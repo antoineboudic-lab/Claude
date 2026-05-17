@@ -373,24 +373,24 @@ function DashboardMockup() {
 
 function Hero() {
   return (
-    <section className="relative pt-28 pb-20 overflow-hidden" style={{ background: '#FFFFFF' }}>
+    <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden" style={{ background: '#FFFFFF' }}>
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.05) 0%, transparent 55%)' }} />
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.06) 0%, transparent 60%)' }} />
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
         <motion.div variants={stagger(0.12)} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-8"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
             style={{ background: '#EDE9FE', color: '#7C3AED', fontFamily: 'var(--font-sans)', border: '1px solid #DDD6FE' }}>
             <Sparkles size={11} /> Personalised AI Training for Business Leaders
           </motion.div>
 
           <motion.h1 variants={fadeUp}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-[4.5rem] font-black leading-[0.95] tracking-tight mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] font-black leading-[1.05] tracking-tight mb-5"
             style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-            Master AI<span className="block" style={{ color: '#7C3AED' }}>Without Code</span>
+            Master AI<br /><span style={{ color: '#7C3AED' }}>Without Code</span>
           </motion.h1>
 
-          <motion.p variants={fadeUp} className="text-lg leading-relaxed mb-8" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+          <motion.p variants={fadeUp} className="text-base sm:text-lg leading-relaxed mb-8 max-w-lg" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
             A personalised learning path shaped by your role, industry, and goals.
             Join thousands of business professionals who now lead with AI — no technical background required.
           </motion.p>
@@ -436,7 +436,7 @@ function Hero() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: easing }} className="hidden lg:block">
+          transition={{ duration: 0.8, delay: 0.3, ease: easing }} className="hidden md:block px-4 lg:px-0">
           <DashboardMockup />
         </motion.div>
       </div>
