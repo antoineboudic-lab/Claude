@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { getTrack } from '@/lib/curriculum'
 import { useGame } from '@/context/GameContext'
+import { useAuth } from '@/context/AuthContext'
 import type { TrackId } from '@/lib/curriculum/types'
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
@@ -85,6 +86,8 @@ export default function TrackPage() {
   const params = useParams()
   const trackId = params.trackId as string
   const { state } = useGame()
+  const { user, openSignUp } = useAuth()
+  const isPro = !!user
 
   const curriculumTrack = getTrack(trackId as TrackId)
   const meta = trackMeta[trackId]
@@ -201,6 +204,8 @@ export default function TrackPage() {
         {modules.map((mod, mi) => {
           const completedInModule = mod.lessonIds.filter(id => state.completedLessons.includes(id)).length
           const moduleComplete = state.completedModules.includes(mod.moduleId)
+          const isModuleFree = mi === 0
+          const isModuleAccessible = isModuleFree || isPro
           return (
             <motion.div
               key={mod.title}
@@ -216,25 +221,41 @@ export default function TrackPage() {
                 <div className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
                     style={{
-                      background: moduleComplete ? `${meta.color}20` : `${meta.color}10`,
-                      color: meta.color,
+                      background: !isModuleAccessible ? '#F1F5F9' : moduleComplete ? `${meta.color}20` : `${meta.color}10`,
+                      color: !isModuleAccessible ? '#CBD5E1' : meta.color,
                       fontFamily: 'var(--font-sans)',
                     }}>
-                    {moduleComplete ? '✓' : mi + 1}
+                    {!isModuleAccessible ? <Lock size={12} /> : moduleComplete ? '✓' : mi + 1}
                   </div>
-                  <h3 className="font-bold text-sm" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                    {mod.title}
-                  </h3>
+                  <div>
+                    <h3 className="font-bold text-sm" style={{ fontFamily: 'var(--font-sans)', color: isModuleAccessible ? '#0F172A' : '#94A3B8' }}>
+                      {mod.title}
+                    </h3>
+                    {isModuleFree && (
+                      <span className="text-xs font-semibold" style={{ color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+                        Free
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  {completedInModule > 0 && (
+                  {isModuleAccessible && completedInModule > 0 && (
                     <span className="text-xs font-medium" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
                       {completedInModule}/{mod.lessons.length}
                     </span>
                   )}
-                  <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                    {mod.lessons.length} lessons
-                  </span>
+                  {!isModuleAccessible ? (
+                    <button
+                      onClick={openSignUp}
+                      className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all hover:opacity-90"
+                      style={{ background: '#7C3AED', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
+                      <Lock size={10} /> Unlock free trial
+                    </button>
+                  ) : (
+                    <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      {mod.lessons.length} lessons
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -243,50 +264,56 @@ export default function TrackPage() {
                 {mod.lessons.map((lesson, li) => {
                   const lessonId = mod.lessonIds[li]
                   const isDone = state.completedLessons.includes(lessonId)
-                  const isUnlocked = mi === 0 || state.completedModules.includes(`${trackId}-m${mi}`)
+                  const isSequentiallyUnlocked = mi === 0 || isPro || state.completedModules.includes(`${trackId}-m${mi}`)
+                  const canAccess = isModuleAccessible && isSequentiallyUnlocked
+
                   return (
                     <div key={lessonId}
-                      className="px-6 py-3.5 flex items-center justify-between group hover:bg-slate-50 transition-colors">
-                      <div className="flex items-center gap-3">
+                      className="px-6 py-3.5 flex items-center justify-between group transition-colors"
+                      style={{ cursor: !canAccess ? 'pointer' : 'default' }}
+                      onClick={!canAccess ? openSignUp : undefined}>
+                      <div className="flex items-center gap-3 hover:bg-slate-50 rounded-lg -mx-1 px-1 w-full py-0.5 transition-colors">
                         <div className="w-5 h-5 flex-shrink-0">
                           {isDone
                             ? <CheckCircle2 size={16} color={meta.color} />
-                            : isUnlocked
+                            : canAccess
                             ? <PlayCircle size={16} color={meta.color} />
                             : <Lock size={14} color="#CBD5E1" />
                           }
                         </div>
-                        <span className="text-sm" style={{
-                          color: isDone ? meta.color : isUnlocked ? '#334155' : '#94A3B8',
+                        <span className="text-sm flex-1" style={{
+                          color: isDone ? meta.color : canAccess ? '#334155' : '#CBD5E1',
                           fontFamily: 'var(--font-sans)',
                           textDecoration: isDone ? 'line-through' : 'none',
                           opacity: isDone ? 0.7 : 1,
                         }}>
                           {lesson}
                         </span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
-                          ~17 min
-                        </span>
-                        {isUnlocked && !isDone && (
-                          <Link
-                            href={`/tracks/${trackId}/lessons/${lessonId}`}
-                            className="text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
-                            style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}
-                          >
-                            Start <ChevronRight size={12} />
-                          </Link>
-                        )}
-                        {isDone && (
-                          <Link
-                            href={`/tracks/${trackId}/lessons/${lessonId}`}
-                            className="text-xs opacity-0 group-hover:opacity-60 transition-opacity"
-                            style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
-                          >
-                            Review
-                          </Link>
-                        )}
+                        <div className="flex items-center gap-3 flex-shrink-0">
+                          <span className="text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                            ~17 min
+                          </span>
+                          {canAccess && !isDone && (
+                            <Link
+                              href={`/tracks/${trackId}/lessons/${lessonId}`}
+                              className="text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
+                              style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}
+                              onClick={e => e.stopPropagation()}
+                            >
+                              Start <ChevronRight size={12} />
+                            </Link>
+                          )}
+                          {isDone && (
+                            <Link
+                              href={`/tracks/${trackId}/lessons/${lessonId}`}
+                              className="text-xs opacity-0 group-hover:opacity-60 transition-opacity"
+                              style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                              onClick={e => e.stopPropagation()}
+                            >
+                              Review
+                            </Link>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )

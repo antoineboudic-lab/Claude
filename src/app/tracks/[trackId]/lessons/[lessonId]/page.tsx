@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
@@ -8,8 +8,10 @@ import ReactMarkdown from 'react-markdown'
 import {
   ArrowLeft, ArrowRight, CheckCircle2, Clock,
   BookOpen, Lightbulb, Dumbbell, HelpCircle, Zap, Sparkles,
+  Lock, Check,
 } from 'lucide-react'
 import { useGame } from '@/context/GameContext'
+import { useAuth } from '@/context/AuthContext'
 import { LevelBar } from '@/components/gamification/LevelBar'
 import { XP } from '@/lib/gamification'
 import { getLesson, getNextLesson } from '@/lib/curriculum'
@@ -110,6 +112,141 @@ function FallbackLesson({ lessonId, color }: { lessonId: string; color: string }
   )
 }
 
+// ─── Paywall overlay ──────────────────────────────────────────────────────────
+
+const TOTAL_LESSONS = 20
+
+function PaywallOverlay({
+  trackId,
+  trackColor,
+  lessonTitle,
+  completedCount,
+  onSignUp,
+  onSignIn,
+}: {
+  trackId: string
+  trackColor: string
+  lessonTitle: string
+  completedCount: number
+  onSignUp: () => void
+  onSignIn: () => void
+}) {
+  const trackName = trackId.charAt(0).toUpperCase() + trackId.slice(1)
+  const pct = Math.round((completedCount / TOTAL_LESSONS) * 100)
+
+  const perks = [
+    `All 20 ${trackName} lessons unlocked`,
+    'Your AI-personalised learning path',
+    'Hands-on exercises with real tools',
+    'Verified completion certificate',
+    'XP, streaks & progress tracking',
+    'Access to all 6 role tracks',
+  ]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 sm:p-6"
+      style={{ background: 'rgba(15,23,42,0.8)', backdropFilter: 'blur(10px)' }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 60 }}
+        transition={{ duration: 0.38, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="relative w-full max-w-md rounded-3xl overflow-hidden"
+        style={{ background: '#FFFFFF', boxShadow: '0 40px 100px rgba(0,0,0,0.35)' }}
+      >
+        {/* Gradient top stripe */}
+        <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${trackColor}, #7C3AED)` }} />
+
+        <div className="px-7 pt-6 pb-7">
+          {/* Header */}
+          <div className="flex items-center gap-4 mb-5">
+            <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
+              style={{ background: `${trackColor}12`, border: `1px solid ${trackColor}25` }}>
+              <Lock size={18} color={trackColor} />
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest mb-0.5"
+                style={{ color: trackColor, fontFamily: 'var(--font-sans)' }}>
+                Pro content
+              </p>
+              <h2 className="text-lg font-black" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                Unlock your full learning path
+              </h2>
+            </div>
+          </div>
+
+          {/* Progress card */}
+          <div className="p-4 rounded-2xl mb-5" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                Your progress
+              </span>
+              <span className="text-xs font-bold" style={{ color: trackColor, fontFamily: 'var(--font-sans)' }}>
+                {completedCount} / {TOTAL_LESSONS} lessons &middot; {pct}%
+              </span>
+            </div>
+            <div className="h-2 rounded-full overflow-hidden mb-2.5" style={{ background: '#E2E8F0' }}>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${pct}%` }}
+                transition={{ duration: 0.9, delay: 0.3, ease: 'easeOut' }}
+                className="h-full rounded-full"
+                style={{ background: `linear-gradient(90deg, ${trackColor}, #7C3AED)` }}
+              />
+            </div>
+            <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+              Next: <span style={{ color: '#475569', fontWeight: 600 }}>{lessonTitle}</span>
+            </p>
+          </div>
+
+          {/* Perks */}
+          <ul className="space-y-2 mb-6">
+            {perks.map(p => (
+              <li key={p} className="flex items-center gap-2.5 text-sm"
+                style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                <Check size={13} color="#10B981" className="flex-shrink-0" />
+                {p}
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA */}
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onSignUp}
+            className="w-full py-4 rounded-xl font-bold text-sm text-white mb-3 transition-opacity hover:opacity-95"
+            style={{
+              background: `linear-gradient(135deg, ${trackColor}, #7C3AED)`,
+              boxShadow: `0 8px 28px ${trackColor}40`,
+              fontFamily: 'var(--font-sans)',
+            }}
+          >
+            Start My 7-Day Free Trial
+          </motion.button>
+
+          <p className="text-center text-xs mb-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            Free for 7 days &middot; Then $49/month &middot; Cancel anytime
+          </p>
+
+          <button
+            onClick={onSignIn}
+            className="w-full text-center text-xs font-medium py-1 transition-colors hover:text-slate-700"
+            style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            Already have an account? Sign in
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function LessonPage() {
@@ -125,7 +262,12 @@ export default function LessonPage() {
   const [exerciseDone, setExerciseDone] = useState(false)
   const [isInPath, setIsInPath] = useState(false)
 
+  const { user, openSignIn, openSignUp } = useAuth()
   const { addXP, completeLesson, completePerfectQuiz, state } = useGame()
+
+  // Module 1 is free; Module 2+ requires sign-in (trial access)
+  const moduleNum = parseInt(lessonId.match(/-m(\d+)-/)?.[1] ?? '1', 10)
+  const isLocked = moduleNum > 1 && !user
 
   const result = getLesson(trackId as TrackId, lessonId)
   const lesson: Lesson | undefined = result?.lesson
@@ -481,6 +623,20 @@ export default function LessonPage() {
           </motion.div>
         )}
       </div>
+
+      {/* Paywall — Module 2+ locked for unauthenticated users */}
+      <AnimatePresence>
+        {isLocked && (
+          <PaywallOverlay
+            trackId={trackId}
+            trackColor={color}
+            lessonTitle={lesson?.title ?? 'Next lesson'}
+            completedCount={state.completedLessons.length}
+            onSignUp={openSignUp}
+            onSignIn={openSignIn}
+          />
+        )}
+      </AnimatePresence>
     </main>
   )
 }

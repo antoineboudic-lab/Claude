@@ -667,15 +667,15 @@ function Testimonials() {
 const plans = [
   {
     name: 'Free', monthlyPrice: '0', annualPrice: '0',
-    desc: 'Explore AI Literacy with limited access',
-    features: ['3 free lessons', 'Role assessment', 'Community access', 'Progress tracking'],
-    cta: 'Get Started Free', highlight: false,
+    desc: 'Start with your full first module — no card needed',
+    features: ['Full Module 1 of your track (4 lessons)', 'Role assessment & personalised path', 'Lesson exercises & quiz', 'XP & progress tracking'],
+    cta: 'Start Free', highlight: false,
   },
   {
     name: 'Professional', monthlyPrice: '49', annualPrice: '39',
-    desc: 'Full access to your personalised learning path',
-    features: ['Unlimited access to all modules', 'AI-personalised path', 'All 6 role tracks', 'Progress analytics', 'Verified certificate', 'Priority support'],
-    cta: 'Start Learning', highlight: true,
+    desc: '7-day free trial · Full access to your personalised path',
+    features: ['All 20 lessons in your track', 'AI-personalised curriculum', 'All 6 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
+    cta: 'Start 7-Day Free Trial', highlight: true,
   },
   {
     name: 'Team', monthlyPrice: '39', annualPrice: '31',
@@ -751,18 +751,27 @@ function Pricing() {
                       </li>
                     ))}
                   </ul>
-                  <button
-                    onClick={plan.name !== 'Team' ? openSignUp : undefined}
-                    className="w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
-                    style={plan.highlight
-                      ? { background: '#FFFFFF', color: '#7C3AED', fontFamily: 'var(--font-sans)' }
-                      : plan.name === 'Free'
-                        ? { background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#475569', fontFamily: 'var(--font-sans)' }
-                        : { background: '#0F172A', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }
-                    }
-                  >
-                    {plan.cta}
-                  </button>
+                  {plan.name === 'Team' ? (
+                    <button
+                      className="w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
+                      style={{ background: '#0F172A', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
+                      {plan.cta}
+                    </button>
+                  ) : (
+                    <Link href="/assessment"
+                      className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
+                      style={plan.highlight
+                        ? { background: '#FFFFFF', color: '#7C3AED', fontFamily: 'var(--font-sans)' }
+                        : { background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#475569', fontFamily: 'var(--font-sans)' }
+                      }>
+                      {plan.cta}
+                    </Link>
+                  )}
+                  {plan.highlight && (
+                    <p className="text-center text-xs mt-2.5" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)' }}>
+                      Free for 7 days &middot; $49/mo after &middot; Cancel anytime
+                    </p>
+                  )}
                 </div>
               </motion.div>
             ))}
