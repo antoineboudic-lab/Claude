@@ -373,10 +373,10 @@ function DashboardMockup() {
 
 function Hero() {
   return (
-    <section className="relative pt-24 sm:pt-32 pb-16 sm:pb-24 overflow-hidden" style={{ background: '#FFFFFF' }}>
+    <section className="relative pt-24 sm:pt-32 pb-20 sm:pb-28" style={{ background: '#FFFFFF' }}>
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.06) 0%, transparent 60%)' }} />
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 xl:gap-20 items-center">
         <motion.div variants={stagger(0.12)} initial="hidden" animate="visible">
           <motion.div variants={fadeUp}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
@@ -385,7 +385,7 @@ function Hero() {
           </motion.div>
 
           <motion.h1 variants={fadeUp}
-            className="text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] font-black leading-[1.05] tracking-tight mb-5"
+            className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight mb-5"
             style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
             Master AI<br /><span style={{ color: '#7C3AED' }}>Without Code</span>
           </motion.h1>
@@ -395,7 +395,7 @@ function Hero() {
             Join thousands of business professionals who now lead with AI — no technical background required.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-5">
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-6">
             <Link href="/assessment"
               className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90 hover:scale-[1.02]"
               style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(124,58,237,0.28)' }}>
@@ -436,7 +436,8 @@ function Hero() {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: easing }} className="hidden md:block px-4 lg:px-0">
+          transition={{ duration: 0.8, delay: 0.3, ease: easing }}
+          className="hidden md:flex items-center justify-center py-8 px-4">
           <DashboardMockup />
         </motion.div>
       </div>
