@@ -40,10 +40,12 @@ export default function OGImage() {
             For business professionals
           </div>
           <div style={{
+            display: 'flex', flexDirection: 'column',
             fontSize: 68, fontWeight: 900, color: '#0F172A',
             lineHeight: 1.05, letterSpacing: -2,
           }}>
-            Master AI Without<br />Writing Code
+            <span>Master AI Without</span>
+            <span>Writing Code</span>
           </div>
           <div style={{ fontSize: 26, color: '#64748B', fontWeight: 400, marginTop: 8 }}>
             Role-specific tracks built for your job — not abstract theory.
