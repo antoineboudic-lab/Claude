@@ -16,28 +16,36 @@ import {
   getLevelForXP, getProgressToNextLevel, BADGES, LEVELS,
 } from '@/lib/gamification'
 import type { AssessmentResult } from '@/lib/assessment/types'
-import { getTrack } from '@/lib/curriculum'
+import { getTrack, getAllTracks } from '@/lib/curriculum'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
 const TRACK_COLORS: Record<string, string> = {
-  marketing: '#EC4899',
-  finance: '#F59E0B',
-  hr: '#10B981',
-  sales: '#8B5CF6',
+  marketing:  '#EC4899',
+  finance:    '#F59E0B',
+  hr:         '#10B981',
+  sales:      '#8B5CF6',
   operations: '#22D3EE',
   leadership: '#F97316',
+  legal:      '#6366F1',
+  product:    '#14B8A6',
+  customer:   '#F43F5E',
+  consulting: '#0EA5E9',
 }
 
 const TRACK_ICONS: Record<string, string> = {
-  marketing: '📣',
-  finance: '📊',
-  hr: '🤝',
-  sales: '🎯',
+  marketing:  '📣',
+  finance:    '📊',
+  hr:         '🤝',
+  sales:      '🎯',
   operations: '⚙️',
   leadership: '🧭',
+  legal:      '⚖️',
+  product:    '📦',
+  customer:   '🎧',
+  consulting: '📈',
 }
 
 // ─── Animated counter ─────────────────────────────────────────────────────────
@@ -434,11 +442,11 @@ function LevelCard({ xp }: { xp: number }) {
 // ─── Recent tracks section ────────────────────────────────────────────────────
 
 function RecentActivity({ completedLessons, completedModules }: { completedLessons: string[]; completedModules: string[] }) {
-  const trackProgress = ['marketing', 'finance', 'hr', 'sales', 'operations', 'leadership'].map(id => {
-    const total = 20
-    const done = completedLessons.filter(l => l.startsWith(id)).length
-    const moduleDone = completedModules.filter(m => m.startsWith(id)).length
-    return { id, done, total, moduleDone, pct: Math.round((done / total) * 100) }
+  const trackProgress = getAllTracks().map(track => {
+    const total = track.modules.reduce((acc, m) => acc + m.lessons.length, 0)
+    const done = completedLessons.filter(l => l.startsWith(track.id)).length
+    const moduleDone = completedModules.filter(m => m.startsWith(track.id)).length
+    return { id: track.id, done, total, moduleDone, pct: Math.round((done / total) * 100) }
   }).filter(t => t.done > 0)
 
   if (trackProgress.length === 0) return null

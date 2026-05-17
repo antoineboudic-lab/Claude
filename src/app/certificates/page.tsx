@@ -14,12 +14,16 @@ function stagger(delay = 0.1) {
 }
 
 const TRACKS = [
-  { name: 'AI for Marketing', color: '#EC4899', skills: ['AI copywriting', 'Campaign automation', 'Content strategy'] },
-  { name: 'AI for Finance', color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis'] },
-  { name: 'AI for HR', color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics'] },
-  { name: 'AI for Sales', color: '#7C3AED', skills: ['Prospect research', 'Proposal writing', 'CRM automation'] },
-  { name: 'AI for Operations', color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Quality ops'] },
-  { name: 'AI for Leaders', color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement'] },
+  { name: 'AI for Marketing',        color: '#EC4899', skills: ['AI copywriting', 'Campaign automation', 'Content strategy'] },
+  { name: 'AI for Finance',          color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis'] },
+  { name: 'AI for HR',               color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics'] },
+  { name: 'AI for Sales',            color: '#7C3AED', skills: ['Prospect research', 'Proposal writing', 'CRM automation'] },
+  { name: 'AI for Operations',       color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Quality ops'] },
+  { name: 'AI for Leaders',          color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement'] },
+  { name: 'AI for Legal',            color: '#6366F1', skills: ['Contract analysis', 'Legal research', 'Risk assessment'] },
+  { name: 'AI for Product',          color: '#14B8A6', skills: ['User research', 'Roadmap prioritisation', 'PRD writing'] },
+  { name: 'AI for Customer Success', color: '#F43F5E', skills: ['Health monitoring', 'Churn prevention', 'CS operations'] },
+  { name: 'AI for Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing'] },
 ]
 
 const LOGOS = ['McKinsey', 'Deloitte', 'Goldman Sachs', 'Accenture', 'L\'Oréal', 'Nestlé']
@@ -139,7 +143,7 @@ export default function CertificatesPage() {
       <section className="py-20" style={{ background: '#FFFFFF' }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-black tracking-tight mb-3" style={{ color: '#0F172A' }}>6 role-specific certificates</h2>
+            <h2 className="text-3xl font-black tracking-tight mb-3" style={{ color: '#0F172A' }}>10 role-specific certificates</h2>
             <p className="text-base" style={{ color: '#64748B' }}>Complete your track to earn your certificate.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

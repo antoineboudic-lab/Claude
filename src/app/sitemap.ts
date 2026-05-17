@@ -9,6 +9,10 @@ const TRACKS = [
   "sales",
   "operations",
   "leadership",
+  "legal",
+  "product",
+  "customer",
+  "consulting",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -9,10 +9,19 @@ export const ROLE_TO_TRACK: Record<string, TrackId> = {
   sales: 'sales',
   operations: 'operations',
   leadership: 'leadership',
+  legal: 'legal',
+  product: 'product',
+  customer: 'customer',
+  consulting: 'consulting',
   other: 'leadership',
 }
 
-// Which modules (0-indexed) to prioritise for each goal
+export function deriveExperience(tools: string[]): 'none' | 'some' | 'regular' {
+  if (!tools.length || (tools.length === 1 && tools[0] === 'none')) return 'none'
+  if (tools.length >= 3) return 'regular'
+  return 'some'
+}
+
 const GOAL_MODULE_BOOST: Record<string, number[]> = {
   'save-time': [1, 2],
   'better-decisions': [2, 3],
@@ -49,6 +58,26 @@ const CHALLENGE_MODULE_BOOST: Record<string, number[]> = {
   'business-case': [1, 2],
   'ai-governance': [3],
   'general': [1, 2],
+  // Legal
+  'contract-volume': [1, 2],
+  'research-speed': [2, 3],
+  'risk-visibility': [2, 3],
+  'legal-comms': [3, 4],
+  // Product
+  'research-synthesis': [1, 2],
+  'prioritisation': [2, 3],
+  'prd-quality': [2],
+  'stakeholder-alignment': [3, 4],
+  // Customer Success
+  'account-scale': [1, 2],
+  'churn-signals': [2, 3],
+  'onboarding-consistency': [2],
+  'renewal-prep': [3, 4],
+  // Consulting
+  'research-time': [1, 2],
+  'deck-production': [2, 3],
+  'differentiation': [2, 3],
+  'client-comms': [3, 4],
 }
 
 const TIME_TO_WEEKS: Record<string, number> = {
@@ -74,21 +103,22 @@ export function buildAssessmentResult(answers: AssessmentAnswers): AssessmentRes
   const lessons: PriorityLesson[] = []
 
   track.modules.forEach((mod, modIdx) => {
-    let moduleScore = 1 // base score
+    let moduleScore = 1
 
-    // Experience shapes module 0 weight significantly
+    // Experience and skill score together shape foundation module weight
     if (modIdx === 0) {
       if (answers.experience === 'none') moduleScore += 4
       else if (answers.experience === 'some') moduleScore += 1
       else moduleScore -= 2
+      // Low skill score boosts foundational content regardless of stated experience
+      if (answers.skillScore === 0) moduleScore += 2
+      else if (answers.skillScore === 2) moduleScore -= 1
     }
 
-    // Goal boosts
     for (const goal of answers.goals) {
       if (GOAL_MODULE_BOOST[goal]?.includes(modIdx)) moduleScore += 2
     }
 
-    // Challenge boost
     if (CHALLENGE_MODULE_BOOST[answers.challenge]?.includes(modIdx)) moduleScore += 2
 
     mod.lessons.forEach((lesson, lessonIdx) => {
@@ -106,14 +136,12 @@ export function buildAssessmentResult(answers: AssessmentAnswers): AssessmentRes
     })
   })
 
-  // Assign priorities based on score ranking
   const sorted = [...lessons].sort((a, b) => b.score - a.score)
   sorted.forEach((l, i) => {
     if (i < 5) l.priority = 'essential'
     else if (i < 12) l.priority = 'recommended'
   })
 
-  // Return in natural curriculum order
   lessons.sort((a, b) => a.moduleIndex * 10 + a.lessonIndex - (b.moduleIndex * 10 + b.lessonIndex))
 
   const goalText = answers.goals

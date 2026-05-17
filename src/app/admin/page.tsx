@@ -33,12 +33,16 @@ interface AssessmentRow {
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const TRACK_COLORS: Record<string, string> = {
-  marketing: '#EC4899',
-  finance: '#F59E0B',
-  hr: '#10B981',
-  sales: '#8B5CF6',
+  marketing:  '#EC4899',
+  finance:    '#F59E0B',
+  hr:         '#10B981',
+  sales:      '#8B5CF6',
   operations: '#22D3EE',
   leadership: '#F97316',
+  legal:      '#6366F1',
+  product:    '#14B8A6',
+  customer:   '#F43F5E',
+  consulting: '#0EA5E9',
 }
 
 function fmt(date: string | null) {

@@ -1,44 +1,178 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, Zap, Check, ArrowRight,
   Clock, BookOpen, Star, ChevronRight, RefreshCw,
+  Brain, Users, Target, ChevronDown, Award,
+  Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
-import type { AssessmentResult, PriorityLesson } from '@/lib/assessment/types'
+import type { AssessmentResult, AssessmentAnswers, PriorityLesson } from '@/lib/assessment/types'
 import type { TrackId } from '@/lib/curriculum/types'
 import { useAuth } from '@/context/AuthContext'
 import { loadLatestAssessment } from '@/lib/supabase/db'
 
 // ─── Track meta ───────────────────────────────────────────────────────────────
 
-const TRACK_META: Record<TrackId, {
-  label: string
-  icon: React.ElementType
-  color: string
-  tagline: string
-}> = {
-  marketing: { label: 'Marketing', icon: Megaphone, color: '#EC4899', tagline: 'Create, campaign, and grow with AI precision' },
-  finance: { label: 'Finance', icon: LineChart, color: '#F59E0B', tagline: 'Model, forecast, and report with AI precision' },
-  hr: { label: 'HR & People', icon: HeartHandshake, color: '#10B981', tagline: 'Hire smarter, engage deeper, develop faster' },
-  sales: { label: 'Sales', icon: TrendingUp, color: '#8B5CF6', tagline: 'Prospect, pitch, and close with AI as your edge' },
-  operations: { label: 'Operations', icon: Settings, color: '#22D3EE', tagline: 'Streamline processes and decisions with AI' },
-  leadership: { label: 'Leadership', icon: Briefcase, color: '#F97316', tagline: 'Lead your organisation into the AI era' },
+const TRACK_META: Record<TrackId, { label: string; icon: React.ElementType; color: string; tagline: string }> = {
+  marketing:   { label: 'Marketing',        icon: Megaphone,     color: '#EC4899', tagline: 'Create, campaign, and grow with AI precision' },
+  finance:     { label: 'Finance',          icon: LineChart,      color: '#F59E0B', tagline: 'Model, forecast, and report with AI precision' },
+  hr:          { label: 'HR & People',      icon: HeartHandshake, color: '#10B981', tagline: 'Hire smarter, engage deeper, develop faster' },
+  sales:       { label: 'Sales',            icon: TrendingUp,     color: '#8B5CF6', tagline: 'Prospect, pitch, and close with AI as your edge' },
+  operations:  { label: 'Operations',       icon: Settings,       color: '#22D3EE', tagline: 'Streamline processes and decisions with AI' },
+  leadership:  { label: 'Leadership',       icon: Briefcase,      color: '#F97316', tagline: 'Lead your organisation into the AI era' },
+  legal:       { label: 'Legal',            icon: Scale,          color: '#6366F1', tagline: 'Review, research, and advise with AI confidence' },
+  product:     { label: 'Product',          icon: Package,        color: '#14B8A6', tagline: 'Discover, prioritise, and ship better products with AI' },
+  customer:    { label: 'Customer Success', icon: Headphones,     color: '#F43F5E', tagline: 'Retain, expand, and delight customers with AI' },
+  consulting:  { label: 'Consulting',       icon: BarChart,       color: '#0EA5E9', tagline: 'Research, analyse, and deliver with AI as your edge' },
 }
 
 const PRIORITY_CONFIG = {
-  essential: { label: 'Essential', color: '#22D3EE', bg: 'rgba(34,211,238,0.08)', border: 'rgba(34,211,238,0.2)' },
-  recommended: { label: 'Recommended', color: '#7C3AED', bg: '#EDE9FE', border: '#DDD6FE' },
-  optional: { label: 'Optional', color: '#94A3B8', bg: '#F8FAFC', border: '#E2E8F0' },
+  essential:    { label: 'Essential',    color: '#7C3AED', bg: '#EDE9FE', border: '#DDD6FE' },
+  recommended:  { label: 'Recommended', color: '#0EA5E9', bg: '#E0F2FE', border: '#BAE6FD' },
+  optional:     { label: 'Optional',    color: '#94A3B8', bg: '#F8FAFC', border: '#E2E8F0' },
 }
+
+const INDUSTRY_LABELS: Record<string, string> = {
+  'technology':         'Technology & Software',
+  'financial-services': 'Financial Services',
+  'consulting':         'Consulting & Professional Services',
+  'consumer-retail':    'Consumer Goods & Retail',
+  'healthcare':         'Healthcare & Life Sciences',
+  'manufacturing':      'Manufacturing & Industrial',
+  'media':              'Media & Entertainment',
+  'government':         'Government & Public Sector',
+  'other-industry':     'Other industry',
+}
+
+const COMPANY_SIZE_LABELS: Record<string, string> = {
+  startup:    'Startup (1–50)',
+  scaleup:    'Scale-up (51–500)',
+  midmarket:  'Mid-market (501–5K)',
+  enterprise: 'Enterprise (5K+)',
+}
+
+const TOOL_LABELS: Record<string, string> = {
+  chatgpt:       'ChatGPT',
+  claude:        'Claude',
+  copilot:       'Microsoft Copilot',
+  gemini:        'Google Gemini',
+  perplexity:    'Perplexity',
+  midjourney:    'Midjourney',
+  'notion-ai':   'Notion AI',
+  'other-tools': 'Other AI tools',
+  none:          'None yet',
+}
+
+const EXPERIENCE_LABELS: Record<string, string> = {
+  none:    'No AI tools yet',
+  some:    'Occasional user',
+  regular: 'Regular AI user',
+}
+
+const ROI_HOURS: Record<string, Record<string, string>> = {
+  marketing:  { light: '3–4', moderate: '5–8',  intensive: '8–12' },
+  finance:    { light: '2–4', moderate: '4–6',  intensive: '7–10' },
+  hr:         { light: '3–5', moderate: '5–8',  intensive: '8–12' },
+  sales:      { light: '2–4', moderate: '4–6',  intensive: '6–10' },
+  operations: { light: '4–6', moderate: '7–10', intensive: '10–15' },
+  leadership: { light: '1–3', moderate: '3–5',  intensive: '5–8'  },
+  legal:      { light: '3–5', moderate: '5–8',  intensive: '8–12' },
+  product:    { light: '2–4', moderate: '4–7',  intensive: '7–11' },
+  customer:   { light: '3–5', moderate: '5–8',  intensive: '8–12' },
+  consulting: { light: '4–6', moderate: '6–10', intensive: '10–15' },
+}
+
+const PEER_ADOPTION: Record<string, number> = {
+  marketing: 78, finance: 64, hr: 71,
+  sales: 82, operations: 68, leadership: 59,
+  legal: 52, product: 74, customer: 66, consulting: 71,
+}
+
+// ─── Readiness score ──────────────────────────────────────────────────────────
+
+function computeReadinessScore(answers: AssessmentAnswers): number {
+  let score = 0
+  if (answers.experience === 'regular') score += 30
+  else if (answers.experience === 'some') score += 15
+  score += (answers.skillScore / 2) * 40
+  const toolCount = answers.currentTools.filter(t => t !== 'none').length
+  score += Math.min(toolCount * 5, 20)
+  score += Math.min(answers.goals.length * 3.33, 10)
+  return Math.round(Math.min(score, 100))
+}
+
+function readinessLabel(score: number) {
+  if (score < 25) return 'Exploring'
+  if (score < 50) return 'Building'
+  if (score < 75) return 'Advancing'
+  return 'Leading'
+}
+
+function readinessColor(score: number) {
+  if (score < 25) return '#94A3B8'
+  if (score < 50) return '#F59E0B'
+  if (score < 75) return '#22D3EE'
+  return '#10B981'
+}
+
+// ─── Readiness ring (SVG) ─────────────────────────────────────────────────────
+
+function ReadinessRing({ score, size = 120 }: { score: number; size?: number }) {
+  const r = 42
+  const circ = 2 * Math.PI * r
+  const color = readinessColor(score)
+  const label = readinessLabel(score)
+
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
+        <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+          <circle cx="50" cy="50" r={r} fill="none" stroke="#E2E8F0" strokeWidth="8" />
+          <motion.circle
+            cx="50" cy="50" r={r} fill="none"
+            stroke={color} strokeWidth="8" strokeLinecap="round"
+            strokeDasharray={circ}
+            initial={{ strokeDashoffset: circ }}
+            animate={{ strokeDashoffset: circ * (1 - score / 100) }}
+            transition={{ duration: 1.4, ease: 'easeOut', delay: 0.4 }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <motion.span
+            className="font-black"
+            style={{ color: '#0F172A', fontFamily: 'var(--font-sans)', fontSize: size * 0.2, lineHeight: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}>
+            {score}
+          </motion.span>
+          <span style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)', fontSize: size * 0.1 }}>/ 100</span>
+        </div>
+      </div>
+      <div>
+        <span className="text-xs font-bold px-3 py-1 rounded-full"
+          style={{ background: `${color}15`, color, fontFamily: 'var(--font-sans)' }}>
+          {label}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+// ─── Animation configs ────────────────────────────────────────────────────────
 
 const stagger = { visible: { transition: { staggerChildren: 0.07 } } }
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] } },
+}
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3 } },
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -46,6 +180,8 @@ const fadeUp = {
 export default function AssessmentResultsPage() {
   const [result, setResult] = useState<AssessmentResult | null>(null)
   const [showAll, setShowAll] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
+  const [skillOpen, setSkillOpen] = useState(false)
   const { user, openSignUp } = useAuth()
 
   useEffect(() => {
@@ -61,12 +197,15 @@ export default function AssessmentResultsPage() {
       try {
         const raw = localStorage.getItem('ai-literacy-assessment')
         if (raw) setResult(JSON.parse(raw) as AssessmentResult)
-      } catch {
-        // ignore
-      }
+      } catch { /* ignore */ }
     }
     load()
   }, [user])
+
+  const readinessScore = useMemo(
+    () => result ? computeReadinessScore(result.answers) : 0,
+    [result],
+  )
 
   if (!result) {
     return (
@@ -77,7 +216,7 @@ export default function AssessmentResultsPage() {
           </p>
           <Link href="/assessment"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white"
-            style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)' }}>
+            style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
             Take the assessment <ArrowRight size={14} />
           </Link>
         </div>
@@ -89,25 +228,30 @@ export default function AssessmentResultsPage() {
   const Icon = meta.icon
   const essential = result.customPath.filter(l => l.priority === 'essential')
   const optional = result.customPath.filter(l => l.priority === 'optional')
+  const firstEssentialLesson = essential[0]
 
   const modules = Array.from(
     result.customPath.reduce((acc, l) => {
       if (!acc.has(l.moduleId)) acc.set(l.moduleId, { title: l.moduleTitle, moduleIndex: l.moduleIndex, lessons: [] })
       acc.get(l.moduleId)!.lessons.push(l)
       return acc
-    }, new Map<string, { title: string; moduleIndex: number; lessons: PriorityLesson[] }>())
+    }, new Map<string, { title: string; moduleIndex: number; lessons: PriorityLesson[] }>()),
   ).sort(([, a], [, b]) => a.moduleIndex - b.moduleIndex)
 
-  const firstEssentialLesson = essential[0]
+  const hoursRange = ROI_HOURS[result.primaryTrackId]?.[result.answers.timePerWeek] ?? '4–6'
+  const peerAdoption = PEER_ADOPTION[result.primaryTrackId] ?? 70
+  const rcColor = readinessColor(readinessScore)
+  const activeTools = result.answers.currentTools.filter(t => t !== 'none')
+    .map(t => TOOL_LABELS[t] ?? t)
 
   return (
     <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
+
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4"
         style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)' }}>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
             <Zap size={16} className="text-white" />
           </div>
           <span className="font-bold" style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: '#0F172A' }}>
@@ -115,148 +259,178 @@ export default function AssessmentResultsPage() {
           </span>
         </Link>
         <Link href="/assessment"
-          className="flex items-center gap-1.5 text-xs font-medium transition-colors hover:text-slate-700"
+          className="flex items-center gap-1.5 text-xs font-medium"
           style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
           <RefreshCw size={12} /> Retake assessment
         </Link>
       </header>
 
-      <div className="max-w-3xl mx-auto px-6 py-14">
-        <motion.div variants={stagger} initial="hidden" animate="visible">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+        <motion.div variants={stagger} initial="hidden" animate="visible" className="space-y-5">
 
-          {/* Hero */}
-          <motion.div variants={fadeUp} className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 text-xs font-semibold"
-              style={{ background: '#ECFEFF', color: '#22D3EE', fontFamily: 'var(--font-sans)', border: '1px solid #A5F3FC' }}>
-              <Check size={11} /> Your path is ready
-            </div>
-            <h1 className="text-4xl lg:text-5xl font-black mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              {result.answers.name
-                ? <>Hi {result.answers.name}, here's<br />your <span style={{ background: 'linear-gradient(90deg, #7C3AED, #22D3EE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>personalised AI path</span></>
-                : <>Here's your<br /><span style={{ background: 'linear-gradient(90deg, #7C3AED, #22D3EE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>personalised AI path</span></>
-              }
-            </h1>
-            <p className="text-base max-w-xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              {result.reasoning}
-            </p>
-          </motion.div>
+          {/* ─── Hero: greeting + ring side by side ─── */}
+          <motion.div variants={fadeUp}
+            className="rounded-2xl p-6 sm:p-8"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6">
 
-          {/* Track card */}
-          <motion.div variants={fadeUp} className="rounded-3xl p-8 mb-6 relative overflow-hidden"
-            style={{ background: `${meta.color}06`, border: `1px solid ${meta.color}25`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-            <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full blur-3xl opacity-10"
-              style={{ background: meta.color }} />
-
-            <div className="relative flex items-start justify-between gap-6">
-              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: `${meta.color}12`, border: `1px solid ${meta.color}30` }}>
-                  <Icon size={28} color={meta.color} />
+              {/* Text side */}
+              <div className="flex-1 min-w-0">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 text-xs font-semibold"
+                  style={{ background: '#EDE9FE', color: '#7C3AED', fontFamily: 'var(--font-sans)', border: '1px solid #DDD6FE' }}>
+                  <Check size={11} /> Your personalised path is ready
                 </div>
-                <div>
-                  <div className="text-xs font-semibold uppercase tracking-widest mb-1"
-                    style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
-                    Recommended track
-                  </div>
-                  <h2 className="text-2xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                    {meta.label}
-                  </h2>
-                  <p className="text-sm mt-1" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                    {meta.tagline}
-                  </p>
-                </div>
+                <h1 className="text-3xl sm:text-4xl font-black mb-3"
+                  style={{ fontFamily: 'var(--font-sans)', color: '#0F172A', lineHeight: 1.1 }}>
+                  {result.answers.name
+                    ? <>{result.answers.name},<br /><span style={{ color: '#7C3AED' }}>here&apos;s your AI path</span></>
+                    : <>Here&apos;s your<br /><span style={{ color: '#7C3AED' }}>AI learning path</span></>
+                  }
+                </h1>
+                <p className="text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                  {result.reasoning}
+                </p>
               </div>
-              <Link href={`/tracks/${result.primaryTrackId}`}
-                className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
-                style={{ background: meta.color, fontFamily: 'var(--font-sans)' }}>
-                View track <ChevronRight size={14} />
-              </Link>
+
+              {/* Ring side */}
+              <div className="flex-shrink-0 flex justify-center sm:justify-end">
+                <ReadinessRing score={readinessScore} size={120} />
+              </div>
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-4">
+            {/* Stats strip */}
+            <div className="mt-6 pt-6 grid grid-cols-3 gap-3" style={{ borderTop: '1px solid #F1F5F9' }}>
               {[
-                { icon: BookOpen, label: 'Lessons', value: `${result.totalLessons}` },
-                { icon: Star, label: 'Essential', value: `${result.essentialCount}` },
-                { icon: Clock, label: 'Est. completion', value: `~${result.estimatedWeeks} wks` },
-              ].map(stat => {
-                const SI = stat.icon
+                { icon: Clock,  value: `${hoursRange} hrs`, label: 'saved/week',     color: '#7C3AED' },
+                { icon: Users,  value: `${peerAdoption}%`,  label: 'of peers use AI', color: '#0EA5E9' },
+                { icon: Target, value: `Top ${readinessScore >= 75 ? '20' : readinessScore >= 50 ? '40' : '60'}%`,
+                  label: 'vs peers',       color: rcColor },
+              ].map(item => {
+                const II = item.icon
                 return (
-                  <div key={stat.label} className="p-4 rounded-2xl text-center"
-                    style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
-                    <SI size={16} color={meta.color} className="mx-auto mb-2" />
-                    <div className="text-xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                      {stat.value}
-                    </div>
-                    <div className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                      {stat.label}
-                    </div>
+                  <div key={item.label} className="flex flex-col items-center text-center gap-1 py-2">
+                    <II size={14} color={item.color} />
+                    <span className="text-lg font-black" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)', lineHeight: 1 }}>
+                      {item.value}
+                    </span>
+                    <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      {item.label}
+                    </span>
                   </div>
                 )
               })}
             </div>
           </motion.div>
 
-          {/* Save path banner — unauthenticated users */}
+          {/* Save path banner — unauthenticated */}
           {!user && (
             <motion.div variants={fadeUp}
-              className="flex items-center gap-4 px-6 py-5 rounded-2xl mb-6"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-5 py-4 rounded-2xl"
               style={{ background: '#EDE9FE', border: '1px solid #DDD6FE' }}>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: '#DDD6FE' }}>
-                <Zap size={16} color="#7C3AED" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                  Save your path — it's free
-                </p>
-                <p className="text-xs mt-0.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                  Create an account to track your progress and pick up where you left off.
-                </p>
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: '#DDD6FE' }}>
+                  <Zap size={15} color="#7C3AED" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    Save your path — it&apos;s free
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                    Track progress and pick up where you left off.
+                  </p>
+                </div>
               </div>
               <button onClick={openSignUp}
-                className="flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
+                className="flex-shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+                style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
                 Sign up free
               </button>
             </motion.div>
           )}
 
-          {/* CTA */}
-          {firstEssentialLesson && (
-            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mb-10">
-              <Link
-                href={`/tracks/${firstEssentialLesson.trackId}/lessons/${firstEssentialLesson.lessonId}`}
-                className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90"
-                style={{
-                  background: 'linear-gradient(135deg, #7C3AED, #22D3EE)',
-                  boxShadow: '0 4px 14px rgba(124,58,237,0.25)',
-                  fontFamily: 'var(--font-sans)',
-                }}>
-                Start first essential lesson <ArrowRight size={16} />
-              </Link>
-              <Link
-                href={`/tracks/${result.primaryTrackId}`}
-                className="flex-1 flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-base transition-all hover:bg-slate-100"
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid #E2E8F0',
-                  color: '#334155',
-                  fontFamily: 'var(--font-sans)',
-                }}>
-                Browse full track <ChevronRight size={16} />
-              </Link>
-            </motion.div>
-          )}
+          {/* ─── Track card + Primary CTA ─── */}
+          <motion.div variants={fadeUp}
+            className="rounded-2xl overflow-hidden"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
 
-          {/* Custom path */}
+            {/* Track header */}
+            <div className="p-5 flex items-center gap-4 relative overflow-hidden"
+              style={{ background: `${meta.color}06`, borderBottom: '1px solid #F1F5F9' }}>
+              <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full blur-2xl opacity-10"
+                style={{ background: meta.color }} />
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 relative"
+                style={{ background: `${meta.color}12`, border: `1px solid ${meta.color}30` }}>
+                <Icon size={22} color={meta.color} />
+              </div>
+              <div className="flex-1 min-w-0 relative">
+                <p className="text-xs font-semibold uppercase tracking-widest mb-0.5"
+                  style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+                  Recommended track
+                </p>
+                <h2 className="text-base font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                  {meta.label}
+                </h2>
+              </div>
+              <Link href={`/tracks/${result.primaryTrackId}`}
+                className="hidden sm:flex items-center gap-1 text-xs font-semibold relative flex-shrink-0"
+                style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+                View track <ChevronRight size={12} />
+              </Link>
+            </div>
+
+            {/* Stats + CTA */}
+            <div className="p-5">
+              <div className="grid grid-cols-3 gap-3 mb-4">
+                {[
+                  { icon: BookOpen, label: 'Lessons',   value: `${result.totalLessons}` },
+                  { icon: Star,     label: 'Essential', value: `${result.essentialCount}` },
+                  { icon: Clock,    label: 'Est. time', value: `~${result.estimatedWeeks} wks` },
+                ].map(stat => {
+                  const SI = stat.icon
+                  return (
+                    <div key={stat.label} className="py-3 rounded-xl text-center"
+                      style={{ background: '#F8FAFC', border: '1px solid #F1F5F9' }}>
+                      <SI size={13} color={meta.color} className="mx-auto mb-1" />
+                      <div className="text-base font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                        {stat.value}
+                      </div>
+                      <div className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                        {stat.label}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              {firstEssentialLesson && (
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <Link
+                    href={`/tracks/${firstEssentialLesson.trackId}/lessons/${firstEssentialLesson.lessonId}`}
+                    className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-white"
+                    style={{ background: '#7C3AED', boxShadow: '0 4px 14px rgba(124,58,237,0.2)', fontFamily: 'var(--font-sans)' }}>
+                    Start first essential lesson <ArrowRight size={14} />
+                  </Link>
+                  <Link
+                    href={`/tracks/${result.primaryTrackId}`}
+                    className="flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl font-semibold text-sm"
+                    style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                    Browse track <ChevronRight size={14} />
+                  </Link>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+          {/* ─── Custom learning path ─── */}
           <motion.div variants={fadeUp}>
-            <div className="flex items-center justify-between mb-5">
-              <h3 className="text-xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                Your custom learning path
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-base font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                Your learning path
               </h3>
               <div className="flex items-center gap-3 text-xs" style={{ fontFamily: 'var(--font-sans)' }}>
                 {(['essential', 'recommended', 'optional'] as const).map(p => (
-                  <div key={p} className="flex items-center gap-1.5">
+                  <div key={p} className="hidden sm:flex items-center gap-1">
                     <div className="w-2 h-2 rounded-full" style={{ background: PRIORITY_CONFIG[p].color }} />
                     <span style={{ color: '#94A3B8' }}>{PRIORITY_CONFIG[p].label}</span>
                   </div>
@@ -264,7 +438,7 @@ export default function AssessmentResultsPage() {
               </div>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2">
               {modules.map(([moduleId, mod], modIdx) => {
                 const visibleLessons = showAll ? mod.lessons : mod.lessons.filter(l => l.priority !== 'optional')
                 if (!showAll && visibleLessons.length === 0) return null
@@ -272,35 +446,39 @@ export default function AssessmentResultsPage() {
                 return (
                   <div key={moduleId} className="rounded-2xl overflow-hidden"
                     style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                    <div className="px-5 py-3 flex items-center gap-3"
+                    {/* Module header */}
+                    <div className="px-4 py-3 flex items-center gap-3"
                       style={{ background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
-                      <div className="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold"
+                      <div className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold flex-shrink-0"
                         style={{ background: `${meta.color}12`, color: meta.color, fontFamily: 'var(--font-sans)' }}>
                         {modIdx + 1}
                       </div>
                       <span className="text-sm font-semibold" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
                         {mod.title}
                       </span>
+                      <span className="ml-auto text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                        {visibleLessons.length} lesson{visibleLessons.length !== 1 ? 's' : ''}
+                      </span>
                     </div>
 
-                    <div className="divide-y divide-slate-50">
-                      {visibleLessons.map(lesson => {
+                    {/* Lesson rows */}
+                    <div>
+                      {visibleLessons.map((lesson, lessonIdx) => {
                         const pc = PRIORITY_CONFIG[lesson.priority]
                         return (
-                          <Link
-                            key={lesson.lessonId}
+                          <Link key={lesson.lessonId}
                             href={`/tracks/${lesson.trackId}/lessons/${lesson.lessonId}`}
-                            className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-slate-50 group"
-                          >
-                            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: pc.color }} />
-                            <span className="flex-1 text-sm" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                            className="flex items-center gap-3 px-4 py-3.5 transition-colors hover:bg-slate-50 group"
+                            style={{ borderTop: lessonIdx > 0 ? '1px solid #F8FAFC' : undefined }}>
+                            <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-0.5" style={{ background: pc.color }} />
+                            <span className="flex-1 text-sm leading-snug" style={{ color: '#374151', fontFamily: 'var(--font-sans)' }}>
                               {lesson.lessonTitle}
                             </span>
-                            <span className="text-xs px-2.5 py-1 rounded-full flex-shrink-0"
+                            <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
                               style={{ background: pc.bg, border: `1px solid ${pc.border}`, color: pc.color, fontFamily: 'var(--font-sans)' }}>
                               {pc.label}
                             </span>
-                            <ChevronRight size={13} className="flex-shrink-0 text-slate-300 group-hover:text-slate-400 transition-colors" />
+                            <ChevronRight size={12} className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#94A3B8' }} />
                           </Link>
                         )
                       })}
@@ -313,18 +491,185 @@ export default function AssessmentResultsPage() {
             {!showAll && optional.length > 0 && (
               <button
                 onClick={() => setShowAll(true)}
-                className="mt-4 w-full py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100"
-                style={{ color: '#64748B', border: '1px solid #E2E8F0', background: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
-                Show {optional.length} optional lessons
+                className="mt-3 w-full py-3 rounded-xl text-sm font-medium transition-colors hover:bg-white"
+                style={{ color: '#64748B', border: '1px solid #E2E8F0', background: 'transparent', fontFamily: 'var(--font-sans)' }}>
+                Show {optional.length} optional lesson{optional.length !== 1 ? 's' : ''}
               </button>
             )}
           </motion.div>
 
-          {/* Bottom encouragement */}
-          <motion.div variants={fadeUp} className="mt-10 text-center p-8 rounded-3xl"
+          {/* ─── Secondary details (collapsible) ─── */}
+
+          {/* Profile */}
+          <motion.div variants={fadeUp}
+            className="rounded-2xl overflow-hidden"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <button
+              className="w-full flex items-center justify-between px-5 py-4"
+              onClick={() => setProfileOpen(v => !v)}>
+              <div className="flex items-center gap-2.5">
+                <Brain size={14} color="#7C3AED" />
+                <span className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                  Your profile
+                </span>
+              </div>
+              <ChevronDown
+                size={15}
+                style={{ color: '#94A3B8', transform: profileOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+              />
+            </button>
+
+            <AnimatePresence>
+              {profileOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="overflow-hidden">
+                  <div className="px-5 pb-5 pt-0" style={{ borderTop: '1px solid #F1F5F9' }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 pt-4">
+                      {[
+                        { label: 'Role',       value: [result.answers.subRole, meta.label].filter(Boolean).join(' · ') || meta.label },
+                        { label: 'Industry',   value: INDUSTRY_LABELS[result.answers.industry] ?? result.answers.industry },
+                        { label: 'Company',    value: COMPANY_SIZE_LABELS[result.answers.companySize] ?? result.answers.companySize },
+                        { label: 'Experience', value: EXPERIENCE_LABELS[result.answers.experience] ?? result.answers.experience },
+                      ].map(({ label, value }) => (
+                        <div key={label}>
+                          <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{label}</span>
+                          <p className="text-sm font-semibold mt-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{value}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="mt-4 pt-4 flex flex-wrap items-center justify-between gap-3"
+                      style={{ borderTop: '1px solid #F1F5F9' }}>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                          Knowledge check:
+                        </span>
+                        <div className="flex items-center gap-1">
+                          {[0, 1].map(i => (
+                            <div key={i} className="w-5 h-5 rounded-full flex items-center justify-center"
+                              style={{
+                                background: i < result.answers.skillScore ? '#ECFDF5' : '#F1F5F9',
+                                border: `1px solid ${i < result.answers.skillScore ? '#6EE7B7' : '#E2E8F0'}`,
+                              }}>
+                              {i < result.answers.skillScore
+                                ? <Check size={9} color="#10B981" />
+                                : <span style={{ color: '#CBD5E1', fontSize: 10 }}>·</span>
+                              }
+                            </div>
+                          ))}
+                          <span className="text-xs ml-1" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                            {result.answers.skillScore}/2
+                          </span>
+                        </div>
+                      </div>
+
+                      {activeTools.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {activeTools.map(tool => (
+                            <span key={tool} className="text-xs px-2 py-0.5 rounded-full"
+                              style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                              {tool}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Skill gap map */}
+          <motion.div variants={fadeUp}
+            className="rounded-2xl overflow-hidden"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <button
+              className="w-full flex items-center justify-between px-5 py-4"
+              onClick={() => setSkillOpen(v => !v)}>
+              <div className="flex items-center gap-2.5">
+                <Star size={14} color="#7C3AED" />
+                <span className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                  Skill gap breakdown
+                </span>
+                <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                  by module
+                </span>
+              </div>
+              <ChevronDown
+                size={15}
+                style={{ color: '#94A3B8', transform: skillOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+              />
+            </button>
+
+            <AnimatePresence>
+              {skillOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="overflow-hidden">
+                  <div className="px-5 pb-5 pt-0" style={{ borderTop: '1px solid #F1F5F9' }}>
+                    <div className="space-y-3 pt-4">
+                      {modules.map(([moduleId, mod]) => {
+                        const essCount = mod.lessons.filter(l => l.priority === 'essential').length
+                        const recCount = mod.lessons.filter(l => l.priority === 'recommended').length
+                        const total = mod.lessons.length
+                        const essWidth = (essCount / total) * 100
+                        const recWidth = (recCount / total) * 100
+                        const priority = essCount > 0 ? 'essential' : recCount > 0 ? 'recommended' : 'optional'
+                        const pc = PRIORITY_CONFIG[priority]
+
+                        return (
+                          <div key={moduleId}>
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-xs font-medium" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                                {mod.title}
+                              </span>
+                              <span className="text-xs px-2 py-0.5 rounded-full"
+                                style={{ background: pc.bg, border: `1px solid ${pc.border}`, color: pc.color, fontFamily: 'var(--font-sans)' }}>
+                                {essCount > 0 ? `${essCount} essential` : recCount > 0 ? `${recCount} recommended` : 'optional'}
+                              </span>
+                            </div>
+                            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#F1F5F9' }}>
+                              <motion.div
+                                className="h-full rounded-full"
+                                style={{ background: `linear-gradient(90deg, ${PRIORITY_CONFIG.essential.color} ${essWidth}%, ${PRIORITY_CONFIG.recommended.color} ${essWidth}% ${essWidth + recWidth}%, #E2E8F0 ${essWidth + recWidth}%)` }}
+                                initial={{ width: 0 }}
+                                animate={{ width: '100%' }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                              />
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    <div className="mt-4 flex items-center gap-4 text-xs" style={{ fontFamily: 'var(--font-sans)' }}>
+                      {(['essential', 'recommended', 'optional'] as const).map(p => (
+                        <div key={p} className="flex items-center gap-1.5">
+                          <div className="w-2 h-2 rounded-full" style={{ background: PRIORITY_CONFIG[p].color }} />
+                          <span style={{ color: '#94A3B8' }}>{PRIORITY_CONFIG[p].label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Bottom CTA */}
+          <motion.div variants={fadeUp}
+            className="text-center p-8 rounded-3xl"
             style={{ background: '#EDE9FE', border: '1px solid #DDD6FE' }}>
-            <Zap size={24} color="#7C3AED" className="mx-auto mb-3" />
-            <h3 className="text-lg font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+            <Award size={22} color="#7C3AED" className="mx-auto mb-3" />
+            <h3 className="text-base font-black mb-1.5" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               Ready when you are
             </h3>
             <p className="text-sm mb-5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
@@ -333,8 +678,8 @@ export default function AssessmentResultsPage() {
             {firstEssentialLesson && (
               <Link
                 href={`/tracks/${firstEssentialLesson.trackId}/lessons/${firstEssentialLesson.lessonId}`}
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white"
+                style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
                 Start learning now <ArrowRight size={14} />
               </Link>
             )}

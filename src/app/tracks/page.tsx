@@ -5,9 +5,11 @@ import { useRef, useState, useEffect } from 'react'
 import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen, Trophy,
-  Zap, Sparkles, ArrowRight, Target,
+  Zap, Sparkles, ArrowRight, Target, LogOut,
+  Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
 import Link from 'next/link'
+import { useAuth } from '@/context/AuthContext'
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
@@ -81,6 +83,46 @@ const tracks = [
     lessons: 20,
     duration: '6 hrs',
     skills: ['AI strategy', 'Change management', 'Team upskilling', 'AI governance'],
+  },
+  {
+    id: 'legal',
+    title: 'Legal',
+    tagline: 'Review, research, and advise with AI confidence',
+    color: '#6366F1',
+    icon: Scale,
+    lessons: 16,
+    duration: '5 hrs',
+    skills: ['Contract analysis', 'Legal research', 'Risk assessment', 'AI governance'],
+  },
+  {
+    id: 'product',
+    title: 'Product',
+    tagline: 'Discover, prioritise, and ship better products with AI',
+    color: '#14B8A6',
+    icon: Package,
+    lessons: 16,
+    duration: '5 hrs',
+    skills: ['User research', 'Roadmap prioritisation', 'PRD writing', 'AI product strategy'],
+  },
+  {
+    id: 'customer',
+    title: 'Customer Success',
+    tagline: 'Retain, expand, and delight customers with AI',
+    color: '#F43F5E',
+    icon: Headphones,
+    lessons: 16,
+    duration: '5 hrs',
+    skills: ['Health monitoring', 'Churn prevention', 'Personalisation', 'CS operations'],
+  },
+  {
+    id: 'consulting',
+    title: 'Consulting',
+    tagline: 'Research, analyse, and deliver with AI as your edge',
+    color: '#0EA5E9',
+    icon: BarChart,
+    lessons: 16,
+    duration: '5 hrs',
+    skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'],
   },
 ]
 
@@ -273,6 +315,7 @@ export default function TracksPage() {
   const [recommendedTrackId, setRecommendedTrackId] = useState<string | null>(null)
   const [assessmentLoaded, setAssessmentLoaded] = useState(false)
   const [skipped, setSkipped] = useState(false)
+  const { user, openSignIn, openSignUp, signOut } = useAuth()
 
   useEffect(() => {
     try {
@@ -292,22 +335,45 @@ export default function TracksPage() {
   return (
     <main style={{ background: '#F8FAFC', minHeight: '100vh' }}>
       {/* Nav */}
-      <nav className="px-6 py-4 flex items-center justify-between"
-        style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
+      <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
+        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-bold text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+          <span className="font-black text-base" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
             AI Literacy
           </span>
         </Link>
-        <Link href="/assessment"
-          className="text-xs font-semibold px-4 py-2 rounded-lg transition-all hover:opacity-90"
-          style={{ background: '#7C3AED', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
-          {hasAssessment ? 'Retake assessment' : 'Take Assessment'}
-        </Link>
+        <div className="flex items-center gap-3">
+          {user ? (
+            <>
+              <Link href="/dashboard"
+                className="text-sm font-medium transition-colors hover:text-slate-900"
+                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                Dashboard
+              </Link>
+              <button onClick={signOut}
+                className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100"
+                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                <LogOut size={13} /> Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={openSignIn}
+                className="text-sm font-medium transition-colors hover:text-slate-900"
+                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                Sign in
+              </button>
+              <Link href="/assessment"
+                className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"
+                style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                {hasAssessment ? 'Retake' : 'Get started'}
+              </Link>
+            </>
+          )}
+        </div>
       </nav>
 
       {/* Assessment gate */}
@@ -332,7 +398,7 @@ export default function TracksPage() {
                   Choose your track
                 </h1>
                 <p className="text-base max-w-lg mx-auto mb-2" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                  Six specialised paths built around real professional challenges.
+                  Ten specialised paths built around real professional challenges.
                 </p>
                 <p className="text-sm" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                   For a personalised recommendation,{' '}

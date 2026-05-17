@@ -3,11 +3,21 @@ import type { TrackId } from '../curriculum/types'
 export type Role = TrackId | 'other'
 export type Experience = 'none' | 'some' | 'regular'
 export type TimeCommitment = 'light' | 'moderate' | 'intensive'
+export type Industry =
+  | 'technology' | 'financial-services' | 'consulting'
+  | 'consumer-retail' | 'healthcare' | 'manufacturing'
+  | 'media' | 'government' | 'other-industry'
+export type CompanySize = 'startup' | 'scaleup' | 'midmarket' | 'enterprise'
 
 export interface AssessmentAnswers {
   name: string
   role: Role
-  experience: Experience
+  subRole: string
+  industry: Industry
+  companySize: CompanySize
+  currentTools: string[]
+  experience: Experience        // derived from currentTools
+  skillScore: number            // 0–2 from skill check
   challenge: string
   goals: string[]
   timePerWeek: TimeCommitment

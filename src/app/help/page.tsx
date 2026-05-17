@@ -12,7 +12,7 @@ const FAQS: { category: string; color: string; items: { q: string; a: string }[]
     items: [
       { q: 'How does the assessment work?', a: 'The assessment is a 5-question survey about your role, industry, experience level, and goals. It takes about 3 minutes and the results are used to build your personalised learning path. There are no right or wrong answers — only honest ones.' },
       { q: 'Do I need any technical background?', a: 'No. AI Literacy is designed specifically for business professionals with no coding background. Every lesson, example, and exercise assumes zero technical knowledge. If you know how to use email and a spreadsheet, you have everything you need.' },
-      { q: 'How long does a track take to complete?', a: 'Each track has 20 lessons, each taking 15–20 minutes. Most learners complete their full track in 6–8 weeks at 2–3 lessons per week. You can go faster or slower — the platform adapts to your pace.' },
+      { q: 'How long does a track take to complete?', a: 'Tracks have 16–20 lessons, each taking 15–20 minutes. Most learners complete their full track in 6–8 weeks at 2–3 lessons per week. You can go faster or slower — the platform adapts to your pace.' },
       { q: 'Can I switch tracks after I start?', a: 'Yes. You can start a new track at any time from your dashboard. Your progress on your current track is saved and you can return to it whenever you want.' },
     ],
   },
@@ -30,7 +30,7 @@ const FAQS: { category: string; color: string; items: { q: string; a: string }[]
     category: 'Certificates',
     color: '#F59E0B',
     items: [
-      { q: 'How do I earn my certificate?', a: 'You earn your certificate by completing all 20 lessons in a track, including the applied exercises at the end of each module. Certificates are awarded automatically once you finish — you\'ll find them in your dashboard.' },
+      { q: 'How do I earn my certificate?', a: 'You earn your certificate by completing all lessons in a track, including the applied exercises at the end of each module. Certificates are awarded automatically once you finish — you\'ll find them in your dashboard.' },
       { q: 'How are certificates verified?', a: 'Each certificate has a unique verification URL that anyone (employers, recruiters, colleagues) can visit to confirm its authenticity. The verification page shows your name, track, completion date, and the specific skills covered.' },
       { q: 'Can I add my certificate to LinkedIn?', a: 'Yes. From your certificates page in the dashboard, click "Add to LinkedIn" and the credential will be added to your LinkedIn profile\'s Licenses & Certifications section automatically.' },
     ],

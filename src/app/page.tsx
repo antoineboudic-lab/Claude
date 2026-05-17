@@ -8,7 +8,7 @@ import {
   Megaphone, Settings, ArrowRight, Check, Star, Zap, Award,
   LineChart, GraduationCap, ClipboardList, CheckCircle2,
   ChevronRight, Play, Route, LogOut, BookOpen, X, Users,
-  Brain, Layers, BarChart3, Menu,
+  Brain, Layers, BarChart3, Menu, Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 
@@ -514,12 +514,16 @@ function HowItWorks() {
 // ─── Role Tracks ──────────────────────────────────────────────────────────────
 
 const TRACKS = [
-  { id: 'marketing', icon: Megaphone, label: 'Marketing', color: '#EC4899', skills: ['AI copywriting', 'Campaign automation', 'Content strategy', 'Data analysis'] },
-  { id: 'finance', icon: LineChart, label: 'Finance', color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis', 'Forecasting'] },
-  { id: 'hr', icon: HeartHandshake, label: 'HR & People', color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics', 'Engagement'] },
-  { id: 'sales', icon: TrendingUp, label: 'Sales', color: '#7C3AED', skills: ['Prospect research', 'Proposal writing', 'CRM automation', 'Pipeline AI'] },
-  { id: 'operations', icon: Settings, label: 'Operations', color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Supply chain AI', 'Quality ops'] },
-  { id: 'leadership', icon: Briefcase, label: 'Leadership', color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement', 'Executive decisions'] },
+  { id: 'marketing',  icon: Megaphone,    label: 'Marketing',        color: '#EC4899', skills: ['AI copywriting', 'Campaign automation', 'Content strategy', 'Data analysis'] },
+  { id: 'finance',    icon: LineChart,    label: 'Finance',          color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis', 'Forecasting'] },
+  { id: 'hr',         icon: HeartHandshake, label: 'HR & People',   color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics', 'Engagement'] },
+  { id: 'sales',      icon: TrendingUp,   label: 'Sales',            color: '#7C3AED', skills: ['Prospect research', 'Proposal writing', 'CRM automation', 'Pipeline AI'] },
+  { id: 'operations', icon: Settings,     label: 'Operations',       color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Supply chain AI', 'Quality ops'] },
+  { id: 'leadership', icon: Briefcase,    label: 'Leadership',       color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement', 'Executive decisions'] },
+  { id: 'legal',      icon: Scale,        label: 'Legal',            color: '#6366F1', skills: ['Contract analysis', 'Legal research', 'Risk assessment', 'AI governance'] },
+  { id: 'product',    icon: Package,      label: 'Product',          color: '#14B8A6', skills: ['User research', 'Roadmap prioritisation', 'PRD writing', 'AI product strategy'] },
+  { id: 'customer',   icon: Headphones,   label: 'Customer Success', color: '#F43F5E', skills: ['Health monitoring', 'Churn prevention', 'Personalisation', 'CS operations'] },
+  { id: 'consulting', icon: BarChart,     label: 'Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'] },
 ]
 
 function RoleTracks() {
@@ -677,7 +681,7 @@ const plans = [
   {
     name: 'Professional', monthlyPrice: '49', annualPrice: '39',
     desc: '7-day free trial · Full access to your personalised path',
-    features: ['All 20 lessons in your track', 'AI-personalised curriculum', 'All 6 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
+    features: ['All lessons in your track', 'AI-personalised curriculum', 'All 10 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
     cta: 'Start 7-Day Free Trial', highlight: true,
   },
   {
@@ -819,7 +823,7 @@ function About() {
 
   const stats = [
     { value: '3,200+', label: 'Professionals trained' },
-    { value: '6', label: 'Role-specific tracks' },
+    { value: '10', label: 'Role-specific tracks' },
     { value: '94%', label: 'Completion rate' },
     { value: '4.9/5', label: 'Learner rating' },
   ]

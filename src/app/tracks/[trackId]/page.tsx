@@ -6,7 +6,8 @@ import Link from 'next/link'
 import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen,
-  Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap,
+  Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap, LogOut,
+  Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
 import { getTrack } from '@/lib/curriculum'
 import { useGame } from '@/context/GameContext'
@@ -34,7 +35,11 @@ const trackMeta: Record<string, {
   hr: { title: 'HR', tagline: 'Attract, retain, and develop talent smarter', color: '#10B981', icon: HeartHandshake, description: 'Use AI to find better candidates, personalise the employee experience, and make people decisions backed by real data.' },
   sales: { title: 'Sales', tagline: 'Prospect, pitch, and close with AI as your edge', color: '#8B5CF6', icon: TrendingUp, description: 'Turn AI into your highest-performing team member — researching prospects, drafting proposals, and helping you win more deals.' },
   operations: { title: 'Operations', tagline: 'Automate processes and optimise at every layer', color: '#22D3EE', icon: Settings, description: 'Eliminate operational waste, automate repetitive processes, and build systems that scale — without needing a developer.' },
-  leadership: { title: 'Leadership', tagline: 'Lead your organisation into the AI era with confidence', color: '#F97316', icon: Briefcase, description: 'Develop the strategic clarity to lead AI transformation — from setting a compelling vision to managing your team through change.' },
+  leadership:  { title: 'Leadership',       tagline: 'Lead your organisation into the AI era with confidence',        color: '#F97316', icon: Briefcase,  description: 'Develop the strategic clarity to lead AI transformation — from setting a compelling vision to managing your team through change.' },
+  legal:       { title: 'Legal',            tagline: 'Review, research, and advise with AI confidence',                color: '#6366F1', icon: Scale,      description: 'Apply AI to the most time-intensive parts of legal work — from contract review and due diligence to research, drafting, and client communication.' },
+  product:     { title: 'Product',          tagline: 'Discover, prioritise, and ship better products with AI',         color: '#14B8A6', icon: Package,    description: 'Use AI to accelerate discovery, sharpen prioritisation, write better specs, and make faster, more confident product decisions.' },
+  customer:    { title: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI',                  color: '#F43F5E', icon: Headphones, description: 'Scale your customer coverage without sacrificing quality — using AI to monitor health, prevent churn, and personalise every interaction.' },
+  consulting:  { title: 'Consulting',       tagline: 'Research, analyse, and deliver with AI as your edge',            color: '#0EA5E9', icon: BarChart,   description: 'Cut research and production time dramatically — so you can spend more time on the judgment, relationships, and strategic thinking that clients actually pay for.' },
 }
 
 const moduleOutlines: Record<string, { title: string; lessons: string[] }[]> = {
@@ -86,7 +91,7 @@ export default function TrackPage() {
   const params = useParams()
   const trackId = params.trackId as string
   const { state } = useGame()
-  const { user, openSignUp } = useAuth()
+  const { user, openSignUp, signOut } = useAuth()
   const isPro = !!user
 
   const curriculumTrack = getTrack(trackId as TrackId)
@@ -121,22 +126,36 @@ export default function TrackPage() {
   return (
     <main style={{ background: '#F8FAFC', minHeight: '100vh' }}>
       {/* Nav */}
-      <nav className="px-6 py-4 flex items-center justify-between"
-        style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
+      <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
+        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-bold text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+          <span className="font-black text-base" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
             AI Literacy
           </span>
         </Link>
-        <Link href="/tracks"
-          className="text-xs font-medium px-3 py-1.5 rounded-lg transition-all"
-          style={{ color: '#475569', background: '#F1F5F9', fontFamily: 'var(--font-sans)' }}>
-          All tracks
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/tracks"
+            className="text-sm font-medium transition-colors hover:text-slate-900"
+            style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            All tracks
+          </Link>
+          {user ? (
+            <button onClick={signOut}
+              className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100"
+              style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              <LogOut size={13} /> Sign out
+            </button>
+          ) : (
+            <button onClick={openSignUp}
+              className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"
+              style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+              Get started free
+            </button>
+          )}
+        </div>
       </nav>
 
       {/* Hero */}
