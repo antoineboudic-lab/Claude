@@ -13,6 +13,7 @@ export interface AssessmentAnswers {
   name: string
   role: Role
   subRole: string
+  roleDescription: string
   industry: Industry
   companySize: CompanySize
   currentTools: string[]

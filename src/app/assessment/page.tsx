@@ -20,7 +20,7 @@ const F = 'var(--font-sans)'
 
 // ─── Step types ───────────────────────────────────────────────────────────────
 
-type StepId = 'welcome' | 'role' | 'subRole' | 'context' | 'tools' | 'skillCheck' | 'challenge' | 'goals' | 'time' | 'processing'
+type StepId = 'welcome' | 'role' | 'subRole' | 'roleDescription' | 'context' | 'tools' | 'skillCheck' | 'challenge' | 'goals' | 'time' | 'processing'
 
 // ─── Role data ────────────────────────────────────────────────────────────────
 
@@ -132,6 +132,66 @@ const AI_TOOLS = [
   { id: 'other-tools', label: 'Other AI tools', color: '#64748B' },
   { id: 'none', label: "I don't use AI tools yet", color: '#94A3B8' },
 ]
+
+// ─── Role description tips ────────────────────────────────────────────────────
+
+const ROLE_DESCRIPTION_TIPS: Record<string, string[]> = {
+  marketing: [
+    'I manage content strategy for a B2B SaaS company — mainly briefing campaigns and reviewing copy.',
+    'I run paid media across Google and Meta, optimising for ROAS and pipeline contribution.',
+    'I lead brand and communications for a mid-size retail group, owning messaging and creative direction.',
+  ],
+  finance: [
+    'I build the monthly management accounts and variance commentary for the CFO.',
+    'I own FP&A for three business units, including annual budgeting and quarterly reforecasting.',
+    'I manage treasury and cash flow, including our FX hedging programme.',
+  ],
+  hr: [
+    'I lead talent acquisition for a scale-up, managing a team of 4 recruiters across EMEA.',
+    'I design and run L&D programmes for a 500-person organisation.',
+    'I act as an HRBP for the commercial function, covering employee relations and org design.',
+  ],
+  sales: [
+    'I run full-cycle enterprise deals from prospecting to close, targeting mid-market SaaS buyers.',
+    'I manage a portfolio of 40 accounts, focused on renewals and expansion revenue.',
+    'I lead an SDR team of 6, responsible for outbound pipeline generation.',
+  ],
+  operations: [
+    'I own process improvement and automation across our supply chain and logistics network.',
+    'I manage quality and compliance for a manufacturing site of 200 people.',
+    'I run the central ops team, responsible for tooling, reporting, and cross-functional projects.',
+  ],
+  leadership: [
+    "I'm a VP responsible for a 60-person commercial team across sales and marketing.",
+    "I'm a CEO leading a 200-person technology business, focused on growth and strategy.",
+    'I sit on the executive team as COO, owning operations, product, and delivery.',
+  ],
+  legal: [
+    "I'm in-house counsel at a fintech, handling contracts, regulatory queries, and risk.",
+    'I manage compliance and data privacy for a healthcare company operating across 5 markets.',
+    'I lead a team of 3 lawyers covering M&A, IP, and commercial agreements.',
+  ],
+  product: [
+    "I'm a PM for a core enterprise product, owning the roadmap and working closely with engineering.",
+    'I lead product discovery — user interviews, synthesis, and turning insights into requirements.',
+    "I'm a growth PM running experiments on activation and retention across our web product.",
+  ],
+  customer: [
+    'I manage a portfolio of 30 mid-market accounts, focused on onboarding, adoption, and renewals.',
+    'I lead CS operations, owning our tech stack, health scoring, and team reporting.',
+    "I'm a VP of Customer Success, responsible for NRR and team development across two regions.",
+  ],
+  consulting: [
+    "I'm a consultant at a strategy firm, owning workstreams and delivering client-facing outputs.",
+    "I'm an analyst building financial models and research decks for M&A advisory engagements.",
+    "I'm a senior partner responsible for client relationships and practice development.",
+  ],
+  other: [
+    'I coordinate cross-functional projects and spend most of my time writing and running meetings.',
+    'I manage a specific system or process that touches multiple teams in the business.',
+    "I'm an individual contributor in a generalist role, covering a wide range of responsibilities.",
+  ],
+}
 
 // ─── Skill check questions ────────────────────────────────────────────────────
 
@@ -809,6 +869,7 @@ const DEFAULT_ANSWERS: AssessmentAnswers = {
   name: '',
   role: 'marketing',
   subRole: '',
+  roleDescription: '',
   industry: 'technology',
   companySize: 'scaleup',
   currentTools: [],
@@ -828,11 +889,13 @@ export default function AssessmentPage() {
   const [direction, setDirection] = useState(1)
   const [answers, setAnswers] = useState<AssessmentAnswers>(DEFAULT_ANSWERS)
   const [processingStep, setProcessingStep] = useState(0)
+  const [showTips, setShowTips] = useState(false)
 
   // Dynamic steps based on role (branching)
   const STEPS = useMemo<StepId[]>(() => {
     const base: StepId[] = ['welcome', 'role']
     if (answers.role !== 'other' && answers.role !== 'leadership') base.push('subRole')
+    base.push('roleDescription')
     return [...base, 'context', 'tools', 'skillCheck', 'challenge', 'goals', 'time', 'processing']
   }, [answers.role])
 
@@ -878,6 +941,7 @@ export default function AssessmentPage() {
       case 'welcome': return answers.name.trim().length > 0
       case 'role': return true
       case 'subRole': return true
+      case 'roleDescription': return true
       case 'context': return answers.industry !== undefined && answers.companySize !== undefined
       case 'tools': return answers.currentTools.length > 0
       case 'skillCheck': return true // managed internally
@@ -1025,6 +1089,82 @@ export default function AssessmentPage() {
                 <NavButtons canProceed onNext={goNext} onBack={goBack} />
               </motion.div>
             )}
+
+            {/* ── Role description ── */}
+            {currentStep === 'roleDescription' && (() => {
+              const tips = ROLE_DESCRIPTION_TIPS[answers.role] ?? ROLE_DESCRIPTION_TIPS.other
+              const roleLabel = ROLES.find(r => r.id === answers.role)?.label ?? 'your role'
+              return (
+                <motion.div key="roleDescription" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
+                  <StepHeader
+                    question="Describe your day-to-day in one sentence."
+                    sub="Optional — but the more context you give us, the better we can personalise your path."
+                  />
+
+                  <div className="mb-2">
+                    <textarea
+                      placeholder={`e.g. ${tips[0]}`}
+                      value={answers.roleDescription}
+                      onChange={e => setAnswers(a => ({ ...a, roleDescription: e.target.value.slice(0, 200) }))}
+                      rows={3}
+                      className="w-full px-5 py-4 rounded-xl text-base outline-none transition-all resize-none"
+                      style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', color: '#0F172A', lineHeight: 1.6 }}
+                      onFocus={e => { e.currentTarget.style.borderColor = '#7C3AED' }}
+                      onBlur={e => { e.currentTarget.style.borderColor = '#CBD5E1' }}
+                    />
+                    <div className="flex items-center justify-between mt-1.5 px-1">
+                      <button
+                        onClick={() => setShowTips(t => !t)}
+                        className="text-xs font-semibold flex items-center gap-1 transition-colors"
+                        style={{ color: '#7C3AED' }}
+                      >
+                        <span style={{ fontSize: 10 }}>{showTips ? '▲' : '▼'}</span>
+                        {showTips ? 'Hide tips' : 'Need inspiration? Show tips'}
+                      </button>
+                      <span className="text-xs" style={{ color: answers.roleDescription.length > 180 ? '#F59E0B' : '#CBD5E1' }}>
+                        {answers.roleDescription.length}/200
+                      </span>
+                    </div>
+                  </div>
+
+                  <AnimatePresence>
+                    {showTips && (
+                      <motion.div
+                        key="tips"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden mb-6"
+                      >
+                        <div className="mt-3 p-4 rounded-2xl" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                          <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>
+                            Examples for {roleLabel}
+                          </p>
+                          <div className="flex flex-col gap-2">
+                            {tips.map((tip, i) => (
+                              <button
+                                key={i}
+                                onClick={() => { setAnswers(a => ({ ...a, roleDescription: tip })); setShowTips(false) }}
+                                className="text-left px-4 py-3 rounded-xl text-sm transition-all hover:scale-[1.01]"
+                                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', color: '#475569' }}
+                              >
+                                {tip}
+                              </button>
+                            ))}
+                          </div>
+                          <p className="text-xs mt-3" style={{ color: '#94A3B8' }}>
+                            Tap an example to use it, or write your own above.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  <NavButtons canProceed onNext={() => { setShowTips(false); goNext() }} onBack={() => { setShowTips(false); goBack() }} />
+                </motion.div>
+              )
+            })()}
 
             {/* ── Context ── */}
             {currentStep === 'context' && (
