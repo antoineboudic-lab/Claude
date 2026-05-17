@@ -163,6 +163,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
       ],
       explanation: "Weak AI output is almost always a prompting problem, not a model problem. Missing context about your audience and what 'good' looks like is the most common cause.",
     },
+    {
+      q: "You want to build a repeatable AI workflow for campaign briefs. What's the right approach?",
+      options: [
+        { id: 'a', label: 'Let each person use AI however they want for maximum creativity', correct: false },
+        { id: 'b', label: 'Create a shared prompt template with brand context baked in, then iterate based on output quality', correct: true },
+        { id: 'c', label: 'Use AI for ideation only — keep execution fully manual', correct: false },
+        { id: 'd', label: 'Standardise on one AI tool across the team and ban all others', correct: false },
+      ],
+      explanation: "Shared, iterated prompt templates give teams consistent quality without losing individual judgment. They're the foundation of a scalable AI workflow.",
+    },
+    {
+      q: "AI produces a statistic in your content that sounds plausible but you can't verify the source. What do you do?",
+      options: [
+        { id: 'a', label: "Keep it — AI is trained on reliable data", correct: false },
+        { id: 'b', label: 'Remove or replace it with a verified source before publishing', correct: true },
+        { id: 'c', label: "Add 'according to AI' as a citation", correct: false },
+        { id: 'd', label: 'Ask AI to confirm the statistic is accurate', correct: false },
+      ],
+      explanation: "AI frequently generates plausible-sounding but fabricated statistics. Any factual claim needs independent verification — asking AI to confirm its own output doesn't count.",
+    },
   ],
   finance: [
     {
@@ -184,6 +204,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
         { id: 'd', label: 'Use AI only for costs, not revenue', correct: false },
       ],
       explanation: "AI models pattern-match on historical data. Your domain knowledge flags when the future won't look like the past — that's the combination that produces good forecasts.",
+    },
+    {
+      q: "Your CFO wants to know which finance processes are best suited for AI. How do you prioritise?",
+      options: [
+        { id: 'a', label: 'Start with the highest-value processes regardless of complexity', correct: false },
+        { id: 'b', label: 'Start with high-volume, rule-based tasks with clear inputs and outputs', correct: true },
+        { id: 'c', label: 'Start with whatever takes the most time regardless of structure', correct: false },
+        { id: 'd', label: 'Start with external reporting since it has the highest visibility', correct: false },
+      ],
+      explanation: "High-volume, rule-based tasks with clear inputs give AI the most to work with and produce the fastest, most reliable results — building credibility before tackling complex judgment-heavy work.",
+    },
+    {
+      q: "You use AI to draft a board memo and it cites a revenue figure that's slightly different from your model. What went wrong?",
+      options: [
+        { id: 'a', label: "The AI accessed outdated data from the internet", correct: false },
+        { id: 'b', label: 'AI hallucinated or misinterpreted the numbers — it should only format, not calculate', correct: true },
+        { id: 'c', label: 'The model used a different accounting standard', correct: false },
+        { id: 'd', label: 'You need a more powerful AI model for financial work', correct: false },
+      ],
+      explanation: "AI is not a calculator — it's a text predictor that can plausibly fabricate numbers. Always supply the figures yourself and use AI to structure and narrate, not to compute.",
     },
   ],
   hr: [
@@ -207,6 +247,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
       ],
       explanation: 'Thematic analysis of open feedback at scale is where AI adds real value in HR — it surfaces insights that would take days to find manually, without touching individual privacy.',
     },
+    {
+      q: "You want to use AI to personalise L&D recommendations for 500 employees. What's the right architecture?",
+      options: [
+        { id: 'a', label: 'Ask AI to build learning plans from scratch for each employee', correct: false },
+        { id: 'b', label: 'Define role-specific skill frameworks, then use AI to match employees to relevant content based on their profile', correct: true },
+        { id: 'c', label: 'Let AI analyse employee email patterns to infer learning needs', correct: false },
+        { id: 'd', label: 'Use AI to recommend the same top 10 courses to everyone', correct: false },
+      ],
+      explanation: "AI personalisation works when it has a structured framework to match against. Without role-specific skill maps, it defaults to generic recommendations that don't drive real development.",
+    },
+    {
+      q: "Legal flags that your AI-assisted hiring process may create compliance risk. What's the most likely concern?",
+      options: [
+        { id: 'a', label: 'AI tools are too expensive to justify for recruitment', correct: false },
+        { id: 'b', label: 'AI trained on historical hiring data may perpetuate demographic biases', correct: true },
+        { id: 'c', label: 'AI is not accurate enough to screen CVs reliably', correct: false },
+        { id: 'd', label: 'Candidates may object to their data being processed', correct: false },
+      ],
+      explanation: "Bias perpetuation is the primary compliance risk in AI-assisted hiring. If historical hiring decisions reflected bias, AI trained on that data will replicate it — requiring ongoing audit and human oversight.",
+    },
   ],
   sales: [
     {
@@ -228,6 +288,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
         { id: 'd', label: 'Use AI to generate notes with no rep input', correct: false },
       ],
       explanation: "Human judgment + AI formatting is the winning combination — reps know what happened, AI ensures it's structured consistently so the data is actually usable.",
+    },
+    {
+      q: "You want to scale outbound without losing personalisation. What's the right AI-assisted approach?",
+      options: [
+        { id: 'a', label: 'Use AI to generate fully automated sequences and send at volume', correct: false },
+        { id: 'b', label: 'Use AI to draft personalised first lines from prospect research, then reps review and send', correct: true },
+        { id: 'c', label: 'Use AI to write the same message for all prospects in the same industry', correct: false },
+        { id: 'd', label: 'Avoid AI for outbound — personalisation must be fully manual', correct: false },
+      ],
+      explanation: "AI-drafted personalisation with human review is the sweet spot — it scales without the robotic feel that tanks reply rates when everything is fully automated.",
+    },
+    {
+      q: "A deal you were confident about goes cold. How can AI help you understand what happened?",
+      options: [
+        { id: 'a', label: 'Ask AI to predict what the prospect is thinking', correct: false },
+        { id: 'b', label: 'Feed the email thread, call notes, and deal timeline into AI to identify where momentum broke down', correct: true },
+        { id: 'c', label: 'Use AI to draft a break-up email and move on', correct: false },
+        { id: 'd', label: "AI can't help with lost deals — focus on new pipeline", correct: false },
+      ],
+      explanation: "AI is excellent at pattern recognition across structured inputs. Feeding it your deal history lets it surface the inflection point you missed — turning a lost deal into a learning.",
     },
   ],
   operations: [
@@ -251,6 +331,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
       ],
       explanation: "Scenario modelling and contingency planning is where AI provides decision support — not autonomous action. Human judgment stays in the loop for consequential calls.",
     },
+    {
+      q: "Your team has 20 manual processes. How do you decide which to tackle with AI first?",
+      options: [
+        { id: 'a', label: 'Start with the most visible process to get executive support', correct: false },
+        { id: 'b', label: 'Prioritise processes that are high-volume, rule-based, and have well-defined inputs and outputs', correct: true },
+        { id: 'c', label: 'Start with the process that takes the most calendar time', correct: false },
+        { id: 'd', label: "Start with the process that the team finds most frustrating", correct: false },
+      ],
+      explanation: "Rule-based, high-volume processes are where AI delivers fast, reliable ROI. Complex judgment-heavy processes require more setup and validation — tackle those after building confidence.",
+    },
+    {
+      q: "An AI-powered quality control system flags a batch as defective, but your experienced operator disagrees. What's the right call?",
+      options: [
+        { id: 'a', label: 'Trust the AI — it has more data than one person', correct: false },
+        { id: 'b', label: "Treat the AI flag as a trigger for human investigation, not an automatic decision", correct: true },
+        { id: 'c', label: 'Trust the operator — AI is not reliable for quality decisions', correct: false },
+        { id: 'd', label: 'Escalate to management to decide between the two', correct: false },
+      ],
+      explanation: "AI flags anomalies — humans make the call. An experienced operator's contextual knowledge is exactly the override mechanism you want in any well-designed AI system.",
+    },
   ],
   leadership: [
     {
@@ -272,6 +372,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
         { id: 'd', label: 'Bring in external consultants to drive the change programme', correct: false },
       ],
       explanation: "Resistance is usually about fear of relevance, not the technology itself. Quick wins that make people's jobs easier are the most powerful change mechanism.",
+    },
+    {
+      q: "You want to measure ROI from your AI programme 6 months in. What's the most meaningful metric?",
+      options: [
+        { id: 'a', label: 'Number of AI tools deployed across the organisation', correct: false },
+        { id: 'b', label: 'Time saved per process multiplied by cost of that time, with outcome quality held constant', correct: true },
+        { id: 'c', label: 'Employee satisfaction with AI tools', correct: false },
+        { id: 'd', label: 'Number of employees who have completed AI training', correct: false },
+      ],
+      explanation: "ROI measurement must connect AI adoption to business outcomes — time saved at maintained quality is the cleanest signal. Tool count and satisfaction are leading indicators, not outcomes.",
+    },
+    {
+      q: "Your legal team raises concerns about AI governance before a company-wide rollout. What's the right response?",
+      options: [
+        { id: 'a', label: 'Proceed anyway — legal will always find concerns', correct: false },
+        { id: 'b', label: 'Pause rollout and develop a usage policy covering data handling, output review, and accountability before proceeding', correct: true },
+        { id: 'c', label: 'Limit rollout to low-risk teams and ignore governance for now', correct: false },
+        { id: 'd', label: 'Outsource governance to a third-party AI vendor', correct: false },
+      ],
+      explanation: "Governance is not a blocker — it's a foundation. A usage policy that defines accountability and data handling protects the organisation and builds the trust that sustains adoption long-term.",
     },
   ],
   legal: [
@@ -295,6 +415,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
       ],
       explanation: 'AI can surface case law, draft clauses, and accelerate research — but legal advice requires licensed professional judgment. The two are complementary, not interchangeable.',
     },
+    {
+      q: "You want to use AI for legal research. What's the most important workflow safeguard?",
+      options: [
+        { id: 'a', label: 'Only use AI tools specifically built for legal research', correct: false },
+        { id: 'b', label: 'Independently verify every case citation AI provides before using it in any work product', correct: true },
+        { id: 'c', label: 'Ask AI to confirm its citations are accurate before relying on them', correct: false },
+        { id: 'd', label: 'Limit AI research to non-contentious matters only', correct: false },
+      ],
+      explanation: "AI hallucinating case citations — generating plausible but non-existent references — is one of the most documented failure modes in legal AI use. Independent verification is non-negotiable.",
+    },
+    {
+      q: "A colleague wants to paste a client's confidential documents into a public AI chatbot to get drafting help. What's your advice?",
+      options: [
+        { id: 'a', label: "It's fine as long as the output is reviewed before sending", correct: false },
+        { id: 'b', label: 'This risks breaching privilege and data protection obligations — use an enterprise tool with appropriate data controls instead', correct: true },
+        { id: 'c', label: "Delete client names first and it should be compliant", correct: false },
+        { id: 'd', label: "Check if the AI tool has a privacy policy and proceed if it does", correct: false },
+      ],
+      explanation: "Public AI tools may use inputs for training and lack the data isolation guarantees required for privileged or confidential material. Enterprise-grade tools with appropriate DPAs are the only safe option.",
+    },
   ],
   product: [
     {
@@ -316,6 +456,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
         { id: 'd', label: 'Use AI to predict user adoption for each feature', correct: false },
       ],
       explanation: "AI doesn't know your users or strategy — but it's excellent at structuring trade-off analysis and stress-testing your assumptions once you define the criteria.",
+    },
+    {
+      q: "You want to use AI to write a PRD faster. What input gives you the most useful first draft?",
+      options: [
+        { id: 'a', label: 'A one-line description of the feature', correct: false },
+        { id: 'b', label: 'Problem statement, user research findings, success metrics, and the PRD structure you want', correct: true },
+        { id: 'c', label: 'A list of requirements from the engineering team', correct: false },
+        { id: 'd', label: 'Examples of PRDs from other companies', correct: false },
+      ],
+      explanation: "AI produces the best PRD drafts when you give it the problem, the evidence, and the desired structure. Without those inputs, it defaults to generic templates that need complete rewriting.",
+    },
+    {
+      q: "Stakeholders push back on a roadmap decision. You used AI to help prioritise — how do you handle this?",
+      options: [
+        { id: 'a', label: "Say the AI recommended it — that ends the debate", correct: false },
+        { id: 'b', label: 'Explain the criteria and trade-offs behind the decision — AI structured the analysis, you made the call', correct: true },
+        { id: 'c', label: "Avoid mentioning AI was involved — it undermines credibility", correct: false },
+        { id: 'd', label: 'Re-run the analysis with different inputs until the AI agrees with stakeholders', correct: false },
+      ],
+      explanation: "AI is a thinking tool, not a decision-maker. You own the criteria, the trade-offs, and the outcome. Being clear about that distinction builds trust with stakeholders rather than undermining it.",
     },
   ],
   customer: [
@@ -339,6 +499,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
       ],
       explanation: 'AI as a first-pass triage and draft layer keeps response quality high while dramatically cutting handling time — the human stays in control of the final message.',
     },
+    {
+      q: "You want to use AI to personalise outreach at scale across your book of business. What's the right model?",
+      options: [
+        { id: 'a', label: 'Have AI generate and send outreach automatically based on health score changes', correct: false },
+        { id: 'b', label: 'Use AI to draft personalised messages from account data, then review and send yourself', correct: true },
+        { id: 'c', label: 'Use AI to write one message per segment and send it to all accounts in that segment', correct: false },
+        { id: 'd', label: 'Personalisation at scale is not possible — focus on your top 20 accounts manually', correct: false },
+      ],
+      explanation: "AI-drafted, human-reviewed personalisation hits the sweet spot — it covers your full book without sacrificing the authenticity that keeps relationships strong.",
+    },
+    {
+      q: "Your company wants to replace CSM check-in calls with AI-powered automated touchpoints. What's your honest assessment?",
+      options: [
+        { id: 'a', label: 'Great idea — AI can handle most customer interactions effectively', correct: false },
+        { id: 'b', label: 'AI touchpoints can supplement check-ins but replacing them risks relationship quality and early churn signal detection', correct: true },
+        { id: 'c', label: 'Fine for low-tier accounts but not enterprise customers', correct: false },
+        { id: 'd', label: 'Depends entirely on how good the AI tool is', correct: false },
+      ],
+      explanation: "The relationship layer of CS is where churn signals surface and trust is built. AI can scale coverage, but removing human touchpoints from the loop means losing the contextual nuance that keeps accounts healthy.",
+    },
   ],
   consulting: [
     {
@@ -361,6 +541,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
       ],
       explanation: 'The biggest consulting time sink is going from insight to structured narrative. AI accelerates that translation while your judgment shapes the final story.',
     },
+    {
+      q: "You're doing secondary research on a client's competitive landscape. How do you use AI responsibly?",
+      options: [
+        { id: 'a', label: 'Ask AI for a competitive analysis and cite it directly in the client deliverable', correct: false },
+        { id: 'b', label: 'Use AI to generate a research framework and initial hypotheses, then verify everything against primary sources', correct: true },
+        { id: 'c', label: 'Use AI only for formatting the research, not conducting it', correct: false },
+        { id: 'd', label: 'Rely on AI for publicly available data and your judgment for the rest', correct: false },
+      ],
+      explanation: "AI-generated competitive intelligence is a starting point, not a source. It structures the question and accelerates the hunt — but every claim needs verification before it reaches a client.",
+    },
+    {
+      q: "A client asks if the analysis in your deliverable was AI-generated. What's the right response?",
+      options: [
+        { id: 'a', label: "Say no — AI was just used for formatting", correct: false },
+        { id: 'b', label: 'Be transparent: AI assisted with research synthesis and drafting; all analysis and conclusions were validated by the team', correct: true },
+        { id: 'c', label: 'Avoid the question — AI disclosure norms are still emerging', correct: false },
+        { id: 'd', label: 'Only disclose if your firm has a policy requiring it', correct: false },
+      ],
+      explanation: "Transparency about AI use — paired with clear ownership of the analysis — is the professional standard. Clients need to know what they're relying on, and your team's judgment is the thing they're actually paying for.",
+    },
   ],
   other: [
     {
@@ -382,6 +582,26 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
         { id: 'd', label: 'Regenerate until it sounds perfect', correct: false },
       ],
       explanation: 'AI is a starting point, not a finished product. Your domain expertise is what turns a plausible-sounding output into something genuinely correct and useful.',
+    },
+    {
+      q: "AI gives you a confident, detailed answer to a factual question. How should you treat it?",
+      options: [
+        { id: 'a', label: "Trust it — AI is trained on vast amounts of accurate data", correct: false },
+        { id: 'b', label: 'Treat it as a strong starting point and verify anything consequential through a reliable source', correct: true },
+        { id: 'c', label: "Trust it for common knowledge but not specialist topics", correct: false },
+        { id: 'd', label: "Ask AI if it's confident in the answer before relying on it", correct: false },
+      ],
+      explanation: "AI can generate confident, detailed, and completely wrong answers. The confidence of the response is not a signal of accuracy — independent verification is always the right call for anything that matters.",
+    },
+    {
+      q: "You want to build a personal AI workflow that saves time each week. Where should you start?",
+      options: [
+        { id: 'a', label: 'Try as many AI tools as possible and see which one feels best', correct: false },
+        { id: 'b', label: 'Identify your most repetitive, time-consuming task and build one reliable prompt for it', correct: true },
+        { id: 'c', label: 'Start with the most complex task to get the biggest time saving', correct: false },
+        { id: 'd', label: 'Wait until your organisation has an approved AI tool list', correct: false },
+      ],
+      explanation: "One reliable prompt for one real pain point beats a dozen half-working tools. Start narrow, get a win, then expand — that's how durable AI habits form.",
     },
   ],
 }
@@ -1035,6 +1255,20 @@ export default function AssessmentPage() {
 
 // ─── Skill check step component ───────────────────────────────────────────────
 
+const SKILL_INTROS = [
+  "Let's start with something practical.",
+  "Good. Now a judgment call.",
+  "Nice. Let's think bigger picture.",
+  "Last one — this one's about risk.",
+]
+
+const NEXT_LABELS = [
+  "Next question →",
+  "Keep going →",
+  "One more →",
+  "See my results",
+]
+
 function SkillCheckStep({
   direction,
   questions,
@@ -1053,6 +1287,7 @@ function SkillCheckStep({
 
   const q = questions[qIdx]
   const isLast = qIdx === questions.length - 1
+  const wasCorrect = revealed && (q.options.find(o => o.id === selected)?.correct ?? false)
 
   function handleSelect(optId: string) {
     if (revealed) return
@@ -1064,13 +1299,16 @@ function SkillCheckStep({
 
   function handleNext() {
     if (isLast) {
-      onComplete(score + (q.options.find(o => o.id === selected)?.correct ? 0 : 0))
+      onComplete(score)
     } else {
       setQIdx(i => i + 1)
       setSelected(null)
       setRevealed(false)
     }
   }
+
+  const intro = SKILL_INTROS[qIdx] ?? `Question ${qIdx + 1}.`
+  const nextLabel = NEXT_LABELS[Math.min(qIdx, NEXT_LABELS.length - 1)]
 
   return (
     <motion.div key="skillCheck" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
@@ -1085,8 +1323,9 @@ function SkillCheckStep({
             ))}
           </div>
         </div>
+        <p className="text-sm font-medium mb-2" style={{ color: '#7C3AED' }}>{intro}</p>
         <h2 className="text-xl sm:text-2xl font-black leading-snug mb-2" style={{ color: '#0F172A' }}>{q.q}</h2>
-        <p className="text-sm" style={{ color: '#94A3B8' }}>Pick the best answer — we'll explain after.</p>
+        {!revealed && <p className="text-sm" style={{ color: '#94A3B8' }}>Pick the best answer — we'll explain after.</p>}
       </div>
 
       <div className="space-y-3 mb-5">
@@ -1125,17 +1364,22 @@ function SkillCheckStep({
         {revealed && (
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             className="mb-6 p-4 rounded-2xl"
-            style={{ background: '#F0FDF4', border: '1px solid #BBF7D0' }}>
+            style={{ background: wasCorrect ? '#F0FDF4' : '#FFF7ED', border: `1px solid ${wasCorrect ? '#BBF7D0' : '#FED7AA'}` }}>
             <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} style={{ color: '#16A34A', marginTop: 1, flexShrink: 0 }} />
-              <p className="text-sm leading-relaxed" style={{ color: '#166534' }}>{q.explanation}</p>
+              <CheckCircle2 size={15} style={{ color: wasCorrect ? '#16A34A' : '#EA580C', marginTop: 1, flexShrink: 0 }} />
+              <div>
+                <p className="text-xs font-bold mb-1" style={{ color: wasCorrect ? '#16A34A' : '#EA580C' }}>
+                  {wasCorrect ? 'Exactly right.' : 'Not quite — here\'s the thinking.'}
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: wasCorrect ? '#166534' : '#7C2D12' }}>{q.explanation}</p>
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <div className="flex items-center gap-3">
-        {qIdx === 0 && (
+        {qIdx === 0 && !revealed && (
           <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100" style={{ color: '#64748B' }}>
             <ArrowLeft size={15} /> Back
           </button>
@@ -1145,7 +1389,7 @@ function SkillCheckStep({
             onClick={handleNext}
             className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
             style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', boxShadow: '0 4px 14px rgba(124,58,237,0.25)' }}>
-            {isLast ? 'Continue' : 'Next question'} <ArrowRight size={15} />
+            {isLast ? 'Continue' : nextLabel} <ArrowRight size={15} />
           </motion.button>
         )}
       </div>

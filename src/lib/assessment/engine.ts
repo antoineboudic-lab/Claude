@@ -111,8 +111,8 @@ export function buildAssessmentResult(answers: AssessmentAnswers): AssessmentRes
       else if (answers.experience === 'some') moduleScore += 1
       else moduleScore -= 2
       // Low skill score boosts foundational content regardless of stated experience
-      if (answers.skillScore === 0) moduleScore += 2
-      else if (answers.skillScore === 2) moduleScore -= 1
+      if (answers.skillScore <= 1) moduleScore += 2
+      else if (answers.skillScore >= 3) moduleScore -= 1
     }
 
     for (const goal of answers.goals) {
