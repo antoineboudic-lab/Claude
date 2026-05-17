@@ -1,6 +1,10 @@
 import { createAdminClient } from '@/lib/supabase/admin'
+import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Users, Zap, BookOpen, Target, TrendingUp, Award, Clock } from 'lucide-react'
+
+const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? 'antoine.boudic@gmail.com').split(',')
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -63,6 +67,10 @@ function timeAgo(date: string | null) {
 // ─── Server Component ─────────────────────────────────────────────────────────
 
 export default async function AdminPage() {
+  const supabase = await createSupabaseServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user || !ADMIN_EMAILS.includes(user.email ?? '')) redirect('/')
+
   const admin = createAdminClient()
 
   const { data: { users } } = await admin.auth.admin.listUsers({ perPage: 500 })
