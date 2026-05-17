@@ -449,15 +449,17 @@ function Hero() {
 function SocialProof() {
   const companies = ['McKinsey', 'Deloitte', 'KPMG', 'Goldman Sachs', "L'Oréal", 'Nestlé', 'Airbus', 'BNP Paribas', 'Accenture', 'BCG']
   return (
-    <div className="py-10 overflow-hidden" style={{ background: '#F8FAFC', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
+    <div className="py-10" style={{ background: '#F8FAFC', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
       <p className="text-center text-xs font-semibold mb-6 tracking-widest uppercase" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
         Trusted by professionals at
       </p>
-      <div className="flex overflow-hidden">
-        <motion.div animate={{ x: ['0%', '-50%'] }} transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-          className="flex gap-14 flex-nowrap">
+      <div className="relative overflow-hidden">
+        <motion.div
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+          className="flex gap-16 flex-nowrap w-max">
           {[...companies, ...companies].map((c, i) => (
-            <span key={i} className="text-base font-bold whitespace-nowrap" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>{c}</span>
+            <span key={i} className="text-sm font-semibold whitespace-nowrap" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{c}</span>
           ))}
         </motion.div>
       </div>
@@ -475,7 +477,7 @@ function HowItWorks() {
   ]
   const { ref, isInView } = useReveal()
   return (
-    <section id="program" className="py-24" style={{ background: '#FFFFFF' }}>
+    <section id="program" className="py-20 sm:py-28" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-16">
@@ -522,7 +524,7 @@ const TRACKS = [
 function RoleTracks() {
   const { ref, isInView } = useReveal()
   return (
-    <section id="tracks" className="py-24" style={{ background: '#F8FAFC' }}>
+    <section id="tracks" className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-14">
@@ -583,7 +585,7 @@ const FEATURES = [
 function Features() {
   const { ref, isInView } = useReveal()
   return (
-    <section className="py-24" style={{ background: '#FFFFFF' }}>
+    <section className="py-20 sm:py-28" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-16">
@@ -624,7 +626,7 @@ const TESTIMONIALS = [
 function Testimonials() {
   const { ref, isInView } = useReveal()
   return (
-    <section className="py-24" style={{ background: '#F8FAFC' }}>
+    <section className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-14">
@@ -691,7 +693,7 @@ function Pricing() {
   const { openSignUp } = useAuth()
 
   return (
-    <section id="pricing" className="py-24" style={{ background: '#FFFFFF' }}>
+    <section id="pricing" className="py-20 sm:py-28" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
@@ -714,9 +716,9 @@ function Pricing() {
             </div>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-6 items-start">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
             {plans.map(plan => (
-              <motion.div key={plan.name} variants={fadeUp} className="relative rounded-2xl overflow-hidden"
+              <motion.div key={plan.name} variants={fadeUp} className={`relative rounded-2xl overflow-hidden${plan.highlight ? ' sm:col-span-2 lg:col-span-1' : ''}`}
                 style={plan.highlight
                   ? { background: '#7C3AED', boxShadow: '0 20px 48px rgba(124,58,237,0.25)' }
                   : { background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
@@ -840,7 +842,7 @@ function About() {
   ]
 
   return (
-    <section id="about" className="py-24" style={{ background: '#F8FAFC' }}>
+    <section id="about" className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
 
@@ -979,7 +981,7 @@ function Footer() {
               </div>
               <span className="text-base font-black" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>AI Literacy</span>
             </div>
-            <p className="text-sm leading-relaxed" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               AI training built for business professionals. No code required.
             </p>
           </div>
@@ -989,12 +991,12 @@ function Footer() {
             { title: 'Support', links: ['Help centre', 'Contact', 'Privacy', 'Terms'] },
           ].map(col => (
             <div key={col.title}>
-              <h4 className="text-sm font-bold mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>{col.title}</h4>
+              <h4 className="text-sm font-bold mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#E2E8F0' }}>{col.title}</h4>
               <ul className="space-y-2">
                 {col.links.map(link => (
                   <li key={link}>
-                    <a href="#" className="text-sm transition-colors hover:text-slate-300"
-                      style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                    <a href="#" className="text-sm transition-colors hover:text-slate-200"
+                      style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                       {link}
                     </a>
                   </li>
@@ -1004,9 +1006,9 @@ function Footer() {
           ))}
         </div>
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>© 2026 AI Literacy. All rights reserved.</p>
-          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>Built for professionals who want to stay ahead.</p>
+          style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+          <p className="text-xs" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>© 2026 AI Literacy. All rights reserved.</p>
+          <p className="text-xs" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>Built for professionals who want to stay ahead.</p>
         </div>
       </div>
     </footer>
