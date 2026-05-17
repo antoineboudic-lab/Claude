@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Zap } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'How AI Literacy collects, uses, and protects your personal data. We are committed to transparency and your privacy rights.',
+  robots: { index: true, follow: false },
+  alternates: { canonical: 'https://ailiteracy.com/privacy' },
+}
 
 const SECTIONS = [
   {

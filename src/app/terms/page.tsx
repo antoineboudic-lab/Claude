@@ -1,5 +1,13 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Zap } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'The terms and conditions governing your use of AI Literacy. Please read these carefully before using our platform.',
+  robots: { index: true, follow: false },
+  alternates: { canonical: 'https://ailiteracy.com/terms' },
+}
 
 const SECTIONS = [
   {
