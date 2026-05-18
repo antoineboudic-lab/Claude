@@ -649,6 +649,174 @@ function Features() {
   )
 }
 
+// ─── Teams ────────────────────────────────────────────────────────────────────
+
+const TEAM_FEATURES = [
+  { icon: BarChart3, label: 'Live progress dashboard', desc: "See every team member's XP, streaks, and lesson completions in real time." },
+  { icon: Target, label: 'Custom track assignment', desc: 'Assign role-specific tracks per member — Finance for your analysts, Marketing for your growth team.' },
+  { icon: Award, label: 'Team leaderboard', desc: 'Healthy competition drives completion. Your team can see who is leading the pack.' },
+  { icon: Users, label: 'Invite in seconds', desc: 'Send invite links by email. Members join with one click — no IT setup required.' },
+]
+
+function TeamsSection() {
+  const { ref, isInView } = useReveal()
+  return (
+    <section className="py-20 sm:py-28 overflow-hidden" style={{ background: '#F8FAFC' }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: copy */}
+            <div>
+              <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3"
+                style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>For teams &amp; organisations</motion.p>
+              <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5"
+                style={{ fontFamily: 'var(--font-sans)', color: '#0F172A', lineHeight: 1.1 }}>
+                Upskill your entire team — not just one person
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-base leading-relaxed mb-10"
+                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                Give every function the AI skills they need. Assign role-specific tracks, track progress across the team, and generate certificates when members complete their programme.
+              </motion.p>
+              <div className="space-y-5 mb-10">
+                {TEAM_FEATURES.map(f => {
+                  const Icon = f.icon
+                  return (
+                    <motion.div key={f.label} variants={fadeUp} className="flex items-start gap-4">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#EDE9FE' }}>
+                        <Icon size={16} style={{ color: '#7C3AED' }} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{f.label}</p>
+                        <p className="text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>{f.desc}</p>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3">
+                <Link href="/teams"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+                  style={{ background: '#7C3AED', boxShadow: '0 4px 16px rgba(124,58,237,0.25)', fontFamily: 'var(--font-sans)' }}>
+                  See team plans
+                </Link>
+                <Link href="/dashboard/team/create"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold transition-all hover:bg-white"
+                  style={{ color: '#475569', border: '1px solid #E2E8F0', background: 'transparent', fontFamily: 'var(--font-sans)' }}>
+                  Create a team
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Right: dashboard mockup */}
+            <motion.div variants={fadeUp} className="relative">
+              {/* Glow */}
+              <div className="absolute -inset-4 rounded-3xl opacity-20 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at center, #7C3AED 0%, transparent 70%)' }} />
+
+              <div className="relative rounded-2xl overflow-hidden"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 8px 40px rgba(0,0,0,0.08)' }}>
+                {/* Window chrome */}
+                <div className="px-5 py-3.5 flex items-center gap-2" style={{ borderBottom: '1px solid #F1F5F9', background: '#FAFBFC' }}>
+                  <div className="w-3 h-3 rounded-full" style={{ background: '#F43F5E' }} />
+                  <div className="w-3 h-3 rounded-full" style={{ background: '#F59E0B' }} />
+                  <div className="w-3 h-3 rounded-full" style={{ background: '#10B981' }} />
+                  <div className="mx-3 flex-1 h-6 rounded-md flex items-center px-3 text-xs" style={{ background: '#F1F5F9', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    ailiteracy.com/dashboard/team
+                  </div>
+                </div>
+
+                {/* Dashboard content */}
+                <div className="p-5 space-y-4">
+                  {/* Stats row */}
+                  <div className="grid grid-cols-4 gap-3">
+                    {[
+                      { label: 'Members', value: '24', color: '#7C3AED' },
+                      { label: 'Total XP', value: '18.4k', color: '#F59E0B' },
+                      { label: 'Lessons', value: '312', color: '#10B981' },
+                      { label: 'Tracks done', value: '9', color: '#EC4899' },
+                    ].map(s => (
+                      <div key={s.label} className="p-3 rounded-xl" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                        <p className="text-lg font-black mb-0.5" style={{ color: s.color, fontFamily: 'var(--font-sans)' }}>{s.value}</p>
+                        <p className="text-[10px]" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{s.label}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Leaderboard */}
+                  <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #E2E8F0' }}>
+                    <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid #F1F5F9', background: '#FAFBFC' }}>
+                      <BarChart3 size={12} style={{ color: '#7C3AED' }} />
+                      <p className="text-xs font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Leaderboard</p>
+                    </div>
+                    <div className="divide-y" style={{ borderColor: '#F1F5F9' }}>
+                      {[
+                        { name: 'Sophie A.', track: 'Marketing', xp: 1840, pct: 100, medal: '🥇' },
+                        { name: 'James W.', track: 'Finance', xp: 1610, pct: 87, medal: '🥈' },
+                        { name: 'Priya N.', track: 'HR', xp: 1390, pct: 75, medal: '🥉' },
+                        { name: 'Marcus R.', track: 'Sales', xp: 1140, pct: 62, medal: '#4' },
+                      ].map((m, i) => (
+                        <div key={m.name} className="flex items-center gap-3 px-4 py-3">
+                          <span className="w-6 text-center text-sm flex-shrink-0">{m.medal.startsWith('#') ?
+                            <span className="text-[10px] font-bold" style={{ color: '#CBD5E1' }}>{m.medal}</span> : m.medal}
+                          </span>
+                          <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
+                            style={{ background: `hsl(${(m.name.charCodeAt(0) * 47) % 360},55%,55%)` }}>
+                            {m.name.slice(0, 2)}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-1">
+                              <p className="text-xs font-semibold truncate" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{m.name}</p>
+                              <p className="text-xs font-black ml-2 flex-shrink-0" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>{m.xp.toLocaleString()} XP</p>
+                            </div>
+                            <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+                              <div className="h-full rounded-full" style={{ width: `${m.pct}%`, background: i === 0 ? '#F59E0B' : '#7C3AED' }} />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Track pills */}
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { label: 'Marketing', color: '#EC4899', pct: 83 },
+                      { label: 'Finance', color: '#F59E0B', pct: 67 },
+                      { label: 'Sales', color: '#8B5CF6', pct: 50 },
+                      { label: 'HR', color: '#10B981', pct: 100 },
+                    ].map(t => (
+                      <div key={t.label} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold"
+                        style={{ background: `${t.color}10`, color: t.color, border: `1px solid ${t.color}25`, fontFamily: 'var(--font-sans)' }}>
+                        <div className="w-1.5 h-1.5 rounded-full" style={{ background: t.color }} />
+                        {t.label} · {t.pct}%
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating badge */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -bottom-4 -left-6 flex items-center gap-2.5 px-4 py-2.5 rounded-2xl"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: '#10B98112' }}>
+                  <Award size={15} style={{ color: '#10B981' }} />
+                </div>
+                <div>
+                  <p className="text-xs font-black" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>HR track complete!</p>
+                  <p className="text-[10px]" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>Priya N. just finished</p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 
 const TESTIMONIALS = [
@@ -1169,6 +1337,7 @@ export default function LandingPage() {
       <HowItWorks />
       <RoleTracks />
       <Features />
+      <TeamsSection />
       <Testimonials />
       <Pricing />
       <FAQ />

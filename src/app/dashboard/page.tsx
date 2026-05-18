@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
-  Star, LogOut, Sparkles, Play,
+  Star, LogOut, Sparkles, Play, Users,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
 import { loadLatestAssessment } from '@/lib/supabase/db'
+import { getAdminTeam, getMemberTeam } from '@/lib/supabase/teams'
 import {
   getLevelForXP, getProgressToNextLevel, BADGES, LEVELS,
 } from '@/lib/gamification'
@@ -507,8 +508,18 @@ export default function DashboardPage() {
   const { state, syncing } = useGame()
   const [assessment, setAssessment] = useState<AssessmentResult | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [teamHref, setTeamHref] = useState<string | null>(null)
 
   useEffect(() => { setMounted(true) }, [])
+
+  useEffect(() => {
+    if (!user) return
+    Promise.all([getAdminTeam(user.id), getMemberTeam(user.id)]).then(([admin, member]) => {
+      if (admin) setTeamHref('/dashboard/team')
+      else if (member) setTeamHref('/dashboard/team')
+      else setTeamHref('/dashboard/team/create')
+    })
+  }, [user])
 
   useEffect(() => {
     if (!mounted) return
@@ -577,6 +588,12 @@ export default function DashboardPage() {
               style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               <BookOpen size={14} /> All Tracks
             </Link>
+            {teamHref && (
+              <Link href={teamHref} className="flex items-center gap-1.5 text-sm font-semibold transition-colors hover:opacity-80 px-3 py-1.5 rounded-lg"
+                style={{ color: '#7C3AED', background: '#EDE9FE', fontFamily: 'var(--font-sans)' }}>
+                <Users size={13} /> Team
+              </Link>
+            )}
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
                 style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
@@ -684,6 +701,7 @@ export default function DashboardPage() {
                   { label: 'Browse all tracks', href: '/tracks', icon: BookOpen, color: '#22D3EE' },
                   { label: 'Retake assessment', href: '/assessment', icon: Target, color: '#7C3AED' },
                   { label: 'View your path', href: '/assessment/results', icon: TrendingUp, color: '#10B981' },
+                  ...(teamHref ? [{ label: 'Team dashboard', href: teamHref, icon: Users, color: '#EC4899' }] : []),
                 ].map(item => (
                   <Link
                     key={item.href}
