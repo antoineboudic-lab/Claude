@@ -305,78 +305,237 @@ function Navbar() {
   )
 }
 
-// ─── Dashboard Mockup ─────────────────────────────────────────────────────────
+// ─── Hero Visual ──────────────────────────────────────────────────────────────
 
-function DashboardMockup() {
-  const modules = [
-    { title: 'AI Foundations', progress: 100, color: '#10B981' },
-    { title: 'ChatGPT for Business', progress: 75, color: '#7C3AED' },
-    { title: 'Prompt Engineering', progress: 40, color: '#3B82F6' },
-    { title: 'AI Strategy', progress: 10, color: '#F59E0B' },
-    { title: 'Team AI Adoption', progress: 0, color: '#CBD5E1' },
-  ]
+const HERO_ROLES = [
+  {
+    role: 'Marketing Manager', track: 'Marketing Track',
+    accent: '#7C3AED', bg: '#EDE9FE',
+    lesson: 'Writing AI prompts for campaign briefs',
+    module: 'Prompt Engineering', progress: 68, xp: 1240, done: 8,
+    insight: 'Prompt Engineering is 3× more relevant for your role — prioritised first.',
+  },
+  {
+    role: 'Chief Financial Officer', track: 'Finance Track',
+    accent: '#3B82F6', bg: '#DBEAFE',
+    lesson: 'AI-powered financial forecasting models',
+    module: 'AI for Finance', progress: 45, xp: 820, done: 5,
+    insight: 'AI forecasting saves finance leaders 6+ hours per week on average.',
+  },
+  {
+    role: 'HR Director', track: 'HR Track',
+    accent: '#10B981', bg: '#D1FAE5',
+    lesson: 'Automating candidate screening with AI',
+    module: 'HR Automation', progress: 82, xp: 1580, done: 12,
+    insight: 'HR teams using AI screening cut time-to-hire by 40% on average.',
+  },
+  {
+    role: 'Sales Lead', track: 'Sales Track',
+    accent: '#F59E0B', bg: '#FEF3C7',
+    lesson: 'AI-driven prospect research & outreach',
+    module: 'AI for Sales', progress: 31, xp: 640, done: 4,
+    insight: 'Sales teams using AI research close 22% more deals. Starting here.',
+  },
+]
+
+function HeroVisual() {
+  const [idx, setIdx] = useState(0)
+  const [typed, setTyped] = useState('')
+  const role = HERO_ROLES[idx]
+
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % HERO_ROLES.length), 4000)
+    return () => clearInterval(t)
+  }, [])
+
+  useEffect(() => {
+    setTyped('')
+    let i = 0
+    const full = role.lesson
+    const t = setInterval(() => {
+      i++
+      setTyped(full.slice(0, i))
+      if (i >= full.length) clearInterval(t)
+    }, 36)
+    return () => clearInterval(t)
+  }, [idx])
+
   return (
-    <div className="relative">
-      <div className="absolute -inset-8 rounded-3xl"
-        style={{ background: 'radial-gradient(ellipse at 60% 50%, rgba(124,58,237,0.07) 0%, transparent 70%)' }} />
-      <div className="relative rounded-2xl overflow-hidden"
-        style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 20px 60px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04)' }}>
-        <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid #F1F5F9' }}>
-          <div>
-            <p className="text-xs font-medium mb-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>Your Learning Path</p>
-            <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Marketing Track</p>
+    <div className="relative select-none">
+      {/* Ambient glow */}
+      <div
+        className="absolute -inset-10 rounded-3xl pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse at 60% 50%, ${role.accent}22 0%, transparent 65%)`,
+          transition: 'background 0.8s ease',
+        }}
+      />
+
+      {/* Card */}
+      <div
+        className="relative rounded-2xl overflow-hidden"
+        style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 24px 64px rgba(0,0,0,0.09), 0 4px 16px rgba(0,0,0,0.04)' }}
+      >
+        {/* Colour-shifting accent strip */}
+        <motion.div
+          className="h-1 w-full"
+          animate={{ background: role.accent }}
+          transition={{ duration: 0.8 }}
+        />
+
+        {/* Header: live indicator + role chip */}
+        <div className="px-5 pt-5 pb-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50" style={{ background: '#10B981' }} />
+                <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: '#10B981' }} />
+              </span>
+              <span className="text-xs font-medium" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>AI-Personalised</span>
+            </div>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={`role-${idx}`}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.25 }}
+                className="text-xs font-semibold px-2.5 py-1 rounded-md"
+                style={{ background: role.bg, color: role.accent, fontFamily: 'var(--font-sans)' }}
+              >
+                {role.role}
+              </motion.span>
+            </AnimatePresence>
           </div>
-          <span className="px-2.5 py-1 rounded-md text-xs font-semibold"
-            style={{ background: '#EDE9FE', color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
-            AI-Personalised
-          </span>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={`track-${idx}`}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.25 }}
+              className="text-sm font-bold"
+              style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+            >
+              {role.track}
+            </motion.p>
+          </AnimatePresence>
         </div>
-        <div className="grid grid-cols-3 px-5 py-4 gap-2" style={{ borderBottom: '1px solid #F1F5F9' }}>
-          {[{ label: 'Completed', value: '1/5', color: '#10B981' }, { label: 'In Progress', value: '2', color: '#7C3AED' }, { label: 'Streak', value: '7 days', color: '#F59E0B' }].map(s => (
-            <div key={s.label} className="text-center">
-              <p className="text-base font-black" style={{ color: s.color, fontFamily: 'var(--font-sans)' }}>{s.value}</p>
+
+        {/* Stats row */}
+        <div className="grid grid-cols-3 py-3" style={{ borderBottom: '1px solid #F1F5F9' }}>
+          {[
+            { label: 'Lessons done', value: String(role.done), color: role.accent },
+            { label: 'XP earned', value: role.xp.toLocaleString(), color: role.accent },
+            { label: 'Day streak', value: '7 🔥', color: '#F59E0B' },
+          ].map((s, i) => (
+            <div key={i} className="text-center px-3" style={{ borderRight: i < 2 ? '1px solid #F1F5F9' : 'none' }}>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={`${s.value}-${idx}`}
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.06 }}
+                  className="text-sm font-black"
+                  style={{ color: s.color, fontFamily: 'var(--font-sans)' }}
+                >
+                  {s.value}
+                </motion.p>
+              </AnimatePresence>
               <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{s.label}</p>
             </div>
           ))}
         </div>
+
+        {/* Current lesson + progress */}
         <div className="px-5 py-4 space-y-3">
-          {modules.map((mod, i) => (
-            <motion.div key={mod.title} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 + i * 0.1 }} className="flex items-center gap-3">
-              <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: mod.progress === 100 ? mod.color : mod.progress > 0 ? 'transparent' : '#F8FAFC', border: mod.progress > 0 && mod.progress < 100 ? `2px solid ${mod.color}` : 'none' }}>
-                {mod.progress === 100 && <Check size={10} color="white" />}
-                {mod.progress > 0 && mod.progress < 100 && <div className="w-1.5 h-1.5 rounded-full" style={{ background: mod.color }} />}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-xs font-medium" style={{ color: mod.progress === 0 ? '#CBD5E1' : '#0F172A', fontFamily: 'var(--font-sans)' }}>{mod.title}</p>
-                  <p className="text-xs font-bold" style={{ color: mod.color, fontFamily: 'var(--font-sans)' }}>{mod.progress}%</p>
-                </div>
-                <div className="h-1 rounded-full" style={{ background: '#F1F5F9' }}>
-                  <motion.div initial={{ width: 0 }} animate={{ width: `${mod.progress}%` }}
-                    transition={{ delay: 0.7 + i * 0.1, duration: 0.8, ease: 'easeOut' }}
-                    className="h-full rounded-full" style={{ background: mod.color }} />
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        <div className="mx-5 mb-5 p-3 rounded-xl" style={{ background: '#F5F3FF', border: '1px solid #DDD6FE' }}>
-          <p className="text-xs font-semibold mb-0.5" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>Next up</p>
-          <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Writing AI prompts for campaign briefs</p>
-          <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>15 min · Prompt Engineering module</p>
+          <div className="p-3.5 rounded-xl" style={{ background: '#F8FAFC', border: '1px solid #F1F5F9' }}>
+            <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+              Now learning
+            </p>
+            <p className="text-sm font-semibold leading-snug mb-3 min-h-[38px]" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+              {typed}
+              <motion.span
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.7, repeat: Infinity }}
+                style={{ color: role.accent }}
+              >|</motion.span>
+            </p>
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{role.module}</span>
+              <motion.span
+                animate={{ color: role.accent }}
+                transition={{ duration: 0.7 }}
+                className="text-xs font-bold"
+                style={{ fontFamily: 'var(--font-sans)' }}
+              >{role.progress}%</motion.span>
+            </div>
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#E2E8F0' }}>
+              <motion.div
+                className="h-full rounded-full"
+                animate={{ width: `${role.progress}%`, background: role.accent }}
+                transition={{ duration: 0.9, ease: 'easeOut' }}
+              />
+            </div>
+          </div>
+
+          {/* AI insight */}
+          <div className="p-3.5 rounded-xl" style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}>
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Sparkles size={10} style={{ color: '#7C3AED' }} />
+              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                AI insight
+              </p>
+            </div>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={`insight-${idx}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-xs leading-relaxed"
+                style={{ color: '#5B21B6', fontFamily: 'var(--font-sans)' }}
+              >
+                {role.insight}
+              </motion.p>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
-      <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -top-4 -right-4 px-3 py-2 rounded-xl text-xs font-semibold"
-        style={{ background: '#ECFDF5', border: '1px solid #A7F3D0', color: '#059669', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}>
-        <CheckCircle2 size={11} className="inline mr-1" />AI Foundation Complete
+
+      {/* Floating badge — top right */}
+      <motion.div
+        animate={{ y: [0, -7, 0] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute -top-4 -right-5 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap"
+        style={{ background: '#ECFDF5', border: '1px solid #A7F3D0', color: '#059669', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+      >
+        <CheckCircle2 size={11} /> Module complete
       </motion.div>
-      <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
-        className="absolute -bottom-4 -left-4 px-3 py-2 rounded-xl text-xs font-semibold"
-        style={{ background: '#FFFBEB', border: '1px solid #FDE68A', color: '#D97706', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}>
-        <Zap size={11} className="inline mr-1" />7-day streak!
+
+      {/* Floating badge — bottom left */}
+      <motion.div
+        animate={{ y: [0, 7, 0] }}
+        transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        className="absolute -bottom-4 -left-5 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap"
+        style={{ background: '#EDE9FE', border: '1px solid #DDD6FE', color: '#7C3AED', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+      >
+        <Zap size={11} /> +150 XP earned
       </motion.div>
+
+      {/* Role indicator dots */}
+      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
+        {HERO_ROLES.map((r, i) => (
+          <motion.div
+            key={i}
+            animate={{ width: i === idx ? 16 : 6, background: i === idx ? r.accent : '#CBD5E1' }}
+            transition={{ duration: 0.3 }}
+            className="h-1.5 rounded-full"
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -449,8 +608,8 @@ function Hero() {
 
         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: easing }}
-          className="hidden md:flex items-center justify-center py-8 px-4">
-          <DashboardMockup />
+          className="hidden md:flex items-center justify-center py-8 px-6 pb-16">
+          <HeroVisual />
         </motion.div>
       </div>
     </section>
