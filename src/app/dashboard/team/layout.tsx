@@ -20,21 +20,23 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
   const pathname = usePathname()
   const [team, setTeam] = useState<Team | null>(null)
   const [checking, setChecking] = useState(true)
+  const isCreatePage = pathname === '/dashboard/team/create'
 
   useEffect(() => {
+    // Create page handles its own auth — skip team checks
+    if (isCreatePage) { setChecking(false); return }
     if (loading) return
     if (!user) { router.replace('/'); return }
 
     getAdminTeam(user.id).then(t => {
       if (!t) {
-        // not an admin — redirect to create team or dashboard
         router.replace('/dashboard/team/create')
       } else {
         setTeam(t)
       }
       setChecking(false)
     })
-  }, [user, loading, router])
+  }, [user, loading, router, isCreatePage])
 
   if (loading || checking) {
     return (
@@ -44,6 +46,9 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
       </div>
     )
   }
+
+  // Create page has its own standalone layout — skip the sidebar
+  if (isCreatePage) return <>{children}</>
 
   if (!user || !team) return null
 
