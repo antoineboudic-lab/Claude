@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
-  Star, LogOut, Sparkles, Play, Users,
+  Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
@@ -509,6 +509,9 @@ export default function DashboardPage() {
   const [assessment, setAssessment] = useState<AssessmentResult | null>(null)
   const [mounted, setMounted] = useState(false)
   const [teamHref, setTeamHref] = useState<string | null>(null)
+  const [referralCode, setReferralCode] = useState<string | null>(null)
+  const [referralStats, setReferralStats] = useState<{ clicks: number; signups: number; conversions: number; reward_xp: number } | null>(null)
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -519,6 +522,19 @@ export default function DashboardPage() {
       else if (member) setTeamHref('/dashboard/team')
       else setTeamHref('/dashboard/team/create')
     })
+  }, [user])
+
+  useEffect(() => {
+    if (!user) return
+    fetch(`/api/referrals?userId=${user.id}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.code) {
+          setReferralCode(data.code)
+          setReferralStats({ clicks: data.clicks, signups: data.signups, conversions: data.conversions, reward_xp: data.reward_xp })
+        }
+      })
+      .catch(() => {})
   }, [user])
 
   useEffect(() => {
@@ -720,6 +736,70 @@ export default function DashboardPage() {
                 ))}
               </div>
             </motion.div>
+
+            {/* Referral card */}
+            {referralCode && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.55, ease: easing }}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+              >
+                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #7C3AED, #EC4899)' }} />
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Share2 size={14} style={{ color: '#7C3AED' }} />
+                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                      Refer &amp; earn XP
+                    </p>
+                  </div>
+                  <p className="text-xs mb-4 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                    Share your link. Earn <strong style={{ color: '#7C3AED' }}>+100 XP</strong> for every colleague who completes their first lesson.
+                  </p>
+
+                  {/* Link copy */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="flex-1 px-3 py-2 rounded-lg text-xs truncate"
+                      style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'monospace' }}>
+                      ailiteracy.com/join?ref={referralCode}
+                    </div>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${window.location.origin}/join?ref=${referralCode}`)
+                        setCopied(true)
+                        setTimeout(() => setCopied(false), 2000)
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
+                      style={{
+                        background: copied ? '#ECFDF5' : '#EDE9FE',
+                        color: copied ? '#059669' : '#7C3AED',
+                        border: `1px solid ${copied ? '#A7F3D0' : '#DDD6FE'}`,
+                        fontFamily: 'var(--font-sans)',
+                      }}
+                    >
+                      {copied ? <><CheckIcon size={11} /> Copied!</> : <><Copy size={11} /> Copy</>}
+                    </button>
+                  </div>
+
+                  {/* Stats */}
+                  {referralStats && (
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { label: 'Clicks', value: referralStats.clicks },
+                        { label: 'Sign-ups', value: referralStats.signups },
+                        { label: 'XP earned', value: referralStats.reward_xp },
+                      ].map(s => (
+                        <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: '#F8FAFC' }}>
+                          <p className="text-sm font-black" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>{s.value}</p>
+                          <p className="text-[10px]" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{s.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>

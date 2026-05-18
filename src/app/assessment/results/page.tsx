@@ -8,7 +8,7 @@ import {
   Settings, Briefcase, Zap, Check, ArrowRight,
   Clock, BookOpen, Star, ChevronRight, RefreshCw,
   Brain, Users, Target, ChevronDown, Award,
-  Scale, Package, Headphones, BarChart,
+  Scale, Package, Headphones, BarChart, Loader2, Lock,
 } from 'lucide-react'
 import type { AssessmentResult, AssessmentAnswers, PriorityLesson } from '@/lib/assessment/types'
 import type { TrackId } from '@/lib/curriculum/types'
@@ -182,7 +182,39 @@ export default function AssessmentResultsPage() {
   const [showAll, setShowAll] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const [skillOpen, setSkillOpen] = useState(false)
+  const [emailUnlocked, setEmailUnlocked] = useState(false)
+  const [captureEmail, setCaptureEmail] = useState('')
+  const [captureLoading, setCaptureLoading] = useState(false)
+  const [captureError, setCaptureError] = useState('')
   const { user, openSignUp } = useAuth()
+
+  const pathUnlocked = !!user || emailUnlocked
+
+  async function handleEmailCapture(e: React.FormEvent) {
+    e.preventDefault()
+    const email = captureEmail.trim().toLowerCase()
+    if (!email) return
+    setCaptureLoading(true)
+    setCaptureError('')
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          source: 'assessment',
+          role: result?.primaryTrackId ?? null,
+          metadata: { answers: result?.answers ?? {} },
+        }),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setEmailUnlocked(true)
+    } catch {
+      setCaptureError('Something went wrong — try again.')
+    } finally {
+      setCaptureLoading(false)
+    }
+  }
 
   useEffect(() => {
     async function load() {
@@ -322,32 +354,106 @@ export default function AssessmentResultsPage() {
             </div>
           </motion.div>
 
-          {/* Save path banner — unauthenticated */}
-          {!user && (
-            <motion.div variants={fadeUp}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-5 py-4 rounded-2xl"
-              style={{ background: '#EDE9FE', border: '1px solid #DDD6FE' }}>
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{ background: '#DDD6FE' }}>
-                  <Zap size={15} color="#7C3AED" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                    Save your path — it&apos;s free
+          {/* Email gate — unauthenticated and not yet captured */}
+          <AnimatePresence mode="wait">
+            {!pathUnlocked ? (
+              <motion.div
+                key="gate"
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, y: -8 }}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: '#FFFFFF', border: '2px solid #7C3AED', boxShadow: '0 0 0 4px rgba(124,58,237,0.08)' }}
+              >
+                <div className="h-1 w-full" style={{ background: '#7C3AED' }} />
+                <div className="px-6 py-7">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+                      style={{ background: '#EDE9FE' }}>
+                      <Lock size={14} style={{ color: '#7C3AED' }} />
+                    </div>
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                      Unlock your full learning path
+                    </p>
+                  </div>
+                  <h3 className="text-xl font-black mb-2" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    Your personalised {result ? TRACK_META[result.primaryTrackId]?.label : 'AI'} curriculum is ready
+                  </h3>
+                  <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                    Enter your email to see your complete lesson plan, priority modules, and AI-generated recommendations.
+                    Free forever — no credit card needed.
                   </p>
-                  <p className="text-xs mt-0.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                    Track progress and pick up where you left off.
+                  <form onSubmit={handleEmailCapture} className="space-y-3">
+                    <div className="flex gap-2">
+                      <input
+                        type="email"
+                        placeholder="your@email.com"
+                        value={captureEmail}
+                        onChange={e => setCaptureEmail(e.target.value)}
+                        required
+                        className="flex-1 px-4 py-3.5 rounded-xl text-sm outline-none"
+                        style={{ background: '#F8FAFC', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+                        onFocus={e => { e.currentTarget.style.borderColor = '#7C3AED'; e.currentTarget.style.background = '#FFFFFF' }}
+                        onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC' }}
+                      />
+                      <button
+                        type="submit"
+                        disabled={captureLoading}
+                        className="flex items-center gap-2 px-5 py-3.5 rounded-xl text-sm font-semibold text-white whitespace-nowrap transition-all hover:opacity-90 disabled:opacity-60"
+                        style={{ background: '#7C3AED', boxShadow: '0 4px 16px rgba(124,58,237,0.25)', fontFamily: 'var(--font-sans)' }}
+                      >
+                        {captureLoading ? <Loader2 size={14} className="animate-spin" /> : <><ArrowRight size={14} /> Unlock path</>}
+                      </button>
+                    </div>
+                    {captureError && (
+                      <p className="text-xs" style={{ color: '#EF4444', fontFamily: 'var(--font-sans)' }}>{captureError}</p>
+                    )}
+                  </form>
+                  <div className="flex items-center gap-4 mt-4">
+                    {['Free forever', 'No credit card', '3,200+ professionals'].map(t => (
+                      <div key={t} className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                        <Check size={10} color="#10B981" /> {t}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs mt-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    Already have an account?{' '}
+                    <button onClick={openSignUp} className="underline hover:text-slate-600 transition-colors" style={{ color: '#64748B' }}>
+                      Sign in
+                    </button>
                   </p>
                 </div>
-              </div>
-              <button onClick={openSignUp}
-                className="flex-shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-                style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
-                Sign up free
-              </button>
-            </motion.div>
-          )}
+              </motion.div>
+            ) : !user && emailUnlocked ? (
+              <motion.div
+                key="save-banner"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-5 py-4 rounded-2xl"
+                style={{ background: '#EDE9FE', border: '1px solid #DDD6FE' }}
+              >
+                <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#DDD6FE' }}>
+                    <Zap size={15} color="#7C3AED" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                      Save your path to track progress
+                    </p>
+                    <p className="text-xs mt-0.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                      Create your free account and pick up where you left off.
+                    </p>
+                  </div>
+                </div>
+                <button onClick={openSignUp}
+                  className="flex-shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
+                  style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  Create free account
+                </button>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
 
           {/* ─── Track card + Primary CTA ─── */}
           <motion.div variants={fadeUp}
