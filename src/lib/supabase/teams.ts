@@ -159,7 +159,14 @@ export async function getInviteByToken(token: string): Promise<TeamInvite | null
     .select('*, teams(name)')
     .eq('token', token)
     .single()
-  return (data as TeamInvite) ?? null
+  if (data) return data as TeamInvite
+  // Fallback: fetch invite without join (handles anon access before policy is set)
+  const { data: inv } = await supabase
+    .from('team_invites')
+    .select('*')
+    .eq('token', token)
+    .single()
+  return (inv as TeamInvite) ?? null
 }
 
 export async function acceptInvite(token: string, userId: string, displayName: string, email: string): Promise<boolean> {
