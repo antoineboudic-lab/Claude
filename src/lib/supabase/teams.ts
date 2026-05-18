@@ -50,6 +50,10 @@ export async function createTeam(userId: string, name: string, plan: Team['plan'
   const supabase = createClient()
   const seatLimits = { starter: 15, growth: 50, enterprise: 999 }
 
+  const { data: { user } } = await supabase.auth.getUser()
+  const email = user?.email ?? ''
+  const displayName = user?.user_metadata?.full_name ?? email.split('@')[0] ?? 'Admin'
+
   const { data: team, error: teamErr } = await supabase
     .from('teams')
     .insert({ name, plan, created_by: userId, seat_limit: seatLimits[plan] })
@@ -58,10 +62,11 @@ export async function createTeam(userId: string, name: string, plan: Team['plan'
 
   if (teamErr || !team) return null
 
-  // Add creator as admin member
   await supabase.from('team_members').insert({
     team_id: team.id,
     user_id: userId,
+    email,
+    display_name: displayName,
     role: 'admin',
     status: 'active',
     joined_at: new Date().toISOString(),
@@ -79,7 +84,28 @@ export async function getAdminTeam(userId: string): Promise<Team | null> {
     .order('created_at', { ascending: false })
     .limit(1)
     .single()
-  return (data as Team) ?? null
+  if (!data) return null
+
+  // Repair: ensure the admin has a team_members row (may be missing if created before this fix)
+  const { count } = await supabase
+    .from('team_members')
+    .select('id', { count: 'exact', head: true })
+    .eq('team_id', data.id)
+    .eq('user_id', userId)
+  if (count === 0) {
+    const { data: { user } } = await supabase.auth.getUser()
+    await supabase.from('team_members').insert({
+      team_id: data.id,
+      user_id: userId,
+      email: user?.email ?? '',
+      display_name: user?.user_metadata?.full_name ?? user?.email?.split('@')[0] ?? 'Admin',
+      role: 'admin',
+      status: 'active',
+      joined_at: new Date().toISOString(),
+    })
+  }
+
+  return data as Team
 }
 
 export async function getMemberTeam(userId: string): Promise<{ team: Team; member: TeamMember } | null> {
