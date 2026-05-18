@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, forwardRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Mail, Lock, User, Eye, EyeOff, Zap, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
 
@@ -23,7 +24,6 @@ export function AuthModal() {
   const isOpen = modalView !== 'closed'
   const isSignUp = modalView === 'signup'
 
-  // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
       setStep('form')
@@ -33,7 +33,6 @@ export function AuthModal() {
     }
   }, [isOpen, modalView])
 
-  // Escape key
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') closeModal() }
     window.addEventListener('keydown', handler)
@@ -44,12 +43,10 @@ export function AuthModal() {
     e.preventDefault()
     setError('')
     setLoading(true)
-
     try {
       if (isSignUp) {
         const { error } = await supabase.current.auth.signUp({
-          email,
-          password,
+          email, password,
           options: { data: { full_name: name } },
         })
         if (error) throw error
@@ -61,7 +58,6 @@ export function AuthModal() {
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Something went wrong'
-      // Make Supabase errors friendlier
       if (msg.includes('Invalid login credentials')) setError('Incorrect email or password.')
       else if (msg.includes('User already registered')) setError('An account with this email already exists.')
       else if (msg.includes('Password should be at least')) setError('Password must be at least 6 characters.')
@@ -84,63 +80,65 @@ export function AuthModal() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)' }}
+            style={{ background: 'rgba(15,23,42,0.5)', backdropFilter: 'blur(6px)' }}
             onClick={closeModal}
           >
             {/* Modal card */}
             <motion.div
               key="modal"
-              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 16 }}
-              transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="relative w-full max-w-md rounded-3xl overflow-hidden"
-              style={{ background: '#0D1117', border: '1px solid rgba(255,255,255,0.1)' }}
+              exit={{ opacity: 0, scale: 0.96, y: 12 }}
+              transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="relative w-full max-w-md rounded-2xl overflow-hidden"
+              style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 24px 64px rgba(0,0,0,0.12)' }}
               onClick={e => e.stopPropagation()}
             >
-              {/* Gradient top bar */}
-              <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #8B5CF6, #22D3EE)' }} />
+              {/* Purple top accent */}
+              <div className="h-1 w-full" style={{ background: '#7C3AED' }} />
 
-              {/* Close button */}
+              {/* Close */}
               <button
                 onClick={closeModal}
-                className="absolute top-5 right-5 w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-white/10"
-                style={{ color: '#64748B' }}
+                className="absolute top-5 right-5 w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100"
+                style={{ color: '#94A3B8' }}
               >
-                <X size={16} />
+                <X size={15} />
               </button>
 
-              <div className="px-8 pt-8 pb-10">
+              <div className="px-8 pt-7 pb-9">
                 {/* Logo */}
-                <div className="flex items-center gap-2 mb-8">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #8B5CF6, #22D3EE)' }}>
-                    <Zap size={15} className="text-white" />
+                <div className="flex items-center gap-2 mb-7">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+                    <Zap size={13} className="text-white" />
                   </div>
-                  <span className="font-bold text-white" style={{ fontFamily: 'var(--font-sans)' }}>AI Literacy</span>
+                  <span className="font-black text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>AI Literacy</span>
                 </div>
 
-                {/* Verify email state */}
                 <AnimatePresence mode="wait">
                   {step === 'verify' ? (
                     <motion.div
                       key="verify"
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       className="text-center py-4"
                     >
-                      <CheckCircle2 size={48} color="#22D3EE" className="mx-auto mb-4" />
-                      <h2 className="text-2xl font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
+                        style={{ background: '#F0FDF4' }}>
+                        <CheckCircle2 size={28} style={{ color: '#10B981' }} />
+                      </div>
+                      <h2 className="text-2xl font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
                         Check your email
                       </h2>
-                      <p className="text-sm mb-6" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        We sent a confirmation link to <strong style={{ color: '#94A3B8' }}>{email}</strong>.
+                      <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        We sent a confirmation link to{' '}
+                        <strong style={{ color: '#0F172A' }}>{email}</strong>.
                         Click it to activate your account.
                       </p>
                       <button
                         onClick={closeModal}
-                        className="w-full py-3 rounded-xl text-sm font-semibold text-white"
-                        style={{ background: 'linear-gradient(135deg, #8B5CF6, #22D3EE)', fontFamily: 'var(--font-sans)' }}
+                        className="w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+                        style={{ background: '#7C3AED', boxShadow: '0 4px 16px rgba(124,58,237,0.25)', fontFamily: 'var(--font-sans)' }}
                       >
                         Got it
                       </button>
@@ -148,7 +146,7 @@ export function AuthModal() {
                   ) : (
                     <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                       {/* Tabs */}
-                      <div className="flex rounded-xl p-1 mb-8" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                      <div className="flex rounded-xl p-1 mb-7" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                         {(['signin', 'signup'] as const).map(tab => (
                           <button
                             key={tab}
@@ -156,9 +154,9 @@ export function AuthModal() {
                             className="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all"
                             style={{
                               fontFamily: 'var(--font-sans)',
-                              background: modalView === tab ? 'rgba(139,92,246,0.15)' : 'transparent',
-                              color: modalView === tab ? '#A78BFA' : '#475569',
-                              border: modalView === tab ? '1px solid rgba(139,92,246,0.3)' : '1px solid transparent',
+                              background: modalView === tab ? '#FFFFFF' : 'transparent',
+                              color: modalView === tab ? '#7C3AED' : '#94A3B8',
+                              boxShadow: modalView === tab ? '0 1px 4px rgba(0,0,0,0.06)' : 'none',
                             }}
                           >
                             {tab === 'signin' ? 'Sign in' : 'Create account'}
@@ -166,66 +164,47 @@ export function AuthModal() {
                         ))}
                       </div>
 
-                      <h2 className="text-2xl font-black mb-1" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>
+                      <h2 className="text-2xl font-black mb-1" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
                         {isSignUp ? 'Start your AI journey' : 'Welcome back'}
                       </h2>
-                      <p className="text-sm mb-8" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        {isSignUp ? 'Create your account to track progress and save your path.' : 'Sign in to continue where you left off.'}
+                      <p className="text-sm mb-7" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        {isSignUp
+                          ? 'Create your account to track progress and save your path.'
+                          : 'Sign in to continue where you left off.'}
                       </p>
 
-                      <form onSubmit={handleSubmit} className="space-y-4">
-                        {/* Name (sign up only) */}
+                      <form onSubmit={handleSubmit} className="space-y-3">
                         <AnimatePresence>
                           {isSignUp && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}
                               exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.2 }}
+                              transition={{ duration: 0.18 }}
                             >
-                              <Field
-                                icon={User}
-                                type="text"
-                                placeholder="Your name"
-                                value={name}
-                                onChange={setName}
-                                required={isSignUp}
-                              />
+                              <Field icon={User} type="text" placeholder="Your full name"
+                                value={name} onChange={setName} required={isSignUp} />
                             </motion.div>
                           )}
                         </AnimatePresence>
 
-                        <Field
-                          ref={emailRef}
-                          icon={Mail}
-                          type="email"
-                          placeholder="Email address"
-                          value={email}
-                          onChange={setEmail}
-                          required
-                        />
+                        <Field ref={emailRef} icon={Mail} type="email" placeholder="Email address"
+                          value={email} onChange={setEmail} required />
 
                         <div className="relative">
-                          <Field
-                            icon={Lock}
-                            type={showPw ? 'text' : 'password'}
-                            placeholder={isSignUp ? 'Create a password' : 'Password'}
-                            value={password}
-                            onChange={setPassword}
-                            required
-                            minLength={6}
-                          />
+                          <Field icon={Lock} type={showPw ? 'text' : 'password'}
+                            placeholder={isSignUp ? 'Create a password (min. 6 chars)' : 'Password'}
+                            value={password} onChange={setPassword} required minLength={6} />
                           <button
                             type="button"
                             onClick={() => setShowPw(v => !v)}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors hover:text-slate-300"
-                            style={{ color: '#475569' }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors hover:text-slate-500"
+                            style={{ color: '#CBD5E1' }}
                           >
-                            {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
+                            {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
                           </button>
                         </div>
 
-                        {/* Error */}
                         <AnimatePresence>
                           {error && (
                             <motion.div
@@ -233,7 +212,7 @@ export function AuthModal() {
                               animate={{ opacity: 1, y: 0 }}
                               exit={{ opacity: 0 }}
                               className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
-                              style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', color: '#FCA5A5', fontFamily: 'var(--font-sans)' }}
+                              style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}
                             >
                               <AlertCircle size={14} className="flex-shrink-0" />
                               {error}
@@ -241,37 +220,32 @@ export function AuthModal() {
                           )}
                         </AnimatePresence>
 
-                        {/* Submit */}
-                        <button
-                          type="submit"
-                          disabled={loading}
-                          className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
-                          style={{
-                            background: 'linear-gradient(135deg, #8B5CF6, #22D3EE)',
-                            boxShadow: '0 0 24px rgba(139,92,246,0.3)',
-                            fontFamily: 'var(--font-sans)',
-                          }}
-                        >
-                          {loading
-                            ? <><Loader2 size={15} className="animate-spin" /> {isSignUp ? 'Creating account…' : 'Signing in…'}</>
-                            : isSignUp ? 'Create account' : 'Sign in'
-                          }
-                        </button>
+                        <div className="pt-1">
+                          <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+                            style={{ background: '#7C3AED', boxShadow: '0 4px 16px rgba(124,58,237,0.25)', fontFamily: 'var(--font-sans)' }}
+                          >
+                            {loading
+                              ? <><Loader2 size={14} className="animate-spin" /> {isSignUp ? 'Creating account…' : 'Signing in…'}</>
+                              : isSignUp ? 'Create account' : 'Sign in'
+                            }
+                          </button>
+                        </div>
 
-                        {/* Sign up legal */}
                         {isSignUp && (
-                          <p className="text-center text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                          <p className="text-center text-xs pt-1" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                             By creating an account you agree to our{' '}
-                            <span className="underline cursor-pointer hover:text-slate-400" style={{ color: '#475569' }}>Terms</span>
+                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>Terms</span>
                             {' '}and{' '}
-                            <span className="underline cursor-pointer hover:text-slate-400" style={{ color: '#475569' }}>Privacy Policy</span>.
+                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>Privacy Policy</span>.
                           </p>
                         )}
 
-                        {/* Forgot password (sign in only) */}
                         {!isSignUp && (
-                          <p className="text-center text-xs" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                            <button type="button" className="underline hover:text-slate-300 transition-colors">
+                          <p className="text-center text-xs pt-1" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                            <button type="button" className="underline hover:text-slate-500 transition-colors" style={{ color: '#64748B' }}>
                               Forgot your password?
                             </button>
                           </p>
@@ -289,10 +263,7 @@ export function AuthModal() {
   )
 }
 
-// ─── Field component ──────────────────────────────────────────────────────────
-
-import { forwardRef } from 'react'
-import type { LucideIcon } from 'lucide-react'
+// ─── Field ────────────────────────────────────────────────────────────────────
 
 const Field = forwardRef<HTMLInputElement, {
   icon: LucideIcon
@@ -304,7 +275,7 @@ const Field = forwardRef<HTMLInputElement, {
   minLength?: number
 }>(({ icon: Icon, type, placeholder, value, onChange, required, minLength }, ref) => (
   <div className="relative">
-    <Icon size={15} className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#475569' }} />
+    <Icon size={14} className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#CBD5E1' }} />
     <input
       ref={ref}
       type={type}
@@ -315,13 +286,13 @@ const Field = forwardRef<HTMLInputElement, {
       minLength={minLength}
       className="w-full pl-11 pr-4 py-3.5 rounded-xl text-sm outline-none transition-all"
       style={{
-        background: 'rgba(255,255,255,0.04)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        color: '#F1F5F9',
+        background: '#F8FAFC',
+        border: '1.5px solid #E2E8F0',
+        color: '#0F172A',
         fontFamily: 'var(--font-sans)',
       }}
-      onFocus={e => { e.currentTarget.style.borderColor = 'rgba(139,92,246,0.5)' }}
-      onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
+      onFocus={e => { e.currentTarget.style.borderColor = '#7C3AED'; e.currentTarget.style.background = '#FFFFFF' }}
+      onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC' }}
     />
   </div>
 ))
