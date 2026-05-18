@@ -140,13 +140,25 @@ function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          {['Program', 'Tracks', 'Pricing', 'About'].map(item => (
-            <a key={item}
-              href={item === 'Tracks' ? '/tracks' : `#${item.toLowerCase()}`}
-              className="text-sm font-medium transition-colors hover:text-slate-900"
-              style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              {item}
-            </a>
+          {[
+            { label: 'Program', href: '#program' },
+            { label: 'Tracks', href: '/tracks' },
+            { label: 'For teams', href: '/teams' },
+            { label: 'Pricing', href: '#pricing' },
+          ].map(item => (
+            item.href.startsWith('/') ? (
+              <Link key={item.label} href={item.href}
+                className="text-sm font-medium transition-colors hover:text-slate-900"
+                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                {item.label}
+              </Link>
+            ) : (
+              <a key={item.label} href={item.href}
+                className="text-sm font-medium transition-colors hover:text-slate-900"
+                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                {item.label}
+              </a>
+            )
           ))}
         </div>
 

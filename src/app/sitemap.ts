@@ -75,6 +75,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...trackPages,
     ...blogPosts,
     {
+      url: `${SITE_URL}/teams`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/contact`,
       lastModified: now,
       changeFrequency: "yearly",

@@ -7,7 +7,7 @@ import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen,
   Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap, LogOut,
-  Scale, Package, Headphones, BarChart,
+  Scale, Package, Headphones, BarChart, ArrowRight, Users,
 } from 'lucide-react'
 import { getTrack } from '@/lib/curriculum'
 import { useGame } from '@/context/GameContext'
@@ -29,17 +29,68 @@ const stagger = (delay = 0.08) => ({
 const trackMeta: Record<string, {
   title: string; tagline: string; color: string;
   icon: React.ElementType; description: string;
+  whoFor: string[]; beforeAfter: { before: string; after: string }[];
 }> = {
-  marketing: { title: 'Marketing', tagline: 'Create, automate, and optimise campaigns with AI', color: '#EC4899', icon: Megaphone, description: 'Master AI tools that give marketers an unfair advantage — from producing better copy in minutes to running smarter campaigns with less effort.' },
-  finance: { title: 'Finance', tagline: 'Model, forecast, and report with AI precision', color: '#F59E0B', icon: LineChart, description: 'Apply AI to the work that matters most in finance — faster analysis, sharper forecasts, and board-ready reports without the manual grind.' },
-  hr: { title: 'HR', tagline: 'Attract, retain, and develop talent smarter', color: '#10B981', icon: HeartHandshake, description: 'Use AI to find better candidates, personalise the employee experience, and make people decisions backed by real data.' },
-  sales: { title: 'Sales', tagline: 'Prospect, pitch, and close with AI as your edge', color: '#8B5CF6', icon: TrendingUp, description: 'Turn AI into your highest-performing team member — researching prospects, drafting proposals, and helping you win more deals.' },
-  operations: { title: 'Operations', tagline: 'Automate processes and optimise at every layer', color: '#22D3EE', icon: Settings, description: 'Eliminate operational waste, automate repetitive processes, and build systems that scale — without needing a developer.' },
-  leadership:  { title: 'Leadership',       tagline: 'Lead your organisation into the AI era with confidence',        color: '#F97316', icon: Briefcase,  description: 'Develop the strategic clarity to lead AI transformation — from setting a compelling vision to managing your team through change.' },
-  legal:       { title: 'Legal',            tagline: 'Review, research, and advise with AI confidence',                color: '#6366F1', icon: Scale,      description: 'Apply AI to the most time-intensive parts of legal work — from contract review and due diligence to research, drafting, and client communication.' },
-  product:     { title: 'Product',          tagline: 'Discover, prioritise, and ship better products with AI',         color: '#14B8A6', icon: Package,    description: 'Use AI to accelerate discovery, sharpen prioritisation, write better specs, and make faster, more confident product decisions.' },
-  customer:    { title: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI',                  color: '#F43F5E', icon: Headphones, description: 'Scale your customer coverage without sacrificing quality — using AI to monitor health, prevent churn, and personalise every interaction.' },
-  consulting:  { title: 'Consulting',       tagline: 'Research, analyse, and deliver with AI as your edge',            color: '#0EA5E9', icon: BarChart,   description: 'Cut research and production time dramatically — so you can spend more time on the judgment, relationships, and strategic thinking that clients actually pay for.' },
+  marketing: {
+    title: 'Marketing', tagline: 'Create, automate, and optimise campaigns with AI', color: '#EC4899', icon: Megaphone,
+    description: 'Master AI tools that give marketers an unfair advantage — from producing better copy in minutes to running smarter campaigns with less effort.',
+    whoFor: ['You manage campaigns, briefs, or content and want AI to free you up for strategy', 'You produce copy, assets, or reports and want professional output faster', "You're responsible for marketing ROI and want sharper analysis without more headcount"],
+    beforeAfter: [{ before: '3 hours writing a campaign brief from scratch', after: '20 min AI draft, 30 min refinement' }, { before: 'Weeks to build a full content calendar', after: 'First draft in under an hour' }, { before: 'Manual competitor analysis taking a full day', after: 'Structured analysis in 15 minutes' }],
+  },
+  finance: {
+    title: 'Finance', tagline: 'Model, forecast, and report with AI precision', color: '#F59E0B', icon: LineChart,
+    description: 'Apply AI to the work that matters most in finance — faster analysis, sharper forecasts, and board-ready reports without the manual grind.',
+    whoFor: ['You spend hours building financial models or preparing board-ready reports', 'You own forecasting, budgeting, or analysis work that is increasingly time-pressured', 'You want to produce more rigorous analysis with the same team and timeline'],
+    beforeAfter: [{ before: 'Half a day building a variance analysis', after: 'Draft model in 30 min, you refine assumptions' }, { before: 'Board pack prep taking 2–3 days', after: 'First draft in 4 hours' }, { before: 'Manual data aggregation before any analysis', after: 'Structured and ready in minutes' }],
+  },
+  hr: {
+    title: 'HR', tagline: 'Attract, retain, and develop talent smarter', color: '#10B981', icon: HeartHandshake,
+    description: 'Use AI to find better candidates, personalise the employee experience, and make people decisions backed by real data.',
+    whoFor: ['You lead talent acquisition, L&D, or HR operations and feel stretched across priorities', 'You manage employee experience programmes and want better data behind your decisions', "You're being asked to develop an AI strategy for your function and aren't sure where to start"],
+    beforeAfter: [{ before: 'Writing job descriptions manually for every role', after: 'Strong first draft in 5 minutes' }, { before: 'Reviewing 200 CVs before any shortlisting', after: 'AI-filtered shortlist, you do final review' }, { before: "Building L&D programmes from a blank slide", after: 'Structured framework with content in hours' }],
+  },
+  sales: {
+    title: 'Sales', tagline: 'Prospect, pitch, and close with AI as your edge', color: '#8B5CF6', icon: TrendingUp,
+    description: 'Turn AI into your highest-performing team member — researching prospects, drafting proposals, and helping you win more deals.',
+    whoFor: ['You carry a quota and want to spend more time on high-leverage activities', 'You run a sales team and want reps producing better proposals, faster', "You're losing deals on proposal quality or speed, not on product"],
+    beforeAfter: [{ before: 'Full day writing a complex proposal', after: 'High-quality first draft in 2–3 hours' }, { before: 'Manually researching each prospect before a call', after: 'Full account brief in 10 minutes' }, { before: 'Generic outreach that gets ignored', after: 'Personalised sequences that get replies' }],
+  },
+  operations: {
+    title: 'Operations', tagline: 'Automate processes and optimise at every layer', color: '#22D3EE', icon: Settings,
+    description: 'Eliminate operational waste, automate repetitive processes, and build systems that scale — without needing a developer.',
+    whoFor: ['You own processes that are repetitive, error-prone, or slow — and know they can be better', "You're responsible for supply chain, quality, or capacity decisions that depend on synthesising large datasets", 'You want to automate without needing to write code or hire developers'],
+    beforeAfter: [{ before: 'Manual data aggregation across 5 systems', after: 'Automated summary ready each morning' }, { before: 'SOPs written by hand and rarely updated', after: 'AI-drafted, version-controlled, searchable' }, { before: 'Hours of analysis before capacity decisions', after: 'AI-modelled scenarios in minutes' }],
+  },
+  leadership: {
+    title: 'Leadership', tagline: 'Lead your organisation into the AI era with confidence', color: '#F97316', icon: Briefcase,
+    description: 'Develop the strategic clarity to lead AI transformation — from setting a compelling vision to managing your team through change.',
+    whoFor: ['You lead a team, department, or business unit and need to set AI direction without being a technical expert', "You're getting board-level pressure to develop an AI strategy and want to lead from the front", "You're managing people who are anxious about AI and want to handle it with clarity and confidence"],
+    beforeAfter: [{ before: 'Vague AI strategy that produces no action', after: 'Concrete roadmap with prioritised initiatives' }, { before: 'Team anxiety about AI replacing jobs', after: 'Clear framing that builds confidence' }, { before: 'Technology decisions driven by vendors', after: 'Informed build/buy/partner decisions' }],
+  },
+  legal: {
+    title: 'Legal', tagline: 'Review, research, and advise with AI confidence', color: '#6366F1', icon: Scale,
+    description: 'Apply AI to the most time-intensive parts of legal work — from contract review and due diligence to research, drafting, and client communication.',
+    whoFor: ["You're in-house counsel or in a firm and spend significant time on contract review or legal research", 'You want to increase output without compromising the rigour your clients or colleagues depend on', "You're being asked about AI governance and want to understand the landscape before recommending policy"],
+    beforeAfter: [{ before: 'First-pass contract review taking 2–4 hours', after: 'AI issues summary in 20 minutes, you apply judgment' }, { before: 'Legal research taking a full day per matter', after: 'Structured first-pass in 1–2 hours' }, { before: 'Client memos written from scratch each time', after: 'Strong first draft in minutes' }],
+  },
+  product: {
+    title: 'Product', tagline: 'Discover, prioritise, and ship better products with AI', color: '#14B8A6', icon: Package,
+    description: 'Use AI to accelerate discovery, sharpen prioritisation, write better specs, and make faster, more confident product decisions.',
+    whoFor: ['You lead product discovery, strategy, or roadmap and want to compress the time from insight to decision', 'You write PRDs, synthesise user research, or manage a backlog growing faster than you can prioritise', 'You want to spend more time on judgment calls and less on the production work that precedes them'],
+    beforeAfter: [{ before: '2 weeks to synthesise a discovery sprint', after: 'Key patterns identified in hours' }, { before: 'PRD writing taking a full day', after: 'Strong first draft in 90 minutes' }, { before: 'Competitive analysis assembled manually', after: 'Structured comparison in 20 minutes' }],
+  },
+  customer: {
+    title: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI', color: '#F43F5E', icon: Headphones,
+    description: 'Scale your customer coverage without sacrificing quality — using AI to monitor health, prevent churn, and personalise every interaction.',
+    whoFor: ['You manage a portfolio of accounts and want better visibility into which ones need attention before it is too late', "You're responsible for retention metrics and want to act on early signals, not lagging indicators", 'You run a CS team and want your CSMs spending time on relationships, not manual data review'],
+    beforeAfter: [{ before: 'Churn caught too late to recover', after: 'At-risk accounts flagged weeks earlier' }, { before: 'Generic QBR decks for every account', after: 'Personalised prep in 20 minutes per account' }, { before: 'Health scoring done manually and inconsistently', after: 'Automated signals, you focus on action' }],
+  },
+  consulting: {
+    title: 'Consulting', tagline: 'Research, analyse, and deliver with AI as your edge', color: '#0EA5E9', icon: BarChart,
+    description: 'Cut research and production time dramatically — so you can spend more time on the judgment, relationships, and strategic thinking that clients actually pay for.',
+    whoFor: ['You work in strategy, management consulting, or professional services with high analytical demands', 'You spend significant time on desk research, client readouts, or slide production', 'You want to deliver more original analysis and spend less time on the production work that precedes it'],
+    beforeAfter: [{ before: '3 days of desk research before you can frame the problem', after: 'First-pass landscape in 4–8 hours' }, { before: 'Slide production consuming most of a sprint', after: 'Structured first draft in hours' }, { before: 'Benchmarking done manually across multiple sources', after: 'Aggregated and formatted in minutes' }],
+  },
 }
 
 const moduleOutlines: Record<string, { title: string; lessons: string[] }[]> = {
@@ -202,7 +253,7 @@ export default function TrackPage() {
               ))}
             </motion.div>
 
-            <motion.div variants={fadeUp}>
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
               <Link
                 href={`/tracks/${trackId}/lessons/${trackId}-m1-l1`}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
@@ -210,8 +261,49 @@ export default function TrackPage() {
               >
                 <PlayCircle size={16} /> Start Track
               </Link>
+              <Link
+                href="/teams"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:bg-slate-100"
+                style={{ background: '#F8FAFC', color: '#475569', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}
+              >
+                <Users size={15} /> Enroll a team
+              </Link>
             </motion.div>
           </motion.div>
+        </div>
+      </div>
+
+      {/* Who this is for + Before/After */}
+      <div className="max-w-5xl mx-auto px-6 pt-10 pb-2 grid md:grid-cols-2 gap-6">
+        {/* Who this is for */}
+        <div className="rounded-2xl p-6" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+          <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+            Who this is for
+          </p>
+          <ul className="space-y-3">
+            {meta.whoFor.map((item, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                <CheckCircle2 size={14} color={meta.color} className="mt-0.5 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Before / After */}
+        <div className="rounded-2xl p-6" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+          <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+            What changes
+          </p>
+          <div className="space-y-3">
+            {meta.beforeAfter.map(({ before, after }, i) => (
+              <div key={i} className="flex items-center gap-2 text-sm">
+                <span className="flex-1 text-right leading-snug" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{before}</span>
+                <ArrowRight size={12} style={{ color: meta.color, flexShrink: 0 }} />
+                <span className="flex-1 leading-snug font-medium" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>{after}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

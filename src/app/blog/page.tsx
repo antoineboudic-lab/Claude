@@ -177,7 +177,7 @@ export default function BlogPage() {
       <section className="pb-8" style={{ background: '#FFFFFF' }}>
         <div className="max-w-5xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <div className="rounded-2xl p-8 sm:p-10 cursor-pointer transition-all hover:shadow-md"
+            <Link href={`/blog/${featured.slug}`} className="block rounded-2xl p-8 sm:p-10 cursor-pointer transition-all hover:shadow-md"
               style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
               <div className="flex items-center gap-3 mb-5">
                 <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white"
@@ -209,7 +209,7 @@ export default function BlogPage() {
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -221,25 +221,27 @@ export default function BlogPage() {
             {rest.map((post, i) => (
               <motion.div key={post.slug}
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i + 0.4 }}
-                className="rounded-2xl p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col"
-                style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-                <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white self-start mb-4"
-                  style={{ background: post.categoryColor }}>{post.category}</span>
-                <h3 className="text-base font-black mb-3 flex-1" style={{ color: '#0F172A', lineHeight: 1.4 }}>{post.title}</h3>
-                <p className="text-sm leading-relaxed mb-5" style={{ color: '#64748B' }}>{post.excerpt}</p>
-                <div className="pt-4 flex items-center justify-between" style={{ borderTop: '1px solid #E2E8F0' }}>
-                  <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
-                      style={{ background: post.categoryColor }}>
-                      {post.author.split(' ').map(n => n[0]).join('')}
+                transition={{ delay: 0.1 * i + 0.4 }}>
+                <Link href={`/blog/${post.slug}`}
+                  className="block rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col h-full"
+                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                  <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white self-start mb-4"
+                    style={{ background: post.categoryColor }}>{post.category}</span>
+                  <h3 className="text-base font-black mb-3 flex-1" style={{ color: '#0F172A', lineHeight: 1.4 }}>{post.title}</h3>
+                  <p className="text-sm leading-relaxed mb-5" style={{ color: '#64748B' }}>{post.excerpt}</p>
+                  <div className="pt-4 flex items-center justify-between" style={{ borderTop: '1px solid #E2E8F0' }}>
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
+                        style={{ background: post.categoryColor }}>
+                        {post.author.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <p className="text-xs font-medium" style={{ color: '#475569' }}>{post.author.split(' ')[0]}</p>
                     </div>
-                    <p className="text-xs font-medium" style={{ color: '#475569' }}>{post.author.split(' ')[0]}</p>
+                    <span className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8' }}>
+                      <Clock size={10} /> {post.readTime}
+                    </span>
                   </div>
-                  <span className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8' }}>
-                    <Clock size={10} /> {post.readTime}
-                  </span>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>
