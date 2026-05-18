@@ -7,7 +7,7 @@ import {
   Sparkles, Target, TrendingUp, Briefcase, HeartHandshake,
   Megaphone, Settings, ArrowRight, Check, Star, Zap, Award,
   LineChart, GraduationCap, ClipboardList, CheckCircle2,
-  ChevronRight, Play, Route, LogOut, BookOpen, X, Users,
+  ChevronRight, ChevronDown, Play, Route, LogOut, BookOpen, X, Users,
   Brain, Layers, BarChart3, Menu, Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
@@ -449,20 +449,37 @@ function Hero() {
 
 function SocialProof() {
   const companies = ['McKinsey', 'Deloitte', 'KPMG', 'Goldman Sachs', "L'Oréal", 'Nestlé', 'Airbus', 'BNP Paribas', 'Accenture', 'BCG']
+  const stats = [
+    { n: '3,200+', label: 'Professionals trained' },
+    { n: '94%', label: 'Completion rate' },
+    { n: '4.9/5', label: 'Average rating' },
+    { n: '4.2 hrs', label: 'Saved per week on average' },
+  ]
   return (
-    <div className="py-10" style={{ background: '#F8FAFC', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
-      <p className="text-center text-xs font-semibold mb-6 tracking-widest uppercase" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
-        Trusted by professionals at
-      </p>
-      <div className="relative overflow-hidden">
-        <motion.div
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-          className="flex gap-16 flex-nowrap w-max">
-          {[...companies, ...companies].map((c, i) => (
-            <span key={i} className="text-sm font-semibold whitespace-nowrap" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{c}</span>
-          ))}
-        </motion.div>
+    <div style={{ background: '#F8FAFC', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
+      <div className="py-8">
+        <p className="text-center text-xs font-semibold mb-6 tracking-widest uppercase" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+          Trusted by professionals at
+        </p>
+        <div className="relative overflow-hidden">
+          <motion.div
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+            className="flex gap-16 flex-nowrap w-max">
+            {[...companies, ...companies].map((c, i) => (
+              <span key={i} className="text-sm font-semibold whitespace-nowrap" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{c}</span>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+      <div className="max-w-4xl mx-auto px-6 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6"
+        style={{ borderTop: '1px solid #E2E8F0' }}>
+        {stats.map(s => (
+          <div key={s.n} className="text-center">
+            <p className="text-2xl sm:text-3xl font-black mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{s.n}</p>
+            <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{s.label}</p>
+          </div>
+        ))}
       </div>
     </div>
   )
@@ -626,6 +643,9 @@ const TESTIMONIALS = [
   { name: 'Sophie Armand', role: 'Head of Marketing', company: "L'Oréal Paris", avatar: 'SA', color: '#EC4899', quote: 'I went from intimidated by AI to running three AI-assisted campaigns in two months. The Marketing track understood exactly where I needed to start.' },
   { name: 'James Whitfield', role: 'VP Finance', company: 'Goldman Sachs', avatar: 'JW', color: '#F59E0B', quote: 'The Finance track cut straight to what matters. No filler, no hype — just practical tools I use every week now in FP&A and reporting.' },
   { name: 'Priya Nair', role: 'CHRO', company: 'Accenture', avatar: 'PN', color: '#10B981', quote: "The assessment nailed my needs better than I could have myself. Three weeks in and I've already built an AI-assisted onboarding process for our team." },
+  { name: 'Marcus Reid', role: 'Account Executive', company: 'Salesforce', avatar: 'MR', color: '#8B5CF6', quote: "I was spending 3 hours a week on prospect research. After the Sales track, that's down to 40 minutes — and the quality of my outreach has gone up significantly." },
+  { name: 'Clara Dubois', role: 'Senior Legal Counsel', company: 'BNP Paribas', avatar: 'CD', color: '#6366F1', quote: "I was sceptical AI could work in legal. The Legal track changed my mind completely. I reviewed a 60-page contract in 20 minutes last week — with better notes than usual." },
+  { name: 'Tom Nakamura', role: 'Product Manager', company: 'Notion', avatar: 'TN', color: '#14B8A6', quote: "The Product track is genuinely the best thing I've done for my career this year. I now go from user interview to draft PRD in one afternoon instead of three days." },
 ]
 
 function Testimonials() {
@@ -660,6 +680,87 @@ function Testimonials() {
                     <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{t.role} · {t.company}</p>
                   </div>
                 </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── FAQ ─────────────────────────────────────────────────────────────────────
+
+const FAQS = [
+  {
+    q: 'Do I need a technical background?',
+    a: 'Not at all. Every track is built for business professionals who want to use AI in their role — without learning to code. The content assumes zero technical knowledge and focuses entirely on practical application.',
+  },
+  {
+    q: 'How long does a track take to complete?',
+    a: 'Most tracks take 4–6 hours in total, split across 16–20 lessons of 15–20 minutes each. You can go at your own pace and pick up where you left off on any device.',
+  },
+  {
+    q: 'What makes this different from a generic AI course?',
+    a: "Every lesson, exercise, and example is tailored to your specific role. A Finance director and a Marketing manager get completely different content — because the AI use cases that matter to them are completely different. That's the whole point.",
+  },
+  {
+    q: 'What do I get when I complete a track?',
+    a: 'You earn a verified certificate tied to your specific role track — shareable directly to LinkedIn and with your employer. You also keep lifetime access to all course materials after completion.',
+  },
+  {
+    q: 'Can I try it before committing?',
+    a: 'Yes. The free plan gives you full access to Module 1 of your track — 4 complete lessons — with no credit card required. Professional and Team plans also include a 7-day free trial.',
+  },
+  {
+    q: 'Is there a plan for teams or companies?',
+    a: 'Yes. The Team plan starts at $39/seat/month and includes a team dashboard, manager progress view, and group challenges. For larger rollouts or enterprise pricing, reach out via the contact page.',
+  },
+]
+
+function FAQ() {
+  const [open, setOpen] = useState<number | null>(null)
+  const { ref, isInView } = useReveal()
+  return (
+    <section className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
+      <div className="max-w-3xl mx-auto px-6">
+        <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
+          <motion.div variants={fadeUp} className="text-center mb-14">
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>FAQ</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+              Common questions
+            </h2>
+          </motion.div>
+          <div className="flex flex-col gap-3">
+            {FAQS.map((faq, i) => (
+              <motion.div key={i} variants={fadeUp}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
+                <button
+                  onClick={() => setOpen(open === i ? null : i)}
+                  className="w-full flex items-center justify-between px-6 py-5 text-left"
+                >
+                  <span className="text-sm font-semibold pr-4" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{faq.q}</span>
+                  <motion.div animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0">
+                    <ChevronDown size={16} style={{ color: '#94A3B8' }} />
+                  </motion.div>
+                </button>
+                <AnimatePresence initial={false}>
+                  {open === i && (
+                    <motion.div
+                      key="answer"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.22, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-6 pb-5 text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        {faq.a}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             ))}
           </div>
@@ -1058,6 +1159,7 @@ export default function LandingPage() {
       <Features />
       <Testimonials />
       <Pricing />
+      <FAQ />
       <About />
       <FinalCTA />
       <Footer />
