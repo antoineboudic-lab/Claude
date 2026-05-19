@@ -127,7 +127,7 @@ const AI_TOOLS = [
   { id: 'copilot', label: 'Microsoft Copilot', color: '#0078D4' },
   { id: 'gemini', label: 'Google Gemini', color: '#4285F4' },
   { id: 'perplexity', label: 'Perplexity', color: '#20B2AA' },
-  { id: 'midjourney', label: 'Midjourney / Image AI', color: '#9B59B6' },
+  { id: 'midjourney', label: 'Midjourney / Image AI', color: '#3B82F6' },
   { id: 'notion-ai', label: 'Notion AI', color: '#000000' },
   { id: 'other-tools', label: 'Other AI tools', color: '#64748B' },
   { id: 'none', label: "I don't use AI tools yet", color: '#94A3B8' },
@@ -1478,7 +1478,7 @@ function SkillCheckStep({
 
           if (revealed) {
             if (isCorrect) { bg = '#ECFDF5'; border = '#6EE7B7'; textColor = '#065F46' }
-            else if (isSelected && !isCorrect) { bg = '#FEF2F2'; border = '#F87171'; textColor = '#9F1239' }
+            else if (isSelected && !isCorrect) { bg = '#FEF2F2'; border = '#F87171'; textColor = '#991B1B' }
           } else if (isSelected) {
             bg = '#CCFBF1'; border = '#0D9488'
           }

@@ -593,7 +593,7 @@ function Hero() {
       {/* Decorative background blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div style={{ position: 'absolute', top: -180, right: -120, width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, rgba(13,148,136,0.09) 0%, transparent 70%)' }} />
-        <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%)' }} />
+        <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(13,148,136,0.06) 0%, transparent 70%)' }} />
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
