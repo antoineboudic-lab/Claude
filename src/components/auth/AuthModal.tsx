@@ -7,7 +7,7 @@ import type { LucideIcon } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
 
-type AuthStep = 'form' | 'verify'
+type AuthStep = 'form' | 'verify' | 'forgot' | 'reset-sent'
 
 export function AuthModal() {
   const { modalView, closeModal, openSignIn, openSignUp } = useAuth()
@@ -39,6 +39,23 @@ export function AuthModal() {
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [closeModal])
+
+  async function handleForgot(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      const redirectTo = `${window.location.origin}/auth/reset`
+      const { error } = await supabase.current.auth.resetPasswordForEmail(email, { redirectTo })
+      if (error) throw error
+      setStep('reset-sent')
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Something went wrong'
+      setError(msg)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -145,6 +162,73 @@ export function AuthModal() {
                         We sent a confirmation link to{' '}
                         <strong style={{ color: '#0F172A' }}>{email}</strong>.
                         Click it to activate your account.
+                      </p>
+                      <button
+                        onClick={closeModal}
+                        className="w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+                        style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
+                      >
+                        Got it
+                      </button>
+                    </motion.div>
+                  ) : step === 'forgot' ? (
+                    <motion.div key="forgot" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+                      <button
+                        type="button"
+                        onClick={() => { setStep('form'); setError('') }}
+                        className="flex items-center gap-1.5 text-xs mb-6 transition-colors hover:text-slate-700"
+                        style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                      >
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                          <path d="M8 2L4 6L8 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        Back to sign in
+                      </button>
+                      <h2 className="text-2xl font-black mb-1" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                        Reset your password
+                      </h2>
+                      <p className="text-sm mb-7" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        Enter your email and we'll send you a reset link.
+                      </p>
+                      <form onSubmit={handleForgot} className="space-y-3">
+                        <Field ref={emailRef} icon={Mail} type="email" placeholder="Email address"
+                          value={email} onChange={setEmail} required />
+                        <AnimatePresence>
+                          {error && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                              className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
+                              style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}
+                            >
+                              <AlertCircle size={14} className="flex-shrink-0" />{error}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                        <div className="pt-1">
+                          <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+                            style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
+                          >
+                            {loading ? <><Loader2 size={14} className="animate-spin" /> Sending…</> : 'Send reset link'}
+                          </button>
+                        </div>
+                      </form>
+                    </motion.div>
+                  ) : step === 'reset-sent' ? (
+                    <motion.div key="reset-sent" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-center py-4">
+                      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
+                        style={{ background: '#EFF6FF' }}>
+                        <Mail size={28} style={{ color: '#2563EB' }} />
+                      </div>
+                      <h2 className="text-2xl font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                        Check your email
+                      </h2>
+                      <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        We sent a password reset link to{' '}
+                        <strong style={{ color: '#0F172A' }}>{email}</strong>.
+                        The link expires in 1 hour.
                       </p>
                       <button
                         onClick={closeModal}
@@ -284,7 +368,7 @@ export function AuthModal() {
 
                         {!isSignUp && (
                           <p className="text-center text-xs pt-1" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                            <button type="button" className="underline hover:text-slate-500 transition-colors" style={{ color: '#64748B' }}>
+                            <button type="button" onClick={() => { setStep('forgot'); setError('') }} className="underline hover:text-slate-500 transition-colors" style={{ color: '#64748B' }}>
                               Forgot your password?
                             </button>
                           </p>
