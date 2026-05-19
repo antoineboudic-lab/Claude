@@ -144,7 +144,7 @@ export default function PressPage() {
                   <p className="text-xs" style={{ color: '#94A3B8' }}>{asset.desc}</p>
                   <p className="text-xs mt-0.5" style={{ color: '#CBD5E1' }}>{asset.size}</p>
                 </div>
-                <button className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors hover:bg-violet-50"
+                <button className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors hover:bg-teal-50"
                   style={{ background: '#CCFBF1' }}>
                   <Download size={14} style={{ color: '#0D9488' }} />
                 </button>

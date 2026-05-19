@@ -30,14 +30,14 @@ export function BadgeUnlock() {
             className="flex items-center gap-3 px-5 py-3.5 rounded-2xl"
             style={{
               background: 'rgba(13,17,23,0.97)',
-              border: '1px solid rgba(139,92,246,0.4)',
+              border: '1px solid rgba(59,130,246,0.4)',
               backdropFilter: 'blur(16px)',
-              boxShadow: '0 8px 40px rgba(139,92,246,0.2)',
+              boxShadow: '0 8px 40px rgba(59,130,246,0.2)',
             }}
           >
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-              style={{ background: 'rgba(139,92,246,0.15)' }}
+              style={{ background: 'rgba(59,130,246,0.15)' }}
             >
               {badge.icon}
             </div>

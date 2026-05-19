@@ -44,15 +44,15 @@ const trackOutcomes: Record<string, string> = {
 }
 
 const trackColors: Record<string, string> = {
-  marketing:  '#EC4899',
+  marketing:  '#E04D2A',
   finance:    '#F59E0B',
   hr:         '#10B981',
-  sales:      '#8B5CF6',
+  sales:      '#3B82F6',
   operations: '#22D3EE',
   leadership: '#F97316',
-  legal:      '#6366F1',
+  legal:      '#0284C7',
   product:    '#14B8A6',
-  customer:   '#F43F5E',
+  customer:   '#DC2626',
   consulting: '#0EA5E9',
 }
 
@@ -686,7 +686,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
       {/* Error */}
       {error && (
         <div className="p-4 rounded-xl text-xs leading-relaxed"
-          style={{ background: '#FFF1F2', border: '1px solid #FDA4AF', color: '#DC2626', fontFamily: 'var(--font-sans)' }}>
+          style={{ background: '#FEF2F2', border: '1px solid #F87171', color: '#DC2626', fontFamily: 'var(--font-sans)' }}>
           {error === 'API key not configured'
             ? 'Add your ANTHROPIC_API_KEY to .env.local to activate the Prompt Lab.'
             : error}
@@ -733,7 +733,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold transition-all disabled:opacity-50"
                 style={{ background: '#F3F0FF', color: '#0D9488', border: '1px solid #99F6E4', fontFamily: 'var(--font-sans)' }}>
                 {critiqueLoading
-                  ? <><span className="animate-spin inline-block w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full" /> Analysing your prompt…</>
+                  ? <><span className="animate-spin inline-block w-3 h-3 border-2 border-red-400 border-t-transparent rounded-full" /> Analysing your prompt…</>
                   : <><SlidersHorizontal size={12} /> Score &amp; analyse my prompt</>
                 }
               </button>
@@ -744,7 +744,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
 
       {critiqueError && (
         <p className="text-xs px-4 py-3 rounded-xl"
-          style={{ background: '#FFF1F2', color: '#DC2626', border: '1px solid #FDA4AF', fontFamily: 'var(--font-sans)' }}>
+          style={{ background: '#FEF2F2', color: '#DC2626', border: '1px solid #F87171', fontFamily: 'var(--font-sans)' }}>
           {critiqueError}
         </p>
       )}
@@ -951,7 +951,7 @@ function OutputComparisonCard({ data, color }: { data: OutputComparison; color: 
 
       {/* Header — changes color with state */}
       <div className="px-5 py-4 flex items-center justify-between transition-colors duration-300"
-        style={{ background: showImproved ? '#F0FDF4' : '#FFF1F2', borderBottom: `1px solid ${showImproved ? '#86EFAC' : '#FECACA'}` }}>
+        style={{ background: showImproved ? '#F0FDF4' : '#FEF2F2', borderBottom: `1px solid ${showImproved ? '#86EFAC' : '#FECACA'}` }}>
         <div className="flex items-center gap-2">
           <GitCompare size={14} color={showImproved ? '#059669' : '#DC2626'} />
           <span className="text-xs font-bold uppercase tracking-widest transition-colors duration-300"
@@ -978,7 +978,7 @@ function OutputComparisonCard({ data, color }: { data: OutputComparison; color: 
           onClick={() => setShowImproved(false)}
           className="flex-1 py-3 text-xs font-semibold transition-all flex items-center justify-center gap-2"
           style={!showImproved
-            ? { background: '#FFF1F2', color: '#DC2626', borderRight: '1px solid #FECACA' }
+            ? { background: '#FEF2F2', color: '#DC2626', borderRight: '1px solid #FECACA' }
             : { background: '#FAFAFA', color: '#9CA3AF', borderRight: '1px solid #F1F5F9' }
           }
         >
@@ -1013,7 +1013,7 @@ function OutputComparisonCard({ data, color }: { data: OutputComparison; color: 
               className="p-3.5 rounded-xl leading-relaxed"
               style={{
                 fontFamily: 'monospace', fontSize: '0.8rem',
-                background: showImproved ? '#F0FDF4' : '#FFF1F2',
+                background: showImproved ? '#F0FDF4' : '#FEF2F2',
                 border: `1px solid ${showImproved ? '#86EFAC' : '#FECACA'}`,
                 color: showImproved ? '#065F46' : '#991B1B',
                 whiteSpace: 'pre-wrap',
@@ -1121,7 +1121,7 @@ function InlineCheckCard({ data, color }: { data: InlineCheck; color: string }) 
               if (isThis) { bg = `${color}06`; borderColor = color; textColor = '#0F172A'; letterBg = color; letterColor = '#FFFFFF' }
             } else {
               if (isThisCorrect) { bg = '#F0FDF4'; borderColor = '#86EFAC'; textColor = '#15803D'; letterBg = '#22C55E'; letterColor = '#FFFFFF' }
-              else if (isThis) { bg = '#FFF1F2'; borderColor = '#FECACA'; textColor = '#DC2626'; letterBg = '#EF4444'; letterColor = '#FFFFFF' }
+              else if (isThis) { bg = '#FEF2F2'; borderColor = '#FECACA'; textColor = '#DC2626'; letterBg = '#EF4444'; letterColor = '#FFFFFF' }
               else { bg = '#FAFAFA'; borderColor = '#F1F5F9'; textColor = '#CBD5E1' }
             }
 
@@ -1879,7 +1879,7 @@ export default function LessonPage() {
                                 className="w-full flex items-center gap-4 px-4 py-4 rounded-2xl text-left transition-all duration-200"
                                 style={{
                                   background: quizFeedbackShown
-                                    ? showCorrect ? '#F0FDF4' : isWrong ? '#FFF1F2' : '#FAFAFA'
+                                    ? showCorrect ? '#F0FDF4' : isWrong ? '#FEF2F2' : '#FAFAFA'
                                     : selected ? `${color}08` : '#FAFAFA',
                                   border: quizFeedbackShown
                                     ? showCorrect ? '2px solid #86EFAC' : isWrong ? '2px solid #FECACA' : '2px solid #F1F5F9'
@@ -2013,7 +2013,7 @@ export default function LessonPage() {
                           ? 'linear-gradient(135deg, #F0FDF4, #DCFCE7)'
                           : wrongConcepts.length < lesson.quiz.length
                           ? 'linear-gradient(135deg, #FFFBEB, #FEF3C7)'
-                          : 'linear-gradient(135deg, #FFF1F2, #FECDD3)',
+                          : 'linear-gradient(135deg, #FEF2F2, #FEE2E2)',
                         border: `2px solid ${wrongConcepts.length === 0 ? '#86EFAC' : wrongConcepts.length < lesson.quiz.length ? '#FDE68A' : '#FECACA'}`,
                       }}>
                       <motion.div
@@ -2032,7 +2032,7 @@ export default function LessonPage() {
                         </span>
                         <span className="text-2xl font-bold"
                           style={{
-                            color: wrongConcepts.length === 0 ? '#4ADE80' : wrongConcepts.length < lesson.quiz.length ? '#FCD34D' : '#FCA5A5',
+                            color: wrongConcepts.length === 0 ? '#4ADE80' : wrongConcepts.length < lesson.quiz.length ? '#FCD34D' : '#F87171',
                             fontFamily: 'var(--font-sans)',
                           }}>
                           /{lesson.quiz.length}

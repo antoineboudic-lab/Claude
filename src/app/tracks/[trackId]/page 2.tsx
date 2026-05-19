@@ -28,10 +28,10 @@ const trackMeta: Record<string, {
   title: string; tagline: string; color: string;
   icon: React.ElementType; description: string;
 }> = {
-  marketing: { title: 'Marketing', tagline: 'Create, automate, and optimise campaigns with AI', color: '#EC4899', icon: Megaphone, description: 'Master AI tools that give marketers an unfair advantage — from producing better copy in minutes to running smarter campaigns with less effort.' },
+  marketing: { title: 'Marketing', tagline: 'Create, automate, and optimise campaigns with AI', color: '#E04D2A', icon: Megaphone, description: 'Master AI tools that give marketers an unfair advantage — from producing better copy in minutes to running smarter campaigns with less effort.' },
   finance: { title: 'Finance', tagline: 'Model, forecast, and report with AI precision', color: '#F59E0B', icon: LineChart, description: 'Apply AI to the work that matters most in finance — faster analysis, sharper forecasts, and board-ready reports without the manual grind.' },
   hr: { title: 'HR', tagline: 'Attract, retain, and develop talent smarter', color: '#10B981', icon: HeartHandshake, description: 'Use AI to find better candidates, personalise the employee experience, and make people decisions backed by real data.' },
-  sales: { title: 'Sales', tagline: 'Prospect, pitch, and close with AI as your edge', color: '#8B5CF6', icon: TrendingUp, description: 'Turn AI into your highest-performing team member — researching prospects, drafting proposals, and helping you win more deals.' },
+  sales: { title: 'Sales', tagline: 'Prospect, pitch, and close with AI as your edge', color: '#3B82F6', icon: TrendingUp, description: 'Turn AI into your highest-performing team member — researching prospects, drafting proposals, and helping you win more deals.' },
   operations: { title: 'Operations', tagline: 'Automate processes and optimise at every layer', color: '#22D3EE', icon: Settings, description: 'Eliminate operational waste, automate repetitive processes, and build systems that scale — without needing a developer.' },
   leadership: { title: 'Leadership', tagline: 'Lead your organisation into the AI era with confidence', color: '#F97316', icon: Briefcase, description: 'Develop the strategic clarity to lead AI transformation — from setting a compelling vision to managing your team through change.' },
 }

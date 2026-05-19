@@ -6,7 +6,7 @@ export const salesTrack: Track = {
   tagline: 'Prospect, pitch, and close with AI as your edge',
   description:
     'Turn AI into your highest-performing team member — researching prospects, drafting proposals, and helping you win more deals.',
-  color: '#8B5CF6',
+  color: '#3B82F6',
   level: 'beginner',
   modules: [
     {

@@ -128,9 +128,9 @@ export const LEVELS: Level[] = [
   { level: 1, title: 'Explorer',     minXP: 0,    maxXP: 199,   color: '#64748B' },
   { level: 2, title: 'Learner',      minXP: 200,  maxXP: 499,   color: '#22D3EE' },
   { level: 3, title: 'Practitioner', minXP: 500,  maxXP: 999,   color: '#10B981' },
-  { level: 4, title: 'Specialist',   minXP: 1000, maxXP: 1999,  color: '#8B5CF6' },
+  { level: 4, title: 'Specialist',   minXP: 1000, maxXP: 1999,  color: '#3B82F6' },
   { level: 5, title: 'Expert',       minXP: 2000, maxXP: 3999,  color: '#F59E0B' },
-  { level: 6, title: 'AI Leader',    minXP: 4000, maxXP: 99999, color: '#EC4899' },
+  { level: 6, title: 'AI Leader',    minXP: 4000, maxXP: 99999, color: '#E04D2A' },
 ]
 
 // ─── XP rewards ───────────────────────────────────────────────────────────

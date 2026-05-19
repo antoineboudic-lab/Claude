@@ -290,7 +290,7 @@ function Navbar() {
                   <a key={item.label}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center py-3.5 text-sm font-medium border-b transition-colors hover:text-violet-600"
+                    className="flex items-center py-3.5 text-sm font-medium border-b transition-colors hover:text-teal-600"
                     style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F0FDFA' }}>
                     {item.label}
                   </a>
@@ -575,15 +575,15 @@ function HeroVisual() {
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 
 const ROLE_PILLS = [
-  { label: 'Marketing', color: '#EC4899', id: 'marketing' },
+  { label: 'Marketing', color: '#E04D2A', id: 'marketing' },
   { label: 'Finance', color: '#F59E0B', id: 'finance' },
   { label: 'HR', color: '#10B981', id: 'hr' },
-  { label: 'Sales', color: '#8B5CF6', id: 'sales' },
+  { label: 'Sales', color: '#3B82F6', id: 'sales' },
   { label: 'Operations', color: '#06B6D4', id: 'operations' },
   { label: 'Leadership', color: '#F97316', id: 'leadership' },
-  { label: 'Legal', color: '#6366F1', id: 'legal' },
+  { label: 'Legal', color: '#0284C7', id: 'legal' },
   { label: 'Product', color: '#14B8A6', id: 'product' },
-  { label: 'Customer Success', color: '#F43F5E', id: 'customer' },
+  { label: 'Customer Success', color: '#DC2626', id: 'customer' },
   { label: 'Consulting', color: '#0EA5E9', id: 'consulting' },
 ]
 
@@ -836,15 +836,15 @@ function HowItWorks() {
 // ─── Role Tracks ──────────────────────────────────────────────────────────────
 
 const TRACKS = [
-  { id: 'marketing',  icon: Megaphone,    label: 'Marketing',        color: '#EC4899', skills: ['AI copywriting', 'Campaign automation', 'Content strategy', 'Data analysis'] },
+  { id: 'marketing',  icon: Megaphone,    label: 'Marketing',        color: '#E04D2A', skills: ['AI copywriting', 'Campaign automation', 'Content strategy', 'Data analysis'] },
   { id: 'finance',    icon: LineChart,    label: 'Finance',          color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis', 'Forecasting'] },
   { id: 'hr',         icon: HeartHandshake, label: 'HR & People',   color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics', 'Engagement'] },
   { id: 'sales',      icon: TrendingUp,   label: 'Sales',            color: '#0D9488', skills: ['Prospect research', 'Proposal writing', 'CRM automation', 'Pipeline AI'] },
   { id: 'operations', icon: Settings,     label: 'Operations',       color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Supply chain AI', 'Quality ops'] },
   { id: 'leadership', icon: Briefcase,    label: 'Leadership',       color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement', 'Executive decisions'] },
-  { id: 'legal',      icon: Scale,        label: 'Legal',            color: '#6366F1', skills: ['Contract analysis', 'Legal research', 'Risk assessment', 'AI governance'] },
+  { id: 'legal',      icon: Scale,        label: 'Legal',            color: '#0284C7', skills: ['Contract analysis', 'Legal research', 'Risk assessment', 'AI governance'] },
   { id: 'product',    icon: Package,      label: 'Product',          color: '#14B8A6', skills: ['User research', 'Roadmap prioritisation', 'PRD writing', 'AI product strategy'] },
-  { id: 'customer',   icon: Headphones,   label: 'Customer Success', color: '#F43F5E', skills: ['Health monitoring', 'Churn prevention', 'Personalisation', 'CS operations'] },
+  { id: 'customer',   icon: Headphones,   label: 'Customer Success', color: '#DC2626', skills: ['Health monitoring', 'Churn prevention', 'Personalisation', 'CS operations'] },
   { id: 'consulting', icon: BarChart,     label: 'Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'] },
 ]
 
@@ -1015,7 +1015,7 @@ const FEATURES = [
   { icon: Target, title: 'Role-specific content', desc: 'Every lesson, exercise, and example is tailored to your job function — not recycled from a generic course.', color: '#3B82F6' },
   { icon: Layers, title: 'Practical exercises', desc: 'Apply what you learn immediately. Every module ends with a real task using tools you already have access to.', color: '#10B981' },
   { icon: BarChart3, title: 'Progress tracking', desc: "See exactly where you are, what you've mastered, and what comes next — with XP, streaks, and milestones.", color: '#F59E0B' },
-  { icon: Award, title: 'Verified certificates', desc: 'Earn credentials that signal AI literacy to your employer — tied to your specific role and track.', color: '#EC4899' },
+  { icon: Award, title: 'Verified certificates', desc: 'Earn credentials that signal AI literacy to your employer — tied to your specific role and track.', color: '#E04D2A' },
   { icon: Users, title: 'Peer community', desc: 'Learn alongside professionals from your industry. Share wins, ask questions, and stay accountable together.', color: '#06B6D4' },
 ]
 
@@ -1165,7 +1165,7 @@ function TeamsSection() {
                 style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 8px 40px rgba(0,0,0,0.08)' }}>
                 {/* Window chrome */}
                 <div className="px-5 py-3.5 flex items-center gap-2" style={{ borderBottom: '1px solid #F1F5F9', background: '#F0FDFA' }}>
-                  <div className="w-3 h-3 rounded-full" style={{ background: '#F43F5E' }} />
+                  <div className="w-3 h-3 rounded-full" style={{ background: '#DC2626' }} />
                   <div className="w-3 h-3 rounded-full" style={{ background: '#F59E0B' }} />
                   <div className="w-3 h-3 rounded-full" style={{ background: '#10B981' }} />
                   <div className="mx-3 flex-1 h-6 rounded-md flex items-center px-3 text-xs" style={{ background: '#F1F5F9', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
@@ -1181,7 +1181,7 @@ function TeamsSection() {
                       { label: 'Members', value: '24', color: '#0D9488' },
                       { label: 'Total XP', value: '18.4k', color: '#F59E0B' },
                       { label: 'Lessons', value: '312', color: '#10B981' },
-                      { label: 'Tracks done', value: '9', color: '#EC4899' },
+                      { label: 'Tracks done', value: '9', color: '#E04D2A' },
                     ].map(s => (
                       <div key={s.label} className="p-3 rounded-xl" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
                         <p className="text-lg font-black mb-0.5" style={{ color: s.color, fontFamily: 'var(--font-sans)' }}>{s.value}</p>
@@ -1228,9 +1228,9 @@ function TeamsSection() {
                   {/* Track pills */}
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { label: 'Marketing', color: '#EC4899', pct: 83 },
+                      { label: 'Marketing', color: '#E04D2A', pct: 83 },
                       { label: 'Finance', color: '#F59E0B', pct: 67 },
-                      { label: 'Sales', color: '#8B5CF6', pct: 50 },
+                      { label: 'Sales', color: '#3B82F6', pct: 50 },
                       { label: 'HR', color: '#10B981', pct: 100 },
                     ].map(t => (
                       <div key={t.label} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold"
@@ -1268,11 +1268,11 @@ function TeamsSection() {
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 
 const TESTIMONIALS = [
-  { name: 'Sophie Armand', role: 'Head of Marketing', company: "L'Oréal Paris", avatar: 'SA', color: '#EC4899', track: 'Marketing', quote: 'I went from intimidated by AI to running three AI-assisted campaigns in two months. The Marketing track understood exactly where I needed to start.' },
+  { name: 'Sophie Armand', role: 'Head of Marketing', company: "L'Oréal Paris", avatar: 'SA', color: '#E04D2A', track: 'Marketing', quote: 'I went from intimidated by AI to running three AI-assisted campaigns in two months. The Marketing track understood exactly where I needed to start.' },
   { name: 'James Whitfield', role: 'VP Finance', company: 'Goldman Sachs', avatar: 'JW', color: '#F59E0B', track: 'Finance', quote: 'The Finance track cut straight to what matters. No filler, no hype — just practical tools I use every week now in FP&A and reporting.' },
   { name: 'Priya Nair', role: 'CHRO', company: 'Accenture', avatar: 'PN', color: '#10B981', track: 'HR & People', quote: "The assessment nailed my needs better than I could have myself. Three weeks in and I've already built an AI-assisted onboarding process for our team." },
-  { name: 'Marcus Reid', role: 'Account Executive', company: 'Salesforce', avatar: 'MR', color: '#8B5CF6', track: 'Sales', quote: "I was spending 3 hours a week on prospect research. After the Sales track, that's down to 40 minutes — and the quality of my outreach has gone up significantly." },
-  { name: 'Clara Dubois', role: 'Senior Legal Counsel', company: 'BNP Paribas', avatar: 'CD', color: '#6366F1', track: 'Legal', quote: "I was sceptical AI could work in legal. The Legal track changed my mind completely. I reviewed a 60-page contract in 20 minutes last week — with better notes than usual." },
+  { name: 'Marcus Reid', role: 'Account Executive', company: 'Salesforce', avatar: 'MR', color: '#3B82F6', track: 'Sales', quote: "I was spending 3 hours a week on prospect research. After the Sales track, that's down to 40 minutes — and the quality of my outreach has gone up significantly." },
+  { name: 'Clara Dubois', role: 'Senior Legal Counsel', company: 'BNP Paribas', avatar: 'CD', color: '#0284C7', track: 'Legal', quote: "I was sceptical AI could work in legal. The Legal track changed my mind completely. I reviewed a 60-page contract in 20 minutes last week — with better notes than usual." },
   { name: 'Tom Nakamura', role: 'Product Manager', company: 'Notion', avatar: 'TN', color: '#14B8A6', track: 'Product', quote: "The Product track is genuinely the best thing I've done for my career this year. I now go from user interview to draft PRD in one afternoon instead of three days." },
 ]
 
@@ -1760,7 +1760,7 @@ function FinalCTA() {
   return (
     <section className="relative overflow-hidden" style={{ background: '#0F172A' }}>
       {/* Top purple band */}
-      <div style={{ height: 6, background: 'linear-gradient(90deg, #0D9488, #EC4899, #F59E0B)' }} />
+      <div style={{ height: 6, background: 'linear-gradient(90deg, #0D9488, #E04D2A, #F59E0B)' }} />
 
       {/* Decorative giant text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
@@ -1773,7 +1773,7 @@ function FinalCTA() {
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold mb-8"
-            style={{ background: 'rgba(13,148,136,0.2)', color: '#C4B5FD', border: '1px solid rgba(13,148,136,0.35)', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
+            style={{ background: 'rgba(13,148,136,0.2)', color: '#93C5FD', border: '1px solid rgba(13,148,136,0.35)', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
             <Zap size={10} /> Free to start
           </motion.div>
           <motion.h2 variants={fadeUp}
@@ -1891,7 +1891,7 @@ function Footer() {
           style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>© 2026 AI Literacy. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            {['#0D9488', '#EC4899', '#F59E0B', '#10B981', '#06B6D4'].map(c => (
+            {['#0D9488', '#E04D2A', '#F59E0B', '#10B981', '#06B6D4'].map(c => (
               <div key={c} className="w-2 h-2 rounded-full" style={{ background: c }} />
             ))}
           </div>

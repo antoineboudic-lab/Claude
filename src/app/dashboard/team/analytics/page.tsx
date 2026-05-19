@@ -10,9 +10,9 @@ import {
 } from '@/lib/supabase/teams'
 
 const TRACK_COLORS: Record<string, string> = {
-  marketing: '#EC4899', finance: '#F59E0B', hr: '#10B981',
-  sales: '#8B5CF6', operations: '#22D3EE', leadership: '#F97316',
-  legal: '#6366F1', product: '#14B8A6', customer: '#F43F5E', consulting: '#0EA5E9',
+  marketing: '#E04D2A', finance: '#F59E0B', hr: '#10B981',
+  sales: '#3B82F6', operations: '#22D3EE', leadership: '#F97316',
+  legal: '#0284C7', product: '#14B8A6', customer: '#DC2626', consulting: '#0EA5E9',
 }
 const TRACK_LABELS: Record<string, string> = {
   marketing: 'Marketing', finance: 'Finance', hr: 'HR',
@@ -178,7 +178,7 @@ export default function AnalyticsPage() {
           { icon: Users, label: 'Active members', value: stats.total, color: '#0D9488' },
           { icon: Zap, label: 'Total XP earned', value: stats.totalXP.toLocaleString(), color: '#F59E0B', str: true },
           { icon: BookOpen, label: 'Lessons completed', value: stats.totalLessons, color: '#10B981' },
-          { icon: Award, label: 'Tracks completed', value: stats.completedTracks, color: '#EC4899' },
+          { icon: Award, label: 'Tracks completed', value: stats.completedTracks, color: '#E04D2A' },
         ].map(({ icon: Icon, label, value, color, str }) => (
           <div key={label} className="p-5 rounded-2xl"
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>

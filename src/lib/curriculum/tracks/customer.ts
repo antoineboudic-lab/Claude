@@ -6,7 +6,7 @@ export const customerTrack: Track = {
   tagline: 'Predict churn, personalise engagement, and scale your team with AI',
   description:
     'A practical curriculum for customer success managers and CS leaders who want to use AI to monitor customer health proactively, personalise every touchpoint, and scale their operations — without sacrificing the human relationships that drive retention.',
-  color: '#F43F5E',
+  color: '#DC2626',
   level: 'beginner',
   modules: [
     {

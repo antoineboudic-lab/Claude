@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
       { label: 'Active last week', count: lastWeek, color: '#0D9488' },
       { label: 'Active this month', count: thisMonth, color: '#F59E0B' },
       { label: 'Inactive (30+ days)', count: older, color: '#E2E8F0' },
-      { label: 'Never started', count: neverStarted, color: '#FCA5A5' },
+      { label: 'Never started', count: neverStarted, color: '#94A3B8' },
     ],
     total: members.length,
   })

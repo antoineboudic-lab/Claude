@@ -6,7 +6,7 @@ export const legalTrack: Track = {
   tagline: 'Review faster, research deeper, and draft with precision using AI',
   description:
     'A practical curriculum for legal professionals and compliance officers who want to use AI to accelerate document review, sharpen legal research, and scale compliance monitoring — while maintaining the rigour and confidentiality their work demands.',
-  color: '#6366F1',
+  color: '#0284C7',
   level: 'beginner',
   modules: [
     {

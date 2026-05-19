@@ -20,7 +20,7 @@ export function XPToast() {
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
             style={{
               background: 'rgba(13,17,23,0.95)',
-              border: '1px solid rgba(139,92,246,0.3)',
+              border: '1px solid rgba(59,130,246,0.3)',
               backdropFilter: 'blur(12px)',
               color: '#F1F5F9',
               fontFamily: 'var(--font-sans)',

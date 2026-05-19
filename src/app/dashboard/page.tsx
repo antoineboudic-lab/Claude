@@ -31,15 +31,15 @@ import { getTrack, getAllTracks } from '@/lib/curriculum'
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
 const TRACK_COLORS: Record<string, string> = {
-  marketing:  '#EC4899',
+  marketing:  '#E04D2A',
   finance:    '#F59E0B',
   hr:         '#10B981',
-  sales:      '#8B5CF6',
+  sales:      '#3B82F6',
   operations: '#22D3EE',
   leadership: '#F97316',
-  legal:      '#6366F1',
+  legal:      '#0284C7',
   product:    '#14B8A6',
-  customer:   '#F43F5E',
+  customer:   '#DC2626',
   consulting: '#0EA5E9',
 }
 
@@ -269,13 +269,13 @@ function BookmarksCard() {
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Bookmark size={15} style={{ color: '#6366F1' }} />
+          <Bookmark size={15} style={{ color: '#0284C7' }} />
           <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
             Bookmarks
           </p>
         </div>
         <span className="text-xs font-semibold px-2 py-0.5 rounded-lg"
-          style={{ background: '#EEF2FF', color: '#4338CA', fontFamily: 'var(--font-sans)' }}>
+          style={{ background: '#EFF6FF', color: '#1D4ED8', fontFamily: 'var(--font-sans)' }}>
           {bookmarks.length}
         </span>
       </div>
@@ -386,7 +386,7 @@ function InsightsCard({
                 Perfect quiz rate
               </span>
             </div>
-            <span className="text-xs font-bold" style={{ color: '#6366F1', fontFamily: 'var(--font-sans)' }}>
+            <span className="text-xs font-bold" style={{ color: '#0284C7', fontFamily: 'var(--font-sans)' }}>
               {quizAccuracy}%
             </span>
           </div>
@@ -396,7 +396,7 @@ function InsightsCard({
               animate={{ width: `${quizAccuracy}%` }}
               transition={{ delay: 0.6, duration: 0.9, ease: easing }}
               className="h-full rounded-full"
-              style={{ background: '#6366F1' }}
+              style={{ background: '#0284C7' }}
             />
           </div>
         </div>
@@ -1078,7 +1078,7 @@ export default function DashboardPage() {
           <StatCard icon={Zap} label="Total XP" value={state.xp} color="#0D9488" delay={0.05} />
           <StatCard icon={Flame} label="Day streak" value={state.streak} color="#F59E0B" delay={0.1} />
           <StatCard icon={CheckCircle2} label="Lessons done" value={state.completedLessons.length} color="#10B981" delay={0.15} />
-          <StatCard icon={Award} label="Badges earned" value={state.earnedBadges.length} color="#EC4899" delay={0.2} />
+          <StatCard icon={Award} label="Badges earned" value={state.earnedBadges.length} color="#E04D2A" delay={0.2} />
         </div>
 
         {/* Review due banner */}
@@ -1088,17 +1088,17 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.4 }}
             className="mb-6 rounded-2xl px-5 py-4 flex items-center justify-between gap-4 flex-wrap"
-            style={{ background: '#EEF2FF', border: '1px solid #C7D2FE' }}
+            style={{ background: '#EFF6FF', border: '1px solid #BFDBFE' }}
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#6366F1' }}>
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#0284C7' }}>
                 <RotateCcw size={14} color="#FFFFFF" />
               </div>
               <div>
-                <p className="text-sm font-bold" style={{ color: '#3730A3', fontFamily: 'var(--font-sans)' }}>
+                <p className="text-sm font-bold" style={{ color: '#1E40AF', fontFamily: 'var(--font-sans)' }}>
                   {srDueCount} card{srDueCount !== 1 ? 's' : ''} ready for review
                 </p>
-                <p className="text-xs" style={{ color: '#6366F1', fontFamily: 'var(--font-sans)' }}>
+                <p className="text-xs" style={{ color: '#0284C7', fontFamily: 'var(--font-sans)' }}>
                   Reinforce what you have learned — takes about {Math.ceil(srDueCount * 0.5)} min
                 </p>
               </div>
@@ -1106,7 +1106,7 @@ export default function DashboardPage() {
             <Link
               href="/review"
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90 flex-shrink-0"
-              style={{ background: '#6366F1', color: '#FFFFFF', textDecoration: 'none', fontFamily: 'var(--font-sans)' }}
+              style={{ background: '#0284C7', color: '#FFFFFF', textDecoration: 'none', fontFamily: 'var(--font-sans)' }}
             >
               Start review <ArrowRight size={14} />
             </Link>
@@ -1395,7 +1395,7 @@ export default function DashboardPage() {
                   { label: 'Browse all tracks', href: '/tracks', icon: BookOpen, color: '#22D3EE' },
                   { label: 'Retake assessment', href: '/assessment', icon: Target, color: '#0D9488' },
                   { label: 'View your path', href: '/assessment/results', icon: TrendingUp, color: '#10B981' },
-                  ...(teamHref ? [{ label: 'Team dashboard', href: teamHref, icon: Users, color: '#EC4899' }] : []),
+                  ...(teamHref ? [{ label: 'Team dashboard', href: teamHref, icon: Users, color: '#E04D2A' }] : []),
                 ].map(item => (
                   <Link
                     key={item.href}
@@ -1424,7 +1424,7 @@ export default function DashboardPage() {
                 className="rounded-2xl overflow-hidden"
                 style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
-                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #0D9488, #EC4899)' }} />
+                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #0D9488, #E04D2A)' }} />
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <Share2 size={14} style={{ color: '#0D9488' }} />

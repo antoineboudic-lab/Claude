@@ -18,15 +18,15 @@ import { loadLatestAssessment } from '@/lib/supabase/db'
 // ─── Track meta ───────────────────────────────────────────────────────────────
 
 const TRACK_META: Record<TrackId, { label: string; icon: React.ElementType; color: string; tagline: string }> = {
-  marketing:   { label: 'Marketing',        icon: Megaphone,     color: '#EC4899', tagline: 'Create, campaign, and grow with AI precision' },
+  marketing:   { label: 'Marketing',        icon: Megaphone,     color: '#E04D2A', tagline: 'Create, campaign, and grow with AI precision' },
   finance:     { label: 'Finance',          icon: LineChart,      color: '#F59E0B', tagline: 'Model, forecast, and report with AI precision' },
   hr:          { label: 'HR & People',      icon: HeartHandshake, color: '#10B981', tagline: 'Hire smarter, engage deeper, develop faster' },
-  sales:       { label: 'Sales',            icon: TrendingUp,     color: '#8B5CF6', tagline: 'Prospect, pitch, and close with AI as your edge' },
+  sales:       { label: 'Sales',            icon: TrendingUp,     color: '#3B82F6', tagline: 'Prospect, pitch, and close with AI as your edge' },
   operations:  { label: 'Operations',       icon: Settings,       color: '#22D3EE', tagline: 'Streamline processes and decisions with AI' },
   leadership:  { label: 'Leadership',       icon: Briefcase,      color: '#F97316', tagline: 'Lead your organisation into the AI era' },
-  legal:       { label: 'Legal',            icon: Scale,          color: '#6366F1', tagline: 'Review, research, and advise with AI confidence' },
+  legal:       { label: 'Legal',            icon: Scale,          color: '#0284C7', tagline: 'Review, research, and advise with AI confidence' },
   product:     { label: 'Product',          icon: Package,        color: '#14B8A6', tagline: 'Discover, prioritise, and ship better products with AI' },
-  customer:    { label: 'Customer Success', icon: Headphones,     color: '#F43F5E', tagline: 'Retain, expand, and delight customers with AI' },
+  customer:    { label: 'Customer Success', icon: Headphones,     color: '#DC2626', tagline: 'Retain, expand, and delight customers with AI' },
   consulting:  { label: 'Consulting',       icon: BarChart,       color: '#0EA5E9', tagline: 'Research, analyse, and deliver with AI as your edge' },
 }
 

@@ -25,15 +25,15 @@ type StepId = 'welcome' | 'role' | 'subRole' | 'roleDescription' | 'context' | '
 // ─── Role data ────────────────────────────────────────────────────────────────
 
 const ROLES = [
-  { id: 'marketing' as Role, label: 'Marketing', icon: Megaphone, color: '#EC4899', detail: 'Brand, content, campaigns, growth' },
+  { id: 'marketing' as Role, label: 'Marketing', icon: Megaphone, color: '#E04D2A', detail: 'Brand, content, campaigns, growth' },
   { id: 'finance' as Role, label: 'Finance', icon: LineChart, color: '#F59E0B', detail: 'FP&A, reporting, treasury, accounting' },
   { id: 'hr' as Role, label: 'HR & People', icon: HeartHandshake, color: '#10B981', detail: 'Talent, L&D, employee experience' },
-  { id: 'sales' as Role, label: 'Sales', icon: TrendingUp, color: '#8B5CF6', detail: 'Revenue, account management, BD' },
+  { id: 'sales' as Role, label: 'Sales', icon: TrendingUp, color: '#3B82F6', detail: 'Revenue, account management, BD' },
   { id: 'operations' as Role, label: 'Operations', icon: Settings, color: '#22D3EE', detail: 'Process, supply chain, quality' },
   { id: 'leadership' as Role, label: 'Leadership', icon: Briefcase, color: '#F97316', detail: 'CEO, Director, VP, C-suite' },
-  { id: 'legal' as Role, label: 'Legal', icon: Scale, color: '#6366F1', detail: 'Counsel, compliance, contracts, IP' },
+  { id: 'legal' as Role, label: 'Legal', icon: Scale, color: '#0284C7', detail: 'Counsel, compliance, contracts, IP' },
   { id: 'product' as Role, label: 'Product', icon: Package, color: '#14B8A6', detail: 'PM, PO, product strategy, roadmap' },
-  { id: 'customer' as Role, label: 'Customer Success', icon: Headphones, color: '#F43F5E', detail: 'CS, account health, renewals, support' },
+  { id: 'customer' as Role, label: 'Customer Success', icon: Headphones, color: '#DC2626', detail: 'CS, account health, renewals, support' },
   { id: 'consulting' as Role, label: 'Consulting', icon: BarChart, color: '#0EA5E9', detail: 'Strategy, advisory, client delivery' },
   { id: 'other' as Role, label: 'Other', icon: User, color: '#94A3B8', detail: 'Something else entirely' },
 ]
@@ -1478,7 +1478,7 @@ function SkillCheckStep({
 
           if (revealed) {
             if (isCorrect) { bg = '#ECFDF5'; border = '#6EE7B7'; textColor = '#065F46' }
-            else if (isSelected && !isCorrect) { bg = '#FFF1F2'; border = '#FDA4AF'; textColor = '#9F1239' }
+            else if (isSelected && !isCorrect) { bg = '#FEF2F2'; border = '#F87171'; textColor = '#9F1239' }
           } else if (isSelected) {
             bg = '#CCFBF1'; border = '#0D9488'
           }
@@ -1490,7 +1490,7 @@ function SkillCheckStep({
               className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all"
               style={{ background: bg, border: `1.5px solid ${border}` }}>
               <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: revealed && isCorrect ? '#10B981' : revealed && isSelected ? '#F43F5E' : '#F1F5F9' }}>
+                style={{ background: revealed && isCorrect ? '#10B981' : revealed && isSelected ? '#DC2626' : '#F1F5F9' }}>
                 {revealed && isCorrect ? <Check size={12} className="text-white" /> :
                   revealed && isSelected && !isCorrect ? <X size={12} className="text-white" /> : null}
               </div>

@@ -41,9 +41,9 @@ interface AssessmentRow {
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 
 const TRACK_COLORS: Record<string, string> = {
-  marketing: '#EC4899', finance: '#F59E0B', hr: '#10B981', sales: '#8B5CF6',
-  operations: '#22D3EE', leadership: '#F97316', legal: '#6366F1',
-  product: '#14B8A6', customer: '#F43F5E', consulting: '#0EA5E9',
+  marketing: '#E04D2A', finance: '#F59E0B', hr: '#10B981', sales: '#3B82F6',
+  operations: '#22D3EE', leadership: '#F97316', legal: '#0284C7',
+  product: '#14B8A6', customer: '#DC2626', consulting: '#0EA5E9',
 }
 const TRACK_LABELS: Record<string, string> = {
   marketing: 'Marketing', finance: 'Finance', hr: 'HR', sales: 'Sales',
@@ -216,10 +216,10 @@ export default async function AdminPage() {
 
         {/* ── Stat row 2: engagement */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 32 }}>
-          <StatCard icon={BookOpen} label="Lessons completed" value={totalLessons.toLocaleString()} sub={`${avgLessons} avg per user`} color="#6366F1" />
+          <StatCard icon={BookOpen} label="Lessons completed" value={totalLessons.toLocaleString()} sub={`${avgLessons} avg per user`} color="#0284C7" />
           <StatCard icon={Zap} label="Total XP earned" value={totalXP.toLocaleString()} sub={`${avgXP.toLocaleString()} avg per user`} color="#F97316" />
           <StatCard icon={Flame} label="Users with streak" value={withStreak} sub={`${avgStreak}d avg streak`} color="#EF4444" />
-          <StatCard icon={Award} label="Tracks completed" value={withTrack} sub={`${pct(withTrack, totalUsers)} completion rate`} color="#EC4899" />
+          <StatCard icon={Award} label="Tracks completed" value={withTrack} sub={`${pct(withTrack, totalUsers)} completion rate`} color="#E04D2A" />
         </div>
 
         {/* ── Charts row */}
@@ -301,7 +301,7 @@ export default async function AdminPage() {
                 const prev = i === 0 ? totalUsers : funnel[i - 1].n
                 const dropPct = i === 0 ? 100 : prev > 0 ? Math.round((step.n / funnel[0].n) * 100) : 0
                 const barW = funnel[0].n > 0 ? Math.round((step.n / funnel[0].n) * 100) : 0
-                const colors = ['#0D9488', '#6366F1', '#22D3EE', '#10B981', '#F59E0B', '#EC4899']
+                const colors = ['#0D9488', '#0284C7', '#22D3EE', '#10B981', '#F59E0B', '#E04D2A']
                 const color = colors[i]
                 return (
                   <div key={step.label} style={{ paddingBottom: 14, borderBottom: i < funnel.length - 1 ? '1px solid #F0FDFA' : 'none', marginBottom: i < funnel.length - 1 ? 14 : 0 }}>
@@ -420,7 +420,7 @@ export default async function AdminPage() {
                           </span>
                         ) : <span style={{ color: '#E2E8F0' }}>—</span>}
                       </td>
-                      <td style={{ padding: '12px 16px', color: p?.earned_badges?.length ? '#EC4899' : '#E2E8F0', fontWeight: 600 }}>
+                      <td style={{ padding: '12px 16px', color: p?.earned_badges?.length ? '#E04D2A' : '#E2E8F0', fontWeight: 600 }}>
                         {p?.earned_badges?.length || '—'}
                       </td>
                       <td style={{ padding: '12px 16px', color: '#94A3B8', whiteSpace: 'nowrap' }}>

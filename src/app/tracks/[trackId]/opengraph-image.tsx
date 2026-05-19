@@ -7,15 +7,15 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 const TRACK_META: Record<string, { color: string; label: string; tagline: string }> = {
-  marketing:  { color: '#EC4899', label: 'Marketing',        tagline: 'Write better briefs, campaigns, and copy — in half the time.' },
+  marketing:  { color: '#E04D2A', label: 'Marketing',        tagline: 'Write better briefs, campaigns, and copy — in half the time.' },
   finance:    { color: '#F59E0B', label: 'Finance',          tagline: 'Turn data into insight with AI-powered analysis and commentary.' },
   hr:         { color: '#10B981', label: 'HR & People',      tagline: 'Hire smarter, engage better, and scale your people operations.' },
-  sales:      { color: '#8B5CF6', label: 'Sales',            tagline: 'Personalise at scale. Research faster. Close more deals.' },
+  sales:      { color: '#3B82F6', label: 'Sales',            tagline: 'Personalise at scale. Research faster. Close more deals.' },
   operations: { color: '#22D3EE', label: 'Operations',       tagline: 'Document processes, cut admin, and make better decisions.' },
   leadership: { color: '#F97316', label: 'Leadership',       tagline: 'Build and execute an AI strategy your team will actually follow.' },
-  legal:      { color: '#6366F1', label: 'Legal',            tagline: 'Review, research, and advise with AI confidence.' },
+  legal:      { color: '#0284C7', label: 'Legal',            tagline: 'Review, research, and advise with AI confidence.' },
   product:    { color: '#14B8A6', label: 'Product',          tagline: 'Discover, prioritise, and ship better products with AI.' },
-  customer:   { color: '#F43F5E', label: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI.' },
+  customer:   { color: '#DC2626', label: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI.' },
   consulting: { color: '#0EA5E9', label: 'Consulting',       tagline: 'Research, analyse, and deliver with AI as your edge.' },
 }
 

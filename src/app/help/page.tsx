@@ -52,7 +52,7 @@ function AccordionItem({ q, a }: { q: string; a: string }) {
     <div style={{ borderBottom: '1px solid #F1F5F9' }}>
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between gap-4 py-4 text-left transition-colors hover:text-violet-700"
+        className="w-full flex items-center justify-between gap-4 py-4 text-left transition-colors hover:text-teal-700"
         style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
         <span className="text-sm font-semibold">{q}</span>
         <motion.div animate={{ rotate: open ? 90 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0">

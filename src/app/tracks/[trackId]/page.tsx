@@ -34,7 +34,7 @@ const trackMeta: Record<string, {
   whoFor: string[]; beforeAfter: { before: string; after: string }[];
 }> = {
   marketing: {
-    title: 'Marketing', tagline: 'Create, automate, and optimise campaigns with AI', color: '#EC4899', icon: Megaphone,
+    title: 'Marketing', tagline: 'Create, automate, and optimise campaigns with AI', color: '#E04D2A', icon: Megaphone,
     description: 'Master AI tools that give marketers an unfair advantage — from producing better copy in minutes to running smarter campaigns with less effort.',
     whoFor: ['You manage campaigns, briefs, or content and want AI to free you up for strategy', 'You produce copy, assets, or reports and want professional output faster', "You're responsible for marketing ROI and want sharper analysis without more headcount"],
     beforeAfter: [{ before: '3 hours writing a campaign brief from scratch', after: '20 min AI draft, 30 min refinement' }, { before: 'Weeks to build a full content calendar', after: 'First draft in under an hour' }, { before: 'Manual competitor analysis taking a full day', after: 'Structured analysis in 15 minutes' }],
@@ -52,7 +52,7 @@ const trackMeta: Record<string, {
     beforeAfter: [{ before: 'Writing job descriptions manually for every role', after: 'Strong first draft in 5 minutes' }, { before: 'Reviewing 200 CVs before any shortlisting', after: 'AI-filtered shortlist, you do final review' }, { before: "Building L&D programmes from a blank slide", after: 'Structured framework with content in hours' }],
   },
   sales: {
-    title: 'Sales', tagline: 'Prospect, pitch, and close with AI as your edge', color: '#8B5CF6', icon: TrendingUp,
+    title: 'Sales', tagline: 'Prospect, pitch, and close with AI as your edge', color: '#3B82F6', icon: TrendingUp,
     description: 'Turn AI into your highest-performing team member — researching prospects, drafting proposals, and helping you win more deals.',
     whoFor: ['You carry a quota and want to spend more time on high-leverage activities', 'You run a sales team and want reps producing better proposals, faster', "You're losing deals on proposal quality or speed, not on product"],
     beforeAfter: [{ before: 'Full day writing a complex proposal', after: 'High-quality first draft in 2–3 hours' }, { before: 'Manually researching each prospect before a call', after: 'Full account brief in 10 minutes' }, { before: 'Generic outreach that gets ignored', after: 'Personalised sequences that get replies' }],
@@ -70,7 +70,7 @@ const trackMeta: Record<string, {
     beforeAfter: [{ before: 'Vague AI strategy that produces no action', after: 'Concrete roadmap with prioritised initiatives' }, { before: 'Team anxiety about AI replacing jobs', after: 'Clear framing that builds confidence' }, { before: 'Technology decisions driven by vendors', after: 'Informed build/buy/partner decisions' }],
   },
   legal: {
-    title: 'Legal', tagline: 'Review, research, and advise with AI confidence', color: '#6366F1', icon: Scale,
+    title: 'Legal', tagline: 'Review, research, and advise with AI confidence', color: '#0284C7', icon: Scale,
     description: 'Apply AI to the most time-intensive parts of legal work — from contract review and due diligence to research, drafting, and client communication.',
     whoFor: ["You're in-house counsel or in a firm and spend significant time on contract review or legal research", 'You want to increase output without compromising the rigour your clients or colleagues depend on', "You're being asked about AI governance and want to understand the landscape before recommending policy"],
     beforeAfter: [{ before: 'First-pass contract review taking 2–4 hours', after: 'AI issues summary in 20 minutes, you apply judgment' }, { before: 'Legal research taking a full day per matter', after: 'Structured first-pass in 1–2 hours' }, { before: 'Client memos written from scratch each time', after: 'Strong first draft in minutes' }],
@@ -82,7 +82,7 @@ const trackMeta: Record<string, {
     beforeAfter: [{ before: '2 weeks to synthesise a discovery sprint', after: 'Key patterns identified in hours' }, { before: 'PRD writing taking a full day', after: 'Strong first draft in 90 minutes' }, { before: 'Competitive analysis assembled manually', after: 'Structured comparison in 20 minutes' }],
   },
   customer: {
-    title: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI', color: '#F43F5E', icon: Headphones,
+    title: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI', color: '#DC2626', icon: Headphones,
     description: 'Scale your customer coverage without sacrificing quality — using AI to monitor health, prevent churn, and personalise every interaction.',
     whoFor: ['You manage a portfolio of accounts and want better visibility into which ones need attention before it is too late', "You're responsible for retention metrics and want to act on early signals, not lagging indicators", 'You run a CS team and want your CSMs spending time on relationships, not manual data review'],
     beforeAfter: [{ before: 'Churn caught too late to recover', after: 'At-risk accounts flagged weeks earlier' }, { before: 'Generic QBR decks for every account', after: 'Personalised prep in 20 minutes per account' }, { before: 'Health scoring done manually and inconsistently', after: 'Automated signals, you focus on action' }],
@@ -360,7 +360,7 @@ export default function TrackPage() {
               <div key={i} className="rounded-xl overflow-hidden" style={{ border: '1px solid #F1F5F9' }}>
                 <div className="flex items-start gap-2.5 px-4 py-2.5" style={{ background: '#FFF8F8' }}>
                   <span className="text-[9px] font-black uppercase tracking-widest mt-0.5 flex-shrink-0"
-                    style={{ color: '#FCA5A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+                    style={{ color: '#F87171', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
                     Before
                   </span>
                   <span className="text-xs leading-snug" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>

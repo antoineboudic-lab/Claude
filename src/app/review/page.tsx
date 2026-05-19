@@ -12,7 +12,7 @@ import { loadQueue, getDueItems, sm2Update, updateItemInQueue, type SRItem, type
 const RATINGS: { label: string; sublabel: string; quality: SRQuality; color: string; bg: string }[] = [
   { label: 'Again',  sublabel: '< 1 day',  quality: 1, color: '#EF4444', bg: '#FEF2F2' },
   { label: 'Hard',   sublabel: '~1 day',   quality: 2, color: '#F97316', bg: '#FFF7ED' },
-  { label: 'Good',   sublabel: '~6 days',  quality: 4, color: '#6366F1', bg: '#EEF2FF' },
+  { label: 'Good',   sublabel: '~6 days',  quality: 4, color: '#0284C7', bg: '#EFF6FF' },
   { label: 'Easy',   sublabel: '~10 days', quality: 5, color: '#10B981', bg: '#F0FDF4' },
 ]
 
@@ -26,7 +26,7 @@ function CompletionScreen({ reviewed, xpEarned, onRedo }: { reviewed: number; xp
       className="flex flex-col items-center justify-center text-center"
       style={{ gap: '20px', maxWidth: '380px', margin: '0 auto', fontFamily: 'var(--font-sans)' }}
     >
-      <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366F1, #8B5CF6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, #0284C7, #3B82F6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <CheckCircle2 size={32} color="#FFFFFF" />
       </div>
       <div>
@@ -129,9 +129,9 @@ function ReviewCard({
             let color = '#334155'
             if (revealed) {
               if (isRight) { bg = '#F0FDF4'; border = '1px solid #86EFAC'; color = '#166534' }
-              else if (isSelected && !isRight) { bg = '#FEF2F2'; border = '1px solid #FCA5A5'; color = '#991B1B' }
+              else if (isSelected && !isRight) { bg = '#FEF2F2'; border = '1px solid #F87171'; color = '#991B1B' }
             } else if (isSelected) {
-              bg = '#EEF2FF'; border = '1px solid #A5B4FC'; color = '#3730A3'
+              bg = '#EFF6FF'; border = '1px solid #93C5FD'; color = '#1E40AF'
             }
 
             return (
@@ -287,7 +287,7 @@ export default function ReviewPage() {
               <motion.div
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3 }}
-                style={{ height: '100%', background: 'linear-gradient(90deg, #6366F1, #8B5CF6)', borderRadius: '3px' }}
+                style={{ height: '100%', background: 'linear-gradient(90deg, #0284C7, #3B82F6)', borderRadius: '3px' }}
               />
             </div>
           )}

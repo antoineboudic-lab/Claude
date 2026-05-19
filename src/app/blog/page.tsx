@@ -17,7 +17,7 @@ const POSTS = [
   {
     slug: 'marketing-ai-briefs',
     category: 'Marketing',
-    categoryColor: '#EC4899',
+    categoryColor: '#E04D2A',
     title: 'How Marketing Teams Are Using AI to Write Better Campaign Briefs',
     excerpt: 'The best marketing teams aren\'t replacing their creative instincts with AI — they\'re using it to sharpen their thinking before a single word of copy is written.',
     author: 'Sophie Armand',
@@ -89,7 +89,7 @@ const POSTS = [
   {
     slug: 'legal-ai-contract-review',
     category: 'Legal',
-    categoryColor: '#6366F1',
+    categoryColor: '#0284C7',
     title: 'How In-House Counsel Are Using AI to Review Contracts Faster — Without Cutting Corners',
     excerpt: 'AI won\'t replace legal judgment. But lawyers who use it to cut first-pass review time by 60% will replace those who don\'t. Here\'s the workflow that actually holds up.',
     author: 'Thomas Beaumont',
@@ -113,7 +113,7 @@ const POSTS = [
   {
     slug: 'customer-success-ai-retention',
     category: 'Customer Success',
-    categoryColor: '#F43F5E',
+    categoryColor: '#DC2626',
     title: 'How Our CS Team Cut Churn by 18% Using AI to Spot At-Risk Accounts Earlier',
     excerpt: 'We weren\'t missing the signals — we were drowning in them. AI didn\'t replace our CSMs\' instincts; it gave them the bandwidth to actually act on what they already knew.',
     author: 'Lena Vasquez',

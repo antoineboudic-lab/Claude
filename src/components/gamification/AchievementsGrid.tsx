@@ -22,8 +22,8 @@ export function AchievementsGrid() {
             key={id}
             className="flex flex-col items-center gap-2 p-3 rounded-xl text-center"
             style={{
-              background: earned ? 'rgba(139,92,246,0.08)' : 'rgba(255,255,255,0.02)',
-              border: earned ? '1px solid rgba(139,92,246,0.2)' : '1px solid rgba(255,255,255,0.05)',
+              background: earned ? 'rgba(59,130,246,0.08)' : 'rgba(255,255,255,0.02)',
+              border: earned ? '1px solid rgba(59,130,246,0.2)' : '1px solid rgba(255,255,255,0.05)',
               opacity: earned ? 1 : 0.4,
             }}
           >

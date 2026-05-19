@@ -15,15 +15,15 @@ import {
 } from '@/lib/supabase/teams'
 
 const TRACKS = [
-  { id: 'marketing',  label: 'Marketing',        color: '#EC4899' },
+  { id: 'marketing',  label: 'Marketing',        color: '#E04D2A' },
   { id: 'finance',    label: 'Finance',           color: '#F59E0B' },
   { id: 'hr',         label: 'HR',                color: '#10B981' },
-  { id: 'sales',      label: 'Sales',             color: '#8B5CF6' },
+  { id: 'sales',      label: 'Sales',             color: '#3B82F6' },
   { id: 'operations', label: 'Operations',        color: '#22D3EE' },
   { id: 'leadership', label: 'Leadership',        color: '#F97316' },
-  { id: 'legal',      label: 'Legal',             color: '#6366F1' },
+  { id: 'legal',      label: 'Legal',             color: '#0284C7' },
   { id: 'product',    label: 'Product',           color: '#14B8A6' },
-  { id: 'customer',   label: 'Customer Success',  color: '#F43F5E' },
+  { id: 'customer',   label: 'Customer Success',  color: '#DC2626' },
   { id: 'consulting', label: 'Consulting',        color: '#0EA5E9' },
 ]
 

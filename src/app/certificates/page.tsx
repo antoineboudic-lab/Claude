@@ -56,15 +56,15 @@ function EarnedCertificates({ completedTracks }: { completedTracks: string[] }) 
 }
 
 const TRACKS = [
-  { name: 'AI for Marketing',        color: '#EC4899', skills: ['AI copywriting', 'Campaign automation', 'Content strategy'] },
+  { name: 'AI for Marketing',        color: '#E04D2A', skills: ['AI copywriting', 'Campaign automation', 'Content strategy'] },
   { name: 'AI for Finance',          color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis'] },
   { name: 'AI for HR',               color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics'] },
   { name: 'AI for Sales',            color: '#0D9488', skills: ['Prospect research', 'Proposal writing', 'CRM automation'] },
   { name: 'AI for Operations',       color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Quality ops'] },
   { name: 'AI for Leaders',          color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement'] },
-  { name: 'AI for Legal',            color: '#6366F1', skills: ['Contract analysis', 'Legal research', 'Risk assessment'] },
+  { name: 'AI for Legal',            color: '#0284C7', skills: ['Contract analysis', 'Legal research', 'Risk assessment'] },
   { name: 'AI for Product',          color: '#14B8A6', skills: ['User research', 'Roadmap prioritisation', 'PRD writing'] },
-  { name: 'AI for Customer Success', color: '#F43F5E', skills: ['Health monitoring', 'Churn prevention', 'CS operations'] },
+  { name: 'AI for Customer Success', color: '#DC2626', skills: ['Health monitoring', 'Churn prevention', 'CS operations'] },
   { name: 'AI for Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing'] },
 ]
 

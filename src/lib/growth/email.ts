@@ -198,14 +198,14 @@ function weeklyDigestHtml(name: string, stats: WeeklyStats): string {
                  <p style="margin:0;font-size:12px;color:#64748B;">Day streak</p>
                </td>
                <td style="padding:20px 24px;text-align:center;width:33%;">
-                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#6366F1;">${srDue}</p>
+                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#0284C7;">${srDue}</p>
                  <p style="margin:0;font-size:12px;color:#64748B;">Cards due</p>
                </td>
              </tr>
            </table>`)}
-    ${srDue > 0 ? row(`<table cellpadding="0" cellspacing="0" style="background:#EEF2FF;border:1px solid #C7D2FE;border-radius:12px;width:100%;">
+    ${srDue > 0 ? row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;width:100%;">
              <tr><td style="padding:16px 20px;">
-               <p style="margin:0;font-size:14px;color:#3730A3;">🃏 <strong>${srDue} flashcard${srDue !== 1 ? 's' : ''} due for review</strong> — spending 5 minutes now locks in everything you&apos;ve learned.</p>
+               <p style="margin:0;font-size:14px;color:#1E40AF;">🃏 <strong>${srDue} flashcard${srDue !== 1 ? 's' : ''} due for review</strong> — spending 5 minutes now locks in everything you&apos;ve learned.</p>
              </td></tr>
            </table>`) : ''}
     ${row(btn('Continue learning →', `${BASE_URL}/dashboard`))}
