@@ -52,7 +52,9 @@ function mergeStates(local: GameState, remote: GameState): GameState {
   return {
     xp: Math.max(local.xp, remote.xp),
     streak: Math.max(local.streak, remote.streak),
+    longestStreak: Math.max(local.longestStreak ?? 0, remote.longestStreak ?? 0),
     lastActiveDate: local.lastActiveDate ?? remote.lastActiveDate,
+    activityDates: Array.from(new Set([...(local.activityDates ?? []), ...(remote.activityDates ?? [])])),
     completedLessons: Array.from(new Set([...local.completedLessons, ...remote.completedLessons])),
     completedModules: Array.from(new Set([...local.completedModules, ...remote.completedModules])),
     completedTracks: Array.from(new Set([...local.completedTracks, ...remote.completedTracks])),
@@ -148,7 +150,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     if (state.lastActiveDate === today) return state
     const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
     const newStreak = state.lastActiveDate === yesterday ? state.streak + 1 : 1
-    return { ...state, streak: newStreak, lastActiveDate: today }
+    const newLongest = Math.max(state.longestStreak ?? 0, newStreak)
+    // Keep activityDates to last 90 days to avoid unbounded growth
+    const existing = state.activityDates ?? []
+    const cutoff = new Date(Date.now() - 90 * 86400000).toISOString().split('T')[0]
+    const newDates = Array.from(new Set([...existing, today])).filter(d => d >= cutoff)
+    return { ...state, streak: newStreak, longestStreak: newLongest, lastActiveDate: today, activityDates: newDates }
   }, [])
 
   const addXP = useCallback((amount: number, label: string) => {
@@ -177,9 +184,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         pushXPEvent(`${next.streak}-day streak`, XP.DAILY_STREAK)
       }
 
+      // Streak milestone bonuses
+      if (next.streak === 3)  { next = { ...next, xp: next.xp + 25 }; pushXPEvent('3-day streak bonus!', 25) }
+      if (next.streak === 7)  { next = { ...next, xp: next.xp + 75 }; pushXPEvent('7-day streak bonus!', 75) }
+      if (next.streak === 14) { next = { ...next, xp: next.xp + 150 }; pushXPEvent('14-day streak bonus!', 150) }
+      if (next.streak === 30) { next = { ...next, xp: next.xp + 300 }; pushXPEvent('30-day streak bonus!', 300) }
+
       if (next.completedLessons.length === 1) next = awardBadge(next, 'first_lesson')
       if (next.completedLessons.length === 10) next = awardBadge(next, 'dedicated')
-      if (next.streak === 7) next = awardBadge(next, 'streak_7')
+      if (next.streak === 3)  next = awardBadge(next, 'streak_3')
+      if (next.streak === 7)  next = awardBadge(next, 'streak_7')
+      if (next.streak === 14) next = awardBadge(next, 'streak_14')
       if (next.streak === 30) next = awardBadge(next, 'streak_30')
 
       const hour = new Date().getHours()

@@ -140,6 +140,114 @@ function StatCard({
   )
 }
 
+// ─── Streak card ──────────────────────────────────────────────────────────────
+
+function StreakCard({
+  streak, longestStreak, lastActiveDate, activityDates,
+}: {
+  streak: number
+  longestStreak: number
+  lastActiveDate: string | null
+  activityDates: string[]
+}) {
+  const today = new Date().toISOString().split('T')[0]
+  const studiedToday = lastActiveDate === today
+  const atRisk = streak > 0 && !studiedToday
+
+  // Build last-7-days array (oldest → newest)
+  const days = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(Date.now() - (6 - i) * 86400000)
+    const iso = d.toISOString().split('T')[0]
+    const isToday = iso === today
+    const active = activityDates.includes(iso)
+    return { iso, label: d.toLocaleDateString('en', { weekday: 'narrow' }), active, isToday }
+  })
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.22, duration: 0.55, ease: easing }}
+      className="rounded-2xl overflow-hidden"
+      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+    >
+      {/* Header */}
+      <div className="px-5 pt-5 pb-4">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <motion.span
+              animate={streak > 0 ? { scale: [1, 1.15, 1] } : {}}
+              transition={{ duration: 0.6, repeat: streak > 0 ? Infinity : 0, repeatDelay: 2 }}
+              style={{ display: 'inline-block', fontSize: '1.25rem', lineHeight: 1 }}
+            >
+              🔥
+            </motion.span>
+            <div>
+              <p className="text-2xl font-black leading-none" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                {streak}
+                <span className="text-sm font-semibold ml-1" style={{ color: '#94A3B8' }}>days</span>
+              </p>
+            </div>
+          </div>
+          {longestStreak > 0 && (
+            <div className="text-right">
+              <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>Best</p>
+              <p className="text-sm font-bold" style={{ color: '#F59E0B', fontFamily: 'var(--font-sans)' }}>
+                {longestStreak}d
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* 7-day calendar */}
+        <div className="flex gap-1.5 mb-3">
+          {days.map(d => (
+            <div key={d.iso} className="flex-1 flex flex-col items-center gap-1">
+              <span style={{ fontSize: '0.625rem', color: '#CBD5E1', fontFamily: 'var(--font-sans)', fontWeight: 500 }}>
+                {d.label}
+              </span>
+              <div
+                style={{
+                  width: '100%',
+                  aspectRatio: '1',
+                  borderRadius: '6px',
+                  background: d.active ? '#F59E0B' : d.isToday ? '#FEF3C7' : '#F1F5F9',
+                  border: d.isToday ? '1.5px solid #FCD34D' : 'none',
+                  transition: 'background 0.2s',
+                }}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Status message */}
+        {streak === 0 ? (
+          <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            Complete a lesson to start your streak
+          </p>
+        ) : studiedToday ? (
+          <div className="flex items-center gap-1.5">
+            <CheckCircle2 size={12} style={{ color: '#10B981', flexShrink: 0 }} />
+            <p className="text-xs font-medium" style={{ color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+              You&apos;ve studied today — streak safe!
+            </p>
+          </div>
+        ) : (
+          <div
+            className="flex items-center gap-2 px-3 py-2 rounded-lg"
+            style={{ background: '#FEF3C7', border: '1px solid #FDE68A' }}
+          >
+            <Flame size={12} style={{ color: '#F59E0B', flexShrink: 0 }} />
+            <p className="text-xs font-medium" style={{ color: '#92400E', fontFamily: 'var(--font-sans)' }}>
+              Study today to protect your {streak}-day streak!
+            </p>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
 // ─── Learning path card ───────────────────────────────────────────────────────
 
 function LearningPathCard({ result }: { result: AssessmentResult }) {
@@ -733,9 +841,15 @@ export default function DashboardPage() {
             </div>
           )}
 
-          {/* Right: level + badges */}
+          {/* Right: level + streak + badges */}
           <div className="space-y-6">
             <LevelCard xp={state.xp} />
+            <StreakCard
+              streak={state.streak}
+              longestStreak={state.longestStreak ?? 0}
+              lastActiveDate={state.lastActiveDate}
+              activityDates={state.activityDates ?? []}
+            />
             <BadgesSection earned={state.earnedBadges} />
 
             {/* Quick links */}

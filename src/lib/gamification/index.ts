@@ -1,7 +1,9 @@
 export type BadgeId =
   | 'first_lesson'
   | 'perfect_score'
+  | 'streak_3'
   | 'streak_7'
+  | 'streak_14'
   | 'streak_30'
   | 'module_complete'
   | 'track_complete'
@@ -28,7 +30,9 @@ export interface Level {
 export interface GameState {
   xp: number
   streak: number
+  longestStreak: number
   lastActiveDate: string | null
+  activityDates: string[]   // ISO date strings (YYYY-MM-DD) of days with lesson activity
   completedLessons: string[]
   completedModules: string[]
   completedTracks: string[]
@@ -53,6 +57,13 @@ export const BADGES: Record<BadgeId, Badge> = {
     icon: '💡',
     xp: 0,
   },
+  streak_3: {
+    id: 'streak_3',
+    name: 'On a Roll',
+    description: 'Learned 3 days in a row',
+    icon: '🔥',
+    xp: 0,
+  },
   streak_7: {
     id: 'streak_7',
     name: '7-Day Streak',
@@ -60,11 +71,18 @@ export const BADGES: Record<BadgeId, Badge> = {
     icon: '🔥',
     xp: 0,
   },
+  streak_14: {
+    id: 'streak_14',
+    name: 'Two Weeks Strong',
+    description: 'Learned 14 days in a row',
+    icon: '⚡',
+    xp: 0,
+  },
   streak_30: {
     id: 'streak_30',
     name: 'Committed',
     description: 'Learned 30 days in a row',
-    icon: '⚡',
+    icon: '💎',
     xp: 0,
   },
   module_complete: {
@@ -144,7 +162,9 @@ export function getProgressToNextLevel(xp: number): number {
 export const DEFAULT_STATE: GameState = {
   xp: 0,
   streak: 0,
+  longestStreak: 0,
   lastActiveDate: null,
+  activityDates: [],
   completedLessons: [],
   completedModules: [],
   completedTracks: [],

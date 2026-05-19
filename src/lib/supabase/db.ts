@@ -17,7 +17,9 @@ export async function loadUserProgress(userId: string): Promise<GameState | null
   return {
     xp: data.xp ?? 0,
     streak: data.streak ?? 0,
+    longestStreak: data.longest_streak ?? 0,
     lastActiveDate: data.last_active_date ?? null,
+    activityDates: data.activity_dates ?? [],
     completedLessons: data.completed_lessons ?? [],
     completedModules: data.completed_modules ?? [],
     completedTracks: data.completed_tracks ?? [],
