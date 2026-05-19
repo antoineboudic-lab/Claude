@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
-  Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search, ExternalLink,
+  Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search, ExternalLink, RotateCcw,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
@@ -618,6 +618,7 @@ export default function DashboardPage() {
   const { state, syncing } = useGame()
   const [assessment, setAssessment] = useState<AssessmentResult | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [srDueCount, setSrDueCount] = useState(0)
   const [teamHref, setTeamHref] = useState<string | null>(null)
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [referralStats, setReferralStats] = useState<{ clicks: number; signups: number; conversions: number; reward_xp: number } | null>(null)
@@ -636,7 +637,10 @@ export default function DashboardPage() {
     return () => window.removeEventListener('keydown', handler)
   }, [])
 
-  useEffect(() => { setMounted(true) }, [])
+  useEffect(() => {
+    setMounted(true)
+    import('@/lib/srs').then(({ getDueCount }) => setSrDueCount(getDueCount()))
+  }, [])
 
   useEffect(() => {
     if (!user) return
@@ -825,6 +829,38 @@ export default function DashboardPage() {
           <StatCard icon={CheckCircle2} label="Lessons done" value={state.completedLessons.length} color="#10B981" delay={0.15} />
           <StatCard icon={Award} label="Badges earned" value={state.earnedBadges.length} color="#EC4899" delay={0.2} />
         </div>
+
+        {/* Review due banner */}
+        {srDueCount > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.4 }}
+            className="mb-6 rounded-2xl px-5 py-4 flex items-center justify-between gap-4 flex-wrap"
+            style={{ background: '#EEF2FF', border: '1px solid #C7D2FE' }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#6366F1' }}>
+                <RotateCcw size={14} color="#FFFFFF" />
+              </div>
+              <div>
+                <p className="text-sm font-bold" style={{ color: '#3730A3', fontFamily: 'var(--font-sans)' }}>
+                  {srDueCount} card{srDueCount !== 1 ? 's' : ''} ready for review
+                </p>
+                <p className="text-xs" style={{ color: '#6366F1', fontFamily: 'var(--font-sans)' }}>
+                  Reinforce what you have learned — takes about {Math.ceil(srDueCount * 0.5)} min
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/review"
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90 flex-shrink-0"
+              style={{ background: '#6366F1', color: '#FFFFFF', textDecoration: 'none', fontFamily: 'var(--font-sans)' }}
+            >
+              Start review <ArrowRight size={14} />
+            </Link>
+          </motion.div>
+        )}
 
         {/* Main grid */}
         <div className="grid lg:grid-cols-3 gap-6">

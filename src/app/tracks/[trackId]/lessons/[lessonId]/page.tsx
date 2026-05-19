@@ -22,6 +22,7 @@ import { useBookmarks } from '@/hooks/useBookmarks'
 import { useNotes } from '@/hooks/useNotes'
 import { XP } from '@/lib/gamification'
 import { getLesson, getNextLesson, getTrack } from '@/lib/curriculum'
+import { addLessonToQueue } from '@/lib/srs'
 import type { Lesson, Module, InlineCheck, OutputComparison, ApplyThisWeek } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
 
@@ -1314,6 +1315,9 @@ export default function LessonPage() {
   const handleMarkComplete = () => {
     if (completed) return
     completeLesson(lessonId, moduleId, trackId)
+    if (lesson?.quiz?.length) {
+      addLessonToQueue(lessonId, trackId, lesson.title, lesson.quiz)
+    }
   }
 
   const handleExerciseDone = () => {
