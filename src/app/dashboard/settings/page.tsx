@@ -7,6 +7,7 @@ import {
   User, Settings, Users, ArrowLeft, Save, Check, Loader2,
   Zap, ChevronRight, Mail, Building2, Briefcase, Target,
   Crown, AlertCircle, Copy, ExternalLink, UserPlus, X,
+  Lock, Eye, EyeOff,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
@@ -103,6 +104,41 @@ function Field({
 
 // ─── Profile tab ──────────────────────────────────────────────────────────────
 
+function PasswordField({
+  label, value, onChange, placeholder, show, onToggle,
+}: {
+  label: string; value: string; onChange: (v: string) => void
+  placeholder: string; show: boolean; onToggle: () => void
+}) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold mb-1.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+        {label}
+      </label>
+      <div className="relative">
+        <Lock size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#CBD5E1' }} />
+        <input
+          type={show ? 'text' : 'password'}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-full pl-10 pr-10 py-3 rounded-xl text-sm outline-none transition-all"
+          style={{ background: '#EFF6FF', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+          onFocus={e => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.background = '#FFFFFF' }}
+          onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#EFF6FF' }}
+        />
+        <button
+          type="button" onClick={onToggle}
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors hover:text-slate-500"
+          style={{ color: '#CBD5E1' }}
+        >
+          {show ? <EyeOff size={13} /> : <Eye size={13} />}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<string, string> } }) {
   const [name, setName] = useState(user.user_metadata?.full_name ?? '')
   const [jobTitle, setJobTitle] = useState(user.user_metadata?.job_title ?? '')
@@ -110,6 +146,19 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
   const [loading, setLoading] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
+
+  // Password change
+  const [pwOpen, setPwOpen] = useState(false)
+  const [currentPw, setCurrentPw] = useState('')
+  const [newPw, setNewPw] = useState('')
+  const [confirmPw, setConfirmPw] = useState('')
+  const [showCurrent, setShowCurrent] = useState(false)
+  const [showNew, setShowNew] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
+  const [pwLoading, setPwLoading] = useState(false)
+  const [pwError, setPwError] = useState('')
+  const [pwSaved, setPwSaved] = useState(false)
+
   const supabase = useRef(createClient())
 
   async function save(e: React.FormEvent) {
@@ -123,6 +172,35 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
     if (error) { setError(error.message); return }
     setSaved(true)
     setTimeout(() => setSaved(false), 3000)
+  }
+
+  async function changePassword(e: React.FormEvent) {
+    e.preventDefault()
+    setPwError('')
+    if (newPw !== confirmPw) { setPwError('New passwords do not match.'); return }
+    if (newPw.length < 6) { setPwError('New password must be at least 6 characters.'); return }
+    setPwLoading(true)
+
+    // Re-authenticate with current password first
+    const { error: authErr } = await supabase.current.auth.signInWithPassword({
+      email: user.email ?? '',
+      password: currentPw,
+    })
+    if (authErr) {
+      setPwLoading(false)
+      setPwError('Current password is incorrect.')
+      return
+    }
+
+    const { error: updateErr } = await supabase.current.auth.updateUser({ password: newPw })
+    setPwLoading(false)
+    if (updateErr) { setPwError(updateErr.message); return }
+
+    setPwSaved(true)
+    setCurrentPw('')
+    setNewPw('')
+    setConfirmPw('')
+    setTimeout(() => { setPwSaved(false); setPwOpen(false) }, 3000)
   }
 
   return (
@@ -158,18 +236,86 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
         </form>
       </SectionCard>
 
-      <SectionCard title="Account">
-        <div className="flex items-center justify-between py-2">
+      <SectionCard title="Password">
+        <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Password</p>
-            <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>Change your account password</p>
+            <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Change password</p>
+            <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+              {pwOpen ? 'Enter your current and new password below.' : 'Update your account password.'}
+            </p>
           </div>
-          <Link href="/?forgot=1"
-            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80"
-            style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-            Change <ChevronRight size={12} />
-          </Link>
+          {!pwOpen && (
+            <button
+              onClick={() => setPwOpen(true)}
+              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80"
+              style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}
+            >
+              Change <ChevronRight size={12} />
+            </button>
+          )}
         </div>
+
+        <AnimatePresence>
+          {pwOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.22 }}
+              className="overflow-hidden"
+            >
+              <form onSubmit={changePassword} className="space-y-3 mt-5">
+                <PasswordField
+                  label="Current password" value={currentPw} onChange={setCurrentPw}
+                  placeholder="Your current password" show={showCurrent} onToggle={() => setShowCurrent(v => !v)}
+                />
+                <PasswordField
+                  label="New password" value={newPw} onChange={setNewPw}
+                  placeholder="Min. 6 characters" show={showNew} onToggle={() => setShowNew(v => !v)}
+                />
+                <PasswordField
+                  label="Confirm new password" value={confirmPw} onChange={setConfirmPw}
+                  placeholder="Repeat new password" show={showConfirm} onToggle={() => setShowConfirm(v => !v)}
+                />
+
+                <AnimatePresence>
+                  {pwError && (
+                    <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                      className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
+                      style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                      <AlertCircle size={13} className="flex-shrink-0" />{pwError}
+                    </motion.div>
+                  )}
+                  {pwSaved && (
+                    <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                      className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
+                      style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+                      <Check size={13} /> Password updated successfully
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <div className="flex items-center gap-3 pt-1">
+                  <button
+                    type="submit" disabled={pwLoading || !currentPw || !newPw || !confirmPw}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+                  >
+                    {pwLoading ? <><Loader2 size={13} className="animate-spin" /> Updating…</> : <><Lock size={13} /> Update password</>}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setPwOpen(false); setPwError(''); setCurrentPw(''); setNewPw(''); setConfirmPw('') }}
+                    className="text-xs font-semibold transition-colors hover:text-slate-600"
+                    style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </SectionCard>
     </motion.div>
   )
