@@ -209,6 +209,7 @@ export default function AssessmentResultsPage() {
       })
       if (!res.ok) throw new Error('Failed')
       setEmailUnlocked(true)
+      openSignUp(email)
     } catch {
       setCaptureError('Something went wrong — try again.')
     } finally {
@@ -450,7 +451,7 @@ export default function AssessmentResultsPage() {
                     Your personalised path is saved. Create an account to track your progress, earn XP, and get lesson reminders — free forever.
                   </p>
                   <button
-                    onClick={openSignUp}
+                    onClick={() => openSignUp(captureEmail)}
                     className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                     style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', boxShadow: '0 4px 20px rgba(37,99,235,0.35)', fontFamily: 'var(--font-sans)' }}
                   >
@@ -803,7 +804,7 @@ export default function AssessmentResultsPage() {
             {!user ? (
               <div className="flex flex-col items-center gap-3">
                 <button
-                  onClick={openSignUp}
+                  onClick={() => openSignUp()}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                   style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.3)', fontFamily: 'var(--font-sans)' }}>
                   <Zap size={14} /> Create free account &amp; start learning

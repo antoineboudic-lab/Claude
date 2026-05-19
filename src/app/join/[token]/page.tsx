@@ -252,7 +252,7 @@ export default function JoinPage() {
             ) : (
               <div className="space-y-3">
                 <button
-                  onClick={openSignUp}
+                  onClick={() => openSignUp()}
                   className="w-full py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90 flex items-center justify-center gap-2"
                   style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
                   Create account & join <ArrowRight size={15} />

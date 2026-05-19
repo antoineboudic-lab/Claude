@@ -230,7 +230,7 @@ export default function TrackPage() {
               </button>
             </>
           ) : (
-            <button onClick={openSignUp}
+            <button onClick={() => openSignUp()}
               className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"
               style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
               Get started free
@@ -441,7 +441,7 @@ export default function TrackPage() {
                   )}
                   {!isModuleAccessible ? (
                     <button
-                      onClick={openSignUp}
+                      onClick={() => openSignUp()}
                       className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all hover:opacity-90"
                       style={{ background: '#2563EB', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
                       <Lock size={10} /> Unlock free trial
@@ -466,7 +466,7 @@ export default function TrackPage() {
                     <div key={lessonId}
                       className="px-6 py-3.5 flex items-center justify-between group transition-colors"
                       style={{ cursor: !canAccess ? 'pointer' : 'default' }}
-                      onClick={!canAccess ? openSignUp : undefined}>
+                      onClick={!canAccess ? () => openSignUp() : undefined}>
                       <div className="flex items-center gap-3 hover:bg-slate-50 rounded-lg -mx-1 px-1 w-full py-0.5 transition-colors">
                         <div className="w-5 h-5 flex-shrink-0">
                           {isDone

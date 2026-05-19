@@ -348,7 +348,7 @@ export default function TeamsPage() {
           </div>
           <p className="text-center text-sm mt-8" style={{ color: '#94A3B8' }}>
             Need individual access?{' '}
-            <button onClick={openSignUp} className="font-semibold hover:underline" style={{ color: '#2563EB' }}>
+            <button onClick={() => openSignUp()} className="font-semibold hover:underline" style={{ color: '#2563EB' }}>
               Start free as a solo learner
             </button>
           </p>

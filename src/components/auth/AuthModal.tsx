@@ -10,7 +10,7 @@ import { createClient } from '@/lib/supabase/client'
 type AuthStep = 'form' | 'verify' | 'forgot' | 'reset-sent'
 
 export function AuthModal() {
-  const { modalView, closeModal, openSignIn, openSignUp } = useAuth()
+  const { modalView, closeModal, openSignIn, openSignUp, prefillEmail } = useAuth()
   const [step, setStep] = useState<AuthStep>('form')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -30,9 +30,10 @@ export function AuthModal() {
       setStep('form')
       setError('')
       setPassword('')
+      if (prefillEmail) setEmail(prefillEmail)
       setTimeout(() => emailRef.current?.focus(), 100)
     }
-  }, [isOpen, modalView])
+  }, [isOpen, modalView, prefillEmail])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') closeModal() }

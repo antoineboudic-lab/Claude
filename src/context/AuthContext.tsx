@@ -11,8 +11,9 @@ interface AuthContextValue {
   session: Session | null
   loading: boolean
   modalView: ModalView
+  prefillEmail: string
   openSignIn: () => void
-  openSignUp: () => void
+  openSignUp: (email?: string) => void
   closeModal: () => void
   signOut: () => Promise<void>
 }
@@ -24,6 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
   const [modalView, setModalView] = useState<ModalView>('closed')
+  const [prefillEmail, setPrefillEmail] = useState('')
   const supabase = useRef(createClient())
 
   useEffect(() => {
@@ -66,10 +68,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{
-      user, session, loading, modalView,
+      user, session, loading, modalView, prefillEmail,
       openSignIn: () => setModalView('signin'),
-      openSignUp: () => setModalView('signup'),
-      closeModal: () => setModalView('closed'),
+      openSignUp: (email?: string) => { setPrefillEmail(email ?? ''); setModalView('signup') },
+      closeModal: () => { setModalView('closed'); setPrefillEmail('') },
       signOut,
     }}>
       {children}
