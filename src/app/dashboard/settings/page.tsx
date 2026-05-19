@@ -1,0 +1,649 @@
+'use client'
+
+import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  User, Settings, Users, ArrowLeft, Save, Check, Loader2,
+  Zap, ChevronRight, Mail, Building2, Briefcase, Target,
+  Crown, AlertCircle, Copy, ExternalLink, UserPlus, X,
+} from 'lucide-react'
+import { useAuth } from '@/context/AuthContext'
+import { createClient } from '@/lib/supabase/client'
+import {
+  getAdminTeam, getMemberTeam, createTeam, createInvite,
+  type Team, type TeamMember,
+} from '@/lib/supabase/teams'
+import { getAllTracks } from '@/lib/curriculum'
+import type { TrackId } from '@/lib/curriculum/types'
+
+const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
+
+const TABS = [
+  { id: 'profile', label: 'Profile', icon: User },
+  { id: 'preferences', label: 'Preferences', icon: Settings },
+  { id: 'team', label: 'Team', icon: Users },
+] as const
+type Tab = typeof TABS[number]['id']
+
+const TRACK_COLORS: Record<string, string> = {
+  marketing: '#E04D2A', finance: '#F59E0B', hr: '#10B981',
+  sales: '#3B82F6', operations: '#22D3EE', leadership: '#F97316',
+  legal: '#0284C7', product: '#14B8A6', customer: '#DC2626', consulting: '#0EA5E9',
+}
+
+const PLAN_OPTIONS = [
+  { id: 'starter', label: 'Starter', seats: '15 seats', desc: 'Small teams getting started', color: '#10B981' },
+  { id: 'growth', label: 'Growth', seats: '50 seats', desc: 'Growing teams at scale', color: '#2563EB' },
+  { id: 'enterprise', label: 'Enterprise', seats: 'Unlimited', desc: 'Large organisations', color: '#7C3AED' },
+] as const
+
+// ─── Saved badge ──────────────────────────────────────────────────────────────
+
+function SavedBadge({ show }: { show: boolean }) {
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.span
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg"
+          style={{ background: '#F0FDF4', color: '#10B981', border: '1px solid #BBF7D0' }}
+        >
+          <Check size={11} /> Saved
+        </motion.span>
+      )}
+    </AnimatePresence>
+  )
+}
+
+// ─── Section card ─────────────────────────────────────────────────────────────
+
+function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl p-6" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+      <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+        {title}
+      </p>
+      {children}
+    </div>
+  )
+}
+
+// ─── Text field ───────────────────────────────────────────────────────────────
+
+function Field({
+  icon: Icon, label, value, onChange, placeholder, type = 'text',
+}: {
+  icon: React.ElementType; label: string; value: string
+  onChange: (v: string) => void; placeholder: string; type?: string
+}) {
+  return (
+    <div>
+      <label className="block text-xs font-semibold mb-1.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+        {label}
+      </label>
+      <div className="relative">
+        <Icon size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#CBD5E1' }} />
+        <input
+          type={type}
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
+          style={{ background: '#EFF6FF', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+          onFocus={e => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.background = '#FFFFFF' }}
+          onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#EFF6FF' }}
+        />
+      </div>
+    </div>
+  )
+}
+
+// ─── Profile tab ──────────────────────────────────────────────────────────────
+
+function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<string, string> } }) {
+  const [name, setName] = useState(user.user_metadata?.full_name ?? '')
+  const [jobTitle, setJobTitle] = useState(user.user_metadata?.job_title ?? '')
+  const [company, setCompany] = useState(user.user_metadata?.company ?? '')
+  const [loading, setLoading] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [error, setError] = useState('')
+  const supabase = useRef(createClient())
+
+  async function save(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    const { error } = await supabase.current.auth.updateUser({
+      data: { full_name: name, job_title: jobTitle, company },
+    })
+    setLoading(false)
+    if (error) { setError(error.message); return }
+    setSaved(true)
+    setTimeout(() => setSaved(false), 3000)
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: easing }}
+      className="space-y-5">
+      <SectionCard title="Personal info">
+        <form onSubmit={save} className="space-y-4">
+          <Field icon={User} label="Display name" value={name} onChange={setName} placeholder="Your full name" />
+          <Field icon={Briefcase} label="Job title" value={jobTitle} onChange={setJobTitle} placeholder="e.g. Marketing Manager" />
+          <Field icon={Building2} label="Company" value={company} onChange={setCompany} placeholder="Your company name" />
+          <Field icon={Mail} label="Email" value={user.email ?? ''} onChange={() => {}} placeholder="" type="email" />
+
+          <AnimatePresence>
+            {error && (
+              <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
+                style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                <AlertCircle size={13} className="flex-shrink-0" />{error}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="flex items-center gap-3 pt-1">
+            <button
+              type="submit" disabled={loading}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+              style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+            >
+              {loading ? <><Loader2 size={13} className="animate-spin" /> Saving…</> : <><Save size={13} /> Save changes</>}
+            </button>
+            <SavedBadge show={saved} />
+          </div>
+        </form>
+      </SectionCard>
+
+      <SectionCard title="Account">
+        <div className="flex items-center justify-between py-2">
+          <div>
+            <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Password</p>
+            <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>Change your account password</p>
+          </div>
+          <Link href="/?forgot=1"
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80"
+            style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+            Change <ChevronRight size={12} />
+          </Link>
+        </div>
+      </SectionCard>
+    </motion.div>
+  )
+}
+
+// ─── Preferences tab ──────────────────────────────────────────────────────────
+
+const DAILY_GOALS = [
+  { value: '1', label: '1 lesson / week', desc: 'Light touch' },
+  { value: '3', label: '3 lessons / week', desc: 'Steady pace' },
+  { value: '5', label: '5 lessons / week', desc: 'Committed' },
+  { value: '7', label: 'Daily', desc: 'Full focus' },
+]
+
+function PreferencesTab() {
+  const tracks = getAllTracks()
+  const [primaryTrack, setPrimaryTrack] = useState<TrackId | ''>('')
+  const [dailyGoal, setDailyGoal] = useState('3')
+  const [emailDigest, setEmailDigest] = useState(true)
+  const [saved, setSaved] = useState(false)
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('ai-literacy-preferences')
+      if (raw) {
+        const p = JSON.parse(raw)
+        if (p.primaryTrack) setPrimaryTrack(p.primaryTrack)
+        if (p.dailyGoal) setDailyGoal(p.dailyGoal)
+        if (typeof p.emailDigest === 'boolean') setEmailDigest(p.emailDigest)
+      }
+    } catch { /* ignore */ }
+  }, [])
+
+  function save() {
+    localStorage.setItem('ai-literacy-preferences', JSON.stringify({ primaryTrack, dailyGoal, emailDigest }))
+    setSaved(true)
+    setTimeout(() => setSaved(false), 3000)
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: easing }}
+      className="space-y-5">
+      <SectionCard title="Learning track">
+        <p className="text-sm mb-4" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+          Pick your primary focus area. This personalises your dashboard recommendations.
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+          {tracks.map(t => {
+            const color = TRACK_COLORS[t.id] ?? '#2563EB'
+            const selected = primaryTrack === t.id
+            return (
+              <button
+                key={t.id}
+                onClick={() => setPrimaryTrack(t.id as TrackId)}
+                className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left transition-all"
+                style={{
+                  background: selected ? `${color}12` : '#EFF6FF',
+                  border: selected ? `1.5px solid ${color}` : '1.5px solid #E2E8F0',
+                }}
+              >
+                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color }} />
+                <span className="text-xs font-semibold truncate" style={{ color: selected ? color : '#64748B', fontFamily: 'var(--font-sans)' }}>
+                  {t.title}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </SectionCard>
+
+      <SectionCard title="Weekly goal">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {DAILY_GOALS.map(g => {
+            const selected = dailyGoal === g.value
+            return (
+              <button
+                key={g.value}
+                onClick={() => setDailyGoal(g.value)}
+                className="flex flex-col items-center gap-1 py-4 rounded-xl transition-all"
+                style={{
+                  background: selected ? '#2563EB' : '#EFF6FF',
+                  border: selected ? '1.5px solid #2563EB' : '1.5px solid #E2E8F0',
+                }}
+              >
+                <span className="text-sm font-black" style={{ color: selected ? '#FFFFFF' : '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                  {g.value === '7' ? '7' : g.value}
+                </span>
+                <span className="text-[10px] font-semibold" style={{ color: selected ? '#BFDBFE' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                  {g.desc}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </SectionCard>
+
+      <SectionCard title="Notifications">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Weekly progress digest</p>
+            <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>A summary of your learning activity each week</p>
+          </div>
+          <button
+            onClick={() => setEmailDigest(v => !v)}
+            className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
+            style={{ background: emailDigest ? '#2563EB' : '#E2E8F0' }}
+          >
+            <span
+              className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all"
+              style={{ left: emailDigest ? '1.375rem' : '0.125rem' }}
+            />
+          </button>
+        </div>
+      </SectionCard>
+
+      <div className="flex items-center gap-3">
+        <button
+          onClick={save}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+          style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+        >
+          <Save size={13} /> Save preferences
+        </button>
+        <SavedBadge show={saved} />
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Team tab ─────────────────────────────────────────────────────────────────
+
+function TeamTab({ userId }: { userId: string }) {
+  const [loading, setLoading] = useState(true)
+  const [adminTeam, setAdminTeam] = useState<Team | null>(null)
+  const [memberInfo, setMemberInfo] = useState<{ team: Team; member: TeamMember } | null>(null)
+
+  // Create team form
+  const [teamName, setTeamName] = useState('')
+  const [plan, setPlan] = useState<'starter' | 'growth' | 'enterprise'>('starter')
+  const [creating, setCreating] = useState(false)
+  const [createError, setCreateError] = useState('')
+
+  // Invite form
+  const [inviteEmail, setInviteEmail] = useState('')
+  const [inviting, setInviting] = useState(false)
+  const [inviteSuccess, setInviteSuccess] = useState(false)
+  const [inviteError, setInviteError] = useState('')
+
+  // Copy invite link
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    async function load() {
+      const [admin, member] = await Promise.all([
+        getAdminTeam(userId),
+        getMemberTeam(userId),
+      ])
+      setAdminTeam(admin)
+      setMemberInfo(member)
+      setLoading(false)
+    }
+    load()
+  }, [userId])
+
+  async function handleCreate(e: React.FormEvent) {
+    e.preventDefault()
+    if (!teamName.trim()) return
+    setCreating(true)
+    setCreateError('')
+    const team = await createTeam(userId, teamName.trim(), plan)
+    if (!team) { setCreateError('Failed to create team. Please try again.'); setCreating(false); return }
+    setAdminTeam(team)
+    setCreating(false)
+  }
+
+  async function handleInvite(e: React.FormEvent) {
+    e.preventDefault()
+    if (!adminTeam || !inviteEmail.trim()) return
+    setInviting(true)
+    setInviteError('')
+    const result = await createInvite(adminTeam.id, inviteEmail.trim(), [], userId)
+    setInviting(false)
+    if (!result) { setInviteError('Failed to send invite. Please try again.'); return }
+    setInviteSuccess(true)
+    setInviteEmail('')
+    setTimeout(() => setInviteSuccess(false), 4000)
+  }
+
+  function copyInviteLink() {
+    if (!adminTeam) return
+    const url = `${window.location.origin}/join/${adminTeam.id}`
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    })
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <Loader2 size={22} className="animate-spin" style={{ color: '#2563EB' }} />
+      </div>
+    )
+  }
+
+  const team = adminTeam ?? memberInfo?.team ?? null
+  const isAdmin = !!adminTeam
+
+  // Already in a team
+  if (team) {
+    return (
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: easing }}
+        className="space-y-5">
+        <SectionCard title="Your team">
+          <div className="flex items-center gap-4 mb-5">
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+              style={{ background: '#DBEAFE' }}>
+              <Users size={20} style={{ color: '#2563EB' }} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-lg font-black truncate" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                {team.name}
+              </p>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-lg capitalize"
+                  style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                  {team.plan}
+                </span>
+                {isAdmin && (
+                  <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-lg"
+                    style={{ background: '#FEF3C7', color: '#D97706', fontFamily: 'var(--font-sans)' }}>
+                    <Crown size={10} /> Admin
+                  </span>
+                )}
+              </div>
+            </div>
+            <Link
+              href="/dashboard/team"
+              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80 flex-shrink-0"
+              style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}
+            >
+              Manage <ExternalLink size={11} />
+            </Link>
+          </div>
+        </SectionCard>
+
+        {isAdmin && (
+          <SectionCard title="Invite members">
+            <p className="text-sm mb-4" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              Invite people by email or share the team link.
+            </p>
+
+            <form onSubmit={handleInvite} className="flex gap-2 mb-4">
+              <div className="relative flex-1">
+                <Mail size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#CBD5E1' }} />
+                <input
+                  type="email"
+                  value={inviteEmail}
+                  onChange={e => setInviteEmail(e.target.value)}
+                  placeholder="colleague@company.com"
+                  required
+                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
+                  style={{ background: '#EFF6FF', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+                  onFocus={e => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.background = '#FFFFFF' }}
+                  onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#EFF6FF' }}
+                />
+              </div>
+              <button
+                type="submit" disabled={inviting}
+                className="flex items-center gap-1.5 px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 flex-shrink-0"
+                style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}
+              >
+                {inviting ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
+                Invite
+              </button>
+            </form>
+
+            <AnimatePresence>
+              {inviteSuccess && (
+                <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm mb-3"
+                  style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+                  <Check size={13} /> Invite sent successfully
+                </motion.div>
+              )}
+              {inviteError && (
+                <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm mb-3"
+                  style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                  <AlertCircle size={13} className="flex-shrink-0" />{inviteError}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <div className="flex items-center gap-3 pt-1">
+              <div className="flex-1 px-3 py-2.5 rounded-xl text-xs truncate"
+                style={{ background: '#EFF6FF', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                {typeof window !== 'undefined' ? `${window.location.origin}/join/${team.id}` : ''}
+              </div>
+              <button
+                onClick={copyInviteLink}
+                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2.5 rounded-xl transition-all hover:opacity-80 flex-shrink-0"
+                style={{ background: copied ? '#F0FDF4' : '#DBEAFE', color: copied ? '#10B981' : '#2563EB', fontFamily: 'var(--font-sans)' }}
+              >
+                {copied ? <><Check size={11} /> Copied</> : <><Copy size={11} /> Copy link</>}
+              </button>
+            </div>
+          </SectionCard>
+        )}
+      </motion.div>
+    )
+  }
+
+  // No team — show create form
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: easing }}
+      className="space-y-5">
+      <SectionCard title="Create your team">
+        <p className="text-sm mb-6" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+          Set up a team workspace to assign tracks, track progress, and manage your organisation's AI learning.
+        </p>
+
+        <form onSubmit={handleCreate} className="space-y-5">
+          <Field icon={Users} label="Team name" value={teamName} onChange={setTeamName} placeholder="e.g. Acme Corp" />
+
+          <div>
+            <label className="block text-xs font-semibold mb-3" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              Plan
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {PLAN_OPTIONS.map(p => {
+                const selected = plan === p.id
+                return (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setPlan(p.id)}
+                    className="flex flex-col items-start gap-1 p-4 rounded-xl text-left transition-all"
+                    style={{
+                      background: selected ? `${p.color}10` : '#EFF6FF',
+                      border: selected ? `1.5px solid ${p.color}` : '1.5px solid #E2E8F0',
+                    }}
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-sm font-black" style={{ color: selected ? p.color : '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                        {p.label}
+                      </span>
+                      {selected && <Check size={13} style={{ color: p.color }} />}
+                    </div>
+                    <span className="text-xs font-semibold" style={{ color: p.color, fontFamily: 'var(--font-sans)' }}>
+                      {p.seats}
+                    </span>
+                    <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      {p.desc}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <AnimatePresence>
+            {createError && (
+              <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
+                style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                <AlertCircle size={13} className="flex-shrink-0" />{createError}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <button
+            type="submit" disabled={creating || !teamName.trim()}
+            className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+            style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+          >
+            {creating ? <><Loader2 size={13} className="animate-spin" /> Creating…</> : <><Zap size={13} /> Create team</>}
+          </button>
+        </form>
+      </SectionCard>
+
+      <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, #EFF6FF, #F0FDF4)', border: '1px solid #DBEAFE' }}>
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#DBEAFE' }}>
+            <Target size={16} style={{ color: '#2563EB' }} />
+          </div>
+          <div>
+            <p className="text-sm font-bold mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+              Already have a team invite?
+            </p>
+            <p className="text-xs leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              Check your email for an invite link from your team admin. Clicking it will automatically add you to their workspace.
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default function SettingsPage() {
+  const { user } = useAuth()
+  const [tab, setTab] = useState<Tab>('profile')
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F8FAFC' }}>
+        <Loader2 size={24} className="animate-spin" style={{ color: '#2563EB' }} />
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px, #F8FAFC 500px)' }}>
+      {/* Nav */}
+      <nav className="sticky top-0 z-40 border-b" style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', borderColor: '#E2E8F0' }}>
+        <div className="max-w-3xl mx-auto px-6 h-14 flex items-center gap-4">
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700"
+            style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+          >
+            <ArrowLeft size={14} /> Dashboard
+          </Link>
+          <span style={{ color: '#E2E8F0' }}>/</span>
+          <span className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Settings</span>
+        </div>
+      </nav>
+
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: easing }}
+          className="mb-8"
+        >
+          <h1 className="text-3xl font-black mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Settings</h1>
+          <p className="text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            Manage your profile, learning preferences, and team.
+          </p>
+        </motion.div>
+
+        {/* Tabs */}
+        <div className="flex gap-1 p-1 rounded-xl mb-8" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0', width: 'fit-content' }}>
+          {TABS.map(t => {
+            const Icon = t.icon
+            const active = tab === t.id
+            return (
+              <button
+                key={t.id}
+                onClick={() => setTab(t.id)}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                style={{
+                  background: active ? '#FFFFFF' : 'transparent',
+                  color: active ? '#2563EB' : '#94A3B8',
+                  boxShadow: active ? '0 1px 4px rgba(0,0,0,0.06)' : 'none',
+                  fontFamily: 'var(--font-sans)',
+                }}
+              >
+                <Icon size={13} />
+                {t.label}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Tab content */}
+        <AnimatePresence mode="wait">
+          {tab === 'profile' && <ProfileTab key="profile" user={user as { email?: string; user_metadata?: Record<string, string> }} />}
+          {tab === 'preferences' && <PreferencesTab key="preferences" />}
+          {tab === 'team' && <TeamTab key="team" userId={user.id} />}
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}

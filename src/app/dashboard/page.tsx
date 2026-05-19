@@ -8,7 +8,7 @@ import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
   Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search, ExternalLink, RotateCcw,
-  Bookmark, Brain, Calendar, CreditCard, Crown, Trophy,
+  Bookmark, Brain, Calendar, CreditCard, Crown, Trophy, Settings,
 } from 'lucide-react'
 import { useBookmarks } from '@/hooks/useBookmarks'
 import { useSubscription } from '@/hooks/useSubscription'
@@ -1063,6 +1063,13 @@ export default function DashboardPage() {
               </Link>
             )}
             <div className="flex items-center gap-2.5">
+              <Link href="/dashboard/settings"
+                className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100"
+                style={{ color: '#94A3B8' }}
+                title="Settings"
+              >
+                <Settings size={15} />
+              </Link>
               <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
                 style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
                 {initials}
