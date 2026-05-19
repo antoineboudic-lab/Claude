@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   UserPlus, Trash2, Edit2, Check, X, Copy, CheckCheck,
   Clock, CheckCircle2, Users, Mail, Link as LinkIcon,
+  AlertTriangle, Upload, ChevronDown, BellRing,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import {
@@ -25,6 +26,29 @@ const TRACKS = [
   { id: 'customer',   label: 'Customer Success',  color: '#F43F5E' },
   { id: 'consulting', label: 'Consulting',        color: '#0EA5E9' },
 ]
+
+// ─── At-risk detection ────────────────────────────────────────────────────────
+
+function getAtRiskStatus(member: TeamMember): 'not-started' | 'stalled' | null {
+  if (member.status !== 'active') return null
+  const daysSinceJoin = member.joined_at
+    ? Math.floor((Date.now() - new Date(member.joined_at).getTime()) / (1000 * 60 * 60 * 24))
+    : 0
+  if ((member.lesson_count ?? 0) === 0 && daysSinceJoin >= 3) return 'not-started'
+  if ((member.lesson_count ?? 0) > 0 && (member.lesson_count ?? 0) < 3 && daysSinceJoin >= 14) return 'stalled'
+  return null
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function parseEmails(raw: string): string[] {
+  return raw
+    .split(/[\n,;]+/)
+    .map(s => s.trim().toLowerCase())
+    .filter(s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s))
+}
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function TrackPicker({ selected, onChange }: { selected: string[]; onChange: (v: string[]) => void }) {
   return (
@@ -101,36 +125,71 @@ function EditTracksModal({ member, onSave, onClose }: {
   )
 }
 
-function MemberCard({ member, onEdit, onRemove }: {
+function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
   member: TeamMember
+  teamId: string
+  teamName: string
   onEdit: (m: TeamMember) => void
   onRemove: (id: string) => Promise<void>
 }) {
   const [removing, setRemoving] = useState(false)
   const [confirm, setConfirm] = useState(false)
+  const [nudging, setNudging] = useState(false)
+  const [nudged, setNudged] = useState(false)
   const lessons = member.lesson_count ?? 0
   const xp = member.xp ?? 0
   const tracks = member.assigned_tracks ?? []
   const done = member.completed_tracks ?? []
   const initials = (member.display_name ?? member.email).slice(0, 2).toUpperCase()
   const isPending = member.status === 'pending'
+  const atRisk = getAtRiskStatus(member)
 
   async function handleRemove() {
     setRemoving(true)
     await onRemove(member.id)
   }
 
+  async function handleNudge() {
+    setNudging(true)
+    try {
+      await fetch('/api/team/nudge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          memberEmail: member.email,
+          memberName: member.display_name ?? member.email.split('@')[0],
+          teamName,
+          teamId,
+        }),
+      })
+      setNudged(true)
+    } finally {
+      setNudging(false)
+    }
+  }
+
   return (
     <div className="rounded-2xl p-5 transition-shadow hover:shadow-md"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
+      style={{
+        background: '#FFFFFF',
+        border: `1px solid ${atRisk ? '#FDE68A' : '#E2E8F0'}`,
+      }}>
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-            style={{ background: isPending ? '#CBD5E1' : `hsl(${(member.email.charCodeAt(0) * 47) % 360},55%,55%)` }}>
-            {initials}
+          <div className="relative">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+              style={{ background: isPending ? '#CBD5E1' : `hsl(${(member.email.charCodeAt(0) * 47) % 360},55%,55%)` }}>
+              {initials}
+            </div>
+            {atRisk && (
+              <div className="absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center"
+                style={{ background: '#F59E0B' }}>
+                <AlertTriangle size={9} color="#fff" />
+              </div>
+            )}
           </div>
           <div className="min-w-0">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <p className="text-sm font-bold truncate" style={{ color: '#0F172A' }}>
                 {member.display_name ?? member.email.split('@')[0]}
               </p>
@@ -143,6 +202,18 @@ function MemberCard({ member, onEdit, onRemove }: {
               {member.role === 'admin' && (
                 <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
                   style={{ background: '#EDE9FE', color: '#7C3AED' }}>Admin</span>
+              )}
+              {atRisk === 'not-started' && (
+                <span className="flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
+                  style={{ background: '#FEF3C7', color: '#D97706' }}>
+                  <AlertTriangle size={8} /> Not started
+                </span>
+              )}
+              {atRisk === 'stalled' && (
+                <span className="flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
+                  style={{ background: '#FFF7ED', color: '#EA580C' }}>
+                  <AlertTriangle size={8} /> Stalled
+                </span>
               )}
             </div>
             <p className="text-xs truncate" style={{ color: '#94A3B8' }}>{member.email}</p>
@@ -228,9 +299,268 @@ function MemberCard({ member, onEdit, onRemove }: {
           <Edit2 size={11} /> Assign tracks
         </button>
       )}
+
+      {atRisk && !isPending && member.role !== 'admin' && (
+        <div className="mt-3 pt-3" style={{ borderTop: '1px solid #FDE68A' }}>
+          {nudged ? (
+            <div className="flex items-center gap-1.5 text-xs font-semibold"
+              style={{ color: '#10B981' }}>
+              <CheckCircle2 size={11} /> Nudge sent!
+            </div>
+          ) : (
+            <button onClick={handleNudge} disabled={nudging}
+              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all hover:opacity-80 disabled:opacity-50"
+              style={{ background: '#FEF3C7', color: '#D97706', border: '1px solid #FDE68A' }}>
+              <BellRing size={11} />
+              {nudging ? 'Sending…' : 'Send nudge email'}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
+
+// ─── Invite panel ─────────────────────────────────────────────────────────────
+
+function InvitePanel({ team, userId, onDone }: {
+  team: Team
+  userId: string
+  onDone: () => Promise<void>
+}) {
+  const [mode, setMode] = useState<'single' | 'bulk'>('single')
+
+  // Single invite state
+  const [inviteEmail, setInviteEmail] = useState('')
+  const [inviteTracks, setInviteTracks] = useState<string[]>([])
+  const [inviting, setInviting] = useState(false)
+  const [newInvite, setNewInvite] = useState<TeamInvite | null>(null)
+  const [copied, setCopied] = useState(false)
+
+  // Bulk invite state
+  const [bulkRaw, setBulkRaw] = useState('')
+  const [bulkTracks, setBulkTracks] = useState<string[]>([])
+  const [bulkInviting, setBulkInviting] = useState(false)
+  const [bulkResult, setBulkResult] = useState<{ sent: number; failed: number } | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const parsedEmails = parseEmails(bulkRaw)
+
+  async function handleSingle(e: React.FormEvent) {
+    e.preventDefault()
+    if (!inviteEmail) return
+    setInviting(true)
+    const inv = await createInvite(team.id, inviteEmail, inviteTracks, userId)
+    if (inv) {
+      setNewInvite(inv)
+      setInviteEmail('')
+      setInviteTracks([])
+      await onDone()
+    }
+    setInviting(false)
+  }
+
+  async function handleBulk(e: React.FormEvent) {
+    e.preventDefault()
+    if (parsedEmails.length === 0) return
+    setBulkInviting(true)
+    let sent = 0, failed = 0
+    for (const email of parsedEmails) {
+      const inv = await createInvite(team.id, email, bulkTracks, userId)
+      inv ? sent++ : failed++
+    }
+    setBulkResult({ sent, failed })
+    setBulkRaw('')
+    setBulkTracks([])
+    await onDone()
+    setBulkInviting(false)
+  }
+
+  function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = ev => {
+      const text = ev.target?.result as string
+      // Extract emails from CSV: look for email-shaped strings anywhere
+      const emails = (text.match(/[^\s,;"'<>]+@[^\s,;"'<>]+\.[^\s,;"'<>]+/g) ?? [])
+        .map(s => s.toLowerCase())
+        .filter((v, i, a) => a.indexOf(v) === i)
+      setBulkRaw(emails.join('\n'))
+    }
+    reader.readAsText(file)
+    e.target.value = ''
+  }
+
+  function copyLink(token: string) {
+    navigator.clipboard.writeText(`${window.location.origin}/join/${token}`)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="rounded-2xl p-6"
+      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+
+      {/* Mode tabs */}
+      <div className="flex items-center gap-1 mb-5 p-1 rounded-xl w-fit"
+        style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+        {(['single', 'bulk'] as const).map(m => (
+          <button key={m} type="button" onClick={() => { setMode(m); setBulkResult(null); setNewInvite(null) }}
+            className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all"
+            style={{
+              background: mode === m ? '#FFFFFF' : 'transparent',
+              color: mode === m ? '#0F172A' : '#94A3B8',
+              boxShadow: mode === m ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+            }}>
+            {m === 'single' ? 'Single invite' : 'Bulk invite'}
+          </button>
+        ))}
+      </div>
+
+      {/* ── Single ── */}
+      {mode === 'single' && (
+        <>
+          {newInvite ? (
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <CheckCircle2 size={18} style={{ color: '#10B981' }} />
+                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Invite created!</p>
+              </div>
+              <p className="text-xs mb-3" style={{ color: '#64748B' }}>
+                Share this link with <strong>{newInvite.email}</strong>. It expires in 7 days.
+              </p>
+              <div className="flex items-center gap-2 p-3 rounded-xl"
+                style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                <LinkIcon size={13} style={{ color: '#94A3B8', flexShrink: 0 }} />
+                <code className="text-xs flex-1 truncate" style={{ color: '#334155' }}>
+                  {typeof window !== 'undefined' ? `${window.location.origin}/join/${newInvite.token}` : `…/join/${newInvite.token}`}
+                </code>
+                <button onClick={() => copyLink(newInvite.token)}
+                  className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80"
+                  style={{ background: copied ? '#D1FAE5' : '#EDE9FE', color: copied ? '#10B981' : '#7C3AED' }}>
+                  {copied ? <><CheckCheck size={11} /> Copied</> : <><Copy size={11} /> Copy</>}
+                </button>
+              </div>
+              <button onClick={() => setNewInvite(null)}
+                className="mt-4 text-xs font-semibold hover:underline"
+                style={{ color: '#94A3B8' }}>
+                Invite another
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSingle} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Work email</label>
+                <div className="flex items-center gap-2 px-3 rounded-xl"
+                  style={{ border: '1.5px solid #E2E8F0', background: '#FAFBFC' }}>
+                  <Mail size={13} style={{ color: '#94A3B8' }} />
+                  <input type="email" required value={inviteEmail} onChange={e => setInviteEmail(e.target.value)}
+                    placeholder="colleague@company.com"
+                    className="flex-1 py-2.5 text-sm outline-none bg-transparent"
+                    style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }} />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold mb-2" style={{ color: '#334155' }}>
+                  Assign tracks <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
+                </label>
+                <TrackPicker selected={inviteTracks} onChange={setInviteTracks} />
+              </div>
+              <button type="submit" disabled={inviting}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+                style={{ background: '#7C3AED' }}>
+                {inviting ? 'Creating…' : 'Create invite link'}
+              </button>
+            </form>
+          )}
+        </>
+      )}
+
+      {/* ── Bulk ── */}
+      {mode === 'bulk' && (
+        <>
+          {bulkResult ? (
+            <div className="text-center py-4">
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3"
+                style={{ background: '#D1FAE5' }}>
+                <CheckCircle2 size={22} style={{ color: '#10B981' }} />
+              </div>
+              <p className="text-sm font-bold mb-1" style={{ color: '#0F172A' }}>
+                {bulkResult.sent} invite{bulkResult.sent !== 1 ? 's' : ''} sent!
+              </p>
+              {bulkResult.failed > 0 && (
+                <p className="text-xs mb-3" style={{ color: '#F59E0B' }}>
+                  {bulkResult.failed} failed (may already be members)
+                </p>
+              )}
+              <button onClick={() => setBulkResult(null)}
+                className="text-xs font-semibold hover:underline"
+                style={{ color: '#7C3AED' }}>
+                Invite more
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleBulk} className="space-y-4">
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-semibold" style={{ color: '#334155' }}>
+                    Email addresses
+                  </label>
+                  <button type="button" onClick={() => fileRef.current?.click()}
+                    className="flex items-center gap-1 text-xs font-semibold transition-colors hover:opacity-70"
+                    style={{ color: '#7C3AED' }}>
+                    <Upload size={11} /> Upload CSV
+                  </button>
+                  <input ref={fileRef} type="file" accept=".csv,.txt" className="hidden" onChange={handleFileUpload} />
+                </div>
+                <textarea
+                  value={bulkRaw}
+                  onChange={e => setBulkRaw(e.target.value)}
+                  placeholder={"Paste emails — one per line or comma-separated:\nalice@company.com\nbob@company.com, carol@company.com"}
+                  rows={5}
+                  className="w-full rounded-xl px-3 py-2.5 text-xs outline-none resize-none"
+                  style={{
+                    border: '1.5px solid #E2E8F0',
+                    background: '#FAFBFC',
+                    color: '#0F172A',
+                    fontFamily: 'var(--font-sans)',
+                    lineHeight: 1.7,
+                  }}
+                  onFocus={e => { e.currentTarget.style.borderColor = '#A78BFA' }}
+                  onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0' }}
+                />
+                {parsedEmails.length > 0 && (
+                  <p className="mt-1.5 text-xs font-semibold" style={{ color: '#7C3AED' }}>
+                    {parsedEmails.length} valid email{parsedEmails.length !== 1 ? 's' : ''} detected
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className="block text-xs font-semibold mb-2" style={{ color: '#334155' }}>
+                  Assign tracks to all <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
+                </label>
+                <TrackPicker selected={bulkTracks} onChange={setBulkTracks} />
+              </div>
+              <button type="submit"
+                disabled={bulkInviting || parsedEmails.length === 0}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-40"
+                style={{ background: '#7C3AED' }}>
+                {bulkInviting
+                  ? 'Sending invites…'
+                  : parsedEmails.length === 0
+                  ? 'Add emails to continue'
+                  : `Invite ${parsedEmails.length} member${parsedEmails.length !== 1 ? 's' : ''}`}
+              </button>
+            </form>
+          )}
+        </>
+      )}
+    </div>
+  )
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function MembersPage() {
   const { user } = useAuth()
@@ -240,11 +570,7 @@ export default function MembersPage() {
   const [loading, setLoading] = useState(true)
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null)
   const [showInvite, setShowInvite] = useState(false)
-  const [inviteEmail, setInviteEmail] = useState('')
-  const [inviteTracks, setInviteTracks] = useState<string[]>([])
-  const [inviting, setInviting] = useState(false)
-  const [newInvite, setNewInvite] = useState<TeamInvite | null>(null)
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState<string | null>(null)
 
   async function reload(teamId: string) {
     const [m, inv] = await Promise.all([
@@ -265,20 +591,6 @@ export default function MembersPage() {
     })
   }, [user])
 
-  async function handleInvite(e: React.FormEvent) {
-    e.preventDefault()
-    if (!team || !user || !inviteEmail) return
-    setInviting(true)
-    const inv = await createInvite(team.id, inviteEmail, inviteTracks, user.id)
-    if (inv) {
-      setNewInvite(inv)
-      setInviteEmail('')
-      setInviteTracks([])
-      await reload(team.id)
-    }
-    setInviting(false)
-  }
-
   async function handleUpdateTracks(memberId: string, tracks: string[]) {
     await updateMemberTracks(memberId, tracks)
     if (team) await reload(team.id)
@@ -295,10 +607,9 @@ export default function MembersPage() {
   }
 
   function copyInviteLink(token: string) {
-    const url = `${window.location.origin}/join/${token}`
-    navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    navigator.clipboard.writeText(`${window.location.origin}/join/${token}`)
+    setCopied(token)
+    setTimeout(() => setCopied(null), 2000)
   }
 
   if (loading) {
@@ -310,10 +621,11 @@ export default function MembersPage() {
     )
   }
 
-  if (!team) return null
+  if (!team || !user) return null
 
   const activeMembers = members.filter(m => m.status === 'active')
   const pendingMembers = members.filter(m => m.status === 'pending')
+  const atRiskCount = activeMembers.filter(m => getAtRiskStatus(m) !== null).length
 
   return (
     <div className="space-y-8">
@@ -321,15 +633,25 @@ export default function MembersPage() {
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div>
           <h1 className="text-2xl font-black" style={{ color: '#0F172A' }}>Members</h1>
-          <p className="text-sm mt-0.5" style={{ color: '#64748B' }}>
-            {activeMembers.length} active · {pendingMembers.length} pending · {team.seat_limit} seat limit
-          </p>
+          <div className="flex items-center gap-3 mt-0.5 flex-wrap">
+            <p className="text-sm" style={{ color: '#64748B' }}>
+              {activeMembers.length} active · {pendingMembers.length} pending · {team.seat_limit} seat limit
+            </p>
+            {atRiskCount > 0 && (
+              <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-lg"
+                style={{ background: '#FEF3C7', color: '#D97706' }}>
+                <AlertTriangle size={11} /> {atRiskCount} need attention
+              </span>
+            )}
+          </div>
         </div>
         <button
-          onClick={() => { setShowInvite(true); setNewInvite(null) }}
+          onClick={() => setShowInvite(v => !v)}
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
           style={{ background: '#7C3AED' }}>
-          <UserPlus size={14} /> Invite member
+          <UserPlus size={14} />
+          {showInvite ? 'Close' : 'Invite members'}
+          <ChevronDown size={13} style={{ transform: showInvite ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
         </button>
       </div>
 
@@ -341,80 +663,11 @@ export default function MembersPage() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             style={{ overflow: 'hidden' }}>
-            <div className="rounded-2xl p-6"
-              style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              {newInvite ? (
-                <div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <CheckCircle2 size={18} style={{ color: '#10B981' }} />
-                    <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Invite created!</p>
-                  </div>
-                  <p className="text-xs mb-3" style={{ color: '#64748B' }}>
-                    Share this link with <strong>{newInvite.email}</strong>. It expires in 7 days.
-                  </p>
-                  <div className="flex items-center gap-2 p-3 rounded-xl"
-                    style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-                    <LinkIcon size={13} style={{ color: '#94A3B8', flexShrink: 0 }} />
-                    <code className="text-xs flex-1 truncate" style={{ color: '#334155' }}>
-                      {typeof window !== 'undefined' ? `${window.location.origin}/join/${newInvite.token}` : `…/join/${newInvite.token}`}
-                    </code>
-                    <button
-                      onClick={() => copyInviteLink(newInvite.token)}
-                      className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80"
-                      style={{ background: copied ? '#D1FAE5' : '#EDE9FE', color: copied ? '#10B981' : '#7C3AED' }}>
-                      {copied ? <><CheckCheck size={11} /> Copied</> : <><Copy size={11} /> Copy</>}
-                    </button>
-                  </div>
-                  <button onClick={() => { setShowInvite(false); setNewInvite(null) }}
-                    className="mt-4 text-xs font-semibold hover:underline"
-                    style={{ color: '#94A3B8' }}>
-                    Done
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleInvite} className="space-y-4">
-                  <div className="flex items-center justify-between mb-1">
-                    <h3 className="text-sm font-black" style={{ color: '#0F172A' }}>Invite a new member</h3>
-                    <button type="button" onClick={() => setShowInvite(false)} style={{ color: '#94A3B8' }}>
-                      <X size={15} />
-                    </button>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Work email</label>
-                    <div className="flex items-center gap-2 px-3 rounded-xl"
-                      style={{ border: '1.5px solid #E2E8F0', background: '#FAFBFC' }}>
-                      <Mail size={13} style={{ color: '#94A3B8' }} />
-                      <input
-                        type="email" required
-                        value={inviteEmail}
-                        onChange={e => setInviteEmail(e.target.value)}
-                        placeholder="colleague@company.com"
-                        className="flex-1 py-2.5 text-sm outline-none bg-transparent"
-                        style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold mb-2" style={{ color: '#334155' }}>
-                      Assign tracks <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional — can be set later)</span>
-                    </label>
-                    <TrackPicker selected={inviteTracks} onChange={setInviteTracks} />
-                  </div>
-                  <div className="flex gap-3">
-                    <button type="button" onClick={() => setShowInvite(false)}
-                      className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-colors hover:bg-slate-100"
-                      style={{ color: '#64748B', background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-                      Cancel
-                    </button>
-                    <button type="submit" disabled={inviting}
-                      className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                      style={{ background: '#7C3AED' }}>
-                      {inviting ? 'Creating…' : 'Create invite link'}
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
+            <InvitePanel
+              team={team}
+              userId={user.id}
+              onDone={async () => { await reload(team.id) }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -427,7 +680,7 @@ export default function MembersPage() {
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {activeMembers.map(m => (
-              <MemberCard key={m.id} member={m} onEdit={setEditingMember} onRemove={handleRemove} />
+              <MemberCard key={m.id} member={m} teamId={team.id} teamName={team.name} onEdit={setEditingMember} onRemove={handleRemove} />
             ))}
           </div>
         </div>
@@ -458,8 +711,8 @@ export default function MembersPage() {
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <button onClick={() => copyInviteLink(inv.token)}
                     className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80"
-                    style={{ background: '#EDE9FE', color: '#7C3AED' }}>
-                    <Copy size={10} /> Copy link
+                    style={{ background: copied === inv.token ? '#D1FAE5' : '#EDE9FE', color: copied === inv.token ? '#10B981' : '#7C3AED' }}>
+                    {copied === inv.token ? <><CheckCheck size={10} /> Copied</> : <><Copy size={10} /> Copy link</>}
                   </button>
                   <button onClick={() => handleRevokeInvite(inv.id)}
                     className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"

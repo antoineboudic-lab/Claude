@@ -15,8 +15,10 @@ import {
 } from 'lucide-react'
 import { useGame } from '@/context/GameContext'
 import { useAuth } from '@/context/AuthContext'
+import { useSubscription } from '@/hooks/useSubscription'
 import { LevelBar } from '@/components/gamification/LevelBar'
 import AITutor from '@/components/AITutor'
+import type { AITutorHandle } from '@/components/AITutor'
 import GlobalSearch from '@/components/GlobalSearch'
 import { useBookmarks } from '@/hooks/useBookmarks'
 import { useNotes } from '@/hooks/useNotes'
@@ -318,17 +320,23 @@ function PaywallOverlay({
   lessonTitle,
   completedCount,
   totalLessons,
+  user,
   onSignUp,
   onSignIn,
+  onUpgrade,
 }: {
   trackId: string
   trackColor: string
   lessonTitle: string
   completedCount: number
   totalLessons: number
+  user: import('@supabase/supabase-js').User | null
   onSignUp: () => void
   onSignIn: () => void
+  onUpgrade: (plan: 'monthly' | 'annual') => void
 }) {
+  const [upgrading, setUpgrading] = useState(false)
+  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'annual'>('monthly')
   const trackName = trackId.charAt(0).toUpperCase() + trackId.slice(1)
   const pct = Math.round((completedCount / totalLessons) * 100)
 
@@ -414,31 +422,76 @@ function PaywallOverlay({
             ))}
           </ul>
 
-          {/* CTA */}
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={onSignUp}
-            className="w-full py-4 rounded-xl font-bold text-sm text-white mb-3 transition-opacity hover:opacity-95"
-            style={{
-              background: `linear-gradient(135deg, ${trackColor}, #7C3AED)`,
-              boxShadow: `0 8px 28px ${trackColor}40`,
-              fontFamily: 'var(--font-sans)',
-            }}
-          >
-            Start My 7-Day Free Trial
-          </motion.button>
-
-          <p className="text-center text-xs mb-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-            Free for 7 days &middot; Then $19/month &middot; Cancel anytime
-          </p>
-
-          <button
-            onClick={onSignIn}
-            className="w-full text-center text-xs font-medium py-1 transition-colors hover:text-slate-700"
-            style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-            Already have an account? Sign in
-          </button>
+          {/* CTA — upgrade if signed in, sign-up otherwise */}
+          {user ? (
+            <>
+              {/* Plan toggle */}
+              <div className="flex gap-2 mb-3">
+                {(['monthly', 'annual'] as const).map(p => (
+                  <button
+                    key={p}
+                    onClick={() => setSelectedPlan(p)}
+                    className="flex-1 py-2 rounded-xl text-xs font-semibold transition-all"
+                    style={{
+                      background: selectedPlan === p ? trackColor : '#F8FAFC',
+                      color: selectedPlan === p ? '#FFFFFF' : '#64748B',
+                      border: `1px solid ${selectedPlan === p ? trackColor : '#E2E8F0'}`,
+                      fontFamily: 'var(--font-sans)',
+                    }}
+                  >
+                    {p === 'monthly' ? '$19 / month' : '$15 / month (annual)'}
+                    {p === 'annual' && <span className="ml-1 opacity-80">−20%</span>}
+                  </button>
+                ))}
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={async () => {
+                  setUpgrading(true)
+                  await onUpgrade(selectedPlan)
+                }}
+                disabled={upgrading}
+                className="w-full py-4 rounded-xl font-bold text-sm text-white mb-3 transition-opacity hover:opacity-95"
+                style={{
+                  background: `linear-gradient(135deg, ${trackColor}, #7C3AED)`,
+                  boxShadow: `0 8px 28px ${trackColor}40`,
+                  fontFamily: 'var(--font-sans)',
+                  opacity: upgrading ? 0.7 : 1,
+                }}
+              >
+                {upgrading ? 'Redirecting to checkout…' : 'Start My 7-Day Free Trial'}
+              </motion.button>
+              <p className="text-center text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                Free for 7 days &middot; Cancel anytime
+              </p>
+            </>
+          ) : (
+            <>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onSignUp}
+                className="w-full py-4 rounded-xl font-bold text-sm text-white mb-3 transition-opacity hover:opacity-95"
+                style={{
+                  background: `linear-gradient(135deg, ${trackColor}, #7C3AED)`,
+                  boxShadow: `0 8px 28px ${trackColor}40`,
+                  fontFamily: 'var(--font-sans)',
+                }}
+              >
+                Create Account &amp; Start Free Trial
+              </motion.button>
+              <p className="text-center text-xs mb-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                Free for 7 days &middot; Then $19/month &middot; Cancel anytime
+              </p>
+              <button
+                onClick={onSignIn}
+                className="w-full text-center text-xs font-medium py-1 transition-colors hover:text-slate-700"
+                style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                Already have an account? Sign in
+              </button>
+            </>
+          )}
         </div>
       </motion.div>
     </motion.div>
@@ -1260,6 +1313,7 @@ export default function LessonPage() {
   })
   const [currentQuizQ, setCurrentQuizQ] = useState(0)
   const [quizFeedbackShown, setQuizFeedbackShown] = useState(false)
+  const tutorRef = useRef<AITutorHandle>(null)
 
   const selectQuizOption = (oi: number) => {
     if (quizFeedbackShown || quizSubmitted) return
@@ -1279,10 +1333,17 @@ export default function LessonPage() {
 
   const { user, openSignIn, openSignUp } = useAuth()
   const { addXP, completeLesson, completePerfectQuiz, state } = useGame()
+  const { isPro } = useSubscription()
 
-  // Module 1 is free; Module 2+ requires sign-in (trial access)
+  // Module 1: free · Module 2: requires sign-in · Module 3+: requires Pro
   const moduleNum = parseInt(lessonId.match(/-m(\d+)-/)?.[1] ?? '1', 10)
-  const isLocked = moduleNum > 1 && !user
+  const isLocked = moduleNum >= 3 ? !isPro : moduleNum > 1 && !user
+
+  const handleUpgrade = async (plan: 'monthly' | 'annual') => {
+    const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plan }) })
+    const data = await res.json()
+    if (data.url) window.location.href = data.url
+  }
 
   const result = getLesson(trackId as TrackId, lessonId)
   const lesson: Lesson | undefined = result?.lesson
@@ -1646,14 +1707,6 @@ export default function LessonPage() {
               </div>
             </div>
 
-            <div className="mt-6">
-              <AITutor
-                lessonTitle={lesson?.title ?? ''}
-                trackId={trackId}
-                lessonSummary={lesson?.description}
-                color={color}
-              />
-            </div>
           </motion.div>
         )}
 
@@ -1901,6 +1954,17 @@ export default function LessonPage() {
                                     style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
                                     {lesson.quiz[currentQuizQ].explanation}
                                   </p>
+                                  {quizAnswers[currentQuizQ] !== lesson.quiz[currentQuizQ].correct && (
+                                    <button
+                                      onClick={() => tutorRef.current?.open(
+                                        `I got this quiz question wrong: "${lesson.quiz[currentQuizQ].question}" — can you explain why the correct answer is "${lesson.quiz[currentQuizQ].options[lesson.quiz[currentQuizQ].correct]}"?`
+                                      )}
+                                      className="mt-2.5 text-xs font-semibold flex items-center gap-1.5 transition-opacity hover:opacity-75"
+                                      style={{ color: '#D97706', fontFamily: 'var(--font-sans)' }}>
+                                      <Sparkles size={11} />
+                                      Ask the AI Tutor why →
+                                    </button>
+                                  )}
                                 </div>
                               </div>
                             </motion.div>
@@ -2085,12 +2149,23 @@ export default function LessonPage() {
             lessonTitle={lesson?.title ?? 'Next lesson'}
             completedCount={state.completedLessons.length}
             totalLessons={totalLessons}
+            user={user}
             onSignUp={openSignUp}
             onSignIn={openSignIn}
+            onUpgrade={handleUpgrade}
           />
         )}
       </AnimatePresence>
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
+      <AITutor
+        ref={tutorRef}
+        floating
+        lessonTitle={lesson?.title ?? ''}
+        trackId={trackId}
+        lessonContent={lesson?.content}
+        keyTakeaways={lesson?.keyTakeaways}
+        color={color}
+      />
     </main>
   )
 }

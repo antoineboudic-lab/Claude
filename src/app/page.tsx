@@ -281,13 +281,18 @@ function Navbar() {
           >
             <div className="px-6 pb-6 pt-2">
               <div className="mb-2">
-                {['Program', 'Tracks', 'Pricing', 'About'].map(item => (
-                  <a key={item}
-                    href={item === 'Tracks' ? '/tracks' : `#${item.toLowerCase()}`}
+                {[
+                  { label: 'Program', href: '#program' },
+                  { label: 'Tracks', href: '/tracks' },
+                  { label: 'For Teams', href: '/teams' },
+                  { label: 'Pricing', href: '#pricing' },
+                ].map(item => (
+                  <a key={item.label}
+                    href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center py-3.5 text-sm font-medium border-b transition-colors hover:text-violet-600"
                     style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F8FAFC' }}>
-                    {item}
+                    {item.label}
                   </a>
                 ))}
               </div>
@@ -1574,11 +1579,11 @@ function Pricing() {
                     ))}
                   </ul>
                   {plan.name === 'Team' ? (
-                    <button
-                      className="w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
+                    <Link href="/contact"
+                      className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
                       style={{ background: '#0F172A', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
                       {plan.cta}
-                    </button>
+                    </Link>
                   ) : (
                     <Link href="/assessment"
                       className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"

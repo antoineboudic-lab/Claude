@@ -31,6 +31,7 @@ export default function JoinPage() {
   const [expired, setExpired] = useState(false)
   const [accepting, setAccepting] = useState(false)
   const [joined, setJoined] = useState(false)
+  const [welcomeMsg, setWelcomeMsg] = useState<string | null>(null)
 
   // Store token so we can process it after auth
   useEffect(() => {
@@ -46,6 +47,11 @@ export default function JoinPage() {
       }
       setInvite(inv)
       setFetching(false)
+      // Load welcome message (public endpoint, no auth required)
+      fetch(`/api/team/welcome?token=${token}`)
+        .then(r => r.json())
+        .then(data => { if (data.message) setWelcomeMsg(data.message) })
+        .catch(() => {})
     })
   }, [token])
 
@@ -201,6 +207,16 @@ export default function JoinPage() {
                     </span>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Welcome message from admin */}
+            {welcomeMsg && (
+              <div className="mb-5 p-4 rounded-xl"
+                style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}>
+                <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5"
+                  style={{ color: '#7C3AED' }}>Message from your team</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#334155' }}>{welcomeMsg}</p>
               </div>
             )}
 

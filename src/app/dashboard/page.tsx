@@ -8,13 +8,18 @@ import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
   Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search, ExternalLink, RotateCcw,
+  Bookmark, Brain, Calendar, CreditCard, Crown, Trophy,
 } from 'lucide-react'
+import { useBookmarks } from '@/hooks/useBookmarks'
+import { useSubscription } from '@/hooks/useSubscription'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
 import { ShareCard } from '@/components/ShareCard'
 import GlobalSearch from '@/components/GlobalSearch'
+import OnboardingChecklist from '@/components/OnboardingChecklist'
+import PushNotificationPrompt from '@/components/PushNotificationPrompt'
 import { loadLatestAssessment } from '@/lib/supabase/db'
-import { getAdminTeam, getMemberTeam } from '@/lib/supabase/teams'
+import { getAdminTeam, getMemberTeam, getTeamMembersWithProgress, type TeamMember } from '@/lib/supabase/teams'
 import {
   getLevelForXP, getProgressToNextLevel, BADGES, LEVELS,
 } from '@/lib/gamification'
@@ -244,6 +249,233 @@ function StreakCard({
           </div>
         )}
       </div>
+    </motion.div>
+  )
+}
+
+// ─── Bookmarks card ───────────────────────────────────────────────────────────
+
+function BookmarksCard() {
+  const { bookmarks } = useBookmarks()
+  if (bookmarks.length === 0) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.28, duration: 0.55, ease: easing }}
+      className="rounded-2xl p-5"
+      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+    >
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <Bookmark size={15} style={{ color: '#6366F1' }} />
+          <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+            Bookmarks
+          </p>
+        </div>
+        <span className="text-xs font-semibold px-2 py-0.5 rounded-lg"
+          style={{ background: '#EEF2FF', color: '#4338CA', fontFamily: 'var(--font-sans)' }}>
+          {bookmarks.length}
+        </span>
+      </div>
+      <div className="space-y-1">
+        {bookmarks.slice(0, 4).map(b => (
+          <Link
+            key={b.lessonId}
+            href={`/tracks/${b.trackId}/lessons/${b.lessonId}`}
+            className="flex items-center gap-3 p-2.5 rounded-xl transition-colors hover:bg-slate-50 group"
+          >
+            <div className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+              style={{ background: TRACK_COLORS[b.trackId] ?? '#94A3B8' }} />
+            <span className="text-sm flex-1 truncate" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+              {b.title}
+            </span>
+            <ChevronRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
+              style={{ color: '#CBD5E1' }} />
+          </Link>
+        ))}
+        {bookmarks.length > 4 && (
+          <p className="text-xs text-center pt-1" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+            +{bookmarks.length - 4} more
+          </p>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Insights card ────────────────────────────────────────────────────────────
+
+function InsightsCard({
+  activityDates,
+  totalQuizzesPerfect,
+  completedLessons,
+}: {
+  activityDates: string[]
+  totalQuizzesPerfect: number
+  completedLessons: string[]
+}) {
+  const today = new Date()
+  const monthStart = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0]
+  const daysThisMonth = activityDates.filter(d => d >= monthStart).length
+
+  const daysInMonth = today.getDate()
+  const studyRate = daysInMonth > 0 ? Math.round((daysThisMonth / daysInMonth) * 100) : 0
+
+  const quizAccuracy = completedLessons.length > 0
+    ? Math.round((totalQuizzesPerfect / completedLessons.length) * 100)
+    : 0
+
+  // Load weak SR items from localStorage
+  const [weakCount, setWeakCount] = useState(0)
+  useEffect(() => {
+    import('@/lib/srs').then(({ loadQueue }) => {
+      const queue = loadQueue()
+      setWeakCount(queue.filter(item => item.easeFactor < 2.0).length)
+    })
+  }, [])
+
+  if (completedLessons.length === 0) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3, duration: 0.55, ease: easing }}
+      className="rounded-2xl p-5"
+      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+    >
+      <div className="flex items-center gap-2 mb-4">
+        <Brain size={15} style={{ color: '#10B981' }} />
+        <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+          Insights
+        </p>
+      </div>
+      <div className="space-y-3">
+        {/* Study consistency */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center gap-1.5">
+              <Calendar size={11} style={{ color: '#94A3B8' }} />
+              <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                Study days this month
+              </span>
+            </div>
+            <span className="text-xs font-bold" style={{ color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+              {daysThisMonth}d / {daysInMonth}d
+            </span>
+          </div>
+          <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${studyRate}%` }}
+              transition={{ delay: 0.5, duration: 0.9, ease: easing }}
+              className="h-full rounded-full"
+              style={{ background: '#10B981' }}
+            />
+          </div>
+        </div>
+
+        {/* Quiz accuracy */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 size={11} style={{ color: '#94A3B8' }} />
+              <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                Perfect quiz rate
+              </span>
+            </div>
+            <span className="text-xs font-bold" style={{ color: '#6366F1', fontFamily: 'var(--font-sans)' }}>
+              {quizAccuracy}%
+            </span>
+          </div>
+          <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${quizAccuracy}%` }}
+              transition={{ delay: 0.6, duration: 0.9, ease: easing }}
+              className="h-full rounded-full"
+              style={{ background: '#6366F1' }}
+            />
+          </div>
+        </div>
+
+        {/* Weak cards */}
+        {weakCount > 0 && (
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl"
+            style={{ background: '#FFF7ED', border: '1px solid #FED7AA' }}>
+            <span className="text-xs" style={{ color: '#92400E', fontFamily: 'var(--font-sans)' }}>
+              {weakCount} card{weakCount !== 1 ? 's' : ''} need more practice
+            </span>
+            <Link
+              href="/review"
+              className="text-xs font-semibold"
+              style={{ color: '#EA580C', fontFamily: 'var(--font-sans)', textDecoration: 'none' }}
+            >
+              Review →
+            </Link>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Daily challenge card ─────────────────────────────────────────────────────
+
+function DailyChallengeCard() {
+  const [done, setDone] = useState(false)
+  const [streak, setStreak] = useState(0)
+
+  useEffect(() => {
+    import('@/lib/challenge').then(({ loadChallengeLog, getChallengeStreak, getDailyChallenge }) => {
+      const log = loadChallengeLog()
+      const today = getDailyChallenge().date
+      setDone(!!log[today])
+      setStreak(getChallengeStreak())
+    })
+  }, [])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.32, duration: 0.55, ease: easing }}
+      className="rounded-2xl p-5"
+      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <Trophy size={14} style={{ color: '#F59E0B' }} />
+          <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Daily Challenge</p>
+        </div>
+        {streak > 0 && (
+          <div className="flex items-center gap-1">
+            <Flame size={12} style={{ color: '#F97316' }} />
+            <span className="text-xs font-bold" style={{ color: '#F97316', fontFamily: 'var(--font-sans)' }}>{streak}</span>
+          </div>
+        )}
+      </div>
+
+      {done ? (
+        <div className="flex items-center gap-2 mb-3">
+          <CheckCircle2 size={14} style={{ color: '#10B981' }} />
+          <p className="text-xs" style={{ color: '#10B981', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>Completed today!</p>
+        </div>
+      ) : (
+        <p className="text-xs mb-3" style={{ color: '#64748B', fontFamily: 'var(--font-sans)', lineHeight: 1.5 }}>
+          One question · 50 XP · Refreshes daily
+        </p>
+      )}
+
+      <Link
+        href="/challenge"
+        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
+        style={{ background: done ? '#F8FAFC' : 'linear-gradient(135deg, #7C3AED, #22D3EE)', color: done ? '#64748B' : '#FFFFFF', textDecoration: 'none', border: done ? '1px solid #E2E8F0' : 'none', fontFamily: 'var(--font-sans)' }}
+      >
+        {done ? 'View result' : 'Take challenge'} <ArrowRight size={13} />
+      </Link>
     </motion.div>
   )
 }
@@ -616,10 +848,15 @@ export default function DashboardPage() {
   const router = useRouter()
   const { user, loading, signOut } = useAuth()
   const { state, syncing } = useGame()
+  const { isPro, isTrialing, subscription } = useSubscription()
   const [assessment, setAssessment] = useState<AssessmentResult | null>(null)
   const [mounted, setMounted] = useState(false)
   const [srDueCount, setSrDueCount] = useState(0)
   const [teamHref, setTeamHref] = useState<string | null>(null)
+  const [memberTeamName, setMemberTeamName] = useState<string | null>(null)
+  const [assignedTracks, setAssignedTracks] = useState<string[]>([])
+  const [teamLeaderboard, setTeamLeaderboard] = useState<TeamMember[]>([])
+  const [myTeamRank, setMyTeamRank] = useState<number | null>(null)
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [referralStats, setReferralStats] = useState<{ clicks: number; signups: number; conversions: number; reward_xp: number } | null>(null)
   const [copied, setCopied] = useState(false)
@@ -645,9 +882,23 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!user) return
     Promise.all([getAdminTeam(user.id), getMemberTeam(user.id)]).then(([admin, member]) => {
-      if (admin) setTeamHref('/dashboard/team')
-      else if (member) setTeamHref('/dashboard/team')
-      else setTeamHref('/dashboard/team/create')
+      if (admin) {
+        setTeamHref('/dashboard/team')
+      } else if (member) {
+        setTeamHref('/dashboard/team')
+        if (member.member.role !== 'admin') {
+          setMemberTeamName(member.team.name)
+          setAssignedTracks(member.member.assigned_tracks ?? [])
+          getTeamMembersWithProgress(member.team.id).then(members => {
+            const active = members.filter(m => m.status === 'active').sort((a, b) => (b.xp ?? 0) - (a.xp ?? 0))
+            setTeamLeaderboard(active.slice(0, 5))
+            const rank = active.findIndex(m => m.user_id === user.id)
+            setMyTeamRank(rank >= 0 ? rank + 1 : null)
+          }).catch(() => {})
+        }
+      } else {
+        setTeamHref('/dashboard/team/create')
+      }
     })
   }, [user])
 
@@ -862,6 +1113,126 @@ export default function DashboardPage() {
           </motion.div>
         )}
 
+        <OnboardingChecklist />
+
+        {/* Team member section — assigned tracks + mini leaderboard */}
+        {memberTeamName && (assignedTracks.length > 0 || teamLeaderboard.length > 0) && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5, ease: easing }}
+            className="mb-6 rounded-2xl overflow-hidden"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <div className="px-5 py-3.5 flex items-center justify-between"
+              style={{ background: '#FAFBFC', borderBottom: '1px solid #F1F5F9' }}>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 rounded-md flex items-center justify-center"
+                  style={{ background: '#EDE9FE' }}>
+                  <Users size={11} style={{ color: '#7C3AED' }} />
+                </div>
+                <span className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                  {memberTeamName}
+                </span>
+                {myTeamRank && (
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                    style={{ background: '#EDE9FE', color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                    #{myTeamRank} on leaderboard
+                  </span>
+                )}
+              </div>
+              {teamHref && (
+                <Link href={teamHref}
+                  className="text-xs font-semibold flex items-center gap-1 hover:underline"
+                  style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  View team <ChevronRight size={11} />
+                </Link>
+              )}
+            </div>
+            <div className="px-5 py-4">
+              <div className="grid sm:grid-cols-2 gap-5">
+                {/* Assigned tracks */}
+                {assignedTracks.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-widest mb-3"
+                      style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      Your assigned tracks
+                    </p>
+                    <div className="space-y-2">
+                      {assignedTracks.map(trackId => {
+                        const color = TRACK_COLORS[trackId] ?? '#7C3AED'
+                        const icon = TRACK_ICONS[trackId] ?? '🎓'
+                        const trackData = getAllTracks().find(t => t.id === trackId)
+                        const total = trackData?.modules.reduce((s, m) => s + m.lessons.length, 0) ?? 1
+                        const done = state.completedLessons.filter(l => l.startsWith(trackId)).length
+                        const pct = Math.round((done / total) * 100)
+                        return (
+                          <Link key={trackId} href={`/tracks/${trackId}`} className="block group">
+                            <div className="flex items-center justify-between mb-1">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm">{icon}</span>
+                                <span className="text-sm font-medium" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                                  {trackData?.title ?? trackId}
+                                </span>
+                              </div>
+                              <span className="text-xs font-semibold" style={{ color, fontFamily: 'var(--font-sans)' }}>
+                                {done}/{total}
+                              </span>
+                            </div>
+                            <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+                              <div className="h-full rounded-full transition-all"
+                                style={{ width: `${pct}%`, background: color }} />
+                            </div>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+                {/* Mini leaderboard */}
+                {teamLeaderboard.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-widest mb-3"
+                      style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      Team leaderboard
+                    </p>
+                    <div className="space-y-2">
+                      {teamLeaderboard.slice(0, 5).map((m, i) => {
+                        const isMe = m.user_id === user.id
+                        const initials = (m.display_name ?? m.email).slice(0, 2).toUpperCase()
+                        return (
+                          <div key={m.id}
+                            className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl"
+                            style={{
+                              background: isMe ? '#EDE9FE' : 'transparent',
+                              border: isMe ? '1px solid #DDD6FE' : '1px solid transparent',
+                            }}>
+                            <span className="text-xs font-bold w-4 text-center"
+                              style={{ color: i < 3 ? ['#F59E0B', '#94A3B8', '#CD7F32'][i] : '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                              {i + 1}
+                            </span>
+                            <div className="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
+                              style={{ background: `hsl(${(m.email.charCodeAt(0) * 47) % 360},55%,55%)` }}>
+                              {initials}
+                            </div>
+                            <span className="text-xs flex-1 truncate font-medium"
+                              style={{ color: isMe ? '#5B21B6' : '#475569', fontFamily: 'var(--font-sans)' }}>
+                              {isMe ? 'You' : (m.display_name ?? m.email.split('@')[0])}
+                            </span>
+                            <span className="text-xs font-bold flex-shrink-0"
+                              style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                              {(m.xp ?? 0).toLocaleString()} XP
+                            </span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* Main grid */}
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left: learning path + activity */}
@@ -887,6 +1258,13 @@ export default function DashboardPage() {
               activityDates={state.activityDates ?? []}
             />
             <BadgesSection earned={state.earnedBadges} />
+            <DailyChallengeCard />
+            <BookmarksCard />
+            <InsightsCard
+              activityDates={state.activityDates ?? []}
+              totalQuizzesPerfect={state.totalQuizzesPerfect}
+              completedLessons={state.completedLessons}
+            />
 
             {/* Certificates */}
             {state.completedTracks.length > 0 && (
@@ -928,11 +1306,84 @@ export default function DashboardPage() {
               </motion.div>
             )}
 
+            {/* Pro status / upgrade card */}
+            {isPro ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.55, ease: easing }}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+              >
+                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #7C3AED, #22D3EE)' }} />
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Crown size={14} style={{ color: '#7C3AED' }} />
+                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                      Pro {isTrialing ? '— Trial active' : 'Member'}
+                    </p>
+                    <span className="ml-auto px-2 py-0.5 rounded-full text-xs font-bold"
+                      style={{ background: isTrialing ? '#FEF3C7' : '#EDE9FE', color: isTrialing ? '#D97706' : '#7C3AED' }}>
+                      {isTrialing ? 'Trial' : 'Active'}
+                    </span>
+                  </div>
+                  {subscription?.currentPeriodEnd && (
+                    <p className="text-xs mb-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      {isTrialing ? 'Trial ends' : 'Renews'} {new Date(subscription.currentPeriodEnd).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </p>
+                  )}
+                  <button
+                    onClick={async () => {
+                      const res = await fetch('/api/billing/portal', { method: 'POST' })
+                      const { url } = await res.json()
+                      if (url) window.location.href = url
+                    }}
+                    className="flex items-center gap-2 text-xs font-semibold transition-colors hover:opacity-80"
+                    style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                  >
+                    <CreditCard size={12} /> Manage subscription
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.55, ease: easing }}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: 'linear-gradient(135deg, #7C3AED08, #22D3EE06)', border: '1px solid #DDD6FE', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+              >
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Crown size={14} style={{ color: '#7C3AED' }} />
+                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                      Upgrade to Pro
+                    </p>
+                  </div>
+                  <p className="text-xs mb-4 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                    Unlock all 5 modules per track, AI tutor, certificates and more.
+                    <strong style={{ color: '#7C3AED' }}> 7 days free.</strong>
+                  </p>
+                  <button
+                    onClick={async () => {
+                      const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ plan: 'monthly' }) })
+                      const { url } = await res.json()
+                      if (url) window.location.href = url
+                    }}
+                    className="w-full py-2.5 rounded-xl text-xs font-bold text-white transition-all hover:opacity-90"
+                    style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', fontFamily: 'var(--font-sans)', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(124,58,237,0.25)' }}
+                  >
+                    Start free trial →
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
             {/* Quick links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.55, ease: easing }}
+              transition={{ delay: 0.45, duration: 0.55, ease: easing }}
               className="rounded-2xl p-6"
               style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
             >
@@ -1032,6 +1483,7 @@ export default function DashboardPage() {
       </div>
       <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#7C3AED" />
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
+      <PushNotificationPrompt />
     </div>
   )
 }

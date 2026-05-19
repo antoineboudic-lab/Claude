@@ -217,11 +217,18 @@ export default function TrackPage() {
             <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
           </button>
           {user ? (
-            <button onClick={signOut}
-              className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100"
-              style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              <LogOut size={13} /> Sign out
-            </button>
+            <>
+              <Link href="/dashboard"
+                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80"
+                style={{ color: '#7C3AED', background: '#EDE9FE', fontFamily: 'var(--font-sans)' }}>
+                <Zap size={12} /> Dashboard
+              </Link>
+              <button onClick={signOut}
+                className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100"
+                style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                <LogOut size={13} /> Sign out
+              </button>
+            </>
           ) : (
             <button onClick={openSignUp}
               className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"

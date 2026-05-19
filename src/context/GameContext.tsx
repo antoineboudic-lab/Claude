@@ -25,6 +25,8 @@ interface GameContextValue {
   xpEvents: XPEvent[]
   newBadge: BadgeId | null
   clearNewBadge: () => void
+  justCompletedTrack: string | null
+  clearJustCompletedTrack: () => void
 }
 
 const GameContext = createContext<GameContextValue | null>(null)
@@ -69,10 +71,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   const [syncing, setSyncing] = useState(false)
   const [xpEvents, setXPEvents] = useState<XPEvent[]>([])
   const [newBadge, setNewBadge] = useState<BadgeId | null>(null)
+  const [justCompletedTrack, setJustCompletedTrack] = useState<string | null>(null)
   const eventId = useRef(0)
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   // Track last synced user to avoid re-syncing on every render
   const syncedUserId = useRef<string | null>(null)
+  // Detect newly completed tracks without modifying completeLesson's setState callback
+  const prevCompletedTracksRef = useRef<string[] | null>(null)
 
   // Load local state on mount
   useEffect(() => {
@@ -132,6 +137,17 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       if (saveTimer.current) clearTimeout(saveTimer.current)
     }
   }, [state, user])
+
+  // Show completion celebration for newly completed tracks (not on initial load)
+  useEffect(() => {
+    if (prevCompletedTracksRef.current === null) {
+      prevCompletedTracksRef.current = state.completedTracks
+      return
+    }
+    const newTracks = state.completedTracks.filter(t => !prevCompletedTracksRef.current!.includes(t))
+    if (newTracks.length > 0) setJustCompletedTrack(newTracks[0])
+    prevCompletedTracksRef.current = state.completedTracks
+  }, [state.completedTracks])
 
   const pushXPEvent = useCallback((label: string, amount: number) => {
     const id = String(eventId.current++)
@@ -237,11 +253,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }, [pushXPEvent, awardBadge])
 
   const clearNewBadge = useCallback(() => setNewBadge(null), [])
+  const clearJustCompletedTrack = useCallback(() => setJustCompletedTrack(null), [])
 
   return (
     <GameContext.Provider value={{
       state, syncing, addXP, completeLesson, completePerfectQuiz,
       xpEvents, newBadge, clearNewBadge,
+      justCompletedTrack, clearJustCompletedTrack,
     }}>
       {children}
     </GameContext.Provider>

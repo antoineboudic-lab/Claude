@@ -1,16 +1,8 @@
-import { redirect } from 'next/navigation'
-import { createSupabaseServerClient } from '@/lib/supabase/server'
 import type { ReactNode } from 'react'
+import type { Metadata } from 'next'
 
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? 'antoine.boudic@gmail.com').split(',')
+export const metadata: Metadata = { title: 'Admin | AI Literacy', robots: { index: false } }
 
-export default async function AdminLayout({ children }: { children: ReactNode }) {
-  const supabase = await createSupabaseServerClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user || !ADMIN_EMAILS.includes(user.email ?? '')) {
-    redirect('/')
-  }
-
+export default function AdminLayout({ children }: { children: ReactNode }) {
   return <>{children}</>
 }

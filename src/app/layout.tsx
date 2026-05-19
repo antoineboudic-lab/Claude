@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { GameProvider } from "@/context/GameContext";
@@ -7,6 +7,8 @@ import { XPToast } from "@/components/gamification/XPToast";
 import { BadgeUnlock } from "@/components/gamification/BadgeUnlock";
 import { AuthModal } from "@/components/auth/AuthModal";
 import FloatingAssistant from "@/components/FloatingAssistant";
+import { TrackCompletion } from "@/components/gamification/TrackCompletion";
+import PWARegister from "@/components/PWARegister";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -15,6 +17,13 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 const SITE_URL = "https://ailiteracy.com";
+
+export const viewport: Viewport = {
+  themeColor: '#7C3AED',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -89,6 +98,14 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   category: "education",
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "default",
+    "apple-mobile-web-app-title": "AI Literacy",
+    "application-name": "AI Literacy",
+    "msapplication-TileColor": "#7C3AED",
+  },
 };
 
 const jsonLd = {
@@ -177,6 +194,8 @@ export default function RootLayout({
             <BadgeUnlock />
             <AuthModal />
             <FloatingAssistant />
+            <TrackCompletion />
+            <PWARegister />
           </GameProvider>
         </AuthProvider>
       </body>

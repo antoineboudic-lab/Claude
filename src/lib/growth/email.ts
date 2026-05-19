@@ -166,3 +166,93 @@ export async function sendUpgradeEmail(to: string, name: string, completedTrack:
   })
   return !error
 }
+
+// ─── Weekly digest ─────────────────────────────────────────────────────────────
+
+interface WeeklyStats {
+  totalLessons: number
+  streak: number
+  srDue: number
+  trackLabel?: string
+}
+
+function weeklyDigestHtml(name: string, stats: WeeklyStats): string {
+  const { totalLessons, streak, srDue, trackLabel } = stats
+  const streakMsg = streak >= 7
+    ? `🔥 You're on a <strong>${streak}-day streak</strong> — that puts you in the top 10%.`
+    : streak > 0
+    ? `You have a <strong>${streak}-day streak</strong> going. Keep it alive today!`
+    : `Start a new streak today — just one lesson is all it takes.`
+
+  return baseHtml(`
+    ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Your weekly learning update, ${name} 📊</h1>
+           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">${streakMsg}</p>`)}
+    ${row(`<table cellpadding="0" cellspacing="0" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;width:100%;">
+             <tr>
+               <td style="padding:20px 24px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
+                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#0F172A;">${totalLessons}</p>
+                 <p style="margin:0;font-size:12px;color:#64748B;">Total lessons</p>
+               </td>
+               <td style="padding:20px 24px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
+                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#F97316;">${streak}</p>
+                 <p style="margin:0;font-size:12px;color:#64748B;">Day streak</p>
+               </td>
+               <td style="padding:20px 24px;text-align:center;width:33%;">
+                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#6366F1;">${srDue}</p>
+                 <p style="margin:0;font-size:12px;color:#64748B;">Cards due</p>
+               </td>
+             </tr>
+           </table>`)}
+    ${srDue > 0 ? row(`<table cellpadding="0" cellspacing="0" style="background:#EEF2FF;border:1px solid #C7D2FE;border-radius:12px;width:100%;">
+             <tr><td style="padding:16px 20px;">
+               <p style="margin:0;font-size:14px;color:#3730A3;">🃏 <strong>${srDue} flashcard${srDue !== 1 ? 's' : ''} due for review</strong> — spending 5 minutes now locks in everything you&apos;ve learned.</p>
+             </td></tr>
+           </table>`) : ''}
+    ${row(btn('Continue learning →', `${BASE_URL}/dashboard`))}
+    ${trackLabel ? row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Currently studying: <strong style="color:#334155;">${trackLabel}</strong></p>`) : ''}
+  `)
+}
+
+// ─── Team nudge ───────────────────────────────────────────────────────────────
+
+function nudgeHtml(memberName: string, teamName: string, adminName: string): string {
+  return baseHtml(`
+    ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Hey ${memberName}, your team misses you 👋</h1>
+           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;"><strong>${adminName}</strong> from <strong>${teamName}</strong> noticed you haven't been on recently and wanted to check in. Your learning path is still waiting — pick up right where you left off.</p>`)}
+    ${row(`<table cellpadding="0" cellspacing="0" style="background:#F5F3FF;border:1px solid #EDE9FE;border-radius:12px;width:100%;">
+             <tr><td style="padding:16px 20px;">
+               <p style="margin:0;font-size:14px;color:#5B21B6;">⚡ Your progress is saved. Even 15 minutes today keeps your streak alive.</p>
+             </td></tr>
+           </table>`)}
+    ${row(btn('Jump back in →', `${BASE_URL}/dashboard`))}
+    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Sent by your team admin · <a href="${BASE_URL}/unsubscribe" style="color:#94A3B8;">Unsubscribe</a></p>`)}
+  `)
+}
+
+export async function sendNudgeEmail(
+  to: string, memberName: string, teamName: string, adminName: string,
+): Promise<boolean> {
+  if (!process.env.RESEND_API_KEY) return false
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: `${adminName} from ${teamName} is checking in on you`,
+    html: nudgeHtml(memberName, teamName, adminName),
+  })
+  return !error
+}
+
+export async function sendWeeklyDigestEmail(
+  to: string,
+  name: string,
+  stats: WeeklyStats,
+): Promise<boolean> {
+  if (!process.env.RESEND_API_KEY) return false
+  const { error } = await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: `Your AI Literacy weekly update, ${name}`,
+    html: weeklyDigestHtml(name, stats),
+  })
+  return !error
+}

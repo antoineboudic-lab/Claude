@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Trophy, Zap, BookOpen, Award, TrendingUp, CheckCircle2, Users } from 'lucide-react'
+import { Trophy, Zap, BookOpen, Award, TrendingUp, CheckCircle2, Users, Download, Activity } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import {
   getAdminTeam, getTeamMembersWithProgress, getTeamStats,
@@ -21,6 +21,32 @@ const TRACK_LABELS: Record<string, string> = {
 }
 
 const ALL_TRACKS = Object.keys(TRACK_LABELS)
+
+function exportCSV(members: TeamMember[], teamName: string) {
+  const headers = ['Name', 'Email', 'XP', 'Lessons', 'Streak', 'Assigned Tracks', 'Completed Tracks']
+  const rows = members
+    .filter(m => m.status === 'active')
+    .sort((a, b) => (b.xp ?? 0) - (a.xp ?? 0))
+    .map(m => [
+      m.display_name ?? m.email.split('@')[0],
+      m.email,
+      m.xp ?? 0,
+      m.lesson_count ?? 0,
+      m.streak ?? 0,
+      (m.assigned_tracks ?? []).map(t => TRACK_LABELS[t] ?? t).join('; '),
+      (m.completed_tracks ?? []).map(t => TRACK_LABELS[t] ?? t).join('; '),
+    ])
+  const csv = [headers, ...rows]
+    .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n')
+  const blob = new Blob([csv], { type: 'text/csv' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${teamName.replace(/\s+/g, '-').toLowerCase()}-progress-${new Date().toISOString().split('T')[0]}.csv`
+  a.click()
+  URL.revokeObjectURL(url)
+}
 
 function LeaderboardRow({ member, rank, max }: { member: TeamMember; rank: number; max: number }) {
   const xp = member.xp ?? 0
@@ -69,11 +95,14 @@ function LeaderboardRow({ member, rank, max }: { member: TeamMember; rank: numbe
   )
 }
 
+interface ActivityBucket { label: string; count: number; color: string }
+
 export default function AnalyticsPage() {
   const { user } = useAuth()
   const [team, setTeam] = useState<Team | null>(null)
   const [members, setMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
+  const [activityBuckets, setActivityBuckets] = useState<ActivityBucket[] | null>(null)
 
   useEffect(() => {
     if (!user) return
@@ -83,6 +112,10 @@ export default function AnalyticsPage() {
       const m = await getTeamMembersWithProgress(t.id)
       setMembers(m)
       setLoading(false)
+      fetch(`/api/team/weekly-activity?teamId=${t.id}`)
+        .then(r => r.json())
+        .then(data => setActivityBuckets(data.buckets ?? []))
+        .catch(() => {})
     })
   }, [user])
 
@@ -124,9 +157,19 @@ export default function AnalyticsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-black" style={{ color: '#0F172A' }}>Analytics</h1>
-        <p className="text-sm mt-0.5" style={{ color: '#64748B' }}>Progress and activity across your team</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-2xl font-black" style={{ color: '#0F172A' }}>Analytics</h1>
+          <p className="text-sm mt-0.5" style={{ color: '#64748B' }}>Progress and activity across your team</p>
+        </div>
+        {active.length > 0 && (
+          <button
+            onClick={() => exportCSV(members, team.name)}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-80"
+            style={{ background: '#F8FAFC', color: '#475569', border: '1px solid #E2E8F0' }}>
+            <Download size={14} /> Export CSV
+          </button>
+        )}
       </div>
 
       {/* Summary stats */}
@@ -167,6 +210,34 @@ export default function AnalyticsPage() {
 
         {/* Right column */}
         <div className="space-y-5">
+          {/* Activity recency */}
+          {activityBuckets && activityBuckets.some(b => b.count > 0) && (
+            <div className="rounded-2xl p-5"
+              style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <div className="flex items-center gap-2 mb-5">
+                <Activity size={14} style={{ color: '#7C3AED' }} />
+                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Member activity</p>
+              </div>
+              <div className="space-y-3">
+                {activityBuckets.filter(b => b.count > 0).map(b => {
+                  const maxCount = Math.max(...activityBuckets.map(x => x.count), 1)
+                  return (
+                    <div key={b.label}>
+                      <div className="flex items-center justify-between text-xs mb-1">
+                        <span style={{ color: '#475569' }}>{b.label}</span>
+                        <span className="font-semibold" style={{ color: '#64748B' }}>{b.count}</span>
+                      </div>
+                      <div className="h-2 rounded-full" style={{ background: '#F1F5F9' }}>
+                        <div className="h-full rounded-full transition-all duration-700"
+                          style={{ width: `${(b.count / maxCount) * 100}%`, background: b.color }} />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Activity distribution */}
           <div className="rounded-2xl p-5"
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>

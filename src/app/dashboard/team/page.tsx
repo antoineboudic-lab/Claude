@@ -6,11 +6,14 @@ import { motion } from 'framer-motion'
 import {
   Users, TrendingUp, Award, Zap, BookOpen, ArrowRight,
   CheckCircle2, Clock, UserPlus, ChevronRight, BarChart3,
+  Target, MessageSquare, Edit2, X, Check, CalendarDays,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import {
   getAdminTeam, getTeamMembersWithProgress, getTeamStats,
-  type Team, type TeamMember,
+  getTeamGoal, upsertTeamGoal, deleteTeamGoal,
+  setWelcomeMessage, getWelcomeMessage,
+  type Team, type TeamMember, type TeamGoal,
 } from '@/lib/supabase/teams'
 
 const TRACK_COLORS: Record<string, string> = {
@@ -74,18 +77,57 @@ export default function TeamOverviewPage() {
   const [team, setTeam] = useState<Team | null>(null)
   const [members, setMembers] = useState<TeamMember[]>([])
   const [loading, setLoading] = useState(true)
+  const [goal, setGoal] = useState<TeamGoal | null>(null)
+  const [welcomeMsg, setWelcomeMsg] = useState<string | null>(null)
+  const [editingGoal, setEditingGoal] = useState(false)
+  const [goalTitle, setGoalTitle] = useState('')
+  const [goalDeadline, setGoalDeadline] = useState('')
+  const [savingGoal, setSavingGoal] = useState(false)
+  const [editingWelcome, setEditingWelcome] = useState(false)
+  const [welcomeDraft, setWelcomeDraft] = useState('')
+  const [savingWelcome, setSavingWelcome] = useState(false)
 
   useEffect(() => {
     if (!user) return
-    Promise.all([getAdminTeam(user.id), getAdminTeam(user.id)]).then(async () => {
-      const t = await getAdminTeam(user.id)
+    getAdminTeam(user.id).then(async t => {
       if (!t) { setLoading(false); return }
       setTeam(t)
-      const m = await getTeamMembersWithProgress(t.id)
+      const [m, g, w] = await Promise.all([
+        getTeamMembersWithProgress(t.id),
+        getTeamGoal(t.id),
+        getWelcomeMessage(t.id),
+      ])
       setMembers(m)
+      setGoal(g)
+      setWelcomeMsg(w)
       setLoading(false)
     })
   }, [user])
+
+  async function handleSaveGoal() {
+    if (!team || !user || !goalTitle.trim()) return
+    setSavingGoal(true)
+    const g = await upsertTeamGoal(team.id, goalTitle.trim(), goalDeadline || null, user.id)
+    setGoal(g)
+    setEditingGoal(false)
+    setSavingGoal(false)
+  }
+
+  async function handleDeleteGoal() {
+    if (!team) return
+    await deleteTeamGoal(team.id)
+    setGoal(null)
+    setEditingGoal(false)
+  }
+
+  async function handleSaveWelcome() {
+    if (!team) return
+    setSavingWelcome(true)
+    await setWelcomeMessage(team.id, welcomeDraft)
+    setWelcomeMsg(welcomeDraft || null)
+    setEditingWelcome(false)
+    setSavingWelcome(false)
+  }
 
   if (loading) {
     return (
@@ -255,6 +297,136 @@ export default function TeamOverviewPage() {
               </Link>
             </div>
           )}
+
+          {/* Team goal */}
+          <div className="rounded-2xl p-5"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Target size={14} style={{ color: '#7C3AED' }} />
+                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Team goal</p>
+              </div>
+              {!editingGoal && (
+                <button onClick={() => { setGoalTitle(goal?.title ?? ''); setGoalDeadline(goal?.deadline ?? ''); setEditingGoal(true) }}
+                  className="p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                  style={{ color: '#94A3B8' }}>
+                  <Edit2 size={12} />
+                </button>
+              )}
+            </div>
+            {editingGoal ? (
+              <div className="space-y-2.5">
+                <input
+                  type="text"
+                  value={goalTitle}
+                  onChange={e => setGoalTitle(e.target.value)}
+                  placeholder="e.g. Complete AI Fundamentals by Q3"
+                  className="w-full px-3 py-2 rounded-xl text-sm outline-none"
+                  style={{ border: '1.5px solid #7C3AED', background: '#FAFBFC', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+                />
+                <div className="flex items-center gap-1.5">
+                  <CalendarDays size={12} style={{ color: '#94A3B8' }} />
+                  <input
+                    type="date"
+                    value={goalDeadline}
+                    onChange={e => setGoalDeadline(e.target.value)}
+                    className="flex-1 px-2 py-1.5 rounded-lg text-xs outline-none"
+                    style={{ border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#475569', fontFamily: 'var(--font-sans)' }}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={handleSaveGoal} disabled={savingGoal || !goalTitle.trim()}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{ background: '#7C3AED' }}>
+                    <Check size={11} /> {savingGoal ? 'Saving…' : 'Save'}
+                  </button>
+                  <button onClick={() => setEditingGoal(false)}
+                    className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors hover:bg-slate-100"
+                    style={{ color: '#64748B', border: '1px solid #E2E8F0' }}>
+                    <X size={11} />
+                  </button>
+                </div>
+                {goal && (
+                  <button onClick={handleDeleteGoal}
+                    className="text-xs hover:underline"
+                    style={{ color: '#EF4444' }}>
+                    Remove goal
+                  </button>
+                )}
+              </div>
+            ) : goal ? (
+              <div>
+                <p className="text-sm font-medium mb-1" style={{ color: '#334155' }}>{goal.title}</p>
+                {goal.deadline && (
+                  <p className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8' }}>
+                    <CalendarDays size={10} />
+                    Due {new Date(goal.deadline).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <button onClick={() => { setGoalTitle(''); setGoalDeadline(''); setEditingGoal(true) }}
+                className="text-xs font-semibold hover:underline"
+                style={{ color: '#7C3AED' }}>
+                + Set a team goal
+              </button>
+            )}
+          </div>
+
+          {/* Welcome message */}
+          <div className="rounded-2xl p-5"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <MessageSquare size={14} style={{ color: '#10B981' }} />
+                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Welcome message</p>
+              </div>
+              {!editingWelcome && (
+                <button onClick={() => { setWelcomeDraft(welcomeMsg ?? ''); setEditingWelcome(true) }}
+                  className="p-1 rounded-lg hover:bg-slate-100 transition-colors"
+                  style={{ color: '#94A3B8' }}>
+                  <Edit2 size={12} />
+                </button>
+              )}
+            </div>
+            {editingWelcome ? (
+              <div className="space-y-2.5">
+                <textarea
+                  value={welcomeDraft}
+                  onChange={e => setWelcomeDraft(e.target.value)}
+                  placeholder="Write a short welcome note for new members joining via invite…"
+                  rows={3}
+                  className="w-full px-3 py-2 rounded-xl text-xs outline-none resize-none"
+                  style={{ border: '1.5px solid #10B981', background: '#FAFBFC', color: '#0F172A', fontFamily: 'var(--font-sans)', lineHeight: 1.6 }}
+                />
+                <div className="flex gap-2">
+                  <button onClick={handleSaveWelcome} disabled={savingWelcome}
+                    className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{ background: '#10B981' }}>
+                    <Check size={11} /> {savingWelcome ? 'Saving…' : 'Save'}
+                  </button>
+                  <button onClick={() => setEditingWelcome(false)}
+                    className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors hover:bg-slate-100"
+                    style={{ color: '#64748B', border: '1px solid #E2E8F0' }}>
+                    <X size={11} />
+                  </button>
+                </div>
+              </div>
+            ) : welcomeMsg ? (
+              <p className="text-xs leading-relaxed" style={{ color: '#475569' }}>{welcomeMsg}</p>
+            ) : (
+              <button onClick={() => { setWelcomeDraft(''); setEditingWelcome(true) }}
+                className="text-xs font-semibold hover:underline"
+                style={{ color: '#10B981' }}>
+                + Add welcome message
+              </button>
+            )}
+            {!editingWelcome && (
+              <p className="mt-2 text-[10px]" style={{ color: '#CBD5E1' }}>
+                Shown to new members on the invite page
+              </p>
+            )}
+          </div>
 
           {/* Quick links */}
           <div className="rounded-2xl p-5"

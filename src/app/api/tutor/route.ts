@@ -3,19 +3,17 @@ import Anthropic from '@anthropic-ai/sdk'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-// Simple in-memory rate limiter: 20 requests per IP per 60s window
+// In-memory rate limiter: 30 requests / IP / 60s
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
-const RATE_LIMIT = 20
-const RATE_WINDOW_MS = 60_000
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now()
   const entry = rateLimitMap.get(ip)
   if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS })
+    rateLimitMap.set(ip, { count: 1, resetAt: now + 60_000 })
     return true
   }
-  if (entry.count >= RATE_LIMIT) return false
+  if (entry.count >= 30) return false
   entry.count++
   return true
 }
@@ -26,35 +24,57 @@ const ALLOWED_ORIGINS = [
   'https://ai-literacy-tau.vercel.app',
 ]
 
-function buildSystemPrompt(
-  lessonTitle?: string,
-  trackId?: string,
-  lessonSummary?: string,
-  pageType?: string,
-  mode?: string,
-): string {
-  const base =
-    'You are an expert AI literacy coach on the AI Literacy platform — a learning platform that teaches business professionals how to use AI in their specific roles, without needing to write code. You are knowledgeable, practical, and encouraging.'
+function buildSystemPrompt(params: {
+  lessonTitle?: string
+  trackId?: string
+  lessonContent?: string
+  keyTakeaways?: string[]
+  pageType?: string
+  mode?: string
+}): string {
+  const { lessonTitle, trackId, lessonContent, keyTakeaways, pageType, mode } = params
+
+  const base = `You are an AI literacy tutor on the AI Literacy platform — a course teaching business professionals how to use AI in their roles, without writing code. You are knowledgeable, practical, encouraging, and concise.`
 
   if (mode === 'practice') {
-    const lessonCtx = lessonTitle ? ` The learner is currently studying: "${lessonTitle}".` : ''
-    return `${base}\n\nMode: Practice Partner.${lessonCtx} Your job is to help the learner practice their AI and prompting skills. You can: create roleplay scenarios (e.g. "You're a marketer writing a product launch email — craft a prompt for that"), critique their prompts and suggest improvements, ask follow-up questions to deepen understanding, or quiz them. Keep sessions engaging, supportive, and practical. Be concise — under 5 sentences unless you're demonstrating a prompt or example.`
+    return `${base}
+
+Mode: Practice Partner. The learner is practising AI prompting skills.${lessonTitle ? ` Current lesson: "${lessonTitle}".` : ''}
+Your job: run engaging practice exercises. Create roleplay scenarios, critique prompts and suggest improvements, quiz understanding, ask follow-up questions. Keep responses practical and under 5 sentences unless demonstrating a prompt.`
   }
 
   if (mode === 'navigate') {
-    return `${base}\n\nMode: Course Navigator. Help the learner find the right track, lessons, or next steps on the platform. Available tracks: Marketing, Finance, HR, Sales, Operations, Leadership, Legal, Product, Customer Success, Consulting. Each track has beginner-to-advanced modules covering real-world AI use cases for that role. Be specific and helpful. Under 4 sentences.`
+    return `${base}
+
+Mode: Course Navigator. Help the learner find the right track, lessons, or next steps.
+Available tracks: Marketing, Finance, HR, Sales, Operations, Leadership, Legal, Product, Customer Success, Consulting.
+Be specific and direct. Under 4 sentences.`
   }
 
-  // ask mode
   if (lessonTitle && trackId) {
-    return `${base}\n\nThe learner is on the lesson: "${lessonTitle}" in the ${trackId} track.${lessonSummary ? ' Lesson context: ' + lessonSummary : ''} Answer questions about this lesson and related AI concepts. Give practical, role-specific examples relevant to ${trackId} professionals. Be concise — 2–4 sentences. Don't repeat what the lesson already covers — add depth or a different angle.`
+    const takeawayBlock = keyTakeaways?.length
+      ? `\n\nKEY TAKEAWAYS:\n${keyTakeaways.map((t, i) => `${i + 1}. ${t}`).join('\n')}`
+      : ''
+    const contentBlock = lessonContent
+      ? `\n\nLESSON CONTENT:\n${lessonContent.slice(0, 2500)}`
+      : ''
+
+    return `${base}
+
+The learner is studying: "${lessonTitle}" (${trackId} track).${takeawayBlock}${contentBlock}
+
+Your role: Answer questions about this lesson. Add depth beyond what's written — give new angles, concrete examples from ${trackId} work, and clarify confusing points. Don't repeat the lesson verbatim. Be concise: 2–4 sentences for simple questions, up to 6 for complex ones.`
   }
 
   if (pageType === 'dashboard') {
-    return `${base}\n\nThe learner is on their learning dashboard. They may ask about their progress, what to learn next, or how to get the most from the platform. Be encouraging, specific, and practical. Under 4 sentences.`
+    return `${base}
+
+The learner is on their dashboard. They may ask about their progress, what to study next, or how to get the most from the platform. Be encouraging and specific. Under 4 sentences.`
   }
 
-  return `${base}\n\nAnswer questions about AI tools, concepts, prompting, and how AI applies to business roles. Be concise and practical — 2–4 sentences. Recommend relevant tracks or lessons when it would help.`
+  return `${base}
+
+Answer questions about AI tools, prompting, and how AI applies to business roles. Be practical and concise — 2–4 sentences. Recommend tracks or lessons when helpful.`
 }
 
 export async function POST(req: NextRequest) {
@@ -77,7 +97,8 @@ export async function POST(req: NextRequest) {
     messages?: { role: 'user' | 'assistant'; content: string }[]
     lessonTitle?: string
     trackId?: string
-    lessonSummary?: string
+    lessonContent?: string
+    keyTakeaways?: string[]
     pageType?: string
     mode?: string
   }
@@ -87,34 +108,47 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const { messages, lessonTitle, trackId, lessonSummary, pageType, mode } = body
+  const { messages, lessonTitle, trackId, lessonContent, keyTakeaways, pageType, mode } = body
 
   if (!messages?.length) {
-    return NextResponse.json({ error: 'Messages are required' }, { status: 400 })
+    return NextResponse.json({ error: 'Messages required' }, { status: 400 })
   }
 
-  const systemPrompt = buildSystemPrompt(
-    lessonTitle?.trim() || undefined,
-    trackId?.trim() || undefined,
-    lessonSummary?.trim() || undefined,
-    pageType,
-    mode,
-  )
+  const system = buildSystemPrompt({ lessonTitle, trackId, lessonContent, keyTakeaways, pageType, mode })
 
-  const maxTokens = mode === 'practice' ? 450 : 320
+  // Stream the response token-by-token
+  const stream = await client.messages.stream({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: mode === 'practice' ? 500 : 400,
+    system,
+    messages: messages as Anthropic.MessageParam[],
+  })
 
-  try {
-    const message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: maxTokens,
-      system: systemPrompt,
-      messages,
-    })
+  const readable = new ReadableStream({
+    async start(controller) {
+      const encoder = new TextEncoder()
+      try {
+        for await (const chunk of stream) {
+          if (
+            chunk.type === 'content_block_delta' &&
+            chunk.delta.type === 'text_delta'
+          ) {
+            controller.enqueue(encoder.encode(chunk.delta.text))
+          }
+        }
+      } catch {
+        controller.error(new Error('Stream error'))
+      } finally {
+        controller.close()
+      }
+    },
+  })
 
-    const text = message.content[0]?.type === 'text' ? message.content[0].text : ''
-    return NextResponse.json({ response: text })
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Unknown error'
-    return NextResponse.json({ error: msg }, { status: 500 })
-  }
+  return new Response(readable, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store',
+      'X-Content-Type-Options': 'nosniff',
+    },
+  })
 }

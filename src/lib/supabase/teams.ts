@@ -271,6 +271,61 @@ export async function revokeInvite(inviteId: string): Promise<void> {
   await supabase.from('team_invites').update({ status: 'expired' }).eq('id', inviteId)
 }
 
+// ── Team goals ────────────────────────────────────────────────────────────────
+
+export interface TeamGoal {
+  id: string
+  team_id: string
+  title: string
+  deadline: string | null
+  created_by: string | null
+  created_at: string
+}
+
+export async function getTeamGoal(teamId: string): Promise<TeamGoal | null> {
+  const supabase = createClient()
+  const { data } = await supabase
+    .from('team_goals')
+    .select('*')
+    .eq('team_id', teamId)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+  return (data as TeamGoal) ?? null
+}
+
+export async function upsertTeamGoal(
+  teamId: string, title: string, deadline: string | null, userId: string,
+): Promise<TeamGoal | null> {
+  const supabase = createClient()
+  // Delete existing goal first, then insert new one (simpler than true upsert)
+  await supabase.from('team_goals').delete().eq('team_id', teamId)
+  const { data } = await supabase
+    .from('team_goals')
+    .insert({ team_id: teamId, title, deadline: deadline || null, created_by: userId })
+    .select()
+    .single()
+  return (data as TeamGoal) ?? null
+}
+
+export async function deleteTeamGoal(teamId: string): Promise<void> {
+  const supabase = createClient()
+  await supabase.from('team_goals').delete().eq('team_id', teamId)
+}
+
+// ── Welcome message ───────────────────────────────────────────────────────────
+
+export async function setWelcomeMessage(teamId: string, message: string): Promise<void> {
+  const supabase = createClient()
+  await supabase.from('teams').update({ welcome_message: message || null }).eq('id', teamId)
+}
+
+export async function getWelcomeMessage(teamId: string): Promise<string | null> {
+  const supabase = createClient()
+  const { data } = await supabase.from('teams').select('welcome_message').eq('id', teamId).single()
+  return (data as { welcome_message: string | null } | null)?.welcome_message ?? null
+}
+
 // ── Analytics helpers ─────────────────────────────────────────────────────────
 
 export function getTeamStats(members: TeamMember[]) {
