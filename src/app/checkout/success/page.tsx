@@ -25,7 +25,7 @@ export default function CheckoutSuccessPage() {
   ]
 
   return (
-    <main style={{ minHeight: '100vh', background: '#F8FAFC', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ minHeight: '100vh', background: '#F0FDFA', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: 'var(--font-sans)' }}>
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,10 +39,10 @@ export default function CheckoutSuccessPage() {
           transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 12 }}
           style={{
             width: 88, height: 88, borderRadius: '50%',
-            background: 'linear-gradient(135deg, #7C3AED, #22D3EE)',
+            background: 'linear-gradient(135deg, #0D9488, #22D3EE)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 28px',
-            boxShadow: '0 12px 36px rgba(124,58,237,0.3)',
+            boxShadow: '0 12px 36px rgba(13,148,136,0.3)',
           }}
         >
           <CheckCircle2 size={40} color="#FFFFFF" />
@@ -53,7 +53,7 @@ export default function CheckoutSuccessPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#7C3AED', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
+          <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0D9488', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
             Welcome to Pro
           </p>
           <h1 style={{ fontSize: '2rem', fontWeight: 900, color: '#0F172A', marginBottom: 10, letterSpacing: '-0.02em', lineHeight: 1.15 }}>
@@ -74,7 +74,7 @@ export default function CheckoutSuccessPage() {
             </p>
             {perks.map(p => (
               <div key={p} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                <Zap size={13} style={{ color: '#7C3AED', flexShrink: 0 }} />
+                <Zap size={13} style={{ color: '#0D9488', flexShrink: 0 }} />
                 <span style={{ fontSize: '0.875rem', color: '#334155' }}>{p}</span>
               </div>
             ))}
@@ -87,10 +87,10 @@ export default function CheckoutSuccessPage() {
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                 padding: '14px 24px', borderRadius: 12,
-                background: 'linear-gradient(135deg, #7C3AED, #22D3EE)',
+                background: 'linear-gradient(135deg, #0D9488, #22D3EE)',
                 color: '#FFFFFF', textDecoration: 'none',
                 fontSize: '0.9375rem', fontWeight: 700,
-                boxShadow: '0 8px 24px rgba(124,58,237,0.25)',
+                boxShadow: '0 8px 24px rgba(13,148,136,0.25)',
               }}
             >
               Go to my dashboard <ArrowRight size={16} />

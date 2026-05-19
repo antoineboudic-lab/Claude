@@ -73,7 +73,7 @@ function StickySignUpBar() {
               </button>
               <Link href="/assessment"
                 className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
-                style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                 Build my learning plan <ArrowRight size={13} />
               </Link>
               <button onClick={() => setDismissed(true)}
@@ -145,7 +145,7 @@ function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="text-lg font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
@@ -181,7 +181,7 @@ function Navbar() {
           <button
             onClick={() => setSearchOpen(true)}
             className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F8FAFC' }}
+            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F0FDFA' }}
           >
             <Search size={13} />
             <span>Search</span>
@@ -196,7 +196,7 @@ function Navbar() {
                   <button onClick={() => setAvatarOpen(v => !v)}
                     className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-xl transition-colors hover:bg-slate-100">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
-                      style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                      style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                       {initials}
                     </div>
                     <span className="text-sm font-medium" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
@@ -247,7 +247,7 @@ function Navbar() {
                   </button>
                   <Link href="/assessment"
                     className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
-                    style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                    style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                     Build my plan
                   </Link>
                 </>
@@ -291,7 +291,7 @@ function Navbar() {
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center py-3.5 text-sm font-medium border-b transition-colors hover:text-violet-600"
-                    style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F8FAFC' }}>
+                    style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F0FDFA' }}>
                     {item.label}
                   </a>
                 ))}
@@ -320,7 +320,7 @@ function Navbar() {
                       </button>
                       <Link href="/assessment" onClick={() => setMobileOpen(false)}
                         className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white"
-                        style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                        style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                         Build my plan <ArrowRight size={13} />
                       </Link>
                     </>
@@ -342,7 +342,7 @@ function Navbar() {
 const HERO_ROLES = [
   {
     role: 'Marketing Manager', track: 'Marketing Track',
-    accent: '#7C3AED', bg: '#EDE9FE',
+    accent: '#0D9488', bg: '#CCFBF1',
     lesson: 'Writing AI prompts for campaign briefs',
     module: 'Prompt Engineering', progress: 68, xp: 1240, done: 8,
     insight: 'Prompt Engineering is 3× more relevant for your role — prioritised first.',
@@ -482,7 +482,7 @@ function HeroVisual() {
 
         {/* Current lesson + progress */}
         <div className="px-5 py-4 space-y-3">
-          <div className="p-3.5 rounded-xl" style={{ background: '#F8FAFC', border: '1px solid #F1F5F9' }}>
+          <div className="p-3.5 rounded-xl" style={{ background: '#F0FDFA', border: '1px solid #F1F5F9' }}>
             <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
               Now learning
             </p>
@@ -513,10 +513,10 @@ function HeroVisual() {
           </div>
 
           {/* AI insight */}
-          <div className="p-3.5 rounded-xl" style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}>
+          <div className="p-3.5 rounded-xl" style={{ background: '#F0FDFA', border: '1px solid #CCFBF1' }}>
             <div className="flex items-center gap-1.5 mb-1.5">
-              <Sparkles size={10} style={{ color: '#7C3AED' }} />
-              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+              <Sparkles size={10} style={{ color: '#0D9488' }} />
+              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                 AI insight
               </p>
             </div>
@@ -528,7 +528,7 @@ function HeroVisual() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-xs leading-relaxed"
-                style={{ color: '#5B21B6', fontFamily: 'var(--font-sans)' }}
+                style={{ color: '#115E59', fontFamily: 'var(--font-sans)' }}
               >
                 {role.insight}
               </motion.p>
@@ -552,7 +552,7 @@ function HeroVisual() {
         animate={{ y: [0, 7, 0] }}
         transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
         className="absolute -bottom-4 -left-5 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap"
-        style={{ background: '#EDE9FE', border: '1px solid #DDD6FE', color: '#7C3AED', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+        style={{ background: '#CCFBF1', border: '1px solid #99F6E4', color: '#0D9488', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
       >
         <Zap size={11} /> +150 XP earned
       </motion.div>
@@ -592,7 +592,7 @@ function Hero() {
     <section className="relative overflow-hidden" style={{ background: '#FFFFFF', paddingTop: '7rem', paddingBottom: '5rem' }}>
       {/* Decorative background blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div style={{ position: 'absolute', top: -180, right: -120, width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, rgba(124,58,237,0.09) 0%, transparent 70%)' }} />
+        <div style={{ position: 'absolute', top: -180, right: -120, width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, rgba(13,148,136,0.09) 0%, transparent 70%)' }} />
         <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%)' }} />
       </div>
 
@@ -601,7 +601,7 @@ function Hero() {
 
           {/* Label */}
           <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold mb-8"
-            style={{ background: '#F5F3FF', color: '#7C3AED', border: '1px solid #EDE9FE', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
+            style={{ background: '#F0FDFA', color: '#0D9488', border: '1px solid #CCFBF1', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
             <Zap size={10} /> Role-specific AI training
           </motion.div>
 
@@ -614,7 +614,7 @@ function Hero() {
               color: '#0F172A', marginBottom: '1.5rem',
             }}>
             The AI skills<br />
-            <span style={{ color: '#7C3AED' }}>your role demands.</span>
+            <span style={{ color: '#0D9488' }}>your role demands.</span>
           </motion.h1>
 
           {/* Subheading */}
@@ -627,7 +627,7 @@ function Hero() {
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
             <Link href="/assessment"
               className="inline-flex items-center justify-center gap-2.5 rounded-xl font-bold text-white transition-all hover:opacity-92 hover:scale-[1.02] active:scale-[0.99]"
-              style={{ background: '#7C3AED', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem', boxShadow: '0 8px 28px rgba(124,58,237,0.32)' }}>
+              style={{ background: '#0D9488', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem', boxShadow: '0 8px 28px rgba(13,148,136,0.32)' }}>
               Find my learning path <ArrowRight size={16} />
             </Link>
             <a href="#program"
@@ -687,7 +687,7 @@ function SocialProof() {
     { n: '4.2 hrs', label: 'Saved per week' },
   ]
   return (
-    <div style={{ background: '#7C3AED' }}>
+    <div style={{ background: '#0D9488' }}>
       {/* Big stats */}
       <div className="max-w-5xl mx-auto px-6 py-14 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10">
         {stats.map(s => (
@@ -723,7 +723,7 @@ function SocialProof() {
 function HowItWorks() {
   const steps = [
     {
-      number: '01', icon: ClipboardList, title: 'Take the Assessment', color: '#7C3AED', bg: '#EDE9FE',
+      number: '01', icon: ClipboardList, title: 'Take the Assessment', color: '#0D9488', bg: '#CCFBF1',
       desc: 'Answer 5 quick questions about your role, industry, and goals. Takes 3 minutes and shapes everything that follows.',
       detail: '3 min · 5 questions · No login required',
       tag: 'Free',
@@ -747,7 +747,7 @@ function HowItWorks() {
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>How it works</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>How it works</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               From zero to AI fluency<br className="hidden sm:block" /> in three steps
             </h2>
@@ -779,7 +779,7 @@ function HowItWorks() {
                       style={{ background: '#FFFFFF', border: '2px solid #F1F5F9' }}>
                       {/* Giant decorative number */}
                       <span className="absolute -top-3 -right-1 font-black leading-none select-none pointer-events-none"
-                        style={{ fontSize: '7rem', color: '#F8FAFC', fontFamily: 'var(--font-sans)' }}>
+                        style={{ fontSize: '7rem', color: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
                         {step.number}
                       </span>
 
@@ -820,7 +820,7 @@ function HowItWorks() {
           <motion.div variants={fadeUp} className="text-center mt-12">
             <Link href="/assessment"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-              style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(124,58,237,0.2)' }}>
+              style={{ background: '#0D9488', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(13,148,136,0.2)' }}>
               Start with the free assessment <ArrowRight size={14} />
             </Link>
             <p className="mt-3 text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
@@ -839,7 +839,7 @@ const TRACKS = [
   { id: 'marketing',  icon: Megaphone,    label: 'Marketing',        color: '#EC4899', skills: ['AI copywriting', 'Campaign automation', 'Content strategy', 'Data analysis'] },
   { id: 'finance',    icon: LineChart,    label: 'Finance',          color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis', 'Forecasting'] },
   { id: 'hr',         icon: HeartHandshake, label: 'HR & People',   color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics', 'Engagement'] },
-  { id: 'sales',      icon: TrendingUp,   label: 'Sales',            color: '#7C3AED', skills: ['Prospect research', 'Proposal writing', 'CRM automation', 'Pipeline AI'] },
+  { id: 'sales',      icon: TrendingUp,   label: 'Sales',            color: '#0D9488', skills: ['Prospect research', 'Proposal writing', 'CRM automation', 'Pipeline AI'] },
   { id: 'operations', icon: Settings,     label: 'Operations',       color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Supply chain AI', 'Quality ops'] },
   { id: 'leadership', icon: Briefcase,    label: 'Leadership',       color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement', 'Executive decisions'] },
   { id: 'legal',      icon: Scale,        label: 'Legal',            color: '#6366F1', skills: ['Contract analysis', 'Legal research', 'Risk assessment', 'AI governance'] },
@@ -869,11 +869,11 @@ function RoleTracks() {
   const Icon = track.icon
 
   return (
-    <section id="tracks" className="py-14 sm:py-20" style={{ background: '#F8FAFC' }}>
+    <section id="tracks" className="py-14 sm:py-20" style={{ background: '#F0FDFA' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>Role-based tracks</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>Role-based tracks</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               Every track is built around<br className="hidden sm:block" /> your specific role
             </h2>
@@ -957,7 +957,7 @@ function RoleTracks() {
                 <div className="p-7">
                   <div className="grid sm:grid-cols-3 gap-4">
                     {preview.modules.map((mod, mi) => (
-                      <div key={mod.title} className="p-4 rounded-xl" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                      <div key={mod.title} className="p-4 rounded-xl" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
                         <div className="flex items-center gap-2 mb-3">
                           <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
                             style={{ background: track.color }}>
@@ -1011,7 +1011,7 @@ function RoleTracks() {
 // ─── Features ─────────────────────────────────────────────────────────────────
 
 const FEATURES = [
-  { icon: Brain, title: 'Adaptive AI personalisation', desc: 'Your path updates as you learn. The more you do, the more accurately it maps to where you are.', color: '#7C3AED' },
+  { icon: Brain, title: 'Adaptive AI personalisation', desc: 'Your path updates as you learn. The more you do, the more accurately it maps to where you are.', color: '#0D9488' },
   { icon: Target, title: 'Role-specific content', desc: 'Every lesson, exercise, and example is tailored to your job function — not recycled from a generic course.', color: '#3B82F6' },
   { icon: Layers, title: 'Practical exercises', desc: 'Apply what you learn immediately. Every module ends with a real task using tools you already have access to.', color: '#10B981' },
   { icon: BarChart3, title: 'Progress tracking', desc: "See exactly where you are, what you've mastered, and what comes next — with XP, streaks, and milestones.", color: '#F59E0B' },
@@ -1029,13 +1029,13 @@ function Features() {
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="flex items-end justify-between flex-wrap gap-4 mb-12">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>Everything you need</p>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>Everything you need</p>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A', lineHeight: 1.1 }}>
                 Designed for how<br className="hidden sm:block" />professionals actually learn
               </h2>
             </div>
             <Link href="/assessment" className="hidden sm:inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
-              style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+              style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
               Get started free <ArrowRight size={13} />
             </Link>
           </motion.div>
@@ -1109,14 +1109,14 @@ const TEAM_FEATURES = [
 function TeamsSection() {
   const { ref, isInView } = useReveal()
   return (
-    <section className="py-14 sm:py-20 overflow-hidden" style={{ background: '#F8FAFC' }}>
+    <section className="py-14 sm:py-20 overflow-hidden" style={{ background: '#F0FDFA' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left: copy */}
             <div>
               <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3"
-                style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>For teams &amp; organisations</motion.p>
+                style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>For teams &amp; organisations</motion.p>
               <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5"
                 style={{ fontFamily: 'var(--font-sans)', color: '#0F172A', lineHeight: 1.1 }}>
                 Upskill your entire team — not just one person
@@ -1130,8 +1130,8 @@ function TeamsSection() {
                   const Icon = f.icon
                   return (
                     <motion.div key={f.label} variants={fadeUp} className="flex items-start gap-4">
-                      <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#EDE9FE' }}>
-                        <Icon size={16} style={{ color: '#7C3AED' }} />
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#CCFBF1' }}>
+                        <Icon size={16} style={{ color: '#0D9488' }} />
                       </div>
                       <div>
                         <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{f.label}</p>
@@ -1144,7 +1144,7 @@ function TeamsSection() {
               <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3">
                 <Link href="/teams"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-                  style={{ background: '#7C3AED', boxShadow: '0 4px 16px rgba(124,58,237,0.25)', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)', fontFamily: 'var(--font-sans)' }}>
                   See team plans
                 </Link>
                 <Link href="/dashboard/team/create"
@@ -1159,12 +1159,12 @@ function TeamsSection() {
             <motion.div variants={fadeUp} className="relative">
               {/* Glow */}
               <div className="absolute -inset-4 rounded-3xl opacity-20 pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse at center, #7C3AED 0%, transparent 70%)' }} />
+                style={{ background: 'radial-gradient(ellipse at center, #0D9488 0%, transparent 70%)' }} />
 
               <div className="relative rounded-2xl overflow-hidden"
                 style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 8px 40px rgba(0,0,0,0.08)' }}>
                 {/* Window chrome */}
-                <div className="px-5 py-3.5 flex items-center gap-2" style={{ borderBottom: '1px solid #F1F5F9', background: '#FAFBFC' }}>
+                <div className="px-5 py-3.5 flex items-center gap-2" style={{ borderBottom: '1px solid #F1F5F9', background: '#F0FDFA' }}>
                   <div className="w-3 h-3 rounded-full" style={{ background: '#F43F5E' }} />
                   <div className="w-3 h-3 rounded-full" style={{ background: '#F59E0B' }} />
                   <div className="w-3 h-3 rounded-full" style={{ background: '#10B981' }} />
@@ -1178,12 +1178,12 @@ function TeamsSection() {
                   {/* Stats row */}
                   <div className="grid grid-cols-4 gap-3">
                     {[
-                      { label: 'Members', value: '24', color: '#7C3AED' },
+                      { label: 'Members', value: '24', color: '#0D9488' },
                       { label: 'Total XP', value: '18.4k', color: '#F59E0B' },
                       { label: 'Lessons', value: '312', color: '#10B981' },
                       { label: 'Tracks done', value: '9', color: '#EC4899' },
                     ].map(s => (
-                      <div key={s.label} className="p-3 rounded-xl" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                      <div key={s.label} className="p-3 rounded-xl" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
                         <p className="text-lg font-black mb-0.5" style={{ color: s.color, fontFamily: 'var(--font-sans)' }}>{s.value}</p>
                         <p className="text-[10px]" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{s.label}</p>
                       </div>
@@ -1192,8 +1192,8 @@ function TeamsSection() {
 
                   {/* Leaderboard */}
                   <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #E2E8F0' }}>
-                    <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid #F1F5F9', background: '#FAFBFC' }}>
-                      <BarChart3 size={12} style={{ color: '#7C3AED' }} />
+                    <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid #F1F5F9', background: '#F0FDFA' }}>
+                      <BarChart3 size={12} style={{ color: '#0D9488' }} />
                       <p className="text-xs font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Leaderboard</p>
                     </div>
                     <div className="divide-y" style={{ borderColor: '#F1F5F9' }}>
@@ -1214,10 +1214,10 @@ function TeamsSection() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-1">
                               <p className="text-xs font-semibold truncate" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{m.name}</p>
-                              <p className="text-xs font-black ml-2 flex-shrink-0" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>{m.xp.toLocaleString()} XP</p>
+                              <p className="text-xs font-black ml-2 flex-shrink-0" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>{m.xp.toLocaleString()} XP</p>
                             </div>
                             <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
-                              <div className="h-full rounded-full" style={{ width: `${m.pct}%`, background: i === 0 ? '#F59E0B' : '#7C3AED' }} />
+                              <div className="h-full rounded-full" style={{ width: `${m.pct}%`, background: i === 0 ? '#F59E0B' : '#0D9488' }} />
                             </div>
                           </div>
                         </div>
@@ -1285,7 +1285,7 @@ function Testimonials() {
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>What people say</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>What people say</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               Real results from real professionals
             </h2>
@@ -1295,7 +1295,7 @@ function Testimonials() {
           <motion.div variants={fadeUp} className="relative mb-5 p-8 sm:p-10 rounded-2xl overflow-hidden"
             style={{ background: '#0F172A', boxShadow: '0 20px 48px rgba(15,23,42,0.18)' }}>
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.18) 0%, transparent 60%)' }} />
+              style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(13,148,136,0.18) 0%, transparent 60%)' }} />
             {/* Big decorative quote mark */}
             <div className="absolute top-6 right-8 pointer-events-none select-none hidden sm:block"
               style={{ fontSize: '8rem', lineHeight: 1, color: 'rgba(255,255,255,0.03)', fontFamily: 'Georgia, serif', fontWeight: 700 }}>&ldquo;</div>
@@ -1416,12 +1416,12 @@ function FAQ() {
     <section className="py-14 sm:py-20 relative overflow-hidden" style={{ background: '#0F172A' }}>
       {/* Subtle radial glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 70% 40%, rgba(124,58,237,0.12) 0%, transparent 55%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 70% 40%, rgba(13,148,136,0.12) 0%, transparent 55%)' }} />
 
       <div className="max-w-3xl mx-auto px-6 relative">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>FAQ</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>FAQ</p>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#FFFFFF', lineHeight: 1.08 }}>
               Still have questions?
             </h2>
@@ -1433,8 +1433,8 @@ function FAQ() {
                 <motion.div key={i} variants={fadeUp}
                   className="rounded-2xl overflow-hidden transition-all"
                   style={{
-                    background: isOpen ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.04)',
-                    border: isOpen ? '1px solid rgba(124,58,237,0.4)' : '1px solid rgba(255,255,255,0.07)',
+                    background: isOpen ? 'rgba(13,148,136,0.15)' : 'rgba(255,255,255,0.04)',
+                    border: isOpen ? '1px solid rgba(13,148,136,0.4)' : '1px solid rgba(255,255,255,0.07)',
                   }}>
                   <button
                     onClick={() => setOpen(isOpen ? null : i)}
@@ -1442,7 +1442,7 @@ function FAQ() {
                   >
                     <div className="flex items-center gap-4 min-w-0">
                       <span className="text-xs font-black flex-shrink-0 tabular-nums"
-                        style={{ color: isOpen ? '#A78BFA' : 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-sans)' }}>
+                        style={{ color: isOpen ? '#5EEAD4' : 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-sans)' }}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <span className="text-sm font-semibold" style={{ color: isOpen ? '#FFFFFF' : 'rgba(255,255,255,0.65)', fontFamily: 'var(--font-sans)' }}>
@@ -1451,7 +1451,7 @@ function FAQ() {
                     </div>
                     <motion.div animate={{ rotate: isOpen ? 45 : 0 }} transition={{ duration: 0.18 }} className="flex-shrink-0">
                       <div className="w-6 h-6 rounded-full flex items-center justify-center"
-                        style={{ background: isOpen ? '#7C3AED' : 'rgba(255,255,255,0.08)' }}>
+                        style={{ background: isOpen ? '#0D9488' : 'rgba(255,255,255,0.08)' }}>
                         <span style={{ fontSize: '1rem', lineHeight: 1, color: isOpen ? '#FFFFFF' : 'rgba(255,255,255,0.4)', fontWeight: 300 }}>+</span>
                       </div>
                     </motion.div>
@@ -1515,7 +1515,7 @@ function Pricing() {
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>Pricing</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>Pricing</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-8" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               Simple, transparent pricing
             </h2>
@@ -1523,7 +1523,7 @@ function Pricing() {
               <span className="text-sm font-medium" style={{ color: annual ? '#94A3B8' : '#0F172A', fontFamily: 'var(--font-sans)' }}>Monthly</span>
               <button onClick={() => setAnnual(!annual)}
                 className="w-11 h-6 rounded-full relative transition-colors"
-                style={{ background: annual ? '#7C3AED' : '#E2E8F0' }}>
+                style={{ background: annual ? '#0D9488' : '#E2E8F0' }}>
                 <motion.div animate={{ x: annual ? 23 : 2 }} transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   className="w-5 h-5 rounded-full bg-white absolute top-0.5 shadow-sm" />
               </button>
@@ -1538,7 +1538,7 @@ function Pricing() {
             {plans.map(plan => (
               <motion.div key={plan.name} variants={fadeUp} className={`relative rounded-2xl overflow-hidden${plan.highlight ? ' sm:col-span-2 lg:col-span-1' : ''}`}
                 style={plan.highlight
-                  ? { background: '#7C3AED', boxShadow: '0 24px 56px rgba(124,58,237,0.35)' }
+                  ? { background: '#0D9488', boxShadow: '0 24px 56px rgba(13,148,136,0.35)' }
                   : { background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                 {plan.highlight && (
                   <>
@@ -1588,8 +1588,8 @@ function Pricing() {
                     <Link href="/assessment"
                       className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
                       style={plan.highlight
-                        ? { background: '#FFFFFF', color: '#7C3AED', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }
-                        : { background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#475569', fontFamily: 'var(--font-sans)' }
+                        ? { background: '#FFFFFF', color: '#0D9488', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }
+                        : { background: '#F0FDFA', border: '1px solid #E2E8F0', color: '#475569', fontFamily: 'var(--font-sans)' }
                       }>
                       {plan.cta}
                     </Link>
@@ -1619,7 +1619,7 @@ function About() {
       name: 'Marie Leconte',
       role: 'CEO & Co-founder',
       initials: 'ML',
-      color: '#7C3AED',
+      color: '#0D9488',
       prev: 'McKinsey & Company',
       bio: 'Former McKinsey partner who spent 12 years watching businesses struggle to operationalise new technologies. Built the AI Literacy curriculum after 200+ interviews with leaders across finance, marketing, and operations.',
     },
@@ -1650,7 +1650,7 @@ function About() {
 
   const values = [
     {
-      num: '01', bg: '#EDE9FE', color: '#7C3AED',
+      num: '01', bg: '#CCFBF1', color: '#0D9488',
       title: 'Role-first, always',
       desc: 'Generic AI training fails because it ignores context. We build every lesson around a specific role, with examples and exercises drawn directly from that world.',
     },
@@ -1667,13 +1667,13 @@ function About() {
   ]
 
   return (
-    <section id="about" className="py-14 sm:py-20" style={{ background: '#F8FAFC' }}>
+    <section id="about" className="py-14 sm:py-20" style={{ background: '#F0FDFA' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
 
           {/* Header */}
           <motion.div variants={fadeUp} className="max-w-3xl mb-16">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>About us</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>About us</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               We started because we saw a gap nobody was filling
             </h2>
@@ -1686,9 +1686,9 @@ function About() {
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden p-10"
               style={{ background: '#0F172A' }}>
-              <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(124,58,237,0.15) 0%, transparent 65%)' }} />
+              <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(13,148,136,0.15) 0%, transparent 65%)' }} />
               <div className="relative">
-                <div className="w-1 h-10 rounded-full mb-7" style={{ background: '#7C3AED' }} />
+                <div className="w-1 h-10 rounded-full mb-7" style={{ background: '#0D9488' }} />
                 <blockquote className="text-xl lg:text-2xl font-black leading-snug mb-6 text-white" style={{ fontFamily: 'var(--font-sans)' }}>
                   &ldquo;Every professional deserves to harness AI &mdash; not just those with an engineering degree. We built the platform we wished existed when AI changed everything.&rdquo;
                 </blockquote>
@@ -1760,7 +1760,7 @@ function FinalCTA() {
   return (
     <section className="relative overflow-hidden" style={{ background: '#0F172A' }}>
       {/* Top purple band */}
-      <div style={{ height: 6, background: 'linear-gradient(90deg, #7C3AED, #EC4899, #F59E0B)' }} />
+      <div style={{ height: 6, background: 'linear-gradient(90deg, #0D9488, #EC4899, #F59E0B)' }} />
 
       {/* Decorative giant text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
@@ -1773,12 +1773,12 @@ function FinalCTA() {
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold mb-8"
-            style={{ background: 'rgba(124,58,237,0.2)', color: '#C4B5FD', border: '1px solid rgba(124,58,237,0.35)', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
+            style={{ background: 'rgba(13,148,136,0.2)', color: '#C4B5FD', border: '1px solid rgba(13,148,136,0.35)', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
             <Zap size={10} /> Free to start
           </motion.div>
           <motion.h2 variants={fadeUp}
             style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(2.5rem, 7vw, 4.5rem)', lineHeight: 1.08, letterSpacing: '-0.03em', color: '#FFFFFF', marginBottom: '1.5rem' }}>
-            Start leading<br /><span style={{ color: '#A78BFA' }}>with AI today.</span>
+            Start leading<br /><span style={{ color: '#5EEAD4' }}>with AI today.</span>
           </motion.h2>
           <motion.p variants={fadeUp}
             style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: 'rgba(255,255,255,0.5)', marginBottom: '2.5rem', lineHeight: 1.7 }}>
@@ -1787,7 +1787,7 @@ function FinalCTA() {
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/assessment"
               className="inline-flex items-center justify-center gap-2.5 rounded-xl font-bold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-              style={{ background: '#7C3AED', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem', boxShadow: '0 8px 28px rgba(124,58,237,0.4)' }}>
+              style={{ background: '#0D9488', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem', boxShadow: '0 8px 28px rgba(13,148,136,0.4)' }}>
               Take the free assessment <ArrowRight size={16} />
             </Link>
             <Link href="/tracks"
@@ -1814,11 +1814,11 @@ function Footer() {
       {/* Brand statement band */}
       <div className="relative overflow-hidden" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.12) 0%, transparent 60%)' }} />
+          style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(13,148,136,0.12) 0%, transparent 60%)' }} />
         <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: '#7C3AED' }}>
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: '#0D9488' }}>
                 <Zap size={14} className="text-white" />
               </div>
               <span className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>AI Literacy</span>
@@ -1829,7 +1829,7 @@ function Footer() {
           </div>
           <Link href="/assessment"
             className="flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
-            style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+            style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
             Start for free <ArrowRight size={13} />
           </Link>
         </div>
@@ -1891,7 +1891,7 @@ function Footer() {
           style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>© 2026 AI Literacy. All rights reserved.</p>
           <div className="flex items-center gap-4">
-            {['#7C3AED', '#EC4899', '#F59E0B', '#10B981', '#06B6D4'].map(c => (
+            {['#0D9488', '#EC4899', '#F59E0B', '#10B981', '#06B6D4'].map(c => (
               <div key={c} className="w-2 h-2 rounded-full" style={{ background: c }} />
             ))}
           </div>

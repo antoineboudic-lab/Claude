@@ -31,9 +31,9 @@ const TRACK_META: Record<TrackId, { label: string; icon: React.ElementType; colo
 }
 
 const PRIORITY_CONFIG = {
-  essential:    { label: 'Essential',    color: '#7C3AED', bg: '#EDE9FE', border: '#DDD6FE' },
+  essential:    { label: 'Essential',    color: '#0D9488', bg: '#CCFBF1', border: '#99F6E4' },
   recommended:  { label: 'Recommended', color: '#0EA5E9', bg: '#E0F2FE', border: '#BAE6FD' },
-  optional:     { label: 'Optional',    color: '#94A3B8', bg: '#F8FAFC', border: '#E2E8F0' },
+  optional:     { label: 'Optional',    color: '#94A3B8', bg: '#F0FDFA', border: '#E2E8F0' },
 }
 
 const INDUSTRY_LABELS: Record<string, string> = {
@@ -241,14 +241,14 @@ export default function AssessmentResultsPage() {
 
   if (!result) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F8FAFC' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F0FDFA' }}>
         <div className="text-center">
           <p className="text-lg mb-4" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
             No assessment found.
           </p>
           <Link href="/assessment"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white"
-            style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+            style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
             Take the assessment <ArrowRight size={14} />
           </Link>
         </div>
@@ -277,13 +277,13 @@ export default function AssessmentResultsPage() {
     .map(t => TOOL_LABELS[t] ?? t)
 
   return (
-    <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
+    <div className="min-h-screen" style={{ background: '#F0FDFA' }}>
 
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4"
         style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
             <Zap size={16} className="text-white" />
           </div>
           <span className="font-bold" style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: '#0F172A' }}>
@@ -309,14 +309,14 @@ export default function AssessmentResultsPage() {
               {/* Text side */}
               <div className="flex-1 min-w-0">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4 text-xs font-semibold"
-                  style={{ background: '#EDE9FE', color: '#7C3AED', fontFamily: 'var(--font-sans)', border: '1px solid #DDD6FE' }}>
+                  style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)', border: '1px solid #99F6E4' }}>
                   <Check size={11} /> Your personalised path is ready
                 </div>
                 <h1 className="text-3xl sm:text-4xl font-black mb-3"
                   style={{ fontFamily: 'var(--font-sans)', color: '#0F172A', lineHeight: 1.1 }}>
                   {result.answers.name
-                    ? <>{result.answers.name},<br /><span style={{ color: '#7C3AED' }}>here&apos;s your AI path</span></>
-                    : <>Here&apos;s your<br /><span style={{ color: '#7C3AED' }}>AI learning path</span></>
+                    ? <>{result.answers.name},<br /><span style={{ color: '#0D9488' }}>here&apos;s your AI path</span></>
+                    : <>Here&apos;s your<br /><span style={{ color: '#0D9488' }}>AI learning path</span></>
                   }
                 </h1>
                 <p className="text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
@@ -333,7 +333,7 @@ export default function AssessmentResultsPage() {
             {/* Stats strip */}
             <div className="mt-6 pt-6 grid grid-cols-3 gap-3" style={{ borderTop: '1px solid #F1F5F9' }}>
               {[
-                { icon: Clock,  value: `${hoursRange} hrs`, label: 'saved/week',     color: '#7C3AED' },
+                { icon: Clock,  value: `${hoursRange} hrs`, label: 'saved/week',     color: '#0D9488' },
                 { icon: Users,  value: `${peerAdoption}%`,  label: 'of peers use AI', color: '#0EA5E9' },
                 { icon: Target, value: `Top ${readinessScore >= 75 ? '20' : readinessScore >= 50 ? '40' : '60'}%`,
                   label: 'vs peers',       color: rcColor },
@@ -364,16 +364,16 @@ export default function AssessmentResultsPage() {
                 animate="visible"
                 exit={{ opacity: 0, y: -8 }}
                 className="rounded-2xl overflow-hidden"
-                style={{ background: '#FFFFFF', border: '2px solid #7C3AED', boxShadow: '0 0 0 4px rgba(124,58,237,0.08)' }}
+                style={{ background: '#FFFFFF', border: '2px solid #0D9488', boxShadow: '0 0 0 4px rgba(13,148,136,0.08)' }}
               >
-                <div className="h-1 w-full" style={{ background: '#7C3AED' }} />
+                <div className="h-1 w-full" style={{ background: '#0D9488' }} />
                 <div className="px-6 py-7">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ background: '#EDE9FE' }}>
-                      <Lock size={14} style={{ color: '#7C3AED' }} />
+                      style={{ background: '#CCFBF1' }}>
+                      <Lock size={14} style={{ color: '#0D9488' }} />
                     </div>
-                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                       Unlock your full learning path
                     </p>
                   </div>
@@ -393,15 +393,15 @@ export default function AssessmentResultsPage() {
                         onChange={e => setCaptureEmail(e.target.value)}
                         required
                         className="flex-1 px-4 py-3.5 rounded-xl text-sm outline-none"
-                        style={{ background: '#F8FAFC', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
-                        onFocus={e => { e.currentTarget.style.borderColor = '#7C3AED'; e.currentTarget.style.background = '#FFFFFF' }}
-                        onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F8FAFC' }}
+                        style={{ background: '#F0FDFA', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+                        onFocus={e => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.background = '#FFFFFF' }}
+                        onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F0FDFA' }}
                       />
                       <button
                         type="submit"
                         disabled={captureLoading}
                         className="flex items-center gap-2 px-5 py-3.5 rounded-xl text-sm font-semibold text-white whitespace-nowrap transition-all hover:opacity-90 disabled:opacity-60"
-                        style={{ background: '#7C3AED', boxShadow: '0 4px 16px rgba(124,58,237,0.25)', fontFamily: 'var(--font-sans)' }}
+                        style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)', fontFamily: 'var(--font-sans)' }}
                       >
                         {captureLoading ? <Loader2 size={14} className="animate-spin" /> : <><ArrowRight size={14} /> Unlock path</>}
                       </button>
@@ -431,11 +431,11 @@ export default function AssessmentResultsPage() {
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-5 py-4 rounded-2xl"
-                style={{ background: '#EDE9FE', border: '1px solid #DDD6FE' }}
+                style={{ background: '#CCFBF1', border: '1px solid #99F6E4' }}
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#DDD6FE' }}>
-                    <Zap size={15} color="#7C3AED" />
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#99F6E4' }}>
+                    <Zap size={15} color="#0D9488" />
                   </div>
                   <div>
                     <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
@@ -448,7 +448,7 @@ export default function AssessmentResultsPage() {
                 </div>
                 <button onClick={openSignUp}
                   className="flex-shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                   Create free account
                 </button>
               </motion.div>
@@ -496,7 +496,7 @@ export default function AssessmentResultsPage() {
                   const SI = stat.icon
                   return (
                     <div key={stat.label} className="py-3 rounded-xl text-center"
-                      style={{ background: '#F8FAFC', border: '1px solid #F1F5F9' }}>
+                      style={{ background: '#F0FDFA', border: '1px solid #F1F5F9' }}>
                       <SI size={13} color={meta.color} className="mx-auto mb-1" />
                       <div className="text-base font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
                         {stat.value}
@@ -514,13 +514,13 @@ export default function AssessmentResultsPage() {
                   <Link
                     href={`/tracks/${firstEssentialLesson.trackId}/lessons/${firstEssentialLesson.lessonId}`}
                     className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-white"
-                    style={{ background: '#7C3AED', boxShadow: '0 4px 14px rgba(124,58,237,0.2)', fontFamily: 'var(--font-sans)' }}>
+                    style={{ background: '#0D9488', boxShadow: '0 4px 14px rgba(13,148,136,0.2)', fontFamily: 'var(--font-sans)' }}>
                     Start first essential lesson <ArrowRight size={14} />
                   </Link>
                   <Link
                     href={`/tracks/${result.primaryTrackId}`}
                     className="flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl font-semibold text-sm"
-                    style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                    style={{ background: '#F0FDFA', border: '1px solid #E2E8F0', color: '#475569', fontFamily: 'var(--font-sans)' }}>
                     Browse track <ChevronRight size={14} />
                   </Link>
                 </div>
@@ -554,7 +554,7 @@ export default function AssessmentResultsPage() {
                     style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
                     {/* Module header */}
                     <div className="px-4 py-3 flex items-center gap-3"
-                      style={{ background: '#F8FAFC', borderBottom: '1px solid #F1F5F9' }}>
+                      style={{ background: '#F0FDFA', borderBottom: '1px solid #F1F5F9' }}>
                       <div className="w-6 h-6 rounded-md flex items-center justify-center text-xs font-bold flex-shrink-0"
                         style={{ background: `${meta.color}12`, color: meta.color, fontFamily: 'var(--font-sans)' }}>
                         {modIdx + 1}
@@ -575,7 +575,7 @@ export default function AssessmentResultsPage() {
                           <Link key={lesson.lessonId}
                             href={`/tracks/${lesson.trackId}/lessons/${lesson.lessonId}`}
                             className="flex items-center gap-3 px-4 py-3.5 transition-colors hover:bg-slate-50 group"
-                            style={{ borderTop: lessonIdx > 0 ? '1px solid #F8FAFC' : undefined }}>
+                            style={{ borderTop: lessonIdx > 0 ? '1px solid #F0FDFA' : undefined }}>
                             <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-0.5" style={{ background: pc.color }} />
                             <span className="flex-1 text-sm leading-snug" style={{ color: '#374151', fontFamily: 'var(--font-sans)' }}>
                               {lesson.lessonTitle}
@@ -614,7 +614,7 @@ export default function AssessmentResultsPage() {
               className="w-full flex items-center justify-between px-5 py-4"
               onClick={() => setProfileOpen(v => !v)}>
               <div className="flex items-center gap-2.5">
-                <Brain size={14} color="#7C3AED" />
+                <Brain size={14} color="#0D9488" />
                 <span className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                   Your profile
                 </span>
@@ -677,7 +677,7 @@ export default function AssessmentResultsPage() {
                         <div className="flex flex-wrap gap-1.5">
                           {activeTools.map(tool => (
                             <span key={tool} className="text-xs px-2 py-0.5 rounded-full"
-                              style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                              style={{ background: '#F0FDFA', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                               {tool}
                             </span>
                           ))}
@@ -698,7 +698,7 @@ export default function AssessmentResultsPage() {
               className="w-full flex items-center justify-between px-5 py-4"
               onClick={() => setSkillOpen(v => !v)}>
               <div className="flex items-center gap-2.5">
-                <Star size={14} color="#7C3AED" />
+                <Star size={14} color="#0D9488" />
                 <span className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                   Skill gap breakdown
                 </span>
@@ -773,8 +773,8 @@ export default function AssessmentResultsPage() {
           {/* Bottom CTA */}
           <motion.div variants={fadeUp}
             className="text-center p-8 rounded-3xl"
-            style={{ background: '#EDE9FE', border: '1px solid #DDD6FE' }}>
-            <Award size={22} color="#7C3AED" className="mx-auto mb-3" />
+            style={{ background: '#CCFBF1', border: '1px solid #99F6E4' }}>
+            <Award size={22} color="#0D9488" className="mx-auto mb-3" />
             <h3 className="text-base font-black mb-1.5" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               Ready when you are
             </h3>
@@ -785,7 +785,7 @@ export default function AssessmentResultsPage() {
               <Link
                 href={`/tracks/${firstEssentialLesson.trackId}/lessons/${firstEssentialLesson.lessonId}`}
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white"
-                style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                 Start learning now <ArrowRight size={14} />
               </Link>
             )}

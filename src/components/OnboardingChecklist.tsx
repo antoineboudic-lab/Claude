@@ -126,7 +126,7 @@ export default function OnboardingChecklist() {
             <div className="flex items-center gap-3">
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-lg"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)' }}
+                style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)' }}
               >
                 🎉
               </div>
@@ -154,7 +154,7 @@ export default function OnboardingChecklist() {
             <div className="px-6 pt-5 pb-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Sparkles size={14} style={{ color: '#7C3AED' }} />
+                  <Sparkles size={14} style={{ color: '#0D9488' }} />
                   <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                     Get started
                   </p>
@@ -180,13 +180,13 @@ export default function OnboardingChecklist() {
                   animate={{ width: `${progress}%` }}
                   transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
                   className="h-full rounded-full"
-                  style={{ background: 'linear-gradient(90deg, #7C3AED, #22D3EE)' }}
+                  style={{ background: 'linear-gradient(90deg, #0D9488, #22D3EE)' }}
                 />
               </div>
             </div>
 
             {/* Tasks */}
-            <div className="divide-y" style={{ borderColor: '#F8FAFC' }}>
+            <div className="divide-y" style={{ borderColor: '#F0FDFA' }}>
               {tasks.map((task, i) => (
                 <motion.div
                   key={task.id}
@@ -194,7 +194,7 @@ export default function OnboardingChecklist() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05, duration: 0.3 }}
                   className="flex items-center gap-4 px-6 py-3.5 group"
-                  style={{ borderBottom: i < tasks.length - 1 ? '1px solid #F8FAFC' : 'none' }}
+                  style={{ borderBottom: i < tasks.length - 1 ? '1px solid #F0FDFA' : 'none' }}
                 >
                   {/* Check icon */}
                   <div className="flex-shrink-0">
@@ -235,7 +235,7 @@ export default function OnboardingChecklist() {
                     <Link
                       href={task.href}
                       className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
-                      style={{ background: '#EDE9FE', color: '#7C3AED' }}
+                      style={{ background: '#CCFBF1', color: '#0D9488' }}
                       aria-label={`Go to ${task.label}`}
                     >
                       <ArrowRight size={12} />

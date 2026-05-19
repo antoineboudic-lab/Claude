@@ -58,7 +58,7 @@ export default function ChallengePage() {
   const alreadyDone = !!todayEntry
 
   return (
-    <main style={{ minHeight: '100vh', background: '#F8FAFC', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ minHeight: '100vh', background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
       {/* Top bar */}
       <div style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '0 24px' }}>
         <div style={{ maxWidth: 680, margin: '0 auto', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -76,8 +76,8 @@ export default function ChallengePage() {
         {/* Header */}
         <div style={{ marginBottom: 32 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-            <Trophy size={16} style={{ color: '#7C3AED' }} />
-            <span style={{ fontSize: 12, fontWeight: 700, color: '#7C3AED', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <Trophy size={16} style={{ color: '#0D9488' }} />
+            <span style={{ fontSize: 12, fontWeight: 700, color: '#0D9488', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               Daily Challenge
             </span>
           </div>
@@ -108,7 +108,7 @@ export default function ChallengePage() {
             {question.options.map((opt, i) => {
               const isSelected = selected === i
               const isCorrect = i === question.correct
-              let bg = '#F8FAFC'
+              let bg = '#F0FDFA'
               let border = '#E2E8F0'
               let color = '#334155'
               let iconEl: React.ReactNode = null
@@ -124,7 +124,7 @@ export default function ChallengePage() {
                   color = '#94A3B8'
                 }
               } else if (isSelected) {
-                bg = '#EDE9FE'; border = '#7C3AED'; color = '#4C1D95'
+                bg = '#CCFBF1'; border = '#0D9488'; color = '#134E4A'
               }
 
               return (
@@ -164,7 +164,7 @@ export default function ChallengePage() {
               transition={{ duration: 0.3, delay: 0.1 }}
               style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '20px 24px', marginBottom: 24, boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}
             >
-              <p style={{ fontSize: 12, fontWeight: 700, color: '#7C3AED', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 8px' }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: '#0D9488', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 8px' }}>
                 Explanation
               </p>
               <p style={{ fontSize: 14, color: '#334155', lineHeight: 1.7, margin: 0 }}>

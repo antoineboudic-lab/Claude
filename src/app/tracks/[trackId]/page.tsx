@@ -180,7 +180,7 @@ export default function TrackPage() {
 
   if (!meta) {
     return (
-      <main style={{ background: '#F8FAFC', minHeight: '100vh' }} className="flex items-center justify-center">
+      <main style={{ background: '#F0FDFA', minHeight: '100vh' }} className="flex items-center justify-center">
         <p style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>Track not found.</p>
       </main>
     )
@@ -189,12 +189,12 @@ export default function TrackPage() {
   const Icon = meta.icon
 
   return (
-    <main style={{ background: '#F8FAFC', minHeight: '100vh' }}>
+    <main style={{ background: '#F0FDFA', minHeight: '100vh' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
@@ -210,7 +210,7 @@ export default function TrackPage() {
           <button
             onClick={() => setSearchOpen(true)}
             className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F8FAFC' }}
+            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F0FDFA' }}
           >
             <Search size={13} />
             <span>Search</span>
@@ -220,7 +220,7 @@ export default function TrackPage() {
             <>
               <Link href="/dashboard"
                 className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80"
-                style={{ color: '#7C3AED', background: '#EDE9FE', fontFamily: 'var(--font-sans)' }}>
+                style={{ color: '#0D9488', background: '#CCFBF1', fontFamily: 'var(--font-sans)' }}>
                 <Zap size={12} /> Dashboard
               </Link>
               <button onClick={signOut}
@@ -232,7 +232,7 @@ export default function TrackPage() {
           ) : (
             <button onClick={openSignUp}
               className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"
-              style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+              style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
               Get started free
             </button>
           )}
@@ -280,20 +280,20 @@ export default function TrackPage() {
 
             {/* Personalisation callout */}
             <motion.div variants={fadeUp} className="max-w-2xl mb-7 p-4 rounded-xl flex items-start gap-3"
-              style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}>
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: '#7C3AED' }}>
+              style={{ background: '#F0FDFA', border: '1px solid #CCFBF1' }}>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: '#0D9488' }}>
                 <Sparkles size={13} className="text-white" />
               </div>
               <div>
                 <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                   This is a sample — your version gets personalised
                 </p>
-                <p className="text-sm leading-relaxed" style={{ color: '#6D28D9', fontFamily: 'var(--font-sans)' }}>
+                <p className="text-sm leading-relaxed" style={{ color: '#0F766E', fontFamily: 'var(--font-sans)' }}>
                   After the 3-minute assessment, the module order, examples, and exercises inside this track adapt to your specific role, seniority, and goals. A Marketing Director and a Growth Manager get different versions of the same track.
                 </p>
                 <Link href="/assessment"
                   className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-semibold"
-                  style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                   Get my personalised version <ArrowRight size={11} />
                 </Link>
               </div>
@@ -322,7 +322,7 @@ export default function TrackPage() {
               <Link
                 href="/teams"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:bg-slate-100"
-                style={{ background: '#F8FAFC', color: '#475569', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}
+                style={{ background: '#F0FDFA', color: '#475569', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}
               >
                 <Users size={15} /> Enroll a team
               </Link>
@@ -389,8 +389,8 @@ export default function TrackPage() {
             Sample Curriculum
           </h2>
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
-            style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-            <Sparkles size={12} style={{ color: '#7C3AED' }} />
+            style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+            <Sparkles size={12} style={{ color: '#0D9488' }} />
             <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               Module order &amp; content adapt after your assessment
             </span>
@@ -412,7 +412,7 @@ export default function TrackPage() {
             >
               {/* Module header */}
               <div className="px-6 py-4 flex items-center justify-between"
-                style={{ borderBottom: '1px solid #F1F5F9', background: '#F8FAFC' }}>
+                style={{ borderBottom: '1px solid #F1F5F9', background: '#F0FDFA' }}>
                 <div className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
                     style={{
@@ -443,7 +443,7 @@ export default function TrackPage() {
                     <button
                       onClick={openSignUp}
                       className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all hover:opacity-90"
-                      style={{ background: '#7C3AED', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
+                      style={{ background: '#0D9488', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
                       <Lock size={10} /> Unlock free trial
                     </button>
                   ) : (

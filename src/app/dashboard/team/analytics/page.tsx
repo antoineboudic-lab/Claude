@@ -77,13 +77,13 @@ function LeaderboardRow({ member, rank, max }: { member: TeamMember; rank: numbe
           <p className="text-sm font-bold truncate" style={{ color: '#0F172A' }}>
             {member.display_name ?? member.email.split('@')[0]}
           </p>
-          <p className="text-sm font-black flex-shrink-0 ml-3" style={{ color: '#7C3AED' }}>
+          <p className="text-sm font-black flex-shrink-0 ml-3" style={{ color: '#0D9488' }}>
             {xp.toLocaleString()} XP
           </p>
         </div>
         <div className="h-2 rounded-full" style={{ background: '#E2E8F0' }}>
           <div className="h-full rounded-full transition-all duration-1000"
-            style={{ width: `${pct}%`, background: rank === 1 ? '#F59E0B' : '#7C3AED' }} />
+            style={{ width: `${pct}%`, background: rank === 1 ? '#F59E0B' : '#0D9488' }} />
         </div>
         <div className="flex items-center gap-4 mt-1 text-xs" style={{ color: '#94A3B8' }}>
           <span>{lessons} lessons</span>
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#7C3AED', borderTopColor: 'transparent' }} />
+          style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -149,9 +149,9 @@ export default function AnalyticsPage() {
   // Activity distribution: how many members completed 0, 1-5, 6-10, 10+ lessons
   const buckets = [
     { label: '0 lessons', count: active.filter(m => (m.lesson_count ?? 0) === 0).length, color: '#E2E8F0' },
-    { label: '1–5 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 1 && (m.lesson_count ?? 0) <= 5).length, color: '#DDD6FE' },
-    { label: '6–15 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 6 && (m.lesson_count ?? 0) <= 15).length, color: '#A78BFA' },
-    { label: '16+ lessons', count: active.filter(m => (m.lesson_count ?? 0) > 15).length, color: '#7C3AED' },
+    { label: '1–5 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 1 && (m.lesson_count ?? 0) <= 5).length, color: '#99F6E4' },
+    { label: '6–15 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 6 && (m.lesson_count ?? 0) <= 15).length, color: '#5EEAD4' },
+    { label: '16+ lessons', count: active.filter(m => (m.lesson_count ?? 0) > 15).length, color: '#0D9488' },
   ]
   const maxBucket = Math.max(...buckets.map(b => b.count), 1)
 
@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
           <button
             onClick={() => exportCSV(members, team.name)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-80"
-            style={{ background: '#F8FAFC', color: '#475569', border: '1px solid #E2E8F0' }}>
+            style={{ background: '#F0FDFA', color: '#475569', border: '1px solid #E2E8F0' }}>
             <Download size={14} /> Export CSV
           </button>
         )}
@@ -175,7 +175,7 @@ export default function AnalyticsPage() {
       {/* Summary stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { icon: Users, label: 'Active members', value: stats.total, color: '#7C3AED' },
+          { icon: Users, label: 'Active members', value: stats.total, color: '#0D9488' },
           { icon: Zap, label: 'Total XP earned', value: stats.totalXP.toLocaleString(), color: '#F59E0B', str: true },
           { icon: BookOpen, label: 'Lessons completed', value: stats.totalLessons, color: '#10B981' },
           { icon: Award, label: 'Tracks completed', value: stats.completedTracks, color: '#EC4899' },
@@ -215,7 +215,7 @@ export default function AnalyticsPage() {
             <div className="rounded-2xl p-5"
               style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <div className="flex items-center gap-2 mb-5">
-                <Activity size={14} style={{ color: '#7C3AED' }} />
+                <Activity size={14} style={{ color: '#0D9488' }} />
                 <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Member activity</p>
               </div>
               <div className="space-y-3">
@@ -242,7 +242,7 @@ export default function AnalyticsPage() {
           <div className="rounded-2xl p-5"
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="flex items-center gap-2 mb-5">
-              <TrendingUp size={14} style={{ color: '#7C3AED' }} />
+              <TrendingUp size={14} style={{ color: '#0D9488' }} />
               <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Engagement levels</p>
             </div>
             <div className="space-y-3">
@@ -271,7 +271,7 @@ export default function AnalyticsPage() {
               </div>
               <div className="space-y-3">
                 {trackMatrix.map(({ track, assigned, completed, inProgress }) => {
-                  const color = TRACK_COLORS[track] ?? '#7C3AED'
+                  const color = TRACK_COLORS[track] ?? '#0D9488'
                   const completePct = assigned > 0 ? (completed / assigned) * 100 : 0
                   const progressPct = assigned > 0 ? ((completed + inProgress) / assigned) * 100 : 0
                   return (
@@ -297,11 +297,11 @@ export default function AnalyticsPage() {
               </div>
               <div className="flex items-center gap-4 mt-4 pt-3 text-[10px]" style={{ borderTop: '1px solid #F1F5F9', color: '#94A3B8' }}>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2 rounded-sm" style={{ background: '#7C3AED' }} />
+                  <div className="w-3 h-2 rounded-sm" style={{ background: '#0D9488' }} />
                   Completed
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2 rounded-sm opacity-30" style={{ background: '#7C3AED' }} />
+                  <div className="w-3 h-2 rounded-sm opacity-30" style={{ background: '#0D9488' }} />
                   In progress
                 </div>
               </div>
@@ -310,16 +310,16 @@ export default function AnalyticsPage() {
 
           {/* Team avg */}
           <div className="rounded-2xl p-5"
-            style={{ background: '#EDE9FE', border: '1px solid #DDD6FE' }}>
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED' }}>Team average</p>
+            style={{ background: '#CCFBF1', border: '1px solid #99F6E4' }}>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Team average</p>
             <div className="space-y-2">
               {[
                 { label: 'Lessons per member', value: stats.avgLessons },
                 { label: 'Active this week', value: `${stats.activeThisWeek}/${stats.total}` },
               ].map(s => (
                 <div key={s.label} className="flex items-center justify-between text-sm">
-                  <span style={{ color: '#5B21B6' }}>{s.label}</span>
-                  <span className="font-bold" style={{ color: '#4C1D95' }}>{s.value}</span>
+                  <span style={{ color: '#115E59' }}>{s.label}</span>
+                  <span className="font-bold" style={{ color: '#134E4A' }}>{s.value}</span>
                 </div>
               ))}
             </div>

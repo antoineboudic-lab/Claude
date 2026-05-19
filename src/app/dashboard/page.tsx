@@ -472,7 +472,7 @@ function DailyChallengeCard() {
       <Link
         href="/challenge"
         className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
-        style={{ background: done ? '#F8FAFC' : 'linear-gradient(135deg, #7C3AED, #22D3EE)', color: done ? '#64748B' : '#FFFFFF', textDecoration: 'none', border: done ? '1px solid #E2E8F0' : 'none', fontFamily: 'var(--font-sans)' }}
+        style={{ background: done ? '#F0FDFA' : 'linear-gradient(135deg, #0D9488, #22D3EE)', color: done ? '#64748B' : '#FFFFFF', textDecoration: 'none', border: done ? '1px solid #E2E8F0' : 'none', fontFamily: 'var(--font-sans)' }}
       >
         {done ? 'View result' : 'Take challenge'} <ArrowRight size={13} />
       </Link>
@@ -484,7 +484,7 @@ function DailyChallengeCard() {
 
 function LearningPathCard({ result }: { result: AssessmentResult }) {
   const track = getTrack(result.primaryTrackId)
-  const color = TRACK_COLORS[result.primaryTrackId] ?? '#7C3AED'
+  const color = TRACK_COLORS[result.primaryTrackId] ?? '#0D9488'
   const icon = TRACK_ICONS[result.primaryTrackId] ?? '🎓'
   const essential = result.customPath.filter(l => l.priority === 'essential')
   const firstLesson = essential[0]
@@ -498,7 +498,7 @@ function LearningPathCard({ result }: { result: AssessmentResult }) {
       style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       {/* Track header */}
-      <div className="px-6 py-5 flex items-center justify-between" style={{ borderBottom: '1px solid #F1F5F9', background: '#FAFBFC' }}>
+      <div className="px-6 py-5 flex items-center justify-between" style={{ borderBottom: '1px solid #F1F5F9', background: '#F0FDFA' }}>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
             style={{ background: `${color}10`, border: `1px solid ${color}20` }}>
@@ -522,7 +522,7 @@ function LearningPathCard({ result }: { result: AssessmentResult }) {
       {/* Stats row */}
       <div className="grid grid-cols-3 px-6 py-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
         {[
-          { label: 'Essential', value: result.essentialCount, color: '#7C3AED' },
+          { label: 'Essential', value: result.essentialCount, color: '#0D9488' },
           { label: 'Total lessons', value: result.totalLessons, color },
           { label: 'Est. weeks', value: result.estimatedWeeks, color: '#22D3EE' },
         ].map(s => (
@@ -603,16 +603,16 @@ function NoAssessmentOnboarding({ name }: { name: string }) {
         style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
         {/* Header */}
         <div className="px-8 pt-8 pb-6 relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #7C3AED08, #22D3EE04)', borderBottom: '1px solid #F1F5F9' }}>
+          style={{ background: 'linear-gradient(135deg, #0D948808, #22D3EE04)', borderBottom: '1px solid #F1F5F9' }}>
           <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full blur-3xl"
-            style={{ background: 'rgba(124,58,237,0.06)' }} />
+            style={{ background: 'rgba(13,148,136,0.06)' }} />
           <div className="relative">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)' }}>
+                style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)' }}>
                 <Sparkles size={14} className="text-white" />
               </div>
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                 Step 1 of 1
               </span>
             </div>
@@ -631,7 +631,7 @@ function NoAssessmentOnboarding({ name }: { name: string }) {
             {steps.map(step => (
               <div key={step.n} className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center text-xs font-black"
-                  style={{ background: '#EDE9FE', color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                   {step.n}
                 </div>
                 <div>
@@ -653,8 +653,8 @@ function NoAssessmentOnboarding({ name }: { name: string }) {
             href="/assessment"
             className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-base font-semibold text-white transition-all hover:opacity-90"
             style={{
-              background: 'linear-gradient(135deg, #7C3AED, #22D3EE)',
-              boxShadow: '0 4px 14px rgba(124,58,237,0.25)',
+              background: 'linear-gradient(135deg, #0D9488, #22D3EE)',
+              boxShadow: '0 4px 14px rgba(13,148,136,0.25)',
               fontFamily: 'var(--font-sans)',
             }}
           >
@@ -702,7 +702,7 @@ function BadgesSection({ earned }: { earned: string[] }) {
               key={badge.id}
               className="flex flex-col items-center gap-1.5 p-3 rounded-xl text-center"
               style={{
-                background: isEarned ? '#FEF3C7' : '#F8FAFC',
+                background: isEarned ? '#FEF3C7' : '#F0FDFA',
                 border: isEarned ? '1px solid #FDE68A' : '1px solid #F1F5F9',
               }}
               title={badge.description}
@@ -810,7 +810,7 @@ function RecentActivity({ completedLessons, completedModules }: { completedLesso
       </div>
       <div className="space-y-4">
         {trackProgress.map(t => {
-          const color = TRACK_COLORS[t.id] ?? '#7C3AED'
+          const color = TRACK_COLORS[t.id] ?? '#0D9488'
           const icon = TRACK_ICONS[t.id] ?? '🎓'
           return (
             <Link key={t.id} href={`/tracks/${t.id}`} className="block group">
@@ -942,12 +942,12 @@ export default function DashboardPage() {
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F8FAFC' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F0FDFA' }}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           className="w-8 h-8 rounded-full border-2 border-t-transparent"
-          style={{ borderColor: '#7C3AED', borderTopColor: 'transparent' }}
+          style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }}
         />
       </div>
     )
@@ -962,14 +962,14 @@ export default function DashboardPage() {
     : user.email?.slice(0, 2).toUpperCase() ?? '?'
 
   return (
-    <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
+    <div className="min-h-screen" style={{ background: '#F0FDFA' }}>
       {/* Navbar */}
       <nav className="sticky top-0 z-40 px-6 py-4"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(16px)', borderBottom: '1px solid #E2E8F0' }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)' }}>
+              style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)' }}>
               <Zap size={13} className="text-white" />
             </div>
             <span className="font-bold text-sm" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
@@ -981,7 +981,7 @@ export default function DashboardPage() {
             <button
               onClick={() => setSearchOpen(true)}
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-              style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F8FAFC' }}
+              style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F0FDFA' }}
             >
               <Search size={13} />
               <span>Search</span>
@@ -993,13 +993,13 @@ export default function DashboardPage() {
             </Link>
             {teamHref && (
               <Link href={teamHref} className="flex items-center gap-1.5 text-sm font-semibold transition-colors hover:opacity-80 px-3 py-1.5 rounded-lg"
-                style={{ color: '#7C3AED', background: '#EDE9FE', fontFamily: 'var(--font-sans)' }}>
+                style={{ color: '#0D9488', background: '#CCFBF1', fontFamily: 'var(--font-sans)' }}>
                 <Users size={13} /> Team
               </Link>
             )}
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
                 {initials}
               </div>
               <button
@@ -1025,7 +1025,7 @@ export default function DashboardPage() {
         >
           <div className="flex items-center gap-3 mb-2">
             <div className="flex items-center gap-2">
-              <Sparkles size={14} style={{ color: '#7C3AED' }} />
+              <Sparkles size={14} style={{ color: '#0D9488' }} />
               <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                 Your Dashboard
               </p>
@@ -1043,7 +1043,7 @@ export default function DashboardPage() {
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                     className="inline-block w-3 h-3 rounded-full border border-t-transparent"
-                    style={{ borderColor: '#7C3AED', borderTopColor: 'transparent' }}
+                    style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }}
                   />
                   Syncing…
                 </motion.span>
@@ -1065,7 +1065,7 @@ export default function DashboardPage() {
               <button
                 onClick={() => setShareOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
-                style={{ background: '#EDE9FE', color: '#7C3AED', border: '1px solid #DDD6FE', fontFamily: 'var(--font-sans)' }}
+                style={{ background: '#CCFBF1', color: '#0D9488', border: '1px solid #99F6E4', fontFamily: 'var(--font-sans)' }}
               >
                 <Share2 size={14} /> Share progress
               </button>
@@ -1075,7 +1075,7 @@ export default function DashboardPage() {
 
         {/* Stats row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <StatCard icon={Zap} label="Total XP" value={state.xp} color="#7C3AED" delay={0.05} />
+          <StatCard icon={Zap} label="Total XP" value={state.xp} color="#0D9488" delay={0.05} />
           <StatCard icon={Flame} label="Day streak" value={state.streak} color="#F59E0B" delay={0.1} />
           <StatCard icon={CheckCircle2} label="Lessons done" value={state.completedLessons.length} color="#10B981" delay={0.15} />
           <StatCard icon={Award} label="Badges earned" value={state.earnedBadges.length} color="#EC4899" delay={0.2} />
@@ -1124,18 +1124,18 @@ export default function DashboardPage() {
             className="mb-6 rounded-2xl overflow-hidden"
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="px-5 py-3.5 flex items-center justify-between"
-              style={{ background: '#FAFBFC', borderBottom: '1px solid #F1F5F9' }}>
+              style={{ background: '#F0FDFA', borderBottom: '1px solid #F1F5F9' }}>
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 rounded-md flex items-center justify-center"
-                  style={{ background: '#EDE9FE' }}>
-                  <Users size={11} style={{ color: '#7C3AED' }} />
+                  style={{ background: '#CCFBF1' }}>
+                  <Users size={11} style={{ color: '#0D9488' }} />
                 </div>
                 <span className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                   {memberTeamName}
                 </span>
                 {myTeamRank && (
                   <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
-                    style={{ background: '#EDE9FE', color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                    style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                     #{myTeamRank} on leaderboard
                   </span>
                 )}
@@ -1143,7 +1143,7 @@ export default function DashboardPage() {
               {teamHref && (
                 <Link href={teamHref}
                   className="text-xs font-semibold flex items-center gap-1 hover:underline"
-                  style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                   View team <ChevronRight size={11} />
                 </Link>
               )}
@@ -1159,7 +1159,7 @@ export default function DashboardPage() {
                     </p>
                     <div className="space-y-2">
                       {assignedTracks.map(trackId => {
-                        const color = TRACK_COLORS[trackId] ?? '#7C3AED'
+                        const color = TRACK_COLORS[trackId] ?? '#0D9488'
                         const icon = TRACK_ICONS[trackId] ?? '🎓'
                         const trackData = getAllTracks().find(t => t.id === trackId)
                         const total = trackData?.modules.reduce((s, m) => s + m.lessons.length, 0) ?? 1
@@ -1203,8 +1203,8 @@ export default function DashboardPage() {
                           <div key={m.id}
                             className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl"
                             style={{
-                              background: isMe ? '#EDE9FE' : 'transparent',
-                              border: isMe ? '1px solid #DDD6FE' : '1px solid transparent',
+                              background: isMe ? '#CCFBF1' : 'transparent',
+                              border: isMe ? '1px solid #99F6E4' : '1px solid transparent',
                             }}>
                             <span className="text-xs font-bold w-4 text-center"
                               style={{ color: i < 3 ? ['#F59E0B', '#94A3B8', '#CD7F32'][i] : '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
@@ -1215,11 +1215,11 @@ export default function DashboardPage() {
                               {initials}
                             </div>
                             <span className="text-xs flex-1 truncate font-medium"
-                              style={{ color: isMe ? '#5B21B6' : '#475569', fontFamily: 'var(--font-sans)' }}>
+                              style={{ color: isMe ? '#115E59' : '#475569', fontFamily: 'var(--font-sans)' }}>
                               {isMe ? 'You' : (m.display_name ?? m.email.split('@')[0])}
                             </span>
                             <span className="text-xs font-bold flex-shrink-0"
-                              style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                              style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
                               {(m.xp ?? 0).toLocaleString()} XP
                             </span>
                           </div>
@@ -1315,15 +1315,15 @@ export default function DashboardPage() {
                 className="rounded-2xl overflow-hidden"
                 style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
-                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #7C3AED, #22D3EE)' }} />
+                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #0D9488, #22D3EE)' }} />
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-1">
-                    <Crown size={14} style={{ color: '#7C3AED' }} />
+                    <Crown size={14} style={{ color: '#0D9488' }} />
                     <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                       Pro {isTrialing ? '— Trial active' : 'Member'}
                     </p>
                     <span className="ml-auto px-2 py-0.5 rounded-full text-xs font-bold"
-                      style={{ background: isTrialing ? '#FEF3C7' : '#EDE9FE', color: isTrialing ? '#D97706' : '#7C3AED' }}>
+                      style={{ background: isTrialing ? '#FEF3C7' : '#CCFBF1', color: isTrialing ? '#D97706' : '#0D9488' }}>
                       {isTrialing ? 'Trial' : 'Active'}
                     </span>
                   </div>
@@ -1339,7 +1339,7 @@ export default function DashboardPage() {
                       if (url) window.location.href = url
                     }}
                     className="flex items-center gap-2 text-xs font-semibold transition-colors hover:opacity-80"
-                    style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    style={{ color: '#0D9488', fontFamily: 'var(--font-sans)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                   >
                     <CreditCard size={12} /> Manage subscription
                   </button>
@@ -1351,18 +1351,18 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.55, ease: easing }}
                 className="rounded-2xl overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, #7C3AED08, #22D3EE06)', border: '1px solid #DDD6FE', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                style={{ background: 'linear-gradient(135deg, #0D948808, #22D3EE06)', border: '1px solid #99F6E4', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <Crown size={14} style={{ color: '#7C3AED' }} />
+                    <Crown size={14} style={{ color: '#0D9488' }} />
                     <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                       Upgrade to Pro
                     </p>
                   </div>
                   <p className="text-xs mb-4 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                     Unlock all 5 modules per track, AI tutor, certificates and more.
-                    <strong style={{ color: '#7C3AED' }}> 7 days free.</strong>
+                    <strong style={{ color: '#0D9488' }}> 7 days free.</strong>
                   </p>
                   <button
                     onClick={async () => {
@@ -1371,7 +1371,7 @@ export default function DashboardPage() {
                       if (url) window.location.href = url
                     }}
                     className="w-full py-2.5 rounded-xl text-xs font-bold text-white transition-all hover:opacity-90"
-                    style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', fontFamily: 'var(--font-sans)', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(124,58,237,0.25)' }}
+                    style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)', fontFamily: 'var(--font-sans)', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(13,148,136,0.25)' }}
                   >
                     Start free trial →
                   </button>
@@ -1393,7 +1393,7 @@ export default function DashboardPage() {
               <div className="space-y-1">
                 {[
                   { label: 'Browse all tracks', href: '/tracks', icon: BookOpen, color: '#22D3EE' },
-                  { label: 'Retake assessment', href: '/assessment', icon: Target, color: '#7C3AED' },
+                  { label: 'Retake assessment', href: '/assessment', icon: Target, color: '#0D9488' },
                   { label: 'View your path', href: '/assessment/results', icon: TrendingUp, color: '#10B981' },
                   ...(teamHref ? [{ label: 'Team dashboard', href: teamHref, icon: Users, color: '#EC4899' }] : []),
                 ].map(item => (
@@ -1424,22 +1424,22 @@ export default function DashboardPage() {
                 className="rounded-2xl overflow-hidden"
                 style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
-                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #7C3AED, #EC4899)' }} />
+                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #0D9488, #EC4899)' }} />
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Share2 size={14} style={{ color: '#7C3AED' }} />
+                    <Share2 size={14} style={{ color: '#0D9488' }} />
                     <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                       Refer &amp; earn XP
                     </p>
                   </div>
                   <p className="text-xs mb-4 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                    Share your link. Earn <strong style={{ color: '#7C3AED' }}>+100 XP</strong> for every colleague who completes their first lesson.
+                    Share your link. Earn <strong style={{ color: '#0D9488' }}>+100 XP</strong> for every colleague who completes their first lesson.
                   </p>
 
                   {/* Link copy */}
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex-1 px-3 py-2 rounded-lg text-xs truncate"
-                      style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'monospace' }}>
+                      style={{ background: '#F0FDFA', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'monospace' }}>
                       ailiteracy.com/join?ref={referralCode}
                     </div>
                     <button
@@ -1450,9 +1450,9 @@ export default function DashboardPage() {
                       }}
                       className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
                       style={{
-                        background: copied ? '#ECFDF5' : '#EDE9FE',
-                        color: copied ? '#059669' : '#7C3AED',
-                        border: `1px solid ${copied ? '#A7F3D0' : '#DDD6FE'}`,
+                        background: copied ? '#ECFDF5' : '#CCFBF1',
+                        color: copied ? '#059669' : '#0D9488',
+                        border: `1px solid ${copied ? '#A7F3D0' : '#99F6E4'}`,
                         fontFamily: 'var(--font-sans)',
                       }}
                     >
@@ -1468,8 +1468,8 @@ export default function DashboardPage() {
                         { label: 'Sign-ups', value: referralStats.signups },
                         { label: 'XP earned', value: referralStats.reward_xp },
                       ].map(s => (
-                        <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: '#F8FAFC' }}>
-                          <p className="text-sm font-black" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>{s.value}</p>
+                        <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: '#F0FDFA' }}>
+                          <p className="text-sm font-black" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>{s.value}</p>
                           <p className="text-[10px]" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{s.label}</p>
                         </div>
                       ))}
@@ -1481,7 +1481,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#7C3AED" />
+      <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#0D9488" />
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PushNotificationPrompt />
     </div>

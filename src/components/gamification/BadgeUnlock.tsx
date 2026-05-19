@@ -44,7 +44,7 @@ export function BadgeUnlock() {
             <div>
               <p
                 className="text-xs font-semibold mb-0.5"
-                style={{ color: '#A78BFA', fontFamily: 'var(--font-sans)' }}
+                style={{ color: '#5EEAD4', fontFamily: 'var(--font-sans)' }}
               >
                 Badge unlocked
               </p>

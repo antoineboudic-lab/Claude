@@ -958,12 +958,12 @@ export default function AssessmentPage() {
   const progressPct = Math.round((stepIdx / contentStepCount) * 100)
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#F8FAFC', fontFamily: F }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#F0FDFA', fontFamily: F }}>
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 flex-shrink-0"
         style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
             <Zap size={16} className="text-white" />
           </div>
           <span className="font-bold text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
@@ -977,7 +977,7 @@ export default function AssessmentPage() {
             <div className="w-32 h-1.5 rounded-full overflow-hidden" style={{ background: '#E2E8F0' }}>
               <motion.div
                 className="h-full rounded-full"
-                style={{ background: 'linear-gradient(90deg, #7C3AED, #22D3EE)' }}
+                style={{ background: 'linear-gradient(90deg, #0D9488, #22D3EE)' }}
                 animate={{ width: `${progressPct}%` }}
                 transition={{ duration: 0.4 }}
               />
@@ -996,12 +996,12 @@ export default function AssessmentPage() {
               <motion.div key="welcome" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
                 <div className="text-center mb-10">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 text-xs font-semibold"
-                    style={{ background: '#EDE9FE', color: '#7C3AED' }}>
+                    style={{ background: '#CCFBF1', color: '#0D9488' }}>
                     <Zap size={11} /> 5-minute personalised assessment
                   </div>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4" style={{ color: '#0F172A' }}>
                     Find your perfect<br />
-                    <span style={{ background: 'linear-gradient(90deg, #7C3AED, #22D3EE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                    <span style={{ background: 'linear-gradient(90deg, #0D9488, #22D3EE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                       AI learning path
                     </span>
                   </h1>
@@ -1021,7 +1021,7 @@ export default function AssessmentPage() {
                     autoFocus
                     className="w-full px-5 py-4 rounded-xl text-base outline-none transition-all"
                     style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', color: '#0F172A' }}
-                    onFocus={e => { e.currentTarget.style.borderColor = '#7C3AED' }}
+                    onFocus={e => { e.currentTarget.style.borderColor = '#0D9488' }}
                     onBlur={e => { e.currentTarget.style.borderColor = '#CBD5E1' }}
                   />
                 </div>
@@ -1074,13 +1074,13 @@ export default function AssessmentPage() {
                       <button key={sr.id}
                         onClick={() => setAnswers(a => ({ ...a, subRole: sr.id }))}
                         className="p-4 rounded-2xl text-left transition-all hover:scale-[1.01]"
-                        style={{ background: sel ? '#EDE9FE' : '#FFFFFF', border: `1px solid ${sel ? '#7C3AED' : '#E2E8F0'}` }}>
+                        style={{ background: sel ? '#CCFBF1' : '#FFFFFF', border: `1px solid ${sel ? '#0D9488' : '#E2E8F0'}` }}>
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="text-sm font-semibold mb-0.5" style={{ color: '#0F172A' }}>{sr.label}</div>
                             <div className="text-xs" style={{ color: '#94A3B8' }}>{sr.detail}</div>
                           </div>
-                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ml-3" style={{ background: '#7C3AED' }}><Check size={11} className="text-white" /></div>}
+                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ml-3" style={{ background: '#0D9488' }}><Check size={11} className="text-white" /></div>}
                         </div>
                       </button>
                     )
@@ -1109,14 +1109,14 @@ export default function AssessmentPage() {
                       rows={3}
                       className="w-full px-5 py-4 rounded-xl text-base outline-none transition-all resize-none"
                       style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', color: '#0F172A', lineHeight: 1.6 }}
-                      onFocus={e => { e.currentTarget.style.borderColor = '#7C3AED' }}
+                      onFocus={e => { e.currentTarget.style.borderColor = '#0D9488' }}
                       onBlur={e => { e.currentTarget.style.borderColor = '#CBD5E1' }}
                     />
                     <div className="flex items-center justify-between mt-1.5 px-1">
                       <button
                         onClick={() => setShowTips(t => !t)}
                         className="text-xs font-semibold flex items-center gap-1 transition-colors"
-                        style={{ color: '#7C3AED' }}
+                        style={{ color: '#0D9488' }}
                       >
                         <span style={{ fontSize: 10 }}>{showTips ? '▲' : '▼'}</span>
                         {showTips ? 'Hide tips' : 'Need inspiration? Show tips'}
@@ -1137,7 +1137,7 @@ export default function AssessmentPage() {
                         transition={{ duration: 0.2 }}
                         className="overflow-hidden mb-6"
                       >
-                        <div className="mt-3 p-4 rounded-2xl" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                        <div className="mt-3 p-4 rounded-2xl" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
                           <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>
                             Examples for {roleLabel}
                           </p>
@@ -1182,7 +1182,7 @@ export default function AssessmentPage() {
                         <button key={ind.id}
                           onClick={() => setAnswers(a => ({ ...a, industry: ind.id }))}
                           className="px-3 py-2.5 rounded-xl text-sm text-left transition-all"
-                          style={{ background: sel ? '#EDE9FE' : '#FFFFFF', border: `1px solid ${sel ? '#7C3AED' : '#E2E8F0'}`, color: sel ? '#7C3AED' : '#475569', fontWeight: sel ? 600 : 400 }}>
+                          style={{ background: sel ? '#CCFBF1' : '#FFFFFF', border: `1px solid ${sel ? '#0D9488' : '#E2E8F0'}`, color: sel ? '#0D9488' : '#475569', fontWeight: sel ? 600 : 400 }}>
                           {ind.label}
                         </button>
                       )
@@ -1198,8 +1198,8 @@ export default function AssessmentPage() {
                         <button key={cs.id}
                           onClick={() => setAnswers(a => ({ ...a, companySize: cs.id }))}
                           className="p-3 rounded-xl text-center transition-all"
-                          style={{ background: sel ? '#EDE9FE' : '#FFFFFF', border: `1px solid ${sel ? '#7C3AED' : '#E2E8F0'}` }}>
-                          <div className="text-sm font-semibold" style={{ color: sel ? '#7C3AED' : '#0F172A' }}>{cs.label}</div>
+                          style={{ background: sel ? '#CCFBF1' : '#FFFFFF', border: `1px solid ${sel ? '#0D9488' : '#E2E8F0'}` }}>
+                          <div className="text-sm font-semibold" style={{ color: sel ? '#0D9488' : '#0F172A' }}>{cs.label}</div>
                           <div className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>{cs.detail}</div>
                         </button>
                       )
@@ -1278,12 +1278,12 @@ export default function AssessmentPage() {
                       <button key={ch.id}
                         onClick={() => setAnswers(a => ({ ...a, challenge: ch.id }))}
                         className="w-full flex items-center gap-4 p-5 rounded-2xl text-left transition-all hover:scale-[1.01]"
-                        style={{ background: sel ? '#EDE9FE' : '#FFFFFF', border: `1px solid ${sel ? '#7C3AED' : '#E2E8F0'}` }}>
+                        style={{ background: sel ? '#CCFBF1' : '#FFFFFF', border: `1px solid ${sel ? '#0D9488' : '#E2E8F0'}` }}>
                         <div className="flex-1">
                           <div className="text-base font-semibold" style={{ color: '#0F172A' }}>{ch.label}</div>
                           <div className="text-sm mt-0.5" style={{ color: '#64748B' }}>{ch.detail}</div>
                         </div>
-                        {sel && <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#7C3AED' }}><Check size={13} className="text-white" /></div>}
+                        {sel && <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#0D9488' }}><Check size={13} className="text-white" /></div>}
                       </button>
                     )
                   })}
@@ -1312,12 +1312,12 @@ export default function AssessmentPage() {
                           goals: sel ? a.goals.filter(g => g !== goal.id) : [...a.goals, goal.id],
                         }))}
                         className="p-4 rounded-2xl text-left transition-all hover:scale-[1.02] disabled:opacity-40"
-                        style={{ background: sel ? '#EDE9FE' : '#FFFFFF', border: `1px solid ${sel ? '#7C3AED' : '#E2E8F0'}` }}>
+                        style={{ background: sel ? '#CCFBF1' : '#FFFFFF', border: `1px solid ${sel ? '#0D9488' : '#E2E8F0'}` }}>
                         <div className="flex items-start justify-between mb-3">
-                          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: sel ? '#DDD6FE' : '#F8FAFC' }}>
-                            <Icon size={16} color={sel ? '#7C3AED' : '#94A3B8'} />
+                          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: sel ? '#99F6E4' : '#F0FDFA' }}>
+                            <Icon size={16} color={sel ? '#0D9488' : '#94A3B8'} />
                           </div>
-                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: '#7C3AED' }}><Check size={11} className="text-white" /></div>}
+                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: '#0D9488' }}><Check size={11} className="text-white" /></div>}
                         </div>
                         <div className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>{goal.label}</div>
                         <div className="text-xs" style={{ color: '#64748B' }}>{goal.detail}</div>
@@ -1364,10 +1364,10 @@ export default function AssessmentPage() {
             {currentStep === 'processing' && (
               <motion.div key="processing" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
                 <div className="relative w-24 h-24 mx-auto mb-10">
-                  <motion.div className="absolute inset-0 rounded-full" style={{ border: '2px solid transparent', borderTopColor: '#7C3AED' }} animate={{ rotate: 360 }} transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }} />
+                  <motion.div className="absolute inset-0 rounded-full" style={{ border: '2px solid transparent', borderTopColor: '#0D9488' }} animate={{ rotate: 360 }} transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }} />
                   <motion.div className="absolute inset-3 rounded-full" style={{ border: '2px solid transparent', borderTopColor: '#22D3EE' }} animate={{ rotate: -360 }} transition={{ duration: 1.8, repeat: Infinity, ease: 'linear' }} />
-                  <div className="absolute inset-7 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #EDE9FE, #ECFEFF)' }}>
-                    <Zap size={18} color="#7C3AED" />
+                  <div className="absolute inset-7 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #CCFBF1, #ECFEFF)' }}>
+                    <Zap size={18} color="#0D9488" />
                   </div>
                 </div>
                 <h2 className="text-2xl font-black mb-6" style={{ color: '#0F172A' }}>Building your path…</h2>
@@ -1454,16 +1454,16 @@ function SkillCheckStep({
     <motion.div key="skillCheck" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#EDE9FE', color: '#7C3AED' }}>
+          <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#CCFBF1', color: '#0D9488' }}>
             Skill check · {qIdx + 1} of {questions.length}
           </span>
           <div className="flex gap-1">
             {questions.map((_, i) => (
-              <div key={i} className="w-6 h-1 rounded-full" style={{ background: i <= qIdx ? '#7C3AED' : '#E2E8F0' }} />
+              <div key={i} className="w-6 h-1 rounded-full" style={{ background: i <= qIdx ? '#0D9488' : '#E2E8F0' }} />
             ))}
           </div>
         </div>
-        <p className="text-sm font-medium mb-2" style={{ color: '#7C3AED' }}>{intro}</p>
+        <p className="text-sm font-medium mb-2" style={{ color: '#0D9488' }}>{intro}</p>
         <h2 className="text-xl sm:text-2xl font-black leading-snug mb-2" style={{ color: '#0F172A' }}>{q.q}</h2>
         {!revealed && <p className="text-sm" style={{ color: '#94A3B8' }}>Pick the best answer — we'll explain after.</p>}
       </div>
@@ -1480,7 +1480,7 @@ function SkillCheckStep({
             if (isCorrect) { bg = '#ECFDF5'; border = '#6EE7B7'; textColor = '#065F46' }
             else if (isSelected && !isCorrect) { bg = '#FFF1F2'; border = '#FDA4AF'; textColor = '#9F1239' }
           } else if (isSelected) {
-            bg = '#EDE9FE'; border = '#7C3AED'
+            bg = '#CCFBF1'; border = '#0D9488'
           }
 
           return (
@@ -1528,7 +1528,7 @@ function SkillCheckStep({
           <motion.button initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
             onClick={handleNext}
             className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
-            style={{ background: 'linear-gradient(135deg, #7C3AED, #22D3EE)', boxShadow: '0 4px 14px rgba(124,58,237,0.25)' }}>
+            style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)', boxShadow: '0 4px 14px rgba(13,148,136,0.25)' }}>
             {isLast ? 'Continue' : nextLabel} <ArrowRight size={15} />
           </motion.button>
         )}
@@ -1573,9 +1573,9 @@ function NavButtons({
       <button onClick={onNext} disabled={!canProceed}
         className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:scale-[1.02]"
         style={{
-          background: canProceed ? 'linear-gradient(135deg, #7C3AED, #22D3EE)' : '#E2E8F0',
+          background: canProceed ? 'linear-gradient(135deg, #0D9488, #22D3EE)' : '#E2E8F0',
           color: canProceed ? '#FFFFFF' : '#94A3B8',
-          boxShadow: canProceed ? '0 4px 14px rgba(124,58,237,0.25)' : 'none',
+          boxShadow: canProceed ? '0 4px 14px rgba(13,148,136,0.25)' : 'none',
         }}>
         {nextLabel} <ArrowRight size={15} />
       </button>

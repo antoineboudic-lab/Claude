@@ -61,11 +61,11 @@ function MemberRow({ member, rank }: { member: TeamMember; rank: number }) {
           <span style={{ color: '#64748B' }}>{lessons}L</span>
         </div>
         <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
-          <div className="h-full rounded-full" style={{ width: `${progress}%`, background: '#7C3AED', transition: 'width 0.8s ease' }} />
+          <div className="h-full rounded-full" style={{ width: `${progress}%`, background: '#0D9488', transition: 'width 0.8s ease' }} />
         </div>
       </div>
       <div className="w-16 text-right flex-shrink-0">
-        <p className="text-sm font-bold" style={{ color: '#7C3AED' }}>{(member.xp ?? 0).toLocaleString()}</p>
+        <p className="text-sm font-bold" style={{ color: '#0D9488' }}>{(member.xp ?? 0).toLocaleString()}</p>
         <p className="text-[10px]" style={{ color: '#94A3B8' }}>XP</p>
       </div>
     </div>
@@ -133,7 +133,7 @@ export default function TeamOverviewPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#7C3AED', borderTopColor: 'transparent' }} />
+          style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -166,7 +166,7 @@ export default function TeamOverviewPage() {
         </div>
         <Link href="/dashboard/team/members"
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: '#7C3AED' }}>
+          style={{ background: '#0D9488' }}>
           <UserPlus size={14} /> Invite member
         </Link>
       </div>
@@ -174,7 +174,7 @@ export default function TeamOverviewPage() {
       {/* Stats row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { icon: Users, label: 'Active members', value: stats.total, color: '#7C3AED' },
+          { icon: Users, label: 'Active members', value: stats.total, color: '#0D9488' },
           { icon: BookOpen, label: 'Total lessons done', value: stats.totalLessons, color: '#10B981' },
           { icon: Zap, label: 'Total XP earned', value: stats.totalXP.toLocaleString(), color: '#F59E0B', str: true },
           { icon: Award, label: 'Tracks completed', value: stats.completedTracks, color: '#EC4899' },
@@ -200,12 +200,12 @@ export default function TeamOverviewPage() {
           style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
           <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid #F1F5F9' }}>
             <div className="flex items-center gap-2">
-              <TrendingUp size={15} style={{ color: '#7C3AED' }} />
+              <TrendingUp size={15} style={{ color: '#0D9488' }} />
               <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Top learners</p>
             </div>
             <Link href="/dashboard/team/analytics"
               className="text-xs font-semibold flex items-center gap-1 hover:underline"
-              style={{ color: '#7C3AED' }}>
+              style={{ color: '#0D9488' }}>
               Full leaderboard <ChevronRight size={11} />
             </Link>
           </div>
@@ -215,7 +215,7 @@ export default function TeamOverviewPage() {
                 <p className="text-sm" style={{ color: '#94A3B8' }}>No active members yet.</p>
                 <Link href="/dashboard/team/members"
                   className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold"
-                  style={{ color: '#7C3AED' }}>
+                  style={{ color: '#0D9488' }}>
                   <UserPlus size={13} /> Invite your first member
                 </Link>
               </div>
@@ -249,7 +249,7 @@ export default function TeamOverviewPage() {
               <div className="space-y-3">
                 {trackCompletion.slice(0, 6).map(({ track, assigned, completed }) => {
                   const pct = assigned > 0 ? Math.round((completed / assigned) * 100) : 0
-                  const color = TRACK_COLORS[track] ?? '#7C3AED'
+                  const color = TRACK_COLORS[track] ?? '#0D9488'
                   return (
                     <div key={track}>
                       <div className="flex items-center justify-between text-xs mb-1">
@@ -303,7 +303,7 @@ export default function TeamOverviewPage() {
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Target size={14} style={{ color: '#7C3AED' }} />
+                <Target size={14} style={{ color: '#0D9488' }} />
                 <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Team goal</p>
               </div>
               {!editingGoal && (
@@ -322,7 +322,7 @@ export default function TeamOverviewPage() {
                   onChange={e => setGoalTitle(e.target.value)}
                   placeholder="e.g. Complete AI Fundamentals by Q3"
                   className="w-full px-3 py-2 rounded-xl text-sm outline-none"
-                  style={{ border: '1.5px solid #7C3AED', background: '#FAFBFC', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+                  style={{ border: '1.5px solid #0D9488', background: '#F0FDFA', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
                 />
                 <div className="flex items-center gap-1.5">
                   <CalendarDays size={12} style={{ color: '#94A3B8' }} />
@@ -331,13 +331,13 @@ export default function TeamOverviewPage() {
                     value={goalDeadline}
                     onChange={e => setGoalDeadline(e.target.value)}
                     className="flex-1 px-2 py-1.5 rounded-lg text-xs outline-none"
-                    style={{ border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#475569', fontFamily: 'var(--font-sans)' }}
+                    style={{ border: '1px solid #E2E8F0', background: '#F0FDFA', color: '#475569', fontFamily: 'var(--font-sans)' }}
                   />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleSaveGoal} disabled={savingGoal || !goalTitle.trim()}
                     className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{ background: '#7C3AED' }}>
+                    style={{ background: '#0D9488' }}>
                     <Check size={11} /> {savingGoal ? 'Saving…' : 'Save'}
                   </button>
                   <button onClick={() => setEditingGoal(false)}
@@ -367,7 +367,7 @@ export default function TeamOverviewPage() {
             ) : (
               <button onClick={() => { setGoalTitle(''); setGoalDeadline(''); setEditingGoal(true) }}
                 className="text-xs font-semibold hover:underline"
-                style={{ color: '#7C3AED' }}>
+                style={{ color: '#0D9488' }}>
                 + Set a team goal
               </button>
             )}
@@ -397,7 +397,7 @@ export default function TeamOverviewPage() {
                   placeholder="Write a short welcome note for new members joining via invite…"
                   rows={3}
                   className="w-full px-3 py-2 rounded-xl text-xs outline-none resize-none"
-                  style={{ border: '1.5px solid #10B981', background: '#FAFBFC', color: '#0F172A', fontFamily: 'var(--font-sans)', lineHeight: 1.6 }}
+                  style={{ border: '1.5px solid #10B981', background: '#F0FDFA', color: '#0F172A', fontFamily: 'var(--font-sans)', lineHeight: 1.6 }}
                 />
                 <div className="flex gap-2">
                   <button onClick={handleSaveWelcome} disabled={savingWelcome}
@@ -433,7 +433,7 @@ export default function TeamOverviewPage() {
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#94A3B8' }}>Quick actions</p>
             {[
-              { href: '/dashboard/team/members', icon: UserPlus, label: 'Invite team members', color: '#7C3AED' },
+              { href: '/dashboard/team/members', icon: UserPlus, label: 'Invite team members', color: '#0D9488' },
               { href: '/dashboard/team/analytics', icon: BarChart3, label: 'View full analytics', color: '#10B981' },
               { href: '/tracks', icon: BookOpen, label: 'Browse all tracks', color: '#F59E0B' },
             ].map(item => (
@@ -462,7 +462,7 @@ export default function TeamOverviewPage() {
           </p>
           <Link href="/dashboard/team/members"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white"
-            style={{ background: '#7C3AED' }}>
+            style={{ background: '#0D9488' }}>
             <UserPlus size={14} /> Invite your first member
           </Link>
         </div>

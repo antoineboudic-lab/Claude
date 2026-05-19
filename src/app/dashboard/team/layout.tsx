@@ -40,9 +40,9 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
 
   if (loading || checking) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F8FAFC' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F0FDFA' }}>
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#7C3AED', borderTopColor: 'transparent' }} />
+          style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -57,14 +57,14 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
     : user.email?.slice(0, 2).toUpperCase() ?? '?'
 
   return (
-    <div className="min-h-screen flex" style={{ background: '#F8FAFC', fontFamily: 'var(--font-sans)' }}>
+    <div className="min-h-screen flex" style={{ background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
       {/* Sidebar */}
       <aside className="hidden lg:flex flex-col w-60 flex-shrink-0"
         style={{ background: '#FFFFFF', borderRight: '1px solid #E2E8F0', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto' }}>
         {/* Logo */}
         <div className="px-5 py-5" style={{ borderBottom: '1px solid #F1F5F9' }}>
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
               <Zap size={13} className="text-white" />
             </div>
             <span className="font-black text-sm" style={{ color: '#0F172A' }}>AI Literacy</span>
@@ -76,7 +76,7 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
           <p className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: '#94A3B8' }}>Team</p>
           <p className="text-sm font-bold truncate" style={{ color: '#0F172A' }}>{team.name}</p>
           <span className="text-[10px] font-semibold capitalize px-1.5 py-0.5 rounded-md mt-1 inline-block"
-            style={{ background: '#EDE9FE', color: '#7C3AED' }}>{team.plan}</span>
+            style={{ background: '#CCFBF1', color: '#0D9488' }}>{team.plan}</span>
         </div>
 
         {/* Nav */}
@@ -88,8 +88,8 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
               <Link key={item.href} href={item.href}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
                 style={{
-                  background: active ? '#EDE9FE' : 'transparent',
-                  color: active ? '#7C3AED' : '#64748B',
+                  background: active ? '#CCFBF1' : 'transparent',
+                  color: active ? '#0D9488' : '#64748B',
                 }}>
                 <Icon size={16} />
                 {item.label}
@@ -110,7 +110,7 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
         <div className="px-4 py-4" style={{ borderTop: '1px solid #F1F5F9' }}>
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-              style={{ background: '#7C3AED' }}>
+              style={{ background: '#0D9488' }}>
               {initials}
             </div>
             <div className="flex-1 min-w-0">
@@ -130,7 +130,7 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 px-4 py-3 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: '#7C3AED' }}>
+          <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: '#0D9488' }}>
             <Zap size={11} className="text-white" />
           </div>
           <span className="font-black text-sm" style={{ color: '#0F172A' }}>Team — {team.name}</span>
@@ -142,7 +142,7 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
             return (
               <Link key={item.href} href={item.href}
                 className="p-1.5 rounded-lg transition-colors"
-                style={{ background: active ? '#EDE9FE' : 'transparent', color: active ? '#7C3AED' : '#94A3B8' }}>
+                style={{ background: active ? '#CCFBF1' : 'transparent', color: active ? '#0D9488' : '#94A3B8' }}>
                 <Icon size={16} />
               </Link>
             )

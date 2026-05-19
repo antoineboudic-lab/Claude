@@ -53,7 +53,7 @@ const POSTS = [
   {
     slug: 'sales-ai-journey',
     category: 'Sales',
-    categoryColor: '#7C3AED',
+    categoryColor: '#0D9488',
     title: 'From Sceptic to Advocate: One Sales Leader\'s AI Journey',
     excerpt: 'Six months ago, I thought AI in sales was overhyped. Then I used it to cut my proposal prep time by 70%. Here\'s what changed my mind.',
     author: 'Marc Fontaine',
@@ -141,19 +141,19 @@ export default function BlogPage() {
   const rest = POSTS.slice(1)
 
   return (
-    <main style={{ background: '#F8FAFC', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
         </Link>
         <Link href="/assessment"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
-          style={{ background: '#7C3AED' }}>
+          style={{ background: '#0D9488' }}>
           Get started
         </Link>
       </nav>
@@ -162,7 +162,7 @@ export default function BlogPage() {
       <section className="py-16 sm:py-20" style={{ background: '#FFFFFF' }}>
         <div className="max-w-5xl mx-auto px-6">
           <motion.div variants={stagger(0.1)} initial="hidden" animate="visible">
-            <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED' }}>Blog</motion.p>
+            <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Blog</motion.p>
             <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl font-black tracking-tight mb-4" style={{ color: '#0F172A' }}>
               Practical AI for<br />business professionals
             </motion.h1>
@@ -178,7 +178,7 @@ export default function BlogPage() {
         <div className="max-w-5xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
             <Link href={`/blog/${featured.slug}`} className="block rounded-2xl p-8 sm:p-10 cursor-pointer transition-all hover:shadow-md"
-              style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+              style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
               <div className="flex items-center gap-3 mb-5">
                 <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white"
                   style={{ background: featured.categoryColor }}>{featured.category}</span>
@@ -204,7 +204,7 @@ export default function BlogPage() {
                   <span className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8' }}>
                     <Clock size={11} /> {featured.readTime}
                   </span>
-                  <span className="flex items-center gap-1 text-sm font-semibold" style={{ color: '#7C3AED' }}>
+                  <span className="flex items-center gap-1 text-sm font-semibold" style={{ color: '#0D9488' }}>
                     Read more <ArrowRight size={13} />
                   </span>
                 </div>
@@ -224,7 +224,7 @@ export default function BlogPage() {
                 transition={{ delay: 0.1 * i + 0.4 }}>
                 <Link href={`/blog/${post.slug}`}
                   className="block rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col h-full"
-                  style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                  style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
                   <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white self-start mb-4"
                     style={{ background: post.categoryColor }}>{post.category}</span>
                   <h3 className="text-base font-black mb-3 flex-1" style={{ color: '#0F172A', lineHeight: 1.4 }}>{post.title}</h3>

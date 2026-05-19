@@ -35,7 +35,7 @@ function CompletionScreen({ reviewed, xpEarned, onRedo }: { reviewed: number; xp
         </h2>
         <p style={{ fontSize: '0.9375rem', color: '#64748B', lineHeight: 1.5 }}>
           You reviewed <strong style={{ color: '#0F172A' }}>{reviewed} card{reviewed !== 1 ? 's' : ''}</strong> and earned{' '}
-          <strong style={{ color: '#7C3AED' }}>+{xpEarned} XP</strong>.
+          <strong style={{ color: '#0D9488' }}>+{xpEarned} XP</strong>.
         </p>
       </div>
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -124,7 +124,7 @@ function ReviewCard({
           {item.options.map((opt, i) => {
             const isSelected = selected === i
             const isRight = i === item.correct
-            let bg = '#F8FAFC'
+            let bg = '#F0FDFA'
             let border = '1px solid #E2E8F0'
             let color = '#334155'
             if (revealed) {
@@ -273,7 +273,7 @@ export default function ReviewPage() {
   const progress = dueItems.length > 0 ? ((cardIndex) / dueItems.length) * 100 : 0
 
   return (
-    <main style={{ minHeight: '100vh', background: '#F8FAFC', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ minHeight: '100vh', background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
       {/* Top bar */}
       <div style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0', padding: '0 24px', position: 'sticky', top: 0, zIndex: 40 }}>
         <div style={{ maxWidth: '640px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '16px', height: '56px' }}>
@@ -302,8 +302,8 @@ export default function ReviewPage() {
           {/* XP counter */}
           {xpEarned > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-              <Zap size={13} color="#7C3AED" />
-              <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#7C3AED' }}>+{xpEarned}</span>
+              <Zap size={13} color="#0D9488" />
+              <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#0D9488' }}>+{xpEarned}</span>
             </div>
           )}
         </div>

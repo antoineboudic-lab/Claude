@@ -61,7 +61,7 @@ function TrackPicker({ selected, onChange }: { selected: string[]; onChange: (v:
             onClick={() => onChange(on ? selected.filter(x => x !== t.id) : [...selected, t.id])}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
             style={{
-              background: on ? `${t.color}15` : '#F8FAFC',
+              background: on ? `${t.color}15` : '#F0FDFA',
               color: on ? t.color : '#94A3B8',
               border: `1px solid ${on ? t.color + '40' : '#E2E8F0'}`,
             }}>
@@ -111,12 +111,12 @@ function EditTracksModal({ member, onSave, onClose }: {
         <div className="flex gap-3 mt-6">
           <button onClick={onClose}
             className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-colors hover:bg-slate-100"
-            style={{ color: '#64748B', background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            style={{ color: '#64748B', background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
             Cancel
           </button>
           <button onClick={save} disabled={saving}
             className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: '#7C3AED' }}>
+            style={{ background: '#0D9488' }}>
             {saving ? 'Saving…' : 'Save changes'}
           </button>
         </div>
@@ -201,7 +201,7 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
               )}
               {member.role === 'admin' && (
                 <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
-                  style={{ background: '#EDE9FE', color: '#7C3AED' }}>Admin</span>
+                  style={{ background: '#CCFBF1', color: '#0D9488' }}>Admin</span>
               )}
               {atRisk === 'not-started' && (
                 <span className="flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
@@ -254,12 +254,12 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
       {!isPending && (
         <div className="grid grid-cols-3 gap-2 mb-4">
           {[
-            { label: 'XP', value: xp.toLocaleString(), color: '#7C3AED' },
+            { label: 'XP', value: xp.toLocaleString(), color: '#0D9488' },
             { label: 'Lessons', value: lessons, color: '#10B981' },
             { label: 'Tracks done', value: done.filter(t => tracks.includes(t)).length, color: '#F59E0B' },
           ].map(s => (
             <div key={s.label} className="rounded-xl p-2.5 text-center"
-              style={{ background: '#F8FAFC', border: '1px solid #F1F5F9' }}>
+              style={{ background: '#F0FDFA', border: '1px solid #F1F5F9' }}>
               <p className="text-sm font-black" style={{ color: s.color }}>{s.value}</p>
               <p className="text-[10px]" style={{ color: '#94A3B8' }}>{s.label}</p>
             </div>
@@ -279,9 +279,9 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
                 <span key={t}
                   className="flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-lg"
                   style={{
-                    background: completed ? `${track?.color ?? '#7C3AED'}15` : '#F8FAFC',
-                    color: completed ? (track?.color ?? '#7C3AED') : '#94A3B8',
-                    border: `1px solid ${completed ? (track?.color ?? '#7C3AED') + '30' : '#E2E8F0'}`,
+                    background: completed ? `${track?.color ?? '#0D9488'}15` : '#F0FDFA',
+                    color: completed ? (track?.color ?? '#0D9488') : '#94A3B8',
+                    border: `1px solid ${completed ? (track?.color ?? '#0D9488') + '30' : '#E2E8F0'}`,
                   }}>
                   {completed && <CheckCircle2 size={9} />}
                   {track?.label ?? t}
@@ -295,7 +295,7 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
       {tracks.length === 0 && !isPending && (
         <button onClick={() => onEdit(member)}
           className="flex items-center gap-1.5 text-xs font-semibold transition-colors hover:underline"
-          style={{ color: '#7C3AED' }}>
+          style={{ color: '#0D9488' }}>
           <Edit2 size={11} /> Assign tracks
         </button>
       )}
@@ -404,7 +404,7 @@ function InvitePanel({ team, userId, onDone }: {
 
       {/* Mode tabs */}
       <div className="flex items-center gap-1 mb-5 p-1 rounded-xl w-fit"
-        style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+        style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
         {(['single', 'bulk'] as const).map(m => (
           <button key={m} type="button" onClick={() => { setMode(m); setBulkResult(null); setNewInvite(null) }}
             className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all"
@@ -431,14 +431,14 @@ function InvitePanel({ team, userId, onDone }: {
                 Share this link with <strong>{newInvite.email}</strong>. It expires in 7 days.
               </p>
               <div className="flex items-center gap-2 p-3 rounded-xl"
-                style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
                 <LinkIcon size={13} style={{ color: '#94A3B8', flexShrink: 0 }} />
                 <code className="text-xs flex-1 truncate" style={{ color: '#334155' }}>
                   {typeof window !== 'undefined' ? `${window.location.origin}/join/${newInvite.token}` : `…/join/${newInvite.token}`}
                 </code>
                 <button onClick={() => copyLink(newInvite.token)}
                   className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80"
-                  style={{ background: copied ? '#D1FAE5' : '#EDE9FE', color: copied ? '#10B981' : '#7C3AED' }}>
+                  style={{ background: copied ? '#D1FAE5' : '#CCFBF1', color: copied ? '#10B981' : '#0D9488' }}>
                   {copied ? <><CheckCheck size={11} /> Copied</> : <><Copy size={11} /> Copy</>}
                 </button>
               </div>
@@ -453,7 +453,7 @@ function InvitePanel({ team, userId, onDone }: {
               <div>
                 <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Work email</label>
                 <div className="flex items-center gap-2 px-3 rounded-xl"
-                  style={{ border: '1.5px solid #E2E8F0', background: '#FAFBFC' }}>
+                  style={{ border: '1.5px solid #E2E8F0', background: '#F0FDFA' }}>
                   <Mail size={13} style={{ color: '#94A3B8' }} />
                   <input type="email" required value={inviteEmail} onChange={e => setInviteEmail(e.target.value)}
                     placeholder="colleague@company.com"
@@ -469,7 +469,7 @@ function InvitePanel({ team, userId, onDone }: {
               </div>
               <button type="submit" disabled={inviting}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                style={{ background: '#7C3AED' }}>
+                style={{ background: '#0D9488' }}>
                 {inviting ? 'Creating…' : 'Create invite link'}
               </button>
             </form>
@@ -496,7 +496,7 @@ function InvitePanel({ team, userId, onDone }: {
               )}
               <button onClick={() => setBulkResult(null)}
                 className="text-xs font-semibold hover:underline"
-                style={{ color: '#7C3AED' }}>
+                style={{ color: '#0D9488' }}>
                 Invite more
               </button>
             </div>
@@ -509,7 +509,7 @@ function InvitePanel({ team, userId, onDone }: {
                   </label>
                   <button type="button" onClick={() => fileRef.current?.click()}
                     className="flex items-center gap-1 text-xs font-semibold transition-colors hover:opacity-70"
-                    style={{ color: '#7C3AED' }}>
+                    style={{ color: '#0D9488' }}>
                     <Upload size={11} /> Upload CSV
                   </button>
                   <input ref={fileRef} type="file" accept=".csv,.txt" className="hidden" onChange={handleFileUpload} />
@@ -522,16 +522,16 @@ function InvitePanel({ team, userId, onDone }: {
                   className="w-full rounded-xl px-3 py-2.5 text-xs outline-none resize-none"
                   style={{
                     border: '1.5px solid #E2E8F0',
-                    background: '#FAFBFC',
+                    background: '#F0FDFA',
                     color: '#0F172A',
                     fontFamily: 'var(--font-sans)',
                     lineHeight: 1.7,
                   }}
-                  onFocus={e => { e.currentTarget.style.borderColor = '#A78BFA' }}
+                  onFocus={e => { e.currentTarget.style.borderColor = '#5EEAD4' }}
                   onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0' }}
                 />
                 {parsedEmails.length > 0 && (
-                  <p className="mt-1.5 text-xs font-semibold" style={{ color: '#7C3AED' }}>
+                  <p className="mt-1.5 text-xs font-semibold" style={{ color: '#0D9488' }}>
                     {parsedEmails.length} valid email{parsedEmails.length !== 1 ? 's' : ''} detected
                   </p>
                 )}
@@ -545,7 +545,7 @@ function InvitePanel({ team, userId, onDone }: {
               <button type="submit"
                 disabled={bulkInviting || parsedEmails.length === 0}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-40"
-                style={{ background: '#7C3AED' }}>
+                style={{ background: '#0D9488' }}>
                 {bulkInviting
                   ? 'Sending invites…'
                   : parsedEmails.length === 0
@@ -616,7 +616,7 @@ export default function MembersPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#7C3AED', borderTopColor: 'transparent' }} />
+          style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -648,7 +648,7 @@ export default function MembersPage() {
         <button
           onClick={() => setShowInvite(v => !v)}
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: '#7C3AED' }}>
+          style={{ background: '#0D9488' }}>
           <UserPlus size={14} />
           {showInvite ? 'Close' : 'Invite members'}
           <ChevronDown size={13} style={{ transform: showInvite ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
@@ -711,7 +711,7 @@ export default function MembersPage() {
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <button onClick={() => copyInviteLink(inv.token)}
                     className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80"
-                    style={{ background: copied === inv.token ? '#D1FAE5' : '#EDE9FE', color: copied === inv.token ? '#10B981' : '#7C3AED' }}>
+                    style={{ background: copied === inv.token ? '#D1FAE5' : '#CCFBF1', color: copied === inv.token ? '#10B981' : '#0D9488' }}>
                     {copied === inv.token ? <><CheckCheck size={10} /> Copied</> : <><Copy size={10} /> Copy link</>}
                   </button>
                   <button onClick={() => handleRevokeInvite(inv.id)}
@@ -735,7 +735,7 @@ export default function MembersPage() {
           <p className="text-xs mb-4" style={{ color: '#94A3B8' }}>Invite your first team member to get started.</p>
           <button onClick={() => setShowInvite(true)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-            style={{ background: '#7C3AED' }}>
+            style={{ background: '#0D9488' }}>
             <UserPlus size={13} /> Send first invite
           </button>
         </div>

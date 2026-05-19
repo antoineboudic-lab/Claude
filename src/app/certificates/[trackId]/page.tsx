@@ -177,7 +177,7 @@ function NotEarned({ trackTitle, trackId, color, lessonsCompleted, totalLessons 
       <p style={{ fontSize: '0.875rem', color: '#64748B', marginBottom: '24px', lineHeight: 1.6 }}>
         Complete all modules in the <strong style={{ color }}>{trackTitle}</strong> track to earn your certificate.
       </p>
-      <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '16px 20px', marginBottom: '24px' }}>
+      <div style={{ background: '#F0FDFA', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '16px 20px', marginBottom: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
           <span style={{ fontSize: '0.75rem', color: '#64748B' }}>Progress</span>
           <span style={{ fontSize: '0.75rem', fontWeight: 700, color }}>
@@ -215,7 +215,7 @@ export default function CertificatePage() {
   const certRef = useRef<HTMLDivElement>(null)
 
   const track = getTrack(trackId)
-  const color = track?.color ?? '#7C3AED'
+  const color = track?.color ?? '#0D9488'
   const skills = TRACK_SKILLS[trackId] ?? []
   const earned = state.completedTracks.includes(trackId)
 
@@ -277,7 +277,7 @@ export default function CertificatePage() {
         }
       `}</style>
 
-      <main style={{ minHeight: '100vh', background: '#F8FAFC', fontFamily: 'var(--font-sans)' }}>
+      <main style={{ minHeight: '100vh', background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
         {/* Nav */}
         <nav style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0', position: 'sticky', top: 0, zIndex: 40 }}>
           <div style={{ maxWidth: '760px', margin: '0 auto', padding: '14px 24px', display: 'flex', alignItems: 'center', gap: '12px' }}>

@@ -19,7 +19,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const SITE_URL = "https://ailiteracy.com";
 
 export const viewport: Viewport = {
-  themeColor: '#7C3AED',
+  themeColor: '#0D9488',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -104,7 +104,7 @@ export const metadata: Metadata = {
     "apple-mobile-web-app-status-bar-style": "default",
     "apple-mobile-web-app-title": "AI Literacy",
     "application-name": "AI Literacy",
-    "msapplication-TileColor": "#7C3AED",
+    "msapplication-TileColor": "#0D9488",
   },
 };
 

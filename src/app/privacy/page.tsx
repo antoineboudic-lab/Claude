@@ -62,12 +62,12 @@ const SECTIONS = [
 
 export default function PrivacyPage() {
   return (
-    <main style={{ background: '#F8FAFC', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#7C3AED' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
       <section className="py-16 pb-24" style={{ background: '#FFFFFF' }}>
         <div className="max-w-3xl mx-auto px-6">
           <div className="mb-10">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED' }}>Legal</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Legal</p>
             <h1 className="text-4xl font-black tracking-tight mb-3" style={{ color: '#0F172A' }}>Privacy Policy</h1>
             <p className="text-sm" style={{ color: '#94A3B8' }}>Last updated: 1 May 2026</p>
           </div>
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
           <div className="mt-12 pt-8" style={{ borderTop: '1px solid #E2E8F0' }}>
             <p className="text-xs" style={{ color: '#94A3B8' }}>
               For questions about this policy, email{' '}
-              <a href="mailto:privacy@ailiteracy.com" style={{ color: '#7C3AED' }}>privacy@ailiteracy.com</a>
+              <a href="mailto:privacy@ailiteracy.com" style={{ color: '#0D9488' }}>privacy@ailiteracy.com</a>
             </p>
           </div>
         </div>
