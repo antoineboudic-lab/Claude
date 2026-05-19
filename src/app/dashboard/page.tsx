@@ -1211,7 +1211,7 @@ export default function DashboardPage() {
                               {i + 1}
                             </span>
                             <div className="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
-                              style={{ background: `hsl(${(m.email.charCodeAt(0) * 47) % 360},55%,55%)` }}>
+                              style={{ background: ['#0D9488','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][m.email.charCodeAt(0) % 10] }}>
                               {initials}
                             </div>
                             <span className="text-xs flex-1 truncate font-medium"

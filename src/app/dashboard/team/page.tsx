@@ -40,7 +40,7 @@ function MemberRow({ member, rank }: { member: TeamMember; rank: number }) {
     <div className="flex items-center gap-4 py-3.5 px-5 transition-colors hover:bg-slate-50 rounded-xl -mx-1">
       <span className="w-6 text-center text-xs font-bold" style={{ color: '#CBD5E1' }}>{rank}</span>
       <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-        style={{ background: `hsl(${(rank * 47 + 200) % 360},60%,55%)` }}>
+        style={{ background: ['#0D9488','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][rank % 10] }}>
         {initials}
       </div>
       <div className="flex-1 min-w-0">

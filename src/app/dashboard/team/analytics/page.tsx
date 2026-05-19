@@ -69,7 +69,7 @@ function LeaderboardRow({ member, rank, max }: { member: TeamMember; rank: numbe
         {rank <= 3 ? medals[rank - 1] : <span className="text-xs font-bold" style={{ color: '#CBD5E1' }}>#{rank}</span>}
       </span>
       <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-        style={{ background: `hsl(${(member.email.charCodeAt(0) * 47) % 360},55%,55%)` }}>
+        style={{ background: ['#0D9488','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][member.email.charCodeAt(0) % 10] }}>
         {initials}
       </div>
       <div className="flex-1 min-w-0">

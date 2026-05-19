@@ -178,7 +178,7 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
         <div className="flex items-center gap-3 min-w-0">
           <div className="relative">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-              style={{ background: isPending ? '#CBD5E1' : `hsl(${(member.email.charCodeAt(0) * 47) % 360},55%,55%)` }}>
+              style={{ background: isPending ? '#CBD5E1' : ['#0D9488','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][member.email.charCodeAt(0) % 10] }}>
               {initials}
             </div>
             {atRisk && (
