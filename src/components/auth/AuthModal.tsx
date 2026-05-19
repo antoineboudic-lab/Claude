@@ -16,6 +16,7 @@ export function AuthModal() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
+  const [rememberMe, setRememberMe] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const emailRef = useRef<HTMLInputElement>(null)
@@ -54,6 +55,16 @@ export function AuthModal() {
       } else {
         const { error } = await supabase.current.auth.signInWithPassword({ email, password })
         if (error) throw error
+        if (!rememberMe) {
+          // Move session from localStorage → sessionStorage so it clears on tab close
+          Object.keys(localStorage)
+            .filter(k => k.startsWith('sb-'))
+            .forEach(k => {
+              const v = localStorage.getItem(k)
+              if (v) sessionStorage.setItem(k, v)
+              localStorage.removeItem(k)
+            })
+        }
         closeModal()
       }
     } catch (err: unknown) {
@@ -204,6 +215,34 @@ export function AuthModal() {
                             {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
                           </button>
                         </div>
+
+                        {!isSignUp && (
+                          <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                            <div
+                              onClick={() => setRememberMe(v => !v)}
+                              className="relative w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-all"
+                              style={{
+                                background: rememberMe ? '#2563EB' : '#FFFFFF',
+                                border: rememberMe ? '1.5px solid #2563EB' : '1.5px solid #CBD5E1',
+                              }}
+                            >
+                              {rememberMe && (
+                                <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+                                  <path d="M1 3.5L3.5 6L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                              )}
+                            </div>
+                            <input
+                              type="checkbox"
+                              checked={rememberMe}
+                              onChange={e => setRememberMe(e.target.checked)}
+                              className="sr-only"
+                            />
+                            <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                              Remember me
+                            </span>
+                          </label>
+                        )}
 
                         <AnimatePresence>
                           {error && (
