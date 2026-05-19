@@ -1408,47 +1408,68 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(null)
   const { ref, isInView } = useReveal()
   return (
-    <section className="py-14 sm:py-20" style={{ background: '#F8FAFC' }}>
-      <div className="max-w-3xl mx-auto px-6">
+    <section className="py-14 sm:py-20 relative overflow-hidden" style={{ background: '#0F172A' }}>
+      {/* Subtle radial glow */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 70% 40%, rgba(124,58,237,0.12) 0%, transparent 55%)' }} />
+
+      <div className="max-w-3xl mx-auto px-6 relative">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
-          <motion.div variants={fadeUp} className="text-center mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>FAQ</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              Common questions
+          <motion.div variants={fadeUp} className="mb-14">
+            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>FAQ</p>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#FFFFFF', lineHeight: 1.08 }}>
+              Still have questions?
             </h2>
           </motion.div>
-          <div className="flex flex-col gap-3">
-            {FAQS.map((faq, i) => (
-              <motion.div key={i} variants={fadeUp}
-                className="rounded-2xl overflow-hidden"
-                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
-                <button
-                  onClick={() => setOpen(open === i ? null : i)}
-                  className="w-full flex items-center justify-between px-6 py-5 text-left"
-                >
-                  <span className="text-sm font-semibold pr-4" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{faq.q}</span>
-                  <motion.div animate={{ rotate: open === i ? 180 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0">
-                    <ChevronDown size={16} style={{ color: '#94A3B8' }} />
-                  </motion.div>
-                </button>
-                <AnimatePresence initial={false}>
-                  {open === i && (
-                    <motion.div
-                      key="answer"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.22, ease: 'easeInOut' }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-6 pb-5 text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        {faq.a}
-                      </p>
+          <div className="flex flex-col gap-2">
+            {FAQS.map((faq, i) => {
+              const isOpen = open === i
+              return (
+                <motion.div key={i} variants={fadeUp}
+                  className="rounded-2xl overflow-hidden transition-all"
+                  style={{
+                    background: isOpen ? 'rgba(124,58,237,0.15)' : 'rgba(255,255,255,0.04)',
+                    border: isOpen ? '1px solid rgba(124,58,237,0.4)' : '1px solid rgba(255,255,255,0.07)',
+                  }}>
+                  <button
+                    onClick={() => setOpen(isOpen ? null : i)}
+                    className="w-full flex items-center justify-between px-6 py-5 text-left gap-4"
+                  >
+                    <div className="flex items-center gap-4 min-w-0">
+                      <span className="text-xs font-black flex-shrink-0 tabular-nums"
+                        style={{ color: isOpen ? '#A78BFA' : 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-sans)' }}>
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-sm font-semibold" style={{ color: isOpen ? '#FFFFFF' : 'rgba(255,255,255,0.65)', fontFamily: 'var(--font-sans)' }}>
+                        {faq.q}
+                      </span>
+                    </div>
+                    <motion.div animate={{ rotate: isOpen ? 45 : 0 }} transition={{ duration: 0.18 }} className="flex-shrink-0">
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center"
+                        style={{ background: isOpen ? '#7C3AED' : 'rgba(255,255,255,0.08)' }}>
+                        <span style={{ fontSize: '1rem', lineHeight: 1, color: isOpen ? '#FFFFFF' : 'rgba(255,255,255,0.4)', fontWeight: 300 }}>+</span>
+                      </div>
                     </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="answer"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.22, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <p className="px-6 pb-6 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)', paddingLeft: '4rem' }}>
+                          {faq.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )
+            })}
           </div>
         </motion.div>
       </div>
