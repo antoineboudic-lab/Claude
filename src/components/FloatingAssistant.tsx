@@ -73,7 +73,7 @@ export default function FloatingAssistant() {
 
   const lessonTitle = lessonData?.lesson.title
   const trackId = lessonContext?.trackId
-  const accentColor = trackData?.color ?? '#4F46E5'
+  const accentColor = trackData?.color ?? '#0D9488'
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -391,7 +391,7 @@ export default function FloatingAssistant() {
               position: 'absolute',
               inset: 0,
               borderRadius: '50%',
-              border: '2px solid rgba(79, 70, 229, 0.35)',
+              border: '2px solid rgba(13, 148, 136, 0.35)',
               pointerEvents: 'none',
             }}
             animate={{ scale: [1, 1.25, 1], opacity: [0.7, 0, 0.7] }}
