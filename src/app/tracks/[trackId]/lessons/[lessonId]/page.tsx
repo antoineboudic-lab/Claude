@@ -11,12 +11,13 @@ import {
   BookOpen, Lightbulb, Dumbbell, HelpCircle, Zap, Sparkles,
   Lock, Check, FlaskConical, Send, ChevronDown, Copy, RotateCcw,
   CalendarDays, Target, Brain, TrendingUp, ThumbsUp, GitCompare,
-  SlidersHorizontal, MessageSquarePlus, AlertCircle, Bookmark,
+  SlidersHorizontal, MessageSquarePlus, AlertCircle, Bookmark, Search,
 } from 'lucide-react'
 import { useGame } from '@/context/GameContext'
 import { useAuth } from '@/context/AuthContext'
 import { LevelBar } from '@/components/gamification/LevelBar'
 import AITutor from '@/components/AITutor'
+import GlobalSearch from '@/components/GlobalSearch'
 import { useBookmarks } from '@/hooks/useBookmarks'
 import { useNotes } from '@/hooks/useNotes'
 import { XP } from '@/lib/gamification'
@@ -1239,6 +1240,18 @@ export default function LessonPage() {
   const [isInPath, setIsInPath] = useState(false)
   const { isBookmarked, addBookmark, removeBookmark } = useBookmarks()
   const { getNote, setNote } = useNotes()
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(v => !v)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
   const [wrongConcepts, setWrongConcepts] = useState<string[]>([])
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set())
   const toggleStep = (i: number) => setCompletedSteps(prev => {
@@ -1390,6 +1403,14 @@ export default function LessonPage() {
 
           <div className="flex-1" />
           <div className="flex items-center gap-3 flex-shrink-0">
+            <button
+              onClick={() => setSearchOpen(true)}
+              title="Search lessons (⌘K)"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', color: '#CBD5E1', transition: 'color 0.15s' }}
+              className="hover:!text-slate-500"
+            >
+              <Search size={15} />
+            </button>
             {lesson && (
               <button
                 onClick={() => isBookmarked(lessonId) ? removeBookmark(lessonId) : addBookmark(lessonId, trackId, lesson.title)}
@@ -2065,6 +2086,7 @@ export default function LessonPage() {
           />
         )}
       </AnimatePresence>
+      {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
     </main>
   )
 }
