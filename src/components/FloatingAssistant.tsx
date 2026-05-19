@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X, Send, Sparkles, BookOpen, Dumbbell, Compass } from 'lucide-react'
+import { Bot, X, Send, Sparkles, BookOpen, Dumbbell, Compass } from 'lucide-react'
 import { getLesson, getTrack } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
 
@@ -146,6 +146,9 @@ export default function FloatingAssistant() {
 
   const starters = getStarters(mode, lessonTitle, pageType)
 
+  // AITutor already handles lesson pages — don't render both
+  if (lessonContext) return null
+
   return (
     <div className="fixed bottom-5 right-5 z-50" style={{ fontFamily: 'var(--font-sans)' }}>
       <AnimatePresence>
@@ -172,8 +175,8 @@ export default function FloatingAssistant() {
             <div style={{ background: '#0F172A', padding: '14px 16px 0' }}>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2 min-w-0">
-                  <div style={{ background: accentColor, borderRadius: '6px', padding: '4px 5px', display: 'flex', flexShrink: 0 }}>
-                    <Sparkles size={11} color="#fff" />
+                  <div style={{ background: '#334155', borderRadius: '6px', padding: '4px 5px', display: 'flex', flexShrink: 0 }}>
+                    <Bot size={11} color="#fff" />
                   </div>
                   <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#FFFFFF', whiteSpace: 'nowrap' }}>AI Assistant</span>
                   {lessonTitle && (
@@ -379,7 +382,7 @@ export default function FloatingAssistant() {
             </motion.span>
           ) : (
             <motion.span key="chat" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
-              <MessageCircle size={18} color="#FFFFFF" />
+              <Bot size={18} color="#FFFFFF" />
             </motion.span>
           )}
         </AnimatePresence>
