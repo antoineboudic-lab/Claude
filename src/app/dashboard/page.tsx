@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -25,6 +25,7 @@ import {
 } from '@/lib/gamification'
 import type { AssessmentResult } from '@/lib/assessment/types'
 import { getTrack, getAllTracks } from '@/lib/curriculum'
+import type { TrackId } from '@/lib/curriculum/types'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -128,17 +129,17 @@ function StatCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.5, ease: easing }}
       className="p-5 rounded-2xl"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: `${color}08`, border: `1px solid ${color}22`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
-      <div className="flex items-start justify-between mb-3">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${color}12` }}>
-          <Icon size={16} style={{ color }} />
+      <div className="mb-3">
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${color}18` }}>
+          <Icon size={15} style={{ color }} />
         </div>
       </div>
-      <p className="text-2xl font-black mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+      <p className="text-3xl font-black mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
         {typeof value === 'number' ? <AnimatedNumber value={value} /> : value}
       </p>
-      <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+      <p className="text-xs font-semibold" style={{ color, fontFamily: 'var(--font-sans)' }}>
         {label}
       </p>
     </motion.div>
@@ -300,6 +301,70 @@ function BookmarksCard() {
             +{bookmarks.length - 4} more
           </p>
         )}
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Continue card ────────────────────────────────────────────────────────────
+
+function ContinueCard({ completedLessons, assessment }: { completedLessons: string[]; assessment: AssessmentResult | null }) {
+  const target = useMemo(() => {
+    const allTracks = getAllTracks()
+    for (const track of allTracks) {
+      const started = completedLessons.some(l => l.startsWith(track.id + '-'))
+      if (!started) continue
+      for (const mod of track.modules) {
+        for (const lesson of mod.lessons) {
+          if (!completedLessons.includes(lesson.id)) {
+            return { trackId: track.id, lessonId: lesson.id, lessonTitle: lesson.title, trackTitle: track.title, trackColor: track.color, moduleTitle: mod.title, isResume: true }
+          }
+        }
+      }
+    }
+    if (assessment?.primaryTrackId) {
+      const track = getTrack(assessment.primaryTrackId as TrackId)
+      const firstLesson = track?.modules[0]?.lessons[0]
+      if (track && firstLesson) {
+        return { trackId: track.id, lessonId: firstLesson.id, lessonTitle: firstLesson.title, trackTitle: track.title, trackColor: track.color, moduleTitle: track.modules[0].title, isResume: false }
+      }
+    }
+    return null
+  }, [completedLessons, assessment])
+
+  if (!target) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.06, duration: 0.5, ease: easing }}
+      className="rounded-2xl overflow-hidden"
+      style={{ background: '#FFFFFF', border: `1px solid ${target.trackColor}30`, boxShadow: `0 4px 20px ${target.trackColor}12` }}
+    >
+      <div style={{ height: 3, background: target.trackColor }} />
+      <div className="px-6 py-5 flex items-center gap-5 flex-wrap">
+        <div className="w-12 h-12 rounded-2xl flex-shrink-0 flex items-center justify-center text-2xl"
+          style={{ background: `${target.trackColor}12`, border: `1px solid ${target.trackColor}20` }}>
+          {TRACK_ICONS[target.trackId] ?? '🎓'}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs font-bold uppercase tracking-widest mb-0.5"
+            style={{ color: target.trackColor, fontFamily: 'var(--font-sans)', letterSpacing: '0.06em' }}>
+            {target.isResume ? 'Resume' : 'Start'} · {target.trackTitle} · {target.moduleTitle}
+          </p>
+          <p className="text-lg font-black truncate" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)', letterSpacing: '-0.01em' }}>
+            {target.lessonTitle}
+          </p>
+        </div>
+        <Link
+          href={`/tracks/${target.trackId}/lessons/${target.lessonId}`}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white flex-shrink-0 transition-opacity hover:opacity-90"
+          style={{ background: target.trackColor, boxShadow: `0 4px 14px ${target.trackColor}35`, fontFamily: 'var(--font-sans)', textDecoration: 'none' }}
+        >
+          <Play size={13} fill="#FFFFFF" />
+          {target.isResume ? 'Continue' : 'Start'}
+        </Link>
       </div>
     </motion.div>
   )
@@ -962,7 +1027,7 @@ export default function DashboardPage() {
     : user.email?.slice(0, 2).toUpperCase() ?? '?'
 
   return (
-    <div className="min-h-screen" style={{ background: '#EFF6FF' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px)' }}>
       {/* Navbar */}
       <nav className="sticky top-0 z-40 px-6 py-4"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(16px)', borderBottom: '1px solid #E2E8F0' }}>
@@ -1079,6 +1144,11 @@ export default function DashboardPage() {
           <StatCard icon={Flame} label="Day streak" value={state.streak} color="#F59E0B" delay={0.1} />
           <StatCard icon={CheckCircle2} label="Lessons done" value={state.completedLessons.length} color="#10B981" delay={0.15} />
           <StatCard icon={Award} label="Badges earned" value={state.earnedBadges.length} color="#E04D2A" delay={0.2} />
+        </div>
+
+        {/* Continue card */}
+        <div className="mb-6">
+          <ContinueCard completedLessons={state.completedLessons} assessment={assessment} />
         </div>
 
         {/* Review due banner */}
@@ -1248,8 +1318,9 @@ export default function DashboardPage() {
             </div>
           )}
 
-          {/* Right: level + streak + badges */}
+          {/* Right: daily challenge + level + streak + badges */}
           <div className="space-y-6">
+            <DailyChallengeCard />
             <LevelCard xp={state.xp} />
             <StreakCard
               streak={state.streak}
@@ -1258,7 +1329,6 @@ export default function DashboardPage() {
               activityDates={state.activityDates ?? []}
             />
             <BadgesSection earned={state.earnedBadges} />
-            <DailyChallengeCard />
             <BookmarksCard />
             <InsightsCard
               activityDates={state.activityDates ?? []}
