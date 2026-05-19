@@ -6,6 +6,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { XPToast } from "@/components/gamification/XPToast";
 import { BadgeUnlock } from "@/components/gamification/BadgeUnlock";
 import { AuthModal } from "@/components/auth/AuthModal";
+import FloatingAssistant from "@/components/FloatingAssistant";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -175,6 +176,7 @@ export default function RootLayout({
             <XPToast />
             <BadgeUnlock />
             <AuthModal />
+            <FloatingAssistant />
           </GameProvider>
         </AuthProvider>
       </body>
