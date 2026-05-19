@@ -1,18 +1,20 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen,
   Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap, LogOut,
-  Scale, Package, Headphones, BarChart, ArrowRight, Users, Sparkles,
+  Scale, Package, Headphones, BarChart, ArrowRight, Users, Sparkles, Search,
 } from 'lucide-react'
 import { getTrack } from '@/lib/curriculum'
 import { useGame } from '@/context/GameContext'
 import { useAuth } from '@/context/AuthContext'
 import type { TrackId } from '@/lib/curriculum/types'
+import GlobalSearch from '@/components/GlobalSearch'
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
@@ -143,6 +145,18 @@ export default function TrackPage() {
   const trackId = params.trackId as string
   const { state } = useGame()
   const { user, openSignUp, signOut } = useAuth()
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(v => !v)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
   const isPro = !!user
 
   const curriculumTrack = getTrack(trackId as TrackId)
@@ -193,6 +207,15 @@ export default function TrackPage() {
             style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
             All tracks
           </Link>
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
+            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F8FAFC' }}
+          >
+            <Search size={13} />
+            <span>Search</span>
+            <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
+          </button>
           {user ? (
             <button onClick={signOut}
               className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100"
@@ -208,6 +231,7 @@ export default function TrackPage() {
           )}
         </div>
       </nav>
+      {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
 
       {/* Hero */}
       <div className="relative overflow-hidden" style={{ borderBottom: '1px solid #E2E8F0', background: '#FFFFFF' }}>

@@ -5,11 +5,12 @@ import { useRef, useState, useEffect } from 'react'
 import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen, Trophy,
-  Zap, Sparkles, ArrowRight, Target, LogOut,
+  Zap, Sparkles, ArrowRight, Target, LogOut, Search,
   Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
+import GlobalSearch from '@/components/GlobalSearch'
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
@@ -346,7 +347,19 @@ export default function TracksPage() {
   const [recommendedTrackId, setRecommendedTrackId] = useState<string | null>(null)
   const [assessmentLoaded, setAssessmentLoaded] = useState(false)
   const [skipped, setSkipped] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const { user, openSignIn, openSignUp, signOut } = useAuth()
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(v => !v)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
 
   useEffect(() => {
     try {
@@ -377,6 +390,15 @@ export default function TracksPage() {
           </span>
         </Link>
         <div className="flex items-center gap-3">
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
+            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F8FAFC' }}
+          >
+            <Search size={13} />
+            <span>Search</span>
+            <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
+          </button>
           {user ? (
             <>
               <Link href="/dashboard"
@@ -406,6 +428,7 @@ export default function TracksPage() {
           )}
         </div>
       </nav>
+      {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
 
       {/* Assessment gate */}
       {showGate && <AssessmentGate onSkip={() => setSkipped(true)} />}
