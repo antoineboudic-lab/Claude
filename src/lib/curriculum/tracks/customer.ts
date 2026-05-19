@@ -1200,5 +1200,366 @@ This programme is your foundation. From here:
         },
       ],
     },
+    {
+      id: 'customer-m5',
+      title: 'Voice of Customer, Revenue Intelligence & CS Leadership',
+      description:
+        'Develop the strategic CS capabilities that connect customer outcomes to business results — from VoC programmes and revenue attribution to executive reporting and leading your team through AI-driven transformation.',
+      lessons: [
+        {
+          id: 'customer-m5-l1',
+          title: 'Voice of Customer Programs with AI',
+          duration: 16,
+          description:
+            'Build a systematic voice of customer programme using AI to analyse feedback at scale, extract actionable themes, and close the loop with customers and product teams.',
+          content: `## From Feedback Collection to Business Intelligence
+
+Most CS teams collect customer feedback. Far fewer transform it into systematic intelligence that drives product, strategy, and operational decisions. The bottleneck is analysis — reading thousands of NPS comments, support tickets, and call transcripts manually creates sampling bias and delays insight. AI removes that bottleneck.
+
+## Designing a VoC Programme
+
+A VoC programme is more than a periodic NPS survey. It is a systematic process for collecting, analysing, acting on, and closing the loop on customer feedback across multiple channels:
+
+- NPS and CSAT surveys (quantitative and qualitative)
+- Support ticket and chat themes
+- Customer call and QBR feedback (from call transcripts)
+- Renewal and churn conversations
+- Product feedback and feature requests
+- Expansion and upsell conversation intelligence
+
+AI makes each channel analysable at a scale that was previously impractical.
+
+## NPS and CSAT Analysis at Scale
+
+When you have hundreds of NPS responses, the quantitative score is only part of the story. The comments contain the "why" that turns a score into an action.
+
+Prompt: "Analyse these [X] NPS/CSAT responses from the past quarter [paste or describe]. For detractors (0–6), identify the top five themes driving dissatisfaction. For promoters (9–10), identify the top five themes driving advocacy. For passives (7–8), identify the one change most commonly cited that would move them to promoters. Flag any response that suggests immediate churn risk."
+
+This produces a structured VoC report in minutes. Your judgment adds: which themes are product issues versus CS process issues, which detractor themes have already been addressed, and which promoter themes you should be amplifying in your marketing.
+
+## Theme Extraction Across Channels
+
+The most powerful VoC intelligence comes from looking across all feedback channels simultaneously.
+
+"Here is a summary of our NPS themes, top support ticket categories, and common themes from customer call notes over the past quarter [describe or paste]. Identify: (1) the top three pain points mentioned across multiple channels, (2) any theme that appears in one channel but not others that might indicate an emerging issue, (3) any gap between what customers say in formal surveys versus what they express in support or informal channels."
+
+Cross-channel consistency confirms real issues. Discrepancies are interesting — they often reveal problems customers don't feel comfortable raising in formal feedback.
+
+## Closing the Feedback Loop
+
+VoC programmes that don't close the loop destroy trust faster than no programme at all. When customers take the time to give feedback and see nothing change, they become detractors.
+
+AI can help you close the loop systematically:
+- Draft personalised follow-up emails to detractors acknowledging their specific concern
+- Produce a monthly VoC digest for the product team linking feedback themes to specific product issues and requests
+- Generate a quarterly VoC board summary showing trends over time and the actions taken in response`,
+          keyTakeaways: [
+            'VoC programmes span multiple channels: NPS, support tickets, call transcripts, renewal conversations — AI makes all of them analysable at scale',
+            'Detractor theme analysis identifies the top reasons for dissatisfaction; promoter analysis identifies the themes to amplify',
+            'Cross-channel VoC analysis is most powerful — discrepancies between formal survey feedback and informal channels often surface emerging issues first',
+            'Closing the feedback loop is not optional — customers who give feedback and see no change become detractors',
+            'AI-produced VoC reports for product teams, framed with specific issue links, are more likely to be acted on than unstructured feedback dumps',
+          ],
+          exercise: {
+            title: 'VoC Theme Analysis',
+            description:
+              'Build a structured VoC analysis from a recent batch of customer feedback using AI.',
+            steps: [
+              'Gather at least 20 NPS comments, support ticket summaries, or call notes from the past 30 days',
+              'Run the analysis prompt asking for: top detractor themes, top promoter themes, and any patterns suggesting churn risk',
+              'Then identify one theme that appears in multiple feedback channels and ask Claude to summarise the evidence across channels',
+              'Draft a one-page VoC brief for your product team: top three pain points, supporting evidence quotes, and a recommended action for each',
+              'Identify one at-risk customer from the analysis and draft a personalised follow-up acknowledging their specific concern',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What does a discrepancy between formal NPS survey feedback and informal support or call feedback typically indicate?',
+              options: [
+                'The NPS survey is not long enough to capture real feedback',
+                'An issue that customers feel but don\'t feel safe raising in formal channels — often an emerging or sensitive problem worth investigating',
+                'Data quality problems in the survey methodology',
+                'That support tickets are always more accurate than survey responses',
+              ],
+              correct: 1,
+              explanation:
+                'Customers sometimes moderate their formal survey responses (knowing they will be read by leadership or result in follow-up) while being more candid in informal support interactions or call conversations. When a theme appears in support tickets but not in NPS comments, it can indicate that the issue exists but customers aren\'t comfortable raising it formally — which often means it\'s more sensitive or serious than feedback that surfaces openly. These discrepancies are worth investigating before they become widespread.',
+            },
+            {
+              question: 'Why does failing to close the VoC feedback loop damage customer relationships more than not running a programme at all?',
+              options: [
+                'Customers who receive no follow-up assume their feedback was used but not attributed to them',
+                'When customers invest time giving feedback and observe no change or acknowledgment, it signals their input doesn\'t matter — actively creating disappointment where none existed before',
+                'VoC programmes without follow-up violate customer data regulations',
+                'Customers who are not followed up with always escalate to support',
+              ],
+              correct: 1,
+              explanation:
+                'Running a VoC programme raises customer expectations: they expect their feedback will be heard and acted upon. When nothing changes and no one follows up, the programme has created a specific experience of being ignored — worse than the baseline of customers assuming their feedback wasn\'t being collected at all. A closed feedback loop (even a simple acknowledgment and "here\'s what we\'re doing about it") converts the programme from a relationship risk into a loyalty driver.',
+            },
+          ],
+        },
+        {
+          id: 'customer-m5-l2',
+          title: 'CS-to-Revenue Attribution with AI',
+          duration: 18,
+          description:
+            'Prove the business impact of your CS team by connecting CS activities to revenue outcomes, building the data-backed case for CS investment, and using AI to identify expansion pipeline earlier.',
+          content: `## The CS Attribution Problem
+
+Customer success teams often struggle to get the investment they deserve because they can\'t clearly prove their revenue impact. Retention, expansion, and product adoption are influenced by many factors — CS activities are one, but proving causality is hard. AI can help you build a more credible attribution story and identify expansion opportunities earlier.
+
+## Building the CS Business Case
+
+A compelling CS business case connects specific CS activities to measurable revenue outcomes:
+
+**Retention attribution.** "Of accounts that were flagged as at-risk by our health model and received an active intervention, what percentage renewed? Of at-risk accounts that did not receive a proactive intervention, what percentage churned?" This comparison shows CS intervention ROI.
+
+**Expansion attribution.** "Which expansion conversations were initiated by the CS team based on a proactive signal? What was the ARR impact of those expansions?" This isolates CS-driven expansion from organic expansion or sales-driven upsell.
+
+**Onboarding impact.** "Is there a measurable difference in 12-month retention between customers who completed our structured onboarding and those who didn\'t?" This proves the onboarding investment.
+
+AI can help you design this analysis and produce the narrative from the data you have:
+
+"Based on the following CS activity and renewal outcome data [describe patterns], help me build a business case for CS investment. What story does this data tell about CS impact on retention and expansion? What additional data would make the case more compelling?"
+
+## AI for Expansion Pipeline Development
+
+CS teams that identify expansion signals early and act on them before sales are involved drive more efficient expansion at lower cost. AI can help structure this:
+
+**Proactive pipeline identification.** "Here is our current customer portfolio usage data and renewal timing [describe or paste]. Which accounts show the clearest expansion signals in the next 90 days based on: usage growth, approaching capacity limits, new use cases mentioned, and champion activity?"
+
+**Expansion conversation preparation.** For each flagged account, AI can produce an expansion conversation brief: "This account is approaching [X% of seat limit]. Based on their usage patterns and the following product portfolio, what is the most relevant expansion opportunity and how should I frame it in terms of their specific business outcomes?"
+
+## Presenting CS Value to Leadership
+
+CS impact should be presented in the language of the CFO and CEO — revenue retained, revenue grown, and cost of acquisition avoided.
+
+Prompt: "Help me translate these CS metrics [list] into a one-page business impact summary for a quarterly leadership review. Frame everything in terms of: ARR retained, ARR expanded, estimated cost of acquisition avoided by retaining existing customers, and the CS team cost-to-retain ratio."
+
+This translation from CS operational metrics to business outcome language is where many CS leaders lose credibility with executives — and where AI can help significantly.`,
+          keyTakeaways: [
+            'CS business case requires connecting specific activities to revenue outcomes — retention after intervention, CS-driven expansion, onboarding impact on 12-month retention',
+            'Proactive expansion pipeline identification by CS, before sales involvement, drives more efficient and lower-cost expansion',
+            'Leadership presentations should translate CS metrics to revenue language: ARR retained, ARR expanded, acquisition cost avoided',
+            'Comparing intervention vs. no-intervention outcomes is the most direct way to demonstrate CS intervention ROI',
+            'AI can help structure the attribution analysis and produce the narrative — the data to fill it must come from your systems',
+          ],
+          exercise: {
+            title: 'CS Business Case Development',
+            description:
+              'Use AI to build a business case narrative for CS investment using your team\'s retention and expansion data.',
+            steps: [
+              'Gather the data points you have available: renewal rates with and without CS intervention, expansion ARR attributed to CS-initiated conversations, onboarding completion vs. 12-month retention',
+              'Ask Claude to help you structure a business case narrative from these data points: what story do they tell and how should they be sequenced for a CFO audience?',
+              'Identify the most significant data gap in your current business case — what would you need to measure to make the attribution story more compelling?',
+              'Design one measurement improvement: what data should you start collecting today to improve your business case next quarter?',
+              'Draft a one-paragraph executive summary of CS impact using revenue language only',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the most credible way to demonstrate CS intervention ROI to a CFO?',
+              options: [
+                'Calculating the total ARR managed by the CS team as a proxy for their impact',
+                'Comparing renewal rates and outcomes for at-risk accounts that received proactive CS intervention versus those that did not',
+                'Showing that NPS scores have improved since the CS team was expanded',
+                'Listing the number of customer interactions the CS team completed in the quarter',
+              ],
+              correct: 1,
+              explanation:
+                'Causality is the challenge in CS attribution. A CFO will rightly question whether CS activities caused renewal or whether healthy customers who were going to renew anyway received outreach. The most credible demonstration of intervention ROI is a controlled comparison: at-risk accounts that received active CS intervention versus at-risk accounts that did not. If the intervention group renews at a materially higher rate, you have a compelling attribution. Activity counts and NPS trends prove effort; outcome comparisons prove impact.',
+            },
+            {
+              question: 'What business outcome language should CS leaders use when presenting to executive leadership?',
+              options: [
+                'CS-specific operational metrics such as QBR completion rate and health score averages',
+                'Revenue retained, revenue expanded, and cost-of-acquisition avoided — translating CS activities into financial impact language',
+                'Customer satisfaction scores and net promoter index rankings',
+                'Headcount per account ratios and time-to-onboarding statistics',
+              ],
+              correct: 1,
+              explanation:
+                'CEOs and CFOs evaluate investments in revenue terms. When CS leaders present in operational metrics (health score averages, QBR rates), they speak a language that requires translation before it becomes relevant to leadership decisions. Presenting in revenue terms — this team retained $X ARR, expanded $Y ARR, and the cost of replacing churned customers through acquisition would have been $Z — positions CS investment as a revenue decision, not a cost decision. AI can help with this translation from CS data to financial impact narrative.',
+            },
+          ],
+        },
+        {
+          id: 'customer-m5-l3',
+          title: 'AI for Executive Reporting and Board-Ready Insights',
+          duration: 15,
+          description:
+            'Turn raw CS data into compelling narratives for executive and board audiences — using AI to structure, simplify, and sharpen the customer intelligence that leadership needs to make decisions.',
+          content: `## Why CS Reporting Often Fails at the Executive Level
+
+CS data is rich: health scores, usage trends, NPS scores, renewal rates, expansion ARR, churn attribution. But most CS executive reports present data rather than insight — tables of metrics without a narrative, trends without interpretation, and numbers without context. Executive audiences don't have time to draw conclusions from raw data. They need the conclusions pre-drawn, with the data as evidence.
+
+## The Structure of an Executive CS Report
+
+An effective executive CS report has three layers:
+
+**The headline number and trend.** One metric that captures CS health. Net revenue retention is the most common choice: it combines renewal rate and expansion into a single figure that executives can benchmark. Trend over three quarters shows direction.
+
+**The three to four supporting stories.** What is driving the headline? For NRR, the supporting stories might be: the specific cohort driving expansion, the risk segment that represents most of the churn exposure, the onboarding changes that are showing up in 90-day retention. Each story has a metric, a context, and a recommended action.
+
+**The one decision or investment request.** Every executive report should end with what you need: headcount, tool investment, a product escalation, a policy change. "Here's what's happening, here's what it means, here's what I need" is the complete executive communication.
+
+## Using AI to Build Executive Reports
+
+Prompt: "I need to produce a quarterly CS executive report. Here are our key metrics [paste or list: NRR, churn rate, expansion ARR, average health score, NPS]. Here are the three most significant things that happened this quarter [describe]. Build a report structure with: a one-paragraph headline summary, three supporting insight sections, and a closing recommendation section. Write for a CEO who reads quickly and wants conclusions before context."
+
+The AI output will be a structured framework. You add: the actual numbers, the specific stories with detail, and the recommendation calibrated to what you need from leadership.
+
+## Board-Ready Customer Insights
+
+Board presentations require even more compression. A board member typically sees CS data for five minutes in a 90-minute meeting. Your job is to communicate: are customers healthy, is the business retaining and growing revenue from existing customers, and are there material risks leadership should know about?
+
+"Structure a five-slide board presentation on customer health. Slides: (1) NRR trend with benchmark context, (2) churn and expansion drivers, (3) top customer risk factors and mitigation status, (4) key CS investments and their impact, (5) forward outlook and recommended focus. Each slide should have one assertion-based title and no more than four data points."
+
+## The Narrative That Connects Data to Decision
+
+The most effective executive reports tell a story: this is what happened, this is why it happened, this is what we should do about it. AI can help structure this narrative, but the "why" and "what we should do" require your judgment and your knowledge of the specific customer situations behind the aggregate numbers.`,
+          keyTakeaways: [
+            'Executive reports should draw conclusions and present data as evidence — not present data and leave executives to draw conclusions',
+            'Structure every executive CS report as: headline metric and trend, three to four supporting stories, one recommendation or decision request',
+            'NRR (net revenue retention) is the single most useful headline CS metric for executive audiences because it combines renewal and expansion',
+            'Board presentations compress further: trend, drivers, risks, investments, outlook — one assertion per slide',
+            'AI structures the report framework; your judgment provides the "why" and "what we should do" that makes it actionable',
+          ],
+          exercise: {
+            title: 'Executive CS Report',
+            description:
+              'Build an executive CS report for a quarterly leadership review using the structured three-layer approach.',
+            steps: [
+              'Define your headline metric and its current value and three-quarter trend',
+              'Identify the three most significant customer stories from the past quarter: one positive driver, one risk or challenge, one strategic opportunity',
+              'Use Claude to structure these into a report: headline paragraph, three story sections, and a recommendation section',
+              'Review the AI structure: does each story have a metric, a context, and a recommended action? Edit until it does.',
+              'Write the opening paragraph as if you had 45 seconds to present it verbally to a CEO — what would you say?',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the fundamental problem with most CS executive reports that AI can help address?',
+              options: [
+                'They are too short and need more detailed metric tables',
+                'They present data without narrative — leaving executives to draw conclusions themselves rather than presenting pre-drawn insights with data as evidence',
+                'They include too many customer quotes and not enough aggregate data',
+                'They focus on retention but ignore expansion metrics',
+              ],
+              correct: 1,
+              explanation:
+                'Executive audiences value conclusions over data. A report that presents twelve CS metrics in a table requires the executive to analyse the data and draw conclusions in real time — which they rarely have capacity for. A report that leads with "Our NRR improved from 105% to 112% this quarter, driven primarily by three factors..." delivers the conclusion immediately and uses data as supporting evidence. AI can help structure reports in conclusion-first format, which is a significant improvement over the typical data-table approach.',
+            },
+            {
+              question: 'What should every executive CS report end with, beyond the metrics and analysis?',
+              options: [
+                'A detailed appendix of raw data supporting the report',
+                'A specific decision or investment request — what you need from leadership as a result of the analysis',
+                'A list of all customers who renewed in the quarter',
+                'A technical explanation of how health scores are calculated',
+              ],
+              correct: 1,
+              explanation:
+                'Executive reports that present analysis without a decision request are incomplete. Leadership\'s role is to make decisions and allocate resources. Every executive CS report should tell leadership not just what is happening, but what they need to do about it: approve a team expansion, fund a new tooling investment, escalate a product issue, endorse a commercial approach. A report that ends with analysis but no request misses the purpose of executive communication.',
+            },
+          ],
+        },
+        {
+          id: 'customer-m5-l4',
+          title: 'Leading CS Transformation with AI',
+          duration: 20,
+          description:
+            'Lead your CS team through AI-driven transformation — managing the change, upskilling your people, building a CS AI playbook, and positioning your function as a strategic driver of company growth.',
+          content: `## The CS Leader's AI Transformation Challenge
+
+Implementing AI in CS is not primarily a technology challenge — it is a people challenge. New tools are straightforward to deploy. Getting a team of CSMs to consistently use them, trust the signals they surface, and build new habits around AI-assisted workflows is the hard work of change management.
+
+CS leaders who treat AI transformation as a tool rollout will get partial adoption and modest results. Those who treat it as a change programme — with clear vision, skill development, cultural reinforcement, and measured outcomes — will get the transformation.
+
+## The Three Stages of CS AI Transformation
+
+**Stage 1 — Foundation (months one to three).** Focus on one or two high-value workflows: account preparation and communication drafting. Standardise these across the team with a shared playbook and prompt library. Measure time saved and quality. Build confidence before expanding.
+
+**Stage 2 — Scale (months four to six).** Add monitoring and analysis workflows: health signal interpretation, feedback analysis, renewal forecasting. Connect AI signals to action playbooks. Begin measuring business outcomes (not just time saved).
+
+**Stage 3 — Strategic (months seven to twelve).** Integrate AI into strategic CS work: VoC programmes, CS-to-revenue attribution, executive reporting. Position the CS function as a source of strategic customer intelligence for the rest of the business.
+
+Each stage builds on the previous. Teams that try to jump to Stage 3 without the foundation of Stage 1 typically fail because CSMs haven't developed the habit or the trust in AI signals needed for strategic use.
+
+## Upskilling Your CS Team
+
+Different CSMs will adopt AI at different rates. Your job as the leader is to create conditions where adoption is the path of least resistance:
+
+**Demonstrate before mandating.** Show the team what an AI-assisted QBR prep looks like. Show the time saving. Show the quality improvement. Then standardise it.
+
+**Identify early adopters.** Find the one or two CSMs who are naturally curious about AI and give them time to experiment. Their discoveries feed the playbook. Their enthusiasm models the behaviour.
+
+**Design for the doubters.** Some CSMs will worry that AI replaces their expertise. Address this directly: AI prepares, humans build relationships. The CSMs who use AI best are the ones with the strongest customer relationships — because they invest the time AI saves back into the relationship.
+
+## Building a CS AI Playbook That Sticks
+
+A playbook that the team actually uses has four characteristics:
+
+1. **Usefulness over completeness.** Five prompts that everyone uses are more valuable than fifty prompts nobody reads.
+2. **Embedded in existing workflows.** AI tools integrated into the tools the team already uses (CRM, email, CS platform) have higher adoption than separate tools that require context-switching.
+3. **Continuously updated.** Assign one person per month to update the playbook with any new prompts that produced great results.
+4. **Owned by the team.** CSMs who contribute prompts to the playbook are more invested in using them.
+
+## The CS Leader's AI Positioning
+
+CS leaders who build AI-powered functions are increasingly valuable to their organisations. The ability to demonstrate CS impact on revenue, to surface customer intelligence that informs product and strategy, and to scale the function without proportional headcount growth positions CS as a strategic function rather than a cost centre. This is how CS leadership earns the investment and influence it deserves.`,
+          keyTakeaways: [
+            'CS AI transformation is a change programme, not a tool rollout — it requires vision, skill development, cultural reinforcement, and measured outcomes',
+            'The three-stage transformation: foundation (one to two workflows), scale (monitoring and analysis), strategic (VoC and revenue attribution)',
+            'Demonstrate before mandating: show the team an AI-assisted workflow in action before standardising it',
+            'A CS AI playbook that sticks has five prompts everyone uses, not fifty prompts nobody reads — and is owned and updated by the team',
+            'CS leaders who position their function as a source of strategic customer intelligence earn investment and influence that cost-centre CS functions never receive',
+          ],
+          exercise: {
+            title: 'CS Transformation Roadmap',
+            description:
+              'Design a three-stage AI transformation roadmap for your CS team with specific milestones and success metrics.',
+            steps: [
+              'Define your Stage 1 target: which two workflows will you standardise first and what does success look like at 90 days?',
+              'Identify your team\'s two most likely adoption patterns: who will be your early adopter, and what is the most common objection from doubters?',
+              'Design your playbook launch: what are the five prompts every CSM should know before anything else?',
+              'Ask Claude: "Help me design a 90-minute CS team AI introduction session. What should I demonstrate, what should they practise, and what commitment should I ask for at the end?"',
+              'Write a one-paragraph vision statement for your team that explains what AI-enabled CS looks like and why it makes their jobs better — not just different',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'Why do CS AI transformations often fail when they are treated as tool rollouts rather than change programmes?',
+              options: [
+                'AI tools are too expensive for most CS teams to deploy at scale',
+                'Tool rollouts create access to AI without building the habit, trust in AI signals, or skill needed for consistent adoption — leading to partial use and modest results',
+                'CS teams require technical training that tool rollouts cannot provide',
+                'Rollouts do not include enough tools to cover all CS workflows',
+              ],
+              correct: 1,
+              explanation:
+                'Technology access is the easy part of AI transformation. Having access to Claude does not mean CSMs will use it before every QBR, trust the signals in their health score, or change the way they approach renewal forecasting. Building consistent new habits requires: demonstrated value (so CSMs choose to use AI), skill development (so they know how to use it well), cultural normalisation (so using AI is the expected behaviour), and measured outcomes (so everyone can see it\'s working). Tool rollouts provide access; change programmes build capability.',
+            },
+            {
+              question: 'What is the most effective way to address CSM concern that AI will replace their expertise?',
+              options: [
+                'Explaining that AI tools are not advanced enough to replace CS expertise',
+                'Demonstrating concretely that AI prepares and scales, while humans build relationships — and that the best relationship builders are those who invest AI-saved time back into customers',
+                'Assuring the team that headcount will not be reduced regardless of AI adoption',
+                'Avoiding the topic until CSMs raise it themselves',
+              ],
+              correct: 1,
+              explanation:
+                'Abstract reassurances about AI not replacing jobs are less convincing than concrete demonstrations of how AI changes the nature of the work. When a CSM sees that AI-assisted QBR prep takes 25 minutes instead of two hours, and that those 90 minutes are now available for an additional customer conversation they wouldn\'t have had, the framing shifts from "AI replacing my value" to "AI giving me more time to do what I\'m actually good at." The demonstration makes the case that words alone cannot.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

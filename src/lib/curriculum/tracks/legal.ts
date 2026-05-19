@@ -1396,5 +1396,352 @@ The competitive advantage is not AI alone — it's AI applied with excellent leg
         },
       ],
     },
+    {
+      id: 'legal-m5',
+      title: 'Litigation Support & Dispute Resolution with AI',
+      description:
+        'Apply AI to the full lifecycle of contentious matters — from case analysis and strategy through witness preparation, settlement modelling, and building a sustainable litigation AI practice.',
+      lessons: [
+        {
+          id: 'legal-m5-l1',
+          title: 'AI for Case Analysis and Litigation Strategy',
+          duration: 17,
+          description:
+            'Use AI to build comprehensive case timelines, surface relevant precedents systematically, and produce risk assessments that sharpen litigation strategy.',
+          content: `## AI in the Early Stages of Litigation
+
+The early stages of any dispute involve a demanding analytical task: organising large volumes of documents and facts into a coherent case narrative, identifying the legal framework that governs the dispute, and assessing the realistic range of outcomes. AI accelerates all three.
+
+## Building Case Timelines with AI
+
+A clear, accurate chronology is the foundation of any case. For complex disputes involving extensive correspondence, contracts, and events, building the timeline manually is a multi-day exercise. AI can compress it.
+
+Prompt: "I will provide you with a set of documents relating to a commercial dispute. Your task is to: (1) identify all factually significant events, (2) order them chronologically, (3) note the document source for each event, and (4) flag any apparent gaps or inconsistencies in the chronology."
+
+Review AI's chronology against the source documents. AI may misattribute dates, conflate separate events, or miss significance in context-dependent facts. The lawyer's review is essential — but the chronology scaffold saves hours.
+
+**Organising by legal issue.** Beyond chronology, AI can organise facts by the legal issues they bear on. "From this chronology, identify which events are most relevant to: (1) breach of contract, (2) causation of loss, (3) the defendant's knowledge and intent." This maps your evidence to your legal case.
+
+## Identifying Precedents Systematically
+
+AI can support the early stages of precedent research: identifying the applicable legal doctrines, suggesting search terms for authoritative databases, and synthesising background on established principles.
+
+"In a claim for [cause of action] under [jurisdiction] law involving [describe key facts], what are the leading legal principles and likely applicable precedents I should research? What distinguishes the cases where the claimant has succeeded from those where they have not?"
+
+This is orientation, not authority. Every precedent must be verified through Westlaw, LexisNexis, or an authoritative legal database before reliance.
+
+## Risk Assessment with AI
+
+Litigation risk assessment requires considering: strength of the legal claim, quality of the evidence, jurisdiction-specific procedural factors, opposing counsel, and commercial dynamics around settlement. AI can help structure this analysis.
+
+"Help me structure a litigation risk assessment for the following dispute [describe]. What are the key risk factors to evaluate? For each, what information would most affect the assessment? What are the most significant uncertainties at this stage?"
+
+AI produces a framework; the lawyer applies the judgment.`,
+          keyTakeaways: [
+            'AI compresses case chronology building from multi-day work to hours — always verify dates and events against source documents',
+            'Organise facts by legal issue, not just chronology, to map your evidence to your case theory',
+            'AI precedent research provides orientation and search direction — every case must be verified through authoritative legal databases',
+            'Litigation risk assessment should be structured: AI can help map the factors, the lawyer applies the judgment',
+            'Case analysis AI outputs are working documents for lawyer review — not final positions',
+          ],
+          exercise: {
+            title: 'Case Chronology and Issue Mapping',
+            description:
+              'Use AI to build a case chronology and map key facts to legal issues for a real or hypothetical dispute.',
+            steps: [
+              'Describe a commercial dispute scenario with at least eight to ten factual events spread over time (use a publicly reported case or a realistic hypothetical)',
+              'Ask Claude to produce a chronological timeline of events with source references and to flag any gaps',
+              'Then ask Claude to map the key events to three legal issues: which facts support each issue and which create risk?',
+              'Review the output: what did AI miss or miscategorise? What would you add from legal analysis?',
+              'Identify one factual gap the chronology reveals that you would want to address through disclosure or further investigation',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'Why must an AI-generated case chronology always be reviewed against the source documents?',
+              options: [
+                'Because AI cannot read documents longer than ten pages',
+                'Because AI can misattribute dates, conflate events, or miss context-dependent significance that a reviewing lawyer must catch',
+                'Because chronologies are always prepared by paralegals, not AI',
+                'Because AI always omits defendant-side facts from chronologies',
+              ],
+              correct: 1,
+              explanation:
+                'AI processes text to identify chronological events but doesn\'t have the legal and factual context to assess the significance of ambiguous dates, disputed events, or context-dependent facts. It may correctly identify that a letter was written on a certain date but fail to flag that it is inconsistent with an earlier statement, or that it was copied to a third party whose involvement becomes significant. The lawyer\'s review is not optional — AI produces the scaffold; the lawyer applies legal judgment to it.',
+            },
+            {
+              question: 'What is the correct use of AI in identifying litigation precedents?',
+              options: [
+                'As the primary source of legal authority that replaces database research',
+                'As an orientation tool that identifies applicable doctrines and search directions, with all cases verified through authoritative databases',
+                'Only for researching cases in foreign jurisdictions where primary sources are unavailable',
+                'As a substitute for Westlaw when time pressure is high',
+              ],
+              correct: 1,
+              explanation:
+                'AI can efficiently map the legal landscape — identifying relevant doctrines, likely applicable case types, and the distinguishing factors between winning and losing cases in a given area. This orientation accelerates research. But AI may cite cases that don\'t exist, misstate holdings, or reference outdated positions. Every specific precedent relied upon must be verified through authoritative legal databases before use in litigation work.',
+            },
+          ],
+        },
+        {
+          id: 'legal-m5-l2',
+          title: 'Deposition and Witness Preparation with AI',
+          duration: 15,
+          description:
+            'Use AI to design more rigorous deposition question sets, anticipate cross-examination challenges, and prepare witnesses more effectively for contentious questioning.',
+          content: `## Why Witness Preparation Benefits From AI
+
+Effective deposition and witness preparation requires anticipating not just the questions you want to ask, but the ones opposing counsel will ask. It requires thinking adversarially — finding the weaknesses in your own case before the other side does. AI is useful precisely because it generates adversarial perspectives systematically and quickly.
+
+## Deposition Question Design with AI
+
+AI can produce a comprehensive set of deposition questions from a case brief. The output needs careful review — not every question will be appropriate, legally sound, or tactically wise — but it surfaces a range of question angles faster than most attorneys can generate alone.
+
+Prompt: "I am deposing [role of witness] in a dispute concerning [describe the legal issues]. The key facts relevant to this witness are [list]. Generate a set of deposition questions organised by: (1) background and credibility, (2) the witness's knowledge of key events, (3) documents authored or received by the witness, (4) communications with [relevant parties], (5) the witness's role in [key events]. For each section, include at least five questions and flag any areas where the witness might resist answering."
+
+Review for: leading questions where open-ended would be better, areas where you lack the document support to follow up effectively, and sequences that telegraph your theory too early.
+
+## Anticipating Cross-Examination with AI
+
+Before any witness testifies for your client, use AI to anticipate the opposition's most damaging questions.
+
+"Based on this witness statement [paste] and the following case context [describe], generate the most damaging cross-examination questions opposing counsel is likely to ask. For each question, identify: what they are trying to establish, the most vulnerable aspect of the witness's evidence, and how the witness should be prepared to answer."
+
+This exercise often reveals the genuine weaknesses in witness evidence that the preparation sessions need to address.
+
+## Briefing Witnesses with AI Assistance
+
+Witness preparation documents — explaining the process, what to expect, and how to handle difficult questions — are time-consuming to produce for each matter. AI can draft the framework.
+
+"Draft a witness preparation briefing for a [role] who will give evidence in a commercial arbitration for the first time. Cover: what to expect on the day, how to answer questions (listen carefully, answer the question asked, say 'I don't know' when appropriate), how to handle documents, and how to handle aggressive cross-examination."
+
+The framework applies across matters; you add the matter-specific content. This saves preparation time while ensuring consistent quality.
+
+## The Professional Responsibility Reminder
+
+Witness preparation is subject to professional rules: you can prepare witnesses for testimony, but you cannot coach them to give evidence you know to be false. AI-assisted preparation documents should reinforce, not undermine, the witness's truthful recollection. Always review AI outputs in this context.`,
+          keyTakeaways: [
+            'AI generates comprehensive deposition question sets faster than manual drafting — review for legal appropriateness and tactical soundness',
+            'Anticipating cross-examination with AI reveals genuine weaknesses in witness evidence before the hearing',
+            'Witness preparation briefings can be drafted by AI as reusable frameworks with matter-specific additions',
+            'Professional rules on witness preparation apply equally to AI-assisted preparation — never coach evidence you know to be false',
+            'Adversarial thinking is where AI adds most value in witness preparation — it generates the other side\'s questions systematically',
+          ],
+          exercise: {
+            title: 'Cross-Examination Anticipation',
+            description:
+              'Use AI to anticipate the most damaging cross-examination questions for a witness and design a preparation approach.',
+            steps: [
+              'Describe a witness scenario: the witness\'s role in the dispute, their evidence, and the key facts at issue',
+              'Ask Claude to generate the ten most damaging cross-examination questions opposing counsel would ask this witness',
+              'For each question, identify: what weakness it targets, and what the witness should be prepared to address',
+              'Identify the three most dangerous questions and design a preparation strategy for each',
+              'Draft two specific preparation points you would cover in a witness preparation meeting',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the most valuable use of AI in preparing for a witness deposition?',
+              options: [
+                'Generating the final deposition transcript before the witness testifies',
+                'Producing comprehensive question sets and anticipating the witness\'s likely responses and resistant areas',
+                'Deciding which witnesses should be deposed',
+                'Replacing the pre-deposition review meeting with the client',
+              ],
+              correct: 1,
+              explanation:
+                'AI generates question sets faster and more comprehensively than most attorneys working alone, and can systematically identify areas where a witness is likely to resist or evade. This allows preparation time to be focused on the genuinely difficult question areas rather than starting from scratch on question design. The attorney still reviews, selects, and sequences the questions — AI produces the raw material.',
+            },
+            {
+              question: 'Why is anticipating cross-examination with AI particularly valuable in witness preparation?',
+              options: [
+                'Because opposing counsel always uses AI to generate their questions',
+                'Because it forces the preparation team to confront the genuine weaknesses in witness evidence before the hearing rather than during it',
+                'Because it eliminates the need for a pre-trial preparation session with the witness',
+                'Because it allows the witness to memorise responses to difficult questions',
+              ],
+              correct: 1,
+              explanation:
+                'Preparation teams naturally focus on the questions they want to ask and the answers they want witnesses to give. AI\'s adversarial perspective — systematically generating the most damaging questions the other side is likely to ask — forces early engagement with the genuine vulnerabilities in witness evidence. Identifying these vulnerabilities weeks before the hearing allows meaningful preparation; encountering them for the first time under cross-examination does not.',
+            },
+          ],
+        },
+        {
+          id: 'legal-m5-l3',
+          title: 'Settlement Analysis and Negotiation Support with AI',
+          duration: 16,
+          description:
+            'Use AI to model realistic settlement ranges, draft term sheet proposals, and prepare negotiation memos that give your client the clearest possible view of their options.',
+          content: `## The Role of Analysis in Settlement
+
+Settlement decisions are among the most consequential in litigation. The difference between a client who settles at the right time for the right amount and one who doesn't is often the quality of the analysis they receive. AI can help structure that analysis more systematically, surface considerations that pure intuition misses, and communicate options more clearly.
+
+## Modelling Settlement Ranges with AI
+
+A credible settlement analysis considers: the range of likely outcomes at trial, the probability of each outcome, the costs of reaching trial, and the risk-adjusted value of settling at a given amount.
+
+AI can help structure this analysis, though the inputs require lawyer judgment:
+
+"Help me structure a settlement range analysis for a dispute with the following characteristics [describe the claim, likely range of damages, strength of liability evidence, jurisdiction]. The factors I need to evaluate are: probability of success on liability, likely quantum range if successful, trial cost estimate, and the time value of early resolution. Model three scenarios: strong case, moderate case, and weak case. For each scenario, calculate the rational settlement range."
+
+AI will produce a structured model. The probability assessments and quantum ranges require lawyer input — AI can hold the structure while you supply the judgment.
+
+**Risk-adjusting for uncertainty.** Settlement analysis should account for the risks that are specific to your matter: a key witness who is unreliable, a document that cuts against you, a judge with a known disposition on certain issues. AI can help identify what factors to include in the risk adjustment.
+
+## Drafting Settlement Term Sheets with AI
+
+Once a settlement range is agreed internally, drafting the initial term sheet or heads of terms moves quickly with AI.
+
+"Draft heads of terms for a commercial settlement. Key terms: [list the agreed commercial terms — payment amount, timing, release scope, any ongoing obligations]. Governing law: [jurisdiction]. The terms should be balanced but favour [party] on [specific point]. Draft in numbered paragraphs suitable for exchange with opposing counsel."
+
+Review for: scope of release (ensure it covers what was intended and nothing more), ongoing obligations (ensure they are defined precisely), and conditions precedent (ensure they are achievable).
+
+## Negotiation Preparation Memos
+
+A memo that clearly explains to a client why a particular settlement is in their interest — or is not — is one of the most valuable documents a litigator produces. AI can draft the structure from your analysis.
+
+"Draft a settlement advice memo for a [type of client] explaining: (1) the current state of the litigation, (2) the realistic range of trial outcomes and their probability, (3) the financial and non-financial costs of proceeding to trial, (4) the proposed settlement terms, and (5) our recommendation. Tone: clear and direct, not legalistic."`,
+          keyTakeaways: [
+            'Settlement range modelling should consider liability probability, quantum range, trial costs, and time value — AI helps structure the analysis',
+            'Risk-adjustment for matter-specific factors (unreliable witnesses, adverse documents) belongs in every settlement model',
+            'AI can draft initial term sheets and heads of terms from agreed commercial terms — always review the scope of release carefully',
+            'Settlement advice memos drafted with AI give clients clearer communication of their options than ad hoc verbal advice',
+            'The probability assessments in settlement models require lawyer judgment — AI holds the structure, you supply the inputs',
+          ],
+          exercise: {
+            title: 'Settlement Range Analysis',
+            description:
+              'Use AI to structure a settlement range analysis for a commercial dispute and produce a client advice memo.',
+            steps: [
+              'Describe a commercial dispute: the nature of the claim, approximate damages sought, the strength of liability evidence on both sides',
+              'Ask Claude to structure a three-scenario settlement analysis: strong, moderate, and weak case for your client',
+              'Input your best estimates for: probability of success, likely quantum if successful, and trial cost estimate',
+              'Review the output: which scenario most closely reflects your actual assessment? What risk factors are missing?',
+              'Ask Claude to draft a one-page client settlement advice memo based on the analysis',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What are the most important inputs to a risk-adjusted settlement analysis that require lawyer judgment rather than AI?',
+              options: [
+                'The formatting and length of the settlement document',
+                'The probability of success on liability and the realistic quantum range — these require legal and factual assessment that AI cannot supply',
+                'The governing law and jurisdiction of the dispute',
+                'The identity of the parties and their legal representatives',
+              ],
+              correct: 1,
+              explanation:
+                'A settlement range model is only as reliable as its inputs. The probability of success on liability requires legal judgment about the strength of evidence, the applicable law, and the likely judicial approach. The realistic quantum range requires understanding of comparable awards, the specific damages methodology, and the weaknesses in the damages case. AI can structure the model and hold the framework — but filling it with credible numbers is a lawyer\'s analytical task.',
+            },
+            {
+              question: 'What is the most important review task when an AI-drafted settlement term sheet is checked by a lawyer?',
+              options: [
+                'Verifying the number of paragraphs matches the instructions',
+                'Reviewing the scope of the release to ensure it covers the intended claims and nothing more or less',
+                'Confirming the AI used the correct formal title for the document',
+                'Checking that the payment amount is prominently displayed',
+              ],
+              correct: 1,
+              explanation:
+                'The release clause in a settlement agreement is where disputes most commonly arise post-settlement: a release that is too narrow leaves the settling party exposed to future claims; a release that is too broad may compromise rights the party intended to preserve. AI drafts a release based on the instructions given — but the legal judgment about what the release should cover, and whether the drafted language achieves that, is the most critical professional review in any settlement document.',
+            },
+          ],
+        },
+        {
+          id: 'legal-m5-l4',
+          title: 'Building Your Litigation AI Practice',
+          duration: 17,
+          description:
+            'Integrate AI systematically into your litigation practice — from workflow design and client communication to the ethics of AI use in contentious proceedings.',
+          content: `## From Occasional Use to Systematic Practice
+
+There is a significant difference between occasionally using AI for a specific task and having built a systematic AI workflow for your litigation practice. The former saves a few hours. The latter transforms how your team operates, what quality of work you produce, and how you compete for and win contentious matters.
+
+## Designing the Litigation AI Workflow
+
+A well-designed litigation AI workflow integrates AI at every stage where it adds value, with clear human review points at each stage. Map your current matter lifecycle and identify the stages where AI should be used:
+
+- Matter intake and initial assessment → AI: case summary, initial issue identification
+- Case strategy development → AI: precedent orientation, risk assessment framework, timeline building
+- Disclosure and document review → AI: document categorisation, privilege review support, theme identification
+- Witness preparation → AI: question generation, cross-examination anticipation, briefing documents
+- Settlement analysis → AI: scenario modelling, term sheet drafting, client memos
+- Trial preparation → AI: skeleton argument structure, opening narrative, closing arguments organisation
+
+For each stage, document: the specific AI tool to use, the prompt template that works for your practice, the review standard before the output is used, and who is responsible for the review.
+
+## Client Communication About AI
+
+Litigation clients want to know that their matters are being handled with rigour and care. Many now ask explicitly whether AI is used. The best position is proactive, confident transparency: "We use AI tools to ensure comprehensive case analysis and consistent document review, with all outputs reviewed and validated by your lead lawyer."
+
+Frame AI as an enhancer of lawyer time and quality — not a cost-cutting replacement. Clients who understand that AI means their lawyer has reviewed more documents, identified more precedents, and considered more angles than the traditional approach allows are typically supportive.
+
+## Ethics in Litigation AI Use
+
+Professional ethics in litigation AI use has several distinct dimensions:
+
+**Candour to the tribunal.** Some courts are now requiring disclosure of AI-assisted documents. Know your jurisdiction's rules and any standing orders in your case. AI-generated drafts that are presented as human-produced work without disclosure may raise professional conduct issues.
+
+**Document authenticity.** AI used to assist with document drafting is not the same as AI-generated evidence. Keep clear records of what was AI-assisted versus human-authored in your file.
+
+**Confidentiality.** The confidentiality obligations discussed in earlier modules apply with particular force in litigation — client strategy, settlement positions, and case weakness analysis are among the most sensitive information any lawyer handles.
+
+**Competence.** Professional competence obligations require you to understand AI's limitations in the context in which you're using it. If you use AI for case analysis, you are professionally responsible for the result — including AI errors you should have caught.
+
+## The Competitive Position
+
+Litigation practices that build systematic AI workflows will deliver more rigorous case preparation in less time. This is a competitive advantage in a profession where client value is measured in quality of outcomes and cost-effectiveness of reaching them. Building this capability now is an investment in the practice you will have in three years.`,
+          keyTakeaways: [
+            'Systematic AI workflow integration transforms the litigation practice — map every stage and assign AI tools, prompt templates, and review standards',
+            'Proactive client transparency about AI use, framed as enhanced rigour, builds confidence rather than undermining it',
+            'Jurisdiction-specific disclosure rules about AI-assisted court documents are evolving — know your rules',
+            'Professional responsibility for all AI-assisted work product remains with the supervising lawyer',
+            'Litigation practices with systematic AI workflows have a competitive quality and efficiency advantage',
+          ],
+          exercise: {
+            title: 'Litigation AI Workflow Design',
+            description:
+              'Design a systematic AI workflow for your litigation practice, including tools, prompts, and review standards at each stage.',
+            steps: [
+              'Map your typical matter lifecycle from intake to resolution into five to seven stages',
+              'For each stage, identify: (a) which AI-assisted tasks are appropriate, (b) the tool you would use, (c) the review standard before the output is relied upon',
+              'Ask Claude: "Help me draft a template prompt for [one specific stage] in a commercial litigation matter. The output should be a working document for lawyer review, not a final product."',
+              'Identify the one stage in your practice where AI integration would save the most time with the lowest professional risk',
+              'Draft a one-paragraph description of your practice\'s AI approach that you could use in a client pitch or a new matter engagement letter',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the most important professional obligation when using AI in document preparation for litigation proceedings?',
+              options: [
+                'Using only AI tools approved by the opposing party',
+                'Understanding your jurisdiction\'s disclosure requirements for AI-assisted documents and your professional responsibility for all AI-assisted work product',
+                'Ensuring AI tools are the most recently updated models available',
+                'Limiting AI use to documents that will not be seen by the tribunal',
+              ],
+              correct: 1,
+              explanation:
+                'Courts in various jurisdictions are developing specific rules about disclosure of AI-assisted documents. Separately, professional responsibility obligations of candour and competence apply regardless of whether court rules require disclosure. The lawyer must know the applicable rules in their jurisdiction, apply AI within those rules, and take full professional responsibility for the quality and accuracy of all AI-assisted work product.',
+            },
+            {
+              question: 'How should a litigator respond when a client asks whether AI is used in their matter?',
+              options: [
+                'Decline to answer because AI use is a proprietary firm method',
+                'Proactively confirm AI use, framing it as enhanced rigour — more documents reviewed, more precedents identified, more analysis completed — with all outputs reviewed by the lead lawyer',
+                'Deny AI use to avoid client concern about reduced lawyer time',
+                'Explain that AI is only used for billing purposes',
+              ],
+              correct: 1,
+              explanation:
+                'Proactive transparency about AI use, framed correctly, builds client confidence rather than undermining it. Clients understand that more comprehensive analysis is better. The framing — "AI enables us to review more documents and consider more angles, with your lead lawyer reviewing and validating everything" — correctly describes the value proposition. Evasion or denial creates trust risk if the client discovers AI use through other means.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

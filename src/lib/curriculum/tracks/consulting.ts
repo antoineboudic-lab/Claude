@@ -1165,5 +1165,362 @@ Over the next 12 months:
         },
       ],
     },
+    {
+      id: 'consulting-m5',
+      title: 'Business Development & AI Practice Building',
+      description:
+        'Use AI to win more work, build your professional brand, design an AI advisory offering, and create the personal system that compounds your competitive advantage over time.',
+      lessons: [
+        {
+          id: 'consulting-m5-l1',
+          title: 'AI-Powered Business Development',
+          duration: 16,
+          description:
+            'Use AI to research prospects more deeply, build stronger pitch narratives, and write more competitive RFP responses — without losing the client intelligence that makes business development personal.',
+          content: `## Business Development as a Consulting Competency
+
+Business development in consulting is not sales in the traditional sense. It is the cultivation of trust, demonstrated expertise, and client relationships that result in mandates. AI can accelerate several components of this: the research that makes every client conversation more informed, the document production that supports pitch processes, and the communication quality that positions you credibly.
+
+## Prospect Research with AI
+
+The most common failure in consulting BD is arriving at a client conversation without knowing enough about the client's world. AI compresses the research that should precede every significant client interaction.
+
+Before any new client meeting, generate an AI-assisted briefing:
+
+"Give me a briefing on [company name] in [industry]. Cover: their business model and revenue drivers, their key strategic challenges based on recent news and financial results, their competitive position, and any major initiatives they appear to be undertaking. Conclude with three questions I should ask their senior leadership to demonstrate understanding of their situation."
+
+This takes ten minutes and produces a better briefing than most consultants generate in an hour of unstructured research. The human contribution: your existing knowledge of the client relationship, what you've heard from their competitors or suppliers, and the instincts from previous interactions that won't appear in any article.
+
+## AI for Pitch Deck Support
+
+Pitch decks in consulting serve one purpose: demonstrating to the client that you understand their problem better than anyone else and have a credible method to solve it. AI can accelerate every element of pitch production.
+
+**Structuring the narrative.** "I am preparing a pitch for [client type] facing [problem]. My recommended approach is [describe]. Help me build a pitch narrative structure using situation-complication-resolution: what context should I establish, what complication should I articulate, and how should I frame our solution as the resolution?"
+
+**Differentiating language.** "Here is our standard service description [paste]. Rewrite it to be specifically relevant to a [industry] client facing [problem type]. Replace generic consulting language with language that references their specific situation."
+
+**Competitive positioning.** "Given that [competitor firms] are also likely pitching for this work, what are the three most credible differentiating points we should emphasise to distinguish our approach? What weaknesses in a generic proposal should we explicitly address?"
+
+## RFP Responses with AI
+
+RFPs are high-effort, deadline-driven documents that follow predictable structures. AI can produce compliant first drafts quickly, freeing your time for the elements that actually win responses: the insight sections, the team narrative, and the specific client understanding.
+
+Prompt: "Draft an RFP response to the following scope [paste relevant sections]. Our firm's approach is [describe]. Format the response to match the RFP structure and answer every question explicitly. Flag the sections where firm-specific content and client tailoring are most critical."
+
+The flagged sections are where you invest human time. AI handles the structural and boilerplate sections.`,
+          keyTakeaways: [
+            'AI prospect research produces better client briefings in a fraction of the time — combine it with relationship knowledge AI cannot access',
+            'Pitch narrative structure (situation-complication-resolution) can be built with AI and then enriched with client-specific intelligence',
+            'RFP responses have a clear AI-appropriate section split: AI handles structure and boilerplate; you invest time in insight and differentiation',
+            'Generic consulting language in pitches loses to client-specific language — AI can help rewrite for specificity',
+            'Three competitive differentiators, clearly articulated, win more pitches than comprehensive but undifferentiated capability statements',
+          ],
+          exercise: {
+            title: 'Prospect Research Brief',
+            description:
+              'Use AI to produce a comprehensive pre-meeting briefing for a real or hypothetical prospect meeting.',
+            steps: [
+              'Choose an upcoming client meeting or a company you would like to target for new work',
+              'Run the prospect briefing prompt: business model, strategic challenges, competitive position, recent initiatives',
+              'Add to the AI briefing: what you know from your own network about this company or sector that doesn\'t appear in public sources',
+              'Generate three "demonstration of understanding" questions AI suggests and refine them with your own judgment',
+              'Compare the briefing to what you would have prepared manually — what did AI surface that you might have missed?',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the most important human contribution to an AI-assisted prospect briefing?',
+              options: [
+                'Formatting the briefing into a professional document',
+                'Adding relationship knowledge, network intelligence, and contextual judgment that no public source captures',
+                'Verifying that the company name is spelled correctly',
+                'Expanding the briefing to include more financial data',
+              ],
+              correct: 1,
+              explanation:
+                'AI compiles and synthesises public information efficiently. What it cannot access is your relationship intelligence: what you\'ve heard from people who work with or for this company, what a peer at a peer firm told you about the client\'s internal dynamics, what you observed in a previous interaction with their team. This informal intelligence — combined with AI\'s systematic research — is what makes a briefing genuinely useful rather than just comprehensive.',
+            },
+            {
+              question: 'In an RFP response, where should a consultant invest their human time rather than delegating to AI?',
+              options: [
+                'The table of contents and section headings',
+                'The insight sections, client-specific understanding, and team narrative that demonstrate your unique perspective on the problem',
+                'The standard methodological descriptions that appear in most consulting RFPs',
+                'The confidentiality and IP clauses',
+              ],
+              correct: 1,
+              explanation:
+                'RFP evaluators distinguish between responses that follow the structure and responses that demonstrate genuine understanding. The structural sections — methodology descriptions, capability statements, standard process — can be AI-drafted and reviewed. The sections that win: the insight that shows you understand the client\'s specific situation better than competitors, the team narrative that makes the evaluator want to work with your people, and the approach sections that reflect original thinking. These require human authorship.',
+            },
+          ],
+        },
+        {
+          id: 'consulting-m5-l2',
+          title: 'Thought Leadership and Content with AI',
+          duration: 18,
+          description:
+            'Build a consistent thought leadership presence using AI to produce articles, LinkedIn posts, and white papers at scale — without losing the distinctive perspective that makes your voice worth following.',
+          content: `## Why Thought Leadership Matters in Consulting
+
+Thought leadership does something sales pitches cannot: it demonstrates expertise before the client ever speaks to you. A well-read article, a frequently shared post, or a cited white paper positions you as the consultant clients think of when a problem you understand arises. AI makes producing this content regularly achievable.
+
+## The Voice Problem — and How to Solve It
+
+The most common failure of AI-assisted thought leadership is that it sounds like everyone else's AI-assisted thought leadership. Generic, well-structured, competent, and completely forgettable. The solution is to use AI for production, not for the ideas.
+
+The process that works:
+1. Generate the idea and the distinctive point of view yourself — from a client experience, an observation that contradicts conventional wisdom, a pattern you've noticed across multiple engagements
+2. Use AI to structure and draft
+3. Edit heavily to restore your voice, specificity, and the concrete details that came from real experience
+
+AI handles the blank page; your perspective is what makes the content worth reading.
+
+## Writing Articles with AI
+
+A practical article workflow:
+
+**Step 1 — Anchor the idea.** Write two to three sentences capturing your distinctive point of view. This is the seed that makes the article yours rather than generic. "Most companies approach digital transformation as a technology programme. The ones that succeed treat it as a talent programme with technology as the enabler."
+
+**Step 2 — Structure with AI.** "I want to write a 1,200-word article for [audience] arguing [your point of view]. Suggest a structure: introduction hook, three to four supporting sections with themes, and a conclusion with a call to reflection."
+
+**Step 3 — Draft and restore voice.** Generate the draft, then edit to: add specific examples from your experience (anonymised as needed), restore your sentence rhythm and vocabulary, and strengthen the sections where AI defaulted to generic analysis.
+
+## LinkedIn Posts That Build Reputation
+
+LinkedIn posts for consultants work when they're specific, contrarian, or surprising. AI can help you find the angle.
+
+"I want to write a LinkedIn post about [topic] for [target audience]. My experience suggests [your observation]. Generate five different angles for this post: a contrarian take, a case study format, a lessons-learned format, a data-driven take, and a practical framework format. Then draft the strongest two."
+
+Review and edit. Your job is to select, personalise with real examples, and refine the language to sound like you.
+
+## White Papers with AI
+
+White papers require more substance than articles — client data, primary research, or a genuinely novel framework. AI can structure the document, generate the sections between your data points, and draft the executive summary. Your contribution is the research, the data, and the insight framework.
+
+"Structure a white paper on [topic] for [target audience]. Include: executive summary, context section, three to four substantive sections addressing [your key points], case example format, and conclusion with recommendations. Each section should be approximately [X] words."`,
+          keyTakeaways: [
+            'Use AI for production (structure and draft), not for ideas — your distinctive perspective is what makes content worth reading',
+            'The voice problem is solved by heavy editing: add real experience, specific examples, and your sentence rhythm after AI drafts',
+            'LinkedIn post angles (contrarian, case study, framework) can be generated with AI and then selected and personalised',
+            'White papers require your research and insight framework — AI structures and fills between your data points',
+            'Consistent thought leadership builds the pipeline of inbound interest that the best consulting practices run on',
+          ],
+          exercise: {
+            title: 'Thought Leadership Article Draft',
+            description:
+              'Write a thought leadership article on a consulting topic using the AI-assisted workflow, then edit to restore your distinctive voice.',
+            steps: [
+              'Identify a distinctive observation from your consulting experience — something that contradicts common advice or that you\'ve seen consistently misunderstood',
+              'Write two to three sentences capturing your point of view on it',
+              'Ask Claude to structure a 900-word article arguing your point: suggest a hook, three supporting sections, and a conclusion',
+              'Generate the draft using Claude',
+              'Edit the draft: add one specific (anonymised) client example, remove two generic sentences that could appear in any consulting article, and rewrite one paragraph in your own voice and rhythm',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the primary risk of using AI to generate the ideas for thought leadership content?',
+              options: [
+                'AI ideas are too technically complex for a general consulting audience',
+                'AI-generated ideas produce generic content that is indistinguishable from other AI-assisted content and fails to establish a distinctive point of view',
+                'AI cannot generate ideas about consulting topics',
+                'AI ideas are too controversial for professional publishing',
+              ],
+              correct: 1,
+              explanation:
+                'AI generates plausible, well-structured ideas about any topic — which is precisely the problem. When all consultants use AI to generate their thought leadership ideas, the resulting content is uniformly reasonable, well-organised, and completely forgettable. The distinctive thought leadership that builds reputation comes from ideas rooted in specific experience: the counterintuitive thing you observed across multiple engagements, the framework you developed from a specific client challenge. These cannot be generated from AI because they require lived experience to produce.',
+            },
+            {
+              question: 'What editing step most distinguishes good AI-assisted thought leadership from poor AI-assisted content?',
+              options: [
+                'Adding more technical jargon to demonstrate expertise',
+                'Adding specific, real examples from professional experience to replace AI\'s generic illustrations',
+                'Making the article longer to increase perceived depth',
+                'Removing all subheadings to create a more natural flow',
+              ],
+              correct: 1,
+              explanation:
+                'AI uses generic examples because it has no access to specific professional experience. "Companies that successfully implement this approach typically see X results" is generic AI output. "When we applied this approach with a mid-market logistics client in 2023, the breakthrough came from [specific observation]" is specific and credible. Specific examples — even anonymised ones — are what transform AI-assisted content from generic to authoritative, because only a practitioner with real experience can supply them.',
+            },
+          ],
+        },
+        {
+          id: 'consulting-m5-l3',
+          title: 'Building an AI Advisory Offering',
+          duration: 17,
+          description:
+            'Design a structured AI advisory service you can sell to clients — covering service design, pricing, delivery model, and how to position AI consulting as a distinct and valuable practice.',
+          content: `## Why AI Advisory Is a Real Consulting Opportunity
+
+Every organisation is trying to figure out what to do with AI. Most don't know where to start, which investments to prioritise, how to govern it responsibly, or how to build the capabilities to deliver on AI's potential. This is a consulting problem — and it's one of the largest addressable consulting opportunities right now.
+
+The consultants who capture this opportunity are not the ones who simply say "we do AI." They're the ones who have designed a clear, repeatable service offering with a defined scope, a delivery model that works, and a track record of outcomes.
+
+## Designing Your AI Service Architecture
+
+An AI advisory offering typically spans three service types, which you can offer separately or as a progression:
+
+**Diagnostic services.** You help the client understand where they are: an AI maturity assessment, an opportunity identification exercise, a governance gap analysis. These are typically short engagements (2–6 weeks) with a clear deliverable.
+
+**Strategy services.** You help the client decide where to go: an AI strategy, a prioritised roadmap, a build/buy/partner recommendation. These are medium-length engagements (6–12 weeks) that produce a strategic decision.
+
+**Implementation support.** You help the client get there: programme management for AI adoption, change management, vendor selection support, and ROI measurement design. These are longer engagements that produce tangible change.
+
+Most consultants start with diagnostics — they're faster to sell, easier to scope, and build the client relationship that leads to larger engagements.
+
+## The Service Design Process with AI
+
+AI can help you design each service offering systematically:
+
+"Help me design a consulting service called [name] for [target client type] facing [problem]. Define: (1) the client problem in their language, (2) what we do in 2–3 sentences, (3) the deliverable(s), (4) the typical engagement duration and team size, (5) why a client would choose an external consultant over doing this internally, and (6) two to three qualifying questions that would tell me this is the right offering for a given client."
+
+## Pricing AI Advisory Services
+
+Pricing consulting services is an art, not a formula. Considerations for AI advisory specifically:
+
+**Value-based framing.** AI adoption creates measurable value: productivity gains, cost savings, new revenue capabilities. Anchoring your fee to a percentage of the value you expect to create is more defensible than time-and-materials pricing.
+
+**Milestone-based billing.** Break long engagements into milestone payments tied to deliverables. This reduces client risk perception and makes the engagement easier to approve at CFO level.
+
+**Diagnostic-to-strategy-to-implementation pipeline.** Price diagnostics low enough to be easily approved but do them well enough to earn the strategy engagement. Earn the strategy engagement to earn the implementation work. The pipeline multiplies a small initial sale.`,
+          keyTakeaways: [
+            'AI advisory spans three service types: diagnostics (where are you), strategy (where to go), and implementation support (how to get there)',
+            'Start with diagnostic services — they\'re faster to sell, easier to scope, and build the relationship for larger work',
+            'Service design should define the client problem in their language, the deliverable, and why an external consultant adds value over internal capability',
+            'Value-based pricing that anchors fees to expected client value is more defensible than time-and-materials for AI advisory',
+            'The diagnostic-to-strategy-to-implementation pipeline turns small initial engagements into larger relationships',
+          ],
+          exercise: {
+            title: 'AI Service Offering Design',
+            description:
+              'Design one complete AI advisory service offering using the structured service design process.',
+            steps: [
+              'Choose the client type and AI challenge you are best positioned to help with based on your existing expertise',
+              'Use the service design prompt to define: client problem, what you do, the deliverable, duration, team size, and qualifying questions',
+              'Review the output: does it differentiate from what your competitors offer? Is the value proposition clear to a non-technical client?',
+              'Draft a one-paragraph service description you could use on a proposal cover letter or your firm\'s website',
+              'Identify the three qualifying questions that would tell you in a first client conversation whether this offering is the right fit',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'Why should most consultants start their AI advisory practice with diagnostic services rather than strategy or implementation?',
+              options: [
+                'Diagnostic services pay more than strategy services',
+                'Diagnostics have a faster sales cycle, lower risk for the client, and create the relationship credibility needed to win larger engagements',
+                'Strategy and implementation services require deeper AI expertise than most consultants have',
+                'Clients always need a diagnostic before they can engage on strategy',
+              ],
+              correct: 1,
+              explanation:
+                'Diagnostic engagements are easier to approve (shorter, lower cost, defined deliverable) and easier for a new advisor to deliver credibly. They also create the most powerful foundation for subsequent work: having completed a diagnostic, the consultant knows the client\'s specific context deeply, has demonstrated competence, and is the natural choice for the strategy engagement that follows. Starting with implementation or strategy without this foundation is harder to sell and riskier to deliver.',
+            },
+            {
+              question: 'What makes value-based pricing more appropriate than time-and-materials for AI advisory services?',
+              options: [
+                'Value-based pricing is always higher than time-and-materials',
+                'AI advisory creates measurable business value, making it possible to anchor fees to outcomes rather than hours — which better aligns the consultant\'s and client\'s interests',
+                'Time-and-materials pricing is not permitted for advisory services',
+                'Value-based pricing requires less documentation than time-based billing',
+              ],
+              correct: 1,
+              explanation:
+                'When AI advisory produces measurable productivity gains, cost savings, or revenue improvements, pricing anchored to a percentage of that value aligns the consultant\'s incentive with the client\'s outcome. A consultant charging $50,000 to help a client capture $500,000 in productivity value has a clear value proposition. A consultant charging $50,000 for 200 hours of time has a cost conversation instead of a value conversation. For outcomes that are measurable, value-based framing is almost always more defensible.',
+            },
+          ],
+        },
+        {
+          id: 'consulting-m5-l4',
+          title: 'Your AI Competitive Advantage as a Consultant',
+          duration: 15,
+          description:
+            'Build the personal AI system, continuous learning practice, and professional differentiation that compounds your advantage as an AI-enabled consultant over months and years.',
+          content: `## Competitive Advantage in an AI-Enabled Profession
+
+Every consultant in your market now has access to roughly the same AI tools. Access is not the differentiator — it's a commodity. What differentiates is how systematically you've integrated those tools, how deeply you've built AI expertise in your practice area, and how clearly you can articulate AI's implications for your clients' industries.
+
+The consultants who build durable competitive advantage with AI are not those who react to each new tool, but those who build a system that compounds.
+
+## Building Your Personal AI System
+
+A personal AI system is a set of consistent practices that integrate AI into every element of your consulting work:
+
+**Your prompt library.** A curated collection of prompts for your most common task types — research synthesis, hypothesis generation, stakeholder communication, proposal drafting, slide structuring. This library grows with each engagement. When you write a prompt that produces great output for a specific task type, you save it. Over time, your library becomes a proprietary productivity asset.
+
+**Your research system.** A regular practice of using AI to stay current in your areas of expertise: "What have been the most significant strategic management insights published or discussed in the past three months? Summarise the three most relevant for a consultant working on organisational transformation."
+
+**Your client intelligence practice.** Before every significant client interaction, a structured AI-assisted briefing. After every engagement, a structured debrief: "Based on this engagement [describe outcomes and lessons], what should I do differently in future engagements of this type? What did I miss that I should watch for?"
+
+## Staying Current as AI Evolves
+
+AI tools are evolving faster than any individual consultant can track. A practical staying-current system:
+
+- Monthly: spend 90 minutes exploring one new AI capability relevant to consulting work
+- Quarterly: assess which elements of your AI workflow need updating as tools have improved
+- Annually: review your personal AI system and invest in the areas where capability gaps have opened
+
+This is not about chasing every new model announcement. It is about ensuring your practice doesn't fall two years behind while you're focused on client delivery.
+
+## Differentiation Through AI Depth
+
+The deepest competitive advantage is not knowing how to use AI tools — it's having developed a point of view on what AI means for your clients' industries. The consultant who can speak credibly to a manufacturing CEO about where AI creates value in industrial operations, where it creates risk, and what the strategic implications are for the competitive landscape over the next five years is more valuable than the consultant who can use Claude efficiently.
+
+Building that depth requires: combining AI tool fluency with sector expertise, developing original hypotheses from what you observe across engagements, and publishing your thinking in a way that puts your perspective in front of clients before you meet them.
+
+## The Long Game
+
+Competitive advantage in consulting is built over years, not weeks. The AI-era version of this long game: each year, you've integrated AI more deeply into your delivery, you've developed more depth in AI's implications for your practice area, and you've built a visible track record of AI-enabled consulting outcomes. The compounding effect of consistent practice, published perspective, and client track record is the durable advantage that distinguishes leading consulting practices from the rest.`,
+          keyTakeaways: [
+            'Access to AI tools is a commodity — the differentiator is systematic integration, practice area depth, and the personal AI system you build over time',
+            'A personal AI system has three components: prompt library, research system, and client intelligence practice',
+            'Staying current requires a deliberate practice: monthly exploration, quarterly workflow review, annual system audit',
+            'The deepest competitive advantage is a point of view on AI\'s strategic implications for your clients\' industries — not tool proficiency alone',
+            'The long game in consulting compounds: each year of AI-enabled delivery, published perspective, and client track record builds advantage that is hard to replicate quickly',
+          ],
+          exercise: {
+            title: 'My AI Consulting System Design',
+            description:
+              'Design your personal AI consulting system — prompt library foundation, research practice, and 90-day differentiation plan.',
+            steps: [
+              'Identify the five task types you do most frequently in consulting engagements',
+              'For each, write or refine one high-quality prompt and save it as the foundation of your prompt library',
+              'Design your research staying-current practice: what topics will you monitor, how frequently, and with what AI-assisted process?',
+              'Identify the one practice area or industry where you want to develop a distinctive AI-era point of view',
+              'Ask Claude: "Based on [your practice area and client types], what are the three most important questions about AI\'s strategic implications that a top consultant in this space should have a developed perspective on?"',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What distinguishes a consultant\'s AI competitive advantage from access to AI tools?',
+              options: [
+                'The number of AI tools in their toolkit',
+                'Systematic integration into delivery, practice area depth in AI implications, and a compounding track record of AI-enabled outcomes',
+                'Being first to adopt each new AI model as it is released',
+                'The speed at which they can produce first drafts using AI',
+              ],
+              correct: 1,
+              explanation:
+                'When all consultants have access to the same AI tools, access becomes a table stake rather than a differentiator. Competitive advantage comes from three things that are harder to replicate: the systematic personal AI system built through consistent practice, the depth of understanding of what AI means for specific industries and client challenges, and the track record of AI-enabled engagements that demonstrates credibility. These compound over time and are not accessible to someone who just signed up for a Claude subscription.',
+            },
+            {
+              question: 'What is the most valuable component of a personal prompt library for a consultant?',
+              options: [
+                'The longest and most detailed prompts in the library',
+                'Prompts refined through real engagement use that produce consistently high-quality outputs for your specific task types and client contexts',
+                'Prompts sourced from published prompt engineering guides',
+                'The most recently created prompts that reflect the latest AI capabilities',
+              ],
+              correct: 1,
+              explanation:
+                'Generic prompts produce generic outputs. The prompts that produce the most value for a consultant are those calibrated through actual use to a specific task type, client context, and quality standard. A prompt for generating competitive landscape analyses in the healthcare sector that has been refined across six engagements will outperform any generic research synthesis prompt every time. The prompt library\'s value comes from the accumulated calibration, not from the number of prompts it contains.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

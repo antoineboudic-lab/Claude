@@ -1202,5 +1202,351 @@ These aren't just ethical considerations — they are the foundations of user tr
         },
       ],
     },
+    {
+      id: 'product-m5',
+      title: 'Growth, Analytics & the AI-Era PM',
+      description:
+        'Master the growth and analytics skills that define the modern PM — using AI to run smarter experiments, extract sharper insights from data, and build the product-led loops that compound over time.',
+      lessons: [
+        {
+          id: 'product-m5-l1',
+          title: 'AI for Growth Experimentation',
+          duration: 16,
+          description:
+            'Use AI to generate stronger A/B test hypotheses, design experiments more rigorously, and extract clearer conclusions from experiment results.',
+          content: `## The Experimentation Problem
+
+Most product teams run fewer experiments than they should and draw weaker conclusions than they could. The constraint is rarely data — it's the time cost of hypothesis generation, test design, and results analysis. AI compresses all three.
+
+## Generating Better Hypotheses with AI
+
+The quality of an experiment depends entirely on the quality of the hypothesis it tests. Weak hypotheses produce technically valid results that don't inform decisions. AI accelerates the hypothesis generation step so you start with a richer, more considered set.
+
+Prompt pattern: "I'm trying to improve [metric] for [user segment] in [product area]. Generate 10 A/B test hypotheses. For each, specify: what changes, what behaviour we expect to change, why, and what we'd need to see to call it a win."
+
+Review AI's hypotheses critically: which are genuinely testable in your product? Which assumptions are they making? Which align with your current understanding of user behaviour? Select and refine, don't accept wholesale.
+
+**Prioritising the hypothesis backlog.** Once you have a pool of hypotheses, AI can apply prioritisation frameworks: "Score each hypothesis against: expected impact on [metric], ease of implementation, confidence in the mechanism, and risk of negative side effects."
+
+## Experiment Design with AI
+
+Beyond the hypothesis, experiment design involves sample size, duration, success metrics, and guardrail metrics. AI can help you think through these systematically.
+
+"I want to test [hypothesis]. My current [metric] is [X] and I want to detect a [Y%] improvement. Help me think through: minimum detectable effect, required sample size (assume [Z] daily users), duration, primary metric, and two guardrail metrics I should watch to avoid inadvertent harm."
+
+AI won't run the statistical calculation — for that you need a power calculator or your data team. But it will surface considerations you might skip when moving quickly.
+
+## Analysing Experiment Results with AI
+
+When a test concludes, AI can help you move from raw numbers to insight faster.
+
+"Here are the results of my A/B test [paste results]. The hypothesis was [X]. Help me interpret these results: is the finding statistically significant? What are the alternative explanations for this outcome? What does this tell us about user behaviour beyond the tested metric? What should we test next based on these results?"
+
+The last question is often missed: experiment results always imply the next question. AI can make this follow-up thinking more systematic.
+
+## What AI Cannot Do in Experimentation
+
+AI can help design and analyse experiments. It cannot tell you which hypothesis will win — that's what experiments are for. And it cannot tell you whether a statistically significant result is practically significant for your business. A 0.3% improvement in conversion may be statistically real and commercially irrelevant. That judgment belongs to you.`,
+          keyTakeaways: [
+            'AI accelerates hypothesis generation — use it to build a richer pool of testable ideas, then apply judgment to select and refine',
+            'Experiment design prompts surface sample size, duration, and guardrail metric considerations you might skip under time pressure',
+            'Use AI to move from raw results to insight: ask for alternative explanations and implications beyond the primary metric',
+            'Statistically significant and practically significant are different — AI can help with the former, you decide the latter',
+            'Always ask AI what the experiment results imply for the next test — systematic learning compounds over time',
+          ],
+          exercise: {
+            title: 'Hypothesis Generation Sprint',
+            description:
+              'Use AI to generate and evaluate a set of A/B test hypotheses for a current product metric you want to improve.',
+            steps: [
+              'Choose one product metric you want to improve (activation rate, feature adoption, conversion from free to paid, etc.)',
+              'Use the hypothesis generation prompt to produce 10 hypotheses targeting that metric',
+              'Score each hypothesis on: testability in your product today, confidence in the mechanism, and expected impact',
+              'Select your top three hypotheses and ask Claude to draft an experiment design brief for the highest-priority one',
+              'Identify the guardrail metrics you would track to ensure the experiment doesn\'t improve one metric at the cost of another',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the most common weakness in A/B test hypotheses that AI can help address?',
+              options: [
+                'Hypotheses that are too specific about what will change',
+                'Hypotheses that describe what will change without stating why — missing the causal mechanism',
+                'Hypotheses that focus on user behaviour rather than business metrics',
+                'Hypotheses that require too large a sample size to test',
+              ],
+              correct: 1,
+              explanation:
+                'A hypothesis without a causal mechanism ("Changing the button colour will increase conversion") provides no learning even if it wins. A strong hypothesis states the cause and the expected behaviour change ("Changing the button colour from grey to blue will increase conversion because the blue colour is more visible and creates stronger affordance in our design system"). If the test wins, you\'ve confirmed the mechanism. If it loses, you\'ve learned something about the mechanism. AI can help you articulate the "why" that turns tests into learning.',
+            },
+            {
+              question: 'What should you always ask after reviewing A/B test results with AI?',
+              options: [
+                'Whether the AI agrees with your interpretation',
+                'What the results imply for the next experiment to run',
+                'Whether the test should be rerun with a larger sample',
+                'Which team member was responsible for the hypothesis',
+              ],
+              correct: 1,
+              explanation:
+                'Every experiment result — whether a win, loss, or inconclusive — generates information about user behaviour. That information implies a follow-up question worth testing. Teams that treat experiments as one-off events miss the compound learning that comes from systematically building on each result. Using AI to identify what each result implies for the next experiment creates a more rigorous learning loop.',
+            },
+          ],
+        },
+        {
+          id: 'product-m5-l2',
+          title: 'Product Metrics and Analytics with AI',
+          duration: 18,
+          description:
+            'Define the right metrics for your product, use AI to interpret data more quickly, and build the habit of distinguishing signal from noise in your analytics.',
+          content: `## The Metric Definition Problem
+
+Most products are over-measured and under-understood. Teams track dozens of metrics and act confidently on movements that are noise. The PM's job is not to track everything — it is to identify the handful of metrics that genuinely predict the outcomes that matter, and to understand what they're telling you.
+
+## Defining the Right Metrics with AI
+
+Before you can interpret data, you need to be confident you're measuring the right things. AI can stress-test your metric framework.
+
+"Here is our current product metric set [list your metrics]. We are trying to [describe your strategic goal]. Identify: (a) which of these metrics are leading indicators of our goal, (b) which are lagging indicators or vanity metrics, (c) what important signal is missing."
+
+The output will challenge your current framework. Some metrics you track religiously may not correlate with outcomes you care about. Some signals you're missing may be your strongest predictors.
+
+**Input vs. output metrics.** Output metrics (revenue, churn rate) tell you what happened. Input metrics (feature adoption, onboarding completion, weekly active users by segment) tell you what's about to happen. Great PM measurement systems are built on input metrics that reliably predict output metrics. AI can help you map your inputs to their output effects.
+
+## AI-Assisted Data Interpretation
+
+When product metrics move, PMs need to ask: why did this change? This is harder than it looks. Changes have multiple possible explanations, and picking the wrong one produces the wrong intervention.
+
+Use AI as a thinking partner when a metric changes unexpectedly: "My [metric] dropped [X%] over [time period]. Here is what I know about the context: [product changes, marketing changes, seasonal factors, new competitors]. Help me generate the five most plausible explanations for this drop and the data I would need to rule each one in or out."
+
+This forces systematic hypothesis generation before you act, rather than latching onto the first explanation that comes to mind.
+
+## Avoiding Metric Obsession
+
+The failure mode of data-driven culture is optimising for metrics at the expense of the user experience that produces them. AI can help you think through second-order effects: "We're considering [optimisation]. This would improve [metric A]. What user experience or product quality tradeoffs might this create that wouldn't show up in [metric A] but could affect [metric B] over time?"
+
+## Building a Metrics Dashboard Brief
+
+AI can help you design better dashboards — not by building them, but by specifying what they should show and why. "Design a product metrics dashboard for a [product type] PM. Include: one north star metric, three input metrics that predict it, two guardrail metrics to watch for unintended effects, and the review cadence recommended for each."`,
+          keyTakeaways: [
+            'Distinguish leading input metrics (what\'s about to happen) from lagging output metrics (what happened) — build your system on inputs',
+            'Use AI to stress-test your metric framework: identify vanity metrics, missing signals, and disconnected measures',
+            'When a metric moves unexpectedly, generate multiple explanations before acting — AI can help structure this systematically',
+            'Metric obsession is a real failure mode — AI can help you think through second-order effects of optimising any single metric',
+            'A north star metric plus three to five input metrics is a more actionable framework than a 20-metric dashboard',
+          ],
+          exercise: {
+            title: 'Metrics Framework Audit',
+            description:
+              'Audit your current product metrics framework using AI to identify vanity metrics, missing signals, and disconnected measures.',
+            steps: [
+              'List every metric you currently track in your product analytics or CS reviews',
+              'Ask Claude to categorise each metric as: leading input indicator, lagging output indicator, or vanity metric — explain the reasoning',
+              'Identify your north star metric (if you have one) and ask AI to identify which of your input metrics most strongly predict movement in that north star',
+              'Identify the most important metric you are NOT currently tracking based on AI\'s analysis',
+              'Design a simplified dashboard of no more than six metrics — one north star, three inputs, two guardrails — and ask Claude to review the logic',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the difference between an input metric and an output metric in product management?',
+              options: [
+                'Input metrics are measured daily; output metrics are measured monthly',
+                'Input metrics measure what users do (leading indicators of future outcomes); output metrics measure what resulted (lagging indicators of past behaviour)',
+                'Input metrics come from product data; output metrics come from financial data',
+                'Input metrics are more important than output metrics for all products',
+              ],
+              correct: 1,
+              explanation:
+                'Output metrics like revenue and churn rate tell you what happened — they\'re lagging indicators you can\'t directly influence today. Input metrics like feature adoption rate, time to first value, and weekly active users by cohort tell you what\'s about to happen — they\'re leading indicators you can influence through product decisions. Building a measurement system primarily on input metrics that reliably predict output outcomes gives PMs earlier warning and more actionable signals.',
+            },
+            {
+              question: 'What is the first step when a key product metric drops unexpectedly?',
+              options: [
+                'Immediately roll back the most recent product change',
+                'Generate multiple plausible explanations and identify the data needed to distinguish between them before acting',
+                'Alert stakeholders and schedule an emergency meeting',
+                'Ask AI to identify the root cause directly',
+              ],
+              correct: 1,
+              explanation:
+                'Acting on the first plausible explanation for a metric drop is a common mistake. A conversion rate drop could be caused by a product change, a marketing traffic shift, a seasonal effect, or a competitor action — each requiring a completely different response. Generating multiple hypotheses and identifying which data would distinguish between them before acting produces better decisions and avoids expensive false starts.',
+            },
+          ],
+        },
+        {
+          id: 'product-m5-l3',
+          title: 'Product-Led Growth and AI',
+          duration: 14,
+          description:
+            'Apply AI to the core PLG challenges: designing onboarding that activates users faster, identifying the signals that predict expansion, and finding the loops that drive viral and usage-based growth.',
+          content: `## PLG and the PM's Role
+
+Product-led growth (PLG) shifts the acquisition and expansion engine from sales-led to product-led. In a PLG model, the product itself acquires, activates, retains, and expands users. The PM's job is to design and optimise the product loops that make this happen. AI accelerates the analysis that tells you which loops are working and which aren't.
+
+## Designing PLG Loops with AI
+
+A PLG loop is a cycle where one set of user actions leads to more users or more usage. AI is useful for identifying loops you might not have considered.
+
+"I am building a [product type] with a freemium model. Help me map five potential PLG growth loops — each as a circular diagram in text: [action] → [outcome] → [next action]. For each loop, identify the activation event that starts it and the metric that would tell me it's working."
+
+The loops AI generates will vary in quality — some obvious, some genuinely novel. Your job is to evaluate which loops your product currently enables and which require new product investments.
+
+## Onboarding Optimisation with AI
+
+In PLG, the onboarding experience is the most critical part of the product. AI can help you analyse and improve it systematically.
+
+**Activation milestone identification.** "Here are our user cohorts and their 30-day and 90-day retention rates [paste or describe data patterns]. Which actions in week one are most correlated with long-term retention? What does this suggest our activation milestone should be?"
+
+**Onboarding friction analysis.** "Here is our current onboarding flow [describe each step]. Identify the steps most likely to cause users to drop off and suggest: what could be simplified, deferred, or removed entirely."
+
+**Time-to-value optimisation.** The metric that drives PLG is not activation rate — it's time-to-first-value. AI can help you design onboarding paths that reach the specific moment of value for each user type as fast as possible.
+
+## Expansion Signal Detection
+
+In PLG, expansion typically happens at natural usage thresholds: a team hitting a seat limit, a user adopting a feature that correlates with paid conversion, a company growing its footprint beyond the free tier.
+
+"Here is our product usage data schema [describe your data]. What signals in this data would suggest a free user is ready to convert to paid, or that a paying team is ready to expand their account? Design a scoring model using these signals."
+
+AI can't run the data analysis — your analytics team does that. But it can help you design the signal model before you ask them to build it.
+
+## The Virality Loop
+
+For products with sharing or collaboration mechanics, AI can help you map and optimise viral loops: "A user invites a colleague. The colleague [action]. The original user sees [outcome]. This should loop because [mechanism]. Where in this loop does friction break the cycle and what would fix it?"`,
+          keyTakeaways: [
+            'PLG loops are cycles where user actions produce more users or usage — map yours explicitly before trying to optimise them',
+            'Time-to-first-value is the PLG metric that drives everything — optimise onboarding for speed to the specific value moment',
+            'Activation milestones should be derived from retention correlation, not intuition — AI can help you design the analysis',
+            'Expansion signals in PLG are usage-based; identify them before building the data model so you know what to measure',
+            'Onboarding optimisation is iterative — AI can help generate friction hypotheses, but user data validates them',
+          ],
+          exercise: {
+            title: 'PLG Loop Mapping',
+            description:
+              'Map your product\'s PLG growth loops and identify the highest-leverage intervention to strengthen the activation loop.',
+            steps: [
+              'Describe your product\'s model to Claude: what users do, how they get value, whether they share or collaborate, and what the upgrade trigger is',
+              'Ask Claude to map three to five growth loops your product could support in the circular action → outcome → action format',
+              'For each loop, identify: the activation event, the current metric measuring it, and where the loop most likely breaks',
+              'Choose the activation loop (free user to first value moment) and ask Claude to suggest three specific onboarding changes that could accelerate time-to-value',
+              'For one suggested change, design a simple A/B test to validate whether it works',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'What is the most important metric in a product-led growth model?',
+              options: [
+                'Monthly recurring revenue growth rate',
+                'Time-to-first-value — how quickly a new user reaches the moment that demonstrates the product\'s core value',
+                'Total number of free sign-ups per month',
+                'Average revenue per user',
+              ],
+              correct: 1,
+              explanation:
+                'In PLG, the product must convince users of its value before they are willing to pay or refer others. The faster users reach the specific moment of value — sending their first report, completing their first workflow, seeing meaningful output — the higher the conversion and retention rates. All onboarding optimisation in PLG should be measured against time-to-first-value because it is the most direct predictor of paid conversion and long-term retention.',
+            },
+            {
+              question: 'How does AI most usefully contribute to PLG loop design?',
+              options: [
+                'By running the usage correlation analysis that identifies activation milestones',
+                'By helping map potential loops and design signal models before the data team builds them',
+                'By automatically optimising onboarding flows without PM input',
+                'By generating acquisition campaigns for free tier growth',
+              ],
+              correct: 1,
+              explanation:
+                'AI contributes most in the design and framing stages of PLG work: mapping growth loops the PM might not have considered, designing signal models for expansion detection before engaging the data team, and generating hypotheses about where loops break. The actual analysis requires data infrastructure and analytical skills that go beyond AI — but arriving at that analysis with a clear model to test produces better and faster results.',
+            },
+          ],
+        },
+        {
+          id: 'product-m5-l4',
+          title: 'The AI-Era Product Manager Career',
+          duration: 18,
+          description:
+            'Understand how AI is reshaping the PM role, which skills compound in value as AI handles more, and how to build a career that leads rather than follows the changes ahead.',
+          content: `## What Changes for PMs
+
+AI is changing what product management work looks like. The PMs who are thriving are not the ones who do more of the same work faster. They're the ones who've shifted the composition of their work — spending less time on production and more time on judgment, user proximity, and strategic framing.
+
+This shift is an opportunity, not a threat. The aspects of the PM role that AI cannot replicate — judgment, user insight, strategic context, stakeholder relationships — are also the aspects that the best PMs are most valued for.
+
+## How AI Changes PM Seniority
+
+One of the more interesting effects of AI is how it shifts the expected output at every career level. Junior PMs who use AI well can produce work that was previously expected of seniors: comprehensive PRDs, structured research synthesis, thorough competitive analysis. This raises the baseline — but it also means that senior PM differentiation increasingly comes from judgment, context, and leadership rather than production quality.
+
+If you're a senior PM, AI raises the floor of your team. If you're a junior PM, AI gives you more capacity to demonstrate judgment earlier. In both cases, the differentiator becomes the quality of your thinking, not the speed of your drafting.
+
+## Skills That Compound in an AI Era
+
+**User proximity and empathy.** AI cannot spend time with users, interpret their silences, or feel the friction in the product experience. PMs who maintain genuine user proximity — not through synthesis, but through time — will have insights no AI workflow can generate.
+
+**Strategic context.** Understanding why your company is making the decisions it is, what the CEO is genuinely worried about, which trade-offs reflect actual strategic conviction — this is not in any document. It's built through relationships and attention. AI doesn't have access to it.
+
+**Systems thinking.** AI is good at analysis in pieces. The PM who sees how a feature decision affects the business model, the competitive positioning, the engineering org, and the customer segment simultaneously has a capability that compounds with experience.
+
+**Taste.** Knowing which of ten AI-generated options is actually good — in the context of your product, your users, your strategy — is a judgment that requires deep product knowledge. This is irreplaceable and increasingly visible when everyone has access to the same generation tools.
+
+## Staying Ahead of the Curve
+
+The risk is not that AI replaces PMs. The risk is that PMs who don't engage with AI are replaced by PMs who do. The practical response:
+
+**Build AI fluency as a continuous practice, not a one-time course.** The tools are changing every six months. Build the habit of trying new capabilities, not just the ability to use current tools.
+
+**Develop a point of view on AI in your product category.** The PMs who lead are those who understand what AI means for their specific market — which features will commoditise, where the new competitive moats are, how user expectations are shifting.
+
+**Use AI to do better work, not just faster work.** The PMs who build career capital are those who use AI to analyse more hypotheses, synthesise more user research, and pressure-test more decisions — not those who use it to produce faster-but-similar outputs.`,
+          keyTakeaways: [
+            'AI raises the production baseline at every career level — differentiation increasingly comes from judgment, not output quality',
+            'User proximity, strategic context, systems thinking, and product taste are the PM skills that compound in an AI era',
+            'Junior PMs gain capacity to demonstrate judgment earlier; senior PMs raise the floor of their teams',
+            'Build AI fluency as a continuous practice — the tools change every six months and staying current compounds over time',
+            'Use AI to do better work (more hypotheses, deeper synthesis, more rigorous pressure-testing), not just faster work',
+          ],
+          exercise: {
+            title: 'Personal AI PM Development Plan',
+            description:
+              'Design a 90-day plan for developing the AI-era PM skills that will differentiate your career.',
+            steps: [
+              'Assess honestly: which of the four compounding skills (user proximity, strategic context, systems thinking, product taste) is currently your weakest?',
+              'For that skill, identify one specific habit or practice you could build over the next 90 days to strengthen it',
+              'Audit your current AI usage: are you using AI to do faster work, or to do better work? What would "better work" look like for your three most important current responsibilities?',
+              'Ask Claude: "Based on a PM role focused on [your product type and stage], what AI capabilities are most underused by PMs in this context that could create significant leverage?"',
+              'Write a three-sentence statement of your AI-era PM positioning that you could use in a performance review, a hiring conversation, or a job application',
+            ],
+            tool: 'Claude',
+          },
+          quiz: [
+            {
+              question: 'How does AI change the differentiation between junior and senior PMs?',
+              options: [
+                'AI makes junior PMs obsolete because senior PMs can produce more with AI',
+                'AI raises the production baseline — junior PMs can produce senior-quality documents, so senior differentiation shifts further toward judgment, context, and leadership',
+                'AI has no effect on PM seniority because judgment cannot be replicated',
+                'AI makes senior PM skills less relevant because production quality becomes the new differentiator',
+              ],
+              correct: 1,
+              explanation:
+                'When AI enables junior PMs to produce comprehensive PRDs, structured research, and thorough competitive analyses, the gap between junior and senior outputs on production tasks narrows. This is good for junior PMs — they can demonstrate higher-level thinking earlier. And it makes senior PM differentiation more clearly about the things that can\'t be produced: judgment about which problems to solve, strategic context about why the company is making the bets it is, and the quality of thinking that turns good tools into great products.',
+            },
+            {
+              question: 'What does "using AI to do better work" mean for a PM, as opposed to just faster work?',
+              options: [
+                'Producing the same outputs more quickly and using the saved time for breaks',
+                'Using AI to test more hypotheses, synthesise more user research, and pressure-test more decisions than would be possible without AI',
+                'Delegating all documentation to AI so PMs focus only on meetings',
+                'Using the highest-cost AI models to ensure maximum quality',
+              ],
+              correct: 1,
+              explanation:
+                '"Faster work" means using AI to produce the same PRDs, research summaries, and analyses you already produce, but in less time. "Better work" means using the time AI saves to do things you previously couldn\'t afford: testing ten growth hypotheses instead of two, synthesising 30 user interviews instead of five, pressure-testing a recommendation from six stakeholder perspectives instead of one. The PMs who build the most career capital are those who use AI to expand the scope of their thinking, not just the speed of their drafting.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }
