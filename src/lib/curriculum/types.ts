@@ -15,6 +15,26 @@ export interface Exercise {
   tool: string
 }
 
+export interface InlineCheck {
+  question: string
+  options: string[]
+  correct: number
+  explanation: string
+}
+
+export interface OutputComparison {
+  label: string
+  vague: { prompt: string; output: string }
+  improved: { prompt: string; output: string }
+  insight: string
+}
+
+export interface ApplyThisWeek {
+  action: string
+  promptTemplate: string
+  tool: string
+}
+
 export interface Lesson {
   id: string
   title: string
@@ -24,6 +44,10 @@ export interface Lesson {
   keyTakeaways: string[]
   exercise: Exercise
   quiz: QuizQuestion[]
+  inlineCheck?: InlineCheck
+  outputComparison?: OutputComparison
+  applyThisWeek?: ApplyThisWeek
+  reflection?: string
 }
 
 export interface Module {

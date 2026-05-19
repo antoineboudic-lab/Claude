@@ -28,6 +28,7 @@ const tracks = [
     id: 'marketing',
     title: 'Marketing',
     tagline: 'Create, automate, and optimise campaigns with AI',
+    outcome: 'Campaign briefs in 20 min, not 3 hours',
     color: '#EC4899',
     icon: Megaphone,
     lessons: 20,
@@ -38,6 +39,7 @@ const tracks = [
     id: 'finance',
     title: 'Finance',
     tagline: 'Model, forecast, and report with AI precision',
+    outcome: 'Variance analysis in 30 min, not half a day',
     color: '#F59E0B',
     icon: LineChart,
     lessons: 20,
@@ -48,6 +50,7 @@ const tracks = [
     id: 'hr',
     title: 'HR',
     tagline: 'Attract, retain, and develop talent smarter',
+    outcome: 'Job description first draft in 5 minutes',
     color: '#10B981',
     icon: HeartHandshake,
     lessons: 20,
@@ -58,6 +61,7 @@ const tracks = [
     id: 'sales',
     title: 'Sales',
     tagline: 'Prospect, pitch, and close with AI as your edge',
+    outcome: 'Full proposal in 2–3 hours, not a full day',
     color: '#8B5CF6',
     icon: TrendingUp,
     lessons: 20,
@@ -68,6 +72,7 @@ const tracks = [
     id: 'operations',
     title: 'Operations',
     tagline: 'Automate processes and optimise at every layer',
+    outcome: 'Automated daily summaries replace manual aggregation',
     color: '#22D3EE',
     icon: Settings,
     lessons: 20,
@@ -78,6 +83,7 @@ const tracks = [
     id: 'leadership',
     title: 'Leadership',
     tagline: 'Lead your organisation into the AI era with confidence',
+    outcome: 'Concrete AI roadmap, not a vague strategy',
     color: '#F97316',
     icon: Briefcase,
     lessons: 20,
@@ -88,6 +94,7 @@ const tracks = [
     id: 'legal',
     title: 'Legal',
     tagline: 'Review, research, and advise with AI confidence',
+    outcome: 'Contract first-pass in 20 min, not 2–4 hours',
     color: '#6366F1',
     icon: Scale,
     lessons: 16,
@@ -98,6 +105,7 @@ const tracks = [
     id: 'product',
     title: 'Product',
     tagline: 'Discover, prioritise, and ship better products with AI',
+    outcome: 'Discovery synthesis in hours, not 2 weeks',
     color: '#14B8A6',
     icon: Package,
     lessons: 16,
@@ -108,6 +116,7 @@ const tracks = [
     id: 'customer',
     title: 'Customer Success',
     tagline: 'Retain, expand, and delight customers with AI',
+    outcome: 'At-risk accounts flagged weeks before churn',
     color: '#F43F5E',
     icon: Headphones,
     lessons: 16,
@@ -118,6 +127,7 @@ const tracks = [
     id: 'consulting',
     title: 'Consulting',
     tagline: 'Research, analyse, and deliver with AI as your edge',
+    outcome: 'First-pass research in 4–8 hours, not 3 days',
     color: '#0EA5E9',
     icon: BarChart,
     lessons: 16,
@@ -128,7 +138,7 @@ const tracks = [
 
 // ─── Track card ───────────────────────────────────────────────────────────────
 
-function TrackCard({ track, index, dimmed = false }: { track: typeof tracks[0]; index: number; dimmed?: boolean }) {
+function TrackCard({ track, index, dimmed = false, showPreviewBadge = false }: { track: typeof tracks[0]; index: number; dimmed?: boolean; showPreviewBadge?: boolean }) {
   return (
     <motion.div
       variants={fadeUp}
@@ -160,11 +170,32 @@ function TrackCard({ track, index, dimmed = false }: { track: typeof tracks[0]; 
                 </span>
               </div>
             </div>
+            {showPreviewBadge && (
+              <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-lg flex-shrink-0"
+                style={{ background: '#F5F3FF', color: '#7C3AED', border: '1px solid #EDE9FE', fontFamily: 'var(--font-sans)' }}>
+                <Sparkles size={9} /> Sample
+              </span>
+            )}
           </div>
 
-          <p className="text-sm leading-relaxed mb-6" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
             {track.tagline}
           </p>
+
+          {/* Outcome hook */}
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg mb-4"
+            style={{ background: `${track.color}08`, border: `1px solid ${track.color}20` }}>
+            <Zap size={11} color={track.color} className="flex-shrink-0" />
+            <span className="text-xs font-medium leading-snug" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+              {track.outcome}
+            </span>
+          </div>
+
+          {showPreviewBadge && (
+            <p className="text-xs mb-4 italic" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+              Content adapts to your role &amp; experience after the assessment.
+            </p>
+          )}
 
           <div className="flex flex-wrap gap-2 mb-6">
             {track.skills.map(skill => (
@@ -189,7 +220,7 @@ function TrackCard({ track, index, dimmed = false }: { track: typeof tracks[0]; 
             </div>
             <div className="flex items-center gap-1 text-xs font-semibold group-hover:gap-2 transition-all"
               style={{ color: track.color, fontFamily: 'var(--font-sans)' }}>
-              Start <ChevronRight size={13} />
+              Preview <ChevronRight size={13} />
             </div>
           </div>
         </div>
@@ -311,7 +342,7 @@ function AssessmentGate({ onSkip }: { onSkip: () => void }) {
 
 export default function TracksPage() {
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
+  const isInView = useInView(ref, { once: true, amount: 0 })
   const [recommendedTrackId, setRecommendedTrackId] = useState<string | null>(null)
   const [assessmentLoaded, setAssessmentLoaded] = useState(false)
   const [skipped, setSkipped] = useState(false)
@@ -387,24 +418,26 @@ export default function TracksPage() {
             <div className="pt-16 pb-12 px-6 text-center relative overflow-hidden"
               style={{ borderBottom: '1px solid #E2E8F0', background: '#FFFFFF' }}>
               <div className="absolute inset-0 pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 60%)' }} />
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.05) 0%, transparent 60%)' }} />
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                <p className="text-xs font-bold tracking-widest uppercase mb-3"
-                  style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
-                  All Tracks
-                </p>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-5"
+                  style={{ background: '#FEF3C7', color: '#92400E', border: '1px solid #FDE68A', fontFamily: 'var(--font-sans)' }}>
+                  👋 You&apos;re browsing sample tracks — your actual content is personalised
+                </div>
                 <h1 className="text-4xl lg:text-5xl font-black tracking-tight mb-4"
                   style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                  Choose your track
+                  10 tracks. One built for you.
                 </h1>
-                <p className="text-base max-w-lg mx-auto mb-2" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                  Ten specialised paths built around real professional challenges.
+                <p className="text-base max-w-xl mx-auto mb-6" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                  What you see here are the topic areas we cover. Once you take the 3-minute assessment, the lessons, modules, and examples inside your track are rebuilt around your specific role, experience level, and goals.
                 </p>
-                <p className="text-sm" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                  For a personalised recommendation,{' '}
-                  <Link href="/assessment" className="underline font-medium" style={{ color: '#7C3AED' }}>
-                    take the 2-minute assessment
-                  </Link>
+                <Link href="/assessment"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
+                  style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(124,58,237,0.2)' }}>
+                  <Sparkles size={14} /> Get my personalised track
+                </Link>
+                <p className="mt-3 text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                  Takes 3 minutes · Free · No credit card required
                 </p>
               </motion.div>
             </div>
@@ -446,12 +479,39 @@ export default function TracksPage() {
               </div>
             )}
 
+            {/* Personalisation context banner — shown when browsing without assessment */}
+            {!hasAssessment && (
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.15 }}
+                className="mb-8 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-4"
+                style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#7C3AED' }}>
+                  <Sparkles size={17} className="text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    These are sample previews
+                  </p>
+                  <p className="text-sm" style={{ color: '#6D28D9', fontFamily: 'var(--font-sans)' }}>
+                    After the 3-minute assessment, your track content — the modules, lesson order, examples, and exercises — is rebuilt around your role and goals. A Finance VP and a Marketing Manager inside the same Finance track get different content.
+                  </p>
+                </div>
+                <Link href="/assessment" className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
+                  style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  Personalise mine <ArrowRight size={12} />
+                </Link>
+              </motion.div>
+            )}
+
             {/* Track grid */}
             <motion.div
               ref={ref}
               variants={stagger(0.08)}
               initial="hidden"
-              animate={isInView ? 'visible' : 'hidden'}
+              animate="visible"
               className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {tracks.map((track, i) => (
@@ -460,6 +520,7 @@ export default function TracksPage() {
                   track={track}
                   index={i}
                   dimmed={hasAssessment && track.id !== recommendedTrackId}
+                  showPreviewBadge={!hasAssessment}
                 />
               ))}
             </motion.div>

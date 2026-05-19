@@ -52,4 +52,4 @@ export function getNextLesson(trackId: TrackId, lessonId: string) {
 }
 
 export type { Track, TrackId }
-export type { Lesson, Module } from './types'
+export type { Lesson, Module, InlineCheck, OutputComparison, ApplyThisWeek } from './types'

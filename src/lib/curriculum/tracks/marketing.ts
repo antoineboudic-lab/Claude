@@ -67,6 +67,35 @@ Start with low-stakes tasks: rewriting an existing email, generating five headli
             ],
             tool: 'ChatGPT',
           },
+          inlineCheck: {
+            question: 'An AI tool confidently states that a competitor\'s market share grew 34% last quarter. What should you do?',
+            options: [
+              'Trust it — AI is trained on massive datasets and tends to be accurate',
+              'Include it in your report but flag it as AI-sourced',
+              'Verify through a reliable primary source before using it anywhere',
+              'Only use it for internal presentations, not external reports',
+            ],
+            correct: 2,
+            explanation: 'LLMs can state incorrect statistics with complete confidence — the number sounds plausible, which makes it dangerous. Always verify specific figures through primary sources before publishing or presenting.',
+          },
+          outputComparison: {
+            label: 'Why specificity matters — see it in action',
+            vague: {
+              prompt: 'Write a social media post about our product',
+              output: '✨ Discover our amazing new product that will transform your daily routine! Perfect for everyone who wants to upgrade their lifestyle. Try it today and see the difference! 🌟 #NewProduct #MustHave #GameChanger',
+            },
+            improved: {
+              prompt: 'Write a 280-character LinkedIn post for a B2B analytics SaaS announcing a new real-time dashboard. Audience: marketing directors at 50–500 person companies. Tone: confident and specific, not promotional. End with a question to drive comments.',
+              output: 'Real-time campaign attribution is now live in [Product]. Marketing directors can see cross-channel performance update as it happens — no more end-of-day reports while your budget burns.\n\nWhat\'s the first metric you check every morning?',
+            },
+            insight: 'The vague prompt produces generic filler. The specific prompt produces something you could actually post — because it defined a role, audience, format constraint, and goal. That\'s the only difference.',
+          },
+          applyThisWeek: {
+            action: 'Pick one piece of content you write every week — a report, email update, or social post. Use an AI tool for the first draft with a specific prompt. Note how much editing it needs versus writing from scratch.',
+            promptTemplate: 'Act as a [your role] writing [content type] for [specific audience]. Goal: [what you want them to think or do]. Format: [structure]. Tone: [adjective]. Keep it under [word count].',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Think about the last piece of content you wrote at work. Which part took longest — coming up with the structure, the first draft, or the editing? AI is strongest at the part that slowed you down most.',
           quiz: [
             {
               question: 'What is the most accurate description of how a large language model works?',

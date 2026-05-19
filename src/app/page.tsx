@@ -8,9 +8,10 @@ import {
   Megaphone, Settings, ArrowRight, Check, Star, Zap, Award,
   LineChart, GraduationCap, ClipboardList, CheckCircle2,
   ChevronRight, ChevronDown, Play, Route, LogOut, BookOpen, X, Users,
-  Brain, Layers, BarChart3, Menu, Scale, Package, Headphones, BarChart,
+  Brain, Layers, BarChart3, Menu, Scale, Package, Headphones, BarChart, Search,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
+import GlobalSearch from '@/components/GlobalSearch'
 
 // ─── Animation ────────────────────────────────────────────────────────────────
 
@@ -94,6 +95,7 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [avatarOpen, setAvatarOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const { user, loading, openSignIn, signOut } = useAuth()
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -111,6 +113,17 @@ function Navbar() {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(v => !v)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
+
   const initials = user?.user_metadata?.full_name
     ? user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
     : user?.email?.slice(0, 2).toUpperCase() ?? '?'
@@ -118,6 +131,7 @@ function Navbar() {
   const solidBg = scrolled || mobileOpen
 
   return (
+    <>
     <motion.nav
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
@@ -163,6 +177,17 @@ function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Search */}
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
+            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F8FAFC' }}
+          >
+            <Search size={13} />
+            <span>Search</span>
+            <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
+          </button>
+
           {/* Desktop auth */}
           {!loading && (
             <div className="hidden md:flex items-center gap-3">
@@ -302,6 +327,8 @@ function Navbar() {
         )}
       </AnimatePresence>
     </motion.nav>
+    {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
+    </>
   )
 }
 
@@ -628,17 +655,21 @@ function SocialProof() {
   ]
   return (
     <div style={{ background: '#F8FAFC', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
-      <div className="py-8">
-        <p className="text-center text-xs font-semibold mb-6 tracking-widest uppercase" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+      <div className="py-10">
+        <p className="text-center text-[11px] font-bold mb-8 tracking-[0.18em] uppercase" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
           Trusted by professionals at
         </p>
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
           <motion.div
             animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-            className="flex gap-16 flex-nowrap w-max">
+            transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+            className="flex gap-12 flex-nowrap w-max items-center">
             {[...companies, ...companies].map((c, i) => (
-              <span key={i} className="text-sm font-semibold whitespace-nowrap" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{c}</span>
+              <div key={i} className="flex items-center gap-2 whitespace-nowrap px-4 py-2 rounded-lg"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#CBD5E1' }} />
+                <span className="text-sm font-bold" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)', letterSpacing: '-0.01em' }}>{c}</span>
+              </div>
             ))}
           </motion.div>
         </div>
@@ -660,39 +691,111 @@ function SocialProof() {
 
 function HowItWorks() {
   const steps = [
-    { number: '01', icon: ClipboardList, title: 'Take the Assessment', desc: 'Answer 5 quick questions about your role, industry, and goals. Takes 3 minutes and shapes everything that follows.', color: '#7C3AED' },
-    { number: '02', icon: Route, title: 'Get Your Path', desc: 'Our AI engine builds your personalised curriculum — the right modules, in the right order, at the right depth for who you are.', color: '#3B82F6' },
-    { number: '03', icon: GraduationCap, title: 'Learn & Apply', desc: 'Short, practical lessons you can apply the same day. Real exercises using tools you already have.', color: '#10B981' },
+    {
+      number: '01', icon: ClipboardList, title: 'Take the Assessment', color: '#7C3AED', bg: '#EDE9FE',
+      desc: 'Answer 5 quick questions about your role, industry, and goals. Takes 3 minutes and shapes everything that follows.',
+      detail: '3 min · 5 questions · No login required',
+      tag: 'Free',
+    },
+    {
+      number: '02', icon: Route, title: 'Get Your Path', color: '#3B82F6', bg: '#DBEAFE',
+      desc: 'Our AI engine builds your personalised curriculum — the right modules, in the right order, at the right depth for your role.',
+      detail: 'Instant · Role-specific · AI-powered',
+      tag: 'Personalised',
+    },
+    {
+      number: '03', icon: GraduationCap, title: 'Learn & Apply', color: '#10B981', bg: '#D1FAE5',
+      desc: 'Short, practical lessons you can apply the same day. Real exercises using tools you already have access to.',
+      detail: '15 min/day · Earn XP · Get certified',
+      tag: 'Applied',
+    },
   ]
   const { ref, isInView } = useReveal()
   return (
-    <section id="program" className="py-20 sm:py-28" style={{ background: '#FFFFFF' }}>
+    <section id="program" className="py-16 sm:py-24" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
-          <motion.div variants={fadeUp} className="text-center mb-16">
+          <motion.div variants={fadeUp} className="text-center mb-14">
             <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>How it works</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              Three steps to AI fluency
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+              From zero to AI fluency<br className="hidden sm:block" /> in three steps
             </h2>
+            <p className="text-base max-w-xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              No setup. No prerequisites. Start your first lesson in under 5 minutes.
+            </p>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {steps.map(step => {
-              const Icon = step.icon
-              return (
-                <motion.div key={step.title} variants={fadeUp}
-                  className="p-7 rounded-2xl" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-                  <div className="flex items-center gap-3 mb-5">
-                    <span className="text-4xl font-black leading-none" style={{ color: '#EDE9FE', fontFamily: 'var(--font-sans)' }}>{step.number}</span>
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: step.color + '12' }}>
-                      <Icon size={17} style={{ color: step.color }} />
+
+          {/* Steps — connected layout */}
+          <div className="relative">
+            {/* Connector line (desktop) */}
+            <div className="hidden md:block absolute top-16 left-0 right-0 h-px pointer-events-none"
+              style={{ background: 'linear-gradient(to right, transparent 8%, #E2E8F0 20%, #E2E8F0 80%, transparent 92%)' }} />
+
+            <div className="grid md:grid-cols-3 gap-6 relative">
+              {steps.map((step, i) => {
+                const Icon = step.icon
+                return (
+                  <motion.div key={step.title} variants={fadeUp} className="group relative">
+                    {/* Arrow between cards (desktop) */}
+                    {i < 2 && (
+                      <div className="hidden md:flex absolute -right-3 top-14 z-10 w-6 h-6 rounded-full items-center justify-center"
+                        style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                        <ChevronRight size={12} style={{ color: '#94A3B8' }} />
+                      </div>
+                    )}
+
+                    <div className="p-7 rounded-2xl h-full transition-shadow hover:shadow-md"
+                      style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+
+                      {/* Step header */}
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                          style={{ background: step.color }}>
+                          <Icon size={20} className="text-white" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full"
+                            style={{ background: step.bg, color: step.color, fontFamily: 'var(--font-sans)' }}>
+                            {step.tag}
+                          </span>
+                          <span className="text-3xl font-black" style={{ color: '#E2E8F0', fontFamily: 'var(--font-sans)', lineHeight: 1 }}>
+                            {step.number}
+                          </span>
+                        </div>
+                      </div>
+
+                      <h3 className="text-lg font-black mb-2.5" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                        {step.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed mb-5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        {step.desc}
+                      </p>
+
+                      {/* Meta */}
+                      <div className="flex items-center gap-1.5 pt-4" style={{ borderTop: '1px solid #E2E8F0' }}>
+                        <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: step.color }} />
+                        <span className="text-xs font-medium" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                          {step.detail}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <h3 className="text-lg font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>{step.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>{step.desc}</p>
-                </motion.div>
-              )
-            })}
+                  </motion.div>
+                )
+              })}
+            </div>
           </div>
+
+          {/* CTA below steps */}
+          <motion.div variants={fadeUp} className="text-center mt-12">
+            <Link href="/assessment"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90 hover:scale-[1.02]"
+              style={{ background: '#7C3AED', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(124,58,237,0.2)' }}>
+              Start with the free assessment <ArrowRight size={14} />
+            </Link>
+            <p className="mt-3 text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+              Takes 3 minutes · No credit card required
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -714,50 +817,160 @@ const TRACKS = [
   { id: 'consulting', icon: BarChart,     label: 'Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'] },
 ]
 
+const TRACK_PREVIEWS: Record<string, { headline: string; modules: { title: string; lessons: string[] }[] }> = {
+  marketing:  { headline: 'Your AI toolkit for campaigns, copy, and growth', modules: [{ title: 'AI Copywriting', lessons: ['Write campaign briefs with AI in 10 minutes', 'Generating 50 ad variants from one prompt'] }, { title: 'Campaign Automation', lessons: ['Auto-scheduling content across channels', 'AI-powered A/B testing workflows'] }, { title: 'Audience Intelligence', lessons: ['Segmenting audiences with AI analysis', 'Predicting campaign ROI before launch'] }] },
+  finance:    { headline: 'AI that cuts your reporting time in half', modules: [{ title: 'Financial Modelling', lessons: ['Building dynamic forecasts with AI', 'Automating variance analysis reports'] }, { title: 'AI for FP&A', lessons: ['AI-assisted scenario planning', 'Generating board-ready summaries from data'] }, { title: 'Risk & Compliance', lessons: ['Using AI for risk flag detection', 'Automating regulatory reporting'] }] },
+  hr:         { headline: 'Hire faster, develop better, retain longer', modules: [{ title: 'AI Talent Acquisition', lessons: ['Screening 200 CVs in under an hour', 'Writing inclusive job descriptions with AI'] }, { title: 'L&D Automation', lessons: ['Building personalised learning plans at scale', 'AI-driven skills gap analysis'] }, { title: 'HR Analytics', lessons: ['Predicting attrition before it happens', 'Automating your employee pulse reports'] }] },
+  sales:      { headline: 'Spend less time researching, more time closing', modules: [{ title: 'AI Prospect Research', lessons: ['Building a 50-lead list in 20 minutes', 'Finding trigger events with AI tools'] }, { title: 'Outreach & Proposals', lessons: ['Personalising cold emails at scale', 'Generating winning proposals in 30 minutes'] }, { title: 'Pipeline Intelligence', lessons: ['AI-powered deal scoring', 'Forecasting close rates from CRM data'] }] },
+  operations: { headline: 'Automate the repeatable. Focus on what matters.', modules: [{ title: 'Process Automation', lessons: ['Mapping and automating manual workflows', 'Building AI decision trees for ops'] }, { title: 'Supply Chain AI', lessons: ['Demand forecasting with AI tools', 'Using AI to identify supply chain risks'] }, { title: 'Quality & Reporting', lessons: ['Automated anomaly detection in ops data', 'AI-assisted root cause analysis'] }] },
+  leadership: { headline: 'Lead your organisation through the AI transition', modules: [{ title: 'AI Strategy', lessons: ['Building your organisation\'s AI roadmap', 'Evaluating AI tools without a technical background'] }, { title: 'Change Management', lessons: ['Communicating AI adoption to your team', 'Managing resistance to AI transformation'] }, { title: 'Executive Decisions', lessons: ['Using AI for strategic scenario planning', 'AI-assisted competitive intelligence'] }] },
+  legal:      { headline: 'Review faster. Research deeper. Risk less.', modules: [{ title: 'Contract Analysis', lessons: ['Reviewing a 60-page contract in 20 minutes', 'Flagging risk clauses automatically'] }, { title: 'Legal Research', lessons: ['AI-assisted case law research', 'Building legal memos with AI assistance'] }, { title: 'AI Governance', lessons: ['AI liability frameworks for counsel', 'Drafting AI usage policies for clients'] }] },
+  product:    { headline: 'From user insight to shipped feature — faster', modules: [{ title: 'User Research AI', lessons: ['Synthesising 50 interviews in one afternoon', 'AI-assisted Jobs-to-be-Done analysis'] }, { title: 'Roadmap & PRD', lessons: ['Prioritising your backlog with AI scoring', 'Generating a full PRD from discovery notes'] }, { title: 'AI Product Strategy', lessons: ['Deciding where AI adds value in your product', 'Writing AI feature specs that engineering ships'] }] },
+  customer:   { headline: 'Prevent churn before it happens', modules: [{ title: 'Health Monitoring', lessons: ['Building an AI churn prediction model', 'Automated health score alerts'] }, { title: 'Personalisation at Scale', lessons: ['AI-tailored QBR prep for every account', 'Personalising onboarding with AI'] }, { title: 'CS Operations', lessons: ['Automating your renewal pipeline', 'AI-assisted escalation routing'] }] },
+  consulting: { headline: 'Deliver deeper insights, faster', modules: [{ title: 'Research & Synthesis', lessons: ['Synthesising 100-page reports in minutes', 'AI-powered competitive landscape analysis'] }, { title: 'Structured Analysis', lessons: ['Building frameworks with AI assistance', 'Issue tree generation from project briefs'] }, { title: 'Client Deliverables', lessons: ['Drafting executive slide narratives with AI', 'AI-assisted proposal writing'] }] },
+}
+
 function RoleTracks() {
+  const [active, setActive] = useState('marketing')
   const { ref, isInView } = useReveal()
+  const track = TRACKS.find(t => t.id === active)!
+  const preview = TRACK_PREVIEWS[active]
+  const Icon = track.icon
+
   return (
-    <section id="tracks" className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
+    <section id="tracks" className="py-14 sm:py-20" style={{ background: '#F8FAFC' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
-          <motion.div variants={fadeUp} className="text-center mb-14">
+          <motion.div variants={fadeUp} className="text-center mb-12">
             <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>Role-based tracks</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              Built for your job, not a generic audience
+              Every track is built around<br className="hidden sm:block" /> your specific role
             </h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              Every track is designed around the real tasks you face — not abstract AI theory.
+            <p className="text-base max-w-xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              A Marketing Manager and a Finance Director get completely different content — because their AI use cases are completely different.
             </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {TRACKS.map(track => {
-              const Icon = track.icon
-              return (
-                <motion.div key={track.id} variants={fadeUp}>
-                  <Link href={`/tracks/${track.id}`}
-                    className="group block p-6 rounded-2xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
-                    style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                    <div className="h-0.5 w-8 rounded-full mb-5" style={{ background: track.color }} />
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: track.color + '12' }}>
-                        <Icon size={19} style={{ color: track.color }} />
+
+          <motion.div variants={fadeUp} className="grid lg:grid-cols-[280px_1fr] gap-6 items-start">
+            {/* Role selector — left */}
+            <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+              {TRACKS.map(t => {
+                const TIcon = t.icon
+                const isActive = t.id === active
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => setActive(t.id)}
+                    className="flex items-center gap-2.5 px-4 py-3 rounded-xl text-left transition-all flex-shrink-0 lg:w-full"
+                    style={{
+                      background: isActive ? '#FFFFFF' : 'transparent',
+                      border: isActive ? `1px solid ${t.color}30` : '1px solid transparent',
+                      boxShadow: isActive ? `0 2px 12px ${t.color}18` : 'none',
+                      fontFamily: 'var(--font-sans)',
+                    }}
+                  >
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ background: isActive ? t.color : '#E2E8F0' }}>
+                      <TIcon size={13} style={{ color: isActive ? '#FFFFFF' : '#94A3B8' }} />
+                    </div>
+                    <span className="text-sm font-semibold whitespace-nowrap"
+                      style={{ color: isActive ? '#0F172A' : '#64748B' }}>
+                      {t.label}
+                    </span>
+                    {isActive && <ChevronRight size={13} className="ml-auto hidden lg:block" style={{ color: track.color }} />}
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Preview panel — right */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22 }}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}
+              >
+                {/* Header */}
+                <div className="px-7 py-6" style={{ borderBottom: '1px solid #F1F5F9', background: '#FAFBFC' }}>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                        style={{ background: track.color }}>
+                        <Icon size={18} className="text-white" />
                       </div>
-                      <ChevronRight size={15} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: track.color }} />
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-widest mb-0.5"
+                          style={{ color: track.color, fontFamily: 'var(--font-sans)' }}>
+                          {track.label} Track
+                        </p>
+                        <h3 className="text-base font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                          {preview.headline}
+                        </h3>
+                      </div>
                     </div>
-                    <h3 className="text-base font-black mb-3" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>{track.label}</h3>
-                    <div className="flex flex-wrap gap-1.5">
-                      {track.skills.map(skill => (
-                        <span key={skill} className="text-xs px-2 py-0.5 rounded-md font-medium"
-                          style={{ background: '#F8FAFC', color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0' }}>
-                          {skill}
-                        </span>
-                      ))}
+                    <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full flex-shrink-0"
+                      style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}>
+                      <Sparkles size={11} style={{ color: '#7C3AED' }} />
+                      <span className="text-xs font-semibold" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                        Personalised for your role
+                      </span>
                     </div>
-                  </Link>
-                </motion.div>
-              )
-            })}
-          </div>
+                  </div>
+                </div>
+
+                {/* Modules */}
+                <div className="p-7">
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    {preview.modules.map((mod, mi) => (
+                      <div key={mod.title} className="p-4 rounded-xl" style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
+                            style={{ background: track.color }}>
+                            <span className="text-[9px] font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>
+                              {String(mi + 1).padStart(2, '0')}
+                            </span>
+                          </div>
+                          <p className="text-xs font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                            {mod.title}
+                          </p>
+                        </div>
+                        <ul className="space-y-2">
+                          {mod.lessons.map(lesson => (
+                            <li key={lesson} className="flex items-start gap-1.5">
+                              <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0" style={{ background: track.color }} />
+                              <span className="text-xs leading-snug" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                                {lesson}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Footer CTA */}
+                  <div className="mt-5 pt-5 flex flex-col sm:flex-row items-center justify-between gap-4"
+                    style={{ borderTop: '1px solid #F1F5F9' }}>
+                    <p className="text-sm" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      Not seeing your role?{' '}
+                      <span style={{ color: '#0F172A', fontWeight: 600 }}>
+                        The assessment tailors your path even further.
+                      </span>
+                    </p>
+                    <Link href="/assessment"
+                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
+                      style={{ background: track.color, fontFamily: 'var(--font-sans)' }}>
+                      Get my {track.label} path <ArrowRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -778,7 +991,7 @@ const FEATURES = [
 function Features() {
   const { ref, isInView } = useReveal()
   return (
-    <section className="py-20 sm:py-28" style={{ background: '#FFFFFF' }}>
+    <section className="py-14 sm:py-20" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-16">
@@ -820,7 +1033,7 @@ const TEAM_FEATURES = [
 function TeamsSection() {
   const { ref, isInView } = useReveal()
   return (
-    <section className="py-20 sm:py-28 overflow-hidden" style={{ background: '#F8FAFC' }}>
+    <section className="py-14 sm:py-20 overflow-hidden" style={{ background: '#F8FAFC' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -989,28 +1202,69 @@ const TESTIMONIALS = [
 
 function Testimonials() {
   const { ref, isInView } = useReveal()
+  const featured = TESTIMONIALS[3] // Marcus Reid — concrete time-saving stat
+  const rest = TESTIMONIALS.filter((_, i) => i !== 3)
   return (
-    <section className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
+    <section className="py-14 sm:py-20" style={{ background: '#F8FAFC' }}>
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
-          <motion.div variants={fadeUp} className="text-center mb-14">
+        <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
+          <motion.div variants={fadeUp} className="text-center mb-12">
             <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>What people say</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
               Real results from real professionals
             </h2>
           </motion.div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map(t => (
-              <motion.div key={t.name} variants={fadeUp} className="p-7 rounded-2xl flex flex-col"
-                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, i) => <Star key={i} size={13} fill="#F59E0B" color="#F59E0B" />)}
+
+          {/* Featured testimonial */}
+          <motion.div variants={fadeUp} className="relative mb-6 p-8 sm:p-10 rounded-2xl overflow-hidden"
+            style={{ background: '#0F172A', boxShadow: '0 20px 48px rgba(15,23,42,0.18)' }}>
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.18) 0%, transparent 60%)' }} />
+            <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-center">
+              <div>
+                <div className="flex gap-0.5 mb-5">
+                  {[...Array(5)].map((_, i) => <Star key={i} size={15} fill="#F59E0B" color="#F59E0B" />)}
                 </div>
-                <p className="text-sm leading-relaxed flex-1 mb-5" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                <blockquote className="text-xl sm:text-2xl lg:text-3xl font-black leading-snug mb-7 text-white"
+                  style={{ fontFamily: 'var(--font-sans)' }}>
+                  &ldquo;{featured.quote}&rdquo;
+                </blockquote>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-black text-white flex-shrink-0"
+                    style={{ background: featured.color }}>
+                    {featured.avatar}
+                  </div>
+                  <div>
+                    <p className="text-base font-bold text-white" style={{ fontFamily: 'var(--font-sans)' }}>{featured.name}</p>
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)' }}>
+                      {featured.role} · {featured.company}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="hidden md:flex flex-col items-center justify-center gap-3 text-center px-8 py-6 rounded-2xl"
+                style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', minWidth: 160 }}>
+                <p className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>−78%</p>
+                <p className="text-xs leading-snug" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)' }}>
+                  time spent on<br />prospect research
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Remaining testimonials */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {rest.map(t => (
+              <motion.div key={t.name} variants={fadeUp} className="p-6 rounded-2xl flex flex-col"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                <div className="flex gap-0.5 mb-3.5">
+                  {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#F59E0B" color="#F59E0B" />)}
+                </div>
+                <p className="text-sm leading-relaxed flex-1 mb-4" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
                   &ldquo;{t.quote}&rdquo;
                 </p>
-                <div className="flex items-center gap-3 pt-5" style={{ borderTop: '1px solid #F1F5F9' }}>
-                  <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
+                <div className="flex items-center gap-3 pt-4" style={{ borderTop: '1px solid #F1F5F9' }}>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
                     style={{ background: t.color }}>
                     {t.avatar}
                   </div>
@@ -1061,7 +1315,7 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(null)
   const { ref, isInView } = useReveal()
   return (
-    <section className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
+    <section className="py-14 sm:py-20" style={{ background: '#F8FAFC' }}>
       <div className="max-w-3xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-14">
@@ -1119,7 +1373,7 @@ const plans = [
     cta: 'Start Free', highlight: false,
   },
   {
-    name: 'Professional', monthlyPrice: '49', annualPrice: '39',
+    name: 'Professional', monthlyPrice: '19', annualPrice: '15',
     desc: '7-day free trial · Full access to your personalised path',
     features: ['All lessons in your track', 'AI-personalised curriculum', 'All 10 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
     cta: 'Start 7-Day Free Trial', highlight: true,
@@ -1138,7 +1392,7 @@ function Pricing() {
   const { openSignUp } = useAuth()
 
   return (
-    <section id="pricing" className="py-20 sm:py-28" style={{ background: '#FFFFFF' }}>
+    <section id="pricing" className="py-14 sm:py-20" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
@@ -1216,7 +1470,7 @@ function Pricing() {
                   )}
                   {plan.highlight && (
                     <p className="text-center text-xs mt-2.5" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)' }}>
-                      Free for 7 days &middot; $49/mo after &middot; Cancel anytime
+                      Free for 7 days &middot; $19/mo after &middot; Cancel anytime
                     </p>
                   )}
                 </div>
@@ -1287,7 +1541,7 @@ function About() {
   ]
 
   return (
-    <section id="about" className="py-20 sm:py-28" style={{ background: '#F8FAFC' }}>
+    <section id="about" className="py-14 sm:py-20" style={{ background: '#F8FAFC' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
 

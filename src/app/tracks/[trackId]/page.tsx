@@ -7,7 +7,7 @@ import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen,
   Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap, LogOut,
-  Scale, Package, Headphones, BarChart, ArrowRight, Users,
+  Scale, Package, Headphones, BarChart, ArrowRight, Users, Sparkles,
 } from 'lucide-react'
 import { getTrack } from '@/lib/curriculum'
 import { useGame } from '@/context/GameContext'
@@ -227,19 +227,46 @@ export default function TrackPage() {
                 <Icon size={26} color={meta.color} />
               </div>
               <div>
-                <p className="text-xs font-semibold mb-0.5" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
-                  Role Track
-                </p>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <p className="text-xs font-semibold" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+                    Role Track
+                  </p>
+                  <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full"
+                    style={{ background: '#FEF3C7', color: '#92400E', border: '1px solid #FDE68A', fontFamily: 'var(--font-sans)' }}>
+                    Sample preview
+                  </span>
+                </div>
                 <h1 className="text-3xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
                   {meta.title}
                 </h1>
               </div>
             </motion.div>
 
-            <motion.p variants={fadeUp} className="text-base max-w-2xl mb-7 leading-relaxed"
+            <motion.p variants={fadeUp} className="text-base max-w-2xl mb-5 leading-relaxed"
               style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
               {meta.description}
             </motion.p>
+
+            {/* Personalisation callout */}
+            <motion.div variants={fadeUp} className="max-w-2xl mb-7 p-4 rounded-xl flex items-start gap-3"
+              style={{ background: '#F5F3FF', border: '1px solid #EDE9FE' }}>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: '#7C3AED' }}>
+                <Sparkles size={13} className="text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                  This is a sample — your version gets personalised
+                </p>
+                <p className="text-sm leading-relaxed" style={{ color: '#6D28D9', fontFamily: 'var(--font-sans)' }}>
+                  After the 3-minute assessment, the module order, examples, and exercises inside this track adapt to your specific role, seniority, and goals. A Marketing Director and a Growth Manager get different versions of the same track.
+                </p>
+                <Link href="/assessment"
+                  className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-semibold"
+                  style={{ color: '#7C3AED', fontFamily: 'var(--font-sans)' }}>
+                  Get my personalised version <ArrowRight size={11} />
+                </Link>
+              </div>
+            </motion.div>
 
             <motion.div variants={fadeUp} className="flex items-center gap-6 mb-7">
               {[
@@ -291,16 +318,33 @@ export default function TrackPage() {
         </div>
 
         {/* Before / After */}
-        <div className="rounded-2xl p-6" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-          <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
-            What changes
-          </p>
-          <div className="space-y-3">
+        <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+          <div className="px-6 pt-5 pb-3">
+            <p className="text-xs font-bold tracking-widest uppercase" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+              What changes
+            </p>
+          </div>
+          <div className="px-4 pb-5 space-y-2.5">
             {meta.beforeAfter.map(({ before, after }, i) => (
-              <div key={i} className="flex items-center gap-2 text-sm">
-                <span className="flex-1 text-right leading-snug" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{before}</span>
-                <ArrowRight size={12} style={{ color: meta.color, flexShrink: 0 }} />
-                <span className="flex-1 leading-snug font-medium" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>{after}</span>
+              <div key={i} className="rounded-xl overflow-hidden" style={{ border: '1px solid #F1F5F9' }}>
+                <div className="flex items-start gap-2.5 px-4 py-2.5" style={{ background: '#FFF8F8' }}>
+                  <span className="text-[9px] font-black uppercase tracking-widest mt-0.5 flex-shrink-0"
+                    style={{ color: '#FCA5A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+                    Before
+                  </span>
+                  <span className="text-xs leading-snug" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    {before}
+                  </span>
+                </div>
+                <div className="flex items-start gap-2.5 px-4 py-2.5" style={{ background: '#F0FDF4', borderTop: `1px solid ${meta.color}15` }}>
+                  <span className="text-[9px] font-black uppercase tracking-widest mt-0.5 flex-shrink-0"
+                    style={{ color: meta.color, fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+                    After
+                  </span>
+                  <span className="text-xs leading-snug font-semibold" style={{ color: '#15803D', fontFamily: 'var(--font-sans)' }}>
+                    {after}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -309,9 +353,18 @@ export default function TrackPage() {
 
       {/* Modules */}
       <div className="max-w-5xl mx-auto px-6 py-12 space-y-4">
-        <h2 className="text-lg font-black mb-6" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-          Course Curriculum
-        </h2>
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+          <h2 className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+            Sample Curriculum
+          </h2>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+            style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <Sparkles size={12} style={{ color: '#7C3AED' }} />
+            <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              Module order &amp; content adapt after your assessment
+            </span>
+          </div>
+        </div>
         {modules.map((mod, mi) => {
           const completedInModule = mod.lessonIds.filter(id => state.completedLessons.includes(id)).length
           const moduleComplete = state.completedModules.includes(mod.moduleId)

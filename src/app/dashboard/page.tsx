@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
+import { ShareCard } from '@/components/ShareCard'
 import { loadLatestAssessment } from '@/lib/supabase/db'
 import { getAdminTeam, getMemberTeam } from '@/lib/supabase/teams'
 import {
@@ -512,6 +513,7 @@ export default function DashboardPage() {
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [referralStats, setReferralStats] = useState<{ clicks: number; signups: number; conversions: number; reward_xp: number } | null>(null)
   const [copied, setCopied] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -663,14 +665,27 @@ export default function DashboardPage() {
               )}
             </AnimatePresence>
           </div>
-          <h1 className="text-3xl lg:text-4xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-            Welcome back, {displayName}.
-          </h1>
-          <p className="mt-1 text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-            {state.completedLessons.length > 0
-              ? `You've completed ${state.completedLessons.length} lesson${state.completedLessons.length === 1 ? '' : 's'} — keep the momentum going.`
-              : 'Ready to start your AI journey? Your personalised path is waiting.'}
-          </p>
+          <div className="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <h1 className="text-3xl lg:text-4xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                Welcome back, {displayName}.
+              </h1>
+              <p className="mt-1 text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                {state.completedLessons.length > 0
+                  ? `You've completed ${state.completedLessons.length} lesson${state.completedLessons.length === 1 ? '' : 's'} — keep the momentum going.`
+                  : 'Ready to start your AI journey? Your personalised path is waiting.'}
+              </p>
+            </div>
+            {state.completedLessons.length > 0 && (
+              <button
+                onClick={() => setShareOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
+                style={{ background: '#EDE9FE', color: '#7C3AED', border: '1px solid #DDD6FE', fontFamily: 'var(--font-sans)' }}
+              >
+                <Share2 size={14} /> Share progress
+              </button>
+            )}
+          </div>
         </motion.div>
 
         {/* Stats row */}
@@ -803,6 +818,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+      <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#7C3AED" />
     </div>
   )
 }
