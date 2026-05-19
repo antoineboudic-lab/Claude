@@ -38,11 +38,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(session)
       setUser(session?.user ?? null)
 
+      if (typeof window === 'undefined') return
+
       // After sign-in, honour ?next= param, otherwise go to /dashboard
-      if (event === 'SIGNED_IN' && typeof window !== 'undefined') {
+      if (event === 'SIGNED_IN') {
         const params = new URLSearchParams(window.location.search)
         const next = params.get('next')
         setTimeout(() => { window.location.href = next ?? '/dashboard' }, 400)
+      }
+
+      // After sign-out, always return to home
+      if (event === 'SIGNED_OUT') {
+        window.location.href = '/'
       }
     })
 
@@ -50,6 +57,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const signOut = useCallback(async () => {
+    // Clear any tokens stored in sessionStorage (Remember me = false path)
+    Object.keys(sessionStorage)
+      .filter(k => k.startsWith('sb-'))
+      .forEach(k => sessionStorage.removeItem(k))
     await supabase.current.auth.signOut()
   }, [])
 
