@@ -1468,6 +1468,13 @@ export default function LessonPage() {
 
           <div className="flex-1" />
           <div className="flex items-center gap-3 flex-shrink-0">
+            {user && (
+              <Link href="/dashboard" title="Dashboard"
+                className="hidden sm:flex items-center gap-1 text-xs font-medium transition-colors hover:text-slate-700"
+                style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                <Zap size={12} /> Dashboard
+              </Link>
+            )}
             <button
               onClick={() => setSearchOpen(true)}
               title="Search lessons (⌘K)"

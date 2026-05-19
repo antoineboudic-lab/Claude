@@ -291,11 +291,26 @@ export default function AssessmentResultsPage() {
             AI Literacy
           </span>
         </Link>
-        <Link href="/assessment"
-          className="flex items-center gap-1.5 text-xs font-medium"
-          style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-          <RefreshCw size={12} /> Retake assessment
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/assessment"
+            className="flex items-center gap-1.5 text-xs font-medium"
+            style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            <RefreshCw size={12} /> Retake
+          </Link>
+          {user ? (
+            <Link href="/dashboard"
+              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors hover:opacity-80"
+              style={{ color: '#2563EB', background: '#DBEAFE', fontFamily: 'var(--font-sans)' }}>
+              <Zap size={11} /> Dashboard
+            </Link>
+          ) : (
+            <button onClick={() => openSignUp(captureEmail)}
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition-all hover:opacity-90"
+              style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+              Sign up free
+            </button>
+          )}
+        </div>
       </header>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
@@ -804,7 +819,7 @@ export default function AssessmentResultsPage() {
             {!user ? (
               <div className="flex flex-col items-center gap-3">
                 <button
-                  onClick={() => openSignUp()}
+                  onClick={() => openSignUp(captureEmail)}
                   className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                   style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.3)', fontFamily: 'var(--font-sans)' }}>
                   <Zap size={14} /> Create free account &amp; start learning
