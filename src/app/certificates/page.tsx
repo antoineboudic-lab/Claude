@@ -2,7 +2,11 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Award, CheckCircle2, ArrowRight, Shield, Building2, Download, Star } from 'lucide-react'
+import { Award, CheckCircle2, ArrowRight, Shield, Building2, Star, ExternalLink } from 'lucide-react'
+import { useGame } from '@/context/GameContext'
+import { useAuth } from '@/context/AuthContext'
+import { getTrack } from '@/lib/curriculum'
+import type { TrackId } from '@/lib/curriculum/types'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -11,6 +15,44 @@ const fadeUp = {
 
 function stagger(delay = 0.1) {
   return { hidden: {}, visible: { transition: { staggerChildren: delay } } }
+}
+
+function EarnedCertificates({ completedTracks }: { completedTracks: string[] }) {
+  if (completedTracks.length === 0) return null
+  return (
+    <section style={{ background: '#F0FDF4', borderBottom: '1px solid #BBF7D0', padding: '24px 0' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+          <CheckCircle2 size={16} color="#10B981" />
+          <p style={{ fontSize: '0.875rem', fontWeight: 700, color: '#065F46', fontFamily: 'var(--font-sans)' }}>
+            Your earned certificates
+          </p>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+          {completedTracks.map(trackId => {
+            const track = getTrack(trackId as TrackId)
+            if (!track) return null
+            return (
+              <Link
+                key={trackId}
+                href={`/certificates/${trackId}`}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '8px',
+                  padding: '8px 14px', borderRadius: '10px',
+                  background: '#FFFFFF', border: `1px solid ${track.color}30`,
+                  textDecoration: 'none', fontFamily: 'var(--font-sans)',
+                }}
+              >
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: track.color, flexShrink: 0 }} />
+                <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#0F172A' }}>{track.title}</span>
+                <ExternalLink size={12} color="#94A3B8" />
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
 }
 
 const TRACKS = [
@@ -29,6 +71,9 @@ const TRACKS = [
 const LOGOS = ['McKinsey', 'Deloitte', 'Goldman Sachs', 'Accenture', 'L\'Oréal', 'Nestlé']
 
 export default function CertificatesPage() {
+  const { state } = useGame()
+  const { user } = useAuth()
+
   return (
     <main style={{ background: '#F8FAFC', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
@@ -46,6 +91,8 @@ export default function CertificatesPage() {
           Get certified
         </Link>
       </nav>
+
+      {user && <EarnedCertificates completedTracks={state.completedTracks} />}
 
       {/* Hero */}
       <section className="py-20 sm:py-28" style={{ background: '#FFFFFF' }}>

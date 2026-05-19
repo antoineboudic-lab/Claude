@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
-  Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search,
+  Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search, ExternalLink,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
@@ -851,6 +851,46 @@ export default function DashboardPage() {
               activityDates={state.activityDates ?? []}
             />
             <BadgesSection earned={state.earnedBadges} />
+
+            {/* Certificates */}
+            {state.completedTracks.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.38, duration: 0.55, ease: easing }}
+                className="rounded-2xl p-5"
+                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <Award size={14} style={{ color: '#F59E0B' }} />
+                  <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    Your certificates
+                  </p>
+                  <span className="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: '#FEF3C7', color: '#92400E' }}>
+                    {state.completedTracks.length}
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  {state.completedTracks.map(trackId => {
+                    const t = getAllTracks().find(t => t.id === trackId)
+                    if (!t) return null
+                    return (
+                      <Link
+                        key={trackId}
+                        href={`/certificates/${trackId}`}
+                        className="flex items-center gap-3 p-2.5 rounded-xl transition-colors hover:bg-slate-50 group"
+                      >
+                        <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: t.color }} />
+                        <span className="text-sm font-medium flex-1 truncate" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                          {t.title}
+                        </span>
+                        <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#CBD5E1' }} />
+                      </Link>
+                    )
+                  })}
+                </div>
+              </motion.div>
+            )}
 
             {/* Quick links */}
             <motion.div
