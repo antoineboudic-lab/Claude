@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
-  Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon,
+  Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
 import { ShareCard } from '@/components/ShareCard'
+import GlobalSearch from '@/components/GlobalSearch'
 import { loadLatestAssessment } from '@/lib/supabase/db'
 import { getAdminTeam, getMemberTeam } from '@/lib/supabase/teams'
 import {
@@ -514,6 +515,18 @@ export default function DashboardPage() {
   const [referralStats, setReferralStats] = useState<{ clicks: number; signups: number; conversions: number; reward_xp: number } | null>(null)
   const [copied, setCopied] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(v => !v)
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -602,6 +615,15 @@ export default function DashboardPage() {
           </Link>
 
           <div className="flex items-center gap-4">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
+              style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F8FAFC' }}
+            >
+              <Search size={13} />
+              <span>Search</span>
+              <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
+            </button>
             <Link href="/tracks" className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700"
               style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               <BookOpen size={14} /> All Tracks
@@ -819,6 +841,7 @@ export default function DashboardPage() {
         </div>
       </div>
       <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#7C3AED" />
+      {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
     </div>
   )
 }
