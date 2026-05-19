@@ -186,7 +186,7 @@ export default function AssessmentResultsPage() {
   const [captureEmail, setCaptureEmail] = useState('')
   const [captureLoading, setCaptureLoading] = useState(false)
   const [captureError, setCaptureError] = useState('')
-  const { user, openSignUp } = useAuth()
+  const { user, openSignUp, openSignIn } = useAuth()
 
   const pathUnlocked = !!user || emailUnlocked
 
@@ -419,7 +419,7 @@ export default function AssessmentResultsPage() {
                   </div>
                   <p className="text-xs mt-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                     Already have an account?{' '}
-                    <button onClick={openSignUp} className="underline hover:text-slate-600 transition-colors" style={{ color: '#64748B' }}>
+                    <button onClick={openSignIn} className="underline hover:text-slate-600 transition-colors" style={{ color: '#64748B' }}>
                       Sign in
                     </button>
                   </p>
@@ -428,29 +428,48 @@ export default function AssessmentResultsPage() {
             ) : !user && emailUnlocked ? (
               <motion.div
                 key="save-banner"
-                initial={{ opacity: 0, y: -8 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-5 py-4 rounded-2xl"
-                style={{ background: '#DBEAFE', border: '1px solid #BFDBFE' }}
+                className="rounded-2xl overflow-hidden"
+                style={{ background: '#FFFFFF', border: '2px solid #2563EB', boxShadow: '0 0 0 4px rgba(37,99,235,0.08)' }}
               >
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#BFDBFE' }}>
-                    <Zap size={15} color="#2563EB" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                      Save your path to track progress
-                    </p>
-                    <p className="text-xs mt-0.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                      Create your free account and pick up where you left off.
+                <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }} />
+                <div className="px-6 py-7">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#DBEAFE' }}>
+                      <Zap size={14} style={{ color: '#2563EB' }} />
+                    </div>
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                      One last step
                     </p>
                   </div>
+                  <h3 className="text-xl font-black mb-2" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    Create your free account to start learning
+                  </h3>
+                  <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                    Your personalised path is saved. Create an account to track your progress, earn XP, and get lesson reminders — free forever.
+                  </p>
+                  <button
+                    onClick={openSignUp}
+                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+                    style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', boxShadow: '0 4px 20px rgba(37,99,235,0.35)', fontFamily: 'var(--font-sans)' }}
+                  >
+                    <Zap size={14} /> Create free account — it takes 30 seconds
+                  </button>
+                  <div className="flex items-center justify-center gap-5 mt-4">
+                    {['Free forever', 'No credit card', 'Keep your results'].map(t => (
+                      <div key={t} className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                        <Check size={10} color="#10B981" /> {t}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs mt-4 text-center" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    Already have an account?{' '}
+                    <button onClick={openSignIn} className="underline hover:text-slate-600 transition-colors" style={{ color: '#64748B' }}>
+                      Sign in
+                    </button>
+                  </p>
                 </div>
-                <button onClick={openSignUp}
-                  className="flex-shrink-0 w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-                  style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                  Create free account
-                </button>
               </motion.div>
             ) : null}
           </AnimatePresence>
@@ -781,14 +800,31 @@ export default function AssessmentResultsPage() {
             <p className="text-sm mb-5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               Each lesson is 15–20 minutes. Your progress is saved automatically.
             </p>
-            {firstEssentialLesson && (
+            {!user ? (
+              <div className="flex flex-col items-center gap-3">
+                <button
+                  onClick={openSignUp}
+                  className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+                  style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.3)', fontFamily: 'var(--font-sans)' }}>
+                  <Zap size={14} /> Create free account &amp; start learning
+                </button>
+                {firstEssentialLesson && (
+                  <Link
+                    href={`/tracks/${firstEssentialLesson.trackId}/lessons/${firstEssentialLesson.lessonId}`}
+                    className="text-xs transition-colors hover:text-slate-600"
+                    style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    Start without an account →
+                  </Link>
+                )}
+              </div>
+            ) : firstEssentialLesson ? (
               <Link
                 href={`/tracks/${firstEssentialLesson.trackId}/lessons/${firstEssentialLesson.lessonId}`}
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-white"
                 style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                 Start learning now <ArrowRight size={14} />
               </Link>
-            )}
+            ) : null}
           </motion.div>
 
         </motion.div>
