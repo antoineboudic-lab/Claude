@@ -41,7 +41,7 @@ export default function OGImage({ params }: { params: { trackId: string } }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{
             width: 44, height: 44, borderRadius: 12,
-            background: '#0D9488', display: 'flex',
+            background: '#2563EB', display: 'flex',
             alignItems: 'center', justifyContent: 'center',
           }}>
             <span style={{ color: '#fff', fontSize: 22, fontWeight: 900 }}>⚡</span>

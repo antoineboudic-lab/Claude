@@ -73,7 +73,7 @@ export default function FloatingAssistant() {
 
   const lessonTitle = lessonData?.lesson.title
   const trackId = lessonContext?.trackId
-  const accentColor = trackData?.color ?? '#0D9488'
+  const accentColor = trackData?.color ?? '#2563EB'
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -240,7 +240,7 @@ export default function FloatingAssistant() {
                         onClick={() => submit(prompt)}
                         style={{
                           textAlign: 'left',
-                          background: '#F0FDFA',
+                          background: '#EFF6FF',
                           border: '1px solid #E2E8F0',
                           borderRadius: '8px',
                           padding: '8px 10px',
@@ -251,7 +251,7 @@ export default function FloatingAssistant() {
                           lineHeight: 1.4,
                         }}
                         onMouseEnter={e => { e.currentTarget.style.background = '#F1F5F9'; e.currentTarget.style.borderColor = '#CBD5E1' }}
-                        onMouseLeave={e => { e.currentTarget.style.background = '#F0FDFA'; e.currentTarget.style.borderColor = '#E2E8F0' }}
+                        onMouseLeave={e => { e.currentTarget.style.background = '#EFF6FF'; e.currentTarget.style.borderColor = '#E2E8F0' }}
                       >
                         {prompt}
                       </button>
@@ -269,7 +269,7 @@ export default function FloatingAssistant() {
                       borderRadius: m.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
                       maxWidth: '86%',
                       lineHeight: 1.6,
-                      background: m.role === 'user' ? '#0F172A' : '#F0FDFA',
+                      background: m.role === 'user' ? '#0F172A' : '#EFF6FF',
                       color: m.role === 'user' ? '#FFFFFF' : '#334155',
                       border: m.role === 'assistant' ? '1px solid #E2E8F0' : 'none',
                       whiteSpace: 'pre-wrap',
@@ -286,7 +286,7 @@ export default function FloatingAssistant() {
                     fontSize: '0.875rem',
                     padding: '7px 14px',
                     borderRadius: '12px 12px 12px 2px',
-                    background: '#F0FDFA',
+                    background: '#EFF6FF',
                     border: '1px solid #E2E8F0',
                     color: '#94A3B8',
                     letterSpacing: '0.05em',
@@ -391,7 +391,7 @@ export default function FloatingAssistant() {
               position: 'absolute',
               inset: 0,
               borderRadius: '50%',
-              border: '2px solid rgba(13, 148, 136, 0.35)',
+              border: '2px solid rgba(37, 99, 235, 0.35)',
               pointerEvents: 'none',
             }}
             animate={{ scale: [1, 1.25, 1], opacity: [0.7, 0, 0.7] }}

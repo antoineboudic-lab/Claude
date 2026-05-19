@@ -11,7 +11,7 @@ import type { Team } from '@/lib/supabase/teams'
 
 const PLANS = [
   { id: 'starter' as const, label: 'Starter', seats: '5–15 seats', price: '$49/seat/mo', color: '#10B981' },
-  { id: 'growth' as const, label: 'Growth', seats: '16–50 seats', price: '$39/seat/mo', color: '#0D9488', popular: true },
+  { id: 'growth' as const, label: 'Growth', seats: '16–50 seats', price: '$39/seat/mo', color: '#2563EB', popular: true },
   { id: 'enterprise' as const, label: 'Enterprise', seats: '50+ seats', price: 'Custom', color: '#0EA5E9' },
 ]
 
@@ -46,20 +46,20 @@ export default function CreateTeamPage() {
   }
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: '#F0FDFA' }}>
+    <div className="min-h-screen flex items-center justify-center" style={{ background: '#EFF6FF' }}>
       <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-        style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }} />
+        style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }} />
     </div>
   )
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 py-16"
-      style={{ background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
+      style={{ background: '#EFF6FF', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <div className="fixed top-0 left-0 right-0 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
@@ -76,8 +76,8 @@ export default function CreateTeamPage() {
         className="w-full max-w-lg mt-12">
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
-            style={{ background: '#CCFBF1' }}>
-            <Users size={26} style={{ color: '#0D9488' }} />
+            style={{ background: '#DBEAFE' }}>
+            <Users size={26} style={{ color: '#2563EB' }} />
           </div>
           <h1 className="text-3xl font-black mb-2" style={{ color: '#0F172A' }}>Create your team</h1>
           <p className="text-base" style={{ color: '#64748B' }}>
@@ -93,8 +93,8 @@ export default function CreateTeamPage() {
               Team name
             </label>
             <div className="flex items-center gap-2 px-4 rounded-xl"
-              style={{ border: '1.5px solid #E2E8F0', background: '#F0FDFA' }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = '#0D9488')}
+              style={{ border: '1.5px solid #E2E8F0', background: '#EFF6FF' }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = '#2563EB')}
               onBlur={(e) => (e.currentTarget.style.borderColor = '#E2E8F0')}>
               <Building2 size={15} style={{ color: '#94A3B8' }} />
               <input
@@ -123,7 +123,7 @@ export default function CreateTeamPage() {
                   className="w-full flex items-center gap-4 p-4 rounded-xl transition-all text-left"
                   style={{
                     border: `2px solid ${plan === p.id ? p.color : '#E2E8F0'}`,
-                    background: plan === p.id ? `${p.color}06` : '#F0FDFA',
+                    background: plan === p.id ? `${p.color}06` : '#EFF6FF',
                   }}>
                   <div className="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
                     style={{ borderColor: plan === p.id ? p.color : '#CBD5E1' }}>
@@ -134,7 +134,7 @@ export default function CreateTeamPage() {
                       <span className="text-sm font-bold" style={{ color: '#0F172A' }}>{p.label}</span>
                       {p.popular && (
                         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md"
-                          style={{ background: '#CCFBF1', color: '#0D9488' }}>Most popular</span>
+                          style={{ background: '#DBEAFE', color: '#2563EB' }}>Most popular</span>
                       )}
                     </div>
                     <span className="text-xs" style={{ color: '#94A3B8' }}>{p.seats}</span>
@@ -158,7 +158,7 @@ export default function CreateTeamPage() {
             type="submit"
             disabled={creating || !name.trim()}
             className="w-full py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
-            style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)' }}>
+            style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
             {creating ? (
               <span className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
                 style={{ borderColor: 'rgba(255,255,255,0.5)', borderTopColor: 'transparent' }} />
@@ -170,7 +170,7 @@ export default function CreateTeamPage() {
 
         <p className="text-center text-xs mt-6" style={{ color: '#94A3B8' }}>
           Looking for individual access?{' '}
-          <Link href="/dashboard" className="font-semibold hover:underline" style={{ color: '#0D9488' }}>
+          <Link href="/dashboard" className="font-semibold hover:underline" style={{ color: '#2563EB' }}>
             Go to your personal dashboard
           </Link>
         </p>

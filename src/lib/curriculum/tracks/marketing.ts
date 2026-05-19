@@ -6,7 +6,7 @@ export const marketingTrack: Track = {
   tagline: 'Create better content, faster campaigns, and smarter strategy with AI',
   description:
     'A practical curriculum for marketing professionals who want to harness AI across the full marketing workflow — from content creation and campaign planning to audience intelligence and performance reporting.',
-  color: '#0D9488',
+  color: '#2563EB',
   level: 'beginner',
   modules: [
     {

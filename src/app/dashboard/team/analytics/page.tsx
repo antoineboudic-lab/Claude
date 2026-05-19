@@ -69,7 +69,7 @@ function LeaderboardRow({ member, rank, max }: { member: TeamMember; rank: numbe
         {rank <= 3 ? medals[rank - 1] : <span className="text-xs font-bold" style={{ color: '#CBD5E1' }}>#{rank}</span>}
       </span>
       <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-        style={{ background: ['#0D9488','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][member.email.charCodeAt(0) % 10] }}>
+        style={{ background: ['#2563EB','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][member.email.charCodeAt(0) % 10] }}>
         {initials}
       </div>
       <div className="flex-1 min-w-0">
@@ -77,13 +77,13 @@ function LeaderboardRow({ member, rank, max }: { member: TeamMember; rank: numbe
           <p className="text-sm font-bold truncate" style={{ color: '#0F172A' }}>
             {member.display_name ?? member.email.split('@')[0]}
           </p>
-          <p className="text-sm font-black flex-shrink-0 ml-3" style={{ color: '#0D9488' }}>
+          <p className="text-sm font-black flex-shrink-0 ml-3" style={{ color: '#2563EB' }}>
             {xp.toLocaleString()} XP
           </p>
         </div>
         <div className="h-2 rounded-full" style={{ background: '#E2E8F0' }}>
           <div className="h-full rounded-full transition-all duration-1000"
-            style={{ width: `${pct}%`, background: rank === 1 ? '#F59E0B' : '#0D9488' }} />
+            style={{ width: `${pct}%`, background: rank === 1 ? '#F59E0B' : '#2563EB' }} />
         </div>
         <div className="flex items-center gap-4 mt-1 text-xs" style={{ color: '#94A3B8' }}>
           <span>{lessons} lessons</span>
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }} />
+          style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -149,9 +149,9 @@ export default function AnalyticsPage() {
   // Activity distribution: how many members completed 0, 1-5, 6-10, 10+ lessons
   const buckets = [
     { label: '0 lessons', count: active.filter(m => (m.lesson_count ?? 0) === 0).length, color: '#E2E8F0' },
-    { label: '1–5 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 1 && (m.lesson_count ?? 0) <= 5).length, color: '#99F6E4' },
-    { label: '6–15 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 6 && (m.lesson_count ?? 0) <= 15).length, color: '#5EEAD4' },
-    { label: '16+ lessons', count: active.filter(m => (m.lesson_count ?? 0) > 15).length, color: '#0D9488' },
+    { label: '1–5 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 1 && (m.lesson_count ?? 0) <= 5).length, color: '#BFDBFE' },
+    { label: '6–15 lessons', count: active.filter(m => (m.lesson_count ?? 0) >= 6 && (m.lesson_count ?? 0) <= 15).length, color: '#93C5FD' },
+    { label: '16+ lessons', count: active.filter(m => (m.lesson_count ?? 0) > 15).length, color: '#2563EB' },
   ]
   const maxBucket = Math.max(...buckets.map(b => b.count), 1)
 
@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
           <button
             onClick={() => exportCSV(members, team.name)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-80"
-            style={{ background: '#F0FDFA', color: '#475569', border: '1px solid #E2E8F0' }}>
+            style={{ background: '#EFF6FF', color: '#475569', border: '1px solid #E2E8F0' }}>
             <Download size={14} /> Export CSV
           </button>
         )}
@@ -175,7 +175,7 @@ export default function AnalyticsPage() {
       {/* Summary stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { icon: Users, label: 'Active members', value: stats.total, color: '#0D9488' },
+          { icon: Users, label: 'Active members', value: stats.total, color: '#2563EB' },
           { icon: Zap, label: 'Total XP earned', value: stats.totalXP.toLocaleString(), color: '#F59E0B', str: true },
           { icon: BookOpen, label: 'Lessons completed', value: stats.totalLessons, color: '#10B981' },
           { icon: Award, label: 'Tracks completed', value: stats.completedTracks, color: '#E04D2A' },
@@ -215,7 +215,7 @@ export default function AnalyticsPage() {
             <div className="rounded-2xl p-5"
               style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <div className="flex items-center gap-2 mb-5">
-                <Activity size={14} style={{ color: '#0D9488' }} />
+                <Activity size={14} style={{ color: '#2563EB' }} />
                 <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Member activity</p>
               </div>
               <div className="space-y-3">
@@ -242,7 +242,7 @@ export default function AnalyticsPage() {
           <div className="rounded-2xl p-5"
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="flex items-center gap-2 mb-5">
-              <TrendingUp size={14} style={{ color: '#0D9488' }} />
+              <TrendingUp size={14} style={{ color: '#2563EB' }} />
               <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Engagement levels</p>
             </div>
             <div className="space-y-3">
@@ -271,7 +271,7 @@ export default function AnalyticsPage() {
               </div>
               <div className="space-y-3">
                 {trackMatrix.map(({ track, assigned, completed, inProgress }) => {
-                  const color = TRACK_COLORS[track] ?? '#0D9488'
+                  const color = TRACK_COLORS[track] ?? '#2563EB'
                   const completePct = assigned > 0 ? (completed / assigned) * 100 : 0
                   const progressPct = assigned > 0 ? ((completed + inProgress) / assigned) * 100 : 0
                   return (
@@ -297,11 +297,11 @@ export default function AnalyticsPage() {
               </div>
               <div className="flex items-center gap-4 mt-4 pt-3 text-[10px]" style={{ borderTop: '1px solid #F1F5F9', color: '#94A3B8' }}>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2 rounded-sm" style={{ background: '#0D9488' }} />
+                  <div className="w-3 h-2 rounded-sm" style={{ background: '#2563EB' }} />
                   Completed
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-2 rounded-sm opacity-30" style={{ background: '#0D9488' }} />
+                  <div className="w-3 h-2 rounded-sm opacity-30" style={{ background: '#2563EB' }} />
                   In progress
                 </div>
               </div>
@@ -310,16 +310,16 @@ export default function AnalyticsPage() {
 
           {/* Team avg */}
           <div className="rounded-2xl p-5"
-            style={{ background: '#CCFBF1', border: '1px solid #99F6E4' }}>
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Team average</p>
+            style={{ background: '#DBEAFE', border: '1px solid #BFDBFE' }}>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Team average</p>
             <div className="space-y-2">
               {[
                 { label: 'Lessons per member', value: stats.avgLessons },
                 { label: 'Active this week', value: `${stats.activeThisWeek}/${stats.total}` },
               ].map(s => (
                 <div key={s.label} className="flex items-center justify-between text-sm">
-                  <span style={{ color: '#115E59' }}>{s.label}</span>
-                  <span className="font-bold" style={{ color: '#134E4A' }}>{s.value}</span>
+                  <span style={{ color: '#1E3A8A' }}>{s.label}</span>
+                  <span className="font-bold" style={{ color: '#1E3A8A' }}>{s.value}</span>
                 </div>
               ))}
             </div>

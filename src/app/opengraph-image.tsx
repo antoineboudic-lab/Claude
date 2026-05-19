@@ -23,7 +23,7 @@ export default function OGImage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{
             width: 44, height: 44, borderRadius: 12,
-            background: '#0D9488', display: 'flex',
+            background: '#2563EB', display: 'flex',
             alignItems: 'center', justifyContent: 'center',
           }}>
             <span style={{ color: '#fff', fontSize: 22, fontWeight: 900 }}>⚡</span>
@@ -35,7 +35,7 @@ export default function OGImage() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div style={{
             fontSize: 13, fontWeight: 700, letterSpacing: 3,
-            textTransform: 'uppercase', color: '#0D9488',
+            textTransform: 'uppercase', color: '#2563EB',
           }}>
             For business professionals
           </div>

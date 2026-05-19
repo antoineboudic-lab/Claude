@@ -90,7 +90,7 @@ export const SCENARIO_META: Record<ScenarioId, { name: string; tagline: string; 
   trial: {
     name: '7-Day Free Trial',
     tagline: 'Best conversion rate. Creates urgency and full-value experience.',
-    color: '#0D9488',
+    color: '#2563EB',
     pros: ['3× higher conversion than freemium', 'Users experience full product', 'Lower churn (users committed)'],
     cons: ['Some drop-off at trial end', 'Need strong day-1 activation', 'Requires email nurture'],
   },

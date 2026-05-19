@@ -83,7 +83,7 @@ export default function PushNotificationPrompt() {
             fontFamily: 'var(--font-sans)',
           }}
         >
-          <div style={{ width: 40, height: 40, borderRadius: 12, background: 'linear-gradient(135deg, #0D9488, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ width: 40, height: 40, borderRadius: 12, background: 'linear-gradient(135deg, #2563EB, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <Bell size={18} style={{ color: '#FFFFFF' }} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -98,7 +98,7 @@ export default function PushNotificationPrompt() {
             <button
               onClick={handleEnable}
               disabled={loading}
-              style={{ padding: '8px 14px', borderRadius: 9, background: '#0D9488', color: '#FFFFFF', border: 'none', fontSize: 12, fontWeight: 700, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, fontFamily: 'var(--font-sans)' }}
+              style={{ padding: '8px 14px', borderRadius: 9, background: '#2563EB', color: '#FFFFFF', border: 'none', fontSize: 12, fontWeight: 700, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, fontFamily: 'var(--font-sans)' }}
             >
               {loading ? '…' : 'Enable'}
             </button>

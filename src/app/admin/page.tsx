@@ -181,7 +181,7 @@ export default async function AdminPage() {
         <div style={{ maxWidth: 1400, margin: '0 auto', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-              <div style={{ width: 26, height: 26, borderRadius: 7, background: 'linear-gradient(135deg, #0D9488, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 26, height: 26, borderRadius: 7, background: 'linear-gradient(135deg, #2563EB, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Zap size={12} style={{ color: '#fff' }} />
               </div>
               <span style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>AI Literacy</span>
@@ -208,7 +208,7 @@ export default async function AdminPage() {
 
         {/* ── Stat row 1: volume */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 16 }}>
-          <StatCard icon={Users} label="Total users" value={totalUsers} color="#0D9488" />
+          <StatCard icon={Users} label="Total users" value={totalUsers} color="#2563EB" />
           <StatCard icon={Zap} label="Active today" value={activeToday} sub={`${pct(activeToday, totalUsers)} of users`} color="#22D3EE" />
           <StatCard icon={TrendingUp} label="Active 7d" value={active7d} sub={`${pct(active7d, totalUsers)} of users`} color="#10B981" />
           <StatCard icon={Bell} label="Push subscribers" value={pushCount ?? 0} sub={`${pct(pushCount ?? 0, totalUsers)} opted in`} color="#F59E0B" />
@@ -248,7 +248,7 @@ export default async function AdminPage() {
                     <div style={{
                       width: '100%', borderRadius: '3px 3px 0 0',
                       height: `${h}%`, minHeight: 2,
-                      background: isToday ? '#0D9488' : count > 0 ? '#22D3EE' : '#F1F5F9',
+                      background: isToday ? '#2563EB' : count > 0 ? '#22D3EE' : '#F1F5F9',
                       opacity: count === 0 ? 0.5 : 1,
                     }} />
                     {showLabel && (
@@ -263,7 +263,7 @@ export default async function AdminPage() {
           {/* Track distribution */}
           <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
-              <Target size={14} style={{ color: '#0D9488' }} />
+              <Target size={14} style={{ color: '#2563EB' }} />
               <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Track distribution</span>
             </div>
             {topTracks.length === 0 ? (
@@ -301,10 +301,10 @@ export default async function AdminPage() {
                 const prev = i === 0 ? totalUsers : funnel[i - 1].n
                 const dropPct = i === 0 ? 100 : prev > 0 ? Math.round((step.n / funnel[0].n) * 100) : 0
                 const barW = funnel[0].n > 0 ? Math.round((step.n / funnel[0].n) * 100) : 0
-                const colors = ['#0D9488', '#0284C7', '#22D3EE', '#10B981', '#F59E0B', '#E04D2A']
+                const colors = ['#2563EB', '#0284C7', '#22D3EE', '#10B981', '#F59E0B', '#E04D2A']
                 const color = colors[i]
                 return (
-                  <div key={step.label} style={{ paddingBottom: 14, borderBottom: i < funnel.length - 1 ? '1px solid #F0FDFA' : 'none', marginBottom: i < funnel.length - 1 ? 14 : 0 }}>
+                  <div key={step.label} style={{ paddingBottom: 14, borderBottom: i < funnel.length - 1 ? '1px solid #EFF6FF' : 'none', marginBottom: i < funnel.length - 1 ? 14 : 0 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                       <span style={{ fontSize: 12, color: '#475569', fontWeight: 500 }}>{step.label}</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -330,7 +330,7 @@ export default async function AdminPage() {
                 { label: '1–3 days', n: progress.filter(p => p.streak >= 1 && p.streak <= 3).length, color: '#FDE68A' },
                 { label: '4–7 days', n: progress.filter(p => p.streak >= 4 && p.streak <= 7).length, color: '#F97316' },
                 { label: '8–14 days', n: progress.filter(p => p.streak >= 8 && p.streak <= 14).length, color: '#EF4444' },
-                { label: '15+ days 🔥', n: progress.filter(p => p.streak >= 15).length, color: '#0D9488' },
+                { label: '15+ days 🔥', n: progress.filter(p => p.streak >= 15).length, color: '#2563EB' },
               ]
               const maxN = Math.max(...streakBuckets.map(b => b.n), 1)
               return (
@@ -358,10 +358,10 @@ export default async function AdminPage() {
         <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
           <div style={{ padding: '16px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Users size={14} style={{ color: '#0D9488' }} />
+              <Users size={14} style={{ color: '#2563EB' }} />
               <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>All Users</span>
             </div>
-            <span style={{ fontSize: 12, background: '#CCFBF1', color: '#0D9488', padding: '3px 10px', borderRadius: 6, fontWeight: 600 }}>
+            <span style={{ fontSize: 12, background: '#DBEAFE', color: '#2563EB', padding: '3px 10px', borderRadius: 6, fontWeight: 600 }}>
               {totalUsers} total
             </span>
           </div>
@@ -387,13 +387,13 @@ export default async function AdminPage() {
                   const hasProgress = lessons > 0
                   return (
                     <tr key={u.id}
-                      style={{ borderBottom: i < users.length - 1 ? '1px solid #F0FDFA' : 'none', background: 'transparent' }}
-                      onMouseOver={e => (e.currentTarget.style.background = '#F0FDFA')}
+                      style={{ borderBottom: i < users.length - 1 ? '1px solid #EFF6FF' : 'none', background: 'transparent' }}
+                      onMouseOver={e => (e.currentTarget.style.background = '#EFF6FF')}
                       onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
                     >
                       <td style={{ padding: '12px 16px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                          <div style={{ width: 28, height: 28, borderRadius: 8, background: hasProgress ? '#CCFBF1' : '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: hasProgress ? '#0D9488' : '#CBD5E1', flexShrink: 0 }}>
+                          <div style={{ width: 28, height: 28, borderRadius: 8, background: hasProgress ? '#DBEAFE' : '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: hasProgress ? '#2563EB' : '#CBD5E1', flexShrink: 0 }}>
                             {name[0]?.toUpperCase() ?? '?'}
                           </div>
                           <div>

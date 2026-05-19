@@ -50,7 +50,7 @@ const PLANS = [
     seats: '16–50 seats',
     price: '$39',
     period: '/seat/month',
-    color: '#0D9488',
+    color: '#2563EB',
     highlight: true,
     features: [
       'Everything in Starter',
@@ -101,7 +101,7 @@ const TESTIMONIALS = [
     name: 'Camille Durand',
     role: 'Chief People Officer',
     company: 'Schneider Electric',
-    color: '#0D9488',
+    color: '#2563EB',
   },
   {
     quote: "The role-specific tracks were the key differentiator. Our legal team needed different content than our sales team. AI Literacy let us deploy the right curriculum to the right people without building anything custom.",
@@ -127,12 +127,12 @@ export default function TeamsPage() {
   }
 
   return (
-    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
@@ -142,7 +142,7 @@ export default function TeamsPage() {
           <Link href="/certificates" className="text-sm font-medium" style={{ color: '#64748B' }}>Certificates</Link>
           <a href="#contact"
             className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
-            style={{ background: '#0D9488' }}>
+            style={{ background: '#2563EB' }}>
             Get a demo
           </a>
         </div>
@@ -158,14 +158,14 @@ export default function TeamsPage() {
             className="max-w-3xl">
             <motion.div variants={fadeUp}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
-              style={{ background: '#CCFBF1', color: '#0D9488', border: '1px solid #99F6E4' }}>
+              style={{ background: '#DBEAFE', color: '#2563EB', border: '1px solid #BFDBFE' }}>
               <Users size={11} /> For teams and organisations
             </motion.div>
             <motion.h1 variants={fadeUp}
               className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] mb-5"
               style={{ color: '#0F172A' }}>
               Upskill your entire<br />
-              <span style={{ color: '#0D9488' }}>team in AI</span> — together
+              <span style={{ color: '#2563EB' }}>team in AI</span> — together
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg leading-relaxed mb-8 max-w-xl" style={{ color: '#64748B' }}>
               Role-specific tracks for every function. Team progress visibility. Group certificates your organisation can stand behind.
@@ -173,12 +173,12 @@ export default function TeamsPage() {
             <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
               <a href="#contact"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90"
-                style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.28)' }}>
+                style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.28)' }}>
                 Get a demo <ArrowRight size={16} />
               </a>
               <a href="#plans"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base transition-all hover:bg-slate-100"
-                style={{ background: '#F0FDFA', color: '#334155', border: '1px solid #E2E8F0' }}>
+                style={{ background: '#EFF6FF', color: '#334155', border: '1px solid #E2E8F0' }}>
                 See plans
               </a>
             </motion.div>
@@ -187,7 +187,7 @@ export default function TeamsPage() {
       </section>
 
       {/* Social proof bar */}
-      <div className="py-6" style={{ background: '#F0FDFA', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
+      <div className="py-6" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="flex flex-wrap items-center gap-2 sm:gap-0 sm:divide-x" style={{ borderColor: '#E2E8F0' }}>
             <p className="text-xs font-semibold sm:pr-6" style={{ color: '#94A3B8' }}>Trusted by teams at</p>
@@ -216,7 +216,7 @@ export default function TeamsPage() {
       </div>
 
       {/* Testimonials */}
-      <div className="py-16" style={{ background: '#F0FDFA', borderTop: '1px solid #E2E8F0' }}>
+      <div className="py-16" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>
         <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-6">
           {TESTIMONIALS.map(t => (
             <div key={t.name} className="rounded-2xl p-8"
@@ -244,7 +244,7 @@ export default function TeamsPage() {
       <div className="py-20" style={{ background: '#FFFFFF' }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>How it works</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>How it works</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ color: '#0F172A' }}>Up and running in days, not months</h2>
           </div>
           <div className="grid sm:grid-cols-3 gap-8">
@@ -260,10 +260,10 @@ export default function TeamsPage() {
       </div>
 
       {/* Features */}
-      <div className="py-20" style={{ background: '#F0FDFA', borderTop: '1px solid #E2E8F0' }}>
+      <div className="py-20" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Built for teams</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Built for teams</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight" style={{ color: '#0F172A' }}>Everything you need to run a great programme</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -272,8 +272,8 @@ export default function TeamsPage() {
               return (
                 <div key={f.title} className="p-6 rounded-2xl"
                   style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: '#CCFBF1' }}>
-                    <Icon size={18} style={{ color: '#0D9488' }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4" style={{ background: '#DBEAFE' }}>
+                    <Icon size={18} style={{ color: '#2563EB' }} />
                   </div>
                   <h3 className="text-base font-black mb-2" style={{ color: '#0F172A' }}>{f.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: '#64748B' }}>{f.desc}</p>
@@ -288,7 +288,7 @@ export default function TeamsPage() {
       <div id="plans" className="py-20" style={{ background: '#FFFFFF' }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Team pricing</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Team pricing</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-3" style={{ color: '#0F172A' }}>Simple, transparent pricing</h2>
             <p className="text-base" style={{ color: '#64748B' }}>All plans billed annually. Individual learner plans also available.</p>
           </div>
@@ -297,9 +297,9 @@ export default function TeamsPage() {
               <div key={plan.name}
                 className="rounded-2xl p-7 relative"
                 style={{
-                  background: plan.highlight ? '#0D9488' : '#FFFFFF',
+                  background: plan.highlight ? '#2563EB' : '#FFFFFF',
                   border: plan.highlight ? 'none' : '1px solid #E2E8F0',
-                  boxShadow: plan.highlight ? '0 20px 60px rgba(13,148,136,0.25)' : '0 1px 3px rgba(0,0,0,0.04)',
+                  boxShadow: plan.highlight ? '0 20px 60px rgba(37,99,235,0.25)' : '0 1px 3px rgba(0,0,0,0.04)',
                 }}>
                 {plan.highlight && (
                   <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold"
@@ -330,7 +330,7 @@ export default function TeamsPage() {
                     <li key={f} className="flex items-start gap-2.5 text-sm"
                       style={{ color: plan.highlight ? 'rgba(255,255,255,0.85)' : '#475569' }}>
                       <CheckCircle2 size={14}
-                        style={{ color: plan.highlight ? '#5EEAD4' : plan.color, flexShrink: 0, marginTop: 1 }} />
+                        style={{ color: plan.highlight ? '#93C5FD' : plan.color, flexShrink: 0, marginTop: 1 }} />
                       {f}
                     </li>
                   ))}
@@ -338,8 +338,8 @@ export default function TeamsPage() {
                 <a href="#contact"
                   className="block text-center py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90"
                   style={{
-                    background: plan.highlight ? '#FFFFFF' : '#0D9488',
-                    color: plan.highlight ? '#0D9488' : '#FFFFFF',
+                    background: plan.highlight ? '#FFFFFF' : '#2563EB',
+                    color: plan.highlight ? '#2563EB' : '#FFFFFF',
                   }}>
                   {plan.name === 'Enterprise' ? 'Contact us' : 'Get started'}
                 </a>
@@ -348,7 +348,7 @@ export default function TeamsPage() {
           </div>
           <p className="text-center text-sm mt-8" style={{ color: '#94A3B8' }}>
             Need individual access?{' '}
-            <button onClick={openSignUp} className="font-semibold hover:underline" style={{ color: '#0D9488' }}>
+            <button onClick={openSignUp} className="font-semibold hover:underline" style={{ color: '#2563EB' }}>
               Start free as a solo learner
             </button>
           </p>
@@ -356,7 +356,7 @@ export default function TeamsPage() {
       </div>
 
       {/* FAQ */}
-      <div className="py-20" style={{ background: '#F0FDFA', borderTop: '1px solid #E2E8F0' }}>
+      <div className="py-20" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-2xl font-black mb-8 text-center" style={{ color: '#0F172A' }}>Frequently asked questions</h2>
           <div className="space-y-2">
@@ -391,7 +391,7 @@ export default function TeamsPage() {
       <div id="contact" className="py-20" style={{ background: '#FFFFFF' }}>
         <div className="max-w-lg mx-auto px-6">
           <div className="text-center mb-10">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Get in touch</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Get in touch</p>
             <h2 className="text-3xl font-black mb-3" style={{ color: '#0F172A' }}>Book a 30-minute demo</h2>
             <p className="text-base" style={{ color: '#64748B' }}>
               We'll walk you through the team dashboard, track assignment, and reporting — and answer any questions about fit for your organisation.
@@ -432,7 +432,7 @@ export default function TeamsPage() {
                       fontFamily: 'var(--font-sans)',
                       background: '#FFFFFF',
                     }}
-                    onFocus={e => (e.target.style.borderColor = '#0D9488')}
+                    onFocus={e => (e.target.style.borderColor = '#2563EB')}
                     onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
                   />
                 </div>
@@ -473,14 +473,14 @@ export default function TeamsPage() {
                     fontFamily: 'var(--font-sans)',
                     background: '#FFFFFF',
                   }}
-                  onFocus={e => (e.target.style.borderColor = '#0D9488')}
+                  onFocus={e => (e.target.style.borderColor = '#2563EB')}
                   onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
                 />
               </div>
               <button
                 type="submit"
                 className="w-full py-4 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
-                style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)' }}>
+                style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
                 Request demo <ArrowRight size={14} className="inline ml-1" />
               </button>
             </form>
@@ -489,7 +489,7 @@ export default function TeamsPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="py-16" style={{ background: '#F0FDFA', borderTop: '1px solid #E2E8F0' }}>
+      <div className="py-16" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>
         <div className="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="text-xl font-black mb-1" style={{ color: '#0F172A' }}>Not ready for a team plan?</h3>
@@ -497,7 +497,7 @@ export default function TeamsPage() {
           </div>
           <Link href="/assessment"
             className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
-            style={{ background: '#0D9488' }}>
+            style={{ background: '#2563EB' }}>
             Start free <ArrowRight size={14} />
           </Link>
         </div>

@@ -19,7 +19,7 @@ export default function ContactPage() {
     padding: '12px 14px',
     borderRadius: '10px',
     border: '1px solid #E2E8F0',
-    background: '#F0FDFA',
+    background: '#EFF6FF',
     color: '#0F172A',
     fontSize: '14px',
     fontFamily: 'var(--font-sans)',
@@ -27,12 +27,12 @@ export default function ContactPage() {
   }
 
   return (
-    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
@@ -47,7 +47,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-[1fr_400px] gap-16 items-start">
             {/* Left */}
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Contact</p>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Contact</p>
               <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-5" style={{ color: '#0F172A' }}>
                 Get in touch
               </h1>
@@ -57,7 +57,7 @@ export default function ContactPage() {
 
               <div className="space-y-5">
                 {[
-                  { icon: Mail, label: 'General enquiries', value: 'hello@ailiteracy.com', color: '#0D9488' },
+                  { icon: Mail, label: 'General enquiries', value: 'hello@ailiteracy.com', color: '#2563EB' },
                   { icon: Building2, label: 'Enterprise & team sales', value: 'sales@ailiteracy.com', color: '#10B981' },
                   { icon: MessageCircle, label: 'Press & media', value: 'press@ailiteracy.com', color: '#F59E0B' },
                 ].map(item => {
@@ -80,7 +80,7 @@ export default function ContactPage() {
             </div>
 
             {/* Form */}
-            <div className="rounded-2xl p-8" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+            <div className="rounded-2xl p-8" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
               {submitted ? (
                 <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-8">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: '#ECFDF5' }}>
@@ -143,7 +143,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     className="w-full py-3.5 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
-                    style={{ background: '#0D9488' }}>
+                    style={{ background: '#2563EB' }}>
                     Send message
                   </button>
                 </form>

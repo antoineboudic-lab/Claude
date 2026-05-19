@@ -95,7 +95,7 @@ export function AuthModal() {
               onClick={e => e.stopPropagation()}
             >
               {/* Purple top accent */}
-              <div className="h-1 w-full" style={{ background: '#0D9488' }} />
+              <div className="h-1 w-full" style={{ background: '#2563EB' }} />
 
               {/* Close */}
               <button
@@ -109,7 +109,7 @@ export function AuthModal() {
               <div className="px-8 pt-7 pb-9">
                 {/* Logo */}
                 <div className="flex items-center gap-2 mb-7">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
                     <Zap size={13} className="text-white" />
                   </div>
                   <span className="font-black text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>AI Literacy</span>
@@ -138,7 +138,7 @@ export function AuthModal() {
                       <button
                         onClick={closeModal}
                         className="w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-                        style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)', fontFamily: 'var(--font-sans)' }}
+                        style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
                       >
                         Got it
                       </button>
@@ -146,7 +146,7 @@ export function AuthModal() {
                   ) : (
                     <motion.div key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                       {/* Tabs */}
-                      <div className="flex rounded-xl p-1 mb-7" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+                      <div className="flex rounded-xl p-1 mb-7" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
                         {(['signin', 'signup'] as const).map(tab => (
                           <button
                             key={tab}
@@ -155,7 +155,7 @@ export function AuthModal() {
                             style={{
                               fontFamily: 'var(--font-sans)',
                               background: modalView === tab ? '#FFFFFF' : 'transparent',
-                              color: modalView === tab ? '#0D9488' : '#94A3B8',
+                              color: modalView === tab ? '#2563EB' : '#94A3B8',
                               boxShadow: modalView === tab ? '0 1px 4px rgba(0,0,0,0.06)' : 'none',
                             }}
                           >
@@ -225,7 +225,7 @@ export function AuthModal() {
                             type="submit"
                             disabled={loading}
                             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                            style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)', fontFamily: 'var(--font-sans)' }}
+                            style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
                           >
                             {loading
                               ? <><Loader2 size={14} className="animate-spin" /> {isSignUp ? 'Creating account…' : 'Signing in…'}</>
@@ -286,13 +286,13 @@ const Field = forwardRef<HTMLInputElement, {
       minLength={minLength}
       className="w-full pl-11 pr-4 py-3.5 rounded-xl text-sm outline-none transition-all"
       style={{
-        background: '#F0FDFA',
+        background: '#EFF6FF',
         border: '1.5px solid #E2E8F0',
         color: '#0F172A',
         fontFamily: 'var(--font-sans)',
       }}
-      onFocus={e => { e.currentTarget.style.borderColor = '#0D9488'; e.currentTarget.style.background = '#FFFFFF' }}
-      onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#F0FDFA' }}
+      onFocus={e => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.background = '#FFFFFF' }}
+      onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#EFF6FF' }}
     />
   </div>
 ))

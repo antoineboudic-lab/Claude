@@ -17,16 +17,16 @@ function baseHtml(content: string): string {
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#F0FDFA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#F0FDFA;padding:40px 16px;">
+<body style="margin:0;padding:0;background:#EFF6FF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#EFF6FF;padding:40px 16px;">
     <tr><td align="center">
       <table width="560" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:16px;border:1px solid #E2E8F0;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
         <!-- Header -->
-        <tr><td style="background:#0D9488;padding:4px 0;"></td></tr>
+        <tr><td style="background:#2563EB;padding:4px 0;"></td></tr>
         <tr><td style="padding:28px 36px 20px;">
           <table cellpadding="0" cellspacing="0">
             <tr>
-              <td style="background:#0D9488;width:28px;height:28px;border-radius:8px;text-align:center;vertical-align:middle;">
+              <td style="background:#2563EB;width:28px;height:28px;border-radius:8px;text-align:center;vertical-align:middle;">
                 <span style="color:#fff;font-size:14px;">⚡</span>
               </td>
               <td style="padding-left:10px;font-size:14px;font-weight:900;color:#0F172A;letter-spacing:-0.3px;">AI Literacy</td>
@@ -50,7 +50,7 @@ function baseHtml(content: string): string {
 }
 
 function btn(text: string, href: string): string {
-  return `<a href="${href}" style="display:inline-block;background:#0D9488;color:#fff;font-weight:600;font-size:14px;padding:14px 28px;border-radius:10px;text-decoration:none;box-shadow:0 4px 16px rgba(13,148,136,0.25);">${text}</a>`
+  return `<a href="${href}" style="display:inline-block;background:#2563EB;color:#fff;font-weight:600;font-size:14px;padding:14px 28px;border-radius:10px;text-decoration:none;box-shadow:0 4px 16px rgba(37,99,235,0.25);">${text}</a>`
 }
 
 function row(content: string): string {
@@ -63,9 +63,9 @@ function welcomeHtml(name: string, trackLabel: string): string {
   return baseHtml(`
     ${row(`<h1 style="margin:0 0 8px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.15;">Welcome, ${name}! 👋</h1>
            <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">Your personalised <strong>${trackLabel}</strong> learning path is ready. It takes most professionals just 15 minutes a day to transform how they work with AI.</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="background:#F0FDFA;border:1px solid #CCFBF1;border-radius:12px;width:100%;">
+    ${row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #DBEAFE;border-radius:12px;width:100%;">
              <tr><td style="padding:20px 24px;">
-               <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#0D9488;text-transform:uppercase;letter-spacing:1px;">Your first lesson</p>
+               <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;letter-spacing:1px;">Your first lesson</p>
                <p style="margin:0 0 16px;font-size:15px;font-weight:600;color:#0F172A;">AI Fundamentals for Business Professionals</p>
                <p style="margin:0;font-size:13px;color:#94A3B8;">12 min · No technical background needed</p>
              </td></tr>
@@ -187,7 +187,7 @@ function weeklyDigestHtml(name: string, stats: WeeklyStats): string {
   return baseHtml(`
     ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Your weekly learning update, ${name} 📊</h1>
            <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">${streakMsg}</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="background:#F0FDFA;border:1px solid #E2E8F0;border-radius:12px;width:100%;">
+    ${row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #E2E8F0;border-radius:12px;width:100%;">
              <tr>
                <td style="padding:20px 24px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
                  <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#0F172A;">${totalLessons}</p>
@@ -219,9 +219,9 @@ function nudgeHtml(memberName: string, teamName: string, adminName: string): str
   return baseHtml(`
     ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Hey ${memberName}, your team misses you 👋</h1>
            <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;"><strong>${adminName}</strong> from <strong>${teamName}</strong> noticed you haven't been on recently and wanted to check in. Your learning path is still waiting — pick up right where you left off.</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="background:#F0FDFA;border:1px solid #CCFBF1;border-radius:12px;width:100%;">
+    ${row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #DBEAFE;border-radius:12px;width:100%;">
              <tr><td style="padding:16px 20px;">
-               <p style="margin:0;font-size:14px;color:#115E59;">⚡ Your progress is saved. Even 15 minutes today keeps your streak alive.</p>
+               <p style="margin:0;font-size:14px;color:#1E3A8A;">⚡ Your progress is saved. Even 15 minutes today keeps your streak alive.</p>
              </td></tr>
            </table>`)}
     ${row(btn('Jump back in →', `${BASE_URL}/dashboard`))}

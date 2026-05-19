@@ -137,7 +137,7 @@ export default function GlobalSearch({ open, onClose }: { open: boolean; onClose
               style={{
                 display: 'flex', alignItems: 'center', gap: '12px',
                 padding: '10px 16px', cursor: 'pointer',
-                background: highlighted === i ? '#F0FDFA' : 'transparent',
+                background: highlighted === i ? '#EFF6FF' : 'transparent',
                 transition: 'background 0.1s',
               }}
             >

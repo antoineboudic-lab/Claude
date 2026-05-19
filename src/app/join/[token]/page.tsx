@@ -82,9 +82,9 @@ export default function JoinPage() {
 
   if (fetching || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F0FDFA' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#EFF6FF' }}>
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#0D9488', borderTopColor: 'transparent' }} />
+          style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -92,14 +92,14 @@ export default function JoinPage() {
   if (notFound) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
-        style={{ background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
+        style={{ background: '#EFF6FF', fontFamily: 'var(--font-sans)' }}>
         <AlertCircle size={40} className="mb-4" style={{ color: '#CBD5E1' }} />
         <h1 className="text-2xl font-black mb-2" style={{ color: '#0F172A' }}>Invite not found</h1>
         <p className="text-base mb-8 max-w-sm" style={{ color: '#64748B' }}>
           This invite link doesn't exist or has already been used.
         </p>
         <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white"
-          style={{ background: '#0D9488' }}>
+          style={{ background: '#2563EB' }}>
           Go to AI Literacy
         </Link>
       </div>
@@ -109,14 +109,14 @@ export default function JoinPage() {
   if (expired) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
-        style={{ background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
+        style={{ background: '#EFF6FF', fontFamily: 'var(--font-sans)' }}>
         <Clock size={40} className="mb-4" style={{ color: '#FCD34D' }} />
         <h1 className="text-2xl font-black mb-2" style={{ color: '#0F172A' }}>Invite expired</h1>
         <p className="text-base mb-8 max-w-sm" style={{ color: '#64748B' }}>
           This invite link has expired. Ask your team admin to send a new one.
         </p>
         <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white"
-          style={{ background: '#0D9488' }}>
+          style={{ background: '#2563EB' }}>
           Go to AI Literacy
         </Link>
       </div>
@@ -126,7 +126,7 @@ export default function JoinPage() {
   if (joined) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center"
-        style={{ background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
+        style={{ background: '#EFF6FF', fontFamily: 'var(--font-sans)' }}>
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -151,12 +151,12 @@ export default function JoinPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 py-16"
-      style={{ background: '#F0FDFA', fontFamily: 'var(--font-sans)' }}>
+      style={{ background: '#EFF6FF', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <div className="fixed top-0 left-0 right-0 px-6 py-4 flex items-center"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
@@ -174,16 +174,16 @@ export default function JoinPage() {
           style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}>
           {/* Header */}
           <div className="px-8 pt-8 pb-6 text-center"
-            style={{ background: 'linear-gradient(135deg, #CCFBF1, #F0FDF4)', borderBottom: '1px solid #E2E8F0' }}>
+            style={{ background: 'linear-gradient(135deg, #DBEAFE, #F0FDF4)', borderBottom: '1px solid #E2E8F0' }}>
             <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
               style={{ background: '#FFFFFF', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
-              <Users size={26} style={{ color: '#0D9488' }} />
+              <Users size={26} style={{ color: '#2563EB' }} />
             </div>
-            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: '#0D9488' }}>Team invitation</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: '#2563EB' }}>Team invitation</p>
             <h1 className="text-2xl font-black mb-1" style={{ color: '#0F172A' }}>
               You've been invited to join
             </h1>
-            <p className="text-xl font-black" style={{ color: '#0D9488' }}>{teamName}</p>
+            <p className="text-xl font-black" style={{ color: '#2563EB' }}>{teamName}</p>
           </div>
 
           <div className="p-8">
@@ -198,9 +198,9 @@ export default function JoinPage() {
                     <span key={t}
                       className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg"
                       style={{
-                        background: `${TRACK_COLORS[t] ?? '#0D9488'}12`,
-                        color: TRACK_COLORS[t] ?? '#0D9488',
-                        border: `1px solid ${TRACK_COLORS[t] ?? '#0D9488'}30`,
+                        background: `${TRACK_COLORS[t] ?? '#2563EB'}12`,
+                        color: TRACK_COLORS[t] ?? '#2563EB',
+                        border: `1px solid ${TRACK_COLORS[t] ?? '#2563EB'}30`,
                       }}>
                       <BookOpen size={10} />
                       {TRACK_LABELS[t] ?? t}
@@ -213,9 +213,9 @@ export default function JoinPage() {
             {/* Welcome message from admin */}
             {welcomeMsg && (
               <div className="mb-5 p-4 rounded-xl"
-                style={{ background: '#F0FDFA', border: '1px solid #CCFBF1' }}>
+                style={{ background: '#EFF6FF', border: '1px solid #DBEAFE' }}>
                 <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5"
-                  style={{ color: '#0D9488' }}>Message from your team</p>
+                  style={{ color: '#2563EB' }}>Message from your team</p>
                 <p className="text-sm leading-relaxed" style={{ color: '#334155' }}>{welcomeMsg}</p>
               </div>
             )}
@@ -241,7 +241,7 @@ export default function JoinPage() {
                 onClick={handleAccept}
                 disabled={accepting}
                 className="w-full py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-2"
-                style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)' }}>
+                style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
                 {accepting ? (
                   <span className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin"
                     style={{ borderColor: 'rgba(255,255,255,0.5)', borderTopColor: 'transparent' }} />
@@ -254,13 +254,13 @@ export default function JoinPage() {
                 <button
                   onClick={openSignUp}
                   className="w-full py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90 flex items-center justify-center gap-2"
-                  style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.25)' }}>
+                  style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
                   Create account & join <ArrowRight size={15} />
                 </button>
                 <button
                   onClick={openSignIn}
                   className="w-full py-3 rounded-xl font-semibold text-sm transition-all hover:bg-slate-100"
-                  style={{ color: '#475569', background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+                  style={{ color: '#475569', background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
                   I already have an account — sign in
                 </button>
                 <p className="text-center text-xs" style={{ color: '#94A3B8' }}>

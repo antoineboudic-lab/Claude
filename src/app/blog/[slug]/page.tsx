@@ -117,7 +117,7 @@ const POSTS: Record<string, PostData> = {
   'sales-ai-journey': {
     slug: 'sales-ai-journey',
     category: 'Sales',
-    categoryColor: '#0D9488',
+    categoryColor: '#2563EB',
     title: "From Sceptic to Advocate: One Sales Leader's AI Journey",
     excerpt: "Six months ago, I thought AI in sales was overhyped. Then I used it to cut my proposal prep time by 70%. Here's what changed my mind.",
     author: 'Marc Fontaine',
@@ -335,19 +335,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound()
 
   return (
-    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
         </Link>
         <Link href="/assessment"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
-          style={{ background: '#0D9488' }}>
+          style={{ background: '#2563EB' }}>
           Get started
         </Link>
       </nav>
@@ -435,7 +435,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* CTA */}
         <div className="mt-16 rounded-2xl p-8 text-center"
-          style={{ background: '#0D9488', boxShadow: '0 8px 32px rgba(13,148,136,0.2)' }}>
+          style={{ background: '#2563EB', boxShadow: '0 8px 32px rgba(37,99,235,0.2)' }}>
           <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>
             Ready to apply this?
           </p>
@@ -446,7 +446,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <Link
             href={`/tracks/${post.trackSlug}`}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-[1.02]"
-            style={{ background: '#FFFFFF', color: '#0D9488' }}>
+            style={{ background: '#FFFFFF', color: '#2563EB' }}>
             View track <ArrowRight size={14} />
           </Link>
         </div>

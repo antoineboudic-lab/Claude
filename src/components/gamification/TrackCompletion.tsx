@@ -25,7 +25,7 @@ export function TrackCompletion() {
   if (!justCompletedTrack) return null
 
   const track = getTrack(justCompletedTrack as TrackId)
-  const color = track?.color ?? '#0D9488'
+  const color = track?.color ?? '#2563EB'
   const skills = TRACK_SKILLS[justCompletedTrack] ?? []
 
   return (

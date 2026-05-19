@@ -8,7 +8,7 @@ import { ChevronRight, Zap, Mail, MessageCircle } from 'lucide-react'
 const FAQS: { category: string; color: string; items: { q: string; a: string }[] }[] = [
   {
     category: 'Getting started',
-    color: '#0D9488',
+    color: '#2563EB',
     items: [
       { q: 'How does the assessment work?', a: 'The assessment is a 5-question survey about your role, industry, experience level, and goals. It takes about 3 minutes and the results are used to build your personalised learning path. There are no right or wrong answers — only honest ones.' },
       { q: 'Do I need any technical background?', a: 'No. AI Literacy is designed specifically for business professionals with no coding background. Every lesson, example, and exercise assumes zero technical knowledge. If you know how to use email and a spreadsheet, you have everything you need.' },
@@ -52,7 +52,7 @@ function AccordionItem({ q, a }: { q: string; a: string }) {
     <div style={{ borderBottom: '1px solid #F1F5F9' }}>
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center justify-between gap-4 py-4 text-left transition-colors hover:text-teal-700"
+        className="w-full flex items-center justify-between gap-4 py-4 text-left transition-colors hover:text-blue-700"
         style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
         <span className="text-sm font-semibold">{q}</span>
         <motion.div animate={{ rotate: open ? 90 : 0 }} transition={{ duration: 0.2 }} className="flex-shrink-0">
@@ -79,19 +79,19 @@ export default function HelpPage() {
   const current = FAQS.find(f => f.category === activeCategory)!
 
   return (
-    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
         </Link>
         <a href="mailto:hello@ailiteracy.com"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
-          style={{ background: '#0D9488' }}>
+          style={{ background: '#2563EB' }}>
           Contact support
         </a>
       </nav>
@@ -100,13 +100,13 @@ export default function HelpPage() {
       <section className="py-16 sm:py-20" style={{ background: '#FFFFFF' }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Help centre</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Help centre</p>
             <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4" style={{ color: '#0F172A' }}>
               How can we help?
             </h1>
             <p className="text-lg" style={{ color: '#64748B' }}>
               Find answers to the most common questions below. Can't find what you need?{' '}
-              <a href="mailto:hello@ailiteracy.com" style={{ color: '#0D9488', fontWeight: 600 }}>Get in touch.</a>
+              <a href="mailto:hello@ailiteracy.com" style={{ color: '#2563EB', fontWeight: 600 }}>Get in touch.</a>
             </p>
           </motion.div>
         </div>
@@ -137,7 +137,7 @@ export default function HelpPage() {
             {/* Questions */}
             <div>
               <h2 className="text-xl font-black mb-6" style={{ color: '#0F172A' }}>{current.category}</h2>
-              <div className="rounded-2xl overflow-hidden px-6" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+              <div className="rounded-2xl overflow-hidden px-6" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
                 {current.items.map(item => (
                   <AccordionItem key={item.q} q={item.q} a={item.a} />
                 ))}
@@ -150,8 +150,8 @@ export default function HelpPage() {
             <a href="mailto:hello@ailiteracy.com"
               className="p-7 rounded-2xl flex items-center gap-4 transition-all hover:shadow-md"
               style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#CCFBF1' }}>
-                <Mail size={18} style={{ color: '#0D9488' }} />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#DBEAFE' }}>
+                <Mail size={18} style={{ color: '#2563EB' }} />
               </div>
               <div>
                 <p className="text-sm font-black mb-0.5" style={{ color: '#0F172A' }}>Email support</p>

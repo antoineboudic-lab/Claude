@@ -26,7 +26,7 @@ const COVERAGE = [
     date: 'March 2026',
     headline: 'La startup qui veut former tous les cadres à l\'intelligence artificielle',
     excerpt: '"Avec 3 200 professionnels formés en moins d\'un an, AI Literacy s\'impose comme la référence de la formation IA pour les non-techniciens."',
-    color: '#0D9488',
+    color: '#2563EB',
   },
   {
     outlet: 'Forbes',
@@ -53,19 +53,19 @@ const STATS = [
 
 export default function PressPage() {
   return (
-    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
         </Link>
         <a href="mailto:press@ailiteracy.com"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
-          style={{ background: '#0D9488' }}>
+          style={{ background: '#2563EB' }}>
           Press contact
         </a>
       </nav>
@@ -74,25 +74,25 @@ export default function PressPage() {
       <section className="py-20 sm:py-24" style={{ background: '#FFFFFF' }}>
         <div className="max-w-4xl mx-auto px-6">
           <motion.div variants={stagger(0.1)} initial="hidden" animate="visible">
-            <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>Press & Media</motion.p>
+            <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Press & Media</motion.p>
             <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl font-black tracking-tight mb-5" style={{ color: '#0F172A' }}>
               News & coverage
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg max-w-2xl" style={{ color: '#64748B' }}>
               For press enquiries, interviews, or media assets, contact us at{' '}
-              <a href="mailto:press@ailiteracy.com" style={{ color: '#0D9488', fontWeight: 600 }}>press@ailiteracy.com</a>
+              <a href="mailto:press@ailiteracy.com" style={{ color: '#2563EB', fontWeight: 600 }}>press@ailiteracy.com</a>
             </motion.p>
           </motion.div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="py-12" style={{ background: '#F0FDFA', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
+      <section className="py-12" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
         <div className="max-w-4xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {STATS.map(s => (
               <div key={s.label} className="text-center">
-                <p className="text-3xl font-black mb-1" style={{ color: '#0D9488' }}>{s.value}</p>
+                <p className="text-3xl font-black mb-1" style={{ color: '#2563EB' }}>{s.value}</p>
                 <p className="text-xs font-medium" style={{ color: '#94A3B8' }}>{s.label}</p>
               </div>
             ))}
@@ -109,7 +109,7 @@ export default function PressPage() {
               <motion.div key={item.outlet}
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i + 0.2 }}
-                className="p-7 rounded-2xl" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+                className="p-7 rounded-2xl" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
                 <div className="flex items-start justify-between gap-4 flex-wrap mb-3">
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-black px-3 py-1 rounded-lg"
@@ -127,7 +127,7 @@ export default function PressPage() {
       </section>
 
       {/* Press kit */}
-      <section className="py-16 pb-24" style={{ background: '#F0FDFA' }}>
+      <section className="py-16 pb-24" style={{ background: '#EFF6FF' }}>
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-2xl font-black mb-8" style={{ color: '#0F172A' }}>Press kit</h2>
           <div className="grid sm:grid-cols-2 gap-5">
@@ -144,9 +144,9 @@ export default function PressPage() {
                   <p className="text-xs" style={{ color: '#94A3B8' }}>{asset.desc}</p>
                   <p className="text-xs mt-0.5" style={{ color: '#CBD5E1' }}>{asset.size}</p>
                 </div>
-                <button className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors hover:bg-teal-50"
-                  style={{ background: '#CCFBF1' }}>
-                  <Download size={14} style={{ color: '#0D9488' }} />
+                <button className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors hover:bg-blue-50"
+                  style={{ background: '#DBEAFE' }}>
+                  <Download size={14} style={{ color: '#2563EB' }} />
                 </button>
               </div>
             ))}
@@ -154,14 +154,14 @@ export default function PressPage() {
 
           <div className="mt-10 p-8 rounded-2xl flex items-center gap-5 flex-wrap"
             style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#CCFBF1' }}>
-              <Mail size={18} style={{ color: '#0D9488' }} />
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#DBEAFE' }}>
+              <Mail size={18} style={{ color: '#2563EB' }} />
             </div>
             <div className="flex-1">
               <p className="text-sm font-black mb-0.5" style={{ color: '#0F172A' }}>Press contact</p>
               <p className="text-sm" style={{ color: '#64748B' }}>
                 For interviews, comment requests, or custom assets:{' '}
-                <a href="mailto:press@ailiteracy.com" style={{ color: '#0D9488', fontWeight: 600 }}>press@ailiteracy.com</a>
+                <a href="mailto:press@ailiteracy.com" style={{ color: '#2563EB', fontWeight: 600 }}>press@ailiteracy.com</a>
               </p>
             </div>
           </div>

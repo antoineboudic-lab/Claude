@@ -275,7 +275,7 @@ function LessonContent({ content, color }: { content: string; color: string }) {
           ),
           blockquote: ({ children }) => (
             <div className="my-5 pl-4 py-3 pr-3"
-              style={{ borderLeft: '2px solid #E2E8F0', background: '#F0FDFA' }}>
+              style={{ borderLeft: '2px solid #E2E8F0', background: '#EFF6FF' }}>
               <div className="text-sm leading-[1.8]" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                 {children}
               </div>
@@ -283,7 +283,7 @@ function LessonContent({ content, color }: { content: string; color: string }) {
           ),
           code: ({ children }) => (
             <code className="px-1.5 py-0.5 rounded text-xs"
-              style={{ background: '#F1F5F9', color: '#0D9488', fontFamily: 'monospace' }}>
+              style={{ background: '#F1F5F9', color: '#2563EB', fontFamily: 'monospace' }}>
               {children}
             </code>
           ),
@@ -300,7 +300,7 @@ function LessonContent({ content, color }: { content: string; color: string }) {
 function FallbackLesson({ lessonId, color }: { lessonId: string; color: string }) {
   return (
     <div className="p-8 rounded-2xl text-center"
-      style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+      style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
       <div className="text-3xl mb-3">📚</div>
       <p className="text-sm font-semibold mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
         Lesson content loading
@@ -367,7 +367,7 @@ function PaywallOverlay({
         style={{ background: '#FFFFFF', boxShadow: '0 40px 100px rgba(0,0,0,0.35)' }}
       >
         {/* Gradient top stripe */}
-        <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${trackColor}, #0D9488)` }} />
+        <div className="h-1.5" style={{ background: `linear-gradient(90deg, ${trackColor}, #2563EB)` }} />
 
         <div className="px-7 pt-6 pb-7">
           {/* Header */}
@@ -388,7 +388,7 @@ function PaywallOverlay({
           </div>
 
           {/* Progress card */}
-          <div className="p-4 rounded-2xl mb-5" style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+          <div className="p-4 rounded-2xl mb-5" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-semibold" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
                 Your progress
@@ -403,7 +403,7 @@ function PaywallOverlay({
                 animate={{ width: `${pct}%` }}
                 transition={{ duration: 0.9, delay: 0.3, ease: 'easeOut' }}
                 className="h-full rounded-full"
-                style={{ background: `linear-gradient(90deg, ${trackColor}, #0D9488)` }}
+                style={{ background: `linear-gradient(90deg, ${trackColor}, #2563EB)` }}
               />
             </div>
             <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
@@ -433,7 +433,7 @@ function PaywallOverlay({
                     onClick={() => setSelectedPlan(p)}
                     className="flex-1 py-2 rounded-xl text-xs font-semibold transition-all"
                     style={{
-                      background: selectedPlan === p ? trackColor : '#F0FDFA',
+                      background: selectedPlan === p ? trackColor : '#EFF6FF',
                       color: selectedPlan === p ? '#FFFFFF' : '#64748B',
                       border: `1px solid ${selectedPlan === p ? trackColor : '#E2E8F0'}`,
                       fontFamily: 'var(--font-sans)',
@@ -454,7 +454,7 @@ function PaywallOverlay({
                 disabled={upgrading}
                 className="w-full py-4 rounded-xl font-bold text-sm text-white mb-3 transition-opacity hover:opacity-95"
                 style={{
-                  background: `linear-gradient(135deg, ${trackColor}, #0D9488)`,
+                  background: `linear-gradient(135deg, ${trackColor}, #2563EB)`,
                   boxShadow: `0 8px 28px ${trackColor}40`,
                   fontFamily: 'var(--font-sans)',
                   opacity: upgrading ? 0.7 : 1,
@@ -474,7 +474,7 @@ function PaywallOverlay({
                 onClick={onSignUp}
                 className="w-full py-4 rounded-xl font-bold text-sm text-white mb-3 transition-opacity hover:opacity-95"
                 style={{
-                  background: `linear-gradient(135deg, ${trackColor}, #0D9488)`,
+                  background: `linear-gradient(135deg, ${trackColor}, #2563EB)`,
                   boxShadow: `0 8px 28px ${trackColor}40`,
                   fontFamily: 'var(--font-sans)',
                 }}
@@ -602,7 +602,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
               </span>
             </div>
             <span className="text-[10px] px-2.5 py-1 rounded-full font-semibold"
-              style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+              style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
               Live · Claude AI
             </span>
           </div>
@@ -631,7 +631,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
         style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 4px rgba(0,0,0,0.04)' }}>
         {/* Editor chrome */}
         <div className="px-4 py-2.5 flex items-center justify-between"
-          style={{ background: '#F0FDFA', borderBottom: '1px solid #E2E8F0' }}>
+          style={{ background: '#EFF6FF', borderBottom: '1px solid #E2E8F0' }}>
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
               <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#FECACA' }} />
@@ -658,7 +658,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
           style={{ color: '#334155', fontFamily: 'var(--font-sans)', background: '#FFFFFF' }}
         />
         <div className="px-4 py-3 flex items-center justify-between"
-          style={{ background: '#F0FDFA', borderTop: '1px solid #F1F5F9' }}>
+          style={{ background: '#EFF6FF', borderTop: '1px solid #F1F5F9' }}>
           <span className="text-[11px]" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
             ⌘↵ to run
           </span>
@@ -731,7 +731,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
                 onClick={getCritique}
                 disabled={critiqueLoading}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold transition-all disabled:opacity-50"
-                style={{ background: '#F3F0FF', color: '#0D9488', border: '1px solid #99F6E4', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#F3F0FF', color: '#2563EB', border: '1px solid #BFDBFE', fontFamily: 'var(--font-sans)' }}>
                 {critiqueLoading
                   ? <><span className="animate-spin inline-block w-3 h-3 border-2 border-red-400 border-t-transparent rounded-full" /> Analysing your prompt…</>
                   : <><SlidersHorizontal size={12} /> Score &amp; analyse my prompt</>
@@ -758,13 +758,13 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3 }}
             className="rounded-2xl overflow-hidden"
-            style={{ border: '1px solid #99F6E4' }}>
+            style={{ border: '1px solid #BFDBFE' }}>
             <div className="px-5 py-3.5 flex items-center justify-between"
-              style={{ background: 'linear-gradient(135deg, #CCFBF1, #F0FDFA)', borderBottom: '1px solid #99F6E4' }}>
+              style={{ background: 'linear-gradient(135deg, #DBEAFE, #EFF6FF)', borderBottom: '1px solid #BFDBFE' }}>
               <div className="flex items-center gap-2">
-                <SlidersHorizontal size={13} color="#0D9488" />
+                <SlidersHorizontal size={13} color="#2563EB" />
                 <span className="text-[11px] font-bold uppercase tracking-widest"
-                  style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                  style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                   Prompt analysis
                 </span>
               </div>
@@ -772,17 +772,17 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
               <div className="flex items-center gap-1.5">
                 <div className="relative w-9 h-9">
                   <svg viewBox="0 0 36 36" className="w-9 h-9 -rotate-90">
-                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="#99F6E4" strokeWidth="3.5" />
+                    <circle cx="18" cy="18" r="15.9" fill="none" stroke="#BFDBFE" strokeWidth="3.5" />
                     <circle
                       cx="18" cy="18" r="15.9" fill="none"
-                      stroke={critique.score >= 7 ? '#0D9488' : critique.score >= 4 ? '#F59E0B' : '#EF4444'}
+                      stroke={critique.score >= 7 ? '#2563EB' : critique.score >= 4 ? '#F59E0B' : '#EF4444'}
                       strokeWidth="3.5"
                       strokeDasharray={`${(critique.score / 10) * 100} 100`}
                       strokeLinecap="round"
                     />
                   </svg>
                   <span className="absolute inset-0 flex items-center justify-center text-xs font-black"
-                    style={{ color: critique.score >= 7 ? '#0D9488' : critique.score >= 4 ? '#D97706' : '#DC2626', fontFamily: 'var(--font-sans)' }}>
+                    style={{ color: critique.score >= 7 ? '#2563EB' : critique.score >= 4 ? '#D97706' : '#DC2626', fontFamily: 'var(--font-sans)' }}>
                     {critique.score}
                   </span>
                 </div>
@@ -833,13 +833,13 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
 
               {/* Top tip */}
               <div className="p-3.5 rounded-xl flex items-start gap-2.5"
-                style={{ background: '#CCFBF1', border: '1px solid #99F6E4' }}>
-                <Zap size={12} color="#0D9488" className="flex-shrink-0 mt-0.5" />
+                style={{ background: '#DBEAFE', border: '1px solid #BFDBFE' }}>
+                <Zap size={12} color="#2563EB" className="flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-[11px] font-bold mb-0.5 uppercase tracking-wide" style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-[11px] font-bold mb-0.5 uppercase tracking-wide" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                     Top tip
                   </p>
-                  <p className="text-xs leading-relaxed" style={{ color: '#0F766E', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-xs leading-relaxed" style={{ color: '#1D4ED8', fontFamily: 'var(--font-sans)' }}>
                     {critique.topTip}
                   </p>
                 </div>
@@ -866,19 +866,19 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
             onClick={() => setShowExpert(!showExpert)}
             className="w-full flex items-center justify-between px-5 py-3.5 rounded-xl transition-all"
             style={{
-              background: showExpert ? '#CCFBF1' : '#F0FDFA',
-              border: `1px solid ${showExpert ? '#99F6E4' : '#E2E8F0'}`,
+              background: showExpert ? '#DBEAFE' : '#EFF6FF',
+              border: `1px solid ${showExpert ? '#BFDBFE' : '#E2E8F0'}`,
               fontFamily: 'var(--font-sans)',
             }}>
             <div className="flex items-center gap-2">
-              <Sparkles size={13} color="#0D9488" />
-              <span className="text-sm font-semibold" style={{ color: '#0D9488' }}>
+              <Sparkles size={13} color="#2563EB" />
+              <span className="text-sm font-semibold" style={{ color: '#2563EB' }}>
                 See the expert prompt
               </span>
               <span className="text-xs hidden sm:inline" style={{ color: '#94A3B8' }}>— compare your approach</span>
             </div>
             <ChevronDown
-              size={14} color="#0D9488"
+              size={14} color="#2563EB"
               className={`transition-transform duration-200 ${showExpert ? 'rotate-180' : ''}`}
             />
           </button>
@@ -893,12 +893,12 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
                 className="overflow-hidden">
                 <div className="mt-3 space-y-3">
                   {/* Expert prompt */}
-                  <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid #99F6E4' }}>
+                  <div className="rounded-2xl overflow-hidden" style={{ border: '1px solid #BFDBFE' }}>
                     <div className="px-4 py-2.5 flex items-center gap-2"
-                      style={{ background: 'linear-gradient(135deg, #CCFBF1, #F0FDFA)', borderBottom: '1px solid #99F6E4' }}>
-                      <Sparkles size={12} color="#0D9488" />
+                      style={{ background: 'linear-gradient(135deg, #DBEAFE, #EFF6FF)', borderBottom: '1px solid #BFDBFE' }}>
+                      <Sparkles size={12} color="#2563EB" />
                       <span className="text-[11px] font-bold uppercase tracking-widest"
-                        style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                        style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                         Expert prompt
                       </span>
                     </div>
@@ -911,7 +911,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
                   </div>
                   {/* Why it works */}
                   <div className="p-4 rounded-xl flex items-start gap-2.5"
-                    style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+                    style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
                     <Lightbulb size={12} color="#94A3B8" className="flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-[11px] font-bold mb-1 uppercase tracking-wide"
@@ -927,7 +927,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
                   <button
                     onClick={() => { setPrompt(scenario.expertPrompt); setShowExpert(false); setResponse(''); setSubmitted(false) }}
                     className="w-full py-3 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
-                    style={{ background: '#0D9488', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
+                    style={{ background: '#2563EB', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
                     Try the expert prompt →
                   </button>
                 </div>
@@ -1042,7 +1042,7 @@ function OutputComparisonCard({ data, color }: { data: OutputComparison; color: 
               transition={{ duration: 0.18, delay: 0.06 }}
               className="p-4 rounded-xl text-sm leading-[1.7]"
               style={{
-                background: '#F0FDFA',
+                background: '#EFF6FF',
                 border: `1px solid ${showImproved ? '#86EFAC' : '#E2E8F0'}`,
                 color: '#475569', whiteSpace: 'pre-wrap', fontFamily: 'var(--font-sans)',
                 transition: 'border-color 0.3s',
@@ -1252,7 +1252,7 @@ function ApplyThisWeekCard({ data, color }: { data: ApplyThisWeek; color: string
         {/* Prompt template */}
         <div className="rounded-xl overflow-hidden" style={{ border: '1px solid #E2E8F0' }}>
           <div className="px-4 py-2.5 flex items-center justify-between"
-            style={{ background: '#F0FDFA', borderBottom: '1px solid #E2E8F0' }}>
+            style={{ background: '#EFF6FF', borderBottom: '1px solid #E2E8F0' }}>
             <span className="text-[10px] font-bold uppercase tracking-widest"
               style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
               Starter prompt · paste into {data.tool}
@@ -1281,7 +1281,7 @@ export default function LessonPage() {
   const params = useParams()
   const lessonId = params.lessonId as string
   const trackId = params.trackId as string
-  const color = trackColors[trackId] ?? '#0D9488'
+  const color = trackColors[trackId] ?? '#2563EB'
   const track = getTrack(trackId as TrackId)
   const totalLessons = track ? track.modules.reduce((acc, m) => acc + m.lessons.length, 0) : 20
 
@@ -1512,7 +1512,7 @@ export default function LessonPage() {
           <div className="flex items-center gap-2 mb-2.5 flex-wrap">
             {isInPath ? (
               <span className="flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded"
-                style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                 <Sparkles size={9} /> From your AI path
               </span>
             ) : (
@@ -1555,15 +1555,15 @@ export default function LessonPage() {
 
           {!isInPath && (
             <div className="flex items-start sm:items-center gap-3 px-4 py-3 rounded-lg"
-              style={{ background: '#F0FDFA', border: '1px solid #CCFBF1' }}>
-              <Sparkles size={13} style={{ color: '#0D9488', flexShrink: 0, marginTop: 1 }} />
-              <p className="text-xs leading-relaxed flex-1" style={{ color: '#0F766E', fontFamily: 'var(--font-sans)' }}>
+              style={{ background: '#EFF6FF', border: '1px solid #DBEAFE' }}>
+              <Sparkles size={13} style={{ color: '#2563EB', flexShrink: 0, marginTop: 1 }} />
+              <p className="text-xs leading-relaxed flex-1" style={{ color: '#1D4ED8', fontFamily: 'var(--font-sans)' }}>
                 <span className="font-semibold">Your version of this lesson adapts to your role.</span>{' '}
                 After the 3-minute assessment, examples, scenarios, and exercises are tailored specifically to your job function and experience level.
               </p>
               <Link href="/assessment"
                 className="text-xs font-semibold flex-shrink-0 whitespace-nowrap"
-                style={{ color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                 Personalise →
               </Link>
             </div>
@@ -2084,7 +2084,7 @@ export default function LessonPage() {
                       {nextLesson && (
                         <Link href={`/tracks/${trackId}/lessons/${nextLesson.id}`}
                           className="w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all hover:opacity-90"
-                          style={{ background: '#F0FDFA', color: '#475569', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}>
+                          style={{ background: '#EFF6FF', color: '#475569', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}>
                           Skip to Next Lesson <ArrowRight size={15} />
                         </Link>
                       )}

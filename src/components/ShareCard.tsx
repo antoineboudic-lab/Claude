@@ -17,7 +17,7 @@ export function ShareCard({ open, onClose, trackColor }: ShareCardProps) {
   const { state } = useGame()
   const { xp, streak, completedLessons, completedTracks } = state
   const level = getLevelForXP(xp)
-  const accent = trackColor ?? '#0D9488'
+  const accent = trackColor ?? '#2563EB'
 
   const [copied, setCopied] = useState(false)
 
@@ -144,7 +144,7 @@ export function ShareCard({ open, onClose, trackColor }: ShareCardProps) {
                     flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
                     gap: '0.375rem', padding: '0.625rem',
                     border: '1px solid #E2E8F0', borderRadius: '0.75rem',
-                    background: '#F0FDFA', color: '#0F172A', fontSize: '0.8125rem',
+                    background: '#EFF6FF', color: '#0F172A', fontSize: '0.8125rem',
                     fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)',
                     transition: 'background 0.15s',
                   }}

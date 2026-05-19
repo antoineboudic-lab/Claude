@@ -59,7 +59,7 @@ const TRACKS = [
   { name: 'AI for Marketing',        color: '#E04D2A', skills: ['AI copywriting', 'Campaign automation', 'Content strategy'] },
   { name: 'AI for Finance',          color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis'] },
   { name: 'AI for HR',               color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics'] },
-  { name: 'AI for Sales',            color: '#0D9488', skills: ['Prospect research', 'Proposal writing', 'CRM automation'] },
+  { name: 'AI for Sales',            color: '#2563EB', skills: ['Prospect research', 'Proposal writing', 'CRM automation'] },
   { name: 'AI for Operations',       color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Quality ops'] },
   { name: 'AI for Leaders',          color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement'] },
   { name: 'AI for Legal',            color: '#0284C7', skills: ['Contract analysis', 'Legal research', 'Risk assessment'] },
@@ -75,19 +75,19 @@ export default function CertificatesPage() {
   const { user } = useAuth()
 
   return (
-    <main style={{ background: '#F0FDFA', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Award size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
         </Link>
         <Link href="/assessment"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
-          style={{ background: '#0D9488' }}>
+          style={{ background: '#2563EB' }}>
           Get certified
         </Link>
       </nav>
@@ -100,13 +100,13 @@ export default function CertificatesPage() {
           <motion.div variants={stagger(0.1)} initial="hidden" animate="visible">
             <motion.div variants={fadeUp}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
-              style={{ background: '#CCFBF1', color: '#0D9488', border: '1px solid #99F6E4' }}>
+              style={{ background: '#DBEAFE', color: '#2563EB', border: '1px solid #BFDBFE' }}>
               <Award size={11} /> Verified credentials
             </motion.div>
             <motion.h1 variants={fadeUp}
               className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] mb-5"
               style={{ color: '#0F172A' }}>
-              Certificates that<br /><span style={{ color: '#0D9488' }}>mean something</span>
+              Certificates that<br /><span style={{ color: '#2563EB' }}>mean something</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg leading-relaxed mb-8 max-w-2xl mx-auto" style={{ color: '#64748B' }}>
               Every AI Literacy certificate is tied to a specific role and a verified set of applied skills — not a course completion checkbox.
@@ -114,7 +114,7 @@ export default function CertificatesPage() {
             <motion.div variants={fadeUp}>
               <Link href="/assessment"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90"
-                style={{ background: '#0D9488', boxShadow: '0 4px 16px rgba(13,148,136,0.28)' }}>
+                style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.28)' }}>
                 Start earning your certificate <ArrowRight size={16} />
               </Link>
             </motion.div>
@@ -123,11 +123,11 @@ export default function CertificatesPage() {
       </section>
 
       {/* Certificate preview */}
-      <section className="py-20" style={{ background: '#F0FDFA' }}>
+      <section className="py-20" style={{ background: '#EFF6FF' }}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#0D9488' }}>What you earn</p>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>What you earn</p>
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-5" style={{ color: '#0F172A' }}>
                 A role-specific, verifiable credential
               </h2>
@@ -144,8 +144,8 @@ export default function CertificatesPage() {
                   const Icon = item.icon
                   return (
                     <li key={item.text} className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#CCFBF1' }}>
-                        <Icon size={15} style={{ color: '#0D9488' }} />
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#DBEAFE' }}>
+                        <Icon size={15} style={{ color: '#2563EB' }} />
                       </div>
                       <p className="text-sm leading-relaxed pt-1" style={{ color: '#475569' }}>{item.text}</p>
                     </li>
@@ -159,17 +159,17 @@ export default function CertificatesPage() {
                 style={{ background: '#FFFFFF', border: '2px solid #E2E8F0', boxShadow: '0 20px 60px rgba(0,0,0,0.08)' }}>
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: '#0D9488' }}>
+                    <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: '#2563EB' }}>
                       <Award size={11} className="text-white" />
                     </div>
                     <span className="text-xs font-black" style={{ color: '#0F172A' }}>AI Literacy</span>
                   </div>
-                  <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#CCFBF1', color: '#0D9488' }}>Verified</span>
+                  <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#DBEAFE', color: '#2563EB' }}>Verified</span>
                 </div>
                 <div className="text-center py-6" style={{ borderTop: '1px solid #F1F5F9', borderBottom: '1px solid #F1F5F9' }}>
                   <p className="text-xs font-semibold mb-2" style={{ color: '#94A3B8' }}>Certificate of Completion</p>
                   <p className="text-2xl font-black mb-1" style={{ color: '#0F172A' }}>AI for Marketing</p>
-                  <p className="text-sm" style={{ color: '#64748B' }}>Awarded to <strong style={{ color: '#0D9488' }}>Sophie Armand</strong></p>
+                  <p className="text-sm" style={{ color: '#64748B' }}>Awarded to <strong style={{ color: '#2563EB' }}>Sophie Armand</strong></p>
                 </div>
                 <div className="pt-4 flex items-center justify-between">
                   <div>
@@ -196,7 +196,7 @@ export default function CertificatesPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {TRACKS.map(t => (
               <div key={t.name} className="p-6 rounded-2xl"
-                style={{ background: '#F0FDFA', border: '1px solid #E2E8F0' }}>
+                style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
                 <div className="h-0.5 w-8 rounded-full mb-4" style={{ background: t.color }} />
                 <p className="text-base font-black mb-3" style={{ color: '#0F172A' }}>{t.name}</p>
                 <div className="space-y-1">
@@ -213,7 +213,7 @@ export default function CertificatesPage() {
       </section>
 
       {/* Trusted by */}
-      <section className="py-16" style={{ background: '#F0FDFA', borderTop: '1px solid #E2E8F0' }}>
+      <section className="py-16" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>
         <div className="max-w-4xl mx-auto px-6 text-center">
           <p className="text-xs font-semibold tracking-widest uppercase mb-8" style={{ color: '#CBD5E1' }}>Recognised by professionals at</p>
           <div className="flex flex-wrap items-center justify-center gap-8">
@@ -225,13 +225,13 @@ export default function CertificatesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20" style={{ background: '#0D9488' }}>
+      <section className="py-20" style={{ background: '#2563EB' }}>
         <div className="max-w-2xl mx-auto px-6 text-center">
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Ready to get certified?</h2>
           <p className="text-base mb-8" style={{ color: 'rgba(255,255,255,0.6)' }}>Take the 3-minute assessment to find your track and start earning.</p>
           <Link href="/assessment"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base transition-all hover:scale-[1.02]"
-            style={{ background: '#FFFFFF', color: '#0D9488' }}>
+            style={{ background: '#FFFFFF', color: '#2563EB' }}>
             Take the Assessment <ArrowRight size={16} />
           </Link>
         </div>

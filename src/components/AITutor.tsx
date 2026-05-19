@@ -289,7 +289,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
               <div style={{
                 maxWidth: '88%', padding: '9px 12px',
                 borderRadius: isUser ? '12px 12px 3px 12px' : '3px 12px 12px 12px',
-                background: isUser ? color : '#F0FDFA',
+                background: isUser ? color : '#EFF6FF',
                 color: isUser ? '#FFFFFF' : '#334155',
                 fontSize: 13, lineHeight: 1.6,
               }}>
@@ -305,7 +305,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
                         ol: ({ children }) => <ol style={{ margin: '4px 0', paddingLeft: 16 }}>{children}</ol>,
                         li: ({ children }) => <li style={{ marginBottom: 2 }}>{children}</li>,
                         code: ({ children }) => (
-                          <code style={{ background: '#CCFBF1', color: '#0D9488', borderRadius: 4, padding: '1px 5px', fontSize: 12 }}>
+                          <code style={{ background: '#DBEAFE', color: '#2563EB', borderRadius: 4, padding: '1px 5px', fontSize: 12 }}>
                             {children}
                           </code>
                         ),
@@ -348,7 +348,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
       <div style={{ padding: '6px 10px 10px', borderTop: '1px solid #F1F5F9' }}>
         <div style={{
           display: 'flex', alignItems: 'flex-end', gap: 6,
-          background: '#F0FDFA', border: '1px solid #E2E8F0',
+          background: '#EFF6FF', border: '1px solid #E2E8F0',
           borderRadius: 12, padding: '7px 7px 7px 12px',
         }}>
           <textarea

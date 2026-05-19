@@ -173,7 +173,7 @@ function TrackCard({ track, index, dimmed = false, showPreviewBadge = false }: {
             </div>
             {showPreviewBadge && (
               <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-lg flex-shrink-0"
-                style={{ background: '#F0FDFA', color: '#0D9488', border: '1px solid #CCFBF1', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #DBEAFE', fontFamily: 'var(--font-sans)' }}>
                 <Sparkles size={9} /> Sample
               </span>
             )}
@@ -201,7 +201,7 @@ function TrackCard({ track, index, dimmed = false, showPreviewBadge = false }: {
           <div className="flex flex-wrap gap-2 mb-6">
             {track.skills.map(skill => (
               <span key={skill} className="text-xs px-2.5 py-1 rounded-lg"
-                style={{ background: '#F0FDFA', color: '#64748B', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#EFF6FF', color: '#64748B', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}>
                 {skill}
               </span>
             ))}
@@ -260,7 +260,7 @@ function RecommendedTrackCard({ track }: { track: typeof tracks[0] }) {
                 Your recommended track
               </span>
               <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold"
-                style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                 <Sparkles size={9} /> AI-personalised
               </span>
             </div>
@@ -302,11 +302,11 @@ function AssessmentGate({ onSkip }: { onSkip: () => void }) {
       className="max-w-2xl mx-auto text-center py-20 px-6"
     >
       <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
-        style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)', boxShadow: '0 8px 24px rgba(13,148,136,0.2)' }}>
+        style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', boxShadow: '0 8px 24px rgba(37,99,235,0.2)' }}>
         <Target size={28} className="text-white" />
       </div>
       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-6"
-        style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+        style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
         <Sparkles size={11} /> 2-minute assessment
       </div>
       <h1 className="text-3xl sm:text-4xl font-black mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
@@ -318,7 +318,7 @@ function AssessmentGate({ onSkip }: { onSkip: () => void }) {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
         <Link href="/assessment"
           className="flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white text-base transition-all hover:opacity-90"
-          style={{ background: 'linear-gradient(135deg, #0D9488, #22D3EE)', boxShadow: '0 4px 14px rgba(13,148,136,0.25)', fontFamily: 'var(--font-sans)' }}>
+          style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', boxShadow: '0 4px 14px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}>
           <Zap size={16} /> Build my personalized track
         </Link>
         <button
@@ -377,12 +377,12 @@ export default function TracksPage() {
   const showGate = assessmentLoaded && !hasAssessment && !skipped
 
   return (
-    <main style={{ background: '#F0FDFA', minHeight: '100vh' }}>
+    <main style={{ background: '#EFF6FF', minHeight: '100vh' }}>
       {/* Nav */}
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#0D9488' }}>
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
@@ -393,7 +393,7 @@ export default function TracksPage() {
           <button
             onClick={() => setSearchOpen(true)}
             className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#F0FDFA' }}
+            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}
           >
             <Search size={13} />
             <span>Search</span>
@@ -421,7 +421,7 @@ export default function TracksPage() {
               </button>
               <Link href="/assessment"
                 className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"
-                style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                 {hasAssessment ? 'Retake' : 'Get started'}
               </Link>
             </>
@@ -441,7 +441,7 @@ export default function TracksPage() {
             <div className="pt-16 pb-12 px-6 text-center relative overflow-hidden"
               style={{ borderBottom: '1px solid #E2E8F0', background: '#FFFFFF' }}>
               <div className="absolute inset-0 pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(13,148,136,0.05) 0%, transparent 60%)' }} />
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(37,99,235,0.05) 0%, transparent 60%)' }} />
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-5"
                   style={{ background: '#FEF3C7', color: '#92400E', border: '1px solid #FDE68A', fontFamily: 'var(--font-sans)' }}>
@@ -456,7 +456,7 @@ export default function TracksPage() {
                 </p>
                 <Link href="/assessment"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
-                  style={{ background: '#0D9488', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(13,148,136,0.2)' }}>
+                  style={{ background: '#2563EB', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(37,99,235,0.2)' }}>
                   <Sparkles size={14} /> Get my personalised track
                 </Link>
                 <p className="mt-3 text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
@@ -472,7 +472,7 @@ export default function TracksPage() {
               style={{ borderBottom: '1px solid #E2E8F0', background: '#FFFFFF' }}>
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4"
-                  style={{ background: '#CCFBF1', color: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                   <Sparkles size={11} /> Your personalised learning plan
                 </div>
                 <h1 className="text-3xl lg:text-4xl font-black mb-2"
@@ -509,21 +509,21 @@ export default function TracksPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.15 }}
                 className="mb-8 p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-4"
-                style={{ background: '#F0FDFA', border: '1px solid #CCFBF1' }}
+                style={{ background: '#EFF6FF', border: '1px solid #DBEAFE' }}
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#0D9488' }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#2563EB' }}>
                   <Sparkles size={17} className="text-white" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                     These are sample previews
                   </p>
-                  <p className="text-sm" style={{ color: '#0F766E', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-sm" style={{ color: '#1D4ED8', fontFamily: 'var(--font-sans)' }}>
                     After the 3-minute assessment, your track content — the modules, lesson order, examples, and exercises — is rebuilt around your role and goals. A Finance VP and a Marketing Manager inside the same Finance track get different content.
                   </p>
                 </div>
                 <Link href="/assessment" className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
-                  style={{ background: '#0D9488', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                   Personalise mine <ArrowRight size={12} />
                 </Link>
               </motion.div>
