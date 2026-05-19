@@ -574,7 +574,7 @@ export default function DashboardPage() {
   }, [user, mounted])
 
   useEffect(() => {
-    if (!loading && !user) router.replace('/')
+    if (!loading && !user) router.replace('/?next=/dashboard')
   }, [loading, user, router])
 
   if (!mounted || loading) {

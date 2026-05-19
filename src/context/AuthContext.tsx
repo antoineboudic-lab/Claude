@@ -38,8 +38,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setSession(session)
       setUser(session?.user ?? null)
 
-      // After sign-in, redirect to assessment if they haven't taken it yet
+      // After sign-in, honour ?next= param (e.g. from /dashboard redirect),
+      // otherwise send new users without an assessment to /assessment
       if (event === 'SIGNED_IN' && typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search)
+        const next = params.get('next')
+        if (next) {
+          setTimeout(() => { window.location.href = next }, 400)
+          return
+        }
         const alreadyOnAssessment = window.location.pathname.startsWith('/assessment')
         const hasAssessment = !!localStorage.getItem('ai-literacy-assessment')
         if (!hasAssessment && !alreadyOnAssessment) {
