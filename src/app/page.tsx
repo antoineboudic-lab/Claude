@@ -1198,17 +1198,17 @@ function TeamsSection() {
                     </div>
                     <div className="divide-y" style={{ borderColor: '#F1F5F9' }}>
                       {[
-                        { name: 'Sophie A.', track: 'Marketing', xp: 1840, pct: 100, medal: '🥇' },
-                        { name: 'James W.', track: 'Finance', xp: 1610, pct: 87, medal: '🥈' },
-                        { name: 'Priya N.', track: 'HR', xp: 1390, pct: 75, medal: '🥉' },
-                        { name: 'Marcus R.', track: 'Sales', xp: 1140, pct: 62, medal: '#4' },
+                        { name: 'Sophie A.', track: 'Marketing', xp: 1840, pct: 100, medal: '🥇', avatarColor: '#E04D2A' },
+                        { name: 'James W.', track: 'Finance', xp: 1610, pct: 87, medal: '🥈', avatarColor: '#F59E0B' },
+                        { name: 'Priya N.', track: 'HR', xp: 1390, pct: 75, medal: '🥉', avatarColor: '#10B981' },
+                        { name: 'Marcus R.', track: 'Sales', xp: 1140, pct: 62, medal: '#4', avatarColor: '#3B82F6' },
                       ].map((m, i) => (
                         <div key={m.name} className="flex items-center gap-3 px-4 py-3">
                           <span className="w-6 text-center text-sm flex-shrink-0">{m.medal.startsWith('#') ?
                             <span className="text-[10px] font-bold" style={{ color: '#CBD5E1' }}>{m.medal}</span> : m.medal}
                           </span>
                           <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
-                            style={{ background: `hsl(${(m.name.charCodeAt(0) * 47) % 360},55%,55%)` }}>
+                            style={{ background: m.avatarColor }}>
                             {m.name.slice(0, 2)}
                           </div>
                           <div className="flex-1 min-w-0">
