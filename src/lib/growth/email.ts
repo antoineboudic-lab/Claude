@@ -169,53 +169,86 @@ export async function sendUpgradeEmail(to: string, name: string, completedTrack:
 
 // ─── Weekly digest ─────────────────────────────────────────────────────────────
 
-interface WeeklyStats {
+export interface WeeklyStats {
+  thisWeekLessons: number  // lessons completed since last digest
   totalLessons: number
   streak: number
   srDue: number
   trackLabel?: string
+  nextLessonTitle?: string
+  nextLessonUrl?: string
+  unsubscribeUrl: string
 }
 
 function weeklyDigestHtml(name: string, stats: WeeklyStats): string {
-  const { totalLessons, streak, srDue, trackLabel } = stats
-  const streakMsg = streak >= 7
-    ? `🔥 You're on a <strong>${streak}-day streak</strong> — that puts you in the top 10%.`
-    : streak > 0
-    ? `You have a <strong>${streak}-day streak</strong> going. Keep it alive today!`
-    : `Start a new streak today — just one lesson is all it takes.`
+  const { thisWeekLessons, totalLessons, streak, srDue, trackLabel, nextLessonTitle, nextLessonUrl, unsubscribeUrl } = stats
+
+  const streakColor = streak >= 7 ? '#F97316' : streak > 0 ? '#F59E0B' : '#94A3B8'
+  const streakEmoji = streak >= 7 ? '🔥' : streak > 0 ? '⚡' : '💤'
+  const streakLabel = streak > 0 ? `${streak}-day streak` : 'No streak yet'
+
+  const heroMsg = thisWeekLessons === 0
+    ? `No lessons this week yet — your progress is waiting where you left off.`
+    : thisWeekLessons === 1
+    ? `You completed <strong>1 lesson</strong> this week. One more today keeps your momentum going.`
+    : `You completed <strong>${thisWeekLessons} lessons</strong> this week — that's ahead of 73% of learners.`
 
   return baseHtml(`
-    ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Your weekly learning update, ${name} 📊</h1>
-           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">${streakMsg}</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #E2E8F0;border-radius:12px;width:100%;">
-             <tr>
-               <td style="padding:20px 24px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
-                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#0F172A;">${totalLessons}</p>
-                 <p style="margin:0;font-size:12px;color:#64748B;">Total lessons</p>
-               </td>
-               <td style="padding:20px 24px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
-                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#F97316;">${streak}</p>
-                 <p style="margin:0;font-size:12px;color:#64748B;">Day streak</p>
-               </td>
-               <td style="padding:20px 24px;text-align:center;width:33%;">
-                 <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:#0284C7;">${srDue}</p>
-                 <p style="margin:0;font-size:12px;color:#64748B;">Cards due</p>
-               </td>
-             </tr>
-           </table>`)}
-    ${srDue > 0 ? row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;width:100%;">
-             <tr><td style="padding:16px 20px;">
-               <p style="margin:0;font-size:14px;color:#1E40AF;">🃏 <strong>${srDue} flashcard${srDue !== 1 ? 's' : ''} due for review</strong> — spending 5 minutes now locks in everything you&apos;ve learned.</p>
-             </td></tr>
-           </table>`) : ''}
-    ${row(btn('Continue learning →', `${BASE_URL}/dashboard`))}
-    ${trackLabel ? row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Currently studying: <strong style="color:#334155;">${trackLabel}</strong></p>`) : ''}
+    ${row(`
+      <h1 style="margin:0 0 6px;font-size:24px;font-weight:900;color:#0F172A;line-height:1.2;">
+        ${thisWeekLessons > 0 ? `${thisWeekLessons} lesson${thisWeekLessons !== 1 ? 's' : ''} this week, ${name} 🎯` : `Your weekly update, ${name}`}
+      </h1>
+      <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">${heroMsg}</p>
+    `)}
+
+    ${row(`
+      <table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #E2E8F0;border-radius:12px;width:100%;">
+        <tr>
+          <td style="padding:18px 20px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
+            <p style="margin:0 0 3px;font-size:30px;font-weight:900;color:#2563EB;">${thisWeekLessons}</p>
+            <p style="margin:0;font-size:11px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.5px;">This week</p>
+          </td>
+          <td style="padding:18px 20px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
+            <p style="margin:0 0 3px;font-size:30px;font-weight:900;color:${streakColor};">${streakEmoji} ${streak}</p>
+            <p style="margin:0;font-size:11px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.5px;">${streakLabel}</p>
+          </td>
+          <td style="padding:18px 20px;text-align:center;width:33%;">
+            <p style="margin:0 0 3px;font-size:30px;font-weight:900;color:#0F172A;">${totalLessons}</p>
+            <p style="margin:0;font-size:11px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.5px;">Total lessons</p>
+          </td>
+        </tr>
+      </table>
+    `)}
+
+    ${nextLessonTitle && nextLessonUrl ? row(`
+      <table cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #DBEAFE;border-radius:12px;width:100%;">
+        <tr><td style="padding:16px 20px;">
+          <p style="margin:0 0 2px;font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;letter-spacing:1px;">Up next</p>
+          <p style="margin:0 0 12px;font-size:15px;font-weight:600;color:#0F172A;">${nextLessonTitle}</p>
+          <p style="margin:0;font-size:13px;color:#94A3B8;">${trackLabel ?? 'Your track'} · ~15 min</p>
+        </td></tr>
+      </table>
+    `) : ''}
+
+    ${srDue > 0 ? row(`
+      <table cellpadding="0" cellspacing="0" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:12px;width:100%;">
+        <tr><td style="padding:14px 20px;">
+          <p style="margin:0;font-size:14px;color:#92400E;">🃏 <strong>${srDue} card${srDue !== 1 ? 's' : ''} due for review</strong> — 5 minutes now locks in what you've learned.</p>
+        </td></tr>
+      </table>
+    `) : ''}
+
+    ${row(btn(nextLessonTitle ? 'Continue learning →' : 'Go to my dashboard →', nextLessonUrl ?? `${BASE_URL}/dashboard`))}
+
+    ${row(`<p style="margin:0;font-size:12px;color:#CBD5E1;text-align:center;">
+      <a href="${unsubscribeUrl}" style="color:#CBD5E1;text-decoration:underline;">Unsubscribe from weekly digests</a>
+    </p>`)}
   `)
 }
 
 // ─── Team nudge ───────────────────────────────────────────────────────────────
 
-function nudgeHtml(memberName: string, teamName: string, adminName: string): string {
+function nudgeHtml(memberName: string, teamName: string, adminName: string, unsubUrl: string): string {
   return baseHtml(`
     ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Hey ${memberName}, your team misses you 👋</h1>
            <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;"><strong>${adminName}</strong> from <strong>${teamName}</strong> noticed you haven't been on recently and wanted to check in. Your learning path is still waiting — pick up right where you left off.</p>`)}
@@ -225,21 +258,28 @@ function nudgeHtml(memberName: string, teamName: string, adminName: string): str
              </td></tr>
            </table>`)}
     ${row(btn('Jump back in →', `${BASE_URL}/dashboard`))}
-    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Sent by your team admin · <a href="${BASE_URL}/unsubscribe" style="color:#94A3B8;">Unsubscribe</a></p>`)}
+    ${row(`<p style="margin:0;font-size:12px;color:#CBD5E1;text-align:center;">Sent by your team admin · <a href="${unsubUrl}" style="color:#CBD5E1;">Unsubscribe</a></p>`)}
   `)
 }
 
 export async function sendNudgeEmail(
-  to: string, memberName: string, teamName: string, adminName: string,
+  to: string, memberName: string, teamName: string, adminName: string, unsubUrl: string,
 ): Promise<boolean> {
   if (!process.env.RESEND_API_KEY) return false
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
     subject: `${adminName} from ${teamName} is checking in on you`,
-    html: nudgeHtml(memberName, teamName, adminName),
+    html: nudgeHtml(memberName, teamName, adminName, unsubUrl),
   })
   return !error
+}
+
+function weeklySubject(name: string, thisWeek: number): string {
+  if (thisWeek === 0) return `Time to get back on track, ${name} 👋`
+  if (thisWeek === 1) return `1 lesson this week — keep going, ${name}!`
+  if (thisWeek < 4) return `${thisWeek} lessons this week, ${name} — you're building momentum 🎯`
+  return `${thisWeek} lessons this week, ${name} — that's a strong week 🔥`
 }
 
 export async function sendWeeklyDigestEmail(
@@ -251,7 +291,7 @@ export async function sendWeeklyDigestEmail(
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `Your AI Literacy weekly update, ${name}`,
+    subject: weeklySubject(name, stats.thisWeekLessons),
     html: weeklyDigestHtml(name, stats),
   })
   return !error

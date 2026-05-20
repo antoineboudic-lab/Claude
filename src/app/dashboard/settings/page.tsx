@@ -331,26 +331,44 @@ const DAILY_GOALS = [
 ]
 
 function PreferencesTab() {
+  const { user } = useAuth()
   const tracks = getAllTracks()
   const [primaryTrack, setPrimaryTrack] = useState<TrackId | ''>('')
   const [dailyGoal, setDailyGoal] = useState('3')
   const [emailDigest, setEmailDigest] = useState(true)
   const [saved, setSaved] = useState(false)
+  const supabase = useRef(createClient())
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('ai-literacy-preferences')
-      if (raw) {
-        const p = JSON.parse(raw)
-        if (p.primaryTrack) setPrimaryTrack(p.primaryTrack)
-        if (p.dailyGoal) setDailyGoal(p.dailyGoal)
-        if (typeof p.emailDigest === 'boolean') setEmailDigest(p.emailDigest)
+    // Load digest preference from Supabase, with localStorage fallback
+    async function load() {
+      if (user) {
+        const { data } = await supabase.current
+          .from('user_progress')
+          .select('digest_opt_out')
+          .eq('user_id', user.id)
+          .single()
+        if (data) setEmailDigest(!data.digest_opt_out)
       }
-    } catch { /* ignore */ }
-  }, [])
+      try {
+        const raw = localStorage.getItem('ai-literacy-preferences')
+        if (raw) {
+          const p = JSON.parse(raw)
+          if (p.primaryTrack) setPrimaryTrack(p.primaryTrack)
+          if (p.dailyGoal) setDailyGoal(p.dailyGoal)
+        }
+      } catch { /* ignore */ }
+    }
+    load()
+  }, [user])
 
-  function save() {
+  async function save() {
     localStorage.setItem('ai-literacy-preferences', JSON.stringify({ primaryTrack, dailyGoal, emailDigest }))
+    if (user) {
+      await supabase.current
+        .from('user_progress')
+        .upsert({ user_id: user.id, digest_opt_out: !emailDigest }, { onConflict: 'user_id' })
+    }
     setSaved(true)
     setTimeout(() => setSaved(false), 3000)
   }
