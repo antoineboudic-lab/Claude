@@ -5,7 +5,7 @@ import { sendWeeklyDigestEmail } from '@/lib/growth/email'
 
 export const runtime = 'nodejs'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ai-literacy-tau.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 // POST /api/cron/weekly-digest-test
 // Body: { email: string } — sends a sample digest to that address

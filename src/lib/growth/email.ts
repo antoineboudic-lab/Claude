@@ -6,7 +6,7 @@ function getResend(): Resend {
   return _resend
 }
 const FROM = 'AI Literacy <onboarding@resend.dev>'
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ai-literacy-tau.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 export type EmailSequence = 'welcome' | 'activation' | 'reengagement' | 'upgrade'
 
@@ -38,7 +38,7 @@ function baseHtml(content: string): string {
         <!-- Footer -->
         <tr><td style="padding:24px 36px;border-top:1px solid #F1F5F9;text-align:center;">
           <p style="margin:0;font-size:12px;color:#94A3B8;">
-            You're receiving this because you signed up at ailiteracy.com.<br>
+            You're receiving this because you signed up at opuslearn.ai.<br>
             <a href="${BASE_URL}/unsubscribe" style="color:#94A3B8;">Unsubscribe</a>
           </p>
         </td></tr>

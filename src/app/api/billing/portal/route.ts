@@ -3,7 +3,7 @@ import { createSupabaseServerClient as createClient } from '@/lib/supabase/serve
 import { stripe } from '@/lib/stripe'
 import { getSubscriptionByUserId } from '@/lib/supabase/subscriptions'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ai-literacy-tau.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 export async function POST() {
   const supabase = await createClient()

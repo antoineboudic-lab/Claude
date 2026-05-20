@@ -35,7 +35,7 @@ export function ShareCard({ open, onClose, trackColor }: ShareCardProps) {
   }
 
   function handleLinkedIn() {
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=https://ai-literacy-tau.vercel.app&summary=${encodeURIComponent(shareText)}`
+    const url = `https://www.linkedin.com/sharing/share-offsite/?url=https://opuslearn.ai&summary=${encodeURIComponent(shareText)}`
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 

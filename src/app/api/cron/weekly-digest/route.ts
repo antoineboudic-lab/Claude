@@ -8,7 +8,7 @@ import type { TrackId } from '@/lib/curriculum/types'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ai-literacy-tau.vercel.app'
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 function makeUnsubToken(userId: string): string {
   return createHmac('sha256', process.env.CRON_SECRET ?? 'dev').update(userId).digest('hex')

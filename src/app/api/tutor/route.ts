@@ -21,7 +21,7 @@ function checkRateLimit(ip: string): boolean {
 const ALLOWED_ORIGINS = [
   'https://ailiteracy.com',
   'https://www.ailiteracy.com',
-  'https://ai-literacy-tau.vercel.app',
+  'https://opuslearn.ai',
 ]
 
 function buildSystemPrompt(params: {

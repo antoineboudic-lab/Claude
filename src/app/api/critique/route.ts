@@ -22,7 +22,7 @@ function checkRateLimit(ip: string): boolean {
 const ALLOWED_ORIGINS = [
   'https://ailiteracy.com',
   'https://www.ailiteracy.com',
-  'https://ai-literacy-tau.vercel.app',
+  'https://opuslearn.ai',
 ]
 
 const CRITIQUE_SYSTEM = `You are an expert prompt engineering coach. Analyse the user's prompt and respond with ONLY valid JSON in this exact format, no other text:

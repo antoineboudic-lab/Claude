@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   const teamName = (teamRow as { name: string } | null)?.name ?? 'Your team'
 
   const inviterName = user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? 'Your team admin'
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ai-literacy-tau.vercel.app'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
   const joinUrl = `${siteUrl}/join/${invite.token}`
 
   if (!process.env.RESEND_API_KEY) {

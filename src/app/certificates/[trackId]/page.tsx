@@ -246,7 +246,7 @@ export default function CertificatePage() {
 
   const certId = user ? generateCertId(user.id, trackId) : 'AIL-XXX-2026-00000'
   const issuedDate = formatDate(state.lastActiveDate)
-  const verifyUrl = typeof window !== 'undefined' ? window.location.href : `https://ai-literacy-tau.vercel.app/certificates/${trackId}`
+  const verifyUrl = typeof window !== 'undefined' ? window.location.href : `https://opuslearn.ai/certificates/${trackId}`
   const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(verifyUrl)}&title=${encodeURIComponent(`I earned my ${track.title} Certificate from AI Literacy`)}`
 
   const handleCopyLink = async () => {

@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   const name = (meta?.full_name as string | undefined)
     ?? (email ? email.split('@')[0] : 'there')
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ai-literacy-tau.vercel.app'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
   const assessmentUrl = `${siteUrl}/assessment`
 
   const admin = createAdminClient()
