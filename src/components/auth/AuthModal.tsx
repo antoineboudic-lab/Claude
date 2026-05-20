@@ -49,9 +49,12 @@ export function AuthModal() {
     setError('')
     setLoading(true)
     try {
-      const redirectTo = `${window.location.origin}/auth/callback?next=/auth/reset`
-      const { error } = await supabase.current.auth.resetPasswordForEmail(email, { redirectTo })
-      if (error) throw error
+      const res = await fetch('/api/auth/forgot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      if (!res.ok) throw new Error('Something went wrong')
       setStep('reset-sent')
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Something went wrong'
