@@ -5,6 +5,7 @@ import {
   Users, Zap, BookOpen, Target, TrendingUp, Bell,
   Flame, Award, Mail, Building2, Share2, UserPlus,
   BarChart3, CheckCircle2, XCircle, RefreshCw,
+  Download, DollarSign, Megaphone, ExternalLink, Calendar,
 } from 'lucide-react'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -79,6 +80,15 @@ interface ReferralRow {
   created_at: string
 }
 
+interface SubscriptionRow {
+  id: string
+  user_id: string
+  plan: string
+  status: string
+  current_period_end: string | null
+  created_at: string
+}
+
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 const TRACK_COLORS: Record<string, string> = {
@@ -145,6 +155,8 @@ function TabNav({ active, userCount, leadsCount, teamsCount }: {
     { id: 'teams', label: `Teams (${teamsCount})`, icon: Building2 },
     { id: 'leads', label: `Leads (${leadsCount})`, icon: UserPlus },
     { id: 'referrals', label: 'Referrals', icon: Share2 },
+    { id: 'revenue', label: 'Revenue', icon: DollarSign },
+    { id: 'broadcast', label: 'Broadcast', icon: Megaphone },
   ]
   return (
     <div style={{ display: 'flex', gap: 3, background: '#1E293B', borderRadius: 12, padding: 5, marginBottom: 32, flexWrap: 'wrap' }}>
@@ -279,6 +291,7 @@ export default async function AdminPage({
   let teamMembers: TeamMemberRow[] = []
   let leads: LeadRow[] = []
   let referrals: ReferralRow[] = []
+  let subscriptions: SubscriptionRow[] = []
 
   if (tab === 'emails') {
     const { data } = await admin.from('email_log').select('id, email, sequence, step, status, sent_at').order('sent_at', { ascending: false }).limit(100)
@@ -299,6 +312,10 @@ export default async function AdminPage({
   if (tab === 'referrals') {
     const { data } = await admin.from('referrals').select('*').order('signups', { ascending: false })
     referrals = data ?? []
+  }
+  if (tab === 'revenue') {
+    const { data } = await admin.from('subscriptions').select('*').order('created_at', { ascending: false })
+    subscriptions = data ?? []
   }
 
   // ── Email tab derived
@@ -326,9 +343,45 @@ export default async function AdminPage({
   const totalSignups = referrals.reduce((s, r) => s + r.signups, 0)
   const totalConversions = referrals.reduce((s, r) => s + r.conversions, 0)
 
+  // ── Revenue tab derived
+  const activeSubs = subscriptions.filter(s => s.status === 'active')
+  const trialingSubs = subscriptions.filter(s => s.status === 'trialing')
+  const subsByPlan = subscriptions.reduce((acc, s) => {
+    acc[s.plan] = (acc[s.plan] ?? 0) + 1; return acc
+  }, {} as Record<string, number>)
+  const MRR_BY_PLAN: Record<string, number> = { pro_monthly: 19, pro_annual: Math.round(190 / 12) }
+  const mrr = activeSubs.reduce((s, sub) => s + (MRR_BY_PLAN[sub.plan] ?? 0), 0)
+  const recentSubs = subscriptions.slice(0, 20)
+
+  // ── Leads derived (avg conversion time)
+  const convertedWithTime = leads.filter(l => l.converted_at && l.created_at)
+  const avgConvDays = convertedWithTime.length > 0
+    ? Math.round(convertedWithTime.reduce((s, l) => {
+        return s + (new Date(l.converted_at!).getTime() - new Date(l.created_at).getTime()) / 86400000
+      }, 0) / convertedWithTime.length)
+    : null
+
+  // ── Retention cohort (signup month cohorts)
+  const cohortMap: Record<string, { total: number; active7: number; active14: number; active28: number }> = {}
+  users.forEach(u => {
+    const month = u.created_at.slice(0, 7)
+    if (!cohortMap[month]) cohortMap[month] = { total: 0, active7: 0, active14: 0, active28: 0 }
+    cohortMap[month].total++
+    const p = progressById[u.id]
+    if (!p?.last_active_date) return
+    const signupMs = new Date(u.created_at).getTime()
+    const lastMs = new Date(p.last_active_date).getTime()
+    const days = (lastMs - signupMs) / 86400000
+    if (days >= 7) cohortMap[month].active7++
+    if (days >= 14) cohortMap[month].active14++
+    if (days >= 28) cohortMap[month].active28++
+  })
+  const cohorts = Object.entries(cohortMap).sort((a, b) => a[0].localeCompare(b[0])).slice(-6)
+
   const tabTitle: Record<string, string> = {
     overview: 'Overview', users: 'Users', emails: 'Emails',
     teams: 'Teams', leads: 'Leads', referrals: 'Referrals',
+    revenue: 'Revenue', broadcast: 'Broadcast',
   }
 
   return (
@@ -476,37 +529,71 @@ export default async function AdminPage({
                 </div>
               </div>
 
-              {/* Streak health */}
+              {/* Retention cohort */}
               <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                <p style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', margin: '0 0 18px' }}>Streak health</p>
-                {(() => {
-                  const buckets = [
-                    { label: '0 days (inactive)', n: progress.filter(p => p.streak === 0).length, color: '#E2E8F0' },
-                    { label: '1–3 days', n: progress.filter(p => p.streak >= 1 && p.streak <= 3).length, color: '#FDE68A' },
-                    { label: '4–7 days', n: progress.filter(p => p.streak >= 4 && p.streak <= 7).length, color: '#F97316' },
-                    { label: '8–14 days', n: progress.filter(p => p.streak >= 8 && p.streak <= 14).length, color: '#EF4444' },
-                    { label: '15+ days 🔥', n: progress.filter(p => p.streak >= 15).length, color: '#2563EB' },
-                  ]
-                  const maxN = Math.max(...buckets.map(b => b.n), 1)
-                  return (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                      {buckets.map(b => (
-                        <div key={b.label}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 5 }}>
-                            <span style={{ color: '#475569' }}>{b.label}</span>
-                            <span style={{ fontWeight: 700, color: b.color === '#E2E8F0' ? '#CBD5E1' : b.color }}>
-                              {b.n} · {pct(b.n, progress.length)}
-                            </span>
-                          </div>
-                          <div style={{ height: 5, borderRadius: 3, background: '#F1F5F9' }}>
-                            <div style={{ height: '100%', borderRadius: 3, width: `${Math.round((b.n / maxN) * 100)}%`, background: b.color }} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )
-                })()}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
+                  <Calendar size={14} style={{ color: '#10B981' }} />
+                  <p style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', margin: 0 }}>Retention by cohort</p>
+                </div>
+                {cohorts.length === 0 ? (
+                  <p style={{ fontSize: 13, color: '#CBD5E1' }}>No data yet</p>
+                ) : (
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+                      <thead>
+                        <tr>
+                          {['Month', 'Users', 'W1 %', 'W2 %', 'W4 %'].map(h => (
+                            <th key={h} style={{ padding: '4px 8px', textAlign: 'right', color: '#94A3B8', fontWeight: 600, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cohorts.map(([month, c]) => (
+                          <tr key={month} style={{ borderTop: '1px solid #F8FAFC' }}>
+                            <td style={{ padding: '6px 8px', color: '#475569', fontWeight: 600 }}>{month}</td>
+                            <td style={{ padding: '6px 8px', textAlign: 'right', color: '#0F172A', fontWeight: 700 }}>{c.total}</td>
+                            <td style={{ padding: '6px 8px', textAlign: 'right', color: '#10B981', fontWeight: 700 }}>{c.total > 0 ? Math.round(c.active7 / c.total * 100) : 0}%</td>
+                            <td style={{ padding: '6px 8px', textAlign: 'right', color: '#F59E0B', fontWeight: 700 }}>{c.total > 0 ? Math.round(c.active14 / c.total * 100) : 0}%</td>
+                            <td style={{ padding: '6px 8px', textAlign: 'right', color: '#EF4444', fontWeight: 700 }}>{c.total > 0 ? Math.round(c.active28 / c.total * 100) : 0}%</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
+            </div>
+
+            {/* Streak health (full width) */}
+            <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '24px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', marginTop: 20 }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', margin: '0 0 18px' }}>Streak health</p>
+              {(() => {
+                const buckets = [
+                  { label: '0 days (inactive)', n: progress.filter(p => p.streak === 0).length, color: '#E2E8F0' },
+                  { label: '1–3 days', n: progress.filter(p => p.streak >= 1 && p.streak <= 3).length, color: '#FDE68A' },
+                  { label: '4–7 days', n: progress.filter(p => p.streak >= 4 && p.streak <= 7).length, color: '#F97316' },
+                  { label: '8–14 days', n: progress.filter(p => p.streak >= 8 && p.streak <= 14).length, color: '#EF4444' },
+                  { label: '15+ days', n: progress.filter(p => p.streak >= 15).length, color: '#2563EB' },
+                ]
+                const maxN = Math.max(...buckets.map(b => b.n), 1)
+                return (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12 }}>
+                    {buckets.map(b => (
+                      <div key={b.label}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 5 }}>
+                          <span style={{ color: '#475569' }}>{b.label}</span>
+                          <span style={{ fontWeight: 700, color: b.color === '#E2E8F0' ? '#CBD5E1' : b.color }}>
+                            {b.n} · {pct(b.n, progress.length)}
+                          </span>
+                        </div>
+                        <div style={{ height: 5, borderRadius: 3, background: '#F1F5F9' }}>
+                          <div style={{ height: '100%', borderRadius: 3, width: `${Math.round((b.n / maxN) * 100)}%`, background: b.color }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )
+              })()}
             </div>
           </>
         )}
@@ -519,13 +606,18 @@ export default async function AdminPage({
                 <Users size={14} style={{ color: '#2563EB' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>All Users</span>
               </div>
-              <span style={{ fontSize: 12, background: '#DBEAFE', color: '#2563EB', padding: '3px 10px', borderRadius: 6, fontWeight: 600 }}>
-                {totalUsers} total
-              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <Link href="/api/admin/export?type=users" style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: '#64748B', textDecoration: 'none', padding: '4px 10px', borderRadius: 6, border: '1px solid #E2E8F0', background: '#FFFFFF' }}>
+                  <Download size={11} /> Export CSV
+                </Link>
+                <span style={{ fontSize: 12, background: '#DBEAFE', color: '#2563EB', padding: '3px 10px', borderRadius: 6, fontWeight: 600 }}>
+                  {totalUsers} total
+                </span>
+              </div>
             </div>
             <div style={{ overflowX: 'auto' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                <TableHead cols={['User', 'Track', 'XP', 'Lessons', 'Streak', 'Badges', 'Digest', 'Last active', 'Joined']} />
+                <TableHead cols={['User', 'Track', 'XP', 'Lessons', 'Streak', 'Badges', 'Digest', 'Last active', 'Joined', '']} />
                 <tbody>
                   {users.map((u, i) => {
                     const p = progressById[u.id]
@@ -577,6 +669,16 @@ export default async function AdminPage({
                         <td style={{ padding: '12px 16px', color: '#CBD5E1', whiteSpace: 'nowrap' }}>
                           {fmt(u.created_at)}
                         </td>
+                        <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' }}>
+                          <div style={{ display: 'flex', gap: 6 }}>
+                            <Link href={`/admin/users/${u.id}`} style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#EFF6FF', color: '#2563EB', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3 }}>
+                              <ExternalLink size={10} /> View
+                            </Link>
+                            <Link href={`/api/admin/impersonate?userId=${u.id}`} target="_blank" style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#FFFBEB', color: '#D97706', textDecoration: 'none', fontWeight: 600 }}>
+                              Impersonate
+                            </Link>
+                          </div>
+                        </td>
                       </tr>
                     )
                   })}
@@ -618,6 +720,26 @@ export default async function AdminPage({
                 </div>
               </div>
             )}
+
+            {/* Cron monitor */}
+            {(() => {
+              const digestRows = emailLogs.filter(e => e.sequence === 'weekly-digest')
+              const lastDigest = digestRows[0]
+              return digestRows.length > 0 ? (
+                <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '20px 24px', marginBottom: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.04)', display: 'flex', alignItems: 'center', gap: 16 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: '#F0FDF4', border: '1px solid #BBF7D0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <RefreshCw size={15} style={{ color: '#16A34A' }} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', margin: '0 0 2px' }}>Weekly digest cron</p>
+                    <p style={{ fontSize: 12, color: '#64748B', margin: 0 }}>
+                      Last run: <strong style={{ color: '#0F172A' }}>{timeAgo(lastDigest.sent_at)}</strong> · {digestRows.length} sends in log
+                    </p>
+                  </div>
+                  <span style={{ fontSize: 11, padding: '3px 10px', borderRadius: 6, background: '#F0FDF4', color: '#16A34A', fontWeight: 700 }}>ACTIVE</span>
+                </div>
+              ) : null
+            })()}
 
             <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <div style={{ padding: '16px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -700,15 +822,21 @@ export default async function AdminPage({
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }}>
               <StatCard icon={UserPlus} label="Total leads" value={leads.length} color="#2563EB" />
               <StatCard icon={CheckCircle2} label="Converted to users" value={convertedLeads} sub={`${pct(convertedLeads, leads.length)} rate`} color="#10B981" />
-              {Object.entries(leadsBySource).slice(0, 2).map(([src, count]) => (
-                <StatCard key={src} icon={Target} label={`Source: ${src}`} value={count} sub={`${pct(count, leads.length)} of leads`} color="#F59E0B" />
+              <StatCard icon={TrendingUp} label="Avg time to convert" value={avgConvDays != null ? `${avgConvDays}d` : '—'} sub={avgConvDays != null ? `${convertedWithTime.length} conversions` : 'No data'} color="#8B5CF6" />
+              {Object.entries(leadsBySource).slice(0, 1).map(([src, count]) => (
+                <StatCard key={src} icon={Target} label={`Top source: ${src}`} value={count} sub={`${pct(count, leads.length)} of leads`} color="#F59E0B" />
               ))}
             </div>
             <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
               <div style={{ padding: '16px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', gap: 8 }}>
                 <UserPlus size={14} style={{ color: '#2563EB' }} />
                 <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>All Leads</span>
-                <span style={{ fontSize: 12, color: '#94A3B8', marginLeft: 'auto' }}>Pre-signup email captures</span>
+                <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <Link href="/api/admin/export?type=leads" style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: '#64748B', textDecoration: 'none', padding: '4px 10px', borderRadius: 6, border: '1px solid #E2E8F0', background: '#FFFFFF' }}>
+                    <Download size={11} /> Export CSV
+                  </Link>
+                  <span style={{ fontSize: 12, color: '#94A3B8' }}>Pre-signup email captures</span>
+                </div>
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
@@ -785,6 +913,98 @@ export default async function AdminPage({
               </div>
             </div>
           </>
+        )}
+
+        {/* ═══════════════════ REVENUE ═══════════════════ */}
+        {tab === 'revenue' && (
+          <>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }}>
+              <StatCard icon={DollarSign} label="MRR (est.)" value={`$${mrr.toLocaleString()}`} sub={`${activeSubs.length} active subs`} color="#10B981" />
+              <StatCard icon={Users} label="Active subscribers" value={activeSubs.length} sub={`${pct(activeSubs.length, totalUsers)} of users`} color="#2563EB" />
+              <StatCard icon={TrendingUp} label="Trialing" value={trialingSubs.length} color="#F59E0B" />
+              <StatCard icon={Award} label="Total subscriptions" value={subscriptions.length} color="#8B5CF6" />
+            </div>
+
+            {Object.keys(subsByPlan).length > 0 && (
+              <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '24px', marginBottom: 20, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+                <p style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', margin: '0 0 18px' }}>By plan</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {Object.entries(subsByPlan).sort((a, b) => b[1] - a[1]).map(([plan, count]) => {
+                    const maxCount = Math.max(...Object.values(subsByPlan))
+                    const planMrr = (MRR_BY_PLAN as Record<string, number>)[plan]
+                    return (
+                      <div key={plan}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 12, marginBottom: 5 }}>
+                          <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600, background: '#DBEAFE', color: '#2563EB' }}>{plan}</span>
+                          <span style={{ color: '#0F172A', fontWeight: 700 }}>{count} {planMrr ? `· $${(count * planMrr).toLocaleString()}/mo` : ''}</span>
+                        </div>
+                        <div style={{ height: 5, borderRadius: 3, background: '#F1F5F9' }}>
+                          <div style={{ height: '100%', borderRadius: 3, width: `${Math.round((count / maxCount) * 100)}%`, background: '#2563EB' }} />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
+            <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <div style={{ padding: '16px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <DollarSign size={14} style={{ color: '#10B981' }} />
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Recent subscriptions</span>
+                <span style={{ fontSize: 12, color: '#94A3B8', marginLeft: 'auto' }}>Last 20</span>
+              </div>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                  <TableHead cols={['User', 'Plan', 'Status', 'Renews', 'Started']} />
+                  <tbody>
+                    {recentSubs.length === 0 ? <EmptyRow cols={5} message="No subscriptions yet" /> : recentSubs.map((s, i) => {
+                      const subUser = users.find(u => u.id === s.user_id)
+                      const statusColors: Record<string, string> = { active: '#10B981', trialing: '#F59E0B', canceled: '#94A3B8', past_due: '#EF4444' }
+                      const color = statusColors[s.status] ?? '#94A3B8'
+                      return (
+                        <tr key={s.id} style={{ borderBottom: i < recentSubs.length - 1 ? '1px solid #EFF6FF' : 'none' }}>
+                          <td style={{ padding: '10px 16px', color: '#475569' }}>
+                            {subUser?.user_metadata?.full_name ?? subUser?.email ?? s.user_id.slice(0, 8) + '…'}
+                          </td>
+                          <td style={{ padding: '10px 16px' }}>
+                            <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600, background: '#DBEAFE', color: '#2563EB' }}>{s.plan}</span>
+                          </td>
+                          <td style={{ padding: '10px 16px', fontWeight: 600, fontSize: 12, color }}>
+                            {s.status}
+                          </td>
+                          <td style={{ padding: '10px 16px', color: '#94A3B8', whiteSpace: 'nowrap' }}>
+                            {fmt(s.current_period_end)}
+                          </td>
+                          <td style={{ padding: '10px 16px', color: '#CBD5E1', whiteSpace: 'nowrap' }}>
+                            {fmt(s.created_at)}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ═══════════════════ BROADCAST ═══════════════════ */}
+        {tab === 'broadcast' && (
+          <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '40px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <div style={{ width: 48, height: 48, borderRadius: 12, background: '#EFF6FF', border: '1px solid #DBEAFE', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
+              <Megaphone size={22} style={{ color: '#2563EB' }} />
+            </div>
+            <h2 style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: '0 0 10px', letterSpacing: '-0.02em' }}>
+              Broadcast to all users
+            </h2>
+            <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 28px', maxWidth: 400, lineHeight: 1.6 }}>
+              Send email blasts or push notifications to your entire user base, or filter by activity level.
+            </p>
+            <Link href="/admin/broadcast" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '11px 24px', borderRadius: 10, background: '#2563EB', color: '#FFFFFF', textDecoration: 'none', fontSize: 14, fontWeight: 700 }}>
+              <Megaphone size={14} /> Open Broadcast Center
+            </Link>
+          </div>
         )}
 
       </div>
