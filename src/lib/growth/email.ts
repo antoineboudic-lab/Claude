@@ -5,43 +5,59 @@ function getResend(): Resend {
   if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY)
   return _resend
 }
+
 const FROM = 'OpusLearn <hello@opuslearn.ai>'
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
-export type EmailSequence = 'welcome' | 'activation' | 'reengagement' | 'upgrade'
+// ─── Logo SVG (inline for email client compatibility) ─────────────────────────
 
-// ─── Templates ────────────────────────────────────────────────────────────────
+const LOGO_MARK = `<svg width="30" height="30" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><rect width="28" height="28" rx="7" fill="#2563EB"/><circle cx="14" cy="15" r="6.5" stroke="white" stroke-width="2.2" fill="none"/><path d="M10.5 17L14 12L17.5 17" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
 
-function baseHtml(content: string): string {
-  return `
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#EFF6FF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#EFF6FF;padding:40px 16px;">
+// ─── Layout helpers ───────────────────────────────────────────────────────────
+
+function baseHtml(content: string, footerExtra = ''): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <title>OpusLearn</title>
+</head>
+<body style="margin:0;padding:0;background:#F1F5F9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F1F5F9;padding:40px 16px;">
     <tr><td align="center">
-      <table width="560" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:16px;border:1px solid #E2E8F0;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
-        <!-- Header -->
-        <tr><td style="background:#2563EB;padding:4px 0;"></td></tr>
-        <tr><td style="padding:28px 36px 20px;">
-          <table cellpadding="0" cellspacing="0">
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#FFFFFF;border-radius:16px;border:1px solid #E2E8F0;overflow:hidden;">
+
+        <!-- Accent bar -->
+        <tr><td style="background:#2563EB;height:4px;font-size:0;line-height:0;">&nbsp;</td></tr>
+
+        <!-- Logo header -->
+        <tr><td style="padding:24px 36px 20px;border-bottom:1px solid #F1F5F9;">
+          <table role="presentation" cellpadding="0" cellspacing="0">
             <tr>
-              <td style="background:#2563EB;width:28px;height:28px;border-radius:8px;text-align:center;vertical-align:middle;">
-                <span style="color:#fff;font-size:14px;">⚡</span>
-              </td>
-              <td style="padding-left:10px;font-size:14px;font-weight:900;color:#0F172A;letter-spacing:-0.3px;">OpusLearn</td>
+              <td style="vertical-align:middle;">${LOGO_MARK}</td>
+              <td style="padding-left:10px;vertical-align:middle;font-size:15px;font-weight:900;color:#0F172A;letter-spacing:-0.3px;line-height:1;">OpusLearn</td>
             </tr>
           </table>
         </td></tr>
-        <!-- Content -->
+
+        <!-- Body content -->
         ${content}
+
         <!-- Footer -->
-        <tr><td style="padding:24px 36px;border-top:1px solid #F1F5F9;text-align:center;">
-          <p style="margin:0;font-size:12px;color:#94A3B8;">
-            You're receiving this because you signed up at opuslearn.ai.<br>
-            <a href="${BASE_URL}/unsubscribe" style="color:#94A3B8;">Unsubscribe</a>
+        <tr><td style="padding:24px 36px;background:#F8FAFF;border-top:1px solid #E2E8F0;text-align:center;">
+          ${footerExtra ? `<p style="margin:0 0 10px;font-size:13px;color:#64748B;">${footerExtra}</p>` : ''}
+          <p style="margin:0 0 6px;font-size:12px;color:#94A3B8;line-height:1.5;">
+            You're receiving this because you signed up at <a href="${BASE_URL}" style="color:#94A3B8;text-decoration:underline;">opuslearn.ai</a>.
+          </p>
+          <p style="margin:0;font-size:12px;color:#CBD5E1;">
+            <a href="${BASE_URL}/unsubscribe" style="color:#CBD5E1;text-decoration:underline;">Unsubscribe</a>
+            &nbsp;&middot;&nbsp;
+            <a href="${BASE_URL}/privacy" style="color:#CBD5E1;text-decoration:underline;">Privacy policy</a>
           </p>
         </td></tr>
+
       </table>
     </td></tr>
   </table>
@@ -49,128 +65,209 @@ function baseHtml(content: string): string {
 </html>`
 }
 
-function btn(text: string, href: string): string {
-  return `<a href="${href}" style="display:inline-block;background:#2563EB;color:#fff;font-weight:600;font-size:14px;padding:14px 28px;border-radius:10px;text-decoration:none;box-shadow:0 4px 16px rgba(37,99,235,0.25);">${text}</a>`
+function row(content: string, pb = 20): string {
+  return `<tr><td style="padding:0 36px ${pb}px;">${content}</td></tr>`
 }
 
-function row(content: string): string {
-  return `<tr><td style="padding:0 36px 20px;">${content}</td></tr>`
+function spacer(h = 8): string {
+  return `<tr><td style="height:${h}px;font-size:0;line-height:0;">&nbsp;</td></tr>`
 }
 
-// ─── Sequence builders ────────────────────────────────────────────────────────
+function btn(label: string, href: string): string {
+  return `<table role="presentation" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="border-radius:10px;background:#2563EB;box-shadow:0 4px 14px rgba(37,99,235,0.3);">
+        <a href="${href}" style="display:inline-block;padding:14px 30px;font-size:14px;font-weight:700;color:#FFFFFF;text-decoration:none;letter-spacing:0.1px;">${label}</a>
+      </td>
+    </tr>
+  </table>`
+}
+
+function infoBox(content: string, variant: 'blue' | 'amber' | 'green' = 'blue'): string {
+  const styles = {
+    blue:  { bg: '#EFF6FF', border: '#BFDBFE', text: '#1E40AF' },
+    amber: { bg: '#FFFBEB', border: '#FDE68A', text: '#92400E' },
+    green: { bg: '#F0FDF4', border: '#BBF7D0', text: '#166534' },
+  }
+  const s = styles[variant]
+  return `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:${s.bg};border:1px solid ${s.border};border-radius:12px;">
+    <tr><td style="padding:16px 20px;font-size:14px;color:${s.text};line-height:1.5;">${content}</td></tr>
+  </table>`
+}
+
+function statsGrid(cells: { value: string; label: string; color?: string }[]): string {
+  const cols = cells.map((c, i) => `
+    <td style="padding:18px 16px;text-align:center;${i < cells.length - 1 ? 'border-right:1px solid #E2E8F0;' : ''}width:${Math.floor(100 / cells.length)}%;">
+      <p style="margin:0 0 4px;font-size:28px;font-weight:900;color:${c.color ?? '#0F172A'};line-height:1;">${c.value}</p>
+      <p style="margin:0;font-size:11px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;">${c.label}</p>
+    </td>`).join('')
+  return `<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#FAFBFF;border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;"><tr>${cols}</tr></table>`
+}
+
+function trackBadge(label: string): string {
+  return `<span style="display:inline-block;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;padding:3px 10px;font-size:12px;font-weight:700;color:#2563EB;letter-spacing:0.2px;">${label}</span>`
+}
+
+// ─── 1. Signup email (immediate on account creation) ─────────────────────────
+
+function signupHtml(name: string): string {
+  return baseHtml(`
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">You're in, ${name}! 🎉</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">Your OpusLearn account is ready. Take a quick 2-minute assessment to get your personalised AI learning path — tailored to your role, your level, your goals.</p>
+    `, 20)}
+    ${row(infoBox(`
+      <strong style="display:block;margin-bottom:6px;font-size:13px;color:#1E40AF;text-transform:uppercase;letter-spacing:0.5px;">What happens next</strong>
+      <table role="presentation" cellpadding="0" cellspacing="0">
+        ${['Answer 5 quick questions about your role', 'Get a personalised learning path', 'Start your first lesson in under 15 minutes'].map((s, i) => `
+          <tr>
+            <td style="padding:4px 12px 4px 0;font-size:14px;color:#1D4ED8;font-weight:700;vertical-align:top;">${i + 1}.</td>
+            <td style="padding:4px 0;font-size:14px;color:#1E3A8A;">${s}</td>
+          </tr>`).join('')}
+      </table>
+    `))}
+    ${spacer(20)}
+    ${row(btn('Take the assessment →', `${BASE_URL}/assessment`))}
+    ${spacer(12)}
+    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Takes 2 minutes. No technical background needed.</p>`, 28)}
+  `)
+}
+
+// ─── 2. Welcome email (post-assessment, knows the track) ─────────────────────
 
 function welcomeHtml(name: string, trackLabel: string): string {
   return baseHtml(`
-    ${row(`<h1 style="margin:0 0 8px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.15;">Welcome, ${name}! 👋</h1>
-           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">Your personalised <strong>${trackLabel}</strong> learning path is ready. It takes most professionals just 15 minutes a day to transform how they work with AI.</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #DBEAFE;border-radius:12px;width:100%;">
-             <tr><td style="padding:20px 24px;">
-               <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;letter-spacing:1px;">Your first lesson</p>
-               <p style="margin:0 0 16px;font-size:15px;font-weight:600;color:#0F172A;">AI Fundamentals for Business Professionals</p>
-               <p style="margin:0;font-size:13px;color:#94A3B8;">12 min · No technical background needed</p>
-             </td></tr>
-           </table>`)}
+    ${spacer(8)}
+    ${row(`
+      ${trackBadge(trackLabel + ' Track')}
+      <h1 style="margin:12px 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">Welcome to OpusLearn, ${name}!</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">Your personalised <strong>${trackLabel}</strong> learning path is ready. Most professionals complete their first lesson in under 15 minutes — and notice a difference in their work within a week.</p>
+    `, 20)}
+    ${row(`
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;">
+        <tr>
+          <td style="padding:18px 20px;">
+            <p style="margin:0 0 3px;font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;letter-spacing:1px;">Your first lesson</p>
+            <p style="margin:0 0 4px;font-size:16px;font-weight:700;color:#0F172A;">AI Fundamentals for Business Professionals</p>
+            <p style="margin:0;font-size:13px;color:#64748B;">12 min &nbsp;·&nbsp; No technical background needed &nbsp;·&nbsp; Free</p>
+          </td>
+        </tr>
+      </table>
+    `, 20)}
     ${row(btn('Start my first lesson →', `${BASE_URL}/dashboard`))}
-    ${row(`<table cellpadding="0" cellspacing="0">
-             ${['✅ Free forever — no credit card needed', '⚡ 15 min/day is all it takes', '🏆 Earn XP and certificates'].map(t => `<tr><td style="padding:4px 0;font-size:13px;color:#64748B;">${t}</td></tr>`).join('')}
-           </table>`)}`
-  )
+    ${spacer(16)}
+    ${row(`
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        ${[
+          ['✅', 'Free forever — no credit card needed'],
+          ['⚡', '15 min/day is all it takes'],
+          ['🏆', 'Earn XP, badges and certificates'],
+        ].map(([icon, text]) => `
+          <tr>
+            <td style="padding:5px 10px 5px 0;font-size:14px;color:#475569;vertical-align:top;white-space:nowrap;">${icon}</td>
+            <td style="padding:5px 0;font-size:14px;color:#475569;">${text}</td>
+          </tr>`).join('')}
+      </table>
+    `, 28)}
+  `)
 }
+
+// ─── 3. Activation email (day 1–3, no lesson started) ────────────────────────
 
 function activationHtml(name: string): string {
   return baseHtml(`
-    ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Your path is waiting, ${name}</h1>
-           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">You completed your AI assessment but haven't started your first lesson yet. Professionals who start within 24 hours are <strong>4× more likely</strong> to finish their track.</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:12px;width:100%;">
-             <tr><td style="padding:16px 20px;">
-               <p style="margin:0;font-size:14px;color:#92400E;">⏱️ <strong>Your personalised plan expires in 48 hours</strong> — we'll reset it if you don't start soon.</p>
-             </td></tr>
-           </table>`)}
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">Your path is waiting, ${name}</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">You completed your assessment but haven't started your first lesson yet. Professionals who start within 24 hours are <strong>4× more likely</strong> to finish their track.</p>
+    `, 20)}
+    ${row(infoBox(`⏱️ <strong>Your personalised plan expires in 48 hours</strong> — we'll reset it if you don't start soon. Pick up right where you left off.`, 'amber'))}
+    ${spacer(20)}
     ${row(btn('Pick up where I left off →', `${BASE_URL}/dashboard`))}
-    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Takes just 12 minutes to complete your first lesson.</p>`)}`
-  )
+    ${spacer(12)}
+    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Takes just 12 minutes to complete your first lesson. Your progress is saved automatically.</p>`, 28)}
+  `)
 }
+
+// ─── 4. Re-engagement email (7 days inactive) ────────────────────────────────
 
 function reengagementHtml(name: string, streak: number, lessonsLeft: number): string {
   return baseHtml(`
-    ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Miss you, ${name} 👀</h1>
-           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">It's been a week since you last logged in. You have <strong>${lessonsLeft} lessons left</strong> to complete your track — you're closer than you think.</p>`)}
-    ${streak > 0 ? row(`<table cellpadding="0" cellspacing="0" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:12px;width:100%;">
-             <tr><td style="padding:16px 20px;">
-               <p style="margin:0;font-size:14px;color:#92400E;">🔥 You had a <strong>${streak}-day streak</strong>. Don't let it reset to zero.</p>
-             </td></tr>
-           </table>`) : ''}
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">Miss you, ${name} 👀</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">It's been a week since your last session. You're closer to finishing than you think — <strong>${lessonsLeft} lesson${lessonsLeft !== 1 ? 's' : ''} left</strong> to complete your track.</p>
+    `, 20)}
+    ${streak > 0 ? row(infoBox(`🔥 <strong>You had a ${streak}-day streak.</strong> Don't let all that momentum reset to zero — jump back in today.`, 'amber')) + spacer(20) : ''}
+    ${row(`
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#FAFBFF;border:1px solid #E2E8F0;border-radius:12px;">
+        <tr>
+          <td style="padding:16px 20px;border-right:1px solid #E2E8F0;text-align:center;width:50%;">
+            <p style="margin:0 0 2px;font-size:28px;font-weight:900;color:#0F172A;">${lessonsLeft}</p>
+            <p style="margin:0;font-size:11px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;">Lessons left</p>
+          </td>
+          <td style="padding:16px 20px;text-align:center;width:50%;">
+            <p style="margin:0 0 2px;font-size:28px;font-weight:900;color:${streak > 0 ? '#F59E0B' : '#94A3B8'};">${streak > 0 ? `🔥 ${streak}` : '–'}</p>
+            <p style="margin:0;font-size:11px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;">Day streak</p>
+          </td>
+        </tr>
+      </table>
+    `, 20)}
     ${row(btn('Continue learning →', `${BASE_URL}/dashboard`))}
-    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Your progress is saved. Jump right back in.</p>`)}`
-  )
+    ${spacer(12)}
+    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Your progress is saved exactly where you left off.</p>`, 28)}
+  `)
 }
+
+// ─── 5. Upgrade email (track completed, no subscription) ─────────────────────
 
 function upgradeHtml(name: string, completedTrack: string): string {
+  const features = [
+    ['🗂️', 'All 10 role-specific tracks'],
+    ['📜', 'Verified completion certificates'],
+    ['🤖', 'AI-powered lesson recommendations'],
+    ['📊', 'Weekly progress reports'],
+    ['🔓', 'Advanced modules + real-world case studies'],
+    ['👥', 'Team learning & leaderboard'],
+  ]
   return baseHtml(`
-    ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">🎉 You completed ${completedTrack}!</h1>
-           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">${name}, you're now ahead of 89% of your peers in AI literacy. Here's what upgrading to Pro unlocks for you:</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="width:100%;">
-             ${['🗂️ All 10 role-specific tracks', '📜 Verified completion certificates', '🤖 AI-powered lesson recommendations', '📊 Weekly progress reports', '🔓 Advanced modules + case studies'].map(f =>
-               `<tr><td style="padding:6px 0;font-size:14px;color:#334155;border-bottom:1px solid #F1F5F9;">${f}</td></tr>`
-             ).join('')}
-           </table>`)}
-    ${row(`<div style="margin-top:8px;">${btn('Upgrade to Pro — $19/mo →', `${BASE_URL}/#pricing`)}</div>`)}
-    ${row(`<p style="margin:0;font-size:12px;color:#94A3B8;">Cancel anytime. 30-day money-back guarantee.</p>`)}`
-  )
+    ${spacer(8)}
+    ${row(infoBox(`🎉 <strong>You completed ${completedTrack}!</strong> You're now in the top 11% of AI-literate professionals on the platform.`, 'green'))}
+    ${spacer(20)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">Ready for the next level, ${name}?</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">You've proven you can do this. Upgrading to Pro unlocks the full library — so you can keep building on the momentum you've built.</p>
+    `, 20)}
+    ${row(`
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;">
+        ${features.map(([icon, text], i) => `
+          <tr>
+            <td style="padding:11px 16px;${i < features.length - 1 ? 'border-bottom:1px solid #F1F5F9;' : ''}vertical-align:middle;width:32px;font-size:16px;">${icon}</td>
+            <td style="padding:11px 16px 11px 4px;${i < features.length - 1 ? 'border-bottom:1px solid #F1F5F9;' : ''}font-size:14px;color:#334155;font-weight:500;">${text}</td>
+          </tr>`).join('')}
+      </table>
+    `, 20)}
+    ${row(`
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;">
+        <tr>
+          <td style="padding:16px 20px;">
+            <p style="margin:0 0 2px;font-size:22px;font-weight:900;color:#0F172A;">$19<span style="font-size:14px;font-weight:500;color:#64748B;">/month</span> &nbsp; <span style="font-size:14px;font-weight:500;color:#64748B;">or</span> &nbsp; $190<span style="font-size:14px;font-weight:500;color:#64748B;">/year</span></p>
+            <p style="margin:0;font-size:13px;color:#64748B;">Cancel anytime &nbsp;·&nbsp; 30-day money-back guarantee</p>
+          </td>
+        </tr>
+      </table>
+    `, 20)}
+    ${row(btn('Upgrade to Pro →', `${BASE_URL}/#pricing`))}
+    ${spacer(12)}
+    ${row(`<p style="margin:0;font-size:12px;color:#94A3B8;">No long-term commitment. Cancel or downgrade anytime.</p>`, 28)}
+  `)
 }
 
-// ─── Send functions ───────────────────────────────────────────────────────────
-
-export async function sendWelcomeEmail(to: string, name: string, trackLabel: string): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) return false
-  const { error } = await getResend().emails.send({
-    from: FROM,
-    to,
-    subject: `Welcome to OpusLearn, ${name}! Your path is ready ⚡`,
-    html: welcomeHtml(name, trackLabel),
-  })
-  return !error
-}
-
-export async function sendActivationEmail(to: string, name: string): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) return false
-  const { error } = await getResend().emails.send({
-    from: FROM,
-    to,
-    subject: `${name}, your AI learning path is waiting`,
-    html: activationHtml(name),
-  })
-  return !error
-}
-
-export async function sendReengagementEmail(
-  to: string, name: string, streak: number, lessonsLeft: number,
-): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) return false
-  const { error } = await getResend().emails.send({
-    from: FROM,
-    to,
-    subject: `Miss you, ${name} — ${lessonsLeft} lessons left in your track`,
-    html: reengagementHtml(name, streak, lessonsLeft),
-  })
-  return !error
-}
-
-export async function sendUpgradeEmail(to: string, name: string, completedTrack: string): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) return false
-  const { error } = await getResend().emails.send({
-    from: FROM,
-    to,
-    subject: `🎉 You completed ${completedTrack} — here's what's next`,
-    html: upgradeHtml(name, completedTrack),
-  })
-  return !error
-}
-
-// ─── Weekly digest ─────────────────────────────────────────────────────────────
+// ─── 6. Weekly digest ─────────────────────────────────────────────────────────
 
 export interface WeeklyStats {
-  thisWeekLessons: number  // lessons completed since last digest
+  thisWeekLessons: number
   totalLessons: number
   streak: number
   srDue: number
@@ -184,96 +281,137 @@ function weeklyDigestHtml(name: string, stats: WeeklyStats): string {
   const { thisWeekLessons, totalLessons, streak, srDue, trackLabel, nextLessonTitle, nextLessonUrl, unsubscribeUrl } = stats
 
   const streakColor = streak >= 7 ? '#F97316' : streak > 0 ? '#F59E0B' : '#94A3B8'
-  const streakEmoji = streak >= 7 ? '🔥' : streak > 0 ? '⚡' : '💤'
-  const streakLabel = streak > 0 ? `${streak}-day streak` : 'No streak yet'
+  const streakDisplay = streak > 0 ? `🔥 ${streak}` : '–'
 
   const heroMsg = thisWeekLessons === 0
-    ? `No lessons this week yet — your progress is waiting where you left off.`
+    ? 'No lessons this week yet. Your progress is exactly where you left it — jump back in today.'
     : thisWeekLessons === 1
-    ? `You completed <strong>1 lesson</strong> this week. One more today keeps your momentum going.`
-    : `You completed <strong>${thisWeekLessons} lessons</strong> this week — that's ahead of 73% of learners.`
+    ? 'You completed <strong>1 lesson</strong> this week. One more today keeps your momentum going.'
+    : `You completed <strong>${thisWeekLessons} lessons</strong> this week — that puts you ahead of 73% of learners on the platform.`
 
   return baseHtml(`
+    ${spacer(8)}
     ${row(`
-      <h1 style="margin:0 0 6px;font-size:24px;font-weight:900;color:#0F172A;line-height:1.2;">
+      <h1 style="margin:0 0 10px;font-size:24px;font-weight:900;color:#0F172A;line-height:1.2;">
         ${thisWeekLessons > 0 ? `${thisWeekLessons} lesson${thisWeekLessons !== 1 ? 's' : ''} this week, ${name} 🎯` : `Your weekly update, ${name}`}
       </h1>
-      <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;">${heroMsg}</p>
-    `)}
-
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">${heroMsg}</p>
+    `, 20)}
+    ${row(statsGrid([
+      { value: String(thisWeekLessons), label: 'This week', color: thisWeekLessons > 0 ? '#2563EB' : '#94A3B8' },
+      { value: streakDisplay, label: streak > 0 ? `${streak}-day streak` : 'No streak yet', color: streakColor },
+      { value: String(totalLessons), label: 'Total lessons', color: '#0F172A' },
+    ]))}
+    ${spacer(4)}
+    ${nextLessonTitle && nextLessonUrl ? `
     ${row(`
-      <table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #E2E8F0;border-radius:12px;width:100%;">
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#FFFFFF;border:1px solid #BFDBFE;border-radius:12px;">
         <tr>
-          <td style="padding:18px 20px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
-            <p style="margin:0 0 3px;font-size:30px;font-weight:900;color:#2563EB;">${thisWeekLessons}</p>
-            <p style="margin:0;font-size:11px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.5px;">This week</p>
-          </td>
-          <td style="padding:18px 20px;border-right:1px solid #E2E8F0;text-align:center;width:33%;">
-            <p style="margin:0 0 3px;font-size:30px;font-weight:900;color:${streakColor};">${streakEmoji} ${streak}</p>
-            <p style="margin:0;font-size:11px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.5px;">${streakLabel}</p>
-          </td>
-          <td style="padding:18px 20px;text-align:center;width:33%;">
-            <p style="margin:0 0 3px;font-size:30px;font-weight:900;color:#0F172A;">${totalLessons}</p>
-            <p style="margin:0;font-size:11px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.5px;">Total lessons</p>
+          <td style="padding:16px 20px;">
+            <p style="margin:0 0 3px;font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;letter-spacing:1px;">Up next</p>
+            <p style="margin:0 0 4px;font-size:15px;font-weight:700;color:#0F172A;">${nextLessonTitle}</p>
+            <p style="margin:0;font-size:13px;color:#94A3B8;">${trackLabel ?? 'Your track'} &nbsp;·&nbsp; ~15 min</p>
           </td>
         </tr>
       </table>
     `)}
-
-    ${nextLessonTitle && nextLessonUrl ? row(`
-      <table cellpadding="0" cellspacing="0" style="background:#FFFFFF;border:1px solid #DBEAFE;border-radius:12px;width:100%;">
-        <tr><td style="padding:16px 20px;">
-          <p style="margin:0 0 2px;font-size:11px;font-weight:700;color:#2563EB;text-transform:uppercase;letter-spacing:1px;">Up next</p>
-          <p style="margin:0 0 12px;font-size:15px;font-weight:600;color:#0F172A;">${nextLessonTitle}</p>
-          <p style="margin:0;font-size:13px;color:#94A3B8;">${trackLabel ?? 'Your track'} · ~15 min</p>
-        </td></tr>
-      </table>
-    `) : ''}
-
-    ${srDue > 0 ? row(`
-      <table cellpadding="0" cellspacing="0" style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:12px;width:100%;">
-        <tr><td style="padding:14px 20px;">
-          <p style="margin:0;font-size:14px;color:#92400E;">🃏 <strong>${srDue} card${srDue !== 1 ? 's' : ''} due for review</strong> — 5 minutes now locks in what you've learned.</p>
-        </td></tr>
-      </table>
-    `) : ''}
-
+    ${spacer(4)}` : ''}
+    ${srDue > 0 ? `
+    ${row(infoBox(`🃏 <strong>${srDue} card${srDue !== 1 ? 's' : ''} due for review</strong> — 5 minutes of spaced repetition locks in what you've learned.`, 'amber'))}
+    ${spacer(4)}` : ''}
     ${row(btn(nextLessonTitle ? 'Continue learning →' : 'Go to my dashboard →', nextLessonUrl ?? `${BASE_URL}/dashboard`))}
-
-    ${row(`<p style="margin:0;font-size:12px;color:#CBD5E1;text-align:center;">
-      <a href="${unsubscribeUrl}" style="color:#CBD5E1;text-decoration:underline;">Unsubscribe from weekly digests</a>
-    </p>`)}
+    ${spacer(12)}
+    ${row(`<p style="margin:0;font-size:12px;color:#CBD5E1;text-align:center;"><a href="${unsubscribeUrl}" style="color:#CBD5E1;text-decoration:underline;">Unsubscribe from weekly digests</a></p>`, 28)}
   `)
 }
 
-// ─── Team nudge ───────────────────────────────────────────────────────────────
+// ─── 7. Team invite ───────────────────────────────────────────────────────────
+
+function teamInviteHtml(inviterName: string, teamName: string, joinUrl: string, assignedTracks?: string[]): string {
+  return baseHtml(`
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">You've been invited to join ${teamName}</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;"><strong>${inviterName}</strong> has invited you to learn AI on OpusLearn — the professional AI training platform built for people who work in business, not engineering.</p>
+    `, 20)}
+    ${assignedTracks && assignedTracks.length > 0 ? row(infoBox(`📚 <strong>Your assigned track${assignedTracks.length > 1 ? 's' : ''}:</strong> ${assignedTracks.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}`, 'blue')) + spacer(20) : ''}
+    ${row(`
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        ${[
+          ['⚡', '15 minutes a day is all it takes'],
+          ['🏆', 'Earn XP, badges and certificates'],
+          ['📊', 'Track your team\'s progress together'],
+        ].map(([icon, text]) => `
+          <tr>
+            <td style="padding:5px 10px 5px 0;font-size:14px;color:#475569;vertical-align:top;white-space:nowrap;">${icon}</td>
+            <td style="padding:5px 0;font-size:14px;color:#475569;">${text}</td>
+          </tr>`).join('')}
+      </table>
+    `, 20)}
+    ${row(btn('Accept invitation →', joinUrl))}
+    ${spacer(12)}
+    ${row(`
+      <p style="margin:0;font-size:12px;color:#94A3B8;">Or paste this link: <a href="${joinUrl}" style="color:#64748B;word-break:break-all;">${joinUrl}</a><br>This invitation expires in 7 days.</p>
+    `, 28)}
+  `)
+}
+
+// ─── 8. Team nudge (admin → inactive team member) ────────────────────────────
 
 function nudgeHtml(memberName: string, teamName: string, adminName: string, unsubUrl: string): string {
   return baseHtml(`
-    ${row(`<h1 style="margin:0 0 8px;font-size:24px;font-weight:900;color:#0F172A;">Hey ${memberName}, your team misses you 👋</h1>
-           <p style="margin:0;font-size:15px;color:#64748B;line-height:1.6;"><strong>${adminName}</strong> from <strong>${teamName}</strong> noticed you haven't been on recently and wanted to check in. Your learning path is still waiting — pick up right where you left off.</p>`)}
-    ${row(`<table cellpadding="0" cellspacing="0" style="background:#EFF6FF;border:1px solid #DBEAFE;border-radius:12px;width:100%;">
-             <tr><td style="padding:16px 20px;">
-               <p style="margin:0;font-size:14px;color:#1E3A8A;">⚡ Your progress is saved. Even 15 minutes today keeps your streak alive.</p>
-             </td></tr>
-           </table>`)}
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">Hey ${memberName}, your team misses you 👋</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;"><strong>${adminName}</strong> from <strong>${teamName}</strong> noticed you haven't been on recently and wanted to check in. Your learning path is still there — pick up exactly where you left off.</p>
+    `, 20)}
+    ${row(infoBox(`⚡ <strong>Even 15 minutes today</strong> keeps your streak alive and your team moving together.`, 'blue'))}
+    ${spacer(20)}
     ${row(btn('Jump back in →', `${BASE_URL}/dashboard`))}
-    ${row(`<p style="margin:0;font-size:12px;color:#CBD5E1;text-align:center;">Sent by your team admin · <a href="${unsubUrl}" style="color:#CBD5E1;">Unsubscribe</a></p>`)}
-  `)
+    ${spacer(12)}
+    ${row(`<p style="margin:0;font-size:12px;color:#94A3B8;">Sent by your team admin on behalf of ${teamName}.</p>`, 28)}
+  `, `<a href="${unsubUrl}" style="color:#94A3B8;text-decoration:underline;font-size:12px;">Unsubscribe from team nudges</a>`)
 }
 
-export async function sendNudgeEmail(
-  to: string, memberName: string, teamName: string, adminName: string, unsubUrl: string,
-): Promise<boolean> {
+// ─── Send functions ───────────────────────────────────────────────────────────
+
+export type EmailSequence = 'signup' | 'welcome' | 'activation' | 'reengagement' | 'upgrade'
+
+async function send(to: string, subject: string, html: string): Promise<boolean> {
   if (!process.env.RESEND_API_KEY) return false
-  const { error } = await getResend().emails.send({
-    from: FROM,
-    to,
-    subject: `${adminName} from ${teamName} is checking in on you`,
-    html: nudgeHtml(memberName, teamName, adminName, unsubUrl),
-  })
+  const { error } = await getResend().emails.send({ from: FROM, to, subject, html })
   return !error
 }
+
+export function sendSignupEmail(to: string, name: string): Promise<boolean> {
+  return send(to, `Welcome to OpusLearn, ${name} — let's get started`, signupHtml(name))
+}
+
+export function sendWelcomeEmail(to: string, name: string, trackLabel: string): Promise<boolean> {
+  return send(to, `Your ${trackLabel} learning path is ready, ${name} ⚡`, welcomeHtml(name, trackLabel))
+}
+
+export function sendActivationEmail(to: string, name: string): Promise<boolean> {
+  return send(to, `${name}, your AI learning path is waiting`, activationHtml(name))
+}
+
+export function sendReengagementEmail(to: string, name: string, streak: number, lessonsLeft: number): Promise<boolean> {
+  return send(to, `Miss you, ${name} — ${lessonsLeft} lesson${lessonsLeft !== 1 ? 's' : ''} left in your track`, reengagementHtml(name, streak, lessonsLeft))
+}
+
+export function sendUpgradeEmail(to: string, name: string, completedTrack: string): Promise<boolean> {
+  return send(to, `🎉 You completed ${completedTrack} — here's what's next`, upgradeHtml(name, completedTrack))
+}
+
+export function sendTeamInviteEmail(to: string, inviterName: string, teamName: string, joinUrl: string, assignedTracks?: string[]): Promise<boolean> {
+  return send(to, `${inviterName} invited you to join ${teamName} on OpusLearn`, teamInviteHtml(inviterName, teamName, joinUrl, assignedTracks))
+}
+
+export function sendNudgeEmail(to: string, memberName: string, teamName: string, adminName: string, unsubUrl: string): Promise<boolean> {
+  return send(to, `${adminName} from ${teamName} is checking in on you`, nudgeHtml(memberName, teamName, adminName, unsubUrl))
+}
+
+// ─── Weekly digest ────────────────────────────────────────────────────────────
 
 function weeklySubject(name: string, thisWeek: number): string {
   if (thisWeek === 0) return `Time to get back on track, ${name} 👋`
@@ -282,17 +420,6 @@ function weeklySubject(name: string, thisWeek: number): string {
   return `${thisWeek} lessons this week, ${name} — that's a strong week 🔥`
 }
 
-export async function sendWeeklyDigestEmail(
-  to: string,
-  name: string,
-  stats: WeeklyStats,
-): Promise<boolean> {
-  if (!process.env.RESEND_API_KEY) return false
-  const { error } = await getResend().emails.send({
-    from: FROM,
-    to,
-    subject: weeklySubject(name, stats.thisWeekLessons),
-    html: weeklyDigestHtml(name, stats),
-  })
-  return !error
+export function sendWeeklyDigestEmail(to: string, name: string, stats: WeeklyStats): Promise<boolean> {
+  return send(to, weeklySubject(name, stats.thisWeekLessons), weeklyDigestHtml(name, stats))
 }
