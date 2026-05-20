@@ -2,14 +2,15 @@
 
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useInView } from 'framer-motion'
 import {
   Zap, Users, BarChart3, Award, CheckCircle2, ArrowRight,
   ChevronDown, Building2, Shield, Headphones, Globe,
-  BookOpen, TrendingUp, Star,
+  BookOpen, TrendingUp, Star, UserPlus, X,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
+import { getAdminTeam, type Team } from '@/lib/supabase/teams'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -116,10 +117,50 @@ export default function TeamsPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [formData, setFormData] = useState({ name: '', email: '', company: '', size: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
-  const { openSignUp } = useAuth()
+  const { openSignUp, user } = useAuth()
+
+  const [adminTeam, setAdminTeam] = useState<Team | null>(null)
+  const [showInvite, setShowInvite] = useState(false)
+  const [inviteEmail, setInviteEmail] = useState('')
+  const [inviteTracks, setInviteTracks] = useState('')
+  const [inviteLoading, setInviteLoading] = useState(false)
+  const [inviteError, setInviteError] = useState<string | null>(null)
+  const [inviteSuccess, setInviteSuccess] = useState<string | null>(null)
 
   const heroRef = useRef(null)
   const heroInView = useInView(heroRef, { once: true })
+
+  useEffect(() => {
+    if (!user) return
+    getAdminTeam(user.id).then(t => setAdminTeam(t))
+  }, [user])
+
+  async function handleInvite(e: React.FormEvent) {
+    e.preventDefault()
+    if (!adminTeam) return
+    setInviteLoading(true)
+    setInviteError(null)
+    setInviteSuccess(null)
+    const assignedTracks = inviteTracks.split(',').map(t => t.trim()).filter(Boolean)
+    try {
+      const res = await fetch('/api/team/invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId: adminTeam.id, email: inviteEmail, assignedTracks }),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        setInviteError((body as { error?: string }).error ?? 'Something went wrong')
+      } else {
+        setInviteSuccess(`Invite sent to ${inviteEmail}!`)
+        setInviteEmail('')
+        setInviteTracks('')
+      }
+    } catch {
+      setInviteError('Network error — please try again')
+    }
+    setInviteLoading(false)
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -214,6 +255,100 @@ export default function TeamsPage() {
           ))}
         </div>
       </div>
+
+      {/* Admin invite section */}
+      {adminTeam && (
+        <div style={{ background: '#FFFFFF', borderTop: '1px solid #E2E8F0' }}>
+          <div className="max-w-5xl mx-auto px-6 py-6">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div>
+                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>{adminTeam.name}</p>
+                <p className="text-xs" style={{ color: '#94A3B8' }}>You're the admin of this team</p>
+              </div>
+              <button
+                onClick={() => { setShowInvite(v => !v); setInviteError(null); setInviteSuccess(null) }}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
+                style={{ background: '#2563EB' }}>
+                <UserPlus size={14} /> Invite member
+              </button>
+            </div>
+            {showInvite && (
+              <div style={{ background: '#FFFFFF', border: '1px solid #DBEAFE', borderRadius: 12, padding: '20px 24px', marginTop: 16, marginBottom: 4 }}>
+                {inviteSuccess ? (
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 size={16} style={{ color: '#10B981' }} />
+                      <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>{inviteSuccess}</p>
+                    </div>
+                    <button
+                      onClick={() => { setInviteSuccess(null); setShowInvite(false) }}
+                      style={{ color: '#94A3B8' }}>
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleInvite} className="space-y-4">
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Invite a team member</p>
+                      <button type="button" onClick={() => setShowInvite(false)} style={{ color: '#94A3B8' }}>
+                        <X size={14} />
+                      </button>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Email address</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="colleague@company.com"
+                        value={inviteEmail}
+                        onChange={e => setInviteEmail(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                        style={{ border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)', background: '#FFFFFF' }}
+                        onFocus={e => (e.target.style.borderColor = '#2563EB')}
+                        onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>
+                        Assign tracks <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. marketing, sales"
+                        value={inviteTracks}
+                        onChange={e => setInviteTracks(e.target.value)}
+                        className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                        style={{ border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)', background: '#FFFFFF' }}
+                        onFocus={e => (e.target.style.borderColor = '#2563EB')}
+                        onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
+                      />
+                    </div>
+                    {inviteError && (
+                      <p className="text-xs" style={{ color: '#EF4444' }}>{inviteError}</p>
+                    )}
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="submit"
+                        disabled={inviteLoading}
+                        className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-60"
+                        style={{ background: '#2563EB' }}>
+                        {inviteLoading ? 'Sending…' : 'Send invite'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowInvite(false)}
+                        className="text-sm font-medium hover:underline"
+                        style={{ color: '#64748B' }}>
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Testimonials */}
       <div className="py-16" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>

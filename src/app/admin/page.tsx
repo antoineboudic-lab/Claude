@@ -1,5 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { AdminNavEmail } from './AdminNavEmail'
+import { AdminUsersTable } from './AdminUsersTable'
 import Link from 'next/link'
 import {
   Users, Zap, BookOpen, Target, TrendingUp, Bell,
@@ -88,6 +89,9 @@ interface SubscriptionRow {
   current_period_end: string | null
   created_at: string
 }
+
+type AdminUser = AuthUser
+
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -615,76 +619,11 @@ export default async function AdminPage({
                 </span>
               </div>
             </div>
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                <TableHead cols={['User', 'Track', 'XP', 'Lessons', 'Streak', 'Badges', 'Digest', 'Last active', 'Joined', '']} />
-                <tbody>
-                  {users.map((u, i) => {
-                    const p = progressById[u.id]
-                    const a = latestAssessmentByUser[u.id]
-                    const name = u.user_metadata?.full_name ?? u.email?.split('@')[0] ?? '—'
-                    const trackColor = a ? (TRACK_COLORS[a.primary_track_id] ?? '#94A3B8') : '#CBD5E1'
-                    const lessons = p?.completed_lessons?.length ?? 0
-                    return (
-                      <tr key={u.id} style={{ borderBottom: i < users.length - 1 ? '1px solid #EFF6FF' : 'none' }}>
-                        <td style={{ padding: '12px 16px' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                            <div style={{ width: 28, height: 28, borderRadius: 8, background: lessons > 0 ? '#DBEAFE' : '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: lessons > 0 ? '#2563EB' : '#CBD5E1', flexShrink: 0 }}>
-                              {name[0]?.toUpperCase() ?? '?'}
-                            </div>
-                            <div>
-                              <p style={{ margin: 0, fontWeight: 600, color: '#0F172A' }}>{name}</p>
-                              <p style={{ margin: 0, fontSize: 11, color: '#CBD5E1' }}>{u.email}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td style={{ padding: '12px 16px' }}>
-                          {a ? <span style={{ padding: '2px 8px', borderRadius: 5, fontSize: 11, fontWeight: 600, background: `${trackColor}15`, color: trackColor }}>{TRACK_LABELS[a.primary_track_id] ?? a.primary_track_id}</span>
-                            : <span style={{ color: '#E2E8F0' }}>—</span>}
-                        </td>
-                        <td style={{ padding: '12px 16px', fontWeight: 700, color: p?.xp ? '#F59E0B' : '#E2E8F0' }}>
-                          {p?.xp ? p.xp.toLocaleString() : '—'}
-                        </td>
-                        <td style={{ padding: '12px 16px', fontWeight: 600, color: lessons > 0 ? '#10B981' : '#E2E8F0' }}>
-                          {lessons || '—'}
-                        </td>
-                        <td style={{ padding: '12px 16px' }}>
-                          {p?.streak ? (
-                            <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#F97316', fontWeight: 700 }}>
-                              <Flame size={12} /> {p.streak}
-                            </span>
-                          ) : <span style={{ color: '#E2E8F0' }}>—</span>}
-                        </td>
-                        <td style={{ padding: '12px 16px', color: p?.earned_badges?.length ? '#E04D2A' : '#E2E8F0', fontWeight: 600 }}>
-                          {p?.earned_badges?.length || '—'}
-                        </td>
-                        <td style={{ padding: '12px 16px' }}>
-                          {p?.digest_opt_out
-                            ? <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#94A3B8', fontSize: 11 }}><XCircle size={11} /> off</span>
-                            : <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#10B981', fontSize: 11 }}><CheckCircle2 size={11} /> on</span>}
-                        </td>
-                        <td style={{ padding: '12px 16px', color: '#94A3B8', whiteSpace: 'nowrap' }}>
-                          {timeAgo(p?.updated_at ?? u.last_sign_in_at)}
-                        </td>
-                        <td style={{ padding: '12px 16px', color: '#CBD5E1', whiteSpace: 'nowrap' }}>
-                          {fmt(u.created_at)}
-                        </td>
-                        <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' }}>
-                          <div style={{ display: 'flex', gap: 6 }}>
-                            <Link href={`/admin/users/${u.id}`} style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#EFF6FF', color: '#2563EB', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3 }}>
-                              <ExternalLink size={10} /> View
-                            </Link>
-                            <Link href={`/api/admin/impersonate?userId=${u.id}`} target="_blank" style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#FFFBEB', color: '#D97706', textDecoration: 'none', fontWeight: 600 }}>
-                              Impersonate
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
+            <AdminUsersTable
+              users={users as unknown as AdminUser[]}
+              progressById={progressById as unknown as Record<string, ProgressRow>}
+              latestAssessmentByUser={latestAssessmentByUser as unknown as Record<string, AssessmentRow>}
+            />
           </div>
         )}
 
