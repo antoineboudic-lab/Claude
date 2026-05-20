@@ -51,6 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // SIGNED_IN also fires on token refresh and tab focus — ignore those.
       if (event === 'SIGNED_IN' && !wasSignedIn.current) {
         wasSignedIn.current = true
+        if (window.location.pathname.startsWith('/auth/')) return
         const params = new URLSearchParams(window.location.search)
         const next = params.get('next')
         router.push(next ?? '/dashboard')
