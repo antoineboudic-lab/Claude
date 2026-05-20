@@ -128,9 +128,7 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 px-4 py-3 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={11} className="text-white" />
-          </div>
+          <Logo size="sm" markOnly />
           <span className="font-black text-sm" style={{ color: '#0F172A' }}>Team — {team.name}</span>
         </Link>
         <div className="flex items-center gap-3">
