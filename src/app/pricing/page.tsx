@@ -242,8 +242,8 @@ export default function PricingPage() {
                 ? <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>$19<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span></p>
                 : (
                   <div style={{ margin: '0 0 4px' }}>
-                    <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: 0, letterSpacing: '-0.03em' }}>$158<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/yr</span></p>
-                    <p style={{ fontSize: 12, color: '#64748B', margin: '2px 0 0' }}>$13/mo, billed annually</p>
+                    <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: 0, letterSpacing: '-0.03em' }}>$190<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/yr</span></p>
+                    <p style={{ fontSize: 12, color: '#64748B', margin: '2px 0 0' }}>$15.83/mo, billed annually</p>
                   </div>
                 )}
               <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 24px', lineHeight: 1.5 }}>{plans.pro.description}</p>
