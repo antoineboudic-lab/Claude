@@ -1,4 +1,5 @@
 import { createAdminClient } from '@/lib/supabase/admin'
+import { AdminNavEmail } from './AdminNavEmail'
 import Link from 'next/link'
 import {
   Users, Zap, BookOpen, Target, TrendingUp, Bell,
@@ -252,10 +253,14 @@ export default async function AdminPage({
   users.forEach(u => { const day = u.created_at.split('T')[0]; if (day in signupsByDay) signupsByDay[day]++ })
   const maxDay = Math.max(...Object.values(signupsByDay), 1)
 
-  // ── Track distribution
+  // ── Track distribution — count unique users per track (latest assessment wins)
+  const trackByUser: Record<string, string> = {}
+  // assessments are ordered newest-first, so first occurrence = latest track per user
+  assessments.forEach(a => { if (!trackByUser[a.user_id]) trackByUser[a.user_id] = a.primary_track_id })
   const trackCounts: Record<string, number> = {}
-  assessments.forEach(a => { trackCounts[a.primary_track_id] = (trackCounts[a.primary_track_id] ?? 0) + 1 })
+  Object.values(trackByUser).forEach(t => { trackCounts[t] = (trackCounts[t] ?? 0) + 1 })
   const topTracks = Object.entries(trackCounts).sort((a, b) => b[1] - a[1])
+  const uniqueTrackUsers = Object.values(trackCounts).reduce((s, n) => s + n, 0)
 
   // ── Activation funnel
   const funnel = [
@@ -347,7 +352,7 @@ export default async function AdminPage({
               <RefreshCw size={11} /> Refresh
             </Link>
             <span style={{ fontSize: 11, background: '#DC2626', color: '#FFFFFF', padding: '2px 8px', borderRadius: 4, fontWeight: 700, letterSpacing: '0.05em' }}>INTERNAL</span>
-            <span style={{ fontSize: 11, color: '#475569' }}>admin</span>
+            <AdminNavEmail />
           </div>
         </div>
       </div>
@@ -426,7 +431,7 @@ export default async function AdminPage({
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     {topTracks.map(([track, count]) => {
                       const color = TRACK_COLORS[track] ?? '#94A3B8'
-                      const p = withAssessment > 0 ? Math.round((count / withAssessment) * 100) : 0
+                      const p = uniqueTrackUsers > 0 ? Math.round((count / uniqueTrackUsers) * 100) : 0
                       return (
                         <div key={track}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 5 }}>
