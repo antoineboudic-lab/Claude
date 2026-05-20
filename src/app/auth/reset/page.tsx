@@ -18,14 +18,24 @@ export default function ResetPasswordPage() {
   const supabase = useRef(createClient())
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
+    // Supabase implicit flow: tokens arrive in the URL hash fragment
+    // e.g. /auth/reset#access_token=...&refresh_token=...&type=recovery
+    const hash = new URLSearchParams(window.location.hash.slice(1))
+    const accessToken = hash.get('access_token')
+    const refreshToken = hash.get('refresh_token')
+    const type = hash.get('type')
 
-    // Callback route already exchanged the code server-side — session is in cookies
-    if (params.get('error')) {
-      setStep('invalid')
+    if (accessToken && refreshToken && type === 'recovery') {
+      supabase.current.auth
+        .setSession({ access_token: accessToken, refresh_token: refreshToken })
+        .then(({ error }) => {
+          if (error) setStep('invalid')
+          else setStep('form')
+        })
       return
     }
 
+    // Fallback: check for an existing session (e.g. user refreshed the page)
     supabase.current.auth.getSession().then(({ data }) => {
       if (data.session) setStep('form')
       else setStep('invalid')
