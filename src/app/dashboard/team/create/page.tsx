@@ -62,7 +62,7 @@ export default function CreateTeamPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
         <Link href="/dashboard" className="text-sm font-medium hover:underline" style={{ color: '#64748B' }}>
           Back to my dashboard

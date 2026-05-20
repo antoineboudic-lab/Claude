@@ -17,7 +17,7 @@ export interface SRItem {
 
 export type SRQuality = 0 | 1 | 2 | 3 | 4 | 5
 
-export const STORAGE_KEY = 'ai-literacy-sr-queue'
+export const STORAGE_KEY = 'opuslearn-sr-queue'
 
 function todayISO(): string {
   return new Date().toISOString().split('T')[0]

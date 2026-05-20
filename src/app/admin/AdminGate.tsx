@@ -30,7 +30,7 @@ export function AdminGate({ children }: { children: ReactNode }) {
             <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, #2563EB, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Zap size={15} style={{ color: '#fff' }} />
             </div>
-            <span style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF' }}>AI Literacy</span>
+            <span style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF' }}>OpusLearn</span>
           </div>
           <div style={{ background: '#1E293B', border: '1px solid #334155', borderRadius: 16, padding: '32px 40px' }}>
             <p style={{ color: '#94A3B8', fontSize: 13, margin: '0 0 6px' }}>Admin access required</p>
@@ -56,7 +56,7 @@ export function AdminGate({ children }: { children: ReactNode }) {
             <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, #2563EB, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Zap size={15} style={{ color: '#fff' }} />
             </div>
-            <span style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF' }}>AI Literacy Admin</span>
+            <span style={{ fontSize: 16, fontWeight: 800, color: '#FFFFFF' }}>OpusLearn Admin</span>
           </div>
           <div style={{ background: '#1E293B', border: '1px solid #334155', borderRadius: 16, padding: '32px 40px' }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: '#7F1D1D20', border: '1px solid #7F1D1D', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>

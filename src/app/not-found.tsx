@@ -1,15 +1,13 @@
 import Link from 'next/link'
-import { Zap, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 export default function NotFound() {
   return (
     <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}
       className="flex flex-col items-center justify-center px-6 text-center">
       <Link href="/" className="flex items-center gap-2 mb-12">
-        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-          <Zap size={13} className="text-white" />
-        </div>
-        <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+        <Logo size="md" />
       </Link>
 
       <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#2563EB' }}>404</p>

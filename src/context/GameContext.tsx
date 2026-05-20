@@ -31,7 +31,7 @@ interface GameContextValue {
 
 const GameContext = createContext<GameContextValue | null>(null)
 
-const STORAGE_KEY = 'ai-literacy-game-state'
+const STORAGE_KEY = 'opuslearn-game-state'
 
 function loadLocalState(): GameState {
   if (typeof window === 'undefined') return DEFAULT_STATE

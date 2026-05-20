@@ -5,13 +5,13 @@ export const metadata: Metadata = {
   description:
     "Explore role-specific AI learning tracks for Marketing, Finance, HR, Sales, Operations, Leadership, Legal, Product, Customer Success, and Consulting. Find the path built for your job.",
   openGraph: {
-    title: "AI Learning Tracks | AI Literacy",
+    title: "AI Learning Tracks | OpusLearn",
     description:
       "Ten role-specific AI training tracks. Built for the real tasks you face — not abstract theory.",
     type: "website",
   },
   alternates: {
-    canonical: "https://ailiteracy.com/tracks",
+    canonical: "https://opuslearn.ai/tracks",
   },
 };
 

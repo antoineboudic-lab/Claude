@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'AI Literacy',
-    short_name: 'AI Literacy',
+    name: 'OpusLearn',
+    short_name: 'OpusLearn',
     description: 'Personalised AI training for business professionals.',
     start_url: '/',
     display: 'standalone',

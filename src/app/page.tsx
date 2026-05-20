@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
+import Logo from '@/components/Logo'
 import GlobalSearch from '@/components/GlobalSearch'
 import { getAllTracks, getTrack } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
@@ -151,13 +152,8 @@ function Navbar() {
       }}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={13} className="text-white" />
-          </div>
-          <span className="text-lg font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-            AI Literacy
-          </span>
+        <Link href="/" className="flex items-center">
+          <Logo size="md" />
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
@@ -1176,7 +1172,7 @@ function TeamsSection() {
                   <div className="w-3 h-3 rounded-full" style={{ background: '#F59E0B' }} />
                   <div className="w-3 h-3 rounded-full" style={{ background: '#10B981' }} />
                   <div className="mx-3 flex-1 h-6 rounded-md flex items-center px-3 text-xs" style={{ background: '#F1F5F9', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                    ailiteracy.com/dashboard/team
+                    opuslearn.ai/dashboard/team
                   </div>
                 </div>
 
@@ -1628,7 +1624,7 @@ function About() {
       initials: 'ML',
       color: '#2563EB',
       prev: 'McKinsey & Company',
-      bio: 'Former McKinsey partner who spent 12 years watching businesses struggle to operationalise new technologies. Built the AI Literacy curriculum after 200+ interviews with leaders across finance, marketing, and operations.',
+      bio: 'Former McKinsey partner who spent 12 years watching businesses struggle to operationalise new technologies. Built the OpusLearn curriculum after 200+ interviews with leaders across finance, marketing, and operations.',
     },
     {
       name: 'Thomas Reeves',
@@ -1685,7 +1681,7 @@ function About() {
               We started because we saw a gap nobody was filling
             </h2>
             <p className="text-lg leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              AI capabilities were advancing at speed. Business professionals were being left behind — not for lack of intelligence, but for lack of access to the right kind of training. We built AI Literacy to close that gap.
+              AI capabilities were advancing at speed. Business professionals were being left behind — not for lack of intelligence, but for lack of access to the right kind of training. We built OpusLearn to close that gap.
             </p>
           </motion.div>
 
@@ -1700,7 +1696,7 @@ function About() {
                   &ldquo;Every professional deserves to harness AI &mdash; not just those with an engineering degree. We built the platform we wished existed when AI changed everything.&rdquo;
                 </blockquote>
                 <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-sans)' }}>
-                  Marie Leconte &mdash; CEO &amp; Co-founder, AI Literacy
+                  Marie Leconte &mdash; CEO &amp; Co-founder, OpusLearn
                 </p>
               </div>
             </motion.div>
@@ -1828,7 +1824,7 @@ function Footer() {
               <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: '#2563EB' }}>
                 <Zap size={14} className="text-white" />
               </div>
-              <span className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>AI Literacy</span>
+              <span className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>OpusLearn</span>
             </div>
             <p className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.2)', maxWidth: '28rem', lineHeight: 1.4 }}>
               The only AI training built around what your role actually needs.
@@ -1896,7 +1892,7 @@ function Footer() {
         </div>
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>© 2026 AI Literacy. All rights reserved.</p>
+          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>© 2026 OpusLearn. All rights reserved.</p>
           <div className="flex items-center gap-4">
             {['#2563EB', '#E04D2A', '#F59E0B', '#10B981', '#06B6D4'].map(c => (
               <div key={c} className="w-2 h-2 rounded-full" style={{ background: c }} />
@@ -1933,12 +1929,12 @@ function LoggedInHome() {
     loadLatestAssessment(user.id)
       .then(r => {
         if (r) { setAssessment(r); return }
-        const raw = localStorage.getItem('ai-literacy-assessment')
+        const raw = localStorage.getItem('opuslearn-assessment')
         if (raw) setAssessment(JSON.parse(raw))
       })
       .catch(() => {
         try {
-          const raw = localStorage.getItem('ai-literacy-assessment')
+          const raw = localStorage.getItem('opuslearn-assessment')
           if (raw) setAssessment(JSON.parse(raw))
         } catch {}
       })
@@ -2003,11 +1999,8 @@ function LoggedInHome() {
       {/* Nav */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 24px', height: 54, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
-            <div style={{ width: 26, height: 26, borderRadius: 7, background: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Zap size={12} color="#fff" />
-            </div>
-            <span style={{ fontWeight: 800, fontSize: 14, color: '#0F172A', letterSpacing: '-0.01em' }}>AI Literacy</span>
+          <Link href="/" style={{ textDecoration: 'none' }}>
+            <Logo size="sm" />
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
             <button

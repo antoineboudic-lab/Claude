@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       <table width="560" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:16px;border:1px solid #E2E8F0;overflow:hidden;">
         <tr><td style="background:#2563EB;height:4px;"></td></tr>
         <tr><td style="padding:28px 36px 20px;">
-          <span style="font-size:14px;font-weight:900;color:#0F172A;">⚡ AI Literacy</span>
+          <span style="font-size:14px;font-weight:900;color:#0F172A;">⚡ OpusLearn</span>
         </td></tr>
         <tr><td style="padding:0 36px 20px;">
           <h1 style="margin:0 0 12px;font-size:24px;font-weight:900;color:#0F172A;">You're in, ${name}!</h1>
@@ -68,9 +68,9 @@ export async function POST(req: NextRequest) {
 </html>`
 
     await resend.emails.send({
-      from: 'AI Literacy <onboarding@resend.dev>',
+      from: 'OpusLearn <onboarding@resend.dev>',
       to: email,
-      subject: 'Welcome to AI Literacy — let\'s get started',
+      subject: 'Welcome to OpusLearn — let\'s get started',
       html,
     })
   }

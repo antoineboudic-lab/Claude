@@ -4,23 +4,23 @@ import { Zap } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'The terms and conditions governing your use of AI Literacy. Please read these carefully before using our platform.',
+  description: 'The terms and conditions governing your use of OpusLearn. Please read these carefully before using our platform.',
   robots: { index: true, follow: false },
-  alternates: { canonical: 'https://ailiteracy.com/terms' },
+  alternates: { canonical: 'https://opuslearn.ai/terms' },
 }
 
 const SECTIONS = [
   {
     title: '1. Acceptance of terms',
-    body: `By accessing or using the AI Literacy platform (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Service. We may update these Terms from time to time; continued use of the Service after changes are posted constitutes acceptance of the updated Terms.`,
+    body: `By accessing or using the OpusLearn platform (the "Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use the Service. We may update these Terms from time to time; continued use of the Service after changes are posted constitutes acceptance of the updated Terms.`,
   },
   {
     title: '2. Description of service',
-    body: `AI Literacy provides an online learning platform offering personalised AI training for business professionals. The Service includes role-specific learning tracks, interactive lessons, applied exercises, progress tracking, and verified certificates. The Service is operated by AI Literacy SAS, registered in France.`,
+    body: `OpusLearn provides an online learning platform offering personalised AI training for business professionals. The Service includes role-specific learning tracks, interactive lessons, applied exercises, progress tracking, and verified certificates. The Service is operated by OpusLearn SAS, registered in France.`,
   },
   {
     title: '3. Account registration',
-    body: `You must create an account to access certain features of the Service. You agree to provide accurate, current, and complete information during registration. You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. Notify us immediately at security@ailiteracy.com if you suspect unauthorised access.`,
+    body: `You must create an account to access certain features of the Service. You agree to provide accurate, current, and complete information during registration. You are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. Notify us immediately at security@opuslearn.ai if you suspect unauthorised access.`,
   },
   {
     title: '4. Subscriptions and payment',
@@ -32,11 +32,11 @@ const SECTIONS = [
   },
   {
     title: '6. Cancellation and refunds',
-    body: `You may cancel your subscription at any time from your account settings. Upon cancellation, you will retain access to paid features until the end of your current billing period. We do not offer refunds for partial subscription periods except where required by applicable law. Refund requests may be considered on a case-by-case basis — contact hello@ailiteracy.com.`,
+    body: `You may cancel your subscription at any time from your account settings. Upon cancellation, you will retain access to paid features until the end of your current billing period. We do not offer refunds for partial subscription periods except where required by applicable law. Refund requests may be considered on a case-by-case basis — contact hello@opuslearn.ai.`,
   },
   {
     title: '7. Intellectual property',
-    body: `All content on the platform — including lesson text, exercises, videos, assessments, and curriculum design — is the intellectual property of AI Literacy SAS and is protected by copyright law. You are granted a limited, non-exclusive, non-transferable licence to access and use the content for your own personal, non-commercial learning purposes. You may not reproduce, distribute, modify, or create derivative works from any platform content without our express written permission.`,
+    body: `All content on the platform — including lesson text, exercises, videos, assessments, and curriculum design — is the intellectual property of OpusLearn SAS and is protected by copyright law. You are granted a limited, non-exclusive, non-transferable licence to access and use the content for your own personal, non-commercial learning purposes. You may not reproduce, distribute, modify, or create derivative works from any platform content without our express written permission.`,
   },
   {
     title: '8. Acceptable use',
@@ -44,7 +44,7 @@ const SECTIONS = [
   },
   {
     title: '9. Certificates',
-    body: `Certificates are issued upon successful completion of a full learning track, including all applied exercises. AI Literacy certificates are educational credentials and do not constitute professional qualifications, licences, or certifications recognised by regulatory bodies. The value of a certificate depends on the policies of the individual employer or institution.`,
+    body: `Certificates are issued upon successful completion of a full learning track, including all applied exercises. OpusLearn certificates are educational credentials and do not constitute professional qualifications, licences, or certifications recognised by regulatory bodies. The value of a certificate depends on the policies of the individual employer or institution.`,
   },
   {
     title: '10. Disclaimer of warranties',
@@ -52,7 +52,7 @@ const SECTIONS = [
   },
   {
     title: '11. Limitation of liability',
-    body: `To the maximum extent permitted by applicable law, AI Literacy SAS shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service. Our total liability for any claim arising from these Terms shall not exceed the amount you paid us in the 12 months preceding the claim.`,
+    body: `To the maximum extent permitted by applicable law, OpusLearn SAS shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service. Our total liability for any claim arising from these Terms shall not exceed the amount you paid us in the 12 months preceding the claim.`,
   },
   {
     title: '12. Governing law',
@@ -60,7 +60,7 @@ const SECTIONS = [
   },
   {
     title: '13. Contact',
-    body: `For questions about these Terms, contact: hello@ailiteracy.com or write to: AI Literacy SAS, 10 rue de la Paix, 75002 Paris, France.`,
+    body: `For questions about these Terms, contact: hello@opuslearn.ai or write to: OpusLearn SAS, 10 rue de la Paix, 75002 Paris, France.`,
   },
 ]
 
@@ -74,7 +74,7 @@ export default function TermsPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
       </nav>
 
@@ -98,7 +98,7 @@ export default function TermsPage() {
           <div className="mt-12 pt-8" style={{ borderTop: '1px solid #E2E8F0' }}>
             <p className="text-xs" style={{ color: '#94A3B8' }}>
               For questions about these Terms, email{' '}
-              <a href="mailto:hello@ailiteracy.com" style={{ color: '#2563EB' }}>hello@ailiteracy.com</a>
+              <a href="mailto:hello@opuslearn.ai" style={{ color: '#2563EB' }}>hello@opuslearn.ai</a>
             </p>
           </div>
         </div>

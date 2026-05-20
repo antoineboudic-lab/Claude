@@ -5,7 +5,7 @@ function getResend(): Resend {
   if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY)
   return _resend
 }
-const FROM = 'AI Literacy <onboarding@resend.dev>'
+const FROM = 'OpusLearn <onboarding@resend.dev>'
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 export type EmailSequence = 'welcome' | 'activation' | 'reengagement' | 'upgrade'
@@ -29,7 +29,7 @@ function baseHtml(content: string): string {
               <td style="background:#2563EB;width:28px;height:28px;border-radius:8px;text-align:center;vertical-align:middle;">
                 <span style="color:#fff;font-size:14px;">⚡</span>
               </td>
-              <td style="padding-left:10px;font-size:14px;font-weight:900;color:#0F172A;letter-spacing:-0.3px;">AI Literacy</td>
+              <td style="padding-left:10px;font-size:14px;font-weight:900;color:#0F172A;letter-spacing:-0.3px;">OpusLearn</td>
             </tr>
           </table>
         </td></tr>
@@ -126,7 +126,7 @@ export async function sendWelcomeEmail(to: string, name: string, trackLabel: str
   const { error } = await getResend().emails.send({
     from: FROM,
     to,
-    subject: `Welcome to AI Literacy, ${name}! Your path is ready ⚡`,
+    subject: `Welcome to OpusLearn, ${name}! Your path is ready ⚡`,
     html: welcomeHtml(name, trackLabel),
   })
   return !error

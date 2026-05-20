@@ -24,7 +24,7 @@ function stagger(delay = 0.1) {
 const FEATURES = [
   { icon: Users, title: 'Team dashboard', desc: 'See every team member\'s progress, completion rate, and skill gaps across all tracks in one view.' },
   { icon: BarChart3, title: 'Progress analytics', desc: 'Weekly cohort reports, leaderboards, and completion forecasts to keep your team on track.' },
-  { icon: Award, title: 'Group certificates', desc: 'Individual certificates for each learner plus a team AI Literacy badge for LinkedIn and company profiles.' },
+  { icon: Award, title: 'Group certificates', desc: 'Individual certificates for each learner plus a team OpusLearn badge for LinkedIn and company profiles.' },
   { icon: BookOpen, title: 'Custom track assignment', desc: 'Assign specific tracks to specific roles. Your sales team gets the sales track; your finance team gets finance.' },
   { icon: Shield, title: 'SSO & SCIM', desc: 'Enterprise-grade authentication via Okta, Azure AD, or Google Workspace. Automatic provisioning and de-provisioning.' },
   { icon: Globe, title: 'Dedicated success manager', desc: 'Enterprise accounts get a named success manager for onboarding, check-ins, and programme optimisation.' },
@@ -58,7 +58,7 @@ const PLANS = [
       'Custom track assignment',
       'Priority support',
       'Quarterly business review',
-      'Team AI Literacy badge',
+      'Team OpusLearn badge',
       'Slack community access',
     ],
   },
@@ -85,7 +85,7 @@ const COMPANIES = ['McKinsey', 'Deloitte', 'Goldman Sachs', 'Accenture', 'L\'Or√
 const HOW_IT_WORKS = [
   { n: '01', title: 'Enroll your team', desc: 'Add team members by email or connect your directory via SSO. Assign each person to the track that matches their role.' },
   { n: '02', title: 'Track progress together', desc: 'Monitor completion rates, skill assessments, and time-to-certificate across your entire team from one dashboard.' },
-  { n: '03', title: 'Certify and share', desc: 'Every team member earns their individual certificate. Your team earns a group AI Literacy credential you can share externally.' },
+  { n: '03', title: 'Certify and share', desc: 'Every team member earns their individual certificate. Your team earns a group OpusLearn credential you can share externally.' },
 ]
 
 const FAQS = [
@@ -105,7 +105,7 @@ const TESTIMONIALS = [
     color: '#2563EB',
   },
   {
-    quote: "The role-specific tracks were the key differentiator. Our legal team needed different content than our sales team. AI Literacy let us deploy the right curriculum to the right people without building anything custom.",
+    quote: "The role-specific tracks were the key differentiator. Our legal team needed different content than our sales team. OpusLearn let us deploy the right curriculum to the right people without building anything custom.",
     name: 'Jonathan Marsh',
     role: 'Head of L&D',
     company: 'Linklaters',
@@ -176,7 +176,7 @@ export default function TeamsPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
         <div className="flex items-center gap-4">
           <Link href="/tracks" className="text-sm font-medium" style={{ color: '#64748B' }}>Tracks</Link>

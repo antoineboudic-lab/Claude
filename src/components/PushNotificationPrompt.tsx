@@ -6,8 +6,8 @@ import { Bell, X } from 'lucide-react'
 import { useGame } from '@/context/GameContext'
 import { useAuth } from '@/context/AuthContext'
 
-const DISMISSED_KEY = 'ai-literacy-push-dismissed'
-const SUBSCRIBED_KEY = 'ai-literacy-push-subscribed'
+const DISMISSED_KEY = 'opuslearn-push-dismissed'
+const SUBSCRIBED_KEY = 'opuslearn-push-subscribed'
 
 export default function PushNotificationPrompt() {
   const { state } = useGame()

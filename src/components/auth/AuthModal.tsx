@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef, forwardRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Mail, Lock, User, Eye, EyeOff, Zap, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
+import { X, Mail, Lock, User, Eye, EyeOff, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
+import Logo from '@/components/Logo'
 import type { LucideIcon } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
@@ -137,11 +138,8 @@ export function AuthModal() {
 
               <div className="px-8 pt-7 pb-9">
                 {/* Logo */}
-                <div className="flex items-center gap-2 mb-7">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-                    <Zap size={13} className="text-white" />
-                  </div>
-                  <span className="font-black text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>AI Literacy</span>
+                <div className="mb-7">
+                  <Logo size="sm" />
                 </div>
 
                 <AnimatePresence mode="wait">

@@ -105,7 +105,7 @@ export default function LeaderboardPage() {
         </Link>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
           <Zap size={20} style={{ color: '#2563EB' }} />
-          <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}>AI Literacy</span>
+          <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}>OpusLearn</span>
         </Link>
         <span style={{ color: '#475569', fontSize: 15 }}>/</span>
         <Link href="/leaderboard" style={{ color: '#94A3B8', fontSize: 15, textDecoration: 'none', fontWeight: 500 }}>

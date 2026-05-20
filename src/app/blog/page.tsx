@@ -39,10 +39,10 @@ const POSTS = [
     featured: false,
   },
   {
-    slug: 'hr-ai-literacy-strategy',
+    slug: 'hr-opuslearn-strategy',
     category: 'HR & People',
     categoryColor: '#10B981',
-    title: 'Why Your HR Team Needs an AI Literacy Strategy in 2026',
+    title: 'Why Your HR Team Needs an OpusLearn Strategy in 2026',
     excerpt: 'The organisations closing the AI skills gap fastest aren\'t the ones with the biggest budgets — they\'re the ones where HR took ownership of the problem.',
     author: 'Priya Nair',
     authorRole: 'CHRO, Accenture',
@@ -81,7 +81,7 @@ const POSTS = [
     title: 'The Executive\'s Guide to Leading AI Transformation Without Losing Your Team',
     excerpt: 'The biggest barrier to enterprise AI adoption isn\'t the technology — it\'s the fear and uncertainty it creates in people. Here\'s how to lead through it.',
     author: 'Marie Leconte',
-    authorRole: 'CEO, AI Literacy',
+    authorRole: 'CEO, OpusLearn',
     date: 'April 7, 2026',
     readTime: '10 min read',
     featured: false,
@@ -149,7 +149,7 @@ export default function BlogPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
         <Link href="/assessment"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"

@@ -17,7 +17,7 @@ const COVERAGE = [
   {
     outlet: 'TechCrunch',
     date: 'April 2026',
-    headline: 'AI Literacy raises €4M seed to bring role-specific AI training to enterprise',
+    headline: 'OpusLearn raises €4M seed to bring role-specific AI training to enterprise',
     excerpt: '"The startup distinguishes itself by going deep on specific business roles rather than offering generic AI courses — a bet that appears to be paying off."',
     color: '#10B981',
   },
@@ -25,21 +25,21 @@ const COVERAGE = [
     outlet: 'Les Echos',
     date: 'March 2026',
     headline: 'La startup qui veut former tous les cadres à l\'intelligence artificielle',
-    excerpt: '"Avec 3 200 professionnels formés en moins d\'un an, AI Literacy s\'impose comme la référence de la formation IA pour les non-techniciens."',
+    excerpt: '"Avec 3 200 professionnels formés en moins d\'un an, OpusLearn s\'impose comme la référence de la formation IA pour les non-techniciens."',
     color: '#2563EB',
   },
   {
     outlet: 'Forbes',
     date: 'February 2026',
     headline: 'The 10 EdTech Companies Closing the AI Skills Gap in 2026',
-    excerpt: '"AI Literacy made our list for one reason: their completion rate. While most online platforms struggle to hit 15%, they\'re sitting at 94%."',
+    excerpt: '"OpusLearn made our list for one reason: their completion rate. While most online platforms struggle to hit 15%, they\'re sitting at 94%."',
     color: '#F59E0B',
   },
   {
     outlet: 'Harvard Business Review',
     date: 'January 2026',
     headline: 'What executives need to know about AI fluency — and how to build it',
-    excerpt: '"Role-specific training programmes, such as those offered by AI Literacy, show consistently stronger outcomes than general AI literacy courses."',
+    excerpt: '"Role-specific training programmes, such as those offered by OpusLearn, show consistently stronger outcomes than general AI literacy courses."',
     color: '#3B82F6',
   },
 ]
@@ -61,9 +61,9 @@ export default function PressPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
-        <a href="mailto:press@ailiteracy.com"
+        <a href="mailto:press@opuslearn.ai"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
           style={{ background: '#2563EB' }}>
           Press contact
@@ -80,7 +80,7 @@ export default function PressPage() {
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg max-w-2xl" style={{ color: '#64748B' }}>
               For press enquiries, interviews, or media assets, contact us at{' '}
-              <a href="mailto:press@ailiteracy.com" style={{ color: '#2563EB', fontWeight: 600 }}>press@ailiteracy.com</a>
+              <a href="mailto:press@opuslearn.ai" style={{ color: '#2563EB', fontWeight: 600 }}>press@opuslearn.ai</a>
             </motion.p>
           </motion.div>
         </div>
@@ -161,7 +161,7 @@ export default function PressPage() {
               <p className="text-sm font-black mb-0.5" style={{ color: '#0F172A' }}>Press contact</p>
               <p className="text-sm" style={{ color: '#64748B' }}>
                 For interviews, comment requests, or custom assets:{' '}
-                <a href="mailto:press@ailiteracy.com" style={{ color: '#2563EB', fontWeight: 600 }}>press@ailiteracy.com</a>
+                <a href="mailto:press@opuslearn.ai" style={{ color: '#2563EB', fontWeight: 600 }}>press@opuslearn.ai</a>
               </p>
             </div>
           </div>

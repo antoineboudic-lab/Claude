@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState, type ReactNode } from 'react'
-import { Zap, LayoutDashboard, Users, BarChart3, BookOpen, LogOut, ChevronRight } from 'lucide-react'
+import { LayoutDashboard, Users, BarChart3, BookOpen, LogOut, ChevronRight } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
 import { getAdminTeam } from '@/lib/supabase/teams'
 import type { Team } from '@/lib/supabase/teams'
@@ -63,11 +64,8 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
         style={{ background: '#FFFFFF', borderRight: '1px solid #E2E8F0', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto' }}>
         {/* Logo */}
         <div className="px-5 py-5" style={{ borderBottom: '1px solid #F1F5F9' }}>
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-              <Zap size={13} className="text-white" />
-            </div>
-            <span className="font-black text-sm" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <Link href="/">
+            <Logo size="sm" />
           </Link>
         </div>
 

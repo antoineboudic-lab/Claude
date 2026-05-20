@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Take the 3-minute AI literacy assessment and get a personalised learning path built for your role, industry, and goals. Free, no credit card required.",
   openGraph: {
-    title: "Find My AI Learning Path | AI Literacy",
+    title: "Find My AI Learning Path | OpusLearn",
     description:
       "Answer 5 quick questions. Get a personalised AI curriculum built specifically for your job function.",
     type: "website",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://ailiteracy.com/assessment",
+    canonical: "https://opuslearn.ai/assessment",
   },
 };
 

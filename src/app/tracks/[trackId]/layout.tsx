@@ -63,7 +63,7 @@ const TRACK_META: Record<string, { title: string; description: string; keywords:
   },
 };
 
-const SITE_URL = "https://ailiteracy.com";
+const SITE_URL = "https://opuslearn.ai";
 
 export async function generateMetadata({
   params,
@@ -82,14 +82,14 @@ export async function generateMetadata({
     description: meta.description,
     keywords: meta.keywords,
     openGraph: {
-      title: `${meta.title} | AI Literacy`,
+      title: `${meta.title} | OpusLearn`,
       description: meta.description,
       type: "website",
       url: `${SITE_URL}/tracks/${trackId}`,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${meta.title} | AI Literacy`,
+      title: `${meta.title} | OpusLearn`,
       description: meta.description,
     },
     alternates: {
@@ -117,7 +117,7 @@ export default async function TrackLayout({
         url: `${SITE_URL}/tracks/${trackId}`,
         provider: {
           "@type": "Organization",
-          name: "AI Literacy",
+          name: "OpusLearn",
           url: SITE_URL,
         },
         educationalLevel: "Professional",

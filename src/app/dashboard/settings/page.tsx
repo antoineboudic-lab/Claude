@@ -351,7 +351,7 @@ function PreferencesTab() {
         if (data) setEmailDigest(!data.digest_opt_out)
       }
       try {
-        const raw = localStorage.getItem('ai-literacy-preferences')
+        const raw = localStorage.getItem('opuslearn-preferences')
         if (raw) {
           const p = JSON.parse(raw)
           if (p.primaryTrack) setPrimaryTrack(p.primaryTrack)
@@ -363,7 +363,7 @@ function PreferencesTab() {
   }, [user])
 
   async function save() {
-    localStorage.setItem('ai-literacy-preferences', JSON.stringify({ primaryTrack, dailyGoal, emailDigest }))
+    localStorage.setItem('opuslearn-preferences', JSON.stringify({ primaryTrack, dailyGoal, emailDigest }))
     if (user) {
       await supabase.current
         .from('user_progress')

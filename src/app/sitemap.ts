@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export const dynamic = "force-dynamic";
 
-const SITE_URL = "https://ailiteracy.com";
+const SITE_URL = "https://opuslearn.ai";
 
 const TRACKS = [
   "marketing",
@@ -20,7 +20,7 @@ const TRACKS = [
 const BLOG_SLUGS = [
   "marketing-ai-briefs",
   "finance-prompting-mistakes",
-  "hr-ai-literacy-strategy",
+  "hr-opuslearn-strategy",
   "sales-ai-journey",
   "operations-decision-support",
   "leadership-ai-change",

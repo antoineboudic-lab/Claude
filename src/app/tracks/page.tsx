@@ -363,7 +363,7 @@ export default function TracksPage() {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem('ai-literacy-assessment')
+      const raw = localStorage.getItem('opuslearn-assessment')
       if (raw) {
         const result = JSON.parse(raw)
         setRecommendedTrackId(result.primaryTrackId ?? null)
@@ -386,7 +386,7 @@ export default function TracksPage() {
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-            AI Literacy
+            OpusLearn
           </span>
         </Link>
         <div className="flex items-center gap-3">

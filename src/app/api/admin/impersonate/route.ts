@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Impersonate — AI Literacy Admin</title>
+  <title>Impersonate — OpusLearn Admin</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -213,7 +213,7 @@ export async function GET(req: NextRequest) {
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
         </svg>
       </div>
-      <span class="logo-text">AI Literacy Admin</span>
+      <span class="logo-text">OpusLearn Admin</span>
     </div>
 
     <div class="warning-icon">⚠️</div>

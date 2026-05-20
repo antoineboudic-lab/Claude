@@ -16,7 +16,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const SITE_URL = "https://ailiteracy.com";
+const SITE_URL = "https://opuslearn.ai";
 
 export const viewport: Viewport = {
   themeColor: '#2563EB',
@@ -28,8 +28,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AI Literacy — Master AI Without Writing Code",
-    template: "%s | AI Literacy",
+    default: "OpusLearn — Master AI Without Writing Code",
+    template: "%s | OpusLearn",
   },
   description:
     "A personalised AI training platform for business professionals. Role-specific learning paths in Marketing, Finance, HR, Sales, Operations & Leadership. No technical background required.",
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
     "AI certification",
     "ChatGPT for business",
   ],
-  authors: [{ name: "AI Literacy", url: SITE_URL }],
-  creator: "AI Literacy",
-  publisher: "AI Literacy",
+  authors: [{ name: "OpusLearn", url: SITE_URL }],
+  creator: "OpusLearn",
+  publisher: "OpusLearn",
   robots: {
     index: true,
     follow: true,
@@ -73,8 +73,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: SITE_URL,
-    siteName: "AI Literacy",
-    title: "AI Literacy — Master AI Without Writing Code",
+    siteName: "OpusLearn",
+    title: "OpusLearn — Master AI Without Writing Code",
     description:
       "Personalised AI training for business professionals. Choose your role, get your learning path, apply AI immediately — no code required.",
     images: [
@@ -82,13 +82,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AI Literacy — Personalised AI Training for Business Professionals",
+        alt: "OpusLearn — Personalised AI Training for Business Professionals",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Literacy — Master AI Without Writing Code",
+    title: "OpusLearn — Master AI Without Writing Code",
     description:
       "Personalised AI training for business professionals. Role-specific paths in Marketing, Finance, HR, Sales, Operations & Leadership.",
     images: ["/og-image.png"],
@@ -102,8 +102,8 @@ export const metadata: Metadata = {
     "mobile-web-app-capable": "yes",
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
-    "apple-mobile-web-app-title": "AI Literacy",
-    "application-name": "AI Literacy",
+    "apple-mobile-web-app-title": "OpusLearn",
+    "application-name": "OpusLearn",
     "msapplication-TileColor": "#2563EB",
   },
 };
@@ -114,7 +114,7 @@ const jsonLd = {
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "AI Literacy",
+      name: "OpusLearn",
       url: SITE_URL,
       logo: {
         "@type": "ImageObject",
@@ -123,7 +123,7 @@ const jsonLd = {
         height: 200,
       },
       description:
-        "AI Literacy is a personalised AI training platform for business professionals across Marketing, Finance, HR, Sales, Operations, and Leadership.",
+        "OpusLearn is a personalised AI training platform for business professionals across Marketing, Finance, HR, Sales, Operations, and Leadership.",
       foundingDate: "2024",
       sameAs: [
         "https://twitter.com/ailiteracy",
@@ -134,7 +134,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "AI Literacy",
+      name: "OpusLearn",
       description: "Personalised AI training for business professionals.",
       publisher: { "@id": `${SITE_URL}/#organization` },
       potentialAction: {
@@ -146,7 +146,7 @@ const jsonLd = {
     {
       "@type": "EducationalOrganization",
       "@id": `${SITE_URL}/#school`,
-      name: "AI Literacy",
+      name: "OpusLearn",
       url: SITE_URL,
       description:
         "Business-focused AI training with role-specific learning paths. No technical background required.",

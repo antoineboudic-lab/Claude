@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'nodejs'
-export const alt = 'AI Literacy — Master AI Without Writing Code'
+export const alt = 'OpusLearn — Master AI Without Writing Code'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -28,7 +28,7 @@ export default function OGImage() {
           }}>
             <span style={{ color: '#fff', fontSize: 22, fontWeight: 900 }}>⚡</span>
           </div>
-          <span style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>AI Literacy</span>
+          <span style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>OpusLearn</span>
         </div>
 
         {/* Headline */}

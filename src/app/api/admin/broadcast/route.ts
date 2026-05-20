@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
 
     // Resend batch limit is 100 per call
     const BATCH_SIZE = 100
-    const from = process.env.RESEND_FROM_EMAIL ?? 'AI Literacy <hello@ailiteracy.com>'
+    const from = process.env.RESEND_FROM_EMAIL ?? 'OpusLearn <hello@opuslearn.ai>'
     let sent = 0
 
     const htmlBody = `
@@ -100,12 +100,12 @@ export async function POST(req: NextRequest) {
 <body style="font-family: -apple-system, sans-serif; color: #0F172A; background: #F1F5F9; margin: 0; padding: 40px 0;">
   <div style="max-width: 560px; margin: 0 auto; background: #FFFFFF; border-radius: 16px; padding: 40px; border: 1px solid #E2E8F0;">
     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 32px;">
-      <span style="font-size: 16px; font-weight: 800; color: #0F172A;">AI Literacy</span>
+      <span style="font-size: 16px; font-weight: 800; color: #0F172A;">OpusLearn</span>
     </div>
     <h1 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 0 0 20px; letter-spacing: -0.02em;">${subject}</h1>
     <div style="font-size: 15px; line-height: 1.7; color: #475569; white-space: pre-wrap;">${messageBody.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
     <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #F1F5F9; font-size: 12px; color: #CBD5E1;">
-      You received this because you have an account on AI Literacy.
+      You received this because you have an account on OpusLearn.
     </div>
   </div>
 </body>

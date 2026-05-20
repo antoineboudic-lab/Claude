@@ -35,7 +35,7 @@ export default function ContactPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
         <Link href="/help" className="text-sm font-medium transition-colors hover:text-slate-900" style={{ color: '#64748B' }}>
           Help centre
@@ -57,9 +57,9 @@ export default function ContactPage() {
 
               <div className="space-y-5">
                 {[
-                  { icon: Mail, label: 'General enquiries', value: 'hello@ailiteracy.com', color: '#2563EB' },
-                  { icon: Building2, label: 'Enterprise & team sales', value: 'sales@ailiteracy.com', color: '#10B981' },
-                  { icon: MessageCircle, label: 'Press & media', value: 'press@ailiteracy.com', color: '#F59E0B' },
+                  { icon: Mail, label: 'General enquiries', value: 'hello@opuslearn.ai', color: '#2563EB' },
+                  { icon: Building2, label: 'Enterprise & team sales', value: 'sales@opuslearn.ai', color: '#10B981' },
+                  { icon: MessageCircle, label: 'Press & media', value: 'press@opuslearn.ai', color: '#F59E0B' },
                 ].map(item => {
                   const Icon = item.icon
                   return (

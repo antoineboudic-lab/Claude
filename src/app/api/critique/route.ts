@@ -20,8 +20,8 @@ function checkRateLimit(ip: string): boolean {
 }
 
 const ALLOWED_ORIGINS = [
-  'https://ailiteracy.com',
-  'https://www.ailiteracy.com',
+  'https://opuslearn.ai',
+  'https://www.opuslearn.ai',
   'https://opuslearn.ai',
 ]
 

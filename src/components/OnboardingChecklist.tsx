@@ -7,7 +7,7 @@ import { CheckCircle2, Circle, X, ArrowRight, Sparkles } from 'lucide-react'
 import { useGame } from '@/context/GameContext'
 import { useBookmarks } from '@/hooks/useBookmarks'
 
-const DISMISSED_KEY = 'ai-literacy-onboarding-dismissed'
+const DISMISSED_KEY = 'opuslearn-onboarding-dismissed'
 
 interface Task {
   id: string
@@ -19,7 +19,7 @@ interface Task {
 
 function loadHasReviewed(): boolean {
   try {
-    const raw = localStorage.getItem('ai-literacy-sr-queue')
+    const raw = localStorage.getItem('opuslearn-sr-queue')
     if (!raw) return false
     const queue = JSON.parse(raw)
     return Array.isArray(queue) && queue.some((item: { lastReviewDate?: string | null }) => !!item.lastReviewDate)
@@ -28,7 +28,7 @@ function loadHasReviewed(): boolean {
 
 function loadHasAssessment(): boolean {
   try {
-    return !!localStorage.getItem('ai-literacy-assessment')
+    return !!localStorage.getItem('opuslearn-assessment')
   } catch { return false }
 }
 

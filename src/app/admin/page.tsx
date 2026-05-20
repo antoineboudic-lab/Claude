@@ -399,7 +399,7 @@ export default async function AdminPage({
               <div style={{ width: 26, height: 26, borderRadius: 7, background: 'linear-gradient(135deg, #2563EB, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Zap size={12} style={{ color: '#fff' }} />
               </div>
-              <span style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>AI Literacy</span>
+              <span style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>OpusLearn</span>
             </Link>
             <span style={{ color: '#334155', fontSize: 13 }}>/</span>
             <span style={{ fontSize: 12, fontWeight: 700, color: '#94A3B8' }}>Admin</span>

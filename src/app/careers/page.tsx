@@ -69,9 +69,9 @@ export default function CareersPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
-        <a href="mailto:jobs@ailiteracy.com"
+        <a href="mailto:jobs@opuslearn.ai"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
           style={{ background: '#2563EB' }}>
           Send your CV
@@ -138,7 +138,7 @@ export default function CareersPage() {
                     </div>
                     <h3 className="text-lg font-black" style={{ color: '#0F172A' }}>{role.title}</h3>
                   </div>
-                  <a href="mailto:jobs@ailiteracy.com"
+                  <a href="mailto:jobs@opuslearn.ai"
                     className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex-shrink-0"
                     style={{ background: role.color }}>
                     Apply <ArrowRight size={13} />
@@ -160,7 +160,7 @@ export default function CareersPage() {
           <div className="mt-12 p-8 rounded-2xl text-center" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
             <p className="text-base font-black mb-2" style={{ color: '#0F172A' }}>Don't see your role?</p>
             <p className="text-sm mb-4" style={{ color: '#64748B' }}>We're always looking for great people. Send us a note about who you are and what you'd build.</p>
-            <a href="mailto:jobs@ailiteracy.com"
+            <a href="mailto:jobs@opuslearn.ai"
               className="inline-flex items-center gap-2 text-sm font-semibold"
               style={{ color: '#2563EB' }}>
               Write to us <ArrowRight size={13} />

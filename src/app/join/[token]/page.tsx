@@ -100,7 +100,7 @@ export default function JoinPage() {
         </p>
         <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white"
           style={{ background: '#2563EB' }}>
-          Go to AI Literacy
+          Go to OpusLearn
         </Link>
       </div>
     )
@@ -117,7 +117,7 @@ export default function JoinPage() {
         </p>
         <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white"
           style={{ background: '#2563EB' }}>
-          Go to AI Literacy
+          Go to OpusLearn
         </Link>
       </div>
     )
@@ -159,7 +159,7 @@ export default function JoinPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
       </div>
 
@@ -225,7 +225,7 @@ export default function JoinPage() {
               {[
                 'Access to all 10 role-specific AI tracks',
                 'Progress tracked alongside your team',
-                'Individual AI Literacy certificate on completion',
+                'Individual OpusLearn certificate on completion',
                 'AI practice tool for each lesson',
               ].map(item => (
                 <div key={item} className="flex items-center gap-2.5 text-sm" style={{ color: '#475569' }}>

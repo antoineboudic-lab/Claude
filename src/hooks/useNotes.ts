@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-const STORAGE_KEY = 'ai-literacy-notes'
+const STORAGE_KEY = 'opuslearn-notes'
 
 function loadFromStorage(): Record<string, string> {
   if (typeof window === 'undefined') return {}

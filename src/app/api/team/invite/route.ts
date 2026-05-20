@@ -48,12 +48,12 @@ export async function POST(req: NextRequest) {
       <table width="560" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:16px;border:1px solid #E2E8F0;overflow:hidden;">
         <tr><td style="background:#2563EB;height:4px;"></td></tr>
         <tr><td style="padding:28px 36px 20px;">
-          <span style="font-size:14px;font-weight:900;color:#0F172A;">⚡ AI Literacy</span>
+          <span style="font-size:14px;font-weight:900;color:#0F172A;">⚡ OpusLearn</span>
         </td></tr>
         <tr><td style="padding:0 36px 20px;">
           <h1 style="margin:0 0 12px;font-size:24px;font-weight:900;color:#0F172A;">You've been invited to ${teamName}</h1>
           <p style="margin:0 0 24px;font-size:15px;color:#64748B;line-height:1.6;">
-            ${inviterName} has invited you to join their team on AI Literacy — where professionals master AI for their job.
+            ${inviterName} has invited you to join their team on OpusLearn — where professionals master AI for their job.
           </p>
           <a href="${joinUrl}" style="display:inline-block;background:#2563EB;color:#fff;font-weight:600;font-size:14px;padding:14px 28px;border-radius:10px;text-decoration:none;">
             Accept invitation →
@@ -72,9 +72,9 @@ export async function POST(req: NextRequest) {
 </html>`
 
   const { error: emailError } = await resend.emails.send({
-    from: 'AI Literacy <onboarding@resend.dev>',
+    from: 'OpusLearn <onboarding@resend.dev>',
     to: email,
-    subject: `[${teamName}] invited you to AI Literacy`,
+    subject: `[${teamName}] invited you to OpusLearn`,
     html,
   })
 

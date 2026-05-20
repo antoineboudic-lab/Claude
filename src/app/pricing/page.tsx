@@ -128,7 +128,7 @@ export default function PricingPage() {
             <div style={{ width: 26, height: 26, borderRadius: 7, background: 'linear-gradient(135deg, #2563EB, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Zap size={12} style={{ color: '#fff' }} />
             </div>
-            <span style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF' }}>AI Literacy</span>
+            <span style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF' }}>OpusLearn</span>
           </Link>
           {!authLoading && (
             user
@@ -300,7 +300,7 @@ export default function PricingPage() {
             </ul>
             <div style={{ marginTop: 'auto' }}>
               <a
-                href="mailto:hello@ailiteracy.com"
+                href="mailto:hello@opuslearn.ai"
                 style={{ display: 'block', width: '100%', padding: '11px 0', borderRadius: 10, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#0F172A', fontSize: 14, fontWeight: 600, textDecoration: 'none', textAlign: 'center', boxSizing: 'border-box' }}
               >
                 Contact us

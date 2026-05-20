@@ -10,7 +10,7 @@ function ensureVapid() {
   const pub = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
   const priv = process.env.VAPID_PRIVATE_KEY
   if (!pub || !priv) throw new Error('VAPID keys not configured')
-  webpush.setVapidDetails('mailto:hello@ailiteracy.com', pub, priv)
+  webpush.setVapidDetails('mailto:hello@opuslearn.ai', pub, priv)
   vapidSet = true
 }
 

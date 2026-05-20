@@ -988,12 +988,12 @@ export default function DashboardPage() {
         const remote = await loadLatestAssessment(user.id).catch(() => null)
         if (remote) {
           setAssessment(remote)
-          localStorage.setItem('ai-literacy-assessment', JSON.stringify(remote))
+          localStorage.setItem('opuslearn-assessment', JSON.stringify(remote))
           return
         }
       }
       try {
-        const raw = localStorage.getItem('ai-literacy-assessment')
+        const raw = localStorage.getItem('opuslearn-assessment')
         if (raw) setAssessment(JSON.parse(raw))
       } catch {}
     }
@@ -1038,7 +1038,7 @@ export default function DashboardPage() {
               <Zap size={13} className="text-white" />
             </div>
             <span className="font-bold text-sm" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              AI Literacy
+              OpusLearn
             </span>
           </Link>
 
@@ -1517,7 +1517,7 @@ export default function DashboardPage() {
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex-1 px-3 py-2 rounded-lg text-xs truncate"
                       style={{ background: '#EFF6FF', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'monospace' }}>
-                      ailiteracy.com/join?ref={referralCode}
+                      opuslearn.ai/join?ref={referralCode}
                     </div>
                     <button
                       onClick={() => {

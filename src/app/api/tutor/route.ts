@@ -19,8 +19,8 @@ function checkRateLimit(ip: string): boolean {
 }
 
 const ALLOWED_ORIGINS = [
-  'https://ailiteracy.com',
-  'https://www.ailiteracy.com',
+  'https://opuslearn.ai',
+  'https://www.opuslearn.ai',
   'https://opuslearn.ai',
 ]
 
@@ -34,7 +34,7 @@ function buildSystemPrompt(params: {
 }): string {
   const { lessonTitle, trackId, lessonContent, keyTakeaways, pageType, mode } = params
 
-  const base = `You are an AI literacy tutor on the AI Literacy platform — a course teaching business professionals how to use AI in their roles, without writing code. You are knowledgeable, practical, encouraging, and concise.`
+  const base = `You are an AI literacy tutor on the OpusLearn platform — a course teaching business professionals how to use AI in their roles, without writing code. You are knowledgeable, practical, encouraging, and concise.`
 
   if (mode === 'practice') {
     return `${base}

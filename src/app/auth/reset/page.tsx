@@ -82,7 +82,7 @@ export default function ResetPasswordPage() {
             <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
               <Zap size={13} className="text-white" />
             </div>
-            <span className="font-black text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>AI Literacy</span>
+            <span className="font-black text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>OpusLearn</span>
           </div>
 
           <AnimatePresence mode="wait">

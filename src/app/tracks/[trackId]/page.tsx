@@ -198,7 +198,7 @@ export default function TrackPage() {
             <Zap size={13} className="text-white" />
           </div>
           <span className="font-black text-base" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-            AI Literacy
+            OpusLearn
           </span>
         </Link>
         <div className="flex items-center gap-3">

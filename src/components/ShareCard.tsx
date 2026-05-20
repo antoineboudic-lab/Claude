@@ -22,10 +22,10 @@ export function ShareCard({ open, onClose, trackColor }: ShareCardProps) {
   const [copied, setCopied] = useState(false)
 
   const shareText =
-    `🎓 My AI Literacy progress:\n` +
+    `🎓 My OpusLearn progress:\n` +
     `Level ${level.level} · ${xp} XP · ${streak}-day streak\n` +
     `${completedLessons.length} lessons completed across ${completedTracks.length} tracks\n` +
-    `Build your AI skills at ai-literacy-tau.vercel.app`
+    `Build your AI skills at opuslearn-tau.vercel.app`
 
   function handleCopy() {
     navigator.clipboard.writeText(shareText).then(() => {
@@ -81,7 +81,7 @@ export function ShareCard({ open, onClose, trackColor }: ShareCardProps) {
               {/* Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
                 <p style={{ color: '#0F172A', fontWeight: 700, fontSize: '1rem', margin: 0 }}>
-                  Your AI Literacy Progress
+                  Your OpusLearn Progress
                 </p>
                 <button
                   onClick={onClose}

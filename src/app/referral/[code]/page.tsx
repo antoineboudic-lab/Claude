@@ -31,7 +31,7 @@ export default async function ReferralPage({
         }}>
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
             <Zap size={20} style={{ color: '#2563EB' }} />
-            <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}>AI Literacy</span>
+            <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}>OpusLearn</span>
           </Link>
         </nav>
         <div style={{
@@ -110,7 +110,7 @@ export default async function ReferralPage({
       }}>
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
           <Zap size={20} style={{ color: '#2563EB' }} />
-          <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}>AI Literacy</span>
+          <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 15 }}>OpusLearn</span>
         </Link>
       </nav>
 
@@ -169,7 +169,7 @@ export default async function ReferralPage({
           margin: '0 0 40px',
           maxWidth: 480,
         }}>
-          Join {firstName} on AI Literacy — the fastest way for professionals to master AI for their job.
+          Join {firstName} on OpusLearn — the fastest way for professionals to master AI for their job.
         </p>
 
         <div style={{
@@ -219,7 +219,7 @@ export default async function ReferralPage({
         </p>
 
         <p style={{ fontSize: 13, color: '#CBD5E1', textAlign: 'center' }}>
-          AI Literacy · ailiteracy.com
+          OpusLearn · opuslearn.ai
         </p>
       </div>
     </div>

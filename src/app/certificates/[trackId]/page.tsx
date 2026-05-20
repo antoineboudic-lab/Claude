@@ -95,7 +95,7 @@ function Certificate({
               <Award size={16} color="#FFFFFF" />
             </div>
             <div>
-              <p style={{ fontSize: '0.875rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.2 }}>AI Literacy</p>
+              <p style={{ fontSize: '0.875rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.2 }}>OpusLearn</p>
               <p style={{ fontSize: '0.625rem', color: '#94A3B8', letterSpacing: '0.08em', textTransform: 'uppercase', lineHeight: 1 }}>Verified Credential</p>
             </div>
           </div>
@@ -150,7 +150,7 @@ function Certificate({
             <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#0F172A', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 4px' }}>
               <Award size={18} color={color} />
             </div>
-            <p style={{ fontSize: '0.5625rem', color: '#CBD5E1', letterSpacing: '0.06em', textTransform: 'uppercase' }}>AI Literacy</p>
+            <p style={{ fontSize: '0.5625rem', color: '#CBD5E1', letterSpacing: '0.06em', textTransform: 'uppercase' }}>OpusLearn</p>
           </div>
           <div style={{ textAlign: 'right' }}>
             <p style={{ fontSize: '0.6875rem', color: '#94A3B8', marginBottom: '2px' }}>Certificate ID</p>
@@ -247,7 +247,7 @@ export default function CertificatePage() {
   const certId = user ? generateCertId(user.id, trackId) : 'AIL-XXX-2026-00000'
   const issuedDate = formatDate(state.lastActiveDate)
   const verifyUrl = typeof window !== 'undefined' ? window.location.href : `https://opuslearn.ai/certificates/${trackId}`
-  const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(verifyUrl)}&title=${encodeURIComponent(`I earned my ${track.title} Certificate from AI Literacy`)}`
+  const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(verifyUrl)}&title=${encodeURIComponent(`I earned my ${track.title} Certificate from OpusLearn`)}`
 
   const handleCopyLink = async () => {
     await navigator.clipboard.writeText(verifyUrl)

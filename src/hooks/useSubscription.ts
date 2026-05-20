@@ -11,7 +11,7 @@ export interface Subscription {
   trialEnd: string | null
 }
 
-const CACHE_KEY = 'ai-literacy-subscription'
+const CACHE_KEY = 'opuslearn-subscription'
 const CACHE_TTL = 60 * 60 * 1000 // 1 hour
 
 function loadCache(userId: string): Subscription | null {

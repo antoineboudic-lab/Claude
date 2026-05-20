@@ -9,7 +9,7 @@ export interface Bookmark {
   addedAt: string
 }
 
-const STORAGE_KEY = 'ai-literacy-bookmarks'
+const STORAGE_KEY = 'opuslearn-bookmarks'
 
 function loadFromStorage(): Bookmark[] {
   if (typeof window === 'undefined') return []

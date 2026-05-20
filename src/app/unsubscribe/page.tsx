@@ -19,7 +19,7 @@ function UnsubscribeContent() {
           <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={15} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </div>
 
         <div className="rounded-2xl p-8 text-center"

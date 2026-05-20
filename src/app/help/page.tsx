@@ -11,7 +11,7 @@ const FAQS: { category: string; color: string; items: { q: string; a: string }[]
     color: '#2563EB',
     items: [
       { q: 'How does the assessment work?', a: 'The assessment is a 5-question survey about your role, industry, experience level, and goals. It takes about 3 minutes and the results are used to build your personalised learning path. There are no right or wrong answers — only honest ones.' },
-      { q: 'Do I need any technical background?', a: 'No. AI Literacy is designed specifically for business professionals with no coding background. Every lesson, example, and exercise assumes zero technical knowledge. If you know how to use email and a spreadsheet, you have everything you need.' },
+      { q: 'Do I need any technical background?', a: 'No. OpusLearn is designed specifically for business professionals with no coding background. Every lesson, example, and exercise assumes zero technical knowledge. If you know how to use email and a spreadsheet, you have everything you need.' },
       { q: 'How long does a track take to complete?', a: 'Tracks have 16–20 lessons, each taking 15–20 minutes. Most learners complete their full track in 6–8 weeks at 2–3 lessons per week. You can go faster or slower — the platform adapts to your pace.' },
       { q: 'Can I switch tracks after I start?', a: 'Yes. You can start a new track at any time from your dashboard. Your progress on your current track is saved and you can return to it whenever you want.' },
     ],
@@ -23,7 +23,7 @@ const FAQS: { category: string; color: string; items: { q: string; a: string }[]
       { q: 'What\'s included in the free plan?', a: 'The free plan gives you full access to Module 1 of your chosen track — that\'s 4 complete lessons with exercises and assessments. No credit card required, no time limit. You can complete Module 1 at your own pace.' },
       { q: 'How does the 7-day free trial work?', a: 'When you upgrade to the Professional plan, you get 7 days of full access at no charge. You won\'t be billed until the 8th day. You can cancel at any time during the trial and you\'ll never be charged.' },
       { q: 'Can I cancel anytime?', a: 'Yes, you can cancel your subscription at any time from your account settings. There\'s no cancellation fee. If you cancel, you\'ll retain access until the end of your current billing period.' },
-      { q: 'Do you offer team or enterprise pricing?', a: 'Yes. Our Team plan is €39/seat/month (billed annually) for groups of 5 or more. For larger organisations or custom requirements, contact us at hello@ailiteracy.com and we\'ll build a plan around your needs.' },
+      { q: 'Do you offer team or enterprise pricing?', a: 'Yes. Our Team plan is €39/seat/month (billed annually) for groups of 5 or more. For larger organisations or custom requirements, contact us at hello@opuslearn.ai and we\'ll build a plan around your needs.' },
     ],
   },
   {
@@ -40,7 +40,7 @@ const FAQS: { category: string; color: string; items: { q: string; a: string }[]
     color: '#3B82F6',
     items: [
       { q: 'How do I reset my password?', a: 'On the sign-in page, click "Forgot password" and enter your email address. You\'ll receive a reset link within a few minutes. If you don\'t see it, check your spam folder.' },
-      { q: 'Can I access AI Literacy on mobile?', a: 'Yes. The platform is fully responsive and works well on phones and tablets. For the best experience with applied exercises, we recommend a laptop or desktop — but lessons can be read and completed on mobile.' },
+      { q: 'Can I access OpusLearn on mobile?', a: 'Yes. The platform is fully responsive and works well on phones and tablets. For the best experience with applied exercises, we recommend a laptop or desktop — but lessons can be read and completed on mobile.' },
       { q: 'What happens to my progress if I cancel?', a: 'Your account and progress are preserved even if you cancel your subscription. You\'ll lose access to paid content, but your completed lessons, progress, and certificates remain in your account. If you resubscribe, everything picks up exactly where you left off.' },
     ],
   },
@@ -87,9 +87,9 @@ export default function HelpPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
-        <a href="mailto:hello@ailiteracy.com"
+        <a href="mailto:hello@opuslearn.ai"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
           style={{ background: '#2563EB' }}>
           Contact support
@@ -106,7 +106,7 @@ export default function HelpPage() {
             </h1>
             <p className="text-lg" style={{ color: '#64748B' }}>
               Find answers to the most common questions below. Can't find what you need?{' '}
-              <a href="mailto:hello@ailiteracy.com" style={{ color: '#2563EB', fontWeight: 600 }}>Get in touch.</a>
+              <a href="mailto:hello@opuslearn.ai" style={{ color: '#2563EB', fontWeight: 600 }}>Get in touch.</a>
             </p>
           </motion.div>
         </div>
@@ -147,7 +147,7 @@ export default function HelpPage() {
 
           {/* Still need help */}
           <div className="mt-16 grid sm:grid-cols-2 gap-5">
-            <a href="mailto:hello@ailiteracy.com"
+            <a href="mailto:hello@opuslearn.ai"
               className="p-7 rounded-2xl flex items-center gap-4 transition-all hover:shadow-md"
               style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
               <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#DBEAFE' }}>
@@ -155,7 +155,7 @@ export default function HelpPage() {
               </div>
               <div>
                 <p className="text-sm font-black mb-0.5" style={{ color: '#0F172A' }}>Email support</p>
-                <p className="text-xs" style={{ color: '#94A3B8' }}>hello@ailiteracy.com · Response within 24h</p>
+                <p className="text-xs" style={{ color: '#94A3B8' }}>hello@opuslearn.ai · Response within 24h</p>
               </div>
             </a>
             <Link href="/contact"

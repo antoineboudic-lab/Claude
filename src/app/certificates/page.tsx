@@ -83,7 +83,7 @@ export default function CertificatesPage() {
           <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Award size={13} className="text-white" />
           </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
         <Link href="/assessment"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
@@ -109,7 +109,7 @@ export default function CertificatesPage() {
               Certificates that<br /><span style={{ color: '#2563EB' }}>mean something</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg leading-relaxed mb-8 max-w-2xl mx-auto" style={{ color: '#64748B' }}>
-              Every AI Literacy certificate is tied to a specific role and a verified set of applied skills — not a course completion checkbox.
+              Every OpusLearn certificate is tied to a specific role and a verified set of applied skills — not a course completion checkbox.
             </motion.p>
             <motion.div variants={fadeUp}>
               <Link href="/assessment"
@@ -162,7 +162,7 @@ export default function CertificatesPage() {
                     <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: '#2563EB' }}>
                       <Award size={11} className="text-white" />
                     </div>
-                    <span className="text-xs font-black" style={{ color: '#0F172A' }}>AI Literacy</span>
+                    <span className="text-xs font-black" style={{ color: '#0F172A' }}>OpusLearn</span>
                   </div>
                   <span className="text-xs px-2 py-0.5 rounded-md font-semibold" style={{ background: '#DBEAFE', color: '#2563EB' }}>Verified</span>
                 </div>

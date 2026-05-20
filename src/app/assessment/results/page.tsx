@@ -288,7 +288,7 @@ export default function AssessmentResultsPage() {
             <Zap size={16} className="text-white" />
           </div>
           <span className="font-bold" style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: '#0F172A' }}>
-            AI Literacy
+            OpusLearn
           </span>
         </Link>
         <div className="flex items-center gap-3">

@@ -926,7 +926,7 @@ export default function AssessmentPage() {
             const derived = deriveExperience(answers.currentTools)
             const finalAnswers = { ...answers, experience: derived }
             const result = buildAssessmentResult(finalAnswers)
-            localStorage.setItem('ai-literacy-assessment', JSON.stringify(result))
+            localStorage.setItem('opuslearn-assessment', JSON.stringify(result))
             if (user) await saveAssessment(user.id, result).catch(() => {})
           } catch { /* ignore */ }
           router.push('/assessment/results')
@@ -966,7 +966,7 @@ export default function AssessmentPage() {
           <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
             <Zap size={16} className="text-white" />
           </div>
-          <span className="font-bold text-base" style={{ color: '#0F172A' }}>AI Literacy</span>
+          <span className="font-bold text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
         </Link>
 
         {currentStep !== 'processing' && (

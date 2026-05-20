@@ -46,7 +46,7 @@ export default function OGImage({ params }: { params: { trackId: string } }) {
           }}>
             <span style={{ color: '#fff', fontSize: 22, fontWeight: 900 }}>⚡</span>
           </div>
-          <span style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>AI Literacy</span>
+          <span style={{ fontSize: 24, fontWeight: 900, color: '#0F172A' }}>OpusLearn</span>
         </div>
 
         {/* Track */}

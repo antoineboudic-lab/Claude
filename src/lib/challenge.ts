@@ -15,7 +15,7 @@ export interface ChallengeEntry {
   xpAwarded: number
 }
 
-const CHALLENGE_LOG_KEY = 'ai-literacy-challenge-log'
+const CHALLENGE_LOG_KEY = 'opuslearn-challenge-log'
 
 function seedRandom(seed: number): number {
   // Simple deterministic hash
