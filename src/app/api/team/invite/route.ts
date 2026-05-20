@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
 </html>`
 
   const { error: emailError } = await resend.emails.send({
-    from: 'OpusLearn <onboarding@resend.dev>',
+    from: 'OpusLearn <hello@opuslearn.ai>',
     to: email,
     subject: `[${teamName}] invited you to OpusLearn`,
     html,

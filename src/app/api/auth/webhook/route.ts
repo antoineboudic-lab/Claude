@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 </html>`
 
     await resend.emails.send({
-      from: 'OpusLearn <onboarding@resend.dev>',
+      from: 'OpusLearn <hello@opuslearn.ai>',
       to: email,
       subject: 'Welcome to OpusLearn — let\'s get started',
       html,

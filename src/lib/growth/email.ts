@@ -5,7 +5,7 @@ function getResend(): Resend {
   if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY)
   return _resend
 }
-const FROM = 'OpusLearn <onboarding@resend.dev>'
+const FROM = 'OpusLearn <hello@opuslearn.ai>'
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 export type EmailSequence = 'welcome' | 'activation' | 'reengagement' | 'upgrade'
