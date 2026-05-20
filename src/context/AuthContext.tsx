@@ -30,11 +30,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = useRef(createClient())
   const router = useRouter()
 
+  const wasSignedIn = useRef(false)
+
   useEffect(() => {
     const client = supabase.current
     client.auth.getSession().then(({ data }) => {
       setSession(data.session)
       setUser(data.session?.user ?? null)
+      wasSignedIn.current = !!data.session?.user
       setLoading(false)
     })
 
@@ -44,15 +47,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (typeof window === 'undefined') return
 
-      // After sign-in, honour ?next= param, otherwise go to /dashboard
-      if (event === 'SIGNED_IN') {
+      // Only redirect on a genuine new sign-in (user was previously logged out).
+      // SIGNED_IN also fires on token refresh and tab focus — ignore those.
+      if (event === 'SIGNED_IN' && !wasSignedIn.current) {
+        wasSignedIn.current = true
         const params = new URLSearchParams(window.location.search)
         const next = params.get('next')
         router.push(next ?? '/dashboard')
       }
 
-      // After sign-out, always return to home
       if (event === 'SIGNED_OUT') {
+        wasSignedIn.current = false
         router.push('/')
       }
     })
