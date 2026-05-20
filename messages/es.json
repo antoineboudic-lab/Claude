@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "Programa",
+    "tracks": "Rutas",
+    "forTeams": "Para equipos",
+    "pricing": "Precios",
+    "signIn": "Iniciar sesión",
+    "getStarted": "Empezar gratis",
+    "dashboard": "Panel",
+    "allTracks": "Todas las rutas"
+  },
+  "home": {
+    "hero": {
+      "badge": "Formación en IA para empresas",
+      "heading": "Domina la IA.\nSin Escribir Código.",
+      "subheading": "Formación en IA personalizada para profesionales. Elige tu rol, obtén tu ruta de aprendizaje y aplica la IA en el trabajo — desde hoy.",
+      "cta": "Empezar gratis",
+      "ctaSub": "No se requiere tarjeta de crédito"
+    },
+    "social": {
+      "trustedBy": "Con la confianza de profesionales de"
+    },
+    "footer": {
+      "rights": "Todos los derechos reservados.",
+      "tagline": "Creado para profesionales de negocios. Sin código."
+    }
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Crear cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "name": "Nombre completo",
+    "continueWith": "O continuar con",
+    "alreadyHaveAccount": "¿Ya tienes cuenta?",
+    "noAccount": "¿No tienes cuenta?",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "sendReset": "Enviar enlace de recuperación",
+    "backToSignIn": "Volver al inicio de sesión",
+    "checkEmail": "Revisa tu correo",
+    "resetSent": "Hemos enviado un enlace de recuperación a tu correo.",
+    "signingIn": "Iniciando sesión…",
+    "creatingAccount": "Creando cuenta…",
+    "welcomeBack": "Bienvenido de vuelta",
+    "joinOpusLearn": "Únete a OpusLearn",
+    "terms": "Al continuar, aceptas nuestros",
+    "termsLink": "Términos",
+    "and": "y",
+    "privacyLink": "Política de privacidad"
+  },
+  "assessment": {
+    "title": "Encuentra tu ruta de aprendizaje",
+    "subtitle": "Responde algunas preguntas para obtener tu ruta personalizada de formación en IA.",
+    "start": "Iniciar evaluación",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "finish": "Ver mi ruta",
+    "question": "Pregunta {current} de {total}"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido de vuelta",
+    "continueLeaning": "Continuar aprendiendo",
+    "yourProgress": "Tu progreso",
+    "streak": "Días seguidos",
+    "xpEarned": "XP ganados",
+    "completed": "Completados",
+    "startLearning": "Empezar a aprender",
+    "takeAssessment": "Hacer la evaluación",
+    "takeAssessmentDesc": "Obtén tu ruta de aprendizaje personalizada en 2 minutos.",
+    "upgrade": "Actualizar a Pro",
+    "settings": "Configuración",
+    "signOut": "Cerrar sesión"
+  },
+  "pricing": {
+    "title": "Precios simples y transparentes",
+    "subtitle": "Empieza gratis. Actualiza cuando estés listo.",
+    "monthly": "Mensual",
+    "annual": "Anual",
+    "save": "Ahorra 17%",
+    "free": "Gratis",
+    "pro": "Pro",
+    "teams": "Equipos",
+    "getStarted": "Empezar gratis",
+    "startTrial": "Iniciar prueba de 7 días",
+    "contactSales": "Contactar ventas",
+    "perMonth": "/mes",
+    "perYear": "/año",
+    "billedAnnually": "facturado anualmente",
+    "mostPopular": "Más popular"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "error": "Algo salió mal",
+    "retry": "Reintentar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "or": "o",
+    "new": "Nuevo",
+    "free": "Gratis",
+    "pro": "Pro"
+  }
+}

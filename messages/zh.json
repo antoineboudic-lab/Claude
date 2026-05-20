@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "课程",
+    "tracks": "学习路径",
+    "forTeams": "企业团队",
+    "pricing": "价格",
+    "signIn": "登录",
+    "getStarted": "免费开始",
+    "dashboard": "控制台",
+    "allTracks": "全部路径"
+  },
+  "home": {
+    "hero": {
+      "badge": "面向企业的AI培训",
+      "heading": "掌握AI技能。\n无需编写代码。",
+      "subheading": "为职场人士量身定制的AI培训。选择您的职位，获取学习路径，从今天起在工作中运用AI。",
+      "cta": "免费开始",
+      "ctaSub": "无需信用卡"
+    },
+    "social": {
+      "trustedBy": "受到来自各行各业专业人士的信赖"
+    },
+    "footer": {
+      "rights": "版权所有。",
+      "tagline": "专为职场人士打造。无需编程。"
+    }
+  },
+  "auth": {
+    "signIn": "登录",
+    "signUp": "创建账户",
+    "email": "电子邮件地址",
+    "password": "密码",
+    "name": "全名",
+    "continueWith": "或通过以下方式继续",
+    "alreadyHaveAccount": "已有账户？",
+    "noAccount": "没有账户？",
+    "forgotPassword": "忘记密码？",
+    "sendReset": "发送重置链接",
+    "backToSignIn": "返回登录",
+    "checkEmail": "查看您的邮件",
+    "resetSent": "我们已将密码重置链接发送至您的邮箱。",
+    "signingIn": "登录中…",
+    "creatingAccount": "创建账户中…",
+    "welcomeBack": "欢迎回来",
+    "joinOpusLearn": "加入OpusLearn",
+    "terms": "继续即表示您同意我们的",
+    "termsLink": "服务条款",
+    "and": "和",
+    "privacyLink": "隐私政策"
+  },
+  "assessment": {
+    "title": "找到您的学习路径",
+    "subtitle": "回答几个问题，获取专属AI培训路径。",
+    "start": "开始测评",
+    "next": "下一步",
+    "back": "返回",
+    "finish": "查看我的路径",
+    "question": "第 {current} 题，共 {total} 题"
+  },
+  "dashboard": {
+    "welcome": "欢迎回来",
+    "continueLeaning": "继续学习",
+    "yourProgress": "您的进度",
+    "streak": "连续天数",
+    "xpEarned": "获得XP",
+    "completed": "已完成",
+    "startLearning": "开始学习",
+    "takeAssessment": "参加测评",
+    "takeAssessmentDesc": "2分钟内获取专属AI学习路径。",
+    "upgrade": "升级至Pro",
+    "settings": "设置",
+    "signOut": "退出登录"
+  },
+  "pricing": {
+    "title": "简单透明的定价",
+    "subtitle": "免费开始，随时升级。",
+    "monthly": "月付",
+    "annual": "年付",
+    "save": "节省17%",
+    "free": "免费",
+    "pro": "Pro",
+    "teams": "团队",
+    "getStarted": "免费开始",
+    "startTrial": "开始7天免费试用",
+    "contactSales": "联系销售",
+    "perMonth": "/月",
+    "perYear": "/年",
+    "billedAnnually": "按年计费",
+    "mostPopular": "最受欢迎"
+  },
+  "common": {
+    "loading": "加载中…",
+    "error": "出现错误",
+    "retry": "重试",
+    "save": "保存",
+    "cancel": "取消",
+    "close": "关闭",
+    "or": "或",
+    "new": "新",
+    "free": "免费",
+    "pro": "Pro"
+  }
+}

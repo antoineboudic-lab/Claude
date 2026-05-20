@@ -9,6 +9,9 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import FloatingAssistant from "@/components/FloatingAssistant";
 import { TrackCompletion } from "@/components/gamification/TrackCompletion";
 import PWARegister from "@/components/PWARegister";
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
+import { rtlLocales } from '@/i18n/config';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -170,14 +173,19 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+  const isRTL = rtlLocales.includes(locale as typeof rtlLocales[number]);
+
   return (
     <html
-      lang="en"
+      lang={locale}
+      dir={isRTL ? 'rtl' : 'ltr'}
       className={`${plusJakartaSans.variable} h-full antialiased`}
     >
       <head>
@@ -187,17 +195,19 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <AuthProvider>
-          <GameProvider>
-            {children}
-            <XPToast />
-            <BadgeUnlock />
-            <AuthModal />
-            <FloatingAssistant />
-            <TrackCompletion />
-            <PWARegister />
-          </GameProvider>
-        </AuthProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AuthProvider>
+            <GameProvider>
+              {children}
+              <XPToast />
+              <BadgeUnlock />
+              <AuthModal />
+              <FloatingAssistant />
+              <TrackCompletion />
+              <PWARegister />
+            </GameProvider>
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

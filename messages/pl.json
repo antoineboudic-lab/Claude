@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "Program",
+    "tracks": "Ścieżki",
+    "forTeams": "Dla zespołów",
+    "pricing": "Cennik",
+    "signIn": "Zaloguj się",
+    "getStarted": "Zacznij za darmo",
+    "dashboard": "Panel",
+    "allTracks": "Wszystkie ścieżki"
+  },
+  "home": {
+    "hero": {
+      "badge": "Szkolenia AI dla biznesu",
+      "heading": "Opanuj AI.\nBez Pisania Kodu.",
+      "subheading": "Spersonalizowane szkolenia AI dla profesjonalistów. Wybierz swoją rolę, uzyskaj ścieżkę nauki i zastosuj AI w pracy — już dziś.",
+      "cta": "Zacznij za darmo",
+      "ctaSub": "Nie wymagana karta kredytowa"
+    },
+    "social": {
+      "trustedBy": "Zaufany przez profesjonalistów z"
+    },
+    "footer": {
+      "rights": "Wszelkie prawa zastrzeżone.",
+      "tagline": "Stworzony dla profesjonalistów biznesowych. Bez kodu."
+    }
+  },
+  "auth": {
+    "signIn": "Zaloguj się",
+    "signUp": "Utwórz konto",
+    "email": "Adres e-mail",
+    "password": "Hasło",
+    "name": "Imię i nazwisko",
+    "continueWith": "Lub kontynuuj z",
+    "alreadyHaveAccount": "Masz już konto?",
+    "noAccount": "Nie masz konta?",
+    "forgotPassword": "Zapomniałeś hasła?",
+    "sendReset": "Wyślij link do resetowania",
+    "backToSignIn": "Powrót do logowania",
+    "checkEmail": "Sprawdź swój e-mail",
+    "resetSent": "Wysłaliśmy link do resetowania hasła na Twój adres e-mail.",
+    "signingIn": "Logowanie…",
+    "creatingAccount": "Tworzenie konta…",
+    "welcomeBack": "Witaj z powrotem",
+    "joinOpusLearn": "Dołącz do OpusLearn",
+    "terms": "Kontynuując, akceptujesz nasze",
+    "termsLink": "Warunki",
+    "and": "i",
+    "privacyLink": "Politykę prywatności"
+  },
+  "assessment": {
+    "title": "Znajdź swoją ścieżkę nauki",
+    "subtitle": "Odpowiedz na kilka pytań, aby uzyskać spersonalizowaną ścieżkę szkolenia AI.",
+    "start": "Rozpocznij ocenę",
+    "next": "Dalej",
+    "back": "Wstecz",
+    "finish": "Zobacz moją ścieżkę",
+    "question": "Pytanie {current} z {total}"
+  },
+  "dashboard": {
+    "welcome": "Witaj z powrotem",
+    "continueLeaning": "Kontynuuj naukę",
+    "yourProgress": "Twój postęp",
+    "streak": "Dni z rzędu",
+    "xpEarned": "Zdobyte XP",
+    "completed": "Ukończone",
+    "startLearning": "Zacznij się uczyć",
+    "takeAssessment": "Wykonaj ocenę",
+    "takeAssessmentDesc": "Uzyskaj spersonalizowaną ścieżkę nauki AI w 2 minuty.",
+    "upgrade": "Ulepsz do Pro",
+    "settings": "Ustawienia",
+    "signOut": "Wyloguj się"
+  },
+  "pricing": {
+    "title": "Proste i przejrzyste ceny",
+    "subtitle": "Zacznij za darmo. Ulepsz kiedy będziesz gotowy.",
+    "monthly": "Miesięcznie",
+    "annual": "Rocznie",
+    "save": "Oszczędź 17%",
+    "free": "Darmowy",
+    "pro": "Pro",
+    "teams": "Zespoły",
+    "getStarted": "Zacznij za darmo",
+    "startTrial": "Rozpocznij 7-dniowy okres próbny",
+    "contactSales": "Skontaktuj się ze sprzedażą",
+    "perMonth": "/mies.",
+    "perYear": "/rok",
+    "billedAnnually": "rozliczane rocznie",
+    "mostPopular": "Najpopularniejszy"
+  },
+  "common": {
+    "loading": "Ładowanie…",
+    "error": "Coś poszło nie tak",
+    "retry": "Spróbuj ponownie",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "close": "Zamknij",
+    "or": "lub",
+    "new": "Nowy",
+    "free": "Darmowy",
+    "pro": "Pro"
+  }
+}

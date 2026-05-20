@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "Program",
+    "tracks": "Trek",
+    "forTeams": "Untuk Pasukan",
+    "pricing": "Harga",
+    "signIn": "Log Masuk",
+    "getStarted": "Mulakan percuma",
+    "dashboard": "Papan pemuka",
+    "allTracks": "Semua trek"
+  },
+  "home": {
+    "hero": {
+      "badge": "Latihan AI untuk perniagaan",
+      "heading": "Kuasai AI.\nTanpa Menulis Kod.",
+      "subheading": "Latihan AI yang diperibadikan untuk profesional perniagaan. Pilih peranan anda, dapatkan laluan pembelajaran dan gunakan AI di tempat kerja — bermula hari ini.",
+      "cta": "Mulakan percuma",
+      "ctaSub": "Tiada kad kredit diperlukan"
+    },
+    "social": {
+      "trustedBy": "Dipercayai oleh profesional dari"
+    },
+    "footer": {
+      "rights": "Hak cipta terpelihara.",
+      "tagline": "Dibina untuk profesional perniagaan. Tiada kod diperlukan."
+    }
+  },
+  "auth": {
+    "signIn": "Log Masuk",
+    "signUp": "Cipta akaun",
+    "email": "Alamat e-mel",
+    "password": "Kata laluan",
+    "name": "Nama penuh",
+    "continueWith": "Atau teruskan dengan",
+    "alreadyHaveAccount": "Sudah ada akaun?",
+    "noAccount": "Tiada akaun?",
+    "forgotPassword": "Terlupa kata laluan?",
+    "sendReset": "Hantar pautan tetapan semula",
+    "backToSignIn": "Kembali ke log masuk",
+    "checkEmail": "Semak e-mel anda",
+    "resetSent": "Kami telah menghantar pautan tetapan semula kata laluan ke e-mel anda.",
+    "signingIn": "Sedang log masuk…",
+    "creatingAccount": "Mencipta akaun…",
+    "welcomeBack": "Selamat kembali",
+    "joinOpusLearn": "Sertai OpusLearn",
+    "terms": "Dengan meneruskan, anda bersetuju dengan",
+    "termsLink": "Terma",
+    "and": "dan",
+    "privacyLink": "Dasar Privasi kami"
+  },
+  "assessment": {
+    "title": "Cari laluan pembelajaran anda",
+    "subtitle": "Jawab beberapa soalan untuk mendapatkan laluan latihan AI yang diperibadikan.",
+    "start": "Mulakan penilaian",
+    "next": "Seterusnya",
+    "back": "Kembali",
+    "finish": "Lihat laluan saya",
+    "question": "Soalan {current} daripada {total}"
+  },
+  "dashboard": {
+    "welcome": "Selamat kembali",
+    "continueLeaning": "Teruskan pembelajaran",
+    "yourProgress": "Kemajuan anda",
+    "streak": "Hari berturut-turut",
+    "xpEarned": "XP diperoleh",
+    "completed": "Selesai",
+    "startLearning": "Mulakan pembelajaran",
+    "takeAssessment": "Buat penilaian",
+    "takeAssessmentDesc": "Dapatkan laluan pembelajaran AI yang diperibadikan dalam 2 minit.",
+    "upgrade": "Naik taraf ke Pro",
+    "settings": "Tetapan",
+    "signOut": "Log keluar"
+  },
+  "pricing": {
+    "title": "Harga mudah dan telus",
+    "subtitle": "Mulakan percuma. Naik taraf apabila bersedia.",
+    "monthly": "Bulanan",
+    "annual": "Tahunan",
+    "save": "Jimat 17%",
+    "free": "Percuma",
+    "pro": "Pro",
+    "teams": "Pasukan",
+    "getStarted": "Mulakan percuma",
+    "startTrial": "Mulakan percubaan 7 hari",
+    "contactSales": "Hubungi jualan",
+    "perMonth": "/bln",
+    "perYear": "/thn",
+    "billedAnnually": "dibilkan tahunan",
+    "mostPopular": "Paling popular"
+  },
+  "common": {
+    "loading": "Memuatkan…",
+    "error": "Ada yang tidak kena",
+    "retry": "Cuba lagi",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "close": "Tutup",
+    "or": "atau",
+    "new": "Baru",
+    "free": "Percuma",
+    "pro": "Pro"
+  }
+}

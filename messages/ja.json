@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "プログラム",
+    "tracks": "コース",
+    "forTeams": "チーム向け",
+    "pricing": "料金",
+    "signIn": "ログイン",
+    "getStarted": "始める",
+    "dashboard": "ダッシュボード",
+    "allTracks": "すべてのコース"
+  },
+  "home": {
+    "hero": {
+      "badge": "ビジネス向けAIトレーニング",
+      "heading": "AIをマスターしよう。\nコーディング不要。",
+      "subheading": "ビジネスプロフェッショナルのためのパーソナライズされたAIトレーニング。役割を選び、学習パスを取得し、今日から職場でAIを活用しましょう。",
+      "cta": "無料で始める",
+      "ctaSub": "クレジットカード不要"
+    },
+    "social": {
+      "trustedBy": "各企業のプロフェッショナルに信頼されています"
+    },
+    "footer": {
+      "rights": "全著作権所有。",
+      "tagline": "ビジネスプロフェッショナルのために構築。コーディング不要。"
+    }
+  },
+  "auth": {
+    "signIn": "ログイン",
+    "signUp": "アカウント作成",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "name": "フルネーム",
+    "continueWith": "または続ける",
+    "alreadyHaveAccount": "すでにアカウントをお持ちですか？",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "sendReset": "リセットリンクを送信",
+    "backToSignIn": "ログインに戻る",
+    "checkEmail": "メールを確認してください",
+    "resetSent": "パスワードリセットリンクをメールに送信しました。",
+    "signingIn": "ログイン中…",
+    "creatingAccount": "アカウントを作成中…",
+    "welcomeBack": "おかえりなさい",
+    "joinOpusLearn": "OpusLearnに参加する",
+    "terms": "続けることで、",
+    "termsLink": "利用規約",
+    "and": "および",
+    "privacyLink": "プライバシーポリシーに同意します"
+  },
+  "assessment": {
+    "title": "学習パスを見つけよう",
+    "subtitle": "いくつかの質問に答えて、パーソナライズされたAIトレーニングパスを取得してください。",
+    "start": "評価を開始",
+    "next": "次へ",
+    "back": "戻る",
+    "finish": "自分のパスを見る",
+    "question": "質問 {current} / {total}"
+  },
+  "dashboard": {
+    "welcome": "おかえりなさい",
+    "continueLeaning": "学習を続ける",
+    "yourProgress": "あなたの進捗",
+    "streak": "連続日数",
+    "xpEarned": "獲得XP",
+    "completed": "完了",
+    "startLearning": "学習を始める",
+    "takeAssessment": "評価を受ける",
+    "takeAssessmentDesc": "2分でパーソナライズされたAI学習パスを取得しましょう。",
+    "upgrade": "Proにアップグレード",
+    "settings": "設定",
+    "signOut": "ログアウト"
+  },
+  "pricing": {
+    "title": "シンプルで透明な料金",
+    "subtitle": "無料で始めて、準備ができたらアップグレード。",
+    "monthly": "月払い",
+    "annual": "年払い",
+    "save": "17%節約",
+    "free": "無料",
+    "pro": "Pro",
+    "teams": "チーム",
+    "getStarted": "無料で始める",
+    "startTrial": "7日間無料トライアルを開始",
+    "contactSales": "営業に問い合わせ",
+    "perMonth": "/月",
+    "perYear": "/年",
+    "billedAnnually": "年払い",
+    "mostPopular": "最も人気"
+  },
+  "common": {
+    "loading": "読み込み中…",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "close": "閉じる",
+    "or": "または",
+    "new": "新着",
+    "free": "無料",
+    "pro": "Pro"
+  }
+}

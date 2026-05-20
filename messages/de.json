@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "Programm",
+    "tracks": "Lernpfade",
+    "forTeams": "Für Teams",
+    "pricing": "Preise",
+    "signIn": "Anmelden",
+    "getStarted": "Loslegen",
+    "dashboard": "Dashboard",
+    "allTracks": "Alle Lernpfade"
+  },
+  "home": {
+    "hero": {
+      "badge": "KI-Training für Unternehmen",
+      "heading": "KI meistern.\nOhne Code zu schreiben.",
+      "subheading": "Personalisiertes KI-Training für Berufstätige. Wähle deine Rolle, erhalte deinen Lernpfad und wende KI bei der Arbeit an — ab heute.",
+      "cta": "Kostenlos starten",
+      "ctaSub": "Keine Kreditkarte erforderlich"
+    },
+    "social": {
+      "trustedBy": "Vertraut von Fachleuten aus"
+    },
+    "footer": {
+      "rights": "Alle Rechte vorbehalten.",
+      "tagline": "Entwickelt für Berufstätige. Kein Code erforderlich."
+    }
+  },
+  "auth": {
+    "signIn": "Anmelden",
+    "signUp": "Konto erstellen",
+    "email": "E-Mail-Adresse",
+    "password": "Passwort",
+    "name": "Vollständiger Name",
+    "continueWith": "Oder weiter mit",
+    "alreadyHaveAccount": "Hast du bereits ein Konto?",
+    "noAccount": "Noch kein Konto?",
+    "forgotPassword": "Passwort vergessen?",
+    "sendReset": "Zurücksetzen-Link senden",
+    "backToSignIn": "Zurück zur Anmeldung",
+    "checkEmail": "Prüfe deine E-Mail",
+    "resetSent": "Wir haben einen Passwort-Zurücksetzen-Link an deine E-Mail gesendet.",
+    "signingIn": "Anmeldung läuft…",
+    "creatingAccount": "Konto wird erstellt…",
+    "welcomeBack": "Willkommen zurück",
+    "joinOpusLearn": "OpusLearn beitreten",
+    "terms": "Mit der Fortsetzung stimmst du unseren",
+    "termsLink": "Nutzungsbedingungen",
+    "and": "und",
+    "privacyLink": "Datenschutzrichtlinien zu"
+  },
+  "assessment": {
+    "title": "Finde deinen Lernpfad",
+    "subtitle": "Beantworte ein paar Fragen, um deinen personalisierten KI-Lernpfad zu erhalten.",
+    "start": "Bewertung starten",
+    "next": "Weiter",
+    "back": "Zurück",
+    "finish": "Meinen Pfad sehen",
+    "question": "Frage {current} von {total}"
+  },
+  "dashboard": {
+    "welcome": "Willkommen zurück",
+    "continueLeaning": "Weiterlernen",
+    "yourProgress": "Dein Fortschritt",
+    "streak": "Tage in Folge",
+    "xpEarned": "XP verdient",
+    "completed": "Abgeschlossen",
+    "startLearning": "Lernen beginnen",
+    "takeAssessment": "Bewertung machen",
+    "takeAssessmentDesc": "Erhalte deinen personalisierten KI-Lernpfad in 2 Minuten.",
+    "upgrade": "Auf Pro upgraden",
+    "settings": "Einstellungen",
+    "signOut": "Abmelden"
+  },
+  "pricing": {
+    "title": "Einfache, transparente Preise",
+    "subtitle": "Kostenlos starten. Upgraden wenn du bereit bist.",
+    "monthly": "Monatlich",
+    "annual": "Jährlich",
+    "save": "17% sparen",
+    "free": "Kostenlos",
+    "pro": "Pro",
+    "teams": "Teams",
+    "getStarted": "Kostenlos starten",
+    "startTrial": "7-Tage-Testversion starten",
+    "contactSales": "Vertrieb kontaktieren",
+    "perMonth": "/Monat",
+    "perYear": "/Jahr",
+    "billedAnnually": "jährlich abgerechnet",
+    "mostPopular": "Beliebteste"
+  },
+  "common": {
+    "loading": "Laden…",
+    "error": "Etwas ist schiefgelaufen",
+    "retry": "Erneut versuchen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "or": "oder",
+    "new": "Neu",
+    "free": "Kostenlos",
+    "pro": "Pro"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "Program",
+    "tracks": "Tracks",
+    "forTeams": "For teams",
+    "pricing": "Pricing",
+    "signIn": "Sign in",
+    "getStarted": "Get started",
+    "dashboard": "Dashboard",
+    "allTracks": "All tracks"
+  },
+  "home": {
+    "hero": {
+      "badge": "AI training built for business",
+      "heading": "Master AI.\nWithout Writing Code.",
+      "subheading": "Personalised AI training for business professionals. Pick your role, get your learning path, apply AI at work — starting today.",
+      "cta": "Start for free",
+      "ctaSub": "No credit card required"
+    },
+    "social": {
+      "trustedBy": "Trusted by professionals from"
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "tagline": "Built for business professionals. No code required."
+    }
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "email": "Email address",
+    "password": "Password",
+    "name": "Full name",
+    "continueWith": "Or continue with",
+    "alreadyHaveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "forgotPassword": "Forgot password?",
+    "sendReset": "Send reset link",
+    "backToSignIn": "Back to sign in",
+    "checkEmail": "Check your email",
+    "resetSent": "We've sent a password reset link to your email.",
+    "signingIn": "Signing in…",
+    "creatingAccount": "Creating account…",
+    "welcomeBack": "Welcome back",
+    "joinOpusLearn": "Join OpusLearn",
+    "terms": "By continuing, you agree to our",
+    "termsLink": "Terms",
+    "and": "and",
+    "privacyLink": "Privacy Policy"
+  },
+  "assessment": {
+    "title": "Find your learning path",
+    "subtitle": "Answer a few questions to get your personalised AI training path.",
+    "start": "Start assessment",
+    "next": "Next",
+    "back": "Back",
+    "finish": "See my path",
+    "question": "Question {current} of {total}"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "continueLeaning": "Continue learning",
+    "yourProgress": "Your progress",
+    "streak": "Day streak",
+    "xpEarned": "XP earned",
+    "completed": "Completed",
+    "startLearning": "Start learning",
+    "takeAssessment": "Take the assessment",
+    "takeAssessmentDesc": "Get your personalised AI learning path in 2 minutes.",
+    "upgrade": "Upgrade to Pro",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Start free. Upgrade when you're ready.",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "save": "Save 17%",
+    "free": "Free",
+    "pro": "Pro",
+    "teams": "Teams",
+    "getStarted": "Get started free",
+    "startTrial": "Start 7-day free trial",
+    "contactSales": "Contact sales",
+    "perMonth": "/mo",
+    "perYear": "/yr",
+    "billedAnnually": "billed annually",
+    "mostPopular": "Most popular"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "or": "or",
+    "new": "New",
+    "free": "Free",
+    "pro": "Pro"
+  }
+}

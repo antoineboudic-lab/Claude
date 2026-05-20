@@ -1,0 +1,103 @@
+{
+  "nav": {
+    "program": "Program",
+    "tracks": "Jalur",
+    "forTeams": "Untuk Tim",
+    "pricing": "Harga",
+    "signIn": "Masuk",
+    "getStarted": "Mulai gratis",
+    "dashboard": "Dasbor",
+    "allTracks": "Semua jalur"
+  },
+  "home": {
+    "hero": {
+      "badge": "Pelatihan AI untuk bisnis",
+      "heading": "Kuasai AI.\nTanpa Menulis Kode.",
+      "subheading": "Pelatihan AI yang dipersonalisasi untuk profesional bisnis. Pilih peran Anda, dapatkan jalur belajar, dan terapkan AI di tempat kerja — mulai hari ini.",
+      "cta": "Mulai gratis",
+      "ctaSub": "Tidak perlu kartu kredit"
+    },
+    "social": {
+      "trustedBy": "Dipercaya oleh para profesional dari"
+    },
+    "footer": {
+      "rights": "Semua hak dilindungi.",
+      "tagline": "Dibuat untuk profesional bisnis. Tanpa kode."
+    }
+  },
+  "auth": {
+    "signIn": "Masuk",
+    "signUp": "Buat akun",
+    "email": "Alamat email",
+    "password": "Kata sandi",
+    "name": "Nama lengkap",
+    "continueWith": "Atau lanjutkan dengan",
+    "alreadyHaveAccount": "Sudah punya akun?",
+    "noAccount": "Belum punya akun?",
+    "forgotPassword": "Lupa kata sandi?",
+    "sendReset": "Kirim tautan reset",
+    "backToSignIn": "Kembali ke masuk",
+    "checkEmail": "Periksa email Anda",
+    "resetSent": "Kami telah mengirimkan tautan reset kata sandi ke email Anda.",
+    "signingIn": "Sedang masuk…",
+    "creatingAccount": "Membuat akun…",
+    "welcomeBack": "Selamat datang kembali",
+    "joinOpusLearn": "Bergabung dengan OpusLearn",
+    "terms": "Dengan melanjutkan, Anda menyetujui",
+    "termsLink": "Syarat",
+    "and": "dan",
+    "privacyLink": "Kebijakan Privasi kami"
+  },
+  "assessment": {
+    "title": "Temukan jalur belajar Anda",
+    "subtitle": "Jawab beberapa pertanyaan untuk mendapatkan jalur pelatihan AI yang dipersonalisasi.",
+    "start": "Mulai penilaian",
+    "next": "Berikutnya",
+    "back": "Kembali",
+    "finish": "Lihat jalur saya",
+    "question": "Pertanyaan {current} dari {total}"
+  },
+  "dashboard": {
+    "welcome": "Selamat datang kembali",
+    "continueLeaning": "Lanjutkan belajar",
+    "yourProgress": "Kemajuan Anda",
+    "streak": "Hari berturut-turut",
+    "xpEarned": "XP diperoleh",
+    "completed": "Selesai",
+    "startLearning": "Mulai belajar",
+    "takeAssessment": "Lakukan penilaian",
+    "takeAssessmentDesc": "Dapatkan jalur belajar AI yang dipersonalisasi dalam 2 menit.",
+    "upgrade": "Upgrade ke Pro",
+    "settings": "Pengaturan",
+    "signOut": "Keluar"
+  },
+  "pricing": {
+    "title": "Harga sederhana dan transparan",
+    "subtitle": "Mulai gratis. Upgrade saat Anda siap.",
+    "monthly": "Bulanan",
+    "annual": "Tahunan",
+    "save": "Hemat 17%",
+    "free": "Gratis",
+    "pro": "Pro",
+    "teams": "Tim",
+    "getStarted": "Mulai gratis",
+    "startTrial": "Mulai uji coba 7 hari",
+    "contactSales": "Hubungi penjualan",
+    "perMonth": "/bln",
+    "perYear": "/thn",
+    "billedAnnually": "ditagih tahunan",
+    "mostPopular": "Paling populer"
+  },
+  "common": {
+    "loading": "Memuat…",
+    "error": "Terjadi kesalahan",
+    "retry": "Coba lagi",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "close": "Tutup",
+    "or": "atau",
+    "new": "Baru",
+    "free": "Gratis",
+    "pro": "Pro"
+  }
+}
