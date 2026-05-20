@@ -49,7 +49,7 @@ export function AuthModal() {
     setError('')
     setLoading(true)
     try {
-      const redirectTo = `${window.location.origin}/auth/reset`
+      const redirectTo = `${window.location.origin}/auth/callback?next=/auth/reset`
       const { error } = await supabase.current.auth.resetPasswordForEmail(email, { redirectTo })
       if (error) throw error
       setStep('reset-sent')
