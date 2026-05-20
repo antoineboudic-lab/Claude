@@ -915,6 +915,7 @@ export default function DashboardPage() {
   const { state, syncing } = useGame()
   const { isPro, isTrialing, subscription } = useSubscription()
   const [assessment, setAssessment] = useState<AssessmentResult | null>(null)
+  const [assessmentChecked, setAssessmentChecked] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [srDueCount, setSrDueCount] = useState(0)
   const [teamHref, setTeamHref] = useState<string | null>(null)
@@ -989,6 +990,7 @@ export default function DashboardPage() {
         if (remote) {
           setAssessment(remote)
           localStorage.setItem('opuslearn-assessment', JSON.stringify(remote))
+          setAssessmentChecked(true)
           return
         }
       }
@@ -996,6 +998,7 @@ export default function DashboardPage() {
         const raw = localStorage.getItem('opuslearn-assessment')
         if (raw) setAssessment(JSON.parse(raw))
       } catch {}
+      setAssessmentChecked(true)
     }
 
     load()
@@ -1004,6 +1007,10 @@ export default function DashboardPage() {
   useEffect(() => {
     if (!loading && !user) router.replace('/?next=/dashboard')
   }, [loading, user, router])
+
+  useEffect(() => {
+    if (assessmentChecked && !assessment) router.replace('/assessment')
+  }, [assessmentChecked, assessment, router])
 
   if (!mounted || loading) {
     return (
