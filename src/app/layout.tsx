@@ -9,6 +9,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import FloatingAssistant from "@/components/FloatingAssistant";
 import { TrackCompletion } from "@/components/gamification/TrackCompletion";
 import PWARegister from "@/components/PWARegister";
+import CookieBanner from "@/components/CookieBanner";
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { rtlLocales } from '@/i18n/config';
@@ -205,6 +206,7 @@ export default async function RootLayout({
               <FloatingAssistant />
               <TrackCompletion />
               <PWARegister />
+              <CookieBanner />
             </GameProvider>
           </AuthProvider>
         </NextIntlClientProvider>
