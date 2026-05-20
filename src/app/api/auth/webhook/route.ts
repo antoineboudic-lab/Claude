@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
 </html>`
 
     await resend.emails.send({
-      from: 'AI Literacy Teams <hello@ailiteracy.com>',
+      from: 'AI Literacy <onboarding@resend.dev>',
       to: email,
       subject: 'Welcome to AI Literacy — let\'s get started',
       html,

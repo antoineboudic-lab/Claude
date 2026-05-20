@@ -5,7 +5,7 @@ function getResend(): Resend {
   if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY)
   return _resend
 }
-const FROM = 'AI Literacy <hello@ailiteracy.com>'
+const FROM = 'AI Literacy <onboarding@resend.dev>'
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ai-literacy-tau.vercel.app'
 
 export type EmailSequence = 'welcome' | 'activation' | 'reengagement' | 'upgrade'

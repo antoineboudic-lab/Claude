@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
 </html>`
 
   const { error: emailError } = await resend.emails.send({
-    from: 'AI Literacy Teams <hello@ailiteracy.com>',
+    from: 'AI Literacy <onboarding@resend.dev>',
     to: email,
     subject: `[${teamName}] invited you to AI Literacy`,
     html,
