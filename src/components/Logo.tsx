@@ -14,10 +14,8 @@ export function LogoMark({ size = 28, color = '#2563EB' }: { size?: number; colo
   return (
     <svg width={size} height={size} viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="28" height="28" rx="7" fill={color} />
-      {/* O */}
-      <circle cx="11" cy="14" r="5.5" stroke="white" strokeWidth="2.5" />
-      {/* L */}
-      <path d="M19.5 9V20H24" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="14" cy="15" r="6.5" stroke="white" strokeWidth="2.2" fill="none" />
+      <path d="M10.5 17L14 12L17.5 17" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   )
 }
