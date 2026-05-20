@@ -9,6 +9,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import FloatingAssistant from "@/components/FloatingAssistant";
 import { TrackCompletion } from "@/components/gamification/TrackCompletion";
 import PWARegister from "@/components/PWARegister";
+import { Analytics } from "@vercel/analytics/next";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -198,6 +199,7 @@ export default function RootLayout({
             <PWARegister />
           </GameProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );
