@@ -18,28 +18,42 @@ export default function ResetPasswordPage() {
   const supabase = useRef(createClient())
 
   useEffect(() => {
-    // Supabase puts the recovery tokens in the URL hash:
-    // #access_token=...&refresh_token=...&type=recovery
-    const hash = window.location.hash.slice(1)
-    const params = new URLSearchParams(hash)
-    const type = params.get('type')
-    const accessToken = params.get('access_token')
-    const refreshToken = params.get('refresh_token')
+    const searchParams = new URLSearchParams(window.location.search)
+    const code = searchParams.get('code')
 
-    if (type === 'recovery' && accessToken && refreshToken) {
+    // PKCE flow (default for @supabase/ssr): reset link arrives as ?code=...
+    if (code) {
       supabase.current.auth
-        .setSession({ access_token: accessToken, refresh_token: refreshToken })
+        .exchangeCodeForSession(code)
         .then(({ error }) => {
           if (error) setStep('invalid')
           else setStep('form')
         })
-    } else {
-      // Maybe the session is already set (PKCE flow) — check for active session
-      supabase.current.auth.getSession().then(({ data }) => {
-        if (data.session) setStep('form')
-        else setStep('invalid')
-      })
+      return
     }
+
+    // Legacy implicit flow fallback: #access_token=...&type=recovery
+    const hash = window.location.hash.slice(1)
+    const params = new URLSearchParams(hash)
+    if (params.get('type') === 'recovery') {
+      const accessToken = params.get('access_token')
+      const refreshToken = params.get('refresh_token')
+      if (accessToken && refreshToken) {
+        supabase.current.auth
+          .setSession({ access_token: accessToken, refresh_token: refreshToken })
+          .then(({ error }) => {
+            if (error) setStep('invalid')
+            else setStep('form')
+          })
+        return
+      }
+    }
+
+    // Check if there's already a valid session (e.g. user navigated back)
+    supabase.current.auth.getSession().then(({ data }) => {
+      if (data.session) setStep('form')
+      else setStep('invalid')
+    })
   }, [])
 
   async function handleSubmit(e: React.FormEvent) {
