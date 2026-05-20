@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import type { User, Session } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 
@@ -27,6 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [modalView, setModalView] = useState<ModalView>('closed')
   const [prefillEmail, setPrefillEmail] = useState('')
   const supabase = useRef(createClient())
+  const router = useRouter()
 
   useEffect(() => {
     const client = supabase.current
@@ -46,17 +48,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (event === 'SIGNED_IN') {
         const params = new URLSearchParams(window.location.search)
         const next = params.get('next')
-        setTimeout(() => { window.location.href = next ?? '/dashboard' }, 400)
+        router.push(next ?? '/dashboard')
       }
 
       // After sign-out, always return to home
       if (event === 'SIGNED_OUT') {
-        window.location.href = '/'
+        router.push('/')
       }
     })
 
     return () => subscription.unsubscribe()
-  }, [])
+  }, [router])
 
   const signOut = useCallback(async () => {
     // Clear any tokens stored in sessionStorage (Remember me = false path)
