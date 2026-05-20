@@ -2235,9 +2235,16 @@ function LoggedInHome() {
 // ─── Landing page ─────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
-  const { user, loading } = useAuth()
+  const { user, loading, openSignIn } = useAuth()
   const [mounted, setMounted] = useState(false)
   useEffect(() => { setMounted(true) }, [])
+
+  // Auto-open sign-in modal when redirected here with ?signin=1 (e.g. from /admin gate)
+  useEffect(() => {
+    if (!mounted || loading) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('signin') === '1' && !user) openSignIn()
+  }, [mounted, loading, user, openSignIn])
 
   if (mounted && !loading && user) return <LoggedInHome />
 
