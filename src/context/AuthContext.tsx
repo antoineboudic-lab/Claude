@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useRef } f
 import { useRouter } from 'next/navigation'
 import type { User, Session } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
+import posthog from 'posthog-js'
 
 export type ModalView = 'closed' | 'signin' | 'signup'
 
@@ -51,6 +52,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // SIGNED_IN also fires on token refresh and tab focus — ignore those.
       if (event === 'SIGNED_IN' && !wasSignedIn.current) {
         wasSignedIn.current = true
+        const isNewUser = session?.user?.created_at === session?.user?.last_sign_in_at
+        posthog.capture(isNewUser ? 'sign_up' : 'sign_in', { email: session?.user?.email })
         if (window.location.pathname.startsWith('/auth/')) return
         const params = new URLSearchParams(window.location.search)
         const next = params.get('next')
@@ -59,6 +62,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (event === 'SIGNED_OUT') {
         wasSignedIn.current = false
+        posthog.reset()
         router.push('/')
       }
     })

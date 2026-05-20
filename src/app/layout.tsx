@@ -10,6 +10,7 @@ import FloatingAssistant from "@/components/FloatingAssistant";
 import { TrackCompletion } from "@/components/gamification/TrackCompletion";
 import PWARegister from "@/components/PWARegister";
 import CookieBanner from "@/components/CookieBanner";
+import { PostHogProvider } from "@/components/PostHogProvider";
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { rtlLocales } from '@/i18n/config';
@@ -198,6 +199,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider>
+            <PostHogProvider>
             <GameProvider>
               {children}
               <XPToast />
@@ -208,6 +210,7 @@ export default async function RootLayout({
               <PWARegister />
               <CookieBanner />
             </GameProvider>
+            </PostHogProvider>
           </AuthProvider>
         </NextIntlClientProvider>
       </body>

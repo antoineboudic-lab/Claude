@@ -9,6 +9,7 @@ import {
 } from '@/lib/gamification'
 import { useAuth } from '@/context/AuthContext'
 import { loadUserProgress, saveUserProgress } from '@/lib/supabase/db'
+import posthog from 'posthog-js'
 
 interface XPEvent {
   id: string
@@ -216,6 +217,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       const hour = new Date().getHours()
       if (hour < 8) next = awardBadge(next, 'early_bird')
 
+      posthog.capture('lesson_complete', { lesson_id: lessonId, module_id: moduleId, track_id: trackId, total_lessons: next.completedLessons.length })
+
       const moduleLessons = [1, 2, 3, 4].map(i => `${moduleId}-l${i}`)
       const moduleComplete = moduleLessons.every(l => next.completedLessons.includes(l))
       if (moduleComplete && !next.completedModules.includes(moduleId)) {
@@ -223,6 +226,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         next = { ...next, xp: next.xp + XP.MODULE_COMPLETE }
         pushXPEvent('Module complete!', XP.MODULE_COMPLETE)
         next = awardBadge(next, 'module_complete')
+        posthog.capture('module_complete', { module_id: moduleId, track_id: trackId })
       }
 
       const trackModules = [1, 2, 3, 4, 5].map(i => `${trackId}-m${i}`)
@@ -233,6 +237,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         pushXPEvent('Track complete!', XP.TRACK_COMPLETE)
         next = awardBadge(next, 'track_complete')
         if (next.completedTracks.length === 3) next = awardBadge(next, 'three_tracks')
+        posthog.capture('track_complete', { track_id: trackId, total_tracks: next.completedTracks.length })
       }
 
       return next
