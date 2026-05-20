@@ -7,10 +7,12 @@ import Logo from '@/components/Logo'
 import type { LucideIcon } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
+import { useTranslations } from 'next-intl'
 
 type AuthStep = 'form' | 'verify' | 'forgot' | 'reset-sent'
 
 export function AuthModal() {
+  const t = useTranslations('auth')
   const { modalView, closeModal, openSignIn, openSignUp, prefillEmail } = useAuth()
   const [step, setStep] = useState<AuthStep>('form')
   const [name, setName] = useState('')
@@ -87,11 +89,11 @@ export function AuthModal() {
         closeModal()
       }
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Something went wrong'
-      if (msg.includes('Invalid login credentials')) setError('Incorrect email or password.')
-      else if (msg.includes('User already registered')) setError('An account with this email already exists.')
-      else if (msg.includes('Password should be at least')) setError('Password must be at least 6 characters.')
-      else if (msg.includes('fetch') || msg.includes('Failed')) setError('Connection error — check your internet and try again.')
+      const msg = err instanceof Error ? err.message : t('errors.generic')
+      if (msg.includes('Invalid login credentials')) setError(t('errors.wrongCredentials'))
+      else if (msg.includes('User already registered')) setError(t('errors.emailExists'))
+      else if (msg.includes('Password should be at least')) setError(t('errors.passwordTooShort'))
+      else if (msg.includes('fetch') || msg.includes('Failed')) setError(t('errors.connectionError'))
       else setError(msg)
     } finally {
       setLoading(false)
@@ -155,19 +157,17 @@ export function AuthModal() {
                         <CheckCircle2 size={28} style={{ color: '#10B981' }} />
                       </div>
                       <h2 className="text-2xl font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                        Check your email
+                        {t('checkEmail')}
                       </h2>
                       <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        We sent a confirmation link to{' '}
-                        <strong style={{ color: '#0F172A' }}>{email}</strong>.
-                        Click it to activate your account.
+                        {t('confirmSent', { email })}
                       </p>
                       <button
                         onClick={closeModal}
                         className="w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                         style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
                       >
-                        Got it
+                        {t('gotIt')}
                       </button>
                     </motion.div>
                   ) : step === 'forgot' ? (
@@ -181,16 +181,16 @@ export function AuthModal() {
                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                           <path d="M8 2L4 6L8 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        Back to sign in
+                        {t('backToSignIn')}
                       </button>
                       <h2 className="text-2xl font-black mb-1" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                        Reset your password
+                        {t('resetPassword')}
                       </h2>
                       <p className="text-sm mb-7" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        Enter your email and we'll send you a reset link.
+                        {t('resetDesc')}
                       </p>
                       <form onSubmit={handleForgot} className="space-y-3">
-                        <Field ref={emailRef} icon={Mail} type="email" placeholder="Email address"
+                        <Field ref={emailRef} icon={Mail} type="email" placeholder={t('emailPlaceholder')}
                           value={email} onChange={setEmail} required />
                         <AnimatePresence>
                           {error && (
@@ -210,7 +210,7 @@ export function AuthModal() {
                             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
                             style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
                           >
-                            {loading ? <><Loader2 size={14} className="animate-spin" /> Sending…</> : 'Send reset link'}
+                            {loading ? <><Loader2 size={14} className="animate-spin" /> {t('sending')}</> : t('sendReset')}
                           </button>
                         </div>
                       </form>
@@ -222,19 +222,17 @@ export function AuthModal() {
                         <Mail size={28} style={{ color: '#2563EB' }} />
                       </div>
                       <h2 className="text-2xl font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                        Check your email
+                        {t('checkEmail')}
                       </h2>
                       <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        We sent a password reset link to{' '}
-                        <strong style={{ color: '#0F172A' }}>{email}</strong>.
-                        The link expires in 1 hour.
+                        {t('resetSent', { email })}
                       </p>
                       <button
                         onClick={closeModal}
                         className="w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                         style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
                       >
-                        Got it
+                        {t('gotIt')}
                       </button>
                     </motion.div>
                   ) : (
@@ -253,18 +251,16 @@ export function AuthModal() {
                               boxShadow: modalView === tab ? '0 1px 4px rgba(0,0,0,0.06)' : 'none',
                             }}
                           >
-                            {tab === 'signin' ? 'Sign in' : 'Create account'}
+                            {tab === 'signin' ? t('signIn') : t('signUp')}
                           </button>
                         ))}
                       </div>
 
                       <h2 className="text-2xl font-black mb-1" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                        {isSignUp ? 'Start your AI journey' : 'Welcome back'}
+                        {isSignUp ? t('startJourney') : t('welcomeBack')}
                       </h2>
                       <p className="text-sm mb-7" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        {isSignUp
-                          ? 'Create your account to track progress and save your path.'
-                          : 'Sign in to continue where you left off.'}
+                        {isSignUp ? t('createToTrack') : t('signInToContinue')}
                       </p>
 
                       <form onSubmit={handleSubmit} className="space-y-3">
@@ -276,18 +272,18 @@ export function AuthModal() {
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.18 }}
                             >
-                              <Field icon={User} type="text" placeholder="Your full name"
+                              <Field icon={User} type="text" placeholder={t('namePlaceholder')}
                                 value={name} onChange={setName} required={isSignUp} />
                             </motion.div>
                           )}
                         </AnimatePresence>
 
-                        <Field ref={emailRef} icon={Mail} type="email" placeholder="Email address"
+                        <Field ref={emailRef} icon={Mail} type="email" placeholder={t('emailPlaceholder')}
                           value={email} onChange={setEmail} required />
 
                         <div className="relative">
                           <Field icon={Lock} type={showPw ? 'text' : 'password'}
-                            placeholder={isSignUp ? 'Create a password (min. 6 chars)' : 'Password'}
+                            placeholder={isSignUp ? t('passwordCreate') : t('password')}
                             value={password} onChange={setPassword} required minLength={6} />
                           <button
                             type="button"
@@ -322,7 +318,7 @@ export function AuthModal() {
                               className="sr-only"
                             />
                             <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                              Remember me
+                              {t('rememberMe')}
                             </span>
                           </label>
                         )}
@@ -350,25 +346,25 @@ export function AuthModal() {
                             style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
                           >
                             {loading
-                              ? <><Loader2 size={14} className="animate-spin" /> {isSignUp ? 'Creating account…' : 'Signing in…'}</>
-                              : isSignUp ? 'Create account' : 'Sign in'
+                              ? <><Loader2 size={14} className="animate-spin" /> {isSignUp ? t('creatingAccount') : t('signingIn')}</>
+                              : isSignUp ? t('signUp') : t('signIn')
                             }
                           </button>
                         </div>
 
                         {isSignUp && (
                           <p className="text-center text-xs pt-1" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                            By creating an account you agree to our{' '}
-                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>Terms</span>
-                            {' '}and{' '}
-                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>Privacy Policy</span>.
+                            {t('terms')}{' '}
+                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>{t('termsLink')}</span>
+                            {' '}{t('and')}{' '}
+                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>{t('privacyLink')}</span>.
                           </p>
                         )}
 
                         {!isSignUp && (
                           <p className="text-center text-xs pt-1" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                             <button type="button" onClick={() => { setStep('forgot'); setError('') }} className="underline hover:text-slate-500 transition-colors" style={{ color: '#64748B' }}>
-                              Forgot your password?
+                              {t('forgotPassword')}
                             </button>
                           </p>
                         )}

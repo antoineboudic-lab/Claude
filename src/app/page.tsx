@@ -11,6 +11,7 @@ import {
   Brain, Layers, BarChart3, Menu, Scale, Package, Headphones, BarChart, Search,
   Flame, LayoutDashboard,
 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
@@ -47,6 +48,8 @@ function StickySignUpBar() {
   const [visible, setVisible] = useState(false)
   const [dismissed, setDismissed] = useState(false)
   const { user, openSignUp, openSignIn } = useAuth()
+  const tBar = useTranslations('home.stickyBar')
+  const tNav = useTranslations('nav')
 
   useEffect(() => {
     if (dismissed || user) return
@@ -69,21 +72,21 @@ function StickySignUpBar() {
           <div className="max-w-5xl mx-auto flex items-center justify-between gap-4 flex-wrap">
             <div>
               <p className="text-sm font-bold" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                Join 3,200+ professionals mastering AI
+                {tBar('title', { count: '3,200' })}
               </p>
               <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                Free forever · No credit card required
+                {tBar('sub')}
               </p>
             </div>
             <div className="flex items-center gap-3">
               <button onClick={openSignIn} className="text-sm font-medium transition-colors hover:text-slate-900"
                 style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                Sign in
+                {tNav('signIn')}
               </button>
               <Link href="/assessment"
                 className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
                 style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                Build my learning plan <ArrowRight size={13} />
+                {tBar('buildPlan')} <ArrowRight size={13} />
               </Link>
               <button onClick={() => setDismissed(true)}
                 className="w-7 h-7 rounded-md flex items-center justify-center transition-colors hover:bg-slate-100"
@@ -107,6 +110,7 @@ function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
   const { user, loading, openSignIn, signOut } = useAuth()
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const tNav = useTranslations('nav')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -159,10 +163,10 @@ function Navbar() {
 
         <div className="hidden md:flex items-center gap-8">
           {[
-            { label: 'Program', href: '#program' },
-            { label: 'Tracks', href: '/tracks' },
-            { label: 'For teams', href: '/teams' },
-            { label: 'Pricing', href: '#pricing' },
+            { label: tNav('program'), href: '#program' },
+            { label: tNav('tracks'), href: '/tracks' },
+            { label: tNav('forTeams'), href: '/teams' },
+            { label: tNav('pricing'), href: '#pricing' },
           ].map(item => (
             item.href.startsWith('/') ? (
               <Link key={item.label} href={item.href}
@@ -193,7 +197,7 @@ function Navbar() {
             style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}
           >
             <Search size={13} />
-            <span>Search</span>
+            <span>{tNav('search')}</span>
             <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
           </button>
 
@@ -231,17 +235,17 @@ function Navbar() {
                           <Link href="/dashboard" onClick={() => setAvatarOpen(false)}
                             className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm transition-colors hover:bg-slate-50"
                             style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                            <Zap size={14} /> Dashboard
+                            <Zap size={14} /> {tNav('dashboard')}
                           </Link>
                           <Link href="/tracks" onClick={() => setAvatarOpen(false)}
                             className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm transition-colors hover:bg-slate-50"
                             style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                            <BookOpen size={14} /> All tracks
+                            <BookOpen size={14} /> {tNav('allTracks')}
                           </Link>
                           <button onClick={() => { signOut(); setAvatarOpen(false) }}
                             className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm transition-colors hover:bg-red-50 hover:text-red-600"
                             style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                            <LogOut size={14} /> Sign out
+                            <LogOut size={14} /> {tNav('signOut')}
                           </button>
                         </div>
                       </motion.div>
@@ -252,12 +256,12 @@ function Navbar() {
                 <>
                   <button onClick={openSignIn} className="text-sm font-medium transition-colors hover:text-slate-900"
                     style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                    Sign in
+                    {tNav('signIn')}
                   </button>
                   <Link href="/assessment"
                     className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
                     style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                    Build my plan
+                    {tNav('buildMyPlan')}
                   </Link>
                 </>
               )}
@@ -291,10 +295,10 @@ function Navbar() {
             <div className="px-6 pb-6 pt-2">
               <div className="mb-2">
                 {[
-                  { label: 'Program', href: '#program' },
-                  { label: 'Tracks', href: '/tracks' },
-                  { label: 'For Teams', href: '/teams' },
-                  { label: 'Pricing', href: '#pricing' },
+                  { label: tNav('program'), href: '#program' },
+                  { label: tNav('tracks'), href: '/tracks' },
+                  { label: tNav('forTeams'), href: '/teams' },
+                  { label: tNav('pricing'), href: '#pricing' },
                 ].map(item => (
                   <a key={item.label}
                     href={item.href}
@@ -312,12 +316,12 @@ function Navbar() {
                       <Link href="/dashboard" onClick={() => setMobileOpen(false)}
                         className="flex items-center gap-2 py-3 px-4 rounded-xl text-sm font-medium w-full transition-colors hover:bg-slate-50"
                         style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                        <Zap size={14} /> Dashboard
+                        <Zap size={14} /> {tNav('dashboard')}
                       </Link>
                       <button onClick={() => { signOut(); setMobileOpen(false) }}
                         className="flex items-center gap-2 py-3 px-4 rounded-xl text-sm w-full transition-colors hover:bg-red-50 hover:text-red-600"
                         style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                        <LogOut size={14} /> Sign out
+                        <LogOut size={14} /> {tNav('signOut')}
                       </button>
                     </>
                   ) : (
@@ -325,12 +329,12 @@ function Navbar() {
                       <button onClick={() => { openSignIn(); setMobileOpen(false) }}
                         className="w-full py-3 text-sm font-medium rounded-xl transition-colors hover:bg-slate-50"
                         style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0' }}>
-                        Sign in
+                        {tNav('signIn')}
                       </button>
                       <Link href="/assessment" onClick={() => setMobileOpen(false)}
                         className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white"
                         style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                        Build my plan <ArrowRight size={13} />
+                        {tNav('buildMyPlan')} <ArrowRight size={13} />
                       </Link>
                     </>
                   )}
@@ -597,6 +601,7 @@ const ROLE_PILLS = [
 ]
 
 function Hero() {
+  const tHero = useTranslations('home.hero')
   return (
     <section className="relative overflow-hidden" style={{ background: '#FFFFFF', paddingTop: '7rem', paddingBottom: '5rem' }}>
       {/* Decorative background blobs */}
@@ -611,7 +616,7 @@ function Hero() {
           {/* Label */}
           <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold mb-8"
             style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #DBEAFE', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
-            <Zap size={10} /> Role-specific AI training
+            <Zap size={10} /> {tHero('badge')}
           </motion.div>
 
           {/* Headline — oversized */}
@@ -623,13 +628,13 @@ function Hero() {
               color: '#0F172A', marginBottom: '1.5rem',
             }}>
             The AI skills<br />
-            <span style={{ color: '#2563EB' }}>your role demands.</span>
+            <span style={{ color: '#2563EB' }}>{tHero('headingAccent')}</span>
           </motion.h1>
 
           {/* Subheading */}
           <motion.p variants={fadeUp}
             style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', lineHeight: 1.7, color: '#64748B', maxWidth: '36rem', margin: '0 auto 2.5rem' }}>
-            Personalised learning paths for business professionals. Apply AI to your actual work — no technical background required.
+            {tHero('subheading')}
           </motion.p>
 
           {/* CTA buttons */}
@@ -637,12 +642,12 @@ function Hero() {
             <Link href="/assessment"
               className="inline-flex items-center justify-center gap-2.5 rounded-xl font-bold text-white transition-all hover:opacity-92 hover:scale-[1.02] active:scale-[0.99]"
               style={{ background: '#2563EB', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem', boxShadow: '0 8px 28px rgba(37,99,235,0.32)' }}>
-              Find my learning path <ArrowRight size={16} />
+              {tHero('cta')} <ArrowRight size={16} />
             </Link>
             <a href="#program"
               className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all hover:bg-slate-50"
               style={{ border: '2px solid #E2E8F0', color: '#475569', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem' }}>
-              <Play size={14} /> See how it works
+              <Play size={14} /> {tHero('seeHowItWorks')}
             </a>
           </motion.div>
 
@@ -653,12 +658,12 @@ function Hero() {
                 {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#F59E0B" color="#F59E0B" />)}
               </div>
               <span style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0F172A', fontFamily: 'var(--font-sans)' }}>4.9/5</span>
-              <span style={{ fontSize: '0.8125rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>from 3,200+ professionals</span>
+              <span style={{ fontSize: '0.8125rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{tHero('rating', { count: '3,200' })}</span>
             </div>
             <div style={{ width: 1, height: 16, background: '#E2E8F0' }} className="hidden sm:block" />
-            {['Free forever', 'No credit card required', 'Start in 2 minutes'].map(t => (
-              <div key={t} className="flex items-center gap-1.5" style={{ fontSize: '0.8125rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                <Check size={11} color="#10B981" /> {t}
+            {[tHero('trustFree'), tHero('trustNoCard'), tHero('trustStart')].map(label => (
+              <div key={label} className="flex items-center gap-1.5" style={{ fontSize: '0.8125rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                <Check size={11} color="#10B981" /> {label}
               </div>
             ))}
           </motion.div>
@@ -666,7 +671,7 @@ function Hero() {
           {/* Role pills */}
           <motion.div variants={fadeUp}>
             <p style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#CBD5E1', marginBottom: '0.875rem', fontFamily: 'var(--font-sans)' }}>
-              Pick your role and start today
+              {tHero('pickYourRole')}
             </p>
             <div className="flex flex-wrap justify-center gap-2.5">
               {ROLE_PILLS.map(r => (
@@ -688,12 +693,13 @@ function Hero() {
 // ─── Social Proof ─────────────────────────────────────────────────────────────
 
 function SocialProof() {
+  const tSocial = useTranslations('home.social')
   const companies = ['McKinsey', 'Deloitte', 'KPMG', 'Goldman Sachs', "L'Oréal", 'Nestlé', 'Airbus', 'BNP Paribas', 'Accenture', 'BCG']
   const stats = [
-    { n: '3,200+', label: 'Professionals trained' },
-    { n: '94%', label: 'Completion rate' },
-    { n: '4.9/5', label: 'Average rating' },
-    { n: '4.2 hrs', label: 'Saved per week' },
+    { n: '3,200+', label: tSocial('stats.trained') },
+    { n: '94%', label: tSocial('stats.completion') },
+    { n: '4.9/5', label: tSocial('stats.rating') },
+    { n: '4.2 hrs', label: tSocial('stats.saved') },
   ]
   return (
     <div style={{ background: '#2563EB' }}>
@@ -709,7 +715,7 @@ function SocialProof() {
       {/* Company ticker */}
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }} className="py-6">
         <p className="text-center font-bold mb-5 tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-sans)', fontSize: '0.625rem' }}>
-          Professionals from
+          {tSocial('professionalsFrom')}
         </p>
         <div className="relative overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, white 10%, white 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, white 10%, white 90%, transparent)' }}>
           <motion.div
@@ -730,24 +736,25 @@ function SocialProof() {
 // ─── How It Works ─────────────────────────────────────────────────────────────
 
 function HowItWorks() {
+  const tHIW = useTranslations('home.howItWorks')
   const steps = [
     {
-      number: '01', icon: ClipboardList, title: 'Take the Assessment', color: '#2563EB', bg: '#DBEAFE',
-      desc: 'Answer 5 quick questions about your role, industry, and goals. Takes 3 minutes and shapes everything that follows.',
-      detail: '3 min · 5 questions · No login required',
-      tag: 'Free',
+      number: '01', icon: ClipboardList, title: tHIW('step1Title'), color: '#2563EB', bg: '#DBEAFE',
+      desc: tHIW('step1Desc'),
+      detail: tHIW('step1Detail'),
+      tag: tHIW('step1Tag'),
     },
     {
-      number: '02', icon: Route, title: 'Get Your Path', color: '#3B82F6', bg: '#DBEAFE',
-      desc: 'Our AI engine builds your personalised curriculum — the right modules, in the right order, at the right depth for your role.',
-      detail: 'Instant · Role-specific · AI-powered',
-      tag: 'Personalised',
+      number: '02', icon: Route, title: tHIW('step2Title'), color: '#3B82F6', bg: '#DBEAFE',
+      desc: tHIW('step2Desc'),
+      detail: tHIW('step2Detail'),
+      tag: tHIW('step2Tag'),
     },
     {
-      number: '03', icon: GraduationCap, title: 'Learn & Apply', color: '#10B981', bg: '#D1FAE5',
-      desc: 'Short, practical lessons you can apply the same day. Real exercises using tools you already have access to.',
-      detail: '15 min/day · Earn XP · Get certified',
-      tag: 'Applied',
+      number: '03', icon: GraduationCap, title: tHIW('step3Title'), color: '#10B981', bg: '#D1FAE5',
+      desc: tHIW('step3Desc'),
+      detail: tHIW('step3Detail'),
+      tag: tHIW('step3Tag'),
     },
   ]
   const { ref, isInView } = useReveal()
@@ -756,12 +763,12 @@ function HowItWorks() {
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>How it works</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tHIW('sectionLabel')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              From zero to AI fluency<br className="hidden sm:block" /> in three steps
+              {tHIW('heading')}
             </h2>
             <p className="text-base max-w-xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              No setup. No prerequisites. Start your first lesson in under 5 minutes.
+              {tHIW('sub')}
             </p>
           </motion.div>
 
@@ -830,10 +837,10 @@ function HowItWorks() {
             <Link href="/assessment"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90 hover:scale-[1.02]"
               style={{ background: '#2563EB', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(37,99,235,0.2)' }}>
-              Start with the free assessment <ArrowRight size={14} />
+              {tHIW('cta')} <ArrowRight size={14} />
             </Link>
             <p className="mt-3 text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
-              Takes 3 minutes · No credit card required
+              {tHIW('ctaSub')}
             </p>
           </motion.div>
         </motion.div>
@@ -876,18 +883,19 @@ function RoleTracks() {
   const track = TRACKS.find(t => t.id === active)!
   const preview = TRACK_PREVIEWS[active]
   const Icon = track.icon
+  const tTracks = useTranslations('home.tracks')
 
   return (
     <section id="tracks" className="py-14 sm:py-20" style={{ background: '#EFF6FF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>Role-based tracks</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tTracks('sectionLabel')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              Every track is built around<br className="hidden sm:block" /> your specific role
+              {tTracks('heading')}
             </h2>
             <p className="text-base max-w-xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              A Marketing Manager and a Finance Director get completely different content — because their AI use cases are completely different.
+              {tTracks('sub')}
             </p>
           </motion.div>
 
@@ -956,7 +964,7 @@ function RoleTracks() {
                       style={{ background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.25)' }}>
                       <Sparkles size={11} style={{ color: '#FFFFFF' }} />
                       <span className="text-xs font-semibold text-white" style={{ fontFamily: 'var(--font-sans)' }}>
-                        Personalised for your role
+                        {tTracks('personalised')}
                       </span>
                     </div>
                   </div>
@@ -996,15 +1004,15 @@ function RoleTracks() {
                   <div className="mt-5 pt-5 flex flex-col sm:flex-row items-center justify-between gap-4"
                     style={{ borderTop: '1px solid #F1F5F9' }}>
                     <p className="text-sm" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                      Not seeing your role?{' '}
+                      {tTracks('notYourRole')}{' '}
                       <span style={{ color: '#0F172A', fontWeight: 600 }}>
-                        The assessment tailors your path even further.
+                        {tTracks('assessmentTailors')}
                       </span>
                     </p>
                     <Link href="/assessment"
                       className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
                       style={{ background: track.color, fontFamily: 'var(--font-sans)' }}>
-                      Get my {track.label} path <ArrowRight size={13} />
+                      {tTracks('getPath', { track: track.label })} <ArrowRight size={13} />
                     </Link>
                   </div>
                 </div>
@@ -1032,20 +1040,21 @@ function Features() {
   const { ref, isInView } = useReveal()
   const [hero, ...rest] = FEATURES
   const HeroIcon = hero.icon
+  const tFeatures = useTranslations('home.features')
   return (
     <section className="py-14 sm:py-20" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="flex items-end justify-between flex-wrap gap-4 mb-12">
             <div>
-              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>Everything you need</p>
+              <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tFeatures('sectionLabel')}</p>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A', lineHeight: 1.1 }}>
-                Designed for how<br className="hidden sm:block" />professionals actually learn
+                {tFeatures('heading')}
               </h2>
             </div>
             <Link href="/assessment" className="hidden sm:inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
               style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-              Get started free <ArrowRight size={13} />
+              {tFeatures('cta')} <ArrowRight size={13} />
             </Link>
           </motion.div>
 
@@ -1065,7 +1074,7 @@ function Features() {
                 <div className="flex items-center gap-2 mb-2">
                   <h3 className="text-xl font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>{hero.title}</h3>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full hidden sm:inline"
-                    style={{ background: `${hero.color}25`, color: hero.color, fontFamily: 'var(--font-sans)' }}>Core feature</span>
+                    style={{ background: `${hero.color}25`, color: hero.color, fontFamily: 'var(--font-sans)' }}>{tFeatures('coreFeature')}</span>
                 </div>
                 <p className="text-base leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)', maxWidth: '44rem' }}>
                   {hero.desc}
@@ -1117,6 +1126,7 @@ const TEAM_FEATURES = [
 
 function TeamsSection() {
   const { ref, isInView } = useReveal()
+  const tTeams = useTranslations('home.teams')
   return (
     <section className="py-14 sm:py-20 overflow-hidden" style={{ background: '#EFF6FF' }}>
       <div className="max-w-7xl mx-auto px-6">
@@ -1125,14 +1135,14 @@ function TeamsSection() {
             {/* Left: copy */}
             <div>
               <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3"
-                style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>For teams &amp; organisations</motion.p>
+                style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tTeams('sectionLabel')}</motion.p>
               <motion.h2 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5"
                 style={{ fontFamily: 'var(--font-sans)', color: '#0F172A', lineHeight: 1.1 }}>
-                Upskill your entire team — not just one person
+                {tTeams('heading')}
               </motion.h2>
               <motion.p variants={fadeUp} className="text-base leading-relaxed mb-10"
                 style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                Give every function the AI skills they need. Assign role-specific tracks, track progress across the team, and generate certificates when members complete their programme.
+                {tTeams('sub')}
               </motion.p>
               <div className="space-y-5 mb-10">
                 {TEAM_FEATURES.map(f => {
@@ -1154,12 +1164,12 @@ function TeamsSection() {
                 <Link href="/teams"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                   style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}>
-                  See team plans
+                  {tTeams('seeTeamPlans')}
                 </Link>
                 <Link href="/dashboard/team/create"
                   className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold transition-all hover:bg-white"
                   style={{ color: '#475569', border: '1px solid #E2E8F0', background: 'transparent', fontFamily: 'var(--font-sans)' }}>
-                  Create a team
+                  {tTeams('createTeam')}
                 </Link>
               </motion.div>
             </div>
@@ -1287,6 +1297,7 @@ const TESTIMONIALS = [
 
 function Testimonials() {
   const { ref, isInView } = useReveal()
+  const tTestimonials = useTranslations('home.testimonials')
   const featured = TESTIMONIALS[3] // Marcus Reid — concrete time-saving stat
   const rest = TESTIMONIALS.filter((_, i) => i !== 3)
   return (
@@ -1294,9 +1305,9 @@ function Testimonials() {
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>What people say</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tTestimonials('sectionLabel')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              Real results from real professionals
+              {tTestimonials('heading')}
             </h2>
           </motion.div>
 
@@ -1340,7 +1351,7 @@ function Testimonials() {
                 style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', minWidth: 160 }}>
                 <p className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>−78%</p>
                 <p className="text-xs leading-snug" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)' }}>
-                  time spent on<br />prospect research
+                  {tTestimonials('timeOnResearch')}
                 </p>
               </div>
             </div>
@@ -1421,6 +1432,7 @@ const FAQS = [
 function FAQ() {
   const [open, setOpen] = useState<number | null>(null)
   const { ref, isInView } = useReveal()
+  const tFAQ = useTranslations('home.faq')
   return (
     <section className="py-14 sm:py-20 relative overflow-hidden" style={{ background: '#0F172A' }}>
       {/* Subtle radial glow */}
@@ -1430,9 +1442,9 @@ function FAQ() {
       <div className="max-w-3xl mx-auto px-6 relative">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>FAQ</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tFAQ('sectionLabel')}</p>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#FFFFFF', lineHeight: 1.08 }}>
-              Still have questions?
+              {tFAQ('heading')}
             </h2>
           </motion.div>
           <div className="flex flex-col gap-2">
@@ -1518,18 +1530,19 @@ function Pricing() {
   const [annual, setAnnual] = useState(false)
   const { ref, isInView } = useReveal()
   const { openSignUp } = useAuth()
+  const tHomePricing = useTranslations('home.pricing')
 
   return (
     <section id="pricing" className="py-14 sm:py-20" style={{ background: '#FFFFFF' }}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>Pricing</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tHomePricing('sectionLabel')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-8" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              Simple, transparent pricing
+              {tHomePricing('heading')}
             </h2>
             <div className="flex items-center justify-center gap-3">
-              <span className="text-sm font-medium" style={{ color: annual ? '#94A3B8' : '#0F172A', fontFamily: 'var(--font-sans)' }}>Monthly</span>
+              <span className="text-sm font-medium" style={{ color: annual ? '#94A3B8' : '#0F172A', fontFamily: 'var(--font-sans)' }}>{tHomePricing('monthly')}</span>
               <button onClick={() => setAnnual(!annual)}
                 className="w-11 h-6 rounded-full relative transition-colors"
                 style={{ background: annual ? '#2563EB' : '#E2E8F0' }}>
@@ -1537,8 +1550,8 @@ function Pricing() {
                   className="w-5 h-5 rounded-full bg-white absolute top-0.5 shadow-sm" />
               </button>
               <span className="text-sm font-medium" style={{ color: annual ? '#0F172A' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                Annual <span className="px-1.5 py-0.5 rounded text-xs font-semibold ml-1"
-                  style={{ background: '#DCFCE7', color: '#16A34A' }}>−20%</span>
+                {tHomePricing('annual')} <span className="px-1.5 py-0.5 rounded text-xs font-semibold ml-1"
+                  style={{ background: '#DCFCE7', color: '#16A34A' }}>{tHomePricing('annualDiscount')}</span>
               </span>
             </div>
           </motion.div>
@@ -1558,7 +1571,7 @@ function Pricing() {
                       style={{ border: '1px solid rgba(255,255,255,0.08)' }} />
                     <div className="text-center py-2 text-[10px] font-black tracking-[0.18em]"
                       style={{ background: 'rgba(0,0,0,0.15)', color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-sans)', letterSpacing: '0.2em' }}>
-                      ✦ MOST POPULAR ✦
+                      {tHomePricing('mostPopular')}
                     </div>
                   </>
                 )}
@@ -1572,7 +1585,7 @@ function Pricing() {
                       ${annual ? plan.annualPrice : plan.monthlyPrice}
                     </span>
                     {plan.monthlyPrice !== '0' && (
-                      <span className="text-sm mb-2" style={{ color: plan.highlight ? 'rgba(255,255,255,0.45)' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>/seat/mo</span>
+                      <span className="text-sm mb-2" style={{ color: plan.highlight ? 'rgba(255,255,255,0.45)' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>{tHomePricing('perSeatMo')}</span>
                     )}
                   </div>
                   <p className="text-sm mb-7" style={{ color: plan.highlight ? 'rgba(255,255,255,0.55)' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>
@@ -1605,7 +1618,7 @@ function Pricing() {
                   )}
                   {plan.highlight && (
                     <p className="text-center text-xs mt-2.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-sans)' }}>
-                      Free for 7 days &middot; $19/mo after &middot; Cancel anytime
+                      {tHomePricing('freeTrialNote')}
                     </p>
                   )}
                 </div>
@@ -1622,6 +1635,7 @@ function Pricing() {
 
 function About() {
   const { ref, isInView } = useReveal()
+  const tAbout = useTranslations('home.about')
 
   const team = [
     {
@@ -1682,12 +1696,12 @@ function About() {
 
           {/* Header */}
           <motion.div variants={fadeUp} className="max-w-3xl mb-16">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>About us</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tAbout('sectionLabel')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-5" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              We started because we saw a gap nobody was filling
+              {tAbout('heading')}
             </h2>
             <p className="text-lg leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              AI capabilities were advancing at speed. Business professionals were being left behind — not for lack of intelligence, but for lack of access to the right kind of training. We built OpusLearn to close that gap.
+              {tAbout('sub')}
             </p>
           </motion.div>
 
@@ -1734,7 +1748,7 @@ function About() {
 
           {/* Team */}
           <motion.div variants={fadeUp}>
-            <p className="text-xs font-bold tracking-widest uppercase mb-8 text-center" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>The team</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-8 text-center" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>{tAbout('theTeam')}</p>
             <div className="grid md:grid-cols-3 gap-6">
               {team.map(member => (
                 <div key={member.name} className="p-7 rounded-2xl"
@@ -1747,7 +1761,7 @@ function About() {
                     <div>
                       <p className="text-sm font-black" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{member.name}</p>
                       <p className="text-xs font-semibold" style={{ color: member.color, fontFamily: 'var(--font-sans)' }}>{member.role}</p>
-                      <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>Previously: {member.prev}</p>
+                      <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{tAbout('previously')} {member.prev}</p>
                     </div>
                   </div>
                   <p className="text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>{member.bio}</p>
@@ -1766,6 +1780,7 @@ function About() {
 
 function FinalCTA() {
   const { ref, isInView } = useReveal()
+  const tFinalCTA = useTranslations('home.finalCta')
   return (
     <section className="relative overflow-hidden" style={{ background: '#0F172A' }}>
       {/* Top purple band */}
@@ -1783,31 +1798,31 @@ function FinalCTA() {
           <motion.div variants={fadeUp}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold mb-8"
             style={{ background: 'rgba(37,99,235,0.2)', color: '#93C5FD', border: '1px solid rgba(37,99,235,0.35)', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
-            <Zap size={10} /> Free to start
+            <Zap size={10} /> {tFinalCTA('badge')}
           </motion.div>
           <motion.h2 variants={fadeUp}
             style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(2.5rem, 7vw, 4.5rem)', lineHeight: 1.08, letterSpacing: '-0.03em', color: '#FFFFFF', marginBottom: '1.5rem' }}>
-            Start leading<br /><span style={{ color: '#93C5FD' }}>with AI today.</span>
+            Start leading<br /><span style={{ color: '#93C5FD' }}>{tFinalCTA('headingAccent')}</span>
           </motion.h2>
           <motion.p variants={fadeUp}
             style={{ fontFamily: 'var(--font-sans)', fontSize: '1.125rem', color: 'rgba(255,255,255,0.5)', marginBottom: '2.5rem', lineHeight: 1.7 }}>
-            3-minute assessment. Personalised path. First lesson in under 5 minutes.
+            {tFinalCTA('sub')}
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/assessment"
               className="inline-flex items-center justify-center gap-2.5 rounded-xl font-bold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
               style={{ background: '#2563EB', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem', boxShadow: '0 8px 28px rgba(37,99,235,0.4)' }}>
-              Take the free assessment <ArrowRight size={16} />
+              {tFinalCTA('cta')} <ArrowRight size={16} />
             </Link>
             <Link href="/tracks"
               className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all"
               style={{ border: '2px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.6)', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem' }}>
-              Browse all tracks
+              {tFinalCTA('browseAllTracks')}
             </Link>
           </motion.div>
           <motion.p variants={fadeUp} className="mt-6 text-sm"
             style={{ color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-sans)' }}>
-            No credit card required · Free plan available · Cancel anytime
+            {tFinalCTA('note')}
           </motion.p>
         </motion.div>
       </div>
@@ -1818,6 +1833,7 @@ function FinalCTA() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
 function Footer() {
+  const tFooter = useTranslations('home.footer')
   return (
     <footer style={{ background: '#0A0F1E' }}>
       {/* Brand statement band */}
@@ -1833,13 +1849,13 @@ function Footer() {
               <span className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: '#F1F5F9' }}>OpusLearn</span>
             </div>
             <p className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: 'rgba(255,255,255,0.2)', maxWidth: '28rem', lineHeight: 1.4 }}>
-              The only AI training built around what your role actually needs.
+              {tFooter('aiTrainingTagline')}
             </p>
           </div>
           <Link href="/assessment"
             className="flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
             style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-            Start for free <ArrowRight size={13} />
+            {tFooter('startForFree')} <ArrowRight size={13} />
           </Link>
         </div>
       </div>
@@ -1847,37 +1863,37 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid md:grid-cols-4 gap-10 mb-10">
           <div>
-            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-sans)' }}>Platform</p>
+            <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: 'rgba(255,255,255,0.2)', fontFamily: 'var(--font-sans)' }}>{tFooter('thePlatform')}</p>
             <p className="text-sm leading-relaxed" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-              AI training built for business professionals. No code required.
+              {tFooter('platformDesc')}
             </p>
           </div>
           {[
             {
-              title: 'Programme',
+              title: tFooter('programme'),
               links: [
-                { label: 'How it works', href: '/#program' },
-                { label: 'Tracks', href: '/tracks' },
-                { label: 'Assessment', href: '/assessment' },
-                { label: 'Certificates', href: '/certificates' },
+                { label: tFooter('links.howItWorks'), href: '/#program' },
+                { label: tFooter('links.tracks'), href: '/tracks' },
+                { label: tFooter('links.assessment'), href: '/assessment' },
+                { label: tFooter('links.certificates'), href: '/certificates' },
               ],
             },
             {
-              title: 'Company',
+              title: tFooter('company'),
               links: [
-                { label: 'About', href: '/#about' },
-                { label: 'Blog', href: '/blog' },
-                { label: 'Careers', href: '/careers' },
-                { label: 'Press', href: '/press' },
+                { label: tFooter('links.about'), href: '/#about' },
+                { label: tFooter('links.blog'), href: '/blog' },
+                { label: tFooter('links.careers'), href: '/careers' },
+                { label: tFooter('links.press'), href: '/press' },
               ],
             },
             {
-              title: 'Support',
+              title: tFooter('support'),
               links: [
-                { label: 'Help centre', href: '/help' },
-                { label: 'Contact', href: '/contact' },
-                { label: 'Privacy', href: '/privacy' },
-                { label: 'Terms', href: '/terms' },
+                { label: tFooter('links.helpCentre'), href: '/help' },
+                { label: tFooter('links.contact'), href: '/contact' },
+                { label: tFooter('links.privacy'), href: '/privacy' },
+                { label: tFooter('links.terms'), href: '/terms' },
               ],
             },
           ].map(col => (
@@ -1898,13 +1914,13 @@ function Footer() {
         </div>
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>© 2026 OpusLearn. All rights reserved.</p>
+          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>© 2026 OpusLearn. {tFooter('rights')}</p>
           <div className="flex items-center gap-4">
             {['#2563EB', '#E04D2A', '#F59E0B', '#10B981', '#06B6D4'].map(c => (
               <div key={c} className="w-2 h-2 rounded-full" style={{ background: c }} />
             ))}
           </div>
-          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>Built for professionals who want to stay ahead.</p>
+          <p className="text-xs" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>{tFooter('tagline2')}</p>
         </div>
       </div>
     </footer>
@@ -1927,6 +1943,8 @@ function LoggedInHome() {
   const [mounted, setMounted] = useState(false)
   const [assessment, setAssessment] = useState<AssessmentResult | null>(null)
   const [searchOpen, setSearchOpen] = useState(false)
+  const tLoggedIn = useTranslations('home.loggedIn')
+  const tNav = useTranslations('nav')
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -1996,7 +2014,7 @@ function LoggedInHome() {
   const studiedToday = state.lastActiveDate === today
   const streakAtRisk = state.streak > 0 && !studiedToday
   const hour = new Date().getHours()
-  const timeOfDay = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+  const timeOfDay = hour < 12 ? tLoggedIn('goodMorning') : hour < 17 ? tLoggedIn('goodAfternoon') : tLoggedIn('goodEvening')
 
   const ff = 'var(--font-sans)'
 
@@ -2013,19 +2031,19 @@ function LoggedInHome() {
               onClick={() => setSearchOpen(true)}
               style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 10px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#EFF6FF', cursor: 'pointer', fontSize: 12, color: '#64748B', fontFamily: ff }}
             >
-              <Search size={11} /> Search
+              <Search size={11} /> {tNav('search')}
               <kbd style={{ fontSize: 10, color: '#CBD5E1', background: '#E2E8F0', borderRadius: 3, padding: '1px 4px', fontFamily: ff }}>⌘K</kbd>
             </button>
-            <Link href="/tracks" style={{ fontSize: 12, color: '#64748B', textDecoration: 'none', padding: '5px 10px', borderRadius: 8, transition: 'background 0.15s' }}>All tracks</Link>
+            <Link href="/tracks" style={{ fontSize: 12, color: '#64748B', textDecoration: 'none', padding: '5px 10px', borderRadius: 8, transition: 'background 0.15s' }}>{tNav('allTracks')}</Link>
             <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: '#64748B', textDecoration: 'none', padding: '5px 10px', borderRadius: 8 }}>
-              <LayoutDashboard size={12} /> Dashboard
+              <LayoutDashboard size={12} /> {tNav('dashboard')}
             </Link>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 4, paddingLeft: 12, borderLeft: '1px solid #E2E8F0' }}>
               <div style={{ width: 28, height: 28, borderRadius: 8, background: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 10, fontWeight: 700, flexShrink: 0 }}>
                 {initials}
               </div>
               <button onClick={signOut} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#94A3B8', background: 'none', border: 'none', cursor: 'pointer', fontFamily: ff }}>
-                <LogOut size={11} /> Sign out
+                <LogOut size={11} /> {tNav('signOut')}
               </button>
             </div>
           </div>
@@ -2048,10 +2066,10 @@ function LoggedInHome() {
           </h1>
           <p style={{ marginTop: 8, fontSize: 14, color: '#64748B', lineHeight: 1.6 }}>
             {state.completedLessons.length > 0
-              ? `${state.completedLessons.length} lesson${state.completedLessons.length !== 1 ? 's' : ''} completed — keep the momentum.`
+              ? tLoggedIn('lessonsCompleted', { count: state.completedLessons.length, plural: state.completedLessons.length !== 1 ? 's' : '' })
               : assessment
-              ? 'Your personalised path is ready. Start your first lesson below.'
-              : 'Build your personalised AI learning path in 2 minutes.'}
+              ? tLoggedIn('pathReady')
+              : tLoggedIn('buildPathDesc')}
           </p>
         </motion.div>
 
@@ -2082,7 +2100,7 @@ function LoggedInHome() {
             ))}
             {streakAtRisk && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 10, background: '#FFFBEB', border: '1px solid #FDE68A' }}>
-                <span style={{ fontSize: 12, color: '#92400E', fontWeight: 500 }}>Study today to protect your streak</span>
+                <span style={{ fontSize: 12, color: '#92400E', fontWeight: 500 }}>{tLoggedIn('studyToProtect')}</span>
               </div>
             )}
           </motion.div>
@@ -2116,8 +2134,8 @@ function LoggedInHome() {
                       </p>
                       <p style={{ fontSize: 13, color: '#94A3B8', marginTop: 6 }}>
                         {state.completedLessons.some(l => l.startsWith(continueTarget.trackId + '-'))
-                          ? 'Continue where you left off'
-                          : 'Start your first lesson'}
+                          ? tLoggedIn('continueWhere')
+                          : tLoggedIn('startFirstLesson')}
                       </p>
                     </div>
                     <Link
@@ -2133,7 +2151,7 @@ function LoggedInHome() {
                       }}
                     >
                       <Play size={13} fill="#FFFFFF" />
-                      {state.completedLessons.some(l => l.startsWith(continueTarget.trackId + '-')) ? 'Continue' : 'Start'}
+                      {state.completedLessons.some(l => l.startsWith(continueTarget.trackId + '-')) ? tLoggedIn('continue') : tLoggedIn('start')}
                     </Link>
                   </div>
                 </div>
@@ -2147,20 +2165,20 @@ function LoggedInHome() {
                       <Sparkles size={14} color="#fff" />
                     </div>
                     <div>
-                      <p style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', letterSpacing: '0.04em', textTransform: 'uppercase', margin: 0 }}>Personalised path</p>
+                      <p style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', letterSpacing: '0.04em', textTransform: 'uppercase', margin: 0 }}>{tLoggedIn('personalizedPath')}</p>
                     </div>
                   </div>
                   <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: '0 0 8px', letterSpacing: '-0.01em' }}>
-                    Your curriculum isn&apos;t built yet
+                    {tLoggedIn('curriculumNotBuilt')}
                   </h2>
                   <p style={{ fontSize: 14, color: '#64748B', marginBottom: 20, lineHeight: 1.6 }}>
-                    Take the 2-minute assessment and we&apos;ll build a learning path tailored to your role and goals.
+                    {tLoggedIn('curriculumNotBuiltDesc')}
                   </p>
                   <Link
                     href="/assessment"
                     style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 22px', borderRadius: 12, background: '#2563EB', color: '#FFFFFF', textDecoration: 'none', fontSize: 14, fontWeight: 700, boxShadow: '0 4px 14px rgba(37,99,235,0.3)' }}
                   >
-                    <Zap size={14} /> Build my learning path
+                    <Zap size={14} /> {tLoggedIn('buildPath')}
                   </Link>
                 </div>
               </div>
@@ -2177,7 +2195,7 @@ function LoggedInHome() {
             style={{ marginBottom: 32 }}
           >
             <p style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 14 }}>
-              Your tracks
+              {tLoggedIn('yourTracks')}
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {trackProgress.map(t => (
@@ -2212,9 +2230,9 @@ function LoggedInHome() {
           style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}
         >
           {[
-            { label: 'All tracks', href: '/tracks', icon: BookOpen, color: '#22D3EE' },
-            { label: 'Assessment', href: '/assessment', icon: Target, color: '#2563EB' },
-            { label: 'Full dashboard', href: '/dashboard', icon: LayoutDashboard, color: '#10B981' },
+            { label: tLoggedIn('allTracks'), href: '/tracks', icon: BookOpen, color: '#22D3EE' },
+            { label: tLoggedIn('assessment'), href: '/assessment', icon: Target, color: '#2563EB' },
+            { label: tLoggedIn('fullDashboard'), href: '/dashboard', icon: LayoutDashboard, color: '#10B981' },
           ].map(item => (
             <Link key={item.href} href={item.href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, padding: '18px 12px', borderRadius: 14, background: '#FFFFFF', border: '1px solid #E2E8F0', textDecoration: 'none', transition: 'border-color 0.15s, box-shadow 0.15s' }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: `${item.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

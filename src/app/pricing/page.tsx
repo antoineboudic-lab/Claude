@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Zap, Check, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
+import { useTranslations } from 'next-intl'
 
 const plans = {
   free: {
@@ -91,6 +92,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function PricingPage() {
+  const t = useTranslations('pricing')
+  const tHomePricing = useTranslations('home.pricing')
   const { user, loading: authLoading, openSignUp, openSignIn } = useAuth()
   const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly')
   const [loading, setLoading] = useState<string | null>(null)
@@ -132,8 +135,8 @@ export default function PricingPage() {
           </Link>
           {!authLoading && (
             user
-              ? <Link href="/dashboard" style={{ fontSize: 13, fontWeight: 600, color: '#CBD5E1', textDecoration: 'none' }}>Dashboard →</Link>
-              : <button onClick={openSignIn} style={{ fontSize: 13, fontWeight: 600, color: '#CBD5E1', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', padding: 0 }}>Sign in</button>
+              ? <Link href="/dashboard" style={{ fontSize: 13, fontWeight: 600, color: '#CBD5E1', textDecoration: 'none' }}>{t('dashboard')}</Link>
+              : <button onClick={openSignIn} style={{ fontSize: 13, fontWeight: 600, color: '#CBD5E1', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', padding: 0 }}>{t('signIn')}</button>
           )}
         </div>
       </nav>
@@ -142,13 +145,13 @@ export default function PricingPage() {
 
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
           <span style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, color: '#2563EB', background: '#DBEAFE', padding: '4px 14px', borderRadius: 999, marginBottom: 20, letterSpacing: '0.02em' }}>
-            Pricing
+            {tHomePricing('sectionLabel')}
           </span>
           <h1 style={{ fontSize: '2rem', fontWeight: 900, color: '#0F172A', margin: '0 0 12px', letterSpacing: '-0.03em', lineHeight: 1.15 }}>
-            Simple, transparent pricing
+            {t('title')}
           </h1>
           <p style={{ fontSize: 16, color: '#64748B', margin: '0 0 32px' }}>
-            Start free. Upgrade when you're ready.
+            {t('subtitle')}
           </p>
 
           <div style={{ display: 'inline-flex', alignItems: 'center', background: '#E2E8F0', borderRadius: 10, padding: 4, gap: 2 }}>
@@ -168,7 +171,7 @@ export default function PricingPage() {
                 transition: 'all 0.15s',
               }}
             >
-              Monthly
+              {t('monthly')}
             </button>
             <button
               onClick={() => setBilling('annual')}
@@ -189,10 +192,10 @@ export default function PricingPage() {
                 gap: 6,
               }}
             >
-              Annual
+              {t('annual')}
               {billing === 'annual' && (
                 <span style={{ fontSize: 10, fontWeight: 700, color: '#059669', background: '#D1FAE5', padding: '2px 6px', borderRadius: 5 }}>
-                  Save 17%
+                  {t('save')}
                 </span>
               )}
             </button>
@@ -220,12 +223,12 @@ export default function PricingPage() {
                     onClick={() => openSignUp()}
                     style={{ width: '100%', padding: '11px 0', borderRadius: 10, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#0F172A', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
                   >
-                    Get started free
+                    {t('getStarted')}
                   </button>
                 )
                 : (
                   <Link href="/dashboard" style={{ display: 'block', width: '100%', padding: '11px 0', borderRadius: 10, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#0F172A', fontSize: 14, fontWeight: 600, textDecoration: 'none', textAlign: 'center', boxSizing: 'border-box' }}>
-                    Get started free
+                    {t('getStarted')}
                   </Link>
                 )}
             </div>
@@ -236,7 +239,7 @@ export default function PricingPage() {
             <div style={{ padding: '24px 24px 28px', display: 'flex', flexDirection: 'column', flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                 <p style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: 0 }}>{plans.pro.title}</p>
-                <span style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', background: '#DBEAFE', padding: '3px 10px', borderRadius: 999 }}>Most popular</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', background: '#DBEAFE', padding: '3px 10px', borderRadius: 999 }}>{t('mostPopular')}</span>
               </div>
               {billing === 'monthly'
                 ? <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>$19<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span></p>
@@ -277,7 +280,7 @@ export default function PricingPage() {
                     transition: 'background 0.15s',
                   }}
                 >
-                  {loading === 'pro' ? <><Loader2 size={15} style={{ animation: 'spin 1s linear infinite' }} /> Redirecting…</> : 'Start 7-day free trial'}
+                  {loading === 'pro' ? <><Loader2 size={15} style={{ animation: 'spin 1s linear infinite' }} /> {t('redirecting')}</> : t('startTrial')}
                 </button>
                 {error && (
                   <p style={{ fontSize: 12, color: '#DC2626', marginTop: 8, textAlign: 'center' }}>{error}</p>
@@ -288,7 +291,7 @@ export default function PricingPage() {
 
           <div style={{ flex: '1 1 260px', maxWidth: 300, background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
             <p style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: '0 0 6px' }}>{plans.teams.title}</p>
-            <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>Custom</p>
+            <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>{t('custom')}</p>
             <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 24px', lineHeight: 1.5 }}>{plans.teams.description}</p>
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
               {plans.teams.features.map(f => (
@@ -303,7 +306,7 @@ export default function PricingPage() {
                 href="mailto:hello@opuslearn.ai"
                 style={{ display: 'block', width: '100%', padding: '11px 0', borderRadius: 10, border: '1px solid #E2E8F0', background: '#F8FAFC', color: '#0F172A', fontSize: 14, fontWeight: 600, textDecoration: 'none', textAlign: 'center', boxSizing: 'border-box' }}
               >
-                Contact us
+                {t('contactUs')}
               </a>
             </div>
           </div>
@@ -311,14 +314,14 @@ export default function PricingPage() {
         </div>
 
         <p style={{ textAlign: 'center', fontSize: 13, color: '#94A3B8', marginBottom: 56 }}>
-          All plans include a 7-day free trial. No credit card required.
+          {t('trialNote')}
         </p>
 
         <div style={{ maxWidth: 600, margin: '0 auto' }}>
           <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.02em' }}>
-            Frequently asked questions
+            {t('faq')}
           </h2>
-          <p style={{ fontSize: 13, color: '#94A3B8', margin: '0 0 24px' }}>Everything you need to know before signing up.</p>
+          <p style={{ fontSize: 13, color: '#94A3B8', margin: '0 0 24px' }}>{t('faqSub')}</p>
           <div style={{ borderTop: '1px solid #E2E8F0' }}>
             {faqs.map(faq => (
               <FaqItem key={faq.q} q={faq.q} a={faq.a} />

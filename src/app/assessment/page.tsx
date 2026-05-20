@@ -15,6 +15,7 @@ import type { AssessmentAnswers, Role, TimeCommitment, Industry, CompanySize } f
 import { buildAssessmentResult, deriveExperience } from '@/lib/assessment/engine'
 import { useAuth } from '@/context/AuthContext'
 import { saveAssessment } from '@/lib/supabase/db'
+import { useTranslations } from 'next-intl'
 
 const F = 'var(--font-sans)'
 
@@ -883,6 +884,7 @@ const DEFAULT_ANSWERS: AssessmentAnswers = {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function AssessmentPage() {
+  const t = useTranslations('assessment')
   const router = useRouter()
   const { user } = useAuth()
   const [stepIdx, setStepIdx] = useState(0)
@@ -972,7 +974,7 @@ export default function AssessmentPage() {
         {currentStep !== 'processing' && (
           <div className="flex items-center gap-4">
             <span className="text-xs hidden sm:block" style={{ color: '#94A3B8' }}>
-              Step {stepIdx + 1} of {contentStepCount}
+              {t('stepOf', { current: stepIdx + 1, total: contentStepCount })}
             </span>
             <div className="w-32 h-1.5 rounded-full overflow-hidden" style={{ background: '#E2E8F0' }}>
               <motion.div
@@ -997,24 +999,24 @@ export default function AssessmentPage() {
                 <div className="text-center mb-10">
                   <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 text-xs font-semibold"
                     style={{ background: '#DBEAFE', color: '#2563EB' }}>
-                    <Zap size={11} /> 5-minute personalised assessment
+                    <Zap size={11} /> {t('fiveMinutes')}
                   </div>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4" style={{ color: '#0F172A' }}>
-                    Find your perfect<br />
+                    {t('findPerfect')}<br />
                     <span style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                       AI learning path
                     </span>
                   </h1>
                   <p className="text-lg" style={{ color: '#64748B' }}>
-                    We'll ask about your role, goals, and AI knowledge — then build a curriculum that's actually built for you.
+                    {t('findPerfectSub')}
                   </p>
                 </div>
 
                 <div className="mb-8">
-                  <label className="block text-sm font-semibold mb-2" style={{ color: '#334155' }}>What's your name?</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: '#334155' }}>{t('yourName')}</label>
                   <input
                     type="text"
-                    placeholder="Your first name"
+                    placeholder={t('yourFirstName')}
                     value={answers.name}
                     onChange={e => setAnswers(a => ({ ...a, name: e.target.value }))}
                     onKeyDown={e => e.key === 'Enter' && canProceed() && goNext()}
@@ -1119,7 +1121,7 @@ export default function AssessmentPage() {
                         style={{ color: '#2563EB' }}
                       >
                         <span style={{ fontSize: 10 }}>{showTips ? '▲' : '▼'}</span>
-                        {showTips ? 'Hide tips' : 'Need inspiration? Show tips'}
+                        {showTips ? t('hideTips') : t('showTips')}
                       </button>
                       <span className="text-xs" style={{ color: answers.roleDescription.length > 180 ? '#F59E0B' : '#CBD5E1' }}>
                         {answers.roleDescription.length}/200
@@ -1139,7 +1141,7 @@ export default function AssessmentPage() {
                       >
                         <div className="mt-3 p-4 rounded-2xl" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
                           <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>
-                            Examples for {roleLabel}
+                            {t('examplesFor', { role: roleLabel })}
                           </p>
                           <div className="flex flex-col gap-2">
                             {tips.map((tip, i) => (
@@ -1154,7 +1156,7 @@ export default function AssessmentPage() {
                             ))}
                           </div>
                           <p className="text-xs mt-3" style={{ color: '#94A3B8' }}>
-                            Tap an example to use it, or write your own above.
+                            {t('tapExample')}
                           </p>
                         </div>
                       </motion.div>
@@ -1174,7 +1176,7 @@ export default function AssessmentPage() {
                   sub="We use this to tailor examples and use cases to your world."
                 />
                 <div className="mb-6">
-                  <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>Industry</p>
+                  <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>{t('industry')}</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {INDUSTRIES.map(ind => {
                       const sel = answers.industry === ind.id
@@ -1190,7 +1192,7 @@ export default function AssessmentPage() {
                   </div>
                 </div>
                 <div className="mb-8">
-                  <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>Company size</p>
+                  <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>{t('companySize')}</p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {COMPANY_SIZES.map(cs => {
                       const sel = answers.companySize === cs.id
@@ -1356,7 +1358,7 @@ export default function AssessmentPage() {
                     )
                   })}
                 </div>
-                <NavButtons canProceed onNext={goNext} onBack={goBack} isLast nextLabel="Build My Path" />
+                <NavButtons canProceed onNext={goNext} onBack={goBack} isLast nextLabel={t('buildMyPath')} />
               </motion.div>
             )}
 
@@ -1370,7 +1372,7 @@ export default function AssessmentPage() {
                     <Zap size={18} color="#2563EB" />
                   </div>
                 </div>
-                <h2 className="text-2xl font-black mb-6" style={{ color: '#0F172A' }}>Building your path…</h2>
+                <h2 className="text-2xl font-black mb-6" style={{ color: '#0F172A' }}>{t('buildingPath')}</h2>
                 <div className="space-y-2.5 max-w-xs mx-auto">
                   {PROCESSING_STEPS.map((step, i) => (
                     <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: processingStep > i ? 1 : 0.3, x: 0 }}
@@ -1420,6 +1422,7 @@ function SkillCheckStep({
   onComplete: (score: number) => void
   onBack: () => void
 }) {
+  const t = useTranslations('assessment')
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState<string | null>(null)
   const [revealed, setRevealed] = useState(false)
@@ -1455,7 +1458,7 @@ function SkillCheckStep({
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#DBEAFE', color: '#2563EB' }}>
-            Skill check · {qIdx + 1} of {questions.length}
+            {t('skillCheckOf', { current: qIdx + 1, total: questions.length })}
           </span>
           <div className="flex gap-1">
             {questions.map((_, i) => (
@@ -1465,7 +1468,7 @@ function SkillCheckStep({
         </div>
         <p className="text-sm font-medium mb-2" style={{ color: '#2563EB' }}>{intro}</p>
         <h2 className="text-xl sm:text-2xl font-black leading-snug mb-2" style={{ color: '#0F172A' }}>{q.q}</h2>
-        {!revealed && <p className="text-sm" style={{ color: '#94A3B8' }}>Pick the best answer — we'll explain after.</p>}
+        {!revealed && <p className="text-sm" style={{ color: '#94A3B8' }}>{t('pickBest')}</p>}
       </div>
 
       <div className="space-y-3 mb-5">
@@ -1509,7 +1512,7 @@ function SkillCheckStep({
               <CheckCircle2 size={15} style={{ color: wasCorrect ? '#16A34A' : '#EA580C', marginTop: 1, flexShrink: 0 }} />
               <div>
                 <p className="text-xs font-bold mb-1" style={{ color: wasCorrect ? '#16A34A' : '#EA580C' }}>
-                  {wasCorrect ? 'Exactly right.' : 'Not quite — here\'s the thinking.'}
+                  {wasCorrect ? t('exactlyRight') : t('notQuite')}
                 </p>
                 <p className="text-sm leading-relaxed" style={{ color: wasCorrect ? '#166534' : '#7C2D12' }}>{q.explanation}</p>
               </div>
@@ -1521,7 +1524,7 @@ function SkillCheckStep({
       <div className="flex items-center gap-3">
         {qIdx === 0 && !revealed && (
           <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100" style={{ color: '#64748B' }}>
-            <ArrowLeft size={15} /> Back
+            <ArrowLeft size={15} /> {t('back')}
           </button>
         )}
         {revealed && (
@@ -1529,7 +1532,7 @@ function SkillCheckStep({
             onClick={handleNext}
             className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
             style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', boxShadow: '0 4px 14px rgba(37,99,235,0.25)' }}>
-            {isLast ? 'Continue' : nextLabel} <ArrowRight size={15} />
+            {isLast ? t('next') : nextLabel} <ArrowRight size={15} />
           </motion.button>
         )}
       </div>
@@ -1554,7 +1557,7 @@ function NavButtons({
   onBack,
   isFirst = false,
   isLast = false,
-  nextLabel = 'Continue',
+  nextLabel,
 }: {
   canProceed: boolean
   onNext: () => void
@@ -1563,11 +1566,13 @@ function NavButtons({
   isLast?: boolean
   nextLabel?: string
 }) {
+  const t = useTranslations('assessment')
+  const label = nextLabel ?? t('next')
   return (
     <div className="flex items-center gap-3">
       {!isFirst && onBack && (
         <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100" style={{ color: '#64748B' }}>
-          <ArrowLeft size={15} /> Back
+          <ArrowLeft size={15} /> {t('back')}
         </button>
       )}
       <button onClick={onNext} disabled={!canProceed}
@@ -1577,7 +1582,7 @@ function NavButtons({
           color: canProceed ? '#FFFFFF' : '#94A3B8',
           boxShadow: canProceed ? '0 4px 14px rgba(37,99,235,0.25)' : 'none',
         }}>
-        {nextLabel} <ArrowRight size={15} />
+        {label} <ArrowRight size={15} />
       </button>
     </div>
   )
