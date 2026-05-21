@@ -1944,7 +1944,8 @@ export default function LandingPage() {
     if (params.get('signin') === '1' && !user) openSignIn()
   }, [mounted, loading, user, openSignIn])
 
-  if (mounted && !loading && user) return null
+  // Don't render anything until auth is resolved — prevents flash for signed-in users
+  if (!mounted || loading || user) return null
 
   return (
     <main style={{ background: '#FFFFFF', color: '#0F172A', minHeight: '100vh' }}>
