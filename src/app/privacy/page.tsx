@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     title: '1. Who we are',
-    body: `OpusLearn SAS ("OpusLearn", "we", "us", "our") is a company registered in France. We operate the OpusLearn platform at opuslearn.ai. Our data controller contact is: privacy@opuslearn.ai.`,
+    body: `OpusLearn SAS ("OpusLearn", "we", "us", "our") is a company registered in France. We operate the OpusLearn platform at opuslearn.ai. Our data controller contact is: hello@opuslearn.ai.`,
   },
   {
     title: '2. What data we collect',
@@ -40,7 +40,7 @@ const SECTIONS = [
   },
   {
     title: '8. Your rights',
-    body: `Under GDPR, you have the right to: access your personal data; correct inaccurate data; request deletion of your data; object to processing; restrict processing; data portability; and withdraw consent at any time. To exercise any of these rights, contact us at privacy@opuslearn.ai. You also have the right to lodge a complaint with your local supervisory authority.`,
+    body: `Under GDPR, you have the right to: access your personal data; correct inaccurate data; request deletion of your data; object to processing; restrict processing; data portability; and withdraw consent at any time. To exercise any of these rights, contact us at hello@opuslearn.ai. You also have the right to lodge a complaint with your local supervisory authority.`,
   },
   {
     title: '9. Cookies',
@@ -48,7 +48,7 @@ const SECTIONS = [
   },
   {
     title: '10. Security',
-    body: `We use industry-standard security measures including encryption in transit (TLS), encryption at rest, access controls, and regular security reviews. No system is completely secure — if you believe your account has been compromised, contact us immediately at security@opuslearn.ai.`,
+    body: `We use industry-standard security measures including encryption in transit (TLS), encryption at rest, access controls, and regular security reviews. No system is completely secure — if you believe your account has been compromised, contact us immediately at hello@opuslearn.ai.`,
   },
   {
     title: '11. Changes to this policy',
@@ -56,7 +56,7 @@ const SECTIONS = [
   },
   {
     title: '12. Contact',
-    body: `For any privacy-related questions or to exercise your rights, contact: privacy@opuslearn.ai or write to: OpusLearn SAS, 10 rue de la Paix, 75002 Paris, France.`,
+    body: `For any privacy-related questions or to exercise your rights, contact: hello@opuslearn.ai or write to: OpusLearn SAS, 10 rue de la Paix, 75002 Paris, France.`,
   },
 ]
 
@@ -94,7 +94,7 @@ export default function PrivacyPage() {
           <div className="mt-12 pt-8" style={{ borderTop: '1px solid #E2E8F0' }}>
             <p className="text-xs" style={{ color: '#94A3B8' }}>
               For questions about this policy, email{' '}
-              <a href="mailto:privacy@opuslearn.ai" style={{ color: '#2563EB' }}>privacy@opuslearn.ai</a>
+              <a href="mailto:hello@opuslearn.ai" style={{ color: '#2563EB' }}>hello@opuslearn.ai</a>
             </p>
           </div>
         </div>
