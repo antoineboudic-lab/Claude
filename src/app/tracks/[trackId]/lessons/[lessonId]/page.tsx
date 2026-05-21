@@ -211,20 +211,28 @@ function LessonContent({ content, color }: { content: string; color: string }) {
       <ReactMarkdown
         components={{
           h2: ({ children }) => (
-            <h2 className="flex items-center gap-3 mt-10 mb-4 first:mt-0"
+            <h2 className="flex items-start gap-3 mt-12 mb-5 first:mt-0"
               style={{ fontFamily: 'var(--font-sans)' }}>
-              <span className="flex-shrink-0 w-1 h-5 rounded-full" style={{ background: color }} />
-              <span className="text-base font-bold" style={{ color: '#0F172A' }}>{children}</span>
+              <span className="flex-shrink-0 w-1 h-6 rounded-full mt-0.5" style={{ background: color }} />
+              <span className="text-[17px] font-bold leading-snug" style={{ color: '#0F172A' }}>{children}</span>
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-[15px] font-semibold mt-6 mb-2"
+            <h3 className="flex items-center gap-2 text-[15px] font-bold mt-7 mb-2.5"
               style={{ fontFamily: 'var(--font-sans)', color: '#1E293B' }}>
+              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: `${color}90` }} />
               {children}
             </h3>
           ),
           p: ({ children }) => {
             const childArray = React.Children.toArray(children)
+            const text = childArray.map(c => typeof c === 'string' ? c : '').join('').trim().toLowerCase()
+
+            // Hide "Prompt example:" lead-in text — the blockquote card below carries its own label
+            if (text === 'prompt example:' || text === 'try this prompt:' || text === 'example:') {
+              return <span aria-hidden style={{ display: 'none' }} />
+            }
+
             const firstEl = childArray[0]
             const isCallout = React.isValidElement(firstEl) &&
               firstEl.type === 'strong' &&
@@ -249,7 +257,7 @@ function LessonContent({ content, color }: { content: string; color: string }) {
             )
           },
           strong: ({ children }) => (
-            <strong style={{ color: '#1E293B', fontWeight: 600 }}>{children}</strong>
+            <strong style={{ color: '#1E293B', fontWeight: 700 }}>{children}</strong>
           ),
           em: ({ children }) => (
             <em style={{ color, fontStyle: 'italic' }}>{children}</em>
@@ -275,15 +283,29 @@ function LessonContent({ content, color }: { content: string; color: string }) {
             </li>
           ),
           blockquote: ({ children }) => (
-            <div className="my-5 pl-4 py-3 pr-3"
-              style={{ borderLeft: '2px solid #E2E8F0', background: '#EFF6FF' }}>
-              <div className="text-sm leading-[1.8]" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                {children}
+            <div className="my-4 rounded-2xl overflow-hidden"
+              style={{ border: `1px solid ${color}28` }}>
+              <div className="flex items-center gap-2 px-4 py-2.5"
+                style={{ background: `${color}0A`, borderBottom: `1px solid ${color}18` }}>
+                <Sparkles size={11} color={color} />
+                <span className="text-[10px] font-bold uppercase tracking-[0.1em]"
+                  style={{ color, fontFamily: 'var(--font-sans)' }}>
+                  Prompt example
+                </span>
+                <span className="ml-auto text-[10px]" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                  paste into Claude or ChatGPT
+                </span>
+              </div>
+              <div className="px-5 py-4" style={{ background: '#FAFCFF' }}>
+                <div className="text-[13.5px] leading-[1.9] italic"
+                  style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                  {children}
+                </div>
               </div>
             </div>
           ),
           code: ({ children }) => (
-            <code className="px-1.5 py-0.5 rounded text-xs"
+            <code className="px-1.5 py-0.5 rounded text-[12px]"
               style={{ background: '#F1F5F9', color: '#2563EB', fontFamily: 'monospace' }}>
               {children}
             </code>
