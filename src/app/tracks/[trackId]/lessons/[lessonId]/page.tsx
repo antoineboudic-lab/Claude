@@ -1403,7 +1403,8 @@ export default function LessonPage() {
       const text = sel.toString().trim()
       if (text.length < 5) { setHighlight(null); return }
       const range = sel.getRangeAt(0)
-      if (!lessonReadRef.current?.contains(range.commonAncestorContainer)) { setHighlight(null); return }
+      const container = lessonReadRef.current ?? document.querySelector('main')
+      if (!container?.contains(range.commonAncestorContainer)) { setHighlight(null); return }
       setHighlight({ text, rect: range.getBoundingClientRect() })
       setHighlightSaved(false)
     }
