@@ -166,7 +166,7 @@ function TrackCard({ track, index, dimmed = false, showPreviewBadge = false }: {
                   {track.title}
                 </h3>
                 <span className="text-xs font-medium px-2 py-0.5 rounded-full"
-                  style={{ background: `${track.color}10`, color: track.color, fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                   Track {index + 1}
                 </span>
               </div>
@@ -220,7 +220,7 @@ function TrackCard({ track, index, dimmed = false, showPreviewBadge = false }: {
               </div>
             </div>
             <div className="flex items-center gap-1 text-xs font-semibold group-hover:gap-2 transition-all"
-              style={{ color: track.color, fontFamily: 'var(--font-sans)' }}>
+              style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
               Preview <ChevronRight size={13} />
             </div>
           </div>
@@ -256,7 +256,7 @@ function RecommendedTrackCard({ track }: { track: typeof tracks[0] }) {
           </div>
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: track.color, fontFamily: 'var(--font-sans)' }}>
+              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                 Your recommended track
               </span>
               <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold"
@@ -276,13 +276,13 @@ function RecommendedTrackCard({ track }: { track: typeof tracks[0] }) {
           <Link
             href={`/assessment/results`}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90 text-white"
-            style={{ background: track.color, fontFamily: 'var(--font-sans)' }}>
+            style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
             View my path <ArrowRight size={14} />
           </Link>
           <Link
             href={`/tracks/${track.id}`}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all hover:bg-white"
-            style={{ border: `1px solid ${track.color}30`, color: track.color, fontFamily: 'var(--font-sans)' }}>
+            style={{ border: '1px solid #BFDBFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
             Browse track
           </Link>
         </div>

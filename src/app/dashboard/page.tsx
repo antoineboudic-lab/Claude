@@ -365,7 +365,7 @@ function ContinueCard({ completedLessons, assessment }: { completedLessons: stri
         <Link
           href={`/tracks/${target.trackId}/lessons/${target.lessonId}`}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white flex-shrink-0 transition-opacity hover:opacity-90"
-          style={{ background: target.trackColor, boxShadow: `0 4px 14px ${target.trackColor}35`, fontFamily: 'var(--font-sans)', textDecoration: 'none' }}
+          style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.3)', fontFamily: 'var(--font-sans)', textDecoration: 'none' }}
         >
           <Play size={13} fill="#FFFFFF" />
           {target.isResume ? t('continueLearning') : t('startLesson')}
@@ -645,7 +645,7 @@ function LearningPathCard({ result }: { result: AssessmentResult }) {
             href={`/tracks/${firstLesson.trackId}/lessons/${firstLesson.lessonId}`}
             className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
             style={{
-              background: `linear-gradient(135deg, ${color}, #22D3EE)`,
+              background: 'linear-gradient(135deg, #2563EB, #1D4ED8)',
               fontFamily: 'var(--font-sans)',
             }}
           >

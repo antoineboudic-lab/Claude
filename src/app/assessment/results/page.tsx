@@ -515,7 +515,7 @@ export default function AssessmentResultsPage() {
               </div>
               <Link href={`/tracks/${result.primaryTrackId}`}
                 className="hidden sm:flex items-center gap-1 text-xs font-semibold relative flex-shrink-0"
-                style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+                style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                 View track <ChevronRight size={12} />
               </Link>
             </div>

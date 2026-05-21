@@ -315,7 +315,7 @@ export default function TrackPage() {
               <Link
                 href={`/tracks/${trackId}/lessons/${trackId}-m1-l1`}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
-                style={{ background: `linear-gradient(135deg, ${meta.color}, ${meta.color}bb)`, fontFamily: 'var(--font-sans)' }}
+                style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', fontFamily: 'var(--font-sans)' }}
               >
                 <PlayCircle size={16} /> Start Track
               </Link>
@@ -492,7 +492,7 @@ export default function TrackPage() {
                             <Link
                               href={`/tracks/${trackId}/lessons/${lessonId}`}
                               className="text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
-                              style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}
+                              style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}
                               onClick={e => e.stopPropagation()}
                             >
                               Start <ChevronRight size={12} />
