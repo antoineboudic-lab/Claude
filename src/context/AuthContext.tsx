@@ -48,16 +48,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (typeof window === 'undefined') return
 
-      // Only redirect on a genuine new sign-in (user was previously logged out).
-      // SIGNED_IN also fires on token refresh and tab focus — ignore those.
       if (event === 'SIGNED_IN' && !wasSignedIn.current) {
         wasSignedIn.current = true
         const isNewUser = session?.user?.created_at === session?.user?.last_sign_in_at
         posthog.capture(isNewUser ? 'sign_up' : 'sign_in', { email: session?.user?.email })
-        if (window.location.pathname.startsWith('/auth/')) return
-        const params = new URLSearchParams(window.location.search)
-        const next = params.get('next')
-        router.push(next ?? '/dashboard')
       }
 
       if (event === 'SIGNED_OUT') {

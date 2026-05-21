@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, forwardRef } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Mail, Lock, User, Eye, EyeOff, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
 import Logo from '@/components/Logo'
@@ -14,6 +15,7 @@ type AuthStep = 'form' | 'verify' | 'forgot' | 'reset-sent'
 export function AuthModal() {
   const t = useTranslations('auth')
   const { modalView, closeModal, openSignIn, openSignUp, prefillEmail } = useAuth()
+  const router = useRouter()
   const [step, setStep] = useState<AuthStep>('form')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -90,6 +92,8 @@ export function AuthModal() {
             })
         }
         closeModal()
+        const next = new URLSearchParams(window.location.search).get('next')
+        router.push(next ?? '/dashboard')
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : t('errors.generic')
