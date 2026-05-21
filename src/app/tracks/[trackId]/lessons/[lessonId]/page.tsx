@@ -1392,6 +1392,45 @@ export default function LessonPage() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [readProgress, setReadProgress] = useState(0)
   const lessonReadRef = useRef<HTMLDivElement>(null)
+  const [highlight, setHighlight] = useState<{ text: string; rect: DOMRect } | null>(null)
+  const [highlightSaved, setHighlightSaved] = useState(false)
+
+  useEffect(() => {
+    if (activeTab !== 'lesson') { setHighlight(null); return }
+    function onMouseUp() {
+      const sel = window.getSelection()
+      if (!sel || sel.isCollapsed || !sel.rangeCount) return
+      const text = sel.toString().trim()
+      if (text.length < 5) return
+      const range = sel.getRangeAt(0)
+      if (!lessonReadRef.current?.contains(range.commonAncestorContainer)) return
+      setHighlight({ text, rect: range.getBoundingClientRect() })
+      setHighlightSaved(false)
+    }
+    function onSelectionChange() {
+      const sel = window.getSelection()
+      if (!sel || sel.isCollapsed) setHighlight(null)
+    }
+    document.addEventListener('mouseup', onMouseUp)
+    document.addEventListener('touchend', onMouseUp)
+    document.addEventListener('selectionchange', onSelectionChange)
+    return () => {
+      document.removeEventListener('mouseup', onMouseUp)
+      document.removeEventListener('touchend', onMouseUp)
+      document.removeEventListener('selectionchange', onSelectionChange)
+    }
+  }, [activeTab])
+
+  function saveHighlight() {
+    if (!highlight) return
+    const existing = getNote(lessonId)
+    const quoted = `> "${highlight.text}"`
+    const next = existing.trim() ? existing.trimEnd() + '\n\n' + quoted : quoted
+    setNote(lessonId, next)
+    setHighlightSaved(true)
+    window.getSelection()?.removeAllRanges()
+    setTimeout(() => { setHighlight(null); setHighlightSaved(false) }, 1000)
+  }
 
   useEffect(() => {
     if (activeTab !== 'lesson') { setReadProgress(0); return }
@@ -2385,6 +2424,33 @@ export default function LessonPage() {
               </p>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Highlight-to-save pill */}
+      <AnimatePresence>
+        {highlight && (
+          <motion.button
+            key="highlight-pill"
+            initial={{ opacity: 0, scale: 0.85, y: 4 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 4 }}
+            transition={{ duration: 0.15 }}
+            onMouseDown={e => e.preventDefault()}
+            onClick={saveHighlight}
+            className="fixed z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full shadow-lg text-white text-xs font-semibold select-none"
+            style={{
+              left: highlight.rect.left + highlight.rect.width / 2,
+              top: Math.max(8, highlight.rect.top - 44),
+              transform: 'translateX(-50%)',
+              background: highlightSaved ? '#059669' : color,
+              pointerEvents: highlightSaved ? 'none' : 'auto',
+              fontFamily: 'var(--font-sans)',
+            }}
+          >
+            <Bookmark size={11} fill={highlightSaved ? 'white' : 'none'} />
+            {highlightSaved ? 'Saved!' : 'Save highlight'}
+          </motion.button>
         )}
       </AnimatePresence>
 
