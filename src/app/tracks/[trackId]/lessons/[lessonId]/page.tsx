@@ -689,7 +689,7 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
             onClick={runPrompt}
             disabled={loading || !prompt.trim()}
             className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all disabled:opacity-40 hover:opacity-90"
-            style={{ background: color, fontFamily: 'var(--font-sans)' }}>
+            style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
             {loading ? (
               <>
                 <span className="flex gap-0.5 items-center">
@@ -1472,7 +1472,7 @@ export default function LessonPage() {
           <motion.div
             animate={{ width: `${progressPct}%` }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            style={{ height: '100%', background: color }}
+            style={{ height: '100%', background: '#2563EB' }}
           />
         </div>
         <div className="relative px-5 py-2.5 flex items-center gap-3">
@@ -1605,7 +1605,7 @@ export default function LessonPage() {
               </p>
             </div>
             <span className="text-xs px-2.5 py-1 rounded-full font-semibold"
-              style={{ background: `${color}12`, color, fontFamily: 'var(--font-sans)' }}>
+              style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
               {Math.round(((currentStepIndex) / steps.length) * 100)}% done
             </span>
           </div>
@@ -1626,8 +1626,8 @@ export default function LessonPage() {
                     <motion.div
                       className="w-10 h-10 rounded-full flex items-center justify-center relative"
                       animate={{
-                        background: isDone ? color : isActive ? color : locked ? '#F3F4F6' : `${color}20`,
-                        boxShadow: isActive ? `0 0 0 4px ${color}20` : '0 0 0 0px transparent',
+                        background: isDone ? '#2563EB' : isActive ? '#2563EB' : locked ? '#F3F4F6' : '#EFF6FF',
+                        boxShadow: isActive ? '0 0 0 4px #2563EB20' : '0 0 0 0px transparent',
                       }}
                       transition={{ duration: 0.2 }}
                     >
@@ -1635,13 +1635,13 @@ export default function LessonPage() {
                         ? <Check size={14} color="#fff" strokeWidth={2.5} />
                         : locked
                         ? <Lock size={13} color="#CBD5E1" />
-                        : <step.icon size={15} color={isActive ? '#fff' : color} />
+                        : <step.icon size={15} color={isActive ? '#fff' : '#2563EB'} />
                       }
                     </motion.div>
                     <span
                       className="text-[11px] font-semibold hidden sm:block transition-colors"
                       style={{
-                        color: isActive ? '#0F172A' : isDone ? color : locked ? '#D1D5DB' : '#9CA3AF',
+                        color: isActive ? '#0F172A' : isDone ? '#2563EB' : locked ? '#D1D5DB' : '#9CA3AF',
                         fontFamily: 'var(--font-sans)',
                       }}
                     >
@@ -1651,7 +1651,7 @@ export default function LessonPage() {
                   {i < steps.length - 1 && (
                     <motion.div
                       className="flex-1 h-[2px] mx-3 mb-[22px] rounded-full"
-                      animate={{ background: i < currentStepIndex ? color : '#E5E7EB' }}
+                      animate={{ background: i < currentStepIndex ? '#2563EB' : '#E5E7EB' }}
                       transition={{ duration: 0.3 }}
                     />
                   )}
@@ -1732,24 +1732,24 @@ export default function LessonPage() {
             )}
 
             {/* Ready to practise CTA */}
-            <div className="mt-10 pt-8" style={{ borderTop: `2px solid ${color}15` }}>
+            <div className="mt-10 pt-8" style={{ borderTop: '1px solid #F1F5F9' }}>
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4 }}
                 className="rounded-2xl overflow-hidden"
-                style={{ border: `1.5px solid ${color}30`, boxShadow: `0 8px 32px ${color}12` }}>
+                style={{ border: '1.5px solid #BFDBFE', boxShadow: '0 8px 32px rgba(37,99,235,0.08)' }}>
                 <div className="px-6 pt-6 pb-5"
-                  style={{ background: `linear-gradient(135deg, ${color}10, ${color}05)` }}>
+                  style={{ background: 'linear-gradient(135deg, #EFF6FF, #F8FAFF)' }}>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
-                      style={{ background: color }}>
+                      style={{ background: '#2563EB' }}>
                       <Dumbbell size={20} color="#fff" />
                     </div>
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5"
-                        style={{ color, fontFamily: 'var(--font-sans)' }}>Next step</p>
+                        style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>Next step</p>
                       <p className="text-base font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                         Put it into practice
                       </p>
@@ -1764,8 +1764,8 @@ export default function LessonPage() {
                     onClick={goNext}
                     className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-bold text-white transition-all"
                     style={{
-                      background: `linear-gradient(135deg, ${color}, ${color}cc)`,
-                      boxShadow: `0 6px 24px ${color}35`,
+                      background: 'linear-gradient(135deg, #2563EB, #1D4ED8)',
+                      boxShadow: '0 6px 24px rgba(37,99,235,0.25)',
                       fontFamily: 'var(--font-sans)',
                     }}>
                     Start practising <ArrowRight size={15} />
@@ -1781,15 +1781,15 @@ export default function LessonPage() {
         {activeTab === 'exercise' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
             {lesson ? (
-              <div className="rounded-2xl overflow-hidden mb-5" style={{ border: `1px solid ${color}20` }}>
+              <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid #E2E8F0' }}>
                 {/* Mission briefing header */}
                 <div className="px-5 py-5"
-                  style={{ background: `linear-gradient(135deg, ${color}10, ${color}04)`, borderBottom: `1px solid ${color}12` }}>
+                  style={{ background: 'linear-gradient(135deg, #EFF6FF, #F8FAFF)', borderBottom: '1px solid #E2E8F0' }}>
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="flex items-center gap-2">
-                      <Dumbbell size={14} color={color} />
+                      <Dumbbell size={14} color="#2563EB" />
                       <span className="text-[10px] font-bold uppercase tracking-widest"
-                        style={{ color, fontFamily: 'var(--font-sans)', letterSpacing: '0.08em' }}>
+                        style={{ color: '#2563EB', fontFamily: 'var(--font-sans)', letterSpacing: '0.08em' }}>
                         Hands-on Practice
                       </span>
                     </div>
@@ -1807,16 +1807,16 @@ export default function LessonPage() {
                   <div className="mt-4">
                     <div className="flex items-center justify-between mb-1.5">
                       <span className="text-xs" style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)' }}>Your progress</span>
-                      <span className="text-xs font-semibold" style={{ color, fontFamily: 'var(--font-sans)' }}>
+                      <span className="text-xs font-semibold" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
                         {completedSteps.size} / {lesson.exercise.steps.length} steps
                       </span>
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: `${color}15` }}>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#DBEAFE' }}>
                       <motion.div
                         className="h-full rounded-full"
                         animate={{ width: `${(completedSteps.size / lesson.exercise.steps.length) * 100}%` }}
                         transition={{ duration: 0.35, ease: 'easeOut' }}
-                        style={{ background: color }}
+                        style={{ background: '#2563EB' }}
                       />
                     </div>
                   </div>
@@ -1843,7 +1843,7 @@ export default function LessonPage() {
                         </div>
                         <div className="flex-1">
                           <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5"
-                            style={{ color: done ? '#86EFAC' : color, fontFamily: 'var(--font-sans)', letterSpacing: '0.07em' }}>
+                            style={{ color: done ? '#86EFAC' : '#2563EB', fontFamily: 'var(--font-sans)', letterSpacing: '0.07em' }}>
                             Step {i + 1}
                           </p>
                           <p className="text-sm leading-[1.7] transition-colors"
@@ -1869,14 +1869,14 @@ export default function LessonPage() {
               <motion.button
                 onClick={handleExerciseDone}
                 animate={lesson && completedSteps.size === lesson.exercise.steps.length && !exerciseDone
-                  ? { scale: [1, 1.04, 1], boxShadow: [`0 0 0 0px ${color}40`, `0 0 0 6px ${color}25`, `0 0 0 0px ${color}40`] }
+                  ? { scale: [1, 1.04, 1], boxShadow: ['0 0 0 0px #2563EB40', '0 0 0 6px #2563EB25', '0 0 0 0px #2563EB40'] }
                   : {}
                 }
                 transition={{ duration: 1.4, repeat: lesson && completedSteps.size === lesson.exercise.steps.length && !exerciseDone ? Infinity : 0, ease: 'easeInOut' }}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
                 style={exerciseDone
                   ? { background: '#D1FAE5', color: '#059669', fontFamily: 'var(--font-sans)' }
-                  : { background: color, color: '#fff', fontFamily: 'var(--font-sans)' }
+                  : { background: '#2563EB', color: '#fff', fontFamily: 'var(--font-sans)' }
                 }>
                 {exerciseDone
                   ? <><CheckCircle2 size={14} /> Done — going to Test</>
@@ -1902,7 +1902,7 @@ export default function LessonPage() {
                           <motion.div key={i}
                             animate={{
                               width: i === currentQuizQ ? 24 : 8,
-                              background: i < currentQuizQ ? color : i === currentQuizQ ? color : '#E5E7EB',
+                              background: i < currentQuizQ ? '#2563EB' : i === currentQuizQ ? '#2563EB' : '#E5E7EB',
                               opacity: i > currentQuizQ ? 0.4 : 1,
                             }}
                             transition={{ duration: 0.25 }}
@@ -2054,7 +2054,7 @@ export default function LessonPage() {
                                 transition={{ duration: 0.2 }}
                                 onClick={advanceQuiz}
                                 className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90 ml-auto"
-                                style={{ background: color, color: '#fff', fontFamily: 'var(--font-sans)' }}>
+                                style={{ background: '#2563EB', color: '#fff', fontFamily: 'var(--font-sans)' }}>
                                 {currentQuizQ < lesson.quiz.length - 1
                                   ? <>Next question <ArrowRight size={14} /></>
                                   : <>See my results <ArrowRight size={14} /></>
@@ -2145,7 +2145,7 @@ export default function LessonPage() {
                       )}
                       <button onClick={goNext}
                         className="w-full py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-all hover:opacity-90"
-                        style={{ background: color, color: '#fff', fontFamily: 'var(--font-sans)' }}>
+                        style={{ background: '#2563EB', color: '#fff', fontFamily: 'var(--font-sans)' }}>
                         Next: Apply it <ArrowRight size={15} />
                       </button>
                       {nextLesson && (
@@ -2158,7 +2158,7 @@ export default function LessonPage() {
                       {!nextLesson && (
                         <Link href={`/tracks/${trackId}`}
                           className="w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2"
-                          style={{ background: `${color}10`, color, border: `1px solid ${color}20`, fontFamily: 'var(--font-sans)' }}>
+                          style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE', fontFamily: 'var(--font-sans)' }}>
                           Back to track overview
                         </Link>
                       )}
@@ -2178,7 +2178,7 @@ export default function LessonPage() {
             <PromptLab scenario={scenario} color={color} />
 
             {/* Completion + next lesson */}
-            <div className="mt-10 pt-8 space-y-3" style={{ borderTop: `2px solid ${color}15` }}>
+            <div className="mt-10 pt-8 space-y-3" style={{ borderTop: '1px solid #F1F5F9' }}>
               {!completed && (
                 <motion.button
                   whileHover={{ scale: 1.01 }}
@@ -2196,11 +2196,11 @@ export default function LessonPage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.1 }}
                   className="rounded-2xl overflow-hidden"
-                  style={{ border: `1.5px solid ${color}30`, boxShadow: `0 8px 32px ${color}12` }}>
+                  style={{ border: '1.5px solid #BFDBFE', boxShadow: '0 8px 32px rgba(37,99,235,0.08)' }}>
                   <div className="px-6 pt-5 pb-5"
-                    style={{ background: `linear-gradient(135deg, ${color}10, ${color}05)` }}>
+                    style={{ background: 'linear-gradient(135deg, #EFF6FF, #F8FAFF)' }}>
                     <p className="text-[10px] font-bold uppercase tracking-widest mb-2"
-                      style={{ color, fontFamily: 'var(--font-sans)' }}>Up next</p>
+                      style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>Up next</p>
                     <h3 className="text-base font-bold mb-1 leading-snug"
                       style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                       {nextLesson.title}
@@ -2213,8 +2213,8 @@ export default function LessonPage() {
                       href={`/tracks/${trackId}/lessons/${nextLesson.id}`}
                       className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-sm text-white transition-all hover:opacity-90"
                       style={{
-                        background: `linear-gradient(135deg, ${color}, ${color}cc)`,
-                        boxShadow: `0 6px 24px ${color}35`,
+                        background: 'linear-gradient(135deg, #2563EB, #1D4ED8)',
+                        boxShadow: '0 6px 24px rgba(37,99,235,0.25)',
                         fontFamily: 'var(--font-sans)',
                       }}>
                       Start next lesson <ArrowRight size={15} />
@@ -2225,7 +2225,7 @@ export default function LessonPage() {
                 <Link
                   href={`/tracks/${trackId}`}
                   className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-semibold text-sm"
-                  style={{ background: `${color}10`, color, border: `1px solid ${color}20`, fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE', fontFamily: 'var(--font-sans)' }}>
                   Back to track overview
                 </Link>
               )}
