@@ -205,7 +205,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{
             width: 28, height: 28, borderRadius: 8, flexShrink: 0,
-            background: `linear-gradient(135deg, ${color}, ${color}99)`,
+            background: 'linear-gradient(135deg, #2563EB, #1D4ED8)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             <Sparkles size={13} style={{ color: '#fff' }} />
@@ -251,7 +251,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
                 {starters.map(q => (
                   <button key={q} onClick={() => sendMessage(q)} style={{
                     textAlign: 'left', padding: '8px 12px', borderRadius: 10,
-                    border: `1px solid ${color}22`, background: `${color}07`,
+                    border: '1px solid #BFDBFE', background: '#EFF6FF',
                     fontSize: 12, color: '#475569', cursor: 'pointer',
                     lineHeight: 1.45, fontFamily: 'var(--font-sans)',
                     transition: 'background 0.15s',
@@ -278,7 +278,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
                 <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
                   <div style={{
                     width: 16, height: 16, borderRadius: 5,
-                    background: `linear-gradient(135deg, ${color}, ${color}88)`,
+                    background: 'linear-gradient(135deg, #2563EB, #1D4ED8)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     <Sparkles size={8} style={{ color: '#fff' }} />
@@ -289,7 +289,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
               <div style={{
                 maxWidth: '88%', padding: '9px 12px',
                 borderRadius: isUser ? '12px 12px 3px 12px' : '3px 12px 12px 12px',
-                background: isUser ? color : '#EFF6FF',
+                background: isUser ? '#2563EB' : '#EFF6FF',
                 color: isUser ? '#FFFFFF' : '#334155',
                 fontSize: 13, lineHeight: 1.6,
               }}>
@@ -313,12 +313,12 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
                         {m.content}
                       </ReactMarkdown>
                     ) : (
-                      <ThinkingDots color={color} />
+                      <ThinkingDots color="#2563EB" />
                     )}
                     {isStreamingThis && m.content && (
                       <span style={{
                         display: 'inline-block', width: 6, height: 13,
-                        background: color, borderRadius: 1, marginLeft: 2,
+                        background: '#2563EB', borderRadius: 1, marginLeft: 2,
                         verticalAlign: 'text-bottom',
                         animation: 'tutor-blink 0.8s step-end infinite',
                       }} />
@@ -401,7 +401,7 @@ const AITutor = forwardRef<AITutorHandle, AITutorProps>(function AITutor(
             width: 48, height: 48, borderRadius: '50%',
             background: open
               ? '#0F172A'
-              : `linear-gradient(135deg, ${color}, ${color}cc)`,
+              : 'linear-gradient(135deg, #2563EB, #1D4ED8)',
             border: 'none', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
