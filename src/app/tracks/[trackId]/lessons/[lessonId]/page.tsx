@@ -1335,6 +1335,23 @@ export default function LessonPage() {
   const { isBookmarked, addBookmark, removeBookmark } = useBookmarks()
   const { getNote, setNote } = useNotes()
   const [searchOpen, setSearchOpen] = useState(false)
+  const [readProgress, setReadProgress] = useState(0)
+  const lessonReadRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (activeTab !== 'lesson') { setReadProgress(0); return }
+    const handleScroll = () => {
+      const el = lessonReadRef.current
+      if (!el) return
+      const { top, height } = el.getBoundingClientRect()
+      const total = height - window.innerHeight
+      if (total <= 0) { setReadProgress(100); return }
+      setReadProgress(Math.min(100, Math.max(0, (-top / total) * 100)))
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [activeTab])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -1550,6 +1567,18 @@ export default function LessonPage() {
         </div>
       </div>
 
+      {/* Reading progress bar */}
+      {activeTab === 'lesson' && (
+        <div className="fixed top-0 left-0 right-0 z-50 h-[3px]" style={{ background: '#E2E8F0' }}>
+          <motion.div
+            className="h-full"
+            style={{ background: color }}
+            animate={{ width: `${readProgress}%` }}
+            transition={{ duration: 0.1, ease: 'linear' }}
+          />
+        </div>
+      )}
+
       <div className="max-w-2xl mx-auto px-5 pt-20 pb-24">
         {/* Lesson header */}
         <motion.div
@@ -1678,7 +1707,7 @@ export default function LessonPage() {
 
         {/* ── Lesson tab ── */}
         {activeTab === 'lesson' && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+          <motion.div ref={lessonReadRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
             {lesson ? (
               <>
                 <LessonContent content={lesson.content} color={color} />
