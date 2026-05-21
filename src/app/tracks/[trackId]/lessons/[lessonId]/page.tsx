@@ -27,6 +27,7 @@ import { getLesson, getNextLesson, getTrack } from '@/lib/curriculum'
 import { addLessonToQueue } from '@/lib/srs'
 import type { Lesson, Module, InlineCheck, OutputComparison, ApplyThisWeek } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
+import PromptSandbox from '@/components/PromptSandbox'
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
@@ -205,6 +206,17 @@ function getScenario(trackId: string, lessonId: string): LabScenario {
 
 // ─── Markdown renderer ────────────────────────────────────────────────────────
 
+function extractText(node: React.ReactNode): string {
+  if (typeof node === 'string') return node
+  if (typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(extractText).join('')
+  if (React.isValidElement(node)) {
+    const props = node.props as { children?: React.ReactNode }
+    return extractText(props.children)
+  }
+  return ''
+}
+
 function LessonContent({ content, color }: { content: string; color: string }) {
   return (
     <div>
@@ -282,28 +294,31 @@ function LessonContent({ content, color }: { content: string; color: string }) {
               <span className="flex-1">{children}</span>
             </li>
           ),
-          blockquote: ({ children }) => (
-            <div className="my-4 rounded-2xl overflow-hidden"
-              style={{ border: `1px solid ${color}28` }}>
-              <div className="flex items-center gap-2 px-4 py-2.5"
-                style={{ background: `${color}0A`, borderBottom: `1px solid ${color}18` }}>
-                <Sparkles size={11} color={color} />
-                <span className="text-[10px] font-bold uppercase tracking-[0.1em]"
-                  style={{ color, fontFamily: 'var(--font-sans)' }}>
-                  Prompt example
-                </span>
-                <span className="ml-auto text-[10px]" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
-                  paste into Claude or ChatGPT
-                </span>
-              </div>
-              <div className="px-5 py-4" style={{ background: '#FAFCFF' }}>
-                <div className="text-[13.5px] leading-[1.9] italic"
-                  style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
-                  {children}
+          blockquote: ({ children }) => {
+            const promptText = extractText(children).trim()
+            return (
+              <div className="my-4 rounded-2xl overflow-hidden"
+                style={{ border: `1px solid ${color}28` }}>
+                <div className="flex items-center gap-2 px-4 py-2.5"
+                  style={{ background: `${color}0A`, borderBottom: `1px solid ${color}18` }}>
+                  <Sparkles size={11} color={color} />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.1em]"
+                    style={{ color, fontFamily: 'var(--font-sans)' }}>
+                    Prompt example
+                  </span>
+                  <div className="ml-auto">
+                    <PromptSandbox defaultPrompt={promptText} color={color} />
+                  </div>
+                </div>
+                <div className="px-5 py-4" style={{ background: '#FAFCFF' }}>
+                  <div className="text-[13.5px] leading-[1.9] italic"
+                    style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                    {children}
+                  </div>
                 </div>
               </div>
-            </div>
-          ),
+            )
+          },
           code: ({ children }) => (
             <code className="px-1.5 py-0.5 rounded text-[12px]"
               style={{ background: '#F1F5F9', color: '#2563EB', fontFamily: 'monospace' }}>
