@@ -1291,6 +1291,8 @@ export default function LessonPage() {
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [completed, setCompleted] = useState(false)
   const [exerciseDone, setExerciseDone] = useState(false)
+  const [readCompleted, setReadCompleted] = useState(false)
+  const [xpToast, setXpToast] = useState<{ amount: number; label: string } | null>(null)
   const [isInPath, setIsInPath] = useState(false)
   const { isBookmarked, addBookmark, removeBookmark } = useBookmarks()
   const { getNote, setNote } = useNotes()
@@ -1373,19 +1375,26 @@ export default function LessonPage() {
 
   const progressPct = completed ? 100 : progressPctWithLab
 
+  const showXpToast = (amount: number, label: string) => {
+    setXpToast({ amount, label })
+    setTimeout(() => setXpToast(null), 2800)
+  }
+
   const handleMarkComplete = () => {
     if (completed) return
     completeLesson(lessonId, moduleId, trackId)
     if (lesson?.quiz?.length) {
       addLessonToQueue(lessonId, trackId, lesson.title, lesson.quiz)
     }
+    showXpToast(XP.LESSON_COMPLETE, 'Lesson complete!')
   }
 
   const handleExerciseDone = () => {
     if (exerciseDone) return
     setExerciseDone(true)
     addXP(XP.EXERCISE_COMPLETE, 'Exercise complete')
-    setTimeout(() => setActiveTab('quiz'), 400)
+    showXpToast(XP.EXERCISE_COMPLETE, 'Exercise done!')
+    setTimeout(() => setActiveTab('quiz'), 900)
   }
 
   const handleQuizSubmit = () => {
@@ -1398,8 +1407,10 @@ export default function LessonPage() {
     setQuizSubmitted(true)
     if (allCorrect) {
       completePerfectQuiz()
+      showXpToast(XP.QUIZ_PERFECT, 'Perfect score!')
     } else {
       addXP(XP.QUIZ_PASS, 'Quiz complete')
+      showXpToast(XP.QUIZ_PASS, 'Quiz done!')
     }
   }
 
@@ -1413,7 +1424,19 @@ export default function LessonPage() {
     { id: 'lab',      label: 'Apply it',      shortLabel: 'Apply',    icon: FlaskConical },
   ]
   const currentStepIndex = steps.findIndex(s => s.id === activeTab)
-  const goNext = () => { if (currentStepIndex < steps.length - 1) setActiveTab(steps[currentStepIndex + 1].id) }
+
+  const isStepLocked = (stepIndex: number) => {
+    if (stepIndex === 0) return false
+    if (stepIndex === 1) return !readCompleted
+    if (stepIndex === 2) return !exerciseDone
+    if (stepIndex === 3) return !quizSubmitted
+    return false
+  }
+
+  const goNext = () => {
+    if (activeTab === 'lesson') setReadCompleted(true)
+    if (currentStepIndex < steps.length - 1) setActiveTab(steps[currentStepIndex + 1].id)
+  }
   const goPrev = () => { if (currentStepIndex > 0) setActiveTab(steps[currentStepIndex - 1].id) }
 
   return (
@@ -1578,49 +1601,73 @@ export default function LessonPage() {
         </motion.div>
 
         {/* Step progress indicator */}
-        <div className="flex items-center mb-10">
-          {steps.map((step, i) => {
-            const isDone = i < currentStepIndex
-            const isActive = i === currentStepIndex
-            return (
-              <React.Fragment key={step.id}>
-                <button
-                  onClick={() => setActiveTab(step.id)}
-                  className="flex flex-col items-center gap-2 flex-shrink-0"
-                >
-                  <motion.div
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
-                    animate={{
-                      background: isDone || isActive ? color : '#F3F4F6',
-                      boxShadow: isActive ? `0 0 0 4px ${color}20` : '0 0 0 0px transparent',
-                    }}
-                    transition={{ duration: 0.2 }}
+        <div className="mb-10 px-1">
+          {/* Step label header */}
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5"
+                style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)' }}>
+                Step {currentStepIndex + 1} of {steps.length}
+              </p>
+              <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                {steps[currentStepIndex].label}
+              </p>
+            </div>
+            <span className="text-xs px-2.5 py-1 rounded-full font-semibold"
+              style={{ background: `${color}12`, color, fontFamily: 'var(--font-sans)' }}>
+              {Math.round(((currentStepIndex) / steps.length) * 100)}% done
+            </span>
+          </div>
+          <div className="flex items-center">
+            {steps.map((step, i) => {
+              const isDone = i < currentStepIndex
+              const isActive = i === currentStepIndex
+              const locked = isStepLocked(i)
+              return (
+                <React.Fragment key={step.id}>
+                  <button
+                    onClick={() => !locked && setActiveTab(step.id)}
+                    disabled={locked && !isDone}
+                    title={locked && !isDone ? `Complete "${steps[i - 1]?.label}" first` : step.label}
+                    className="flex flex-col items-center gap-2 flex-shrink-0 group"
+                    style={{ cursor: locked && !isDone ? 'not-allowed' : 'pointer' }}
                   >
-                    {isDone
-                      ? <Check size={14} color="#fff" strokeWidth={2.5} />
-                      : <step.icon size={15} color={isActive ? '#fff' : '#9CA3AF'} />
-                    }
-                  </motion.div>
-                  <span
-                    className="text-[11px] font-semibold hidden sm:block transition-colors"
-                    style={{
-                      color: isActive ? '#0F172A' : isDone ? color : '#CBD5E1',
-                      fontFamily: 'var(--font-sans)',
-                    }}
-                  >
-                    {step.shortLabel}
-                  </span>
-                </button>
-                {i < steps.length - 1 && (
-                  <motion.div
-                    className="flex-1 h-[2px] mx-3 mb-[22px] rounded-full"
-                    animate={{ background: i < currentStepIndex ? color : '#E5E7EB' }}
-                    transition={{ duration: 0.3 }}
-                  />
-                )}
-              </React.Fragment>
-            )
-          })}
+                    <motion.div
+                      className="w-10 h-10 rounded-full flex items-center justify-center relative"
+                      animate={{
+                        background: isDone ? color : isActive ? color : locked ? '#F3F4F6' : `${color}20`,
+                        boxShadow: isActive ? `0 0 0 4px ${color}20` : '0 0 0 0px transparent',
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {isDone
+                        ? <Check size={14} color="#fff" strokeWidth={2.5} />
+                        : locked
+                        ? <Lock size={13} color="#CBD5E1" />
+                        : <step.icon size={15} color={isActive ? '#fff' : color} />
+                      }
+                    </motion.div>
+                    <span
+                      className="text-[11px] font-semibold hidden sm:block transition-colors"
+                      style={{
+                        color: isActive ? '#0F172A' : isDone ? color : locked ? '#D1D5DB' : '#9CA3AF',
+                        fontFamily: 'var(--font-sans)',
+                      }}
+                    >
+                      {step.shortLabel}
+                    </span>
+                  </button>
+                  {i < steps.length - 1 && (
+                    <motion.div
+                      className="flex-1 h-[2px] mx-3 mb-[22px] rounded-full"
+                      animate={{ background: i < currentStepIndex ? color : '#E5E7EB' }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </React.Fragment>
+              )
+            })}
+          </div>
         </div>
 
         {/* ── Lesson tab ── */}
@@ -1692,26 +1739,46 @@ export default function LessonPage() {
             )}
 
             {/* Ready to practise CTA */}
-            <div className="mt-10 pt-8" style={{ borderTop: '1px solid #F1F5F9' }}>
-              <div className="rounded-2xl p-6 text-center"
-                style={{ background: `linear-gradient(135deg, ${color}08, ${color}04)`, border: `1px solid ${color}20` }}>
-                <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3"
-                  style={{ background: `${color}15` }}>
-                  <Dumbbell size={18} color={color} />
+            <div className="mt-10 pt-8" style={{ borderTop: `2px solid ${color}15` }}>
+              <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+                className="rounded-2xl overflow-hidden"
+                style={{ border: `1.5px solid ${color}30`, boxShadow: `0 8px 32px ${color}12` }}>
+                <div className="px-6 pt-6 pb-5"
+                  style={{ background: `linear-gradient(135deg, ${color}10, ${color}05)` }}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0"
+                      style={{ background: color }}>
+                      <Dumbbell size={20} color="#fff" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-widest mb-0.5"
+                        style={{ color, fontFamily: 'var(--font-sans)' }}>Next step</p>
+                      <p className="text-base font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                        Put it into practice
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-[1.65] mb-5" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                    You've read the lesson — now apply it in a guided hands-on exercise. It takes about 5 minutes.
+                  </p>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={goNext}
+                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-bold text-white transition-all"
+                    style={{
+                      background: `linear-gradient(135deg, ${color}, ${color}cc)`,
+                      boxShadow: `0 6px 24px ${color}35`,
+                      fontFamily: 'var(--font-sans)',
+                    }}>
+                    Start practising <ArrowRight size={15} />
+                  </motion.button>
                 </div>
-                <p className="text-sm font-bold mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                  Ready to put it into practice?
-                </p>
-                <p className="text-xs mb-4 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                  Apply what you just learned with a hands-on exercise.
-                </p>
-                <button
-                  onClick={goNext}
-                  className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
-                  style={{ background: color, color: '#fff', fontFamily: 'var(--font-sans)' }}>
-                  Start practising <ArrowRight size={14} />
-                </button>
-              </div>
+              </motion.div>
             </div>
 
           </motion.div>
@@ -2117,32 +2184,64 @@ export default function LessonPage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
             <PromptLab scenario={scenario} color={color} />
 
-            {/* Step nav */}
-            <div className="flex items-center justify-between mt-8 pt-5" style={{ borderTop: '1px solid #F1F5F9' }}>
-              <button
-                onClick={goPrev}
-                className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700"
-                style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)' }}
-              >
-                <ArrowLeft size={13} /> Test
-              </button>
+            {/* Completion + next lesson */}
+            <div className="mt-10 pt-8 space-y-3" style={{ borderTop: `2px solid ${color}15` }}>
+              {!completed && (
+                <motion.button
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  onClick={handleMarkComplete}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all"
+                  style={{ background: '#D1FAE5', color: '#059669', border: '1px solid #A7F3D0', fontFamily: 'var(--font-sans)' }}>
+                  <CheckCircle2 size={15} /> Mark lesson complete (+{XP.LESSON_COMPLETE} XP)
+                </motion.button>
+              )}
               {nextLesson ? (
-                <Link
-                  href={`/tracks/${trackId}/lessons/${nextLesson.id}`}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90"
-                  style={{ background: color, color: '#fff', fontFamily: 'var(--font-sans)' }}
-                >
-                  Next Lesson <ArrowRight size={14} />
-                </Link>
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                  className="rounded-2xl overflow-hidden"
+                  style={{ border: `1.5px solid ${color}30`, boxShadow: `0 8px 32px ${color}12` }}>
+                  <div className="px-6 pt-5 pb-5"
+                    style={{ background: `linear-gradient(135deg, ${color}10, ${color}05)` }}>
+                    <p className="text-[10px] font-bold uppercase tracking-widest mb-2"
+                      style={{ color, fontFamily: 'var(--font-sans)' }}>Up next</p>
+                    <h3 className="text-base font-bold mb-1 leading-snug"
+                      style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                      {nextLesson.title}
+                    </h3>
+                    <p className="text-xs mb-4 flex items-center gap-1.5"
+                      style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)' }}>
+                      <Clock size={11} /> {nextLesson.duration ?? 15} min
+                    </p>
+                    <Link
+                      href={`/tracks/${trackId}/lessons/${nextLesson.id}`}
+                      className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-sm text-white transition-all hover:opacity-90"
+                      style={{
+                        background: `linear-gradient(135deg, ${color}, ${color}cc)`,
+                        boxShadow: `0 6px 24px ${color}35`,
+                        fontFamily: 'var(--font-sans)',
+                      }}>
+                      Start next lesson <ArrowRight size={15} />
+                    </Link>
+                  </div>
+                </motion.div>
               ) : (
                 <Link
                   href={`/tracks/${trackId}`}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm"
-                  style={{ background: `${color}10`, color, border: `1px solid ${color}20`, fontFamily: 'var(--font-sans)' }}
-                >
-                  Track overview
+                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-semibold text-sm"
+                  style={{ background: `${color}10`, color, border: `1px solid ${color}20`, fontFamily: 'var(--font-sans)' }}>
+                  Back to track overview
                 </Link>
               )}
+              <button
+                onClick={goPrev}
+                className="flex items-center gap-1.5 text-sm pt-1 transition-colors hover:text-slate-700 mx-auto"
+                style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)', display: 'flex' }}>
+                <ArrowLeft size={13} /> Back to quiz
+              </button>
             </div>
           </motion.div>
         )}
@@ -2163,6 +2262,37 @@ export default function LessonPage() {
           />
         )}
       </AnimatePresence>
+      {/* XP toast */}
+      <AnimatePresence>
+        {xpToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 340, damping: 22 }}
+            className="fixed bottom-6 left-1/2 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl"
+            style={{
+              transform: 'translateX(-50%)',
+              background: 'linear-gradient(135deg, #0F172A, #1E293B)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
+              border: '1px solid rgba(255,255,255,0.08)',
+            }}>
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: color }}>
+              <Zap size={16} color="#fff" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-white" style={{ fontFamily: 'var(--font-sans)' }}>
+                {xpToast.label}
+              </p>
+              <p className="text-xs font-semibold" style={{ color: color, fontFamily: 'var(--font-sans)' }}>
+                +{xpToast.amount} XP earned
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <AITutor
         ref={tutorRef}
