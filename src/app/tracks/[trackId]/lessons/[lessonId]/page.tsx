@@ -211,13 +211,14 @@ function LessonContent({ content, color }: { content: string; color: string }) {
       <ReactMarkdown
         components={{
           h2: ({ children }) => (
-            <h2 className="text-[11px] font-semibold uppercase tracking-widest mt-8 mb-3 first:mt-0"
-              style={{ color, fontFamily: 'var(--font-sans)', letterSpacing: '0.08em' }}>
-              {children}
+            <h2 className="flex items-center gap-3 mt-10 mb-4 first:mt-0"
+              style={{ fontFamily: 'var(--font-sans)' }}>
+              <span className="flex-shrink-0 w-1 h-5 rounded-full" style={{ background: color }} />
+              <span className="text-base font-bold" style={{ color: '#0F172A' }}>{children}</span>
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-sm font-semibold mt-5 mb-1.5"
+            <h3 className="text-[15px] font-semibold mt-6 mb-2"
               style={{ fontFamily: 'var(--font-sans)', color: '#1E293B' }}>
               {children}
             </h3>
@@ -231,9 +232,9 @@ function LessonContent({ content, color }: { content: string; color: string }) {
 
             if (isCallout) {
               return (
-                <div className="my-5 pl-4 py-3 pr-3"
-                  style={{ borderLeft: `2px solid ${color}`, background: `${color}06` }}>
-                  <p className="text-sm leading-[1.8]" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                <div className="my-6 pl-4 py-4 pr-4 rounded-r-xl"
+                  style={{ borderLeft: `3px solid ${color}`, background: `${color}07` }}>
+                  <p className="text-[15px] leading-[1.8]" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
                     {children}
                   </p>
                 </div>
@@ -241,7 +242,7 @@ function LessonContent({ content, color }: { content: string; color: string }) {
             }
 
             return (
-              <p className="text-sm leading-[1.8] mb-4"
+              <p className="text-[15px] leading-[1.85] mb-5"
                 style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
                 {children}
               </p>
@@ -254,21 +255,21 @@ function LessonContent({ content, color }: { content: string; color: string }) {
             <em style={{ color, fontStyle: 'italic' }}>{children}</em>
           ),
           ul: ({ children }) => (
-            <ul className="my-4 space-y-2">{children}</ul>
+            <ul className="my-5 space-y-3">{children}</ul>
           ),
           ol: ({ children }) => (
-            <ol className="my-4 space-y-2">{children}</ol>
+            <ol className="my-5 space-y-3">{children}</ol>
           ),
           li: ({ children, ...props }: React.LiHTMLAttributes<HTMLLIElement> & { ordered?: boolean; index?: number }) => (
-            <li className="flex items-start gap-2.5 text-sm leading-[1.8]"
+            <li className="flex items-start gap-3 text-[15px] leading-[1.8]"
               style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
               {props.ordered ? (
-                <span className="flex-shrink-0 text-xs font-semibold mt-[3px] min-w-[1.25rem]"
-                  style={{ color }}>
-                  {(props.index ?? 0) + 1}.
+                <span className="flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold mt-[1px]"
+                  style={{ color: '#fff', background: color, fontFamily: 'var(--font-sans)' }}>
+                  {(props.index ?? 0) + 1}
                 </span>
               ) : (
-                <span className="flex-shrink-0 text-[9px] mt-[7px]" style={{ color }}>■</span>
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-[10px]" style={{ background: color }} />
               )}
               <span className="flex-1">{children}</span>
             </li>
@@ -1490,19 +1491,12 @@ export default function LessonPage() {
           )}
 
           <div className="flex-1" />
-          <div className="flex items-center gap-3 flex-shrink-0">
-            {user && (
-              <Link href="/dashboard" title="Dashboard"
-                className="hidden sm:flex items-center gap-1 text-xs font-medium transition-colors hover:text-slate-700"
-                style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                <Zap size={12} /> Dashboard
-              </Link>
-            )}
+          <div className="flex items-center gap-1 flex-shrink-0">
             <button
               onClick={() => setSearchOpen(true)}
               title="Search lessons (⌘K)"
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', color: '#CBD5E1', transition: 'color 0.15s' }}
-              className="hover:!text-slate-500"
+              className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-slate-100"
+              style={{ color: '#CBD5E1' }}
             >
               <Search size={15} />
             </button>
@@ -1510,23 +1504,11 @@ export default function LessonPage() {
               <button
                 onClick={() => isBookmarked(lessonId) ? removeBookmark(lessonId) : addBookmark(lessonId, trackId, lesson.title)}
                 title={isBookmarked(lessonId) ? 'Remove bookmark' : 'Bookmark this lesson'}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', transition: 'color 0.15s' }}
+                className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors hover:bg-slate-100"
               >
                 <Bookmark size={15} color={isBookmarked(lessonId) ? color : '#CBD5E1'} fill={isBookmarked(lessonId) ? color : 'none'} />
               </button>
             )}
-            <LevelBar />
-            <button
-              onClick={handleMarkComplete}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
-              style={
-                completed
-                  ? { background: '#D1FAE5', color: '#059669', border: '1px solid #A7F3D0', fontFamily: 'var(--font-sans)' }
-                  : { background: `${color}10`, color, border: `1px solid ${color}25`, fontFamily: 'var(--font-sans)' }
-              }
-            >
-              {completed ? <><CheckCircle2 size={12} /> Done</> : 'Mark complete'}
-            </button>
           </div>
         </div>
       </div>
@@ -1539,63 +1521,50 @@ export default function LessonPage() {
           transition={{ duration: 0.45, ease: easing }}
           className="mb-7"
         >
-          <div className="flex items-center gap-2 mb-2.5 flex-wrap">
-            {isInPath ? (
-              <span className="flex items-center gap-1.5 text-xs font-medium px-2 py-0.5 rounded"
-                style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                <Sparkles size={9} /> From your AI path
-              </span>
-            ) : (
-              <span className="text-xs font-medium px-2 py-0.5 rounded"
-                style={{ background: '#FEF9C3', color: '#A16207', fontFamily: 'var(--font-sans)' }}>
-                Sample lesson
-              </span>
-            )}
+          {/* Meta row: colored dot · module · duration · personalise */}
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color }} />
             {module && (
-              <span className="text-xs font-medium px-2 py-0.5 rounded"
-                style={{ background: `${color}10`, color, fontFamily: 'var(--font-sans)' }}>
+              <span className="text-xs font-medium" style={{ color, fontFamily: 'var(--font-sans)' }}>
                 {module.title}
               </span>
             )}
-            <span className="flex items-center gap-1 text-xs" style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)' }}>
-              <Clock size={11} /> {lesson?.duration ?? 15} min
+            <span className="text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>·</span>
+            <span className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+              <Clock size={11} /> {lesson?.duration ?? 15} min read
             </span>
+            {!isInPath && (
+              <>
+                <span className="text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>·</span>
+                <Link href="/assessment"
+                  className="text-xs font-medium"
+                  style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                  Personalise for your role →
+                </Link>
+              </>
+            )}
           </div>
-          <h1 className="text-[1.55rem] font-bold mb-2 leading-snug"
+
+          <h1 className="text-2xl sm:text-3xl font-bold mb-3 leading-snug"
             style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
             {lesson?.title ?? lessonId}
           </h1>
+
           {lesson?.description && (
-            <p className="text-sm leading-[1.7] mb-4" style={{ color: '#6B7280', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-base leading-[1.7] mb-4" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
               {lesson.description}
             </p>
           )}
 
-          {/* Track outcome — constant reminder of why this matters */}
+          {/* Track outcome */}
           {trackOutcomes[trackId] && (
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg mb-4"
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg mb-1"
               style={{ background: `${color}07`, border: `1px solid ${color}18` }}>
               <Zap size={11} color={color} className="flex-shrink-0" />
               <p className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                 <span className="font-semibold" style={{ color }}>In practice: </span>
                 {trackOutcomes[trackId]}
               </p>
-            </div>
-          )}
-
-          {!isInPath && (
-            <div className="flex items-start sm:items-center gap-3 px-4 py-3 rounded-lg"
-              style={{ background: '#EFF6FF', border: '1px solid #DBEAFE' }}>
-              <Sparkles size={13} style={{ color: '#2563EB', flexShrink: 0, marginTop: 1 }} />
-              <p className="text-xs leading-relaxed flex-1" style={{ color: '#1D4ED8', fontFamily: 'var(--font-sans)' }}>
-                <span className="font-semibold">Your version of this lesson adapts to your role.</span>{' '}
-                After the 3-minute assessment, examples, scenarios, and exercises are tailored specifically to your job function and experience level.
-              </p>
-              <Link href="/assessment"
-                className="text-xs font-semibold flex-shrink-0 whitespace-nowrap"
-                style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                Personalise →
-              </Link>
             </div>
           )}
         </motion.div>
@@ -1677,29 +1646,32 @@ export default function LessonPage() {
               <>
                 <LessonContent content={lesson.content} color={color} />
 
-                {lesson.outputComparison && (
-                  <div className="mt-8">
-                    <OutputComparisonCard data={lesson.outputComparison} color={color} />
-                  </div>
-                )}
-
-                {lesson.inlineCheck && (
-                  <div className="mt-6">
-                    <InlineCheckCard data={lesson.inlineCheck} color={color} />
+                {(lesson.outputComparison || lesson.inlineCheck) && (
+                  <div className="mt-10 pt-8" style={{ borderTop: '1px solid #F1F5F9' }}>
+                    {lesson.outputComparison && (
+                      <div className="mb-6">
+                        <OutputComparisonCard data={lesson.outputComparison} color={color} />
+                      </div>
+                    )}
+                    {lesson.inlineCheck && (
+                      <InlineCheckCard data={lesson.inlineCheck} color={color} />
+                    )}
                   </div>
                 )}
 
                 {/* Key takeaways */}
-                <div className="mt-8 pt-6" style={{ borderTop: '1px solid #F1F5F9' }}>
-                  <p className="text-[11px] font-semibold uppercase tracking-widest mb-3"
-                    style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)', letterSpacing: '0.08em' }}>
+                <div className="mt-10 pt-8" style={{ borderTop: '1px solid #F1F5F9' }}>
+                  <h3 className="text-base font-bold mb-4" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                     Key Takeaways
-                  </p>
-                  <ul className="space-y-2.5">
+                  </h3>
+                  <ul className="space-y-3">
                     {lesson.keyTakeaways.map((point, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-sm leading-[1.7]"
+                      <li key={i} className="flex items-start gap-3 text-[15px] leading-[1.75]"
                         style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                        <span className="flex-shrink-0 text-[9px] mt-[7px]" style={{ color }}>■</span>
+                        <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold mt-0.5"
+                          style={{ background: `${color}15`, color }}>
+                          {i + 1}
+                        </span>
                         <span>{point}</span>
                       </li>
                     ))}
@@ -1713,12 +1685,11 @@ export default function LessonPage() {
                 )}
 
                 {/* Reflection */}
-                <div className="mt-6 pt-6" style={{ borderTop: '1px solid #F1F5F9' }}>
-                  <p className="text-[11px] font-semibold uppercase tracking-widest mb-2"
-                    style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)', letterSpacing: '0.08em' }}>
+                <div className="mt-8 pt-8" style={{ borderTop: '1px solid #F1F5F9' }}>
+                  <h3 className="text-base font-bold mb-2" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
                     Before you practise
-                  </p>
-                  <p className="text-sm mb-3 leading-[1.7]" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                  </h3>
+                  <p className="text-[15px] mb-4 leading-[1.75]" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
                     {lesson.reflection ?? 'What is one specific task in your current role where you could apply what you just learned?'}
                   </p>
                   <textarea
