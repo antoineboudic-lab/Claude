@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, RotateCcw, X, Loader2 } from 'lucide-react'
+import { Play, RotateCcw, X, Loader2, Copy, Check } from 'lucide-react'
 
 interface Props {
   defaultPrompt: string
@@ -14,7 +14,15 @@ export default function PromptSandbox({ defaultPrompt, color }: Props) {
   const [prompt, setPrompt] = useState(defaultPrompt)
   const [response, setResponse] = useState('')
   const [loading, setLoading] = useState(false)
+  const [copied, setCopied] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
+
+  function copy() {
+    navigator.clipboard.writeText(prompt).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    })
+  }
 
   const isDirty = prompt !== defaultPrompt
 
@@ -69,14 +77,25 @@ export default function PromptSandbox({ defaultPrompt, color }: Props) {
 
   if (!open) {
     return (
-      <button
-        onClick={() => setOpen(true)}
-        className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-lg transition-all hover:opacity-80"
-        style={{ background: `${color}15`, color, border: `1px solid ${color}30` }}
-      >
-        <Play size={9} fill="currentColor" />
-        Try it
-      </button>
+      <div className="flex items-center gap-1.5">
+        <button
+          onClick={copy}
+          className="flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-lg transition-all hover:opacity-80"
+          style={{ background: '#F1F5F9', color: '#64748B', border: '1px solid #E2E8F0' }}
+          title="Copy prompt"
+        >
+          {copied ? <Check size={9} /> : <Copy size={9} />}
+          {copied ? 'Copied!' : 'Copy'}
+        </button>
+        <button
+          onClick={() => setOpen(true)}
+          className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-lg transition-all hover:opacity-80"
+          style={{ background: `${color}15`, color, border: `1px solid ${color}30` }}
+        >
+          <Play size={9} fill="currentColor" />
+          Try it
+        </button>
+      </div>
     )
   }
 
@@ -99,9 +118,20 @@ export default function PromptSandbox({ defaultPrompt, color }: Props) {
             AI Sandbox
           </span>
           <span className="text-[10px]" style={{ color: '#94A3B8' }}>— edit the prompt, then run it</span>
-          <button onClick={close} className="ml-auto hover:opacity-60 transition-opacity">
-            <X size={12} style={{ color: '#94A3B8' }} />
-          </button>
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              onClick={copy}
+              className="flex items-center gap-1 text-[10px] font-medium transition-opacity hover:opacity-70"
+              style={{ color: '#94A3B8' }}
+              title="Copy prompt"
+            >
+              {copied ? <Check size={10} /> : <Copy size={10} />}
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+            <button onClick={close} className="hover:opacity-60 transition-opacity">
+              <X size={12} style={{ color: '#94A3B8' }} />
+            </button>
+          </div>
         </div>
 
         <div className="p-4 space-y-3">
