@@ -1399,25 +1399,19 @@ export default function LessonPage() {
     if (activeTab !== 'lesson') { setHighlight(null); return }
     function onMouseUp() {
       const sel = window.getSelection()
-      if (!sel || sel.isCollapsed || !sel.rangeCount) return
+      if (!sel || sel.isCollapsed || !sel.rangeCount) { setHighlight(null); return }
       const text = sel.toString().trim()
-      if (text.length < 5) return
+      if (text.length < 5) { setHighlight(null); return }
       const range = sel.getRangeAt(0)
-      if (!lessonReadRef.current?.contains(range.commonAncestorContainer)) return
+      if (!lessonReadRef.current?.contains(range.commonAncestorContainer)) { setHighlight(null); return }
       setHighlight({ text, rect: range.getBoundingClientRect() })
       setHighlightSaved(false)
     }
-    function onSelectionChange() {
-      const sel = window.getSelection()
-      if (!sel || sel.isCollapsed) setHighlight(null)
-    }
     document.addEventListener('mouseup', onMouseUp)
     document.addEventListener('touchend', onMouseUp)
-    document.addEventListener('selectionchange', onSelectionChange)
     return () => {
       document.removeEventListener('mouseup', onMouseUp)
       document.removeEventListener('touchend', onMouseUp)
-      document.removeEventListener('selectionchange', onSelectionChange)
     }
   }, [activeTab])
 
