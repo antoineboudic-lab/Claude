@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, forwardRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Mail, Lock, User, Eye, EyeOff, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
+import Link from 'next/link'
 import Logo from '@/components/Logo'
 import type { LucideIcon } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
@@ -362,9 +363,9 @@ export function AuthModal() {
                         {isSignUp && (
                           <p className="text-center text-xs pt-1" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                             {t('terms')}{' '}
-                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>{t('termsLink')}</span>
+                            <Link href="/terms" target="_blank" className="underline hover:text-slate-500 transition-colors" style={{ color: '#64748B' }}>{t('termsLink')}</Link>
                             {' '}{t('and')}{' '}
-                            <span className="underline cursor-pointer hover:text-slate-500" style={{ color: '#64748B' }}>{t('privacyLink')}</span>.
+                            <Link href="/privacy" target="_blank" className="underline hover:text-slate-500 transition-colors" style={{ color: '#64748B' }}>{t('privacyLink')}</Link>.
                           </p>
                         )}
 
