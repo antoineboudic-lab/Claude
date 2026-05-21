@@ -978,6 +978,61 @@ function PromptLab({ scenario, color }: { scenario: LabScenario; color: string }
   )
 }
 
+// ─── Lesson Rating ────────────────────────────────────────────────────────────
+
+function LessonRating({ lessonId, trackId, lessonTitle }: { lessonId: string; trackId: string; lessonTitle: string }) {
+  const storageKey = `lesson-rating-${lessonId}`
+  const [rating, setRating] = useState<'up' | 'down' | null>(() => {
+    if (typeof window === 'undefined') return null
+    return (localStorage.getItem(storageKey) as 'up' | 'down') ?? null
+  })
+  const [sent, setSent] = useState(rating !== null)
+
+  async function submit(value: 'up' | 'down') {
+    if (sent) return
+    setRating(value)
+    setSent(true)
+    localStorage.setItem(storageKey, value)
+    await fetch('/api/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'other',
+        page: `/${trackId}/lessons/${lessonId}`,
+        description: `Lesson rating: ${value === 'up' ? '👍' : '👎'} — "${lessonTitle}"`,
+        email: '',
+      }),
+    })
+  }
+
+  return (
+    <div className="mt-8 pt-6 flex items-center gap-3" style={{ borderTop: '1px solid #F1F5F9' }}>
+      <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+        {sent ? (rating === 'up' ? 'Thanks for the feedback!' : 'Thanks — we\'ll improve it.') : 'Was this lesson helpful?'}
+      </span>
+      {!sent && (
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={() => submit('up')}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-base transition-all hover:scale-110 active:scale-95"
+            style={{ background: '#F1F5F9' }}
+            aria-label="Thumbs up"
+          >👍</button>
+          <button
+            onClick={() => submit('down')}
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-base transition-all hover:scale-110 active:scale-95"
+            style={{ background: '#F1F5F9' }}
+            aria-label="Thumbs down"
+          >👎</button>
+        </div>
+      )}
+      {sent && (
+        <span className="text-base">{rating === 'up' ? '👍' : '👎'}</span>
+      )}
+    </div>
+  )
+}
+
 // ─── Output Comparison ───────────────────────────────────────────────────────
 
 function OutputComparisonCard({ data, color }: { data: OutputComparison; color: string }) {
@@ -1770,6 +1825,9 @@ export default function LessonPage() {
                     }}
                   />
                 </div>
+
+                {/* Lesson rating */}
+                <LessonRating lessonId={lessonId} trackId={trackId} lessonTitle={lesson.title} />
               </>
             ) : (
               <FallbackLesson lessonId={lessonId} color={color} />
