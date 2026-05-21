@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import {
@@ -17,11 +18,6 @@ import { useGame } from '@/context/GameContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import Logo from '@/components/Logo'
 import GlobalSearch from '@/components/GlobalSearch'
-import { getAllTracks, getTrack } from '@/lib/curriculum'
-import type { TrackId } from '@/lib/curriculum/types'
-import { loadLatestAssessment } from '@/lib/supabase/db'
-import { getLevelForXP } from '@/lib/gamification'
-import type { AssessmentResult } from '@/lib/assessment/types'
 
 // ─── Animation ────────────────────────────────────────────────────────────────
 
@@ -1927,334 +1923,19 @@ function Footer() {
   )
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
-// ─── Logged-in home ───────────────────────────────────────────────────────────
-
-const TRACK_EMOJI: Record<string, string> = {
-  marketing: '📣', finance: '📊', hr: '🤝', sales: '🎯',
-  operations: '⚙️', leadership: '🧭', legal: '⚖️',
-  product: '📦', customer: '🎧', consulting: '📈',
-}
-
-function LoggedInHome() {
-  const { user, signOut } = useAuth()
-  const { state } = useGame()
-  const [mounted, setMounted] = useState(false)
-  const [assessment, setAssessment] = useState<AssessmentResult | null>(null)
-  const [searchOpen, setSearchOpen] = useState(false)
-  const tLoggedIn = useTranslations('home.loggedIn')
-  const tNav = useTranslations('nav')
-
-  useEffect(() => { setMounted(true) }, [])
-
-  useEffect(() => {
-    if (!mounted || !user) return
-    loadLatestAssessment(user.id)
-      .then(r => {
-        if (r) { setAssessment(r); return }
-        const raw = localStorage.getItem('opuslearn-assessment')
-        if (raw) setAssessment(JSON.parse(raw))
-      })
-      .catch(() => {
-        try {
-          const raw = localStorage.getItem('opuslearn-assessment')
-          if (raw) setAssessment(JSON.parse(raw))
-        } catch {}
-      })
-  }, [mounted, user])
-
-  // Find the next lesson to continue across all started tracks
-  const continueTarget = useMemo(() => {
-    if (!mounted) return null
-    const allTracks = getAllTracks()
-    // First pass: find first uncompleted lesson in a started track
-    for (const track of allTracks) {
-      const started = state.completedLessons.some(l => l.startsWith(track.id + '-'))
-      if (!started) continue
-      for (const mod of track.modules) {
-        for (const lesson of mod.lessons) {
-          if (!state.completedLessons.includes(lesson.id)) {
-            return { trackId: track.id, lessonId: lesson.id, lessonTitle: lesson.title, trackTitle: track.title, trackColor: track.color, moduleTitle: mod.title }
-          }
-        }
-      }
-    }
-    // No started tracks — use assessment primary track first lesson
-    if (assessment?.primaryTrackId) {
-      const track = getTrack(assessment.primaryTrackId as TrackId)
-      const firstLesson = track?.modules[0]?.lessons[0]
-      if (track && firstLesson) {
-        return { trackId: track.id, lessonId: firstLesson.id, lessonTitle: firstLesson.title, trackTitle: track.title, trackColor: track.color, moduleTitle: track.modules[0].title }
-      }
-    }
-    return null
-  }, [mounted, state.completedLessons, assessment])
-
-  // Started tracks with progress
-  const trackProgress = useMemo(() => {
-    if (!mounted) return []
-    return getAllTracks()
-      .map(t => {
-        const total = t.modules.reduce((s, m) => s + m.lessons.length, 0)
-        const done = state.completedLessons.filter(l => l.startsWith(t.id + '-')).length
-        return { id: t.id, title: t.title, color: t.color, done, total, pct: Math.round((done / total) * 100) }
-      })
-      .filter(t => t.done > 0)
-      .sort((a, b) => b.done - a.done)
-  }, [mounted, state.completedLessons])
-
-  const displayName = user?.user_metadata?.full_name?.split(' ')[0] ?? user?.email?.split('@')[0] ?? 'there'
-  const initials = user?.user_metadata?.full_name
-    ? user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
-    : user?.email?.slice(0, 2).toUpperCase() ?? '?'
-
-  const level = mounted ? getLevelForXP(state.xp) : null
-  const today = new Date().toISOString().split('T')[0]
-  const studiedToday = state.lastActiveDate === today
-  const streakAtRisk = state.streak > 0 && !studiedToday
-  const hour = new Date().getHours()
-  const timeOfDay = hour < 12 ? tLoggedIn('goodMorning') : hour < 17 ? tLoggedIn('goodAfternoon') : tLoggedIn('goodEvening')
-
-  const ff = 'var(--font-sans)'
-
-  return (
-    <div style={{ minHeight: '100vh', background: '#F8FAFC', fontFamily: ff }}>
-      {/* Nav */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 24px', height: 54, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" style={{ textDecoration: 'none' }}>
-            <Logo size="sm" />
-          </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <button
-              onClick={() => setSearchOpen(true)}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 10px', borderRadius: 8, border: '1px solid #E2E8F0', background: '#EFF6FF', cursor: 'pointer', fontSize: 12, color: '#64748B', fontFamily: ff }}
-            >
-              <Search size={11} /> {tNav('search')}
-              <kbd style={{ fontSize: 10, color: '#CBD5E1', background: '#E2E8F0', borderRadius: 3, padding: '1px 4px', fontFamily: ff }}>⌘K</kbd>
-            </button>
-            <Link href="/tracks" style={{ fontSize: 12, color: '#64748B', textDecoration: 'none', padding: '5px 10px', borderRadius: 8, transition: 'background 0.15s' }}>{tNav('allTracks')}</Link>
-            <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 12, color: '#64748B', textDecoration: 'none', padding: '5px 10px', borderRadius: 8 }}>
-              <LayoutDashboard size={12} /> {tNav('dashboard')}
-            </Link>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 4, paddingLeft: 12, borderLeft: '1px solid #E2E8F0' }}>
-              <div style={{ width: 28, height: 28, borderRadius: 8, background: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 10, fontWeight: 700, flexShrink: 0 }}>
-                {initials}
-              </div>
-              <button onClick={signOut} style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#94A3B8', background: 'none', border: 'none', cursor: 'pointer', fontFamily: ff }}>
-                <LogOut size={11} /> {tNav('signOut')}
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Content */}
-      <div style={{ maxWidth: 760, margin: '0 auto', padding: '52px 24px 96px' }}>
-
-        {/* Greeting */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          style={{ marginBottom: 36 }}
-        >
-          <p style={{ fontSize: 12, color: '#94A3B8', marginBottom: 6, letterSpacing: '0.02em' }}>{timeOfDay}</p>
-          <h1 style={{ fontSize: 30, fontWeight: 900, color: '#0F172A', margin: 0, letterSpacing: '-0.02em', lineHeight: 1.15 }}>
-            {displayName}.
-          </h1>
-          <p style={{ marginTop: 8, fontSize: 14, color: '#64748B', lineHeight: 1.6 }}>
-            {state.completedLessons.length > 0
-              ? tLoggedIn('lessonsCompleted', { count: state.completedLessons.length, plural: state.completedLessons.length !== 1 ? 's' : '' })
-              : assessment
-              ? tLoggedIn('pathReady')
-              : tLoggedIn('buildPathDesc')}
-          </p>
-        </motion.div>
-
-        {/* Stats row */}
-        {mounted && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08, duration: 0.38 }}
-            style={{ display: 'flex', gap: 10, marginBottom: 32, flexWrap: 'wrap' }}
-          >
-            {[
-              { icon: Zap, value: `${state.xp} XP`, color: '#2563EB', alert: false },
-              { icon: Flame, value: `${state.streak}d streak`, color: '#F59E0B', alert: streakAtRisk },
-              { icon: CheckCircle2, value: `${state.completedLessons.length} lessons`, color: '#10B981', alert: false },
-              ...(level ? [{ icon: Award, value: level.title, color: level.color, alert: false }] : []),
-            ].map((s, i) => (
-              <div key={i} style={{
-                display: 'flex', alignItems: 'center', gap: 7,
-                padding: '8px 14px', borderRadius: 10,
-                background: s.alert ? '#FFFBEB' : '#FFFFFF',
-                border: `1px solid ${s.alert ? '#FDE68A' : '#E2E8F0'}`,
-                boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-              }}>
-                <s.icon size={13} style={{ color: s.color, flexShrink: 0 }} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>{s.value}</span>
-              </div>
-            ))}
-            {streakAtRisk && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 10, background: '#FFFBEB', border: '1px solid #FDE68A' }}>
-                <span style={{ fontSize: 12, color: '#92400E', fontWeight: 500 }}>{tLoggedIn('studyToProtect')}</span>
-              </div>
-            )}
-          </motion.div>
-        )}
-
-        {/* Continue card */}
-        {mounted && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.14, duration: 0.42 }}
-            style={{ marginBottom: 32 }}
-          >
-            {continueTarget ? (
-              <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-                {/* Track colour bar */}
-                <div style={{ height: 3, background: continueTarget.trackColor }} />
-                <div style={{ padding: '24px 28px' }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16 }}>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-                        <span style={{ fontSize: 18 }}>{TRACK_EMOJI[continueTarget.trackId] ?? '🎓'}</span>
-                        <div>
-                          <span style={{ fontSize: 11, fontWeight: 600, color: continueTarget.trackColor, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
-                            {continueTarget.trackTitle} · {continueTarget.moduleTitle}
-                          </span>
-                        </div>
-                      </div>
-                      <p style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: 0, lineHeight: 1.3, letterSpacing: '-0.01em' }}>
-                        {continueTarget.lessonTitle}
-                      </p>
-                      <p style={{ fontSize: 13, color: '#94A3B8', marginTop: 6 }}>
-                        {state.completedLessons.some(l => l.startsWith(continueTarget.trackId + '-'))
-                          ? tLoggedIn('continueWhere')
-                          : tLoggedIn('startFirstLesson')}
-                      </p>
-                    </div>
-                    <Link
-                      href={`/tracks/${continueTarget.trackId}/lessons/${continueTarget.lessonId}`}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: 8,
-                        padding: '12px 20px', borderRadius: 12,
-                        background: continueTarget.trackColor,
-                        color: '#FFFFFF', textDecoration: 'none',
-                        fontSize: 13, fontWeight: 700, flexShrink: 0,
-                        boxShadow: `0 4px 14px ${continueTarget.trackColor}40`,
-                        transition: 'opacity 0.15s',
-                      }}
-                    >
-                      <Play size={13} fill="#FFFFFF" />
-                      {state.completedLessons.some(l => l.startsWith(continueTarget.trackId + '-')) ? tLoggedIn('continue') : tLoggedIn('start')}
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ) : !assessment ? (
-              <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-                <div style={{ height: 3, background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }} />
-                <div style={{ padding: '28px 28px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: 8, background: 'linear-gradient(135deg, #2563EB, #22D3EE)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Sparkles size={14} color="#fff" />
-                    </div>
-                    <div>
-                      <p style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', letterSpacing: '0.04em', textTransform: 'uppercase', margin: 0 }}>{tLoggedIn('personalizedPath')}</p>
-                    </div>
-                  </div>
-                  <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', margin: '0 0 8px', letterSpacing: '-0.01em' }}>
-                    {tLoggedIn('curriculumNotBuilt')}
-                  </h2>
-                  <p style={{ fontSize: 14, color: '#64748B', marginBottom: 20, lineHeight: 1.6 }}>
-                    {tLoggedIn('curriculumNotBuiltDesc')}
-                  </p>
-                  <Link
-                    href="/assessment"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 22px', borderRadius: 12, background: '#2563EB', color: '#FFFFFF', textDecoration: 'none', fontSize: 14, fontWeight: 700, boxShadow: '0 4px 14px rgba(37,99,235,0.3)' }}
-                  >
-                    <Zap size={14} /> {tLoggedIn('buildPath')}
-                  </Link>
-                </div>
-              </div>
-            ) : null}
-          </motion.div>
-        )}
-
-        {/* Track progress */}
-        {mounted && trackProgress.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.22, duration: 0.4 }}
-            style={{ marginBottom: 32 }}
-          >
-            <p style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 14 }}>
-              {tLoggedIn('yourTracks')}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-              {trackProgress.map(t => (
-                <Link key={t.id} href={`/tracks/${t.id}`} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 16px', borderRadius: 12, background: '#FFFFFF', border: '1px solid #E2E8F0', textDecoration: 'none', transition: 'border-color 0.15s' }}>
-                  <span style={{ fontSize: 16, flexShrink: 0 }}>{TRACK_EMOJI[t.id] ?? '🎓'}</span>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
-                      <span style={{ fontSize: 13, fontWeight: 600, color: '#334155' }}>{t.title}</span>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: t.color, flexShrink: 0, marginLeft: 8 }}>{t.done}/{t.total}</span>
-                    </div>
-                    <div style={{ height: 4, borderRadius: 99, background: '#F1F5F9', overflow: 'hidden' }}>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${t.pct}%` }}
-                        transition={{ delay: 0.4, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        style={{ height: '100%', borderRadius: 99, background: t.color }}
-                      />
-                    </div>
-                  </div>
-                  <ChevronRight size={14} style={{ color: '#CBD5E1', flexShrink: 0 }} />
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Quick links */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.28, duration: 0.4 }}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}
-        >
-          {[
-            { label: tLoggedIn('allTracks'), href: '/tracks', icon: BookOpen, color: '#22D3EE' },
-            { label: tLoggedIn('assessment'), href: '/assessment', icon: Target, color: '#2563EB' },
-            { label: tLoggedIn('fullDashboard'), href: '/dashboard', icon: LayoutDashboard, color: '#10B981' },
-          ].map(item => (
-            <Link key={item.href} href={item.href} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, padding: '18px 12px', borderRadius: 14, background: '#FFFFFF', border: '1px solid #E2E8F0', textDecoration: 'none', transition: 'border-color 0.15s, box-shadow 0.15s' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 10, background: `${item.color}12`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <item.icon size={16} style={{ color: item.color }} />
-              </div>
-              <span style={{ fontSize: 12, fontWeight: 600, color: '#475569', textAlign: 'center' }}>{item.label}</span>
-            </Link>
-          ))}
-        </motion.div>
-      </div>
-
-      {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
-    </div>
-  )
-}
 
 // ─── Landing page ─────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
   const { user, loading, openSignIn } = useAuth()
   const [mounted, setMounted] = useState(false)
+  const router = useRouter()
   useEffect(() => { setMounted(true) }, [])
+
+  // Redirect signed-in users straight to the dashboard
+  useEffect(() => {
+    if (mounted && !loading && user) router.replace('/dashboard')
+  }, [mounted, loading, user, router])
 
   // Auto-open sign-in modal when redirected here with ?signin=1 (e.g. from /admin gate)
   useEffect(() => {
@@ -2263,7 +1944,7 @@ export default function LandingPage() {
     if (params.get('signin') === '1' && !user) openSignIn()
   }, [mounted, loading, user, openSignIn])
 
-  if (mounted && !loading && user) return <LoggedInHome />
+  if (mounted && !loading && user) return null
 
   return (
     <main style={{ background: '#FFFFFF', color: '#0F172A', minHeight: '100vh' }}>
