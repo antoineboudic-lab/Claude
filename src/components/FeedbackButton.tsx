@@ -116,7 +116,7 @@ export default function FeedbackButton() {
                         ? 'What happened? What did you expect?'
                         : type === 'suggestion'
                         ? 'What would make this better?'
-                        : 'What's on your mind?'
+                        : "What's on your mind?"
                     }
                     value={description}
                     onChange={e => setDescription(e.target.value)}
