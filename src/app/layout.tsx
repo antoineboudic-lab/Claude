@@ -6,7 +6,8 @@ import { AuthProvider } from "@/context/AuthContext";
 import { XPToast } from "@/components/gamification/XPToast";
 import { BadgeUnlock } from "@/components/gamification/BadgeUnlock";
 import { AuthModal } from "@/components/auth/AuthModal";
-import FloatingAssistant from "@/components/FloatingAssistant";
+import FloatingAssistant from "@/components/FloatingAssistant"
+import FeedbackButton from "@/components/FeedbackButton";
 import { TrackCompletion } from "@/components/gamification/TrackCompletion";
 import PWARegister from "@/components/PWARegister";
 import CookieBanner from "@/components/CookieBanner";
@@ -206,6 +207,7 @@ export default async function RootLayout({
               <BadgeUnlock />
               <AuthModal />
               <FloatingAssistant />
+              <FeedbackButton />
               <TrackCompletion />
               <PWARegister />
               <CookieBanner />
