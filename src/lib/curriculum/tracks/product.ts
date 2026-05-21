@@ -74,6 +74,35 @@ This is a more senior version of the PM role, not a diminished one.`,
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A PM wants to use AI to help with quarterly roadmap prioritisation. What should they expect AI to contribute?',
+            options: [
+              'A fully ranked roadmap based on user impact — no PM input required',
+              'Structured analysis of frameworks like RICE using the PM\'s inputs, plus stress-testing from multiple stakeholder angles',
+              'A final prioritisation decision that accounts for company strategy and resource constraints',
+              'Real-time data on which features will generate the most revenue',
+            ],
+            correct: 1,
+            explanation: 'AI cannot make prioritisation decisions — it lacks your strategy, resource constraints, and organisational context. What it can do is apply frameworks rigorously to your inputs and surface objections from different stakeholder perspectives you might not have considered. The decision and the inputs are yours; AI structures and stress-tests the thinking.',
+          },
+          outputComparison: {
+            label: 'PM AI task mapping: vague curiosity vs. structured workflow analysis',
+            vague: {
+              prompt: 'How can I use AI as a product manager?',
+              output: 'As a product manager, you can use AI in many ways. AI can help with writing documents, doing research, and analysing data. You can use tools like ChatGPT or Claude to assist with your daily tasks. AI is great for brainstorming ideas and getting things done faster. Consider using AI for your PRDs, user stories, and meeting summaries.',
+            },
+            improved: {
+              prompt: 'I\'m a PM at a 150-person B2B SaaS company. My most time-consuming recurring tasks are: synthesising user interview notes (3-4 hrs/week), writing first-draft PRDs (2-3 hrs/feature), drafting stakeholder update emails (1 hr/week), and updating our competitive tracker (2 hrs/month). For each task, tell me: (a) where AI adds the most leverage, (b) what I need to supply that AI can\'t, and (c) one specific prompt pattern to start with.',
+              output: 'User interview synthesis (3-4 hrs → ~45 min with AI)\n(a) AI excels at pattern extraction across multiple transcripts — identifying recurring themes, clustering sentiments, and surfacing representative quotes.\n(b) You need to supply: the research objective, your existing hypotheses, and the strategic lens. AI doesn\'t know what surprising = significant for your product.\n(c) Prompt: "Here are transcripts from [N] user interviews about [topic]. Identify the 5 most recurring themes. For each: one-sentence description, 2 representative quotes, and whether this confirms or challenges the hypothesis that [your hypothesis]."\n\nPRD first drafts (2-3 hrs → ~30 min)\n(a) AI eliminates the blank page and produces a structurally complete draft from your bullet notes.\n(b) You need to supply: the specific user evidence, your actual success metrics (not placeholders), and strategic alignment with your current quarter\'s priorities.\n(c) Prompt: "Draft a PRD for [feature] using these notes: User=[who], Problem=[what, evidenced by], Solution=[high-level], Metrics=[how we\'ll measure], Non-goals=[explicitly not], Constraints=[tech/time/resource]."',
+            },
+            insight: 'The vague prompt returns a generic list that any PM has read a dozen times — it doesn\'t connect to actual tasks or tell you what to do on Monday. The specific prompt anchors AI to your real workflow, generates task-specific leverage analysis, and ends with a prompt template you can use immediately. The key upgrade was replacing "how can I use AI?" with a structured description of actual tasks and a request for specific, actionable guidance for each.',
+          },
+          applyThisWeek: {
+            action: 'List your five most time-consuming recurring PM tasks. For each, score it on: how much of it is drafting/synthesis vs. judgment (1-5), and how bad an error would be (1-5). Your top AI candidate is the one with the highest drafting score and the lowest error-consequence score. Use AI for it this week and note what you had to edit.',
+            promptTemplate: 'I\'m a PM working on [product type] at a [company size/stage] company. My most time-consuming tasks this week are: [list 3-5 tasks]. For each task, tell me: (a) where AI can add the most leverage, (b) what I need to supply that AI can\'t know, and (c) one specific prompt to start with.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time you spent more than two hours on a single PM task. How much of that time was generating ideas or drafting versus making actual decisions? What would you have done with that time if the drafting had taken 20 minutes instead?',
           quiz: [
             {
               question: 'Which type of PM task benefits most from AI assistance?',
@@ -154,6 +183,35 @@ You don't need many tools. The risk is spending more time evaluating and switchi
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your organisation has ChatGPT Enterprise approved. You\'ve been using Claude personally. A new research synthesis tool also looks useful. What should you do?',
+            options: [
+              'Use all three tools simultaneously for different tasks to maximise coverage',
+              'Start with the approved enterprise tool and build fluency before evaluating whether additional tools are genuinely needed',
+              'Switch to the new research synthesis tool immediately since it\'s purpose-built for PM work',
+              'Ignore the approved tool and continue with your personal preference regardless of organisational context',
+            ],
+            correct: 1,
+            explanation: 'Tool proliferation is a real productivity trap — each additional tool requires onboarding time, context-switching cost, and approval overhead. Starting with what\'s already approved and available avoids data governance issues and builds fluency faster. Once you\'ve exhausted what the approved tool can do, then evaluate additions based on specific gaps, not general interest.',
+          },
+          outputComparison: {
+            label: 'AI tool strategy: impulse adoption vs. deliberate stack building',
+            vague: {
+              prompt: 'What are the best AI tools for product managers in 2024?',
+              output: 'Here are the best AI tools for product managers:\n1. ChatGPT - Great for writing and brainstorming\n2. Midjourney - For creating visual mockups\n3. Notion AI - For documentation\n4. GitHub Copilot - For working with engineers\n5. Zapier AI - For automation\n6. Otter.ai - For meeting transcription\n7. Jasper - For content creation\nThese tools will help you be more productive and efficient in your PM role.',
+            },
+            improved: {
+              prompt: 'I\'m a PM at a B2B SaaS company. We already have Notion and Jira approved, and our company just rolled out ChatGPT Enterprise. My main unmet needs are: (1) synthesising qualitative user research faster, (2) getting better competitive intelligence without manual tracking, (3) writing sharper tickets. Given my existing stack, tell me: what can I do right now with what I already have, what specific gap would justify adding a new tool, and what\'s the one tool worth evaluating if I have that gap?',
+              output: 'What you can do right now with your existing stack:\n\nChatGPT Enterprise for research synthesis: Paste 5-10 interview transcripts and prompt it to extract the 5 recurring themes with representative quotes. For competitive intelligence, ask it to analyse a competitor\'s G2 reviews (paste 20-30) and produce a structured breakdown of strengths, weaknesses, and switching reasons. For ticket writing, give it a 2-sentence feature description and ask for a user story with 5 acceptance criteria.\n\nNotion AI: Use it to summarise long research documents, generate first-draft status updates, and maintain a living competitor tracker with AI-assisted updates.\n\nThe gap worth a new tool: If you\'re doing 10+ user interviews per quarter and spending >2 hours per study on synthesis and tagging, that\'s the gap that justifies evaluating Dovetail — it\'s purpose-built for qualitative tagging, theme extraction, and connecting insights to features.\n\nDon\'t add Otter, Jasper, or Midjourney — ChatGPT Enterprise covers transcription summaries, writing, and you don\'t need image generation for core PM work.',
+            },
+            insight: 'The vague prompt returns a generic tool list that ignores what the PM already has and creates tool proliferation pressure. The specific prompt anchors the answer to the existing stack, identifies what\'s achievable immediately, and sets a clear threshold for when a new tool is actually justified. The upgrade was providing context about current tools and specific unmet needs — which turns a shopping list into a decision framework.',
+          },
+          applyThisWeek: {
+            action: 'Audit your current AI tool usage: list every AI tool you\'ve opened in the last two weeks. For each, write one sentence on the specific PM task it helps with. Identify any tools with overlapping use cases, then pick the one to stop using. Build fluency in the remaining tools by using each for a specific task this week.',
+            promptTemplate: 'I\'m a PM with access to [list your approved AI tools]. My main unmet needs are: [describe 2-3 specific PM tasks where you want more leverage]. Given my current stack, tell me: what can I accomplish right now without adding new tools, and what specific gap would justify a new tool addition?',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'How many AI tools have you tried in the last six months? Of those, how many are still in your regular workflow? What does that ratio tell you about your tool adoption strategy?',
           quiz: [
             {
               question: 'What is the most common mistake PMs make when building their AI toolkit?',
@@ -229,6 +287,35 @@ A prompt is rarely perfect on first try. Treat prompting like product iteration:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You ask AI to write a PRD for a new feature. What should you provide for the most useful output?',
+            options: [
+              'Just the feature name — AI can determine the requirements from context',
+              'The problem you\'re solving, the user segment, success metrics, and any constraints',
+              'A list of features competitors have — so AI can benchmark appropriately',
+              'Your engineering team\'s capacity — so AI can scope correctly',
+            ],
+            correct: 1,
+            explanation: 'AI cannot know your users, their problems, or your business context unless you provide it. A good PRD starts with a well-defined problem and user segment. Without that foundation, AI produces a generic template rather than a document that actually guides your team.',
+          },
+          outputComparison: {
+            label: 'User story: vague vs. outcome-driven — the difference in quality',
+            vague: {
+              prompt: 'Write user stories for a notification feature',
+              output: 'User Story 1: As a user, I want to receive notifications so that I can stay informed.\nUser Story 2: As a user, I want to customise my notification settings so that I can control what I receive.\nUser Story 3: As a user, I want to see a notification history so that I can review past notifications.',
+            },
+            improved: {
+              prompt: 'Write 3 user stories for the notification centre feature in our B2B project management tool. The core problem: team leads miss critical blocker updates because they\'re buried in Slack. Primary user: team leads at 20-100 person software companies. Each story should follow the format: As [specific user], I want [specific action] so that [measurable outcome]. Include one acceptance criterion per story. Prioritise: (1) in-app alert for blockers, (2) digest email for daily summary, (3) snooze/mute for non-critical items.',
+              output: 'Story 1 (P1 — Blocker Alert)\nAs a team lead responsible for sprint delivery, I want to receive an in-app alert within 5 minutes when a task is marked as blocked, so that I can unblock my team before it impacts the sprint.\nAC: Alert appears in notification bell with the task name, blocker description, and a direct link. Dismissed once lead clicks through.\n\nStory 2 (P2 — Daily Digest)\nAs a team lead managing 3+ projects, I want a daily 8am email summarising overnight status changes (new blockers, completed tasks, overdue items), so that I can start each day with full situational awareness without opening the app.\nAC: Email sent at 8am local time. Includes only projects where lead has member role. Configurable off per project.\n\nStory 3 (P3 — Snooze)\nAs a team lead in deep-focus work, I want to snooze all non-critical notifications for up to 4 hours, so that I can concentrate without disabling alerts entirely.\nAC: Snooze button in notification centre. Blocker alerts override snooze. Snooze expires automatically.',
+            },
+            insight: 'The vague prompt produces placeholder stories that any PM has seen a hundred times — they describe a feature category, not a user problem. The specific version defines who exactly the user is, what problem they have, and what measurable outcome they need. That context is what turns a template into a document a designer and engineer can actually build from.',
+          },
+          applyThisWeek: {
+            action: 'Take one feature you\'re currently scoping or have recently shipped. Use AI to write the user stories or rewrite existing ones with specific acceptance criteria. Then review them with an engineer and note where the AI output needed the most correction.',
+            promptTemplate: 'Write [N] user stories for [feature name] in [product type]. The core problem: [describe the user pain]. Primary user: [specific role at specific company type]. Format: As [user], I want [action] so that [outcome]. Include 1-2 acceptance criteria per story. Prioritise by: [your priority order].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last feature that shipped differently than the PRD described. At which point did the misalignment happen — writing the requirements, sharing them with the team, or during implementation? Where could clearer AI-assisted documentation have helped?',
           quiz: [
             {
               question: 'Which element most improves AI output quality for PM tasks?',
@@ -311,6 +398,35 @@ The key is calibrating review depth to document stakes — not applying the same
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You generate a PRD with AI and it looks complete and professional. Before sharing it with your engineering lead, what is the most critical review step?',
+            options: [
+              'Check for spelling and grammar errors throughout the document',
+              'Verify that the success metrics, user descriptions, and strategic framing reflect your actual product context — not generic placeholders',
+              'Ensure the document is at least 1,000 words to demonstrate thoroughness',
+              'Add a table of contents so engineering can navigate easily',
+            ],
+            correct: 1,
+            explanation: 'AI produces documents that look professional but fill them with generic content — placeholder metrics like "increase retention by X%", generic personas like "busy professionals", and strategic language that could apply to any product. The PM\'s critical editing task is replacing that generic content with specific user evidence, actual business metrics, and strategy that reflects what your team decided last week. If you share the AI draft without this step, engineering will build to the wrong problem.',
+          },
+          outputComparison: {
+            label: 'AI PRD quality review: generic vs. strategically grounded',
+            vague: {
+              prompt: 'Write a PRD for an in-app search feature for our SaaS product',
+              output: 'PRD: In-App Search Feature\n\nBackground: Users need to find content quickly within the application. Search is a critical feature for any modern SaaS product.\n\nProblem Statement: Users are unable to find the information they need efficiently, leading to frustration and reduced productivity.\n\nGoals: Improve user experience, increase user satisfaction, reduce time to find content.\n\nSuccess Metrics: Increase search usage by 20%, improve user satisfaction score by 10%, reduce support tickets related to content discovery by 15%.\n\nUser Stories:\n- As a user, I want to search for content so that I can find what I need quickly.\n- As a user, I want to filter search results so that I can narrow down options.',
+            },
+            improved: {
+              prompt: 'Write a PRD for an in-app search feature. Here are my notes:\n- User: Operations managers at our mid-market B2B logistics customers (50-500 employees)\n- Problem: They can\'t find historical shipment records during client calls — current workaround is exporting to Excel and using Ctrl+F, which our CS team tells us triggers 30% of "I can\'t find it" support tickets\n- Solution: Full-text search across shipment records, BOL documents, and delivery notes from the last 24 months\n- Success metrics: Reduce "content discovery" support ticket category by 40% in 60 days; search feature adoption by 60% of operations users in first 30 days\n- Non-goals: We are NOT indexing financial documents (SOX compliance risk, separate initiative Q3)\n- Constraints: Must not require backend reindexing of data older than 24 months; launch before Q2 customer advisory board',
+              output: 'PRD: In-App Search — Shipment Record Discovery\n\nBackground: Operations managers at mid-market logistics customers spend significant time during client calls trying to locate historical shipment records. The current workaround — exporting to Excel and using Ctrl+F — is cited as the trigger for approximately 30% of "I can\'t find it" support tickets logged with our CS team.\n\nProblem Statement: Operations managers cannot retrieve specific shipment records, BOL documents, or delivery notes quickly enough during time-sensitive client conversations, forcing manual workarounds that reduce trust and increase support burden.\n\nGoals:\n- Reduce "content discovery" support ticket category by 40% within 60 days of launch\n- Achieve 60% adoption among operations users within first 30 days\n\nNon-Goals (explicitly out of scope):\n- Financial document indexing (SOX compliance review required — tracked as separate Q3 initiative)\n- Reindexing records older than 24 months\n\nUser Stories:\n1. As an operations manager on a client call, I want to search by shipment ID, customer name, or BOL number so that I can pull up the relevant record in under 10 seconds without leaving the screen.\nAC: Search results appear within 3 seconds. Matches are highlighted in results.',
+            },
+            insight: 'The vague prompt produces a structurally passable PRD that could describe any search feature in any SaaS product — the metrics are made-up placeholders and the problem statement has no evidence. The specific version uses real business context (30% of support tickets, compliance constraints, customer advisory board deadline) that makes the document immediately actionable. Engineering can build to this because it describes a real problem for a specific user in a specific situation.',
+          },
+          applyThisWeek: {
+            action: 'Take an AI-generated document you\'ve produced recently (PRD, user story, research synthesis). Apply the four-point quality checklist: strategy alignment, persona specificity, verified claims, and missing context. Count how many sections you need to edit and categorise each type of issue.',
+            promptTemplate: 'Review this [PRD section / user story / research insight] I\'ve drafted and identify: (1) any content that is too generic or could apply to any product, (2) any specific claims (metrics, market data, user behaviour) that need verification, (3) what important context is missing that would make this more actionable for [engineering / a stakeholder / design]. Here is the draft: [paste your content].',
+            tool: 'Claude',
+          },
+          reflection: 'When you share a document with your team, how often do they come back with questions that suggest they didn\'t understand the user or the problem? How much of that could be addressed by more specific, evidence-grounded documentation?',
           quiz: [
             {
               question: 'Why might an AI-generated PRD look professional but still be a poor starting point?',
@@ -394,6 +510,35 @@ The researcher who was in the room still provides the most important layer of in
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You paste 8 user interview transcripts into Claude and ask it to identify recurring themes. The AI returns 6 themes with supporting quotes. What should you do next?',
+            options: [
+              'Share the themes directly with your team — AI synthesis is reliable enough for immediate use',
+              'Review the themes against the source transcripts, add themes the AI missed, and apply your contextual knowledge about why each theme matters strategically',
+              'Run the synthesis again with a different prompt to see if the themes change',
+              'Reduce the AI output to 3 themes to keep the team focused',
+            ],
+            correct: 1,
+            explanation: 'AI synthesis identifies patterns in stated text reliably — but it doesn\'t know which themes are strategically important for your product, which quotes are most representative, or what users were doing and feeling when they said something. Your review validates accuracy, adds the themes AI under-weighted or missed entirely, and layers in the contextual significance only a researcher who knows the product and the users can provide.',
+          },
+          outputComparison: {
+            label: 'Interview synthesis: unfocused dump vs. structured insight extraction',
+            vague: {
+              prompt: 'Here are my user interview notes. What did users say?',
+              output: 'Based on your interview notes, users mentioned several things:\n- They find the product useful\n- They have some difficulties with navigation\n- They want more features\n- The onboarding could be better\n- They use the product regularly\n- Some users had trouble with the export function\nOverall, users seem to have a mix of positive and negative experiences with your product.',
+            },
+            improved: {
+              prompt: 'Here are notes from 6 user interviews with operations managers at logistics companies who use our shipment tracking product. My research objective was to understand what prevents them from reducing "where is my shipment?" calls from their customers. Identify the 4-5 recurring themes. For each theme: (1) a clear label, (2) a one-sentence description of the underlying user problem, (3) 2 representative quotes, and (4) whether this theme confirms or challenges my hypothesis that the problem is real-time visibility rather than historical record access.',
+              output: 'Theme 1: Proactive alert failure\nProblem: Users rely on reactive checking because the product only notifies on delivery, not on delay or exception events.\nQuotes: "I check the portal every hour just in case something\'s gone wrong — there\'s no way to know otherwise." / "My customer called me before I knew their shipment was delayed. That was embarrassing."\nHypothesis check: CONFIRMS — this is a real-time visibility problem, not historical access.\n\nTheme 2: Status language opacity\nProblem: Status labels ("In transit", "Pending") don\'t map to what ops managers need to tell customers, creating a translation step.\nQuotes: "What does \'In transit\' actually mean? Is it moving, is it sitting in a depot?" / "I end up calling the carrier anyway because the portal doesn\'t tell me what I need to say."\nHypothesis check: PARTIALLY CHALLENGES — this is a communication design problem, not just a data availability problem.\n\nTheme 3: Multi-carrier fragmentation\nProblem: Managers with multiple carrier relationships check 3-5 portals; our product only covers one carrier relationship.\n[continues with quotes and hypothesis check]',
+            },
+            insight: 'The vague prompt produces a list of observations with no structure, no strategic lens, and no connection to the research objective — it\'s barely better than rereading the notes yourself. The specific version uses the research objective and hypothesis as a filter, producing theme labels, user problem descriptions, supporting quotes, and an explicit check on whether each theme validates or challenges the PM\'s existing assumption. That last element is what turns synthesis into a decision input.',
+          },
+          applyThisWeek: {
+            action: 'Take a set of user research you\'ve collected recently (even 3-4 interview notes, or 20 support tickets). Paste them into Claude with your research objective and at least one hypothesis you\'re testing. Ask for themes, quotes, and an explicit hypothesis check. Compare the output to what you would have written manually.',
+            promptTemplate: 'Here are [type of research: interview notes / support tickets / survey responses] from [N] [user type]. My research objective was to understand [specific question]. I have a hypothesis that [your hypothesis]. Identify the [4-5] recurring themes. For each theme: (1) a clear label, (2) a one-sentence description of the underlying problem, (3) 2 representative quotes, and (4) whether this confirms or challenges my hypothesis.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time you shared research findings with your team. How confident were you that you\'d captured every important theme from the raw data? What might you have missed because of time pressure, confirmation bias, or the volume of material?',
           quiz: [
             {
               question: 'What is the primary limitation of AI-synthesised user research?',
@@ -468,6 +613,35 @@ Create a standard competitor profile template and have AI fill it for each compe
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You need competitive intelligence on a rival product before a strategy review next week. What is the most reliable AI-assisted approach?',
+            options: [
+              'Ask Claude directly: "What are the weaknesses of [competitor]?" and use the output in your presentation',
+              'Gather competitor reviews from G2 and their website copy, paste them into AI with a structured analysis prompt, then verify key claims against the actual product',
+              'Ask AI to predict the competitor\'s next feature release based on their current trajectory',
+              'Use AI to write a competitive teardown entirely from its training data without providing additional source material',
+            ],
+            correct: 1,
+            explanation: 'AI\'s training data has a cutoff date and may contain outdated or inaccurate information about specific competitor products. The reliable approach is to feed AI fresh source material — recent reviews, current website copy, updated documentation — and use AI to structure and analyse that material. Verifying key claims against the actual product before presenting to stakeholders prevents the credibility damage of confidently presenting incorrect competitive information.',
+          },
+          outputComparison: {
+            label: 'Competitor review mining: scattered observations vs. structured competitive intelligence',
+            vague: {
+              prompt: 'What do people think about Asana?',
+              output: 'Asana is a popular project management tool. People generally have positive things to say about it, though there are some criticisms. Users like its visual interface and task management features. Some users find it complex and expensive. It\'s used by many companies for project tracking and team collaboration. The tool has many integrations and is considered a leader in the project management space.',
+            },
+            improved: {
+              prompt: 'I\'m a PM at a B2B project management tool that competes with Asana in the mid-market segment (50-500 employees). Here are 25 G2 reviews from the past 6 months that I\'ve collected [paste reviews]. Analyse these reviews and produce: (1) the top 3 strengths users consistently praise, (2) the top 3 pain points users consistently raise, (3) any mentions of switching from or to competitors and why, (4) what user segments seem most and least satisfied, and (5) any specific features praised or criticised by name. Format this as a competitive intelligence brief.',
+              output: 'Competitive Intelligence Brief: Asana (G2, last 6 months, n=25)\n\nTop 3 User-Praised Strengths:\n1. Timeline view (mentioned in 14/25 reviews) — specifically praised by project managers who run multi-team dependencies. Quote: "Timeline is the one thing that keeps our cross-team projects from falling apart."\n2. Automation rules — praised for reducing repetitive task updates; especially valued by ops-heavy teams\n3. Portfolio view — praised by senior PMs and team leads managing multiple projects simultaneously\n\nTop 3 Consistent Pain Points:\n1. Pricing at scale (mentioned in 18/25 reviews) — the jump from Team to Business tier is consistently described as "too steep" for teams under 100 people. Quote: "We\'d use more features but can\'t justify the Business tier for our size."\n2. Mobile experience — 9 reviewers describe mobile as "limited" or "an afterthought"; field teams and remote-first companies disproportionately affected\n3. Reporting — custom report building described as "time-consuming" and requiring admin skills most teams don\'t have\n\nSwitching Patterns:\n- 3 reviews mention switching FROM Monday.com (reason: Asana felt more structured for engineering workflows)\n- 2 reviews mention considering a switch TO Linear (reason: Asana "too heavy" for pure software teams)',
+            },
+            insight: 'The vague prompt returns a generic summary that could have been written without reading a single review — it tells you nothing actionable. The specific prompt transforms 25 reviews into structured competitive intelligence with specific features mentioned, pricing pain points with supporting quotes, and switching patterns that directly inform competitive positioning. The upgrade was providing source material and asking for analysis, not asking AI to generate impressions from its training data.',
+          },
+          applyThisWeek: {
+            action: 'Pick one direct competitor. Find 15-20 recent reviews on G2, Capterra, or the App Store. Paste them into Claude with a structured competitive analysis prompt. Compare the output to your current internal understanding of this competitor — what surprised you, and what would you update in your competitive positioning as a result?',
+            promptTemplate: 'I\'m a PM at [your product type] competing with [competitor] in the [market segment] segment. Here are [N] reviews from [G2 / Capterra / App Store] in the past [timeframe]: [paste reviews]. Analyse these and produce: (1) top 3 strengths users consistently praise, (2) top 3 pain points, (3) any switching patterns (from/to which products and why), (4) which user segments are most vs. least satisfied, (5) specific features praised or criticised by name.',
+            tool: 'Claude',
+          },
+          reflection: 'When was the last time you updated your competitive intelligence in a systematic way, not just reacting to a competitor\'s launch announcement? If a competitor had quietly fixed their top-cited weakness in the last quarter, would you know?',
           quiz: [
             {
               question: 'Which competitive intelligence source provides the most unfiltered user voice about a competitor?',
@@ -539,6 +713,35 @@ AI will produce numbers. Those numbers may be fabricated or outdated. Any opport
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your team has been working from the problem statement: "Users struggle to find the content they need." An AI-assisted reframing exercise produces five alternative framings. What should you do with them?',
+            options: [
+              'Replace your current problem statement with whichever AI framing sounds most compelling',
+              'Evaluate each framing against your actual user research to determine which most accurately describes the root cause, then test the selected framing with your team',
+              'Use all five framings simultaneously to cover more solution space',
+              'Discard the framings and stick with your original statement since AI doesn\'t know your users',
+            ],
+            correct: 1,
+            explanation: 'AI reframings are hypotheses to be evaluated, not conclusions to be adopted. Their value is in surfacing framings you hadn\'t considered — some will be irrelevant, some will resonate immediately with your research, and occasionally one will reframe the problem in a way that opens a significantly better solution space. Evaluating them against your actual user evidence is the PM\'s job; the AI generates the options.',
+          },
+          outputComparison: {
+            label: 'Problem framing: surface-level symptom vs. root-cause problem statement',
+            vague: {
+              prompt: 'Help me write a problem statement for a search feature',
+              output: 'Problem Statement: Users are unable to find the content they are looking for within the application, which leads to frustration and decreased productivity. The current search functionality does not meet user needs and requires improvement. Users want a better search experience that helps them locate relevant information quickly and efficiently.',
+            },
+            improved: {
+              prompt: 'I\'m going to describe a user problem. Help me: (1) separate the stated symptom from the likely root causes, (2) reframe it as a specific, testable problem statement that points to a solution direction, and (3) generate 3 alternative framings that suggest different solution approaches.\n\nUser problem description: Operations managers at our logistics customers tell us they spend 45+ minutes per day searching for historical shipment records to answer customer queries. They currently export data to Excel and use Ctrl+F. Our product has a search bar that searches shipment IDs only.',
+              output: 'Symptom vs. Root Cause Analysis:\nStated symptom: Users spend too long searching for shipment records.\nLikely root causes (distinct from the symptom):\n• Search scope is too narrow — shipment ID only, when users search by customer name, date, route, or status\n• The product is designed for data entry, not retrieval — search is an afterthought, not a first-class workflow\n• No contextual starting point — users land on a blank search, not on the record type they most often need\n\nSpecific Problem Statement:\nOperations managers handling inbound customer queries cannot retrieve specific shipment records within 30 seconds because our search only matches exact shipment IDs — not the customer names, dates, or status terms that define how ops managers think about shipments.\n\nAlternative Framings:\n1. Customer communication framing: "When customers ask about their order, our ops managers can\'t get an answer in the conversation — they have to call back." (Solution: focus on real-time status, not search)\n2. Workflow interruption framing: "Answering a customer query requires leaving our product and using Excel." (Solution: eliminate the export workaround)\n3. Cognitive load framing: "Ops managers have to translate customer language into database IDs before they can search." (Solution: natural language search or saved customer segments)',
+            },
+            insight: 'The vague prompt produces a problem statement that describes frustration with no mechanism — it could justify any search improvement without telling you which one. The specific version separates symptom from root cause, produces a problem statement with a testable claim (search scope), and generates three framings that point to genuinely different solution directions. The PM can now decide which framing best matches their user evidence rather than building to the first solution that comes to mind.',
+          },
+          applyThisWeek: {
+            action: 'Take a problem statement you\'re currently using to justify a feature or initiative. Paste it into Claude and ask for: (1) the distinction between symptom and root cause, (2) a more specific, testable restatement, and (3) three alternative framings that suggest different solution approaches. Evaluate which framing your user research best supports.',
+            promptTemplate: 'Here is a user problem I\'m working with: [describe the problem as you currently understand it, including any user data or quotes]. Help me: (1) separate the stated symptom from the likely root causes, (2) rewrite it as a specific, testable problem statement that identifies a mechanism, and (3) generate 3 alternative framings that would each suggest a different type of solution.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a feature that didn\'t achieve its intended impact after launch. In hindsight, was the problem statement you were solving genuinely the root cause — or was it a symptom of something deeper that the feature didn\'t address?',
           quiz: [
             {
               question: 'What is the most valuable use of AI in problem framing for product managers?',
@@ -613,6 +816,35 @@ Before doing research, ask AI: "If I am researching [topic] with these questions
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An AI-generated interview discussion guide includes the question: "How frustrating is it when you can\'t find what you\'re looking for in our product?" What is wrong with this question?',
+            options: [
+              'It\'s too short — interview questions should be longer and more detailed',
+              'It\'s a leading question that assumes users experience frustration, priming them to confirm the hypothesis rather than describe their actual experience',
+              'It\'s too specific — interview questions should be more general to allow for broader responses',
+              'It mentions the product by name, which could introduce bias',
+            ],
+            correct: 1,
+            explanation: 'Leading questions are the most damaging flaw in research design because they corrupt the data before a single interview is conducted. By assuming frustration, this question signals to the participant that frustration is the expected answer. A neutral alternative — "Tell me about a recent time when you were looking for something in our product. Walk me through what happened." — allows participants to describe their actual experience, which might be frustration, confusion, or something the PM didn\'t anticipate at all.',
+          },
+          outputComparison: {
+            label: 'Research discussion guide: AI first draft vs. PM-reviewed and refined',
+            vague: {
+              prompt: 'Write interview questions for a user research study about our onboarding',
+              output: 'Interview Questions:\n1. How was your experience with our onboarding process?\n2. Did you find the onboarding easy or difficult?\n3. What features did you learn during onboarding?\n4. How satisfied are you with the onboarding experience?\n5. Would you recommend our onboarding to a colleague?\n6. What improvements would you suggest for our onboarding?\n7. Did you complete all the onboarding steps?\n8. How long did the onboarding take you?',
+            },
+            improved: {
+              prompt: 'I\'m planning interviews to understand why 40% of new users don\'t complete our onboarding flow for a B2B project management tool. Target user: team leads at companies under 200 employees who signed up in the last 30 days. Research objective: identify the specific moments where users disengage or feel confused, and understand what they were trying to accomplish when they stopped. Generate a 10-question discussion guide using open-ended questions only. Include 2 opening questions to establish context, 5 core questions about the onboarding experience, and 3 closing questions about unmet needs. Flag any questions that might be leading.',
+              output: 'Discussion Guide: Onboarding Drop-off Research\n\nOpening (establish context — do not mention onboarding yet)\n1. Tell me a bit about your role and how you typically manage projects with your team. (Establishes baseline workflow without anchoring to our product)\n2. What were you hoping to accomplish when you first signed up for [product]? What was the situation that made you look for a tool? (Surfaces motivation and job-to-be-done before we discuss the experience)\n\nCore: Onboarding Experience\n3. Walk me through what happened after you first logged in. What did you do first? (Open narrative — let them describe their actual sequence)\n4. Tell me about a moment during that first session where you weren\'t sure what to do next. What did you do? (Identifies friction without assuming frustration)\n5. Was there anything you were trying to set up or figure out that you couldn\'t find? (Surfaces unmet goals without leading)\n6. What would have made you feel like you\'d successfully set up the product? (Identifies their definition of activation — may differ from ours)\n7. At what point, if any, did you decide to come back to the setup later — or step away entirely? (Captures the abandonment decision neutrally)\n\n[Guide continues with closing questions]\n\n⚠️ Questions to review for potential leading: None flagged in this draft, but watch for follow-ups that assume a negative experience.',
+            },
+            insight: 'The vague prompt produces a guide full of closed and leading questions that will generate unreliable data — "Did you find the onboarding easy or difficult?" primes a binary answer and "How satisfied are you?" is a survey question, not an interview question. The specific version establishes clear objectives, uses open-ended narrative prompts that let participants describe their actual experience, and flags the risk of leading follow-ups. The key upgrade was defining the research objective, the user, and the drop-off signal before asking for questions.',
+          },
+          applyThisWeek: {
+            action: 'Take the discussion guide from your last or next user interview study. Paste it into Claude and ask it to: (1) identify any leading or closed questions, (2) suggest open-ended alternatives for each flagged question, and (3) identify any important question you\'re missing given your research objective. Revise the guide before your next interview.',
+            promptTemplate: 'I\'m planning [N] user interviews to understand [research objective]. Target user: [describe role, company type, situation]. Research hypotheses: [list 2-3 things you\'re testing]. Generate a [N]-question discussion guide using open-ended questions only. Include: [N] opening context questions, [N] core experience questions, [N] closing unmet needs questions. Flag any question that might be leading or closed.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a user research study you ran that produced surprising results. Were those surprises because users genuinely surprised you — or because your questions were open enough to surface something you hadn\'t anticipated? What question design made the difference?',
           quiz: [
             {
               question: 'What is the most important quality check when reviewing an AI-drafted interview discussion guide?',
@@ -694,6 +926,35 @@ Draft a PRD with: Background & context, Problem statement, Goals & non-goals, Us
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'ve been asked to write a PRD for a new feature by end of day. You open Claude immediately and type "Write a PRD for a customer notification feature." What\'s the problem with this approach?',
+            options: [
+              'PRDs should never be started with AI — they require full manual drafting first',
+              'Without your product thinking as input, AI will produce a structurally complete but strategically empty document filled with generic content that will need to be almost entirely rewritten',
+              'This approach is fine — AI can generate the thinking and the writing simultaneously',
+              'The prompt is too short; you need to use a longer prompt to get a better output',
+            ],
+            correct: 1,
+            explanation: 'AI cannot generate the product thinking — it can only express thinking you\'ve already done. Without knowing your specific user, the evidence behind the problem, your actual success metrics, and your constraints, AI will produce a document that looks complete but is filled with placeholders: generic user descriptions, invented metrics, and strategic language that applies to any product. Spending 5 minutes on bullet-point notes before prompting produces a PRD draft that requires editing rather than rewriting.',
+          },
+          outputComparison: {
+            label: 'PRD drafting: AI without thinking vs. AI with PM notes as input',
+            vague: {
+              prompt: 'Write a PRD for an analytics dashboard feature for our SaaS product',
+              output: 'PRD: Analytics Dashboard\n\nBackground: Data-driven decision making is critical for modern businesses. Our users need better visibility into their data.\n\nProblem Statement: Users lack the insights they need to make informed decisions about their business operations.\n\nGoals:\n- Provide users with real-time data visibility\n- Enable data-driven decision making\n- Improve user engagement with our platform\n\nSuccess Metrics:\n- Increase dashboard usage by 30%\n- Improve user satisfaction scores by 15%\n- Reduce data-related support tickets by 20%\n\nUser Stories:\n- As a user, I want to view my key metrics so that I can understand my performance.\n- As a user, I want to filter data by date so that I can analyse trends.',
+            },
+            improved: {
+              prompt: 'Write a PRD for an analytics dashboard feature using these notes:\n- User: Account managers at our mid-market B2B SaaS customers (companies 50-200 employees) who manage 10-20 client accounts each\n- Problem: Account managers are exporting data to Excel weekly to build client reports — our CS team says this is the #1 request in NPS feedback ("I wish I could show my clients a dashboard instead of sending spreadsheets")\n- Solution: Embeddable client-facing report showing: active users, feature adoption, ROI metrics per client account. Client can view read-only.\n- Success metrics: Reduce "reporting" tagged CS tickets by 50% in 90 days; 40% of account managers create at least one shared report in first 30 days\n- Non-goals: NOT a full analytics platform; NOT editable by clients; NOT covering billing data (legal review needed)\n- Constraints: Must use existing BI infrastructure; cannot require new data pipeline; launch before Q2 business reviews',
+              output: 'PRD: Client-Facing Analytics Dashboard\n\nBackground: Account managers at mid-market B2B customers currently export data to Excel each week to produce client reports — a manual workflow cited as the #1 request in NPS feedback: "I wish I could show my clients a dashboard instead of sending spreadsheets."\n\nProblem Statement: Account managers cannot share real-time performance data with their clients without manual export and reformatting, creating a weekly reporting burden and reducing the perceived value of our platform during business reviews.\n\nGoals:\n- Reduce "reporting" tagged CS tickets by 50% within 90 days of launch\n- Achieve 40% of account managers creating at least one shared report within 30 days\n\nNon-Goals:\n- Full analytics platform or custom metric builder (separate initiative)\n- Client editing permissions (read-only only)\n- Billing data inclusion (requires legal review — tracked separately)\n\nUser Stories:\n1. As an account manager preparing for a quarterly business review, I want to share a live link to my client\'s usage dashboard so that I can present real-time data without building a deck.\nAC: Shareable link with read-only access, expires after 30 days unless renewed. Shows: active user count, top 3 features used, weekly usage trend for last 90 days.',
+            },
+            insight: 'The vague prompt produces a document with invented metrics ("increase dashboard usage by 30%"), a user description that fits any SaaS customer, and goals that could apply to any analytics feature ever built. The specific version uses the PM\'s bullet notes to anchor every section: the NPS quote as evidence for the problem, the 90-day CS ticket reduction as a real success target, and the legal constraint as a concrete non-goal. The difference is not prompt length — it\'s the PM\'s thinking arriving before the prompt.',
+          },
+          applyThisWeek: {
+            action: 'For your next PRD, spend exactly 5 minutes writing bullet-point notes before opening AI — covering user, problem (with evidence), solution, metrics, non-goals, and constraints. Then use the PRD prompt template and compare the output quality to a PRD you drafted without notes first. Estimate: how much editing did each require?',
+            promptTemplate: 'Write a PRD for [feature name] using these notes:\n- User: [who, specifically — role, company type, situation]\n- Problem: [what problem, evidenced by what data, research, or customer signal]\n- Solution: [high-level what we\'re building]\n- Success metrics: [specific, measurable outcomes in a timeframe]\n- Non-goals: [what we are explicitly not solving]\n- Constraints: [technical, timeline, resource, or strategic constraints]\nFormat: Background, Problem Statement, Goals & Non-Goals, User Stories (5-7 with acceptance criteria), Success Metrics, Open Questions.',
+            tool: 'Claude',
+          },
+          reflection: 'How often do you write a PRD and discover, while writing it, that you\'re unclear on who the primary user really is or what success actually looks like? What would it change about your product work if you had to answer those questions before the PRD began?',
           quiz: [
             {
               question: 'What must a PM bring to the AI PRD drafting process that AI cannot supply?',
@@ -760,6 +1021,35 @@ AI will generate considerations you can evaluate. The decision is still yours.`,
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You ask AI to rank your backlog using RICE scores. The AI produces a ranked list. How should you treat this output?',
+            options: [
+              'Present it directly to stakeholders as your Q3 roadmap — AI scoring is objective',
+              'Use it as a starting point to review, adjusting ranks where your strategic context, team capacity, or stakeholder constraints make the AI\'s ordering inappropriate',
+              'Reject it — RICE scores require manual calculation to be valid',
+              'Ask AI to re-rank using a different framework to see if the order changes',
+            ],
+            correct: 1,
+            explanation: 'AI applies RICE frameworks to the scores you provide, but it doesn\'t know what\'s politically important to your CEO, which items are technically bundled, what your team\'s actual velocity is, or what strategic bets you\'re making this quarter. The ranked output is a useful structured starting point — it externalises the framework logic and makes inconsistencies visible. Your judgment then applies the context that makes it a real roadmap decision.',
+          },
+          outputComparison: {
+            label: 'Roadmap stress-testing: no challenge vs. multi-stakeholder perspective',
+            vague: {
+              prompt: 'Review my Q3 roadmap and tell me if it looks good: Feature A, Feature B, Feature C, Feature D',
+              output: 'Your Q3 roadmap looks comprehensive. Feature A, B, C, and D cover a range of user needs. The roadmap seems balanced and should help improve user experience. Make sure to prioritise based on user feedback and business goals. It would be good to validate these features with users before building.',
+            },
+            improved: {
+              prompt: 'Here is my Q3 roadmap for a B2B project management tool:\n1. Advanced reporting dashboard (estimated 6 weeks, requested by enterprise accounts, expected to improve retention)\n2. Mobile app redesign (estimated 8 weeks, high customer complaint volume, expected to reduce churn)\n3. Slack integration (estimated 3 weeks, requested by sales as a deal-blocker, expected to help new sales)\n4. Bulk task import (estimated 2 weeks, power user request, expected to improve activation for larger teams)\n\nChallenge this roadmap from three perspectives: (1) a power user who uses the product 5+ hours per day, (2) your CFO who wants to see ARR growth this quarter, (3) your lead engineer who has a 4-person team. What would each object to, and why?',
+              output: 'Power user perspective (heavy daily use):\nWould strongly object to Mobile app being #2 — they likely use desktop primarily and don\'t experience mobile pain. Would advocate for Bulk task import first — it directly solves the "I have 200 tasks to migrate" problem that power users hit when onboarding new projects. Would also ask: "Why is reporting #1? I can already export to Excel."\n\nCFO perspective (ARR growth this quarter):\nWould prioritise Slack integration above everything — it\'s a deal-blocker, which means it has a direct, near-term revenue link. If sales is losing deals over this, a 3-week investment with clear revenue attribution should rank higher. Would question Mobile redesign ROI: "Will this reduce churn enough to justify 8 weeks of the team\'s time? What\'s the data?"\n\nLead engineer (4-person team, 8 weeks to deliver):\nWould flag that the roadmap totals 19 weeks of estimated work for an 8-week quarter. Either estimates are wrong, scope needs to be cut, or something needs to be deferred. Would recommend: Slack integration (3 wks) + Bulk import (2 wks) + one phase of Reporting (3 wks) = 8 weeks. Would defer Mobile redesign to Q4 unless churn data is compelling.',
+            },
+            insight: 'The vague prompt produces generic approval that adds no information — it doesn\'t challenge a single assumption or surface a single risk. The specific prompt generates three distinct objections that each expose a real weakness: the power user reveals a scope disconnect, the CFO reveals a revenue prioritisation argument, and the engineer reveals that the roadmap is mathematically impossible in the stated timeframe. Each objection is actionable before the stakeholder review rather than during it.',
+          },
+          applyThisWeek: {
+            action: 'Take your current roadmap or backlog top 5. Ask Claude to challenge it from three perspectives: your most demanding power user, your CEO or investor, and your engineering lead. For each objection, decide: is this valid and should it change my priorities, or is it an objection I can address with a clear rationale?',
+            promptTemplate: 'Here is my [Q_/ sprint] roadmap for [product type]:\n[List items with estimated effort and rationale for each]\n\nChallenge this roadmap from three perspectives: (1) [primary user type] who uses the product [frequency], (2) [key business stakeholder, e.g. CEO/CFO/Sales lead] who cares about [their primary metric], (3) my lead engineer who has [team size] and [timeframe]. For each perspective: what would they object to and why? What would they reprioritise?',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time a stakeholder challenged your roadmap in a review meeting with an objection you hadn\'t anticipated. What would it have been worth to surface that objection a week earlier — before the meeting rather than during it?',
           quiz: [
             {
               question: 'What is the most valuable way to use AI in a roadmap prioritisation session?',
@@ -824,6 +1114,35 @@ The most common problem with AI-generated stakeholder communications is that the
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'ve written an AI-generated feature announcement for three audiences: customers, the engineering team, and the executive leadership team. What is the most important edit to make before sending?',
+            options: [
+              'Ensure all three are the same length for consistency',
+              'Replace generic language in each version with specific references to what each audience cares about — their workflows, their metrics, their constraints',
+              'Add more technical detail to all three versions to demonstrate depth',
+              'Shorten all three to bullet-point summaries for efficiency',
+            ],
+            correct: 1,
+            explanation: 'AI writes for a generic professional reader. Your customers care about their specific workflow change, not "improved efficiency." Your engineers care about what done looks like and what\'s out of scope, not strategic positioning. Your executives care about the metrics it moves and the decision they need to make. Replacing generic language with specific references to each audience\'s actual context is what separates a communication that gets read and acted on from one that gets skimmed and filed.',
+          },
+          outputComparison: {
+            label: 'Executive product update: generic recap vs. decision-focused briefing',
+            vague: {
+              prompt: 'Write an executive update about our product progress this month',
+              output: 'Executive Product Update — This Month\n\nWe have made significant progress on our product initiatives this month. Our team has been working hard to deliver value to our customers and improve our product offering.\n\nKey highlights:\n• Completed development on several new features\n• Continued work on improving user experience\n• Made progress on our roadmap items\n• Addressed various customer feedback items\n\nLooking ahead, we plan to continue executing on our roadmap and delivering value to customers. We remain focused on our strategic goals and will continue to update you on our progress.',
+            },
+            improved: {
+              prompt: 'Write a 5-bullet executive product update for May. Audience: our CEO and two board members who care about ARR growth and customer retention. Format: What shipped, Key learnings, Progress toward our Q2 retention goal, Upcoming priorities, Decision needed.\n\nContext:\n- Shipped: Slack integration (3 weeks), now live for all customers\n- Key learning: 40% of new Slack integration users came from the enterprise segment — higher than expected\n- Q2 retention goal: reduce churn from 3.2% to 2.8% monthly; current: 2.9% (on track)\n- Upcoming: Mobile redesign starts June 1, targeting 60-day delivery\n- Decision needed: Should we pull in the reporting dashboard from Q4 to Q3 given the enterprise signal? Needs engineering capacity decision by June 15.',
+              output: 'Executive Product Update — May\n\n1. SHIPPED: Slack integration launched to all customers on May 12. Adoption at 28% of active users in first 2 weeks — ahead of our 20% 30-day target.\n\n2. KEY LEARNING: 40% of Slack integration adopters are from our enterprise segment (companies 200+ employees) — 2x the segment\'s share of our overall user base. This suggests the integration addresses a disproportionate enterprise need worth monitoring in expansion data.\n\n3. RETENTION PROGRESS: Monthly churn at 2.9% vs. Q2 goal of 2.8% — on track. Cohort analysis shows the improvement is concentrated in the 90-180 day customer segment, which correlates with our onboarding changes in April.\n\n4. NEXT PRIORITY: Mobile redesign begins June 1. Engineering is committed to 60-day delivery. This is our highest-volume complaint category in NPS (mentioned by 34% of detractors).\n\n5. DECISION NEEDED BY JUNE 15: Given the enterprise signal from Slack adoption, should we move the reporting dashboard from Q4 to Q3? It would require pulling 2 engineers from other work. Your call on whether the enterprise revenue opportunity justifies the trade-off — I can present the business case in our June 10 1:1.',
+            },
+            insight: 'The vague prompt produces a communication that contains no actual information — any PM at any company could have written it and it tells an executive nothing they can act on. The specific version uses real numbers (2.9% vs 2.8% churn target), a specific enterprise insight, and a time-bound decision request. The upgrade was providing the actual context for each bullet and specifying that the audience cares about ARR and retention — which filtered out everything an exec doesn\'t need to know.',
+          },
+          applyThisWeek: {
+            action: 'Take an upcoming stakeholder communication (sprint update, feature announcement, or status email). Write separate AI prompts for two different audiences, explicitly specifying what each audience cares about and what action you want them to take. Compare the two outputs — how different are they, and which one required the most editing to be audience-appropriate?',
+            promptTemplate: 'Write a [type of communication: product update / feature announcement / status email] for [specific audience: CEO / engineering team / customers]. This audience primarily cares about [their key metric or concern]. The content to cover: [what shipped or is changing], [key data or learning], [what\'s coming next], [what action or decision I need from them]. Keep it to [length]. Avoid [jargon type or level of detail they don\'t need].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a stakeholder who regularly asks questions in your update meetings that suggest they didn\'t read or understand your written update. What would they need the communication to look like to actually read it — and how far is that from what you currently send?',
           quiz: [
             {
               question: 'What is the most common problem with AI-generated stakeholder communications?',
@@ -892,6 +1211,35 @@ AI can turn raw sprint data (completed stories, incomplete items, blockers) into
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You ask AI to write a Jira ticket for a new export feature. The AI produces a user story with five acceptance criteria. Before adding it to the backlog, what must you review?',
+            options: [
+              'Whether the story is long enough to justify a full sprint point estimate',
+              'Whether the acceptance criteria are testable, cover relevant edge cases, and don\'t over-specify implementation approach',
+              'Whether the ticket follows the exact Jira template format used in previous sprints',
+              'Whether the story covers all potential future variations of the feature',
+            ],
+            correct: 1,
+            explanation: 'AI produces well-structured tickets but consistently makes two errors: acceptance criteria that describe intentions rather than testable conditions ("Users should be able to export easily" instead of "Export completes in under 3 seconds for files up to 10,000 rows"), and implementation prescriptions that constrain engineering when they should only define the user-observable outcome. Reviewing for testability and appropriate scope is the PM\'s quality gate before the ticket enters the team\'s workflow.',
+          },
+          outputComparison: {
+            label: 'Sprint ticket writing: generic story vs. engineering-ready specification',
+            vague: {
+              prompt: 'Write a user story for a CSV export feature',
+              output: 'User Story: As a user, I want to export data as a CSV file so that I can analyse my data in Excel.\n\nAcceptance Criteria:\n• Users can export data to CSV format\n• The export file contains relevant data\n• Users receive the exported file\n• The export process is easy to use\n• The file opens correctly in Excel',
+            },
+            improved: {
+              prompt: 'Write a Jira user story for a CSV export feature in our B2B project management tool. Context: Operations managers need to export their task lists with status, owner, and due date to include in weekly client reports — currently they copy-paste from the screen manually. Primary user: operations manager at a 50-200 employee company managing 3-5 active client projects. Include: user story format, 5 specific and testable acceptance criteria, 2 edge cases to consider, and a definition of done. Do not specify implementation approach — define observable user outcomes only.',
+              output: 'User Story:\nAs an operations manager preparing my weekly client report, I want to export my project task list to CSV so that I can include current status, owners, and due dates in my report without manual copy-pasting.\n\nAcceptance Criteria:\n1. Export button is visible on the task list view for any project where the user has at least Viewer permission.\n2. Exported CSV includes columns: Task name, Status, Assignee, Due date, Priority, Last updated — in that order.\n3. Export of a task list up to 500 rows completes and downloads within 5 seconds on a standard broadband connection.\n4. CSV file opens in Excel and Google Sheets without encoding errors (UTF-8 format, comma delimited).\n5. If active filters are applied to the task list, the export respects those filters — users export what they see on screen, not the full unfiltered list.\n\nEdge Cases:\n• What happens if the task list is empty? (Expected: export still works, produces a header row with no data rows, no error message)\n• What if a task has no assignee or no due date? (Expected: those fields export as blank cells, not "null" or "undefined")\n\nDefinition of Done:\nExport feature tested in Chrome, Safari, and Firefox. Verified with a 500-row task list. Verified in Excel 365 and Google Sheets. Edge cases tested and confirmed.',
+            },
+            insight: 'The vague prompt produces acceptance criteria that no engineer could test — "easy to use" and "contains relevant data" are opinions, not conditions. The specific version produces five genuinely testable conditions, including a performance threshold (5 seconds), a column order specification, an encoding requirement, and a filter-respects-view rule that would otherwise be ambiguous. The edge cases surface two real questions that would otherwise appear as bugs. The upgrade was providing the user context and explicitly requesting testable, implementation-neutral criteria.',
+          },
+          applyThisWeek: {
+            action: 'Take three tickets from your next sprint that you would normally write manually. Write a 2-3 sentence description for each, then use AI to generate the full user story with acceptance criteria. Review each for: testable ACs, missing edge cases, and over-specified implementation. Edit one to make it engineering-ready and compare the time saved to your usual ticket-writing process.',
+            promptTemplate: 'Write a Jira user story for [feature description] in [product type]. Context: [describe the user situation and what they\'re trying to accomplish — include current workaround if applicable]. Primary user: [specific role at specific company type]. Include: user story format, [N] specific and testable acceptance criteria, [N] edge cases to consider, and a definition of done. Define observable user outcomes only — do not specify implementation approach.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last bug that reached production that could have been caught in the ticket. Was the acceptance criterion that should have prevented it missing, untestable, or ambiguous? How would you write that criterion now?',
           quiz: [
             {
               question: 'What is the most valuable use of AI in sprint ticket writing?',
@@ -972,6 +1320,35 @@ AI features have failure modes that traditional software doesn't. Design for the
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A vendor pitches you an AI feature that "automatically understands what customers need and generates the right response." As a PM, what is your most important follow-up question?',
+            options: [
+              'How much does it cost per API call?',
+              'What is the expected accuracy rate, how is it measured, and what happens when the model is wrong?',
+              'Which companies are currently using this technology?',
+              'How quickly can we integrate this into our product?',
+            ],
+            correct: 1,
+            explanation: 'AI vendor pitches describe what the technology does when it works well. The PM\'s job is to understand the failure mode — because AI features have failure modes traditional software doesn\'t. Without knowing the accuracy rate, how "wrong" is measured, and what happens in the failure case (does it fail silently? produce confident incorrect output? prompt a fallback?), you cannot write requirements, set user expectations, or design a trustworthy product experience.',
+          },
+          outputComparison: {
+            label: 'AI feature scoping: vague capability claim vs. capability-typed requirements',
+            vague: {
+              prompt: 'We want to add AI to our customer support product. What should we build?',
+              output: 'Here are some AI features you could add to your customer support product:\n1. Chatbot for answering common questions\n2. Sentiment analysis to detect frustrated customers\n3. Auto-categorisation of tickets\n4. AI-generated response suggestions\n5. Smart routing to the right agent\n6. Predictive analytics for ticket volume\n7. Knowledge base search improvement\nThese features would greatly improve your customer support capabilities and customer satisfaction.',
+            },
+            improved: {
+              prompt: 'We\'re a B2B SaaS company with a customer support team handling 500 tickets/day. 60% of tickets are answered with a response that\'s one of 15 standard answers. Our team spends 40% of their time on these predictable tickets. We\'re evaluating where to add AI. For each AI capability type (classification, generation, RAG, recommendation, extraction), tell me: (1) which of our specific support problems it solves, (2) what data we\'d need, (3) realistic accuracy expectations, and (4) what the failure mode looks like that our PMs and designers need to plan for.',
+              output: 'Classification — Ticket categorisation and routing\nYour problem it solves: Routing the 500 daily tickets to the right queue without manual triage.\nData needed: 3-6 months of historical tickets with correct categories labelled (minimum 500 per category for reliable training).\nRealistic accuracy: 85-92% for well-defined categories with sufficient training data. Lower for ambiguous tickets or new issue types.\nFailure mode: Miscategorised tickets reach the wrong queue and get delayed. Design: human review queue for low-confidence classifications; monitor and retrain when a new product launch creates a new uncategorised issue type.\n\nRAG — Response suggestion grounded in knowledge base\nYour problem it solves: The 60% of tickets with standard answers — AI can draft the response grounded in your documented answers.\nData needed: A clean, structured knowledge base. Quality of RAG is directly proportional to quality of source documentation.\nRealistic accuracy: Response quality depends on KB quality, not just the model. Expect 70-80% of suggestions usable with light editing; 20-30% requiring rewrite.\nFailure mode: AI confidently generates a response that cites outdated or wrong KB article. Design: show the source article the response was based on; allow agent to override; log when agents edit heavily (signals KB quality problem).\n\n[continues with Generation, Recommendation, Extraction]',
+            },
+            insight: 'The vague prompt returns a shopping list of AI features with no connection to the company\'s actual support context, no data requirements, and no failure mode analysis. The specific version maps each AI capability type to a real business problem (60% predictable tickets, 500/day volume), names specific data requirements, and provides failure mode design implications that PMs need to write requirements. The upgrade was providing the actual business context and asking for the failure mode — the question most PMs don\'t ask vendors.',
+          },
+          applyThisWeek: {
+            action: 'Identify one AI feature in your product (or a competitor\'s product you want to understand better). Classify it by AI capability type (classification, generation, RAG, recommendation, or extraction). Then identify: what data it needs, what its likely accuracy rate is, and what the failure mode looks like in the current UX. Write a one-paragraph assessment.',
+            promptTemplate: 'I\'m evaluating adding an AI feature to [product type]. The user problem we\'re solving: [describe the specific problem]. Our current data: [describe what data you have available]. For each AI capability type that could apply (classification / generation / RAG / recommendation / extraction): tell me (1) how it would solve our specific problem, (2) what data it needs, (3) realistic accuracy expectations, and (4) what the failure mode looks like that my design team needs to plan for.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about an AI feature you\'ve used in a product that felt untrustworthy — where you weren\'t sure whether to believe the output. Was the failure mode a data quality problem, an accuracy problem, or a design problem that didn\'t help you understand the AI\'s confidence level? What would have made it trustworthy?',
           quiz: [
             {
               question: 'What distinguishes Retrieval-Augmented Generation (RAG) from standard text generation?',
@@ -1041,6 +1418,35 @@ Additional AI sections:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your team is launching an AI feature that suggests email subject lines for sales reps. The PRD says "the feature should suggest helpful subject lines." What critical requirement is missing?',
+            options: [
+              'A specification for the font size of the suggestion UI',
+              'An accuracy threshold defining what "helpful" means, how it is measured, and what happens when the model\'s confidence is low',
+              'A list of all email clients the feature should support',
+              'A requirement for how many suggestions to show at once',
+            ],
+            correct: 1,
+            explanation: '"Helpful" is not a requirement — it\'s an intention. An AI feature PRD must define what good looks like in measurable terms (e.g. "sales rep uses the suggestion without editing in >50% of cases"), how that is measured, and what the system does when it cannot generate a confident suggestion. Without these specifications, engineering has no standard to build to, QA has no bar to test against, and you\'ll discover what "helpful" means by reading support tickets after launch.',
+          },
+          outputComparison: {
+            label: 'AI feature PRD sections: standard requirements vs. AI-complete requirements',
+            vague: {
+              prompt: 'Write the requirements for an AI feature that auto-categorises customer support tickets',
+              output: 'Requirements for AI Ticket Categorisation:\n\nFunctional Requirements:\n• The system shall automatically categorise incoming support tickets\n• The AI shall analyse ticket content and assign appropriate categories\n• Categories shall include: Billing, Technical, Account, General\n• The system shall learn from corrections made by agents\n• Categorisation shall happen automatically when a ticket is received\n\nNon-Functional Requirements:\n• The system shall be accurate\n• The system shall be fast\n• The system shall be easy to use',
+            },
+            improved: {
+              prompt: 'Write the AI-specific PRD sections for an AI ticket auto-categorisation feature for our B2B SaaS customer support team. Our team handles 500 tickets/day across 4 categories. Background: We have 18 months of labelled historical tickets (avg 5,000 per category). Include these sections: (1) Data requirements, (2) Accuracy and quality thresholds (define acceptable accuracy, false positive/negative rates, and relative consequences of each error type), (3) Failure modes and fallbacks, (4) User controls (how agents interact with and correct the AI), (5) Ongoing monitoring plan. Be specific enough that an engineer could implement from these requirements.',
+              output: 'Data Requirements:\n• Training data: 18 months of historical tickets, labelled with correct category. Minimum 2,000 tickets per category required for reliable classification (we meet this threshold).\n• Ongoing training data: Agent corrections must be logged with original category, corrected category, and ticket ID to enable retraining every 60 days.\n• PII handling: Ticket content used for training must have customer name, email, and company name redacted prior to use in any training pipeline.\n\nAccuracy and Quality Thresholds:\n• Minimum acceptable accuracy at launch: 87% across all categories (measured on 20% held-out test set).\n• Category-level floor: No single category may fall below 82% accuracy at launch.\n• False positive/negative consequence analysis: Miscategorising a Billing ticket as General is higher-consequence than miscategorising a General ticket as Technical — billing tickets routed incorrectly delay resolution for time-sensitive customers. Weight the billing category precision higher in evaluation.\n• Confidence threshold: If model confidence is below 75%, flag for human review rather than auto-assigning.\n\nFailure Modes and Fallbacks:\n• If confidence < 75%: Route to "Needs review" queue. Assign to a senior agent. Do not auto-categorise.\n• If the model is unavailable: Fall back to keyword-based rules (pre-existing routing logic). Log the outage event for ops review.\n• If a ticket belongs to a new, uncategorised issue type: Route to "Uncategorised" queue. Alert PM team weekly on volume — signal for new category creation.\n\nUser Controls:\n• Agents can see the AI\'s assigned category and confidence score for every ticket.\n• One-click recategorisation: Agent selects correct category from dropdown; correction is logged automatically for retraining.\n• Agent cannot turn off AI categorisation individually, but team leads can disable for specific queues in settings.\n\nOngoing Monitoring:\n• Weekly: PM reviews override rate (target: <15%). Spikes indicate model drift or new issue types.\n• Monthly: Data team runs category-level accuracy report on production data. Flag any category below 85%.\n• Retraining cadence: Every 60 days using accumulated corrections.',
+            },
+            insight: 'The vague requirements are unmeetable — "the system shall be accurate" gives engineering nothing to build to and QA nothing to test against. The specific version gives engineering a measurable accuracy floor (87%), a confidence threshold for the fallback path (75%), a PII handling requirement for training data, and a monitoring cadence that defines who does what and when. The critical difference is that every requirement is testable and specific enough that a disagreement about whether it\'s been met can be resolved with data.',
+          },
+          applyThisWeek: {
+            action: 'Take an AI feature you\'re planning or recently shipped. Draft the five AI-specific PRD sections: data requirements, accuracy thresholds, failure modes, user controls, and monitoring plan. For each section, ask: "Could an engineer build from this requirement without asking me a follow-up question?" Rewrite any section where the answer is no.',
+            promptTemplate: 'Write the AI-specific PRD sections for [AI feature name] in [product type]. Context: [describe the feature, the user, and the data you have available]. Include: (1) Data requirements (training data, ongoing data, PII handling), (2) Accuracy and quality thresholds (minimum acceptable accuracy, false positive/negative consequence analysis, confidence threshold for fallback), (3) Failure modes and fallbacks, (4) User controls (how users see and correct AI outputs), (5) Ongoing monitoring plan (who monitors what, at what cadence, and what triggers action).',
+            tool: 'Claude',
+          },
+          reflection: 'Has your team ever shipped an AI feature and then spent weeks debating what "good performance" meant — because it wasn\'t defined before launch? What would it have taken to define that standard before the first line of code was written?',
           quiz: [
             {
               question: 'What is the most important difference between a standard software PRD and an AI feature PRD?',
@@ -1107,6 +1513,35 @@ PMs are not model evaluators — that is a data science responsibility. The PM's
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your AI email drafting feature achieves 91% accuracy in offline testing. Is it ready to launch?',
+            options: [
+              'Yes — 91% accuracy is above the industry benchmark for AI features',
+              'Not necessarily — offline accuracy must be validated with human evaluation of output quality and A/B tested against user outcome metrics before launch decisions are made',
+              'Yes — any accuracy above 90% is considered production-ready',
+              'No — AI features should not be launched until 99% accuracy is achieved',
+            ],
+            correct: 1,
+            explanation: 'Offline accuracy measures whether the model produces statistically correct outputs on a test dataset — but it doesn\'t measure whether users find the outputs useful, whether they improve task completion rates, or whether they create trust or harm in edge cases. A feature with 91% accuracy can still damage user trust if the 9% failure cases occur on high-stakes emails, or if the outputs are technically accurate but tone-deaf to the specific context. Human evaluation and A/B testing on user outcomes are the additional quality gates that bridge model accuracy to real-world value.',
+          },
+          outputComparison: {
+            label: 'AI feature evaluation: no plan vs. structured pre- and post-launch evaluation',
+            vague: {
+              prompt: 'How should we test our AI ticket categorisation feature before launching it?',
+              output: 'To test your AI ticket categorisation feature, you should:\n1. Test it with sample tickets\n2. Check if the categories are correct\n3. Ask your team if they like it\n4. Run a pilot with a small group\n5. Monitor it after launch\n6. Gather feedback from users\n7. Make improvements based on what you learn\nMake sure to test thoroughly before launching to ensure quality.',
+            },
+            improved: {
+              prompt: 'Design an evaluation plan for our AI ticket auto-categorisation feature before and after launch. Context: The feature auto-assigns one of 4 categories to incoming support tickets. We have 18 months of labelled historical tickets and a team of 12 support agents. Our minimum acceptable accuracy is 87%. We are launching to a team that currently routes tickets manually. Design: (1) offline evaluation methodology, (2) human evaluation rubric for the cases where accuracy is ambiguous, (3) a red-teaming approach with 5 specific adversarial inputs we should test, (4) A/B test design for the production launch, and (5) two production monitoring metrics for the first 30 days.',
+              output: 'Offline Evaluation:\nHold out 20% of historical labelled tickets (do not use in training). Run model against this set and calculate: overall accuracy, per-category accuracy, and confusion matrix. Minimum bar: 87% overall, no category below 82%. Track which category pairs are most confused — Billing/Account confusion is higher-consequence than Technical/General.\n\nHuman Evaluation Rubric:\nFor tickets where model confidence is 65-80% (the ambiguous zone), have 3 agents independently categorise a random 200-ticket sample. Calculate inter-rater agreement. If agents agree on the correct category >90% of the time, the model\'s performance on those tickets can be benchmarked against the agent consensus. Rubric for "correct": Would an experienced agent routing this ticket assign the same category without seeing the AI\'s suggestion?\n\nRed-Teaming — 5 adversarial inputs:\n1. Multi-issue ticket: "I can\'t log in (Technical) and I was charged twice this month (Billing)" — which category does the model assign?\n2. Language switch mid-ticket: English subject, Spanish body — does the model fail or categorise correctly?\n3. Sarcastic/ambiguous language: "Great, you charged me again" — does this route as Billing or General?\n4. Empty ticket: Subject only, no body — does this fail gracefully?\n5. New product feature not in training data: A ticket about a feature launched 2 weeks ago — does the model misclassify or route to the review queue?\n\nA/B Test Design:\nControl: manual routing by agents (current state). Treatment: AI auto-categorisation with agent override available. Metric: time-to-first-response per ticket (primary). Guardrail: agent override rate (if >25% of AI assignments are overridden within 48 hours, pause the experiment and investigate).\n\nProduction Monitoring — 30 days post-launch:\n1. Override rate by category: tracked daily. Target <15% overall. Spike >20% on any category triggers model review.\n2. Time-to-first-response: tracked weekly vs. pre-launch baseline. Target: no regression; aim for 15% reduction.',
+            },
+            insight: 'The vague prompt produces a checklist of general advice that any team already knows — it adds no structure, no thresholds, and no specific adversarial inputs. The specific version gives an engineer a test dataset methodology, a rubric for ambiguous human evaluation, five named red-team inputs that test real edge cases, an A/B test design with a guardrail metric, and two production monitoring metrics with action thresholds. The upgrade was providing the feature context (4 categories, 87% threshold, 12 agents) and asking for each evaluation stage explicitly.',
+          },
+          applyThisWeek: {
+            action: 'For an AI feature you\'re planning or have recently shipped, design a 3-part evaluation framework: (1) define your minimum acceptable accuracy and how you\'ll measure it pre-launch, (2) write 3 red-team inputs specifically designed to find failure modes in your feature\'s domain, (3) name the one production metric you\'d monitor weekly in the first 30 days and the threshold that would trigger action.',
+            promptTemplate: 'Design an evaluation plan for [AI feature description]. Context: [describe the feature, user, and data available]. Our minimum acceptable accuracy is [X%]. Design: (1) offline evaluation methodology and quality bar, (2) a 3-point human evaluation rubric for cases where accuracy is ambiguous, (3) [N] red-team adversarial inputs specific to our domain and user base, (4) A/B test design with primary metric and one guardrail metric, (5) two production monitoring metrics for the first 30 days with action thresholds.',
+            tool: 'Claude',
+          },
+          reflection: 'Has your team ever discovered a critical AI failure mode from a user support ticket rather than from testing? What would the red-team test have looked like that would have caught it before launch?',
           quiz: [
             {
               question: 'What is the purpose of red-teaming an AI feature before launch?',
@@ -1185,6 +1620,35 @@ These aren't just ethical considerations — they are the foundations of user tr
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your competitor just announced a fully automated AI feature that makes decisions on behalf of users without review. Your CEO asks why you haven\'t built this yet. What is the strongest product argument for your current Stage 1 (augmentation) approach?',
+            options: [
+              'Because fully automated AI is too expensive to build for a company our size',
+              'Because Stage 1 augmentation builds the user trust and feedback loops that make Stage 2 automation safer and more adopted when we get there',
+              'Because competitors are always wrong about which AI features to build',
+              'Because augmentation features are faster to ship than automation features',
+            ],
+            correct: 1,
+            explanation: 'Jumping to automation before users trust the AI in your product creates a dangerous combination: users who don\'t understand the AI\'s outputs, can\'t easily override them, and haven\'t built the mental model to catch its errors. Stage 1 augmentation is not a shortcut — it\'s the product investment that builds user familiarity, reveals failure modes at low stakes, and generates the feedback data that makes Stage 2 automation safe. Competitors who skip it often face user backlash when the automation fails publicly.',
+          },
+          outputComparison: {
+            label: 'AI product strategy: feature list vs. sequenced capability roadmap',
+            vague: {
+              prompt: 'What AI features should we add to our project management product?',
+              output: 'Here are AI features you could add to your project management product:\n1. AI-powered task creation\n2. Smart deadline suggestions\n3. Automated status updates\n4. AI meeting summaries\n5. Intelligent resource allocation\n6. Predictive project completion dates\n7. Natural language project creation\n8. AI-generated project templates\nThese features would modernise your product and improve user productivity.',
+            },
+            improved: {
+              prompt: 'I\'m building an AI product roadmap for a B2B project management tool used by operations teams at 50-200 person companies. We have 3 engineers for AI work and 6 months to demonstrate meaningful AI value. Our users currently manage projects manually — they\'re not AI-native. Using the three-stage AI roadmap framework (Stage 1: augmentation, Stage 2: automation, Stage 3: intelligence), recommend: (1) one Stage 1 feature we could ship in 6 weeks to build user trust, (2) one Stage 2 feature we could target in month 3-4 once trust is established, (3) one Stage 3 vision feature for month 6+ if early stages succeed. For each, tell me: the user value, the data it needs, and the trust-building step that must come first.',
+              output: 'Stage 1 Augmentation — Ship in weeks 1-6: AI-drafted status update suggestions\nUser value: Project managers spend 20-30 minutes weekly writing status updates for stakeholders. AI can draft these from task completion data and comments — PM reviews, edits, and sends.\nData needed: Task status changes, completion events, and comment text (all already in your data model).\nTrust prerequisite: None — users see the suggestion, edit it, and send it. Low stakes, high transparency. This teaches users that AI can read their project data accurately.\nWhy this first: It\'s low-consequence (PM always reviews before sending), delivers immediate time savings, and demonstrates AI understands project context without requiring users to change their workflow.\n\nStage 2 Automation — Target months 3-4: Auto-close completed tasks with summary\nUser value: When all subtasks complete, AI auto-closes the parent task and posts a brief completion summary to the activity feed — no manual action required.\nData needed: Subtask completion events + 2 months of status update drafts from Stage 1 (to calibrate summary quality).\nTrust prerequisite: Users must have seen accurate AI summaries in Stage 1 for 8+ weeks. Override mechanism: one-click reopen with reason. Opt-in per project initially.\nWhy this sequence: Auto-closure is only trusted when users have already seen that AI understands what "complete" means in their project context.\n\nStage 3 Intelligence — Months 6+: Proactive risk detection\nUser value: AI flags projects at risk of missing deadline based on velocity, open blockers, and historical delivery patterns — surfaces risk before the PM sees it.\nData needed: 6+ months of project completion data, task velocity by team, historical blocker resolution times.\nTrust prerequisite: Requires significant data accumulation and established user trust in AI accuracy from Stages 1 and 2. A false risk flag from a product users don\'t trust yet is more damaging than no flag at all.',
+            },
+            insight: 'The vague prompt returns a feature list with no sequencing logic, no data requirements, and no consideration of whether users are ready to trust each capability. The specific version uses the three-stage framework to sequence features in dependency order — Stage 2 automation explicitly requires the trust data generated by Stage 1 augmentation. That sequencing logic is the AI product strategy; the feature list is just implementation detail. The upgrade was providing the team size, user maturity, and timeframe — which forced the AI to make real trade-offs.',
+          },
+          applyThisWeek: {
+            action: 'Map your product\'s current and planned AI features to the three-stage framework (augmentation / automation / intelligence). Identify: which features are building user trust that later stages depend on, and which features are at risk of being introduced before that trust exists. Adjust your roadmap sequence if needed.',
+            promptTemplate: 'I\'m building an AI roadmap for [product type] with [team size] AI engineering capacity and [timeframe]. Our users are [describe AI familiarity level]. Using the three-stage framework (Stage 1: augmentation, Stage 2: automation, Stage 3: intelligence), recommend: (1) one Stage 1 feature to build user trust in [timeframe], (2) one Stage 2 feature for [later timeframe] once trust is established, (3) one Stage 3 vision feature for [final timeframe] if earlier stages succeed. For each: user value, data needed, and the trust-building prerequisite from the previous stage.',
+            tool: 'Claude',
+          },
+          reflection: 'Is there an AI feature in your product or on your roadmap that was added because it sounded impressive rather than because it solves a specific user problem your product is in a unique position to solve? What would it take to justify that feature against a simpler alternative?',
           quiz: [
             {
               question: 'What is the correct sequencing for an AI product roadmap?',
@@ -1267,6 +1731,35 @@ AI can help design and analyse experiments. It cannot tell you which hypothesis 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An A/B test shows that adding social proof ("1,200 teams use this feature") to the upgrade prompt increased paid conversion by 2.3% with 95% statistical significance. What should you ask next?',
+            options: [
+              'Roll out the change immediately — 95% significance is conclusive',
+              'Ask what mechanism drove the result, check guardrail metrics for unintended effects, and identify what this implies about the next hypothesis to test',
+              'Run the test again to confirm the result before rolling out',
+              'Ask AI whether the 2.3% improvement is large enough to matter',
+            ],
+            correct: 1,
+            explanation: 'A statistically significant result is the beginning of learning, not the end. You need to understand why social proof worked — is it trust? is it FOMO? is it the specific number? — because that mechanism tells you what to test next. You also need to check whether the conversion improvement came at the cost of another metric (e.g. lower satisfaction among users who upgraded based on social pressure). AI can help you generate alternative explanations and follow-up hypotheses, but the decision to roll out requires your judgment about practical significance.',
+          },
+          outputComparison: {
+            label: 'Experiment hypothesis: weak correlation claim vs. mechanism-based hypothesis',
+            vague: {
+              prompt: 'Generate A/B test ideas to improve our trial-to-paid conversion rate',
+              output: 'Here are some A/B test ideas to improve trial-to-paid conversion:\n1. Test different pricing page layouts\n2. Try offering a discount\n3. Add testimonials to the upgrade page\n4. Test different CTA button colours\n5. Try a free trial extension offer\n6. Add a comparison table\n7. Test different headline copy\n8. Try adding urgency messaging\nThese tests could help improve your conversion rate.',
+            },
+            improved: {
+              prompt: 'I\'m trying to improve trial-to-paid conversion for our B2B project management tool. Our current conversion rate is 12% at day 30. We know that users who invite at least one teammate in week 1 convert at 28% vs 8% for solo users. We have not yet addressed this in our onboarding or upgrade flows. Generate 8 A/B test hypotheses targeting this insight. For each hypothesis: (1) what specifically changes in the product, (2) what user behaviour we expect to change and why (the mechanism), and (3) what metric defines a win and what guardrail metric we should watch to prevent harm.',
+              output: 'Hypothesis 1: Invitation prompt at first value moment\nWhat changes: After a user completes their first project setup, show an inline prompt: "Projects work better with your team. Invite one person to collaborate on this project." (instead of waiting for explicit navigation to settings).\nMechanism: Users who invite a teammate convert at 28% vs 8% — the barrier may be discoverability, not intent. Positioning the invitation at the moment they\'ve just created something valuable raises the perceived benefit of collaboration.\nWin metric: % of solo users who invite ≥1 teammate in week 1 (target: +40% relative). Guardrail: trial completion rate (ensure the prompt doesn\'t interrupt setup and cause drop-off).\n\nHypothesis 2: Upgrade page personalisation by collaboration status\nWhat changes: Solo users (no teammates) see an upgrade page emphasising the collaboration features with social proof ("Teams using [product] collaborate on average 3 projects simultaneously"). Users who have already invited teammates see an upgrade page emphasising advanced features and admin controls.\nMechanism: The value of the paid plan differs by collaboration status. Showing solo users what they\'re missing (team features) targets a different motivation than showing already-collaborative users admin capabilities.\nWin metric: Trial-to-paid conversion rate by user segment. Guardrail: page drop-off rate (personalisation should not create confusion).\n\nHypothesis 3: Friction-reduced team invite in email drip\nWhat changes: Day 3 activation email includes a single pre-filled invite link for the user\'s most frequent collaborator (based on email domain) with one-click send.\nMechanism: If the barrier is effort (finding email addresses, composing the invite), removing that friction for the most likely invitee should increase invitation rate in week 1 — which predicts conversion.\nWin metric: Invitation sent rate from email. Guardrail: email unsubscribe rate (ensure this doesn\'t feel invasive).',
+            },
+            insight: 'The vague prompt returns a list of standard conversion tactics with no connection to the company\'s actual data insight (28% vs 8% conversion split on team invitation). The specific version anchors every hypothesis to that insight and provides a causal mechanism for each — which means even a failing test teaches you something about whether the mechanism was correct. The guardrail metrics ensure each test can\'t improve conversion at the cost of another dimension of user experience. The upgrade was providing the specific data insight that should drive the hypothesis generation.',
+          },
+          applyThisWeek: {
+            action: 'Pick one metric you want to improve. Find one user behaviour segment that correlates with better outcomes on that metric (from your analytics, customer interviews, or intuition). Use that insight as the anchor for generating 5 A/B test hypotheses — each with a mechanism, not just a correlation. Score each hypothesis on: testability today, confidence in the mechanism, and expected impact.',
+            promptTemplate: 'I\'m trying to improve [metric] for [product type]. Current rate: [X%]. We know that users who [specific behaviour] achieve [better outcome] vs [worse outcome] for users who don\'t. We haven\'t yet addressed this in the product. Generate [N] A/B test hypotheses targeting this insight. For each: (1) what specifically changes in the product, (2) the user behaviour we expect to change and the mechanism (why), (3) the metric that defines a win, and (4) one guardrail metric to prevent harm.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last A/B test your team ran that won. Did you know why it won — the specific mechanism — or just that it did? If you didn\'t know why, what hypothesis about the mechanism would have changed what you tested next?',
           quiz: [
             {
               question: 'What is the most common weakness in A/B test hypotheses that AI can help address?',
@@ -1349,6 +1842,35 @@ AI can help you design better dashboards — not by building them, but by specif
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your monthly active user count (MAU) dropped 8% last month. Your first instinct is that last month\'s UI redesign caused it. What is the most rigorous next step?',
+            options: [
+              'Roll back the UI redesign immediately to restore the MAU',
+              'Generate multiple competing hypotheses for the drop and identify the data needed to rule each one in or out before taking action',
+              'Ask AI to confirm that the UI redesign caused the drop',
+              'Schedule a team retrospective to discuss the redesign decision',
+            ],
+            correct: 1,
+            explanation: 'Acting on the first plausible explanation is one of the most common and expensive mistakes in product analytics. An MAU drop could be caused by the UI change, a marketing budget reduction, a seasonal effect, a new competitor launch, or a data pipeline issue — each requiring a completely different response. Generating competing hypotheses and identifying discriminating data (cohort analysis, acquisition source data, competitor activity) before acting produces better decisions and avoids the risk of rolling back a redesign that wasn\'t the problem.',
+          },
+          outputComparison: {
+            label: 'Metric drop investigation: single-cause assumption vs. structured hypothesis analysis',
+            vague: {
+              prompt: 'Our user engagement dropped this month. What should we do?',
+              output: 'A drop in user engagement could have several causes. Here are some things you can do:\n1. Look at your analytics to understand what changed\n2. Survey your users to get feedback\n3. Check if there were any product changes\n4. Look at competitor activity\n5. Review your marketing campaigns\n6. Check if there are any technical issues\n7. Analyse your user segments\n8. Consider improving your onboarding\nIt\'s important to understand the root cause before making changes.',
+            },
+            improved: {
+              prompt: 'Our weekly active users dropped 11% over the past 3 weeks for our B2B project management tool. Here is what I know about the context: (1) We launched a new navigation redesign 4 weeks ago, (2) Our marketing team reduced ad spend by 30% in the same period, (3) A competitor launched a major feature update 3 weeks ago, (4) Our CS team has not reported an unusual volume of complaints. Generate the 5 most plausible explanations for this drop. For each: (1) the hypothesis, (2) the specific data I would need to confirm or rule it out, and (3) how quickly I could get that data.',
+              output: 'Hypothesis 1: Navigation redesign disrupted existing users\' workflows\nMechanism: The redesign changed where key features are accessed, reducing engagement while users relearn navigation — but engaged users who persist will recover.\nData to confirm/rule out: Compare WAU for users who were active before the redesign vs. users who joined after. If existing user WAU dropped while new user WAU held steady, the redesign is the culprit. Also check feature-level usage: did specific high-use features see disproportionate drops?\nTime to get data: 2-3 hours with your analytics tool.\n\nHypothesis 2: Marketing spend reduction reduced new user activation, masking in the WAU aggregate\nMechanism: Reduced ad spend means fewer new users entering the activation funnel — if new user WAU contribution dropped, aggregate WAU drops even without existing user behaviour changing.\nData to confirm/rule out: Segment WAU by user cohort (existing vs. new in last 30 days). If new user WAU contribution fell proportionally to the 30% spend reduction, this is an acquisition story, not an engagement story.\nTime to get data: Same analytics query as above — 2-3 hours.\n\nHypothesis 3: Competitor feature launch triggered evaluation behaviour\nMechanism: Power users who saw the competitor announcement may have started trialling the alternative, reducing time spent in your product.\nData to confirm/rule out: Check WAU drop by user segment — are power users (high session frequency, multiple projects) disproportionately affected? Also check if support tickets or NPS comments mention the competitor.\nTime to get data: 1-2 hours for usage segmentation; CS sentiment review can be done same day.\n\n[Hypotheses 4-5 continue with data requirements and timelines]',
+            },
+            insight: 'The vague prompt produces a general investigation checklist that tells an experienced PM nothing new — any analyst knows to "check if there were any product changes." The specific prompt uses the actual context (three simultaneous changes in the same month) to generate hypotheses that each point to discriminating data that could rule them in or out within hours. That data requirement is the key deliverable — it turns "we need to investigate" into "run these three queries this afternoon and we\'ll know which story is true."',
+          },
+          applyThisWeek: {
+            action: 'Pick one metric in your product that has moved unexpectedly in the last month (up or down). Write down everything you know about the context: product changes, marketing changes, competitor activity, seasonal factors. Then use AI to generate 4-5 competing hypotheses and the data needed to distinguish between them. Run at least one of the data queries before end of week.',
+            promptTemplate: 'Our [metric] [increased/dropped] by [X%] over [timeframe]. Context about what changed in that period: [list all relevant product changes, marketing changes, competitor activity, and seasonal factors]. Generate [N] competing hypotheses for why this happened. For each: (1) the hypothesis and mechanism, (2) the specific data I would need to confirm or rule it out, and (3) how quickly I could realistically get that data.',
+            tool: 'Claude',
+          },
+          reflection: 'When your team last saw an unexpected metric move, how long did it take to agree on the root cause? How much of that time was spent generating competing hypotheses versus defending the first explanation someone proposed?',
           quiz: [
             {
               question: 'What is the difference between an input metric and an output metric in product management?',
@@ -1435,6 +1957,35 @@ For products with sharing or collaboration mechanics, AI can help you map and op
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your freemium product has a 12% free-to-paid conversion rate at day 30. Analysis shows that users who complete a "first project with a collaborator" in week 1 convert at 31%, while solo users convert at 6%. What should be your first PLG action?',
+            options: [
+              'Reduce the price of the paid tier to improve overall conversion rates',
+              'Redesign onboarding to get more users to complete a collaborative project in week 1 — this is likely your activation milestone',
+              'Send discount emails to all solo users at day 20 to improve their conversion rate',
+              'Add more features to the paid tier to make the upgrade more compelling',
+            ],
+            correct: 1,
+            explanation: 'This is a classic PLG activation milestone signal: users who experience a specific behaviour (collaborative project) convert at 5x the rate of those who don\'t. The PLG response is to redesign onboarding to maximise the percentage of new users who reach that milestone in week 1 — not to incentivise non-activated users downstream. Discounts and feature additions don\'t address the root cause: users who haven\'t experienced the core value moment of your product aren\'t ready to pay for it.',
+          },
+          outputComparison: {
+            label: 'PLG onboarding analysis: generic optimisation vs. activation-milestone-driven redesign',
+            vague: {
+              prompt: 'How can I improve user onboarding for my SaaS product?',
+              output: 'Here are some ways to improve your SaaS onboarding:\n1. Make the signup process simpler\n2. Add an onboarding checklist\n3. Send welcome emails\n4. Create tutorial videos\n5. Add tooltips and in-app guidance\n6. Reduce the number of steps\n7. Add progress indicators\n8. Personalise the experience\nThese changes should help users get started faster and improve retention.',
+            },
+            improved: {
+              prompt: 'I\'m optimising onboarding for a B2B project management tool with a freemium PLG model. Key data: (1) Users who create their first project with at least one collaborator in week 1 retain at 68% vs 23% for solo users at 90 days. (2) Currently only 31% of new users invite a collaborator in week 1. (3) Our current onboarding flow: signup → create account → product tour (5 steps) → empty project dashboard. The invitation feature is in Settings > Team. Using the PLG framework (activation milestone → time-to-value → expansion signals), help me: (1) confirm whether "first collaborative project" is the right activation milestone, (2) identify where in our current flow users likely lose momentum before reaching it, and (3) suggest 3 specific onboarding changes that move more users to the milestone in week 1.',
+              output: 'Activation Milestone Validation:\n"First collaborative project" is a strong activation milestone candidate — the 68% vs 23% retention split is substantial and suggests collaboration is core to your product\'s value delivery, not just a feature. One thing to validate: are collaborative users retaining because collaboration drives value, or because teams with multiple users are more invested in any tool they adopt (selection bias)? Run a cohort analysis on users who invited a collaborator but didn\'t get them to join — if their retention is similar to solo users, the value is in actual collaboration, not just intent.\n\nWhere users lose momentum in your current flow:\n1. The 5-step product tour is a passive education experience with no activation task embedded. Users who complete it land on an empty dashboard with no prompting toward the specific action (invite a collaborator) that predicts retention. This is the highest-risk drop-off point.\n2. The invitation feature lives in Settings > Team — this is a maintenance area, not a workflow area. Users building their first project have no reason to navigate there unless prompted.\n3. "Empty project dashboard" is the most common PLG abandonment trigger. New users who see an empty state with no collaborators have no immediate social context for why the product is valuable.\n\n3 Specific Onboarding Changes:\n1. Replace the product tour with a "first project setup" wizard that embeds team invitation as step 2 of 4 — before the user reaches the dashboard. Framing: "Projects work best with your team. Who do you work with most on projects like this?" Pre-populate with email address suggestions if you have calendar integration.\n2. Redesign the empty dashboard state for solo users to show a "Waiting for your team" prompt with a one-click invite shortcut — make the absence of collaborators feel like an incomplete setup, not a starting point.\n3. Add a day-2 activation email specifically for solo users (no teammate invited): subject "Your project is waiting for your team" — single CTA to invite one person. This captures users who skipped the in-app invitation and adds a second chance at the activation milestone.',
+            },
+            insight: 'The vague prompt returns a generic onboarding checklist that could apply to any SaaS product — none of it is derived from the company\'s actual retention data. The specific version uses the 68% vs 23% retention split to validate the activation milestone, then identifies the three specific places in the current flow where that milestone is least likely to be reached, and generates targeted changes that address each friction point directly. The upgrade was providing the retention data and current onboarding flow — which grounded every recommendation in the actual product context.',
+          },
+          applyThisWeek: {
+            action: 'Identify one user behaviour in your product that correlates strongly with better retention or conversion. This is your candidate activation milestone. Then map your current onboarding flow step by step and identify: where in the flow do users have the best opportunity to reach that milestone, and where does the flow create distance from it? Write one specific onboarding change that would move more users toward the milestone in week 1.',
+            promptTemplate: 'I\'m optimising onboarding for [product type] with a [freemium / trial / PLG] model. Key data: users who [specific behaviour] retain at [X%] vs [Y%] for users who don\'t. Currently [Z%] of new users reach this milestone in week 1. My current onboarding flow is: [describe each step]. Using the PLG activation milestone framework: (1) confirm whether [behaviour] is the right activation milestone or suggest a better candidate, (2) identify where in the current flow users lose momentum before reaching it, (3) suggest [N] specific onboarding changes that move more users to the milestone in week 1.',
+            tool: 'Claude',
+          },
+          reflection: 'What is the specific moment when a new user of your product first thinks "yes, this is worth my time"? Have you validated that this moment is actually happening for most users in week 1 — and if not, does your onboarding flow actively lead users toward it?',
           quiz: [
             {
               question: 'What is the most important metric in a product-led growth model?',
@@ -1519,6 +2070,35 @@ The risk is not that AI replaces PMs. The risk is that PMs who don't engage with
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A junior PM uses AI to produce comprehensive PRDs, structured research summaries, and detailed competitive analyses that previously took senior PMs much longer to complete. What does this mean for senior PM career differentiation?',
+            options: [
+              'Senior PMs become less valuable as their production advantage narrows',
+              'Senior PM differentiation shifts further toward the things AI cannot replicate: strategic context, stakeholder relationships, user proximity, and the judgment to know which problems are worth solving',
+              'Senior PMs should avoid using AI so they maintain a production advantage over junior PMs',
+              'The PM career ladder will flatten as AI eliminates skill-based differences between levels',
+            ],
+            correct: 1,
+            explanation: 'When junior PMs can produce senior-quality documentation with AI assistance, the gap between levels narrows on production tasks — but widens on the dimensions AI cannot close: understanding why the company is making the strategic bets it is, knowing which user pain matters most in a product category, navigating organisational dynamics to get good decisions made, and exercising the taste that distinguishes a great product from a technically correct one. These are the dimensions that compound with experience and cannot be generated.',
+          },
+          outputComparison: {
+            label: 'AI-era PM self-assessment: feature usage vs. career capital development',
+            vague: {
+              prompt: 'How should I use AI to advance my PM career?',
+              output: 'Here are some ways to use AI to advance your PM career:\n1. Use AI to write better PRDs faster\n2. Use AI to analyse competitors\n3. Use AI to generate user stories\n4. Use AI to summarise meeting notes\n5. Stay updated on the latest AI tools\n6. Learn to prompt AI effectively\n7. Use AI to prepare for interviews\n8. Build AI features in your product\nUsing AI will make you more productive and competitive in the job market.',
+            },
+            improved: {
+              prompt: 'I\'m a mid-level PM at a B2B SaaS company (3 years experience, working toward a senior role). I currently use AI for: writing first-draft PRDs, synthesising research notes, and drafting stakeholder emails. I want to use AI to build career capital, not just work faster. Based on the AI-era PM skills that compound in value (user proximity, strategic context, systems thinking, product taste), help me: (1) assess which of these I\'m developing vs. delegating to AI, (2) identify where I might be using AI in ways that atrophy rather than develop my PM judgment, and (3) suggest 3 specific practices that would use AI to do genuinely better work — not just faster work — over the next 90 days.',
+              output: 'Assessment: What you\'re developing vs. delegating\n\nStrategic context: Using AI for PRDs and stakeholder emails creates a risk of drafting without deeply thinking through the strategic alignment. If you\'re generating content and then reviewing it rather than formulating your own view first, you may be outsourcing the thinking that builds strategic judgment. Green flag: if you consistently edit AI drafts to better reflect company strategy, you\'re exercising the judgment. Red flag: if AI drafts feel "good enough" without significant strategic editing.\n\nUser proximity: This is where the gap appears most clearly in your current AI usage. None of your three use cases (PRDs, research synthesis, emails) require you to be close to users — in fact, AI research synthesis could reduce your incentive to read raw transcripts, which is where the most nuanced user insight lives. Risk: using AI synthesis as a substitute for reading the actual interviews rather than a complement to it.\n\nProduct taste: Drafting with AI and editing develops taste only if you\'re consciously choosing between options and articulating why one is better. If you\'re accepting AI output with light edits, taste atrophies.\n\n3 Practices for Genuinely Better Work:\n1. Use AI to synthesise research, then read 3 raw transcripts yourself to test whether the synthesis captured what actually surprised you. This keeps you close to unfiltered user voice while getting synthesis speed.\n2. Before generating a PRD with AI, write a 5-bullet "my actual thinking" note covering: why this problem matters, who the user really is, and what trade-offs I\'m making. Measure how much AI changes vs. reflects your thinking.\n3. Use AI to generate 10 alternative framings for a problem you\'re working on, then defend your current framing against the best AI alternative to a colleague. The defence builds the strategic reasoning that\'s visible in senior PM work.',
+            },
+            insight: 'The vague prompt returns a list of AI use cases that a PM could adopt without thinking about whether each builds or replaces judgment. The specific prompt uses the four AI-era PM skills as a diagnostic lens and distinguishes between using AI to do faster work versus using AI to do better work — identifying specific risks of capability atrophy in the PM\'s current AI usage pattern. The upgrade was providing the specific career context and asking for an honest assessment of what each AI use case is developing versus delegating.',
+          },
+          applyThisWeek: {
+            action: 'For each of your three most frequent AI use cases, ask yourself: "Am I exercising my PM judgment more or less because of this?" Write one sentence for each. Identify one use case where AI might be replacing thinking you should be doing yourself, and redesign how you use it to ensure the AI assists the thinking rather than skipping it.',
+            promptTemplate: 'I\'m a [career stage] PM working on [product type]. I currently use AI for: [list your 3-5 main AI use cases]. I want to develop toward [specific career goal]. Based on the AI-era PM skills that compound in value (user proximity, strategic context, systems thinking, product taste): (1) which of these am I developing vs. potentially delegating to AI in my current usage? (2) where might I be using AI in ways that atrophy PM judgment over time? (3) suggest 3 specific practices that would use AI to do genuinely better work — not just faster work — over the next 90 days.',
+            tool: 'Claude',
+          },
+          reflection: 'If AI handles an increasing share of the drafting and synthesis in your PM role, what would you do with that time that you currently can\'t afford? Is that the work that would most differentiate you in two years — and what\'s stopping you from doing more of it now?',
           quiz: [
             {
               question: 'How does AI change the differentiation between junior and senior PMs?',

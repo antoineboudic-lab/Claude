@@ -68,6 +68,35 @@ Use AI to make HR professionals more effective at human judgment — not to repl
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR team wants to use AI to automatically score and rank 300 job applicants. What is the most important concern?',
+            options: [
+              'AI scoring is slower than manual review for large volumes',
+              'Automated scoring removes human accountability and can replicate historical hiring biases at scale, affecting real people\'s career opportunities',
+              'Applicants may not like the use of AI in recruitment',
+              'AI tools are too expensive for most recruitment budgets',
+            ],
+            correct: 1,
+            explanation: 'When AI makes or heavily influences hiring decisions, any bias in the model affects thousands of candidates — without a visible human face responsible for the error. HR decisions directly affect people\'s economic security and professional lives, which is why automated decision-making in hiring requires rigorous human oversight, not just technical review.',
+          },
+          outputComparison: {
+            label: 'Why HR AI context matters — see it in action',
+            vague: {
+              prompt: 'What are the risks of using AI in HR?',
+              output: 'AI in HR has several risks including bias, privacy concerns, and lack of human touch. AI may make mistakes and could affect employee morale. It\'s important to use AI responsibly and ensure humans are still involved in decision-making. Companies should have policies in place for AI use.',
+            },
+            improved: {
+              prompt: 'I\'m an HR Business Partner at a 500-person UK financial services company. We\'re considering using an AI tool to screen CVs for graduate roles. What are the three most significant risks specific to this context, and what governance steps should we take before deployment?',
+              output: 'Three risks specific to your context:\n\n1. Bias amplification: If your historical graduate hires skewed toward specific universities or demographics, the AI will learn those patterns. Request the vendor\'s bias audit results across gender, ethnicity, and socioeconomic background before signing anything.\n\n2. EU AI Act exposure: AI CV screening classifies as a \'high-risk\' system under the EU AI Act (which applies to UK firms targeting EU roles). You\'ll need conformity assessment documentation.\n\n3. GDPR Article 22: Graduates have the right not to be subject to solely automated decisions with significant effects. Your process must include a meaningful human review step — not just a rubber stamp — or you risk a breach.\n\nGovernance steps before deployment: (1) Request the vendor\'s bias testing methodology and results. (2) Document your lawful basis. (3) Design the human review step. (4) Add to your DPIA. (5) Prepare candidate-facing transparency statement.',
+            },
+            insight: 'The vague prompt produces generic statements that could apply to any company. The specific prompt — with company size, sector, jurisdiction, and exact use case — produces actionable governance steps an HR professional can actually implement. Specificity is what converts AI output from interesting to useful.',
+          },
+          applyThisWeek: {
+            action: 'Map five tasks from your current HR role against the \'AI opportunity\' vs \'AI caution\' framework. For each \'AI opportunity\' task, draft one prompt you could use this week.',
+            promptTemplate: 'I\'m an HR professional at a [company size] [industry] company. I need to [specific task description]. Key constraints: [legal jurisdiction, audience, tone requirements]. Please [specific output format]. Flag any sections that require legal or specialist review.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the HR task that currently takes you the most time each week. Is it primarily documentation, research, or a judgment about an individual? What would it mean for your strategic impact if AI handled the first two categories — and where would you invest that recovered time?',
           quiz: [
             {
               question: 'Why does AI use in HR require more ethical consideration than in most other business functions?',
@@ -174,6 +203,35 @@ Any "AI hiring tool" that promises to screen, score, or rank candidates should b
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR manager wants to paste 50 employee performance reviews into ChatGPT to identify common themes. The reviews include employee names and manager IDs. What should happen first?',
+            options: [
+              'Proceed — ChatGPT is a trusted enterprise tool',
+              'Check the Data Processing Agreement and remove all identifying information before using any AI tool',
+              'Only use reviews from employees who have been with the company over two years',
+              'Use a different tool — ChatGPT cannot analyse text effectively',
+            ],
+            correct: 1,
+            explanation: 'Named performance reviews are identifiable personal data — a sensitive category under GDPR. Before using any AI tool, you must anonymise the data and confirm your organisation has an approved Data Processing Agreement with that tool. Pasting identifiable employee data into an unapproved consumer AI tool is likely a data protection breach, regardless of the tool\'s general reputation.',
+          },
+          outputComparison: {
+            label: 'Choosing the right tool for the right HR task — see it in action',
+            vague: {
+              prompt: 'Write an employee policy',
+              output: 'Company Policy\n\nThis policy outlines the company\'s expectations for employees. All employees are expected to behave professionally and follow company guidelines. Violations of this policy may result in disciplinary action. This policy is subject to change at any time. Please see HR for any questions.',
+            },
+            improved: {
+              prompt: 'Draft a Hybrid Working Policy for a 200-person UK professional services firm. The policy applies to all permanent employees below Director level. It must comply with UK employment law including flexible working rights, cover: eligibility criteria, minimum office days per week (our baseline is 3 days), equipment provision, health and safety responsibilities, and performance expectations in a hybrid context. Maximum 800 words. Plain English. Flag any clause requiring legal review.',
+              output: 'Hybrid Working Policy — [Company Name]\n\nPurpose: This policy sets out how [Company] supports hybrid working for eligible employees while maintaining our collaborative culture and meeting our client commitments.\n\nEligibility: Available to all permanent employees below Director level who have completed their probationary period and whose role can be performed effectively in a hybrid arrangement.\n\nOffice attendance: A minimum of 3 days per week in the office is required. Specific days are agreed with your line manager, taking into account team and client needs.\n\n[Equipment, health & safety, performance sections follow in plain English]\n\n⚠ Legal review recommended: Flexible working request process, reasonable adjustment provisions, and data security obligations should be reviewed by an employment solicitor before implementation.',
+            },
+            insight: 'The vague prompt produces a document that is legally empty and practically useless. The specific prompt — with company size, jurisdiction, audience, scope, word count, and a request to flag legal risks — produces a document that is ready for legal review and then publication. Claude\'s careful tone is well-suited to policies where precision matters.',
+          },
+          applyThisWeek: {
+            action: 'Audit the last five AI tasks you used or considered using at work. Classify each data type as Public, Internal (anonymised), or Personal — and verify whether the tool you used (or would use) has an approved DPA for that data category.',
+            promptTemplate: 'Draft a [policy name] policy for a [company size] [industry] organisation in [jurisdiction]. The policy covers: [list key topics]. Audience: [employee level]. Maximum [word count] words in plain English. Flag any section requiring legal review.',
+            tool: 'Claude',
+          },
+          reflection: 'Which AI tool do your HR colleagues use most frequently right now, and do you know whether it has an approved Data Processing Agreement for employee data? What would you do differently if the answer is no?',
           quiz: [
             {
               question: 'An HR professional wants to use ChatGPT to analyse patterns in 500 employee performance reviews containing names and manager IDs. What is the correct approach?',
@@ -268,6 +326,35 @@ For any AI-assisted decision affecting an individual employee, a human must be i
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An AI CV screening vendor claims their tool is "completely objective because it uses data, not human judgment." What is the most appropriate HR response?',
+            options: [
+              'Accept the claim — AI systems cannot be biased if they don\'t use protected characteristics directly',
+              'Request the tool\'s bias audit results — "objective data" still reflects the historical biases present in the data it was trained on',
+              'Use the tool on a trial basis to see if it feels fair',
+              'Only use the tool for roles that have historically had diverse hires',
+            ],
+            correct: 1,
+            explanation: '"Objective" is marketing language, not a technical guarantee. If an AI screening tool was trained on historical hiring decisions that reflected gender, ethnicity, or socioeconomic bias, it will replicate those patterns without using protected characteristics explicitly. Requesting the vendor\'s bias audit methodology and differential impact results is the appropriate HR due diligence before any deployment.',
+          },
+          outputComparison: {
+            label: 'Why AI bias in hiring is invisible — see it in action',
+            vague: {
+              prompt: 'Is our recruitment process fair?',
+              output: 'Recruitment fairness depends on many factors including your job descriptions, interview process, and selection criteria. It\'s important to train hiring managers on unconscious bias and use standardised processes. Consider reviewing your diversity statistics and comparing them to industry benchmarks. Regular audits are recommended.',
+            },
+            improved: {
+              prompt: 'We use an AI CV screening tool that was trained on our historical hires. Over the past 3 years, 78% of our hires have been male and 85% attended Russell Group universities. Our workforce is 60% based in London. Given this training data profile, what specific bias risks does our screening tool likely carry, and what three steps should we take before our next recruitment cycle?',
+              output: 'Based on your training data profile, your screening tool likely carries three specific risks:\n\n1. Gender proxy bias: With 78% male historical hires, the model has learned patterns associated with male candidates (career trajectory without gaps, certain activity types, language patterns in CVs). It will score female candidates lower on these patterns, even without using gender directly.\n\n2. Educational proxy bias: 85% Russell Group skews the model toward a socioeconomic demographic that correlates with — but is not the same as — capability. Strong candidates from post-92 universities will be systematically underscored.\n\n3. Geographic proxy: London-weighting can introduce ethnicity and class proxies depending on which London postcodes correlate with your historical hires.\n\nThree steps before your next cycle: (1) Request a disaggregated pass-through rate from the vendor by gender, university type, and postcode. (2) Have a sample of AI-rejected CVs reviewed by a diverse panel to check for systematic patterns. (3) Consider removing educational institution from screening criteria entirely and using skill-based criteria instead.',
+            },
+            insight: 'The vague prompt produces generic advice that any HR professional already knows. The specific prompt — with actual data on hiring demographics — produces a concrete bias risk assessment specific to this organisation\'s situation. Providing the training data profile allowed the AI to reason about proxies, not just repeat general principles.',
+          },
+          applyThisWeek: {
+            action: 'Apply the five bias assessment questions to one AI tool currently used or being considered in your hiring process. Write one paragraph on the highest risk you identify.',
+            promptTemplate: 'Assess the bias risk of [tool name/type] for use in [specific HR task]. Our historical hiring data shows [describe known demographics]. Identify: (1) the most likely proxy variables, (2) which candidate groups are at elevated risk of systematic underscoring, and (3) three mitigation steps. Format as a one-page risk assessment.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time a strong candidate was rejected early in your hiring process. Could algorithmic bias have played a role — and would you have known if it had? What would a genuine audit of that decision look like?',
           quiz: [
             {
               question: 'What is a "proxy variable" in the context of AI bias, and why is it a problem in HR tools?',
@@ -359,6 +446,35 @@ Employees should know when AI is being used in processes that affect them. This 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your company uses an AI tool to score candidates during the application process. A rejected candidate asks: "Was AI used in assessing my application?" What is the correct response?',
+            options: [
+              'Decline to answer — AI tool usage is commercially confidential',
+              'Confirm that AI was used and provide meaningful information about the process — employees and job applicants generally have the right to know about automated decision-making',
+              'Confirm AI was used but explain you cannot share any further details',
+              'Only answer if the candidate submits a formal Subject Access Request',
+            ],
+            correct: 1,
+            explanation: 'GDPR requires transparency about data processing, including automated decision-making that has significant effects. Candidates have the right to be informed that an automated system was used and to receive meaningful information about it. Hiding AI involvement from affected individuals creates both legal and trust risk — transparency is the ethically and legally correct position.',
+          },
+          outputComparison: {
+            label: 'Why GDPR compliance in HR AI requires specificity — see it in action',
+            vague: {
+              prompt: 'What are the GDPR rules for using AI with employee data?',
+              output: 'GDPR requires organisations to protect personal data and use it responsibly. For employee data, you need a lawful basis for processing and must inform employees about how their data is used. You should have appropriate security measures in place and not keep data longer than necessary. AI tools must comply with GDPR requirements. Consider consulting a data protection specialist.',
+            },
+            improved: {
+              prompt: 'We\'re a UK company planning to use an AI tool to analyse anonymised engagement survey responses from 800 employees to identify themes by department and tenure band. The survey data will be exported as a CSV and pasted into Claude for analysis. Outline our specific GDPR obligations for this exact use case, including lawful basis, anonymisation standard required, DPA requirements, and any Article 22 considerations.',
+              output: 'For this specific use case, here are your GDPR obligations:\n\nLawful basis: Legitimate interests is likely appropriate (organisational management purpose). Document this in your ROPA before proceeding.\n\nAnonymisation standard: "Anonymised" under GDPR means the data cannot be re-identified even in combination with other data. For 800 employees, department + tenure band combinations with fewer than 5 people risk re-identification. Suppress or aggregate any subgroup under 5.\n\nDPA requirement: Pasting data into Claude (Anthropic) requires that your organisation has a Data Processing Agreement with Anthropic. Check whether your Claude subscription is consumer or enterprise — enterprise (Claude.ai Teams or API) includes a DPA; consumer does not.\n\nArticle 22: This use case is analytical (identifying themes), not decisional — no automated decisions with significant individual effects. Article 22 does not apply here, but document this assessment.\n\nRecommend: Complete a brief DPIA note for this use case and confirm DPA coverage before first use.',
+            },
+            insight: 'The vague prompt produces standard GDPR boilerplate that adds no value to someone with basic awareness. The specific prompt — with exact headcount, data type, tool, and intended process — produces actionable compliance guidance for this specific situation. Specificity transforms AI from a knowledge summary into a practical compliance tool.',
+          },
+          applyThisWeek: {
+            action: 'Identify one AI use case your HR team currently uses or is planning. Run it through the five-item compliance checklist (data minimisation, anonymisation, DPA coverage, human review, lawful basis) and document the results.',
+            promptTemplate: 'We are a [company size] [industry] company in [jurisdiction] planning to use [AI tool] to [specific task] with [data type]. Outline our specific GDPR obligations including: lawful basis, anonymisation requirements, DPA considerations, and whether Article 22 applies. Note any gaps we need to address before proceeding.',
+            tool: 'Claude',
+          },
+          reflection: 'If every employee in your organisation knew exactly how AI was being used in decisions that affect them — their hiring, their performance review, their development planning — what would they find? Are there uses you would feel comfortable being fully transparent about?',
           quiz: [
             {
               question: 'Why is "employee consent" generally not the appropriate GDPR lawful basis for processing employee data with AI?',
@@ -456,6 +572,35 @@ Ask AI:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A job description lists 12 requirements, all marked as "essential." Research suggests this most directly affects which group of qualified candidates?',
+            options: [
+              'Candidates with less than two years of experience',
+              'Women, who on average apply when they meet close to 100% of listed requirements — compared to men who apply at around 60%',
+              'Candidates from non-Russell Group universities',
+              'Candidates applying from overseas',
+            ],
+            correct: 1,
+            explanation: 'Research consistently shows that women, on average, apply for roles when they meet nearly all listed requirements, while men apply at around 60%. When all 12 requirements are marked essential, qualified women who meet 9 or 10 will self-screen out — while equally or less qualified men apply anyway. Separating essential from preferred requirements is one of the highest-impact diversity improvements with no change to role standards.',
+          },
+          outputComparison: {
+            label: 'Why job description structure determines who applies — see it in action',
+            vague: {
+              prompt: 'Write a job description for an HR Business Partner',
+              output: 'HR Business Partner\n\nWe are looking for an experienced HR Business Partner to join our dynamic team. The ideal candidate will be a passionate people person with strong communication skills and the ability to work in a fast-paced environment. You will support business leaders on all HR matters and be a trusted advisor. We offer a competitive salary and great benefits. Apply now!',
+            },
+            improved: {
+              prompt: 'Write a job description for a Senior HR Business Partner at a 1,200-person UK retail company. The role partners with three commercial directors (Marketing, Digital, and Customer) at senior leadership team level. Essential requirements: CIPD Level 7, 6+ years HRBP experience, proven track record in organisational change, strong data literacy. Preferred: retail sector experience, experience with Workday. Salary: £70–85k + 15% bonus. Tone: direct and specific, no corporate buzzwords. Highlight our commitment to flexible working (3 days in office, Camden HQ). Structure: what this person will own in 12 months, why this role is different, requirements clearly separated into essential and preferred, what you\'ll get from us.',
+              output: 'Senior HR Business Partner — Marketing, Digital & Customer\nLondon (Camden) | £70,000–£85,000 + 15% bonus | 3 days in-office\n\nWhat you\'ll own in 12 months:\nYou\'ll be the strategic partner to three Directors who collectively shape how 1,200 people experience working here. In your first year, that means: leading a restructure of the Digital team (planned Q2), building a talent pipeline for commercial roles that currently take 90 days to fill, and designing the succession plan for two senior leadership positions.\n\nWhy this role is different:\nYou\'ll have real influence — these Directors are active partners, not just clients to manage. You\'ll own the org design decisions, not just implement them. And you\'ll have access to our people data directly through Workday.\n\nWhat you\'ll need (essential):\nCIPD Level 7. Six or more years in a senior HRBP role. A track record of leading organisational change, not just supporting it. Comfortable with data — you\'ll be presenting to the SLT with numbers, not just stories.\n\nUseful but not required: retail background, Workday experience.\n\nWhat you\'ll get: £70–85k + 15% bonus. Genuine flexible working. A CHRO who has built three HR teams from scratch and will invest in yours.',
+            },
+            insight: 'The vague prompt produces a JD that strong candidates scroll past — it tells them nothing they couldn\'t guess. The specific prompt produces a JD that tells candidates exactly what they\'ll own, who they\'ll work with, and what makes the role worth their time. The detail came from the prompt, not the AI\'s knowledge.',
+          },
+          applyThisWeek: {
+            action: 'Take a current or recent job description and run the inclusive language audit: paste it into Claude and ask for gendered language, requirement inflation, and cultural exclusions. Rewrite it using the value proposition structure.',
+            promptTemplate: 'Review this job description for: (1) gendered language that may deter qualified applicants, (2) requirements listed as essential that could reasonably be preferred, (3) cultural references or idioms that favour specific backgrounds. For each issue, suggest a specific revision. Then rewrite the opening paragraph using an outcomes-focused, value-proposition structure. Here is the JD: [paste JD]',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Look at the last role your organisation struggled to fill or hired a less diverse candidate pool for than you\'d hoped. Reading the job description again now, what language or structural choices might have shaped who applied — and who didn\'t?',
           quiz: [
             {
               question: 'Research on gendered language in job descriptions shows what effect on applications?',
@@ -548,6 +693,35 @@ The most effective approach: use AI to make the human review more consistent, no
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A vendor offers an AI tool that scores candidates\' CVs on "culture fit" using natural language processing. What is the most significant risk of this approach?',
+            options: [
+              'NLP tools are not accurate enough to read CV text reliably',
+              '"Culture fit" is a subjective concept that often functions as a proxy for demographic similarity — an AI scoring it will likely encode and scale existing cultural homogeneity',
+              'The tool may not integrate with your ATS',
+              'Candidates might object to AI reviewing their CV',
+            ],
+            correct: 1,
+            explanation: '"Culture fit" has no objective definition — it reflects the characteristics of whoever was previously successful at the organisation. Training an AI on historical hires to score future candidates on this dimension teaches the model to replicate the demographics, backgrounds, and presentation styles of past hires. This is a legally and ethically high-risk screening approach with no validated predictive validity for actual job performance.',
+          },
+          outputComparison: {
+            label: 'Building fair screening tools — see it in action',
+            vague: {
+              prompt: 'Help me screen CVs for a marketing manager role',
+              output: 'To screen CVs for a marketing manager role, look for candidates with relevant experience in marketing, strong communication skills, and a proven track record of success. Consider their educational background and any relevant certifications. Look for candidates who seem passionate about marketing and have experience with digital channels. Create a shortlist of the top candidates based on their overall profile.',
+            },
+            improved: {
+              prompt: 'I\'m hiring for a Senior Marketing Manager at a B2B SaaS company. I have 180 CVs to review. Essential criteria: 5+ years B2B marketing experience, demonstrable experience managing budgets over £500k, at least one example of owning a demand generation campaign from brief to reporting. Create a structured CV review rubric with these three essential criteria. For each criterion, write specific behavioural anchors for scores 1 (not demonstrated in CV), 3 (partially demonstrated — mentioned but no specifics), and 5 (clearly demonstrated with specifics, numbers, or named examples). Include an instruction to reviewers to ignore: university attended, company prestige, and employment gaps under 12 months.',
+              output: 'Senior Marketing Manager CV Review Rubric\n\nInstruction to reviewers: Score each criterion independently. Do not consider university attended, company prestige or size, or employment gaps under 12 months — these are not predictive of performance in this role.\n\nCriterion 1: B2B Marketing Experience (5+ years)\n1 — No B2B experience evident; B2C or generalist background only\n3 — B2B experience mentioned but role scope unclear; years not verifiable from CV\n5 — Clear B2B experience across multiple years with named companies, industries, and role scope\n\nCriterion 2: Budget Management (£500k+)\n1 — No budget responsibility mentioned\n3 — Budget management referenced but no scale indicated\n5 — Specific budget figures stated (e.g., "managed £650k annual demand gen budget")\n\nCriterion 3: Demand Generation Campaign Ownership\n1 — No campaign ownership evident; execution only\n3 — Campaign involvement described but ownership unclear\n5 — Clear end-to-end ownership with results: "Owned Q3 ABM campaign — 42 MQLs, £1.2m pipeline generated"',
+            },
+            insight: 'The vague prompt produces generic screening advice that introduces subjectivity ("seem passionate," "overall profile") — exactly the kind of inconsistency that creates bias and unfair outcomes. The specific prompt produces a rubric with objective, behaviourally anchored criteria and explicit instructions to remove irrelevant factors, making the process consistent and defensible.',
+          },
+          applyThisWeek: {
+            action: 'For a role you are currently or frequently hiring for, create a structured CV review rubric using AI. Include 4-5 criteria with 1/3/5 anchors and explicitly list three factors reviewers should ignore.',
+            promptTemplate: 'Create a structured CV review rubric for [role title]. Essential criteria: [list 4-5 specific, observable requirements]. For each criterion, write behavioural anchors for scores 1 (not demonstrated), 3 (partially demonstrated), and 5 (clearly demonstrated with specifics). Include a reviewer instruction listing these factors to exclude from assessment: [list irrelevant factors like university attended, company prestige, employment gaps].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time you reviewed a strong-looking CV and felt something was "off" without being able to name what. What were you actually responding to — and could that intuition be a bias rather than a signal about job performance?',
           quiz: [
             {
               question: 'Which AI use in candidate screening is most appropriate and lowest risk?',
@@ -638,6 +812,35 @@ For roles where candidates may lack direct experience:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An interview panel of four people discusses their assessments together immediately after the interview, starting with the most senior panellist\'s view. What bias does this create?',
+            options: [
+              'Primacy bias — the candidate who interviews first is favoured',
+              'Anchoring bias — subsequent assessors adjust their views toward the first speaker\'s position rather than maintaining independent assessments',
+              'Confirmation bias — panellists look for evidence that confirms existing impressions from the CV',
+              'Halo effect — one strong answer elevates the candidate\'s scores across all criteria',
+            ],
+            correct: 1,
+            explanation: 'When the most senior person speaks first in a panel debrief, their view anchors everyone else\'s. Research shows that subsequent assessors move their scores toward the first speaker, especially when the first speaker has higher status. Panel calibration — recording independent scores before discussion — prevents this by ensuring each panellist\'s assessment is formed without social influence from others.',
+          },
+          outputComparison: {
+            label: 'Why structured interview questions change what you learn — see it in action',
+            vague: {
+              prompt: 'Give me some interview questions for a project manager',
+              output: 'Here are some interview questions for a project manager:\n1. Tell me about yourself.\n2. Why do you want this job?\n3. What are your strengths and weaknesses?\n4. Where do you see yourself in five years?\n5. Describe a challenging project you worked on.\n6. How do you handle pressure?\n7. What is your management style?\n8. Do you have any questions for us?',
+            },
+            improved: {
+              prompt: 'Design a structured interview for a Senior Project Manager role at a 300-person construction and engineering firm. Key competencies: stakeholder management, risk identification and mitigation, managing scope creep, and delivering under budget pressure. For each competency, generate one behavioural question (Tell me about a time...) and two follow-up probing questions to explore depth and impact. Also write a 1-5 scoring guide for the stakeholder management competency with specific behavioural descriptors at each level.',
+              output: 'Stakeholder Management\nBehavioural question: Tell me about a time you had to manage a stakeholder who had significantly different expectations from the agreed project scope. What was your approach and what happened?\nProbe 1: What was your read of why their expectations had diverged, and how did that shape your approach?\nProbe 2: What specifically did you do to manage the relationship rather than just the immediate issue?\n\nScoring guide — Stakeholder Management:\n1 — No relevant example; describes hypothetically or defers to team\n2 — Describes a situation but candidate\'s role is reactive; no proactive relationship management evident\n3 — Manages the immediate situation effectively; limited evidence of longer-term relationship thinking\n4 — Clear stakeholder strategy; adapted communication to different audiences; situation resolved with relationship preserved\n5 — Proactive stakeholder mapping before issues arose; complex multi-stakeholder environment; quantified business impact of approach (e.g., prevented £200k scope change, maintained client relationship for rebid)\n\n[Risk, scope creep, and budget competencies follow same format]',
+            },
+            insight: 'The vague prompt produces generic questions that allow candidates to give rehearsed answers ("Tell me about yourself") and that assess nothing specific to the role or organisation. The specific prompt produces behavioural questions tied to real competencies, with probing follow-ups that distinguish candidates who did the work from candidates who know what good looks like.',
+          },
+          applyThisWeek: {
+            action: 'Design a structured interview for one role you hire for regularly. Use AI to generate behavioural questions for your top 3 competencies, then write a scoring guide for the competency you find hardest to assess consistently.',
+            promptTemplate: 'Design structured interview questions for a [role title] position. Key competencies: [list 3-4]. For each competency, generate: (1) one behavioural question starting with "Tell me about a time...", (2) two follow-up probing questions to explore depth, impact, and context. Then write a 1-5 scoring guide for [most important competency] with specific behavioural descriptors for each score level.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a hire who turned out to be stronger or weaker than expected once in the role. Looking back at your interview process, what would a well-designed behavioural question and scoring guide have revealed that your actual interview missed?',
           quiz: [
             {
               question: 'Why are behavioural interview questions ("Tell me about a time...") more predictive of job performance than situational questions ("What would you do if...")?',
@@ -732,6 +935,35 @@ For high-volume roles, you can\'t personalise every communication individually. 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A candidate who interviewed for a senior role receives an automated email saying: "We\'ve decided to move forward with other candidates. We wish you the best in your search." What is the primary problem with this communication?',
+            options: [
+              'It is not compliant with recruitment data protection obligations',
+              'It is impersonal, contains no specific acknowledgment of their interview investment, and tells them nothing they couldn\'t have inferred — treating them as a number rather than a professional who invested time in your process',
+              'It should have been sent by phone for any rejection',
+              'The email subject line does not clearly state it is a rejection',
+            ],
+            correct: 1,
+            explanation: 'Senior candidates who have been through a multi-stage process — multiple interviews, potentially a business case or presentation — have invested significant professional time and vulnerability. A boilerplate automated rejection fails to acknowledge this and signals that their time was not respected. These candidates talk to peers, post on Glassdoor, and remember the experience when evaluating future opportunities with your company.',
+          },
+          outputComparison: {
+            label: 'Why candidate communications shape your employer brand — see it in action',
+            vague: {
+              prompt: 'Write a rejection email for a job applicant',
+              output: 'Dear Applicant,\n\nThank you for applying to our company. After careful consideration, we have decided to move forward with other candidates whose experience more closely matches our requirements at this time.\n\nWe appreciate your interest in our organisation and wish you the best of luck in your job search.\n\nKind regards,\nHR Team',
+            },
+            improved: {
+              prompt: 'Write a rejection email for a candidate who completed a phone screen and first-round interview for a Head of Talent Acquisition role at a 400-person technology company. The candidate was strong but we selected someone with more enterprise-scale experience. Tone: warm and genuine, not corporate. Acknowledge the time they invested. Be direct about the outcome. Offer to stay in touch — we may have future roles. Under 150 words. Do not use "moving forward with other candidates" or any equivalent phrase.',
+              output: 'Hi [Name],\n\nThank you for the time you put into our process — your interview gave us a clear picture of your thinking on talent strategy, and you asked some of the sharpest questions we\'ve heard.\n\nWe\'ve made a decision, and I wanted to be direct with you: we\'ve selected a candidate whose background includes building TA functions at larger enterprise scale, which was the deciding factor given where we\'re heading.\n\nThis was a strong field and a genuinely close call. I\'d very much like to stay connected — we\'re growing quickly and our needs will evolve. Would you be open to me reaching out when that happens?\n\nThanks again for your time and your openness throughout.\n\n[Your name]',
+            },
+            insight: 'The vague prompt produces the exact boilerplate candidates have learned to resent. The specific prompt — with candidate context, decision rationale, tone guidelines, and explicit word exclusions — produces a communication that treats the candidate as an individual and preserves the relationship. The detail in the prompt is what makes the output feel human.',
+          },
+          applyThisWeek: {
+            action: 'Build a candidate communication library for your three most common rejection points (post-application, post-phone screen, post-interview). Draft each template using AI, then read them as if you were the rejected candidate and revise anything that feels impersonal.',
+            promptTemplate: 'Write a [stage] rejection email for a candidate for [role type] at [company type]. Context: [brief description of what the candidate did in the process and why they were not selected]. Tone: [warm/direct/professional]. Under [word count] words. Do not use: "moving forward with other candidates", "at this time", or "best of luck in your search". End with [specific closing instruction].',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Think about a time you were rejected from a process — professional or otherwise. What did the communication make you feel, and what would have made it better? How many candidates in your current hiring process receive communications that you\'d be proud of if you received them yourself?',
           quiz: [
             {
               question: 'Why does candidate experience matter beyond the immediate hiring decision?',
@@ -830,6 +1062,35 @@ New hires have predictable questions that HR answers repeatedly. AI can structur
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A new hire\'s first week is packed with compliance training, system access setup, and HR paperwork. By Friday, they\'ve completed all required modules. What is missing from this onboarding approach?',
+            options: [
+              'Nothing — compliance and admin completion in week one is excellent onboarding',
+              'Relationship building, role context, early wins, and clarity on what success looks like — the things that actually accelerate time-to-effectiveness',
+              'The new hire should also have attended a team social event',
+              'The manager should have completed a formal check-in on day five',
+            ],
+            correct: 1,
+            explanation: 'Compliance completion optimises for HR\'s administrative convenience, not for the new hire\'s effectiveness. Research on onboarding effectiveness consistently shows that what new hires need in week one is context (why does this role matter?), relationships (who should I know?), and clarity on expectations (what does success look like in 30 days?) — none of which are addressed by a compliance module queue.',
+          },
+          outputComparison: {
+            label: 'Why onboarding design determines early performance — see it in action',
+            vague: {
+              prompt: 'Create an onboarding plan for a new employee',
+              output: 'Day 1: Welcome and office tour. Meet with HR for paperwork and benefits. Set up computer and access. Review company handbook.\nWeek 1: Complete mandatory training modules. Meet with team members. Set up meetings with key stakeholders.\nMonth 1: Regular check-ins with manager. Complete any remaining compliance training. Begin working on assigned tasks.\nMonth 3: Performance review with manager. Set goals for next quarter.',
+            },
+            improved: {
+              prompt: 'Design a 30-60-90 day onboarding framework for a new People Business Partner joining a 600-person UK retail company. They will partner with the Logistics and Customer Operations functions. By day 90, they should be trusted by their business leaders, understand the current people challenges in both functions, and have delivered one concrete HR initiative. For each phase, specify: (1) 2-3 learning objectives, (2) 3 relationships they must establish, (3) one tangible deliverable, (4) check-in structure. Focus on time-to-effectiveness, not compliance tick-boxes.',
+              output: 'Days 1-30: Learning\nObjectives: Understand the business (Logistics P&L drivers, Customer Operations seasonal patterns, key metrics). Learn the people landscape (current capability gaps, engagement trends, ongoing ER cases). Map the informal power structure.\nRelationships: Their two Director partners (Logistics and Customer Ops). The outgoing HRBP for a knowledge handover. One frontline manager in each function for ground-level perspective.\nDeliverable: A one-page \'people landscape\' document for each function — top 3 opportunities, top 3 risks, key relationships.\nCheck-in: Weekly 30-minute with CHRO. Agenda: one thing learned, one thing unclear, one relationship built.\n\nDays 31-60: Contributing\nObjectives: Design and run first initiative (e.g., manager capability session or engagement follow-up). Establish credibility with Director partners. Begin coaching one manager.\nRelationships: Two senior managers from each function. HR team peers for collaboration norms.\nDeliverable: First initiative delivered and retrospective written.\nCheck-in: Bi-weekly with CHRO. Agenda: initiative progress, relationship temperature, support needed.\n\nDays 61-90: Owning\nObjectives: Be the trusted go-to for both Directors. Present people strategy recommendations for Q4. Run a stay interview with a high performer in each function.\nRelationships: CFO (brief intro), two HRBP peers for cross-functional alignment.\nDeliverable: Q4 people priorities presentation for both Director partners.\nCheck-in: Monthly with CHRO; 90-day debrief including new hire\'s reflection on onboarding.',
+            },
+            insight: 'The vague prompt produces a generic first-week schedule that could apply to any employee in any company. The specific prompt produces a framework that names exactly which relationships matter, what deliverables demonstrate effectiveness, and how progress is tracked — because it provided the role, the functions, the company, and the success definition.',
+          },
+          applyThisWeek: {
+            action: 'Choose one role you hire regularly. Use AI to design a 30-60-90 day onboarding framework that focuses on time-to-effectiveness. Share it with a recent new hire in that role and ask what would have changed their first 90 days.',
+            promptTemplate: 'Design a 30-60-90 day onboarding framework for a [role title] joining a [company size] [industry] company. They will be responsible for [key responsibilities]. By day 90, they should [specific effectiveness definition]. For each phase: (1) 2-3 learning objectives, (2) 3 relationships to establish, (3) one tangible deliverable, (4) check-in cadence and agenda. Focus on time-to-effectiveness, not compliance completion.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a time you started a new role. What did you most need that no one told you or arranged — and what did it cost you in terms of time, confidence, or early mistakes? How many of your current new hires face the same gap?',
           quiz: [
             {
               question: 'What is the most important objective of effective onboarding?',
@@ -918,6 +1179,35 @@ This is where AI creates the most value in engagement work:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An engagement survey asks: "My manager provides clear direction and gives me useful feedback." An employee gives it a 2 out of 5. What is the fundamental problem with this question?',
+            options: [
+              'A 5-point scale doesn\'t provide enough granularity for this topic',
+              'It\'s a double-barrelled question — a score of 2 could mean poor direction, poor feedback, or both, making it impossible to take targeted action',
+              'Manager effectiveness should not be measured in engagement surveys',
+              'The question should use a 10-point scale to avoid neutral midpoint responses',
+            ],
+            correct: 1,
+            explanation: 'A double-barrelled question embeds two separate concepts in one item. A low score could mean the manager gives poor direction but good feedback, good direction but poor feedback, or both are poor. Without knowing which, HR cannot design an appropriate intervention. Every engagement question should test one concept only — if you need to measure both, use two separate questions.',
+          },
+          outputComparison: {
+            label: 'Why engagement survey design determines action quality — see it in action',
+            vague: {
+              prompt: 'Write some employee engagement survey questions',
+              output: '1. Are you happy at work? (1-5)\n2. Do you feel your manager supports you? (1-5)\n3. Do you enjoy your role and the company culture? (1-5)\n4. Do you feel valued and recognised for your contributions? (1-5)\n5. Would you recommend this company as a place to work? (1-5)\n6. Do you have the tools and resources to do your job well? (1-5)\n7. Do you feel there are good career development opportunities here? (1-5)\n8. Are you satisfied with your work-life balance and benefits? (1-5)',
+            },
+            improved: {
+              prompt: 'Design 12 engagement survey questions for a 500-person UK professional services firm that has identified manager effectiveness and career progression as key concerns from last year\'s exit interview themes. Each question must: (1) measure exactly one concept, (2) be answerable on a 1-5 agree/disagree scale, (3) measure something the company is prepared to act on if the score is low. Include at least three questions on manager effectiveness (actionable at team level), three on career development, two on psychological safety, and two on recognition. Flag any question that is double-barrelled.',
+              output: 'Manager Effectiveness (team-level actionable)\n1. My manager gives me specific, timely feedback on my work — not just in formal reviews.\n2. When I raise a concern with my manager, I feel it is taken seriously.\n3. My manager has a clear understanding of my development goals and actively supports them.\n\nCareer Development\n4. I have a clear picture of the career paths available to me in this organisation.\n5. In the last six months, I have had a meaningful conversation with my manager about my career development.\n6. I believe this organisation will invest in my growth over the next two years.\n\nPsychological Safety\n7. I feel comfortable raising a concern or disagreeing with my team\'s direction without fear of negative consequences.\n8. Mistakes are treated as learning opportunities in my team, not as something to hide.\n\nRecognition\n9. When I do good work, I receive recognition that feels specific and genuine — not generic.\n10. My contribution to team results is visible to people beyond my immediate manager.\n\n[Two further questions on cross-team collaboration and role clarity]\n\n⚠ Flagged as double-barrelled and removed: "I feel supported by my manager and the company provides the resources I need." Separated into two distinct items.',
+            },
+            insight: 'The vague prompt produces leading questions ("Are you happy?"), double-barrelled items ("valued and recognised"), and satisfaction questions the company may not be prepared to act on. The specific prompt — with last year\'s themes, action-readiness requirement, and single-concept rule — produces questions that are directly connected to identified problems and structured to produce actionable insight.',
+          },
+          applyThisWeek: {
+            action: 'Take your most recent engagement survey and run it through an AI audit: identify every double-barrelled question, every question the company may not be prepared to act on, and every leading or ambiguous item. Rewrite the three worst examples.',
+            promptTemplate: 'Audit these employee engagement survey questions: [paste questions]. For each, assess: (1) is it double-barrelled (measuring two concepts)? (2) is it actionable — could the company change something if the score is low? (3) does the language lead toward a positive response? For each issue found, suggest a revised version. Then generate 3 replacement questions on [topic] that each measure one concept, are answerable on a 5-point scale, and measure something actionable.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about your last engagement survey results. Which findings led to visible, concrete action that employees noticed — and which findings were acknowledged in a presentation and then quietly disappeared? What made the difference between action and inaction, and what could you change in your next survey to close that gap?',
           quiz: [
             {
               question: 'What is the most important criterion for an employee engagement survey question?',
@@ -1008,6 +1298,35 @@ AI should never score, rank, or rate individual employees. Feedback is a human r
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A manager gives this feedback: "You\'re a poor communicator and your attitude has been a problem this quarter." What is wrong with this feedback?',
+            options: [
+              'The feedback is too short — it needs more detail about the full quarter\'s performance',
+              'It focuses on character ("poor communicator," "attitude") rather than specific observable behaviour, making it impossible for the employee to know what to change',
+              'It should be delivered in writing, not verbally',
+              'Quarterly feedback is too infrequent — this feedback is overdue',
+            ],
+            correct: 1,
+            explanation: 'Effective feedback describes specific observable behaviour ("In the last two sprint reviews, you\'ve presented updates that team members told me they couldn\'t follow") rather than character judgments ("poor communicator"). Character-focused feedback triggers defensiveness without providing actionable direction for change. SBI structure (Situation-Behaviour-Impact) anchors feedback in observable specifics that the recipient can act on.',
+          },
+          outputComparison: {
+            label: 'How SBI transforms feedback quality — see it in action',
+            vague: {
+              prompt: 'Help me give feedback to an employee who is underperforming',
+              output: 'When giving feedback to an underperforming employee, it\'s important to be clear, constructive, and supportive. Start by acknowledging their strengths before addressing areas for improvement. Be specific about what you\'d like to see change, set clear expectations, and agree on a plan for improvement. Follow up regularly to track progress and offer support. Maintain a positive and encouraging tone throughout.',
+            },
+            improved: {
+              prompt: 'A manager needs to give feedback to a Senior HR Advisor who has missed three deadlines in the past six weeks (the monthly HR board pack, a job description that held up a vacancy, and a restructure letter). Each time, the advisor didn\'t flag the delay in advance — the manager found out when the stakeholder chased. Help the manager draft this feedback using SBI structure (Situation-Behaviour-Impact). The manager wants to be direct and constructive — not punitive. End with a specific positive request for changed behaviour, not a general instruction to "communicate better".',
+              output: 'Here is a draft using SBI structure:\n\n"I want to talk about something that\'s come up three times in the last six weeks, and I think it\'s worth addressing directly. In each case — the board pack deadline on [date], the job description for the Finance Director role, and the restructure letter for [department] — the deadline passed without me or the relevant stakeholder hearing from you that it would be late. We found out when they chased. [Situation]\n\nWhat I\'ve observed each time is that when a piece of work runs over, you haven\'t flagged it in advance — so we\'ve had no opportunity to reprioritise, bring in support, or reset expectations with the stakeholder. [Behaviour]\n\nThe impact has been three stakeholders who felt let down and came back to me, which has made it harder for me to position HR as reliable partners. In the Finance Director case, the vacancy was held for an additional two weeks because of the delay. [Impact]\n\nHere\'s the specific change I\'d like to see: if you\'re going to miss a deadline, or if you think you might, I want you to tell me by the end of the day before the deadline is due — not after. That gives us options. Even a two-line message. Can we agree on that?"',
+            },
+            insight: 'The vague prompt produces generic coaching advice about feedback that any manager already knows. The specific prompt — with the actual situation, the pattern of behaviour, and a request for SBI structure with a concrete behavioural ask — produces a draft the manager can use (with their own adjustments) in a real conversation. The specifics in the prompt produced the specifics in the output.',
+          },
+          applyThisWeek: {
+            action: 'Identify one piece of feedback a manager in your organisation needs to give but has been avoiding. Use AI to draft it using SBI structure. Share it with the manager as a starting point for their own words — not a script to read verbatim.',
+            promptTemplate: 'Help me draft feedback for a manager to deliver to a [role] team member. Situation: [describe what happened and when]. Behaviour observed: [describe specifically what the person did or didn\'t do — observable, not character-based]. Impact: [describe the effect on people, work, or relationships]. Structure the feedback using SBI format. End with a specific, positive request for changed behaviour — not a general instruction. Tone: [direct and constructive/empathetic/firm].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the feedback culture in your organisation. When was the last time an employee received specific, timely, behaviour-focused feedback from their manager — outside of a formal review? What would it take to make that the norm rather than the exception?',
           quiz: [
             {
               question: 'What makes feedback most effective according to research?',
@@ -1098,6 +1417,35 @@ Exit interviews produce data too late and too biased (people say what they think
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR team runs a retention analytics model that flags an employee as "high flight risk." The employee\'s manager then schedules an unexpected one-to-one, citing "just checking in." The employee later discovers they were flagged by a risk model. What is the likely outcome?',
+            options: [
+              'The employee feels valued and their retention risk decreases',
+              'The employee\'s trust in the organisation likely decreases — feeling profiled and managed as a data point accelerates departure rather than preventing it',
+              'No significant effect — employees are generally comfortable with data-driven HR processes',
+              'The employee will appreciate the proactive engagement regardless of how it was triggered',
+            ],
+            correct: 1,
+            explanation: 'Retention analytics creates a paradox: the intervention that identifies at-risk employees can itself damage the trust relationship that underpins retention. Employees who feel surveilled rather than genuinely valued are more likely to leave, not less. Effective retention interventions must feel like normal, good management — meaningful career conversations, genuine recognition, development opportunities — not surveillance-triggered responses.',
+          },
+          outputComparison: {
+            label: 'How to use people data to intervene before it\'s too late — see it in action',
+            vague: {
+              prompt: 'How can I use HR data to improve retention?',
+              output: 'To improve retention using HR data, track key metrics like turnover rate, time-to-fill, and employee satisfaction scores. Look for trends and patterns in your data. Conduct exit interviews to understand why people are leaving. Compare your data to industry benchmarks. Use the insights to identify areas for improvement and develop targeted retention strategies. Regular reporting and monitoring will help you stay ahead of retention issues.',
+            },
+            improved: {
+              prompt: 'I\'m an HR Business Partner for a 350-person UK software company. Our engineering team has had 31% voluntary attrition over the last 12 months, versus 14% company-wide. I have access to anonymised data on: tenure at exit, time since last promotion, compensation band percentile, manager assignment, engagement score at last survey, and department. Design a retention risk analysis approach for this team using this data. Identify: (1) which data combinations create the strongest risk signal, (2) what a "high risk" profile looks like for an engineer at this company, (3) three retention interventions I should recommend — and critically, how to implement them so they feel like good management, not surveillance.',
+              output: 'Retention Risk Analysis — Engineering Team\n\nStrongest risk signal combinations:\nEngineers who left in the last 12 months: cross-reference tenure at exit with time-since-promotion and compensation percentile. Look for the cluster: 2-4 years tenure + 18+ months since last review/promotion + compensation at or below market median. This combination appears in most tech attrition research as the highest-risk profile.\n\nHigh-risk engineer profile (based on your data variables):\n- Tenure: 18-36 months (past the honeymoon phase, not yet embedded)\n- Compensation: Below 50th percentile for their band\n- Engagement score: Dropped >5 points since previous survey\n- Manager: Assigned to a manager with team attrition above 20%\n- Time since promotion/meaningful progression: 18+ months\n\nThree interventions that feel like good management:\n1. Structured career conversations (not retention conversations): Train engineering managers to run quarterly "what\'s energising you / what\'s frustrating you / where do you want to go next?" conversations as normal practice. Build this into manager check-in templates. No one needs to know it\'s also a retention early-warning mechanism.\n\n2. Compensation review cycle brought forward for the at-risk cohort: Bring the annual compensation review forward for engineers in the 0-50th percentile band. Frame it as "we\'re doing a market alignment check" — which is true.\n\n3. Internal mobility programme: Create visible internal project opportunities for engineers at 18-24 months who haven\'t had a meaningful scope change. New projects are more retentive than promotions for many engineers.',
+            },
+            insight: 'The vague prompt produces standard people analytics advice every HR professional already knows. The specific prompt — with actual data variables, exact attrition rates, company context, and a constraint to make interventions feel like good management — produces a practical analysis framework and three deployable interventions. The constraint "feel like good management, not surveillance" is what made the final output actionable without the trust paradox.',
+          },
+          applyThisWeek: {
+            action: 'Design a stay interview framework for your highest-retention-risk employee segment. Use AI to generate 8 questions that surface what keeps people and what might cause them to leave — without feeling like a retention exercise.',
+            promptTemplate: 'Design a stay interview framework for [role or employee segment] at a [company size] [industry] company. Include: (1) recommended frequency, (2) 8-10 questions that feel like genuine development conversations while surfacing retention risk signals, (3) a note-taking template that is shared with the employee after the conversation, (4) guidance for managers on how to follow up on what they hear. The framework should feel like good management, not a data collection exercise.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last two or three people who left your organisation voluntarily. Were there signals in the data — or in what they said in day-to-day conversations — that something was wrong? What would have needed to be different for you to have caught and acted on those signals 3-6 months earlier?',
           quiz: [
             {
               question: 'Which data pattern is most associated with elevated voluntary attrition risk?',
@@ -1198,6 +1546,35 @@ AI is particularly strong at generating realistic business scenarios:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You ask AI to design a 4-hour training programme on giving performance feedback. Without additional constraints, what format will the AI most likely default to?',
+            options: [
+              'A scenario-based simulation with practice conversations',
+              'A content-delivery-heavy format with slides, videos, and reading — with limited interactive practice',
+              'A peer-coaching exercise where managers give feedback to each other',
+              'An assessment-first design starting with a knowledge check',
+            ],
+            correct: 1,
+            explanation: 'AI training design defaults to information transmission because it\'s easy to generate: slides covering the theory, video recommendations, reading lists, and a summary quiz. Adults learn complex interpersonal skills like feedback through practice, not passive content exposure. Adding explicit constraints — "maximum 30% content delivery, minimum 50% practice-based activities" — forces AI to design the programme around how people actually learn.',
+          },
+          outputComparison: {
+            label: 'Why training design prompts need explicit interactivity constraints — see it in action',
+            vague: {
+              prompt: 'Design a training programme on performance management for managers',
+              output: 'Performance Management Training Programme (Full Day)\n\nModule 1 (9:00-10:30): Introduction to Performance Management — what it is and why it matters. Presentation covering performance management theory, company framework overview, and legal context.\n\nModule 2 (10:45-12:00): Setting Objectives — SMART goals and OKRs. Presentation with examples. Group discussion.\n\nModule 3 (13:00-14:30): Giving Feedback — the importance of regular feedback. Video on feedback best practices. Q&A.\n\nModule 4 (14:45-16:00): The Performance Review Conversation — how to structure the annual review. Role-play in pairs.\n\nClose and evaluation survey.',
+            },
+            improved: {
+              prompt: 'Design a 4-hour training programme on giving performance feedback for line managers at a 400-person UK retailer. Most managers have 5-10 direct reports, give feedback primarily in weekly one-to-ones and quarterly reviews, and self-report avoiding difficult feedback conversations. Learning objectives: managers will be able to (1) structure feedback using SBI, (2) identify the difference between behaviour-focused and character-focused feedback, (3) handle common defensive responses. Constraints: maximum 25% content delivery; at least 60% practice-based (role plays, scenario analysis, peer coaching); design must work for a group of 12-18 managers. Include: one realistic scenario involving late delivery on a client project, one involving a top performer pushing back on a development area. No lecture-only modules.',
+              output: 'Performance Feedback Training — 4 Hours\nGroup size: 12-18 managers | Format: Workshop (not lecture)\n\n9:00–9:20 | Opening Diagnostic (20 min) — Practice, not theory\nManagers work in pairs: each writes down one feedback conversation they\'ve been avoiding and why. No sharing yet. This creates psychological investment in what\'s coming.\n\n9:20–9:50 | The SBI Framework — Minimum input, maximum application (30 min)\nFacilitator presents SBI in 10 minutes: Situation, Behaviour, Impact — one slide, three examples from retail context. Managers then immediately apply it: convert three character-focused statements into SBI language in pairs. Debrief: what was hard about this?\n\n9:50–10:40 | Scenario 1: The Late Delivery (50 min)\n[Full scenario and role-play instructions for the client project situation. Observers use a one-page scoring sheet to identify: did they use SBI? Did they describe behaviour or character? Did they make a specific request?]\n\n10:40–11:00 | Break + Reflection\n\n11:00–11:50 | Handling Push-Back (50 min)\nThe top performer scenario: role-play with a participant who is briefed to push back. Debrief focuses on: what\'s the difference between genuine disagreement and defensive avoidance? How do you hold the feedback without escalating?\n\n11:50–12:30 | The Avoided Conversation (40 min)\nManagers return to their opening diagnostic. In triads: one manager describes their avoided conversation, the group helps them draft the opening two sentences using SBI. Rotates three times.\n\n12:30–12:50 | Commitments and Close\nEach manager writes one feedback conversation they will have in the next two weeks and one specific thing they will do differently. Shared with a peer for accountability.',
+            },
+            insight: 'The vague prompt produces a classic lecture-heavy programme — 75% content delivery — that research shows produces minimal behaviour change for interpersonal skills. The specific prompt, with explicit interactivity constraints, realistic scenarios from the company\'s context, and a constraint against lecture-only modules, produces a programme where managers practice the actual skill they came to develop. The constraints in the prompt are the design.',
+          },
+          applyThisWeek: {
+            action: 'Take a training need in your organisation and use AI to design a module structure with explicit interactivity constraints. Then generate one realistic workplace scenario for the most important skill the training aims to develop.',
+            promptTemplate: 'Design a [duration] training programme on [topic] for [audience description] at a [company type]. Learning objectives: after this programme, participants will be able to [list 2-3 specific behavioural outcomes]. Constraints: maximum [X]% content delivery; minimum [Y]% practice-based activities (specify types). Group size: [number]. Generate: (1) a module-by-module structure with timings and activity types, (2) one realistic scenario participants will role-play, including a briefing card for the person playing the challenging party.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a training programme your organisation has run in the past year. How much of it was content delivery versus practice? If you had to redesign it with a "maximum 25% content delivery" constraint, what would you cut — and what would you add?',
           quiz: [
             {
               question: 'What constraint in a training design prompt prevents AI from defaulting to lecture-heavy formats?',
@@ -1286,6 +1663,35 @@ Use AI to help you anticipate gaps before they become urgent.`,
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR team conducts a skills gap analysis by reviewing last year\'s performance review outcomes and identifying the lowest-scoring competencies. What is the key flaw in this approach?',
+            options: [
+              'Performance review data is not granular enough for skills analysis',
+              'This identifies gaps relative to past performance requirements — not the capabilities the organisation will need for its future strategic direction',
+              'Skills gap analysis should be conducted by the L&D team, not HR',
+              'Performance review data is too biased to be useful for skills assessment',
+            ],
+            correct: 1,
+            explanation: 'A skills gap analysis based on historical performance data tells you where people fell short of yesterday\'s requirements. If the business is pursuing a new market, digital transformation, or changed operating model, the critical gaps may be in capabilities that didn\'t appear in last year\'s reviews at all. Gap analysis must start with strategic direction — where is the business going? — not with the data you happen to have.',
+          },
+          outputComparison: {
+            label: 'Why skills gap analysis needs strategic context to be useful — see it in action',
+            vague: {
+              prompt: 'Help me do a skills gap analysis for my HR team',
+              output: 'A skills gap analysis involves identifying the skills your team currently has and comparing them to the skills they need. Start by listing the key competencies required for each HR role. Then assess your team members against each competency using a rating scale. Identify areas where there are gaps between current and required levels. Prioritise the gaps by importance and develop a learning plan to address them. Consider a mix of training, coaching, and on-the-job development.',
+            },
+            improved: {
+              prompt: 'I\'m the HR Director at a 1,000-person UK manufacturing company. Over the next 18 months, we\'re implementing a new HRIS (Workday), moving to a hybrid HRBP model, and the CFO has asked HR to lead a people analytics function for the first time. Our HR team of 12 includes: 4 HRBPs, 2 TA specialists, 2 L&D coordinators, 1 HR Operations Manager, 1 Payroll Manager, 1 ER Advisor, and me. Conduct a skills gap analysis for the capabilities needed to deliver these three strategic priorities. For each priority, identify: (1) critical skills required, (2) where those skills likely exist in the team now (based on typical role profiles), (3) the highest-priority gap to close, and (4) whether to build, buy, or borrow for each gap.',
+              output: 'Strategic Priority 1: Workday Implementation\nCritical skills: HRIS configuration and testing, change management, data migration, user training design\nLikely existing capability: HR Operations Manager may have HRIS experience; L&D coordinators have training design skills\nHighest-priority gap: HRIS technical configuration — unlikely to exist in a 12-person HR team without prior Workday exposure\nBuild/Buy/Borrow: Borrow — contract a Workday implementation specialist for 6-9 months. Build basic user competency internally through L&D. Do not hire a permanent HRIS specialist until post-implementation needs are clearer.\n\nStrategic Priority 2: HRBP Model Transition\nCritical skills: Business partnering mindset (commercial acumen, business-led conversations), change management for the HR team itself, role boundary clarity\nLikely existing capability: Mixed — some HRBPs may already be operating at this level; others may be primarily operational\nHighest-priority gap: Commercial acumen and strategic HR thinking — this is a mindset and capability shift, not a technical skill\nBuild/Buy/Borrow: Build — structured coaching programme for HRBPs with external HRBP coach. Accelerate by bringing in one experienced senior HRBP externally to model the approach.\n\nStrategic Priority 3: People Analytics\nCritical skills: Data literacy (reading and interpreting HR data), data visualisation, business case construction from people data, analytical thinking\nLikely existing capability: Near-zero — people analytics is absent from most traditional HR team profiles\nHighest-priority gap: The function itself doesn\'t exist — no capability baseline to build on\nBuild/Buy/Borrow: Buy — hire one dedicated People Analyst (not a full data scientist; a profile that bridges HR and data). Build data literacy across the HRBP team as a secondary priority.',
+            },
+            insight: 'The vague prompt produces a generic skills assessment methodology that could apply to any team anywhere. The specific prompt — with the exact team composition, three named strategic priorities, and a build/buy/borrow framework requirement — produces an analysis that names specific gaps, which roles carry which skills, and what the company should actually do about each gap. The strategic context transformed the output from generic to actionable.',
+          },
+          applyThisWeek: {
+            action: 'Conduct a mini skills gap analysis for the HR function or team you support. Start by writing 100 words on their top two strategic priorities for the next 18 months, then use AI to identify the capability gaps and recommend build/buy/borrow for each.',
+            promptTemplate: 'Conduct a skills gap analysis for a [function] team of [size] at a [company type]. Strategic priorities for the next 18 months: [list 2-3 specific priorities]. Current team composition: [list roles]. For each strategic priority, identify: (1) critical capabilities required, (2) where those capabilities likely exist in the current team, (3) the highest-priority gap, and (4) a build/buy/borrow recommendation with rationale.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a capability your organisation needed 18 months ago that it didn\'t have. Was it possible to have predicted that gap earlier — and what would earlier identification have allowed you to do differently? How could a structured skills gap analysis against your current strategy prevent the same situation from happening again?',
           quiz: [
             {
               question: 'What must a skills gap analysis be aligned to in order to be useful?',
@@ -1372,6 +1778,35 @@ For managers:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A high-performing team member asks their manager: "Where can I go from here?" The manager says: "Well, the path I took was from analyst to senior analyst to team lead." What is the fundamental problem with this response?',
+            options: [
+              'The manager should have directed the question to HR rather than answering directly',
+              'The manager can only describe their own career path, which may be entirely irrelevant to this employee\'s interests, strengths, or the paths that now exist in the organisation',
+              'Career conversations should only happen during annual performance reviews',
+              'The manager has not consulted the HR team before discussing career options',
+            ],
+            correct: 1,
+            explanation: 'Most managers became managers because they were excellent at their own job — not because they\'re skilled career coaches. Without a structured career pathway framework and conversation guide, development conversations default to "here\'s what worked for me," which may be irrelevant, outdated, or simply not what this employee needs. Providing managers with pathway maps, lateral options, and conversation frameworks transforms the quality of these conversations.',
+          },
+          outputComparison: {
+            label: 'Why career pathway visibility changes retention — see it in action',
+            vague: {
+              prompt: 'Create a career development plan for an HR professional',
+              output: 'Career Development Plan\n\nName: [Employee Name]\nCurrent Role: HR Professional\nGoal: To advance in HR\n\nShort-term goals (6-12 months): Develop stronger communication skills. Complete one HR certification. Take on additional responsibilities in current role.\n\nLong-term goals (3-5 years): Move into a senior HR role. Potentially become HR Manager or HR Director.\n\nDevelopment activities: Attend HR conferences. Complete online courses. Find a mentor.\n\nReview date: [Date]',
+            },
+            improved: {
+              prompt: 'Create a one-page Individual Development Plan (IDP) for a mid-level HR Advisor with 4 years of experience at a 700-person UK healthcare company. She has expressed interest in moving toward people analytics but isn\'t sure if she should move into a dedicated analytics role or stay in generalist HR and build analytics as a capability. Her manager rates her as strong on ER and policy, developing on data interpretation, and excellent with stakeholder relationships. Two development priorities: (1) data literacy and analytics thinking, (2) commercial acumen — she struggles to connect HR work to business outcomes. For each priority: one experience-based development activity (70%), one learning resource (10%), and one way to demonstrate progress. Keep to one page. No jargon.',
+              output: 'Individual Development Plan — [Name] | HR Advisor\nPeriod: [Month] to [Month + 6]\n\nCareer ambition: Build a unique HR profile combining strong ER/people expertise with analytics capability — either as a senior generalist or eventually in a specialist people analytics role. Decide within 6 months which direction to pursue.\n\nPriority 1: Data Literacy and Analytics Thinking\nExperience (70%): Own the quarterly HR metrics report for one business unit — from data extraction to presentation to the Director. Present findings and two recommendations each quarter.\nLearning (10%): Complete Google\'s free "Data Analytics Fundamentals" course (8 hours). Focus on the data interpretation and visualisation modules.\nProgress: By month 3, present first metrics report independently and get the Director\'s feedback. By month 6, have made one recommendation that was acted on.\n\nPriority 2: Commercial Acumen\nExperience (70%): Attend the monthly Business Unit Review meeting with your HRBP for the next three months as an observer. Afterwards, write two sentences connecting what was discussed to a people implication.\nLearning (10%): Read "The HR Scorecard" (one chapter per fortnight).\nProgress: By month 6, lead one conversation with a manager about the people cost of a business decision — with numbers, not just intuition.\n\nReview date: [Month + 3] mid-point and [Month + 6] full review with manager.',
+            },
+            insight: 'The vague prompt produces a development plan template that could belong to anyone — it contains no specifics about the person, their strengths, their actual development needs, or how progress will be measured. The specific prompt — with the person\'s strengths, their exact career ambiguity, and two named priorities with 70/20/10 framing — produces a plan that is genuinely useful and that the employee and manager can review in a real conversation.',
+          },
+          applyThisWeek: {
+            action: 'Map the career pathways for one function you support — including at least two lateral options that employees in that function might not know exist. Then use AI to create a manager conversation guide for development conversations in that function.',
+            promptTemplate: 'Design a career pathway framework for the [function] function in a [company type]. Include: (1) roles at each level from entry to senior, (2) what distinguishes each level from the one below (skills, scope, autonomy — not just years of experience), (3) two lateral pathways available at the [mid-level] point, (4) typical development experiences that support progression. Then create a 10-question guide for managers having development conversations with people in this function.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a high performer who left your organisation in the last two years. Did they have a clear picture of where they could go next — and did their manager know how to articulate it? What would visible career pathways and a better manager conversation have changed about that outcome?',
           quiz: [
             {
               question: 'Why do most career development conversations between managers and employees fail?',
@@ -1465,6 +1900,35 @@ Design measurement at the same time as the programme — adding it after the fac
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Six months after a management training programme, L&D produces a report showing 92% satisfaction scores and 100% completion rates. A business leader asks: "Has our managers\' performance actually improved?" What does the report tell you?',
+            options: [
+              'Yes — high satisfaction and completion indicate the programme was effective',
+              'Nothing about performance improvement — satisfaction and completion are Level 1 metrics that measure the experience, not whether behaviour or performance changed',
+              'Probably — high satisfaction usually correlates with learning',
+              'The question cannot be answered without a longer time horizon',
+            ],
+            correct: 1,
+            explanation: 'Satisfaction scores (Level 1) measure whether participants enjoyed the experience — not whether they learned anything, changed their behaviour, or improved business results. A highly entertaining training programme with catered lunch and a popular speaker will score 92% satisfaction regardless of whether anyone changed how they manage. The business leader\'s question requires Level 3 data (behaviour change) or Level 4 data (business results).',
+          },
+          outputComparison: {
+            label: 'Why L&D measurement determines whether investment is justified — see it in action',
+            vague: {
+              prompt: 'How should I measure the effectiveness of a training programme?',
+              output: 'To measure training effectiveness, use Kirkpatrick\'s Four Levels: Reaction (did participants like it?), Learning (did they learn?), Behaviour (did they apply it?), and Results (what was the business impact?). Most organisations measure Level 1 through post-training surveys. For higher levels, consider knowledge assessments, manager observations, and business metric tracking. Design your measurement approach before the training and collect baseline data for comparison.',
+            },
+            improved: {
+              prompt: 'I\'m designing a measurement plan for a 3-month management development programme for 24 line managers at a 450-person UK logistics company. The business objective is to reduce formal ER cases by 25% within 12 months by improving manager capability in early-stage difficult conversations. Design a four-level Kirkpatrick evaluation plan. For each level: what exactly to measure, when to measure it, how to collect the data, and what "success" looks like. Include a Level 3 manager observation guide — the specific behaviours their skip-level managers should look for at 30, 60, and 90 days post-programme.',
+              output: 'Four-Level Evaluation Plan — Management Development Programme\nBusiness objective: 25% reduction in formal ER cases within 12 months\n\nLevel 1 — Reaction (Day 1 post-programme)\nMeasure: Relevance to their actual management challenges (not general satisfaction). Did the programme address the situations they actually face?\nData: 5-question post-programme survey. One open question: "What will you do differently in your next difficult conversation?"\nSuccess: 80%+ rate the content as highly relevant to their specific role.\n\nLevel 2 — Learning (End of programme)\nMeasure: Knowledge of SBI structure, ability to identify character vs behaviour-focused feedback, ability to recognise when to escalate vs manage informally.\nData: Pre/post knowledge assessment (8 scenarios, written responses). Compare pre-programme baseline to post-programme scores.\nSuccess: Average score improvement of 30%+ from baseline.\n\nLevel 3 — Behaviour (30, 60, 90 days post-programme)\nMeasure: Are managers applying programme skills in real conversations?\nData: Skip-level manager observation against behaviour checklist (see below). Also: HR Business Partner observations from ER case involvement.\nSuccess: 70%+ of observed managers demonstrate SBI-structured feedback in observed or reported conversations by day 90.\n\nLevel 3 Observation Guide for Skip-Level Managers:\nAt 30 days — look for: Has the manager had a difficult conversation that previously they would have escalated? Can they describe a recent feedback conversation using specific behaviour examples?\nAt 60 days — look for: Has the pattern of conversations changed? Fewer "can you deal with this for me" requests to HR? Evidence of documenting performance concerns with specifics?\nAt 90 days — look for: Are ER case referrals from this manager\'s team down compared to same period last year? Can the manager articulate how they approached a recent performance concern differently?\n\nLevel 4 — Results (12 months post-programme)\nMeasure: ER case volume change vs 12-month baseline (baseline: [X] formal cases from this cohort\'s teams).\nData: ER case log by manager team. Compare pre/post programme.\nSuccess: 25% reduction in formal ER cases from programme cohort\'s teams vs baseline year.',
+            },
+            insight: 'The vague prompt correctly describes Kirkpatrick\'s framework but produces advice that any L&D professional already knows. The specific prompt — with exact programme details, a quantified business objective, and a request for a Level 3 observation guide — produces a complete measurement plan with specific success thresholds and a practical tool for skip-level managers to use. The business objective in the prompt is what made Level 4 measurement concrete rather than aspirational.',
+          },
+          applyThisWeek: {
+            action: 'For a training programme you have recently delivered or are about to deliver, design a Level 3 evaluation plan. Define the specific behaviours managers should observe, the timing for observation, and what "success" looks like at 90 days post-training.',
+            promptTemplate: 'Design a Level 3 (behaviour change) evaluation plan for a training programme on [topic] delivered to [audience]. The business objective is [specific measurable outcome]. Include: (1) the specific behaviours that should change if the programme worked, (2) who should observe these behaviours and when (30/60/90 days), (3) the observation checklist for managers or HR, (4) how to collect and aggregate the data, and (5) what a "success" threshold looks like at 90 days.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the L&D investment your organisation has made in the last 12 months. If you had to justify each programme to your CFO using business outcomes rather than satisfaction scores and completion rates, which programmes could you defend — and which couldn\'t you? What would you need to measure differently to change that answer?',
           quiz: [
             {
               question: 'Why is Level 1 (satisfaction) evaluation insufficient as the primary measure of L&D effectiveness?',
@@ -1559,6 +2023,35 @@ Always have employment documents reviewed by a qualified HR or legal professiona
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR team uses AI to draft a Performance Improvement Plan (PIP) for an employee. The draft reads: "Your performance has been consistently poor this quarter and is not meeting expectations." What is the most significant problem with this PIP?',
+            options: [
+              'The language is too harsh — PIPs should always use positive framing',
+              'It lacks specificity — "consistently poor" and "not meeting expectations" are character judgments with no observable behaviour, specific examples, or defined standard for improvement',
+              'The PIP should include a 360-degree review before any performance language is used',
+              'PIPs should not be drafted with AI assistance due to legal risk',
+            ],
+            correct: 1,
+            explanation: 'A PIP that uses vague language like "consistently poor" without naming specific incidents, describing observable behaviour, and stating what "meeting expectations" actually looks like is legally vulnerable. In an unfair dismissal claim, the organisation must demonstrate that the employee was told specifically what was wrong, what the standard was, and what support was provided. Generic performance language cannot meet this standard.',
+          },
+          outputComparison: {
+            label: 'Why HR documentation specificity determines legal defensibility — see it in action',
+            vague: {
+              prompt: 'Write a Performance Improvement Plan for an underperforming employee',
+              output: 'PERFORMANCE IMPROVEMENT PLAN\n\nEmployee Name: [Name]\nDate: [Date]\nManager: [Manager Name]\n\nThis PIP has been issued because your performance has not met the required standards. Areas of concern include work quality, meeting deadlines, and communication with the team.\n\nImprovement Required: You are expected to improve your performance in all areas identified above within 90 days.\n\nSupport: Your manager will provide regular check-ins to support your improvement.\n\nConsequences: Failure to improve may result in further disciplinary action.\n\nSigned: ____________________',
+            },
+            improved: {
+              prompt: 'Draft a Performance Improvement Plan for a Customer Success Manager at a 300-person UK SaaS company. The specific concerns: (1) three client accounts have flagged dissatisfaction in the last 6 weeks (Clients A, B, and C — I\'ll add names), (2) two monthly account review reports submitted late (February and March — I\'ll add dates), (3) the employee has not proactively communicated account risks to their manager. The required standard is: all reports submitted by the 5th of the following month, client satisfaction scores above 7/10, and any account at risk to be flagged within 48 hours of the risk being identified. Support to be provided: weekly 30-minute manager check-in, access to a senior CSM for mentoring, training on our client escalation protocol. Review period: 90 days. Tone: fair and constructive. Written for the employee to understand — no HR jargon.',
+              output: 'Performance Improvement Plan\nEmployee: [Name] | Role: Customer Success Manager | Start date: [Date] | Review date: [Date + 90 days]\n\nPurpose of this plan\nThis plan sets out specific concerns about recent performance, the standard we need you to reach, the support we\'ll provide, and the timeline for review. It is designed to give you a clear picture of what\'s expected and the support available to help you get there.\n\nSpecific concerns\n1. Client satisfaction: Three of your accounts — [Client A], [Client B], and [Client C] — have raised dissatisfaction concerns with your manager in the past six weeks. In each case, the concern related to response times and account knowledge.\n2. Report deadlines: Your February and March account review reports were submitted after the 5th of the following month (submitted on [dates]). This is the second and third occurrence this quarter.\n3. Risk communication: On two occasions in the past six weeks, account risks that were later significant were not proactively communicated to your manager until after the client had escalated.\n\nRequired standard (what meeting expectations looks like)\n- All monthly account review reports submitted by the 5th of the following month\n- Client satisfaction scores of 7/10 or above across your portfolio\n- Any account identified as at risk to be flagged to your manager within 48 hours of the risk being identified\n\nSupport we will provide\n- Weekly 30-minute check-in with your manager (Tuesdays at 9am)\n- Access to [Senior CSM Name] for mentoring — two sessions per month for 90 days\n- Training session on our client escalation protocol in week 2\n\nReview\nWe will review progress at 30, 60, and 90 days. At 90 days, we will assess whether the required standard has been met. If it has, this plan will close. If not, further action may be considered.\n\n⚠ Legal review recommended before issuing.',
+            },
+            insight: 'The vague prompt produces a PIP shell that contains no specific incidents, no defined standards, and no meaningful support — legally indefensible and practically useless for the employee. The specific prompt — with named accounts, actual dates, and defined standards for each concern — produces a document the employee can understand and act on, and that would hold up to legal scrutiny. The legal recommendation flag is important: AI drafts, professionals validate.',
+          },
+          applyThisWeek: {
+            action: 'Take one HR document that is currently overdue or being avoided in your team (a policy update, a difficult letter, a process guide). Use AI to draft it in under 20 minutes, then spend 10 minutes on legal and factual review before sharing.',
+            promptTemplate: 'Draft a [document type] for a [role/situation] at a [company type] in [jurisdiction]. Specific context: [describe the situation with named examples where relevant]. Required content: [list key sections]. Tone: [fair/constructive/professional]. Maximum [word count]. Flag any section where legal review is recommended before use.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the HR documents in your organisation that are either out of date, poorly written, or inconsistently applied. Which one, if updated and clarified, would save the most manager or HR time — and how long have you been meaning to update it? What has stopped you, and could AI remove that barrier?',
           quiz: [
             {
               question: 'What must always happen before an AI-drafted employment document (offer letter, contract, PIP) is used?',
@@ -1649,6 +2142,35 @@ After collecting and presenting your data:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR analyst presents this finding to the CFO: "Our attrition rate is 22%, which is 7 percentage points above the industry average." What is missing from this presentation?',
+            options: [
+              'The analyst should have compared to a competitor, not an industry average',
+              'The financial cost of that attrition — without a monetary figure, the CFO has no basis for deciding whether to invest in a solution',
+              'The data should be broken down by department before presenting to the CFO',
+              'Attrition rates are an HR metric and should not be presented to a CFO',
+            ],
+            correct: 1,
+            explanation: 'A CFO\'s primary language is financial. "7 percentage points above industry average" is interesting to an HR professional but gives a CFO no basis for action — they don\'t know whether closing that gap is worth £100,000 or £2 million to invest in. Translating attrition into replacement costs (typically 1-2x annual salary per leaver) and projecting the cost over 12 months converts an HR metric into a business decision about investment and return.',
+          },
+          outputComparison: {
+            label: 'Why people analytics requires business language to drive action — see it in action',
+            vague: {
+              prompt: 'Analyse our HR data to find insights',
+              output: 'Based on HR data analysis, here are some insights:\n\n- Turnover rate: 18% (slightly above average)\n- Average tenure: 3.2 years\n- Highest attrition department: Sales (28%)\n- Employee satisfaction: 6.8/10\n- Time to hire: 45 days average\n\nRecommendations: Focus retention efforts on the Sales department. Review the hiring process to reduce time to hire. Consider an employee satisfaction initiative to improve the 6.8 score.',
+            },
+            improved: {
+              prompt: 'I\'m presenting people analytics findings to our CEO and CFO at a 600-person UK professional services firm. Key data: voluntary attrition is 24% in our Consulting division (company average: 16%). Average replacement cost for a consultant: £45,000 (recruitment fees, lost productivity, knowledge transfer). Last year we lost 38 consultants from this division. Engagement score for Consulting: 5.9/10 vs company average 7.1. Top exit interview theme (68% of leavers): "lack of career progression clarity." Write a five-minute presentation narrative that: leads with the financial cost, connects the data to root cause, and recommends two specific actions with estimated investment and ROI. Use business language — no HR jargon.',
+              output: 'CEO, CFO — I want to take five minutes to share a data story about a problem that is costing us more than most of our operational challenges.\n\nLast year, we lost 38 consultants from our Consulting division — a 24% voluntary attrition rate, compared to 16% company-wide. At an average replacement cost of £45,000 per leaver, that is £1.71 million in direct cost last year alone. If we don\'t change the trajectory, we\'re looking at the same figure or higher in the year ahead.\n\nWhy is Consulting losing people at 50% above our company rate? The exit interview data gives us a clear signal: 68% of leavers cited "lack of career progression clarity" as a primary reason. Our engagement data supports this — Consulting scores 5.9 on engagement versus 7.1 company-wide, and the three lowest scoring items all relate to career visibility and growth.\n\nThe problem is not compensation — our Consulting pay is market-competitive. It is that our consultants cannot see where they go next, and their managers don\'t have the tools to show them.\n\nTwo specific interventions:\n\n1. Career pathway framework for Consulting — visible pathways from Analyst to Director level, with lateral options, built in the next 90 days. Estimated cost: £15,000 (one HR Business Partner and external facilitator for design and manager briefing sessions). Estimated ROI: if we reduce attrition by 5 percentage points (to 19%), we save approximately £340,000 in replacement costs in year one.\n\n2. Manager development: development conversations — a half-day workshop for all 18 Consulting managers on how to have career conversations. Cost: £8,000. This directly addresses the 68% root cause.\n\nTotal investment: £23,000. Conservative year-one return if attrition drops by 5 percentage points: £340,000. That is a 14:1 return.\n\nI\'m asking for approval to proceed.',
+            },
+            insight: 'The vague prompt produces a data dump with generic recommendations that give a CEO or CFO no basis for deciding whether to invest. The specific prompt — with real cost data, a financial calculation, the root cause from exit interviews, and a clear ask with ROI — produces a presentation narrative that a business leader can respond to with yes or no. The financial translation is what made the difference.',
+          },
+          applyThisWeek: {
+            action: 'Identify one people metric your organisation tracks (attrition, time-to-hire, absence rate). Calculate the financial cost of your current performance on that metric, and use AI to draft a business case for a targeted intervention.',
+            promptTemplate: 'I\'m presenting a people analytics business case to [audience] at a [company size] [industry] company. Key data: [metric] is [current rate] versus [benchmark]. Financial cost calculation: [number of people affected] x [cost per person] = [total cost]. Root cause from [data source]: [top theme]. Write a 5-minute presentation narrative that: leads with financial cost, explains the root cause, recommends [number] interventions with estimated cost and ROI. Use business language — no HR jargon.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time you presented people data to a senior business leader. Did they act on it — and if not, was it because the data wasn\'t compelling, or because it wasn\'t translated into the financial and strategic language they needed to justify investment? What would you change about how you presented it?',
           quiz: [
             {
               question: 'What is the most common failure mode in people analytics initiatives?',
@@ -1743,6 +2265,35 @@ This test surfaces real-world application problems before the policy is publishe
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR team publishes a new Remote Working Policy that is 12 pages long, includes legal disclaimers throughout, and uses phrases like "notwithstanding the foregoing" and "subject to managerial discretion." Six months later, managers are applying it inconsistently. What is the most likely cause?',
+            options: [
+              'Managers have not been trained on the policy',
+              'The policy is written in a way that managers cannot easily read, understand, and apply in real situations — complexity produces inconsistency',
+              'The policy needs a more detailed FAQ section',
+              'A 12-page policy is appropriate for a complex topic like remote working',
+            ],
+            correct: 1,
+            explanation: 'Policies that people cannot read and understand will not be followed consistently. Legal language and comprehensive coverage optimise for the tribunal, not the manager facing a real situation on a Monday morning. A two-page plain English policy that a manager can read in three minutes and remember the key rules of will produce more consistent application than a comprehensive 12-page document that no one finishes reading.',
+          },
+          outputComparison: {
+            label: 'Why policy design determines whether policies are actually followed — see it in action',
+            vague: {
+              prompt: 'Write an AI usage policy for HR',
+              output: 'AI Usage Policy for HR Department\n\nThis policy governs the use of artificial intelligence tools within the Human Resources department. All employees must comply with this policy when using AI tools in their work.\n\n1. Introduction: AI tools may be used to support HR functions subject to compliance with all applicable laws and regulations.\n\n2. Approved tools: Only approved AI tools may be used. A list of approved tools will be maintained by IT.\n\n3. Data protection: All AI usage must comply with GDPR and company data protection policies.\n\n4. Review: This policy will be reviewed annually.\n\nNon-compliance may result in disciplinary action.',
+            },
+            improved: {
+              prompt: 'Draft an AI Tool Use Policy for the HR team at a 500-person UK manufacturing company. The policy must cover: (1) which AI tools are approved for HR use and for what tasks, (2) which employee data can and cannot be used with AI tools, (3) the human review requirement for any AI output that affects an individual employee, (4) what to do if you\'re unsure whether a use case is permitted. Maximum 600 words. Plain English — write for a manager who will read this once and needs to be able to remember the key rules. Use concrete examples, not abstract principles. Flag two sections requiring legal review.',
+              output: 'HR AI Tool Use Policy — [Company Name]\nEffective: [Date] | Review date: [Date + 12 months] | Owner: HR Director\n\nWhat this policy covers\nThis policy tells you which AI tools you can use in HR work, what data you can use them with, and when you need to add a human review step. If you\'re unsure about a specific use case, the last section tells you who to ask.\n\nApproved tools and what you can use them for\n✓ Claude (via our enterprise account — not the free consumer version): drafting policies, letters, job descriptions, training content, and analysing anonymised survey data.\n✓ Microsoft Copilot (via our M365 subscription): drafting documents in Word, summarising meetings in Teams, generating formulas in Excel.\n✗ ChatGPT (consumer version): not approved for any HR data — our organisation does not have a Data Processing Agreement with this version.\n✗ Any AI tool not on this list: check with the HR Director before use.\n\nWhat data you can and cannot use\n✓ You can use AI with: job descriptions, policy drafts, anonymised survey data (remove names, IDs, and any combination that could identify an individual), salary benchmarks from public sources, training content.\n✗ You cannot use AI with: named employee data, performance ratings linked to individuals, disciplinary or ER case details, health or absence data, any data that could identify a specific person.\nWhen in doubt: anonymise it, or don\'t use AI.\n\nHuman review requirement\nAny AI output that will be seen by an employee or used in a decision affecting an employee must be reviewed and approved by a qualified HR professional before use. This includes: offer letters, PIPs, rejection emails, and policy communications.\nAI drafts; humans validate and approve.\n\nIf you\'re unsure\nAsk the HR Director before using any AI tool with data you haven\'t used AI with before. The rule of thumb: if you wouldn\'t be comfortable explaining your data use to the employee whose data it is, don\'t do it.\n\n⚠ Legal review recommended: Data classification section and approved tool list should be reviewed by your data protection officer before publication. Human review requirement section should be reviewed by employment counsel.',
+            },
+            insight: 'The vague prompt produces a policy full of abstract obligations ("comply with applicable laws") that gives an HR professional no practical guidance. The specific prompt — with concrete examples, a word limit, a plain English requirement, and actual approved/not approved tools — produces a policy a manager can actually follow. The concrete examples (✓ / ✗ format) make the rules memorable rather than interpretable.',
+          },
+          applyThisWeek: {
+            action: 'Apply the manager application test to one current HR policy. Use AI to identify three scenarios where the policy\'s guidance is ambiguous, and three questions employees would ask that the policy doesn\'t clearly answer. Revise the policy to close the gaps.',
+            promptTemplate: 'Read this [policy name] policy and identify: (1) three realistic scenarios a manager might face where the policy\'s guidance is ambiguous or contradictory, (2) three questions an employee would likely ask that this policy doesn\'t clearly answer, (3) any sentence longer than 25 words or containing jargon a new employee wouldn\'t understand. For each issue, suggest a specific revision. Here is the policy: [paste policy]',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a policy in your organisation that is regularly misapplied or ignored by managers. Is it being ignored because people disagree with it — or because it\'s genuinely unclear, too long, or too abstract to be remembered and applied in a real situation? What would a plain English rewrite change about its impact?',
           quiz: [
             {
               question: 'What is the most common reason HR policies fail in practice?',
@@ -1846,6 +2397,35 @@ The HR function's AI governance must include:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An HR function uses AI to handle initial ER case triage, drafts all communications through AI, and uses an AI chatbot for employee queries. A senior manager approaches HR about a sensitive redundancy situation involving a long-serving employee. What is the risk of this operating model?',
+            options: [
+              'AI cannot process the complexity of UK redundancy law accurately',
+              'The HR function has allowed AI to creep into advice-tier work — sensitive human situations require human judgment, empathy, and accountability that AI cannot provide',
+              'The chatbot may not have sufficient data to handle redundancy queries',
+              'AI is appropriate for all these tasks as long as a human signs off the output',
+            ],
+            correct: 1,
+            explanation: 'Sensitive employee situations — redundancy conversations, disciplinary processes, mental health disclosures — require human judgment, empathy, trust, and genuine accountability. An HR professional in these situations must read emotional cues, exercise discretion, and be genuinely present in a way that AI cannot replicate. The three-tier model exists precisely to keep human judgment in the advice tier, even as AI handles the administrative tier.',
+          },
+          outputComparison: {
+            label: 'Why the three-tier HR model prevents AI from eroding strategic value — see it in action',
+            vague: {
+              prompt: 'How should HR use AI?',
+              output: 'HR can use AI in many ways to improve efficiency and effectiveness. AI can help with recruiting, onboarding, employee engagement, performance management, and learning and development. It can automate repetitive tasks, provide insights from data, and personalise employee experiences. HR should use AI responsibly, ensure data privacy, and maintain human oversight. Start with low-risk use cases and expand as you build capability and confidence.',
+            },
+            improved: {
+              prompt: 'Design a practical AI adoption roadmap for a 10-person HR team at a 700-person UK retail company. The team currently spends approximately 60% of its time on administration (documentation, queries, reporting). The CHRO wants to free up 30% of team capacity for strategic work over 12 months. Structure the roadmap in three phases: (1) what to automate with AI in months 1-3, (2) what to augment with AI support in months 4-6, (3) what HR capabilities to invest in during months 7-12 as admin time reduces. For each phase, be specific about which tasks, which tools, which governance steps, and what the HR team should do with recovered capacity. Also specify which tasks must remain human-only regardless of AI capability.',
+              output: 'HR AI Adoption Roadmap — 12 Months\nTeam: 10-person HR | Headcount: 700 | Goal: 30% capacity shift from admin to strategic work\n\nPhase 1 — Automate (Months 1-3): Target: reduce time on high-volume, low-judgment tasks\nTasks to automate:\n- Job description drafting: Claude (enterprise account). Prompt library with 8 role-type templates. Time saving: ~3 hours per JD reduced to 30 minutes.\n- Policy first drafts: Claude. All policy updates start with an AI draft reviewed by HRBP. Time saving: ~4 hours per policy reduced to 90 minutes.\n- Candidate rejection emails: AI templates by stage. Human sends and personalises. Time saving: ~1 hour per day in high-volume periods.\n- Monthly HR metrics report: Copilot in Excel. Template + commentary generated from data. Time saving: ~1 day per month.\nGovernance steps: Confirm Claude enterprise DPA. Brief team on data classification (what can/cannot be used with AI). One person owns the prompt library.\nHuman-only regardless: ER case advice, redundancy conversations, sensitive employee communications, anything affecting an individual\'s employment status.\n\nPhase 2 — Augment (Months 4-6): Target: AI supports human judgment, doesn\'t replace it\nTasks to augment:\n- Engagement survey analysis: AI identifies themes from anonymised open text; HRBP interprets and recommends actions. AI provides faster pattern identification; humans provide context and judgment.\n- Skills gap analysis: AI structures the framework; HRBP validates against business knowledge.\n- Manager coaching prep: HRBPs use AI to draft coaching frameworks for specific manager situations; they deliver the coaching.\nGovernance steps: Human review requirement formalised: all AI-augmented outputs affecting individuals require HRBP sign-off before use.\n\nPhase 3 — Invest in human capability (Months 7-12): Use recovered capacity for what AI cannot do\nInvestment areas:\n- HRBP business partnering depth: with admin reduced, each HRBP dedicates 2 additional hours per week to proactive business leader conversations.\n- Manager coaching programme: recovered L&D time funds a 6-month manager capability programme.\n- People analytics capability: one HRBP develops data literacy to lead the quarterly people analytics review.\nCapacity recovered: estimated 25-30% admin reduction enables HRBPs to move from reactive to proactive partnership.\n\nHuman-only — always:\n- Sensitive investigations (disciplinary, grievance, harassment)\n- Redundancy consultations\n- Board/executive relationships\n- Culture and trust-building conversations\n- Mental health disclosures and employee welfare situations',
+            },
+            insight: 'The vague prompt produces generic AI adoption advice that any HR team could generate from a Google search. The specific prompt — with team size, current time allocation, a quantified 12-month goal, and a three-phase structure — produces a phased roadmap with named tasks, tools, governance steps, and a clear articulation of what must stay human. The specificity of the goal ("30% capacity shift") drove the specificity of the plan.',
+          },
+          applyThisWeek: {
+            action: 'Map your HR team\'s current work against the three tiers (admin/AI-assisted, advice/human-led, strategic/human-only). Identify the three highest-volume admin tasks and draft one AI prompt for each that you could use this week.',
+            promptTemplate: 'Design a 90-day AI adoption pilot for an HR team of [size] at a [company type]. We want to reduce time spent on [specific admin task] by approximately [X hours per week]. The pilot should: (1) specify the exact AI workflow for this task, (2) define the data rules (what can and cannot be used with AI), (3) define the human review step, (4) specify how we will measure time saved and quality maintained, and (5) identify what the team will do with recovered time.',
+            tool: 'Claude',
+          },
+          reflection: 'As AI takes on more of the administrative work in HR, the most important question is not "what can we automate?" but "what will we do with the time we recover?" If your team had 20% more capacity next quarter, what would you invest it in — and how would that change the strategic impact of HR in your organisation?',
           quiz: [
             {
               question: 'Which tier of HR work should remain human-only, even as AI capability grows?',

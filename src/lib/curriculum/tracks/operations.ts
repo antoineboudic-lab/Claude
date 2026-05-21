@@ -66,6 +66,35 @@ The easiest wins are tasks that are currently done manually, follow consistent p
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Which type of operational task is AI best suited to handle?',
+            options: [
+              'Deciding whether to exit a key supplier relationship after a major failure',
+              'Categorising and routing 400 maintenance tickets per week by type and urgency',
+              'Determining why an unprecedented equipment failure occurred',
+              'Choosing which of two candidates to promote to operations manager',
+            ],
+            correct: 1,
+            explanation: 'AI excels at high-volume, pattern-based tasks like categorisation and routing — where consistent rules apply and the sheer volume exceeds what a human can handle efficiently. The other options all require contextual judgment, tacit knowledge, or relationship insight that AI cannot reliably provide. The key question to ask is: does this task follow repeatable rules at high volume?',
+          },
+          outputComparison: {
+            label: 'Asking AI for help with operations — generic vs. specific',
+            vague: {
+              prompt: 'How can AI help my operations team?',
+              output: 'AI can help operations teams in many ways. It can automate repetitive tasks, improve efficiency, reduce costs, and provide data insights. Some common applications include process automation, predictive analytics, and supply chain optimisation. You should explore AI tools that match your specific needs.',
+            },
+            improved: {
+              prompt: 'I manage a 12-person operations team at a food manufacturing company. We spend significant time on: (1) manually categorising 200+ daily quality defect reports, (2) writing supplier delivery-delay emails, and (3) compiling a weekly KPI report from three different systems. Which of these should I prioritise for AI support first, and what would the workflow look like?',
+              output: 'Based on volume and rule-consistency, prioritise defect report categorisation first. Here\'s why and how:\n\n**Priority 1: Defect report categorisation**\n- 200+ reports/day is a clear AI win — high volume, consistent pattern, measurable output\n- Workflow: reports arrive → AI categorises by defect type, affected line, severity → team reviews flagged exceptions → resolved tickets auto-close\n- Expected impact: 2-3 hours/day freed from sorting, faster escalation of critical defects\n\n**Priority 2: Supplier delay emails**\n- Draft-and-review workflow: AI generates draft based on delay type and supplier history → team personalises and sends\n- Impact: response time from hours to minutes, more consistent tone\n\n**Priority 3: KPI report compilation**\n- Highest setup effort (requires connecting three systems) — do this after quick wins build confidence\n\nStart with defect categorisation this week using Claude — no integration required, just paste batches of reports.',
+            },
+            insight: 'The vague prompt gets a generic list that could apply to any company. The specific prompt — with team size, industry, and actual pain points — gets a prioritised plan with concrete workflows and expected outcomes. AI cannot read your context; you have to provide it. The more operational detail you include, the more actionable the response.',
+          },
+          applyThisWeek: {
+            action: 'Identify your three highest-volume repetitive tasks and test AI on the most pattern-based one by pasting a real batch of work items and asking AI to categorise or draft responses.',
+            promptTemplate: 'I manage operations at [company type/size]. My team spends significant time on: [task 1], [task 2], [task 3]. Which of these is best suited for AI support, and what would the step-by-step workflow look like for the top priority?',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Which task in your team creates the most frustration — not because it\'s hard, but because it\'s high-volume, repetitive, and feels like a poor use of your team\'s expertise? What would change if AI handled that task?',
           quiz: [
             {
               question:
@@ -166,6 +195,35 @@ Lower readiness is typical in: supplier relationship management, complex procure
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'A process step runs 300 times per month, follows clear decision rules, and results are logged in your ERP. How would you score its AI readiness?',
+            options: [
+              'Low — it happens too often to change without major disruption',
+              'Low — AI readiness depends on the complexity of the rules, not the volume',
+              'High — it scores well on volume, pattern consistency, and data availability',
+              'Medium — measurability is missing because we have not defined success metrics yet',
+            ],
+            correct: 2,
+            explanation: 'High volume, consistent rules, and recorded data are three of the four readiness dimensions scored high. Even without formal success metrics defined yet, this process is an excellent AI candidate. You can define metrics (time per transaction, error rate) once you have identified the opportunity — the readiness is already there.',
+          },
+          outputComparison: {
+            label: 'Process readiness assessment: vague hunch vs. structured evaluation',
+            vague: {
+              prompt: 'Which of our processes should we use AI for?',
+              output: 'There are many processes that could benefit from AI. You should look at your most time-consuming tasks and see if AI can help automate them. Common areas include customer service, data entry, and reporting. Consider starting with a pilot project to test the benefits.',
+            },
+            improved: {
+              prompt: 'Help me assess AI readiness for three processes at our distribution centre. Process 1: Goods receipt — 150 transactions/day, follows strict rules (check PO, count items, log discrepancies), all data in WMS. Process 2: Escalation decisions for damaged goods — 10-15/day, requires judgment based on customer relationship and value. Process 3: Monthly carrier performance review — quarterly, high judgment, data spread across 4 systems. Score each on: data availability, pattern consistency, volume, and measurability. Then rank by AI readiness.',
+              output: '**AI Readiness Assessment**\n\n| Process | Data | Pattern | Volume | Measurable | Total | Readiness |\n|---------|------|---------|--------|------------|-------|-----------|\n| Goods receipt | 3 | 3 | 3 | 3 | 12/12 | High |\n| Damaged goods escalation | 2 | 1 | 2 | 2 | 7/12 | Medium |\n| Carrier performance review | 1 | 1 | 1 | 2 | 5/12 | Low |\n\n**Recommendation**: Start with goods receipt — automate discrepancy flagging and logging. The data is already in your WMS; a simple AI layer can pre-classify discrepancy types and flag exceptions before human review. Expected impact: reduce processing time by 50-60%, near-zero missed discrepancies.',
+            },
+            insight: 'The vague prompt gets advice that could apply to any company. The specific prompt — naming your actual processes with real attributes — produces a scored comparison table and a concrete starting point. The framework forces you to think systematically about readiness rather than going with instinct, and AI turns your structured input into a prioritised decision.',
+          },
+          applyThisWeek: {
+            action: 'Pick your three most time-consuming operational processes and score each on the four readiness dimensions (1-3 per dimension). Use AI to help interpret your scores and identify where to start.',
+            promptTemplate: 'Score these processes for AI readiness on four dimensions (1=low, 2=medium, 3=high): data availability, pattern consistency, volume/frequency, and measurability. Process 1: [name, brief description]. Process 2: [name, brief description]. Process 3: [name, brief description]. Then rank by total score and recommend where to start.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'What process in your team would your most experienced operator say "we\'ve always just done it this way" — and what does that tell you about whether it\'s well-defined enough for AI, or whether the rules are still in someone\'s head?',
           quiz: [
             {
               question:
@@ -264,6 +322,35 @@ Start small. Pilot with one team, one process. Measure results before rolling ou
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your team needs to automatically send a Slack alert every time a new quality defect is logged in your ERP, without anyone manually triggering it. Which tool category fits best?',
+            options: [
+              'General-purpose AI assistant — just paste the defect log into Claude each morning',
+              'Specialist AI operations tool — this requires domain-specific quality analysis',
+              'Workflow automation platform — this needs to happen automatically based on a system trigger',
+              'A custom machine learning model built by IT to detect quality events',
+            ],
+            correct: 2,
+            explanation: 'The requirement for automatic triggering — without a human initiating it — is the key signal. Workflow automation platforms like Zapier or Make connect your ERP to Slack and fire the alert the moment a defect is logged. General-purpose AI assistants require a human to start the conversation each time. Specialist AI is overkill for what is essentially a data routing task.',
+          },
+          outputComparison: {
+            label: 'Tool selection: jumping to a product vs. matching tool to task',
+            vague: {
+              prompt: 'What AI tool should I use for operations?',
+              output: 'There are many great AI tools for operations. Some popular options include Microsoft Copilot, ChatGPT, and various ERP add-ons. The best tool depends on your specific needs and budget. I recommend researching a few options and seeing which one feels right for your team.',
+            },
+            improved: {
+              prompt: 'I have three AI tasks for my operations team: (1) drafting responses to routine supplier emails — text-based, human-initiated each time; (2) automatically flagging any purchase order over £50,000 for director approval — needs to happen without anyone remembering to do it; (3) predicting which SKUs will stock out in the next 14 days based on sales velocity and lead times — needs to analyse 2,000 SKUs daily. Which tool category fits each task, and what specific tool would you suggest to evaluate first?',
+              output: '**Task 1: Supplier email drafting**\nCategory: General-purpose AI assistant\nSuggested tool: Claude or ChatGPT — start today, no setup required\nWorkflow: team pastes incoming email → AI drafts response → team reviews and sends\n\n**Task 2: PO approval flagging**\nCategory: Workflow automation platform\nSuggested tool: Zapier or Microsoft Power Automate (if you use M365)\nWorkflow: PO created in ERP → trigger fires → Slack/email alert sent to director automatically\n\n**Task 3: Stockout prediction**\nCategory: Specialist AI operations tool\nSuggested tool: Check your ERP\'s built-in forecasting module first (SAP, Oracle, Dynamics all have this). If not available, evaluate Blue Yonder or Relex.\nNote: This requires data integration — do tasks 1 and 2 first while this is being set up.',
+            },
+            insight: 'The vague prompt produces a name-drop of popular tools with no guidance on fit. The specific prompt — with three distinct task descriptions — produces a clear category match and specific tool recommendations for each, plus implementation sequencing. The matching framework (text-based? automated trigger? domain-specific?) does the work; you just have to describe the task accurately.',
+          },
+          applyThisWeek: {
+            action: 'Take the top AI opportunity from your process mapping exercise and determine which tool category it falls into. Check whether your existing systems (ERP, M365, Google Workspace) already have that capability before evaluating new tools.',
+            promptTemplate: 'I need AI help with this task: [describe the task]. It needs to: [run automatically / be human-initiated]. It involves: [text / structured data / predictions]. My current systems are: [ERP name, M365/Google, etc.]. What tool category fits, and does my existing stack likely have this capability already?',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Think about the last time your team adopted a new technology. What made it stick or fail? How would you approach AI tool introduction differently, knowing what you know now?',
           quiz: [
             {
               question:
@@ -363,6 +450,35 @@ Credibility is everything. A conservative case you can defend is worth more than
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You are building a business case for AI in invoice processing. Your team processes 500 invoices per month, each taking 12 minutes manually. AI would reduce this to 3 minutes for routine invoices (85%) and 15 minutes for exceptions (15%). What is the most important number to include in your case?',
+            options: [
+              'The name of the AI tool you plan to use — leadership wants to know what you are buying',
+              'The number of invoices processed — volume demonstrates the scale of the opportunity',
+              'The total monthly hours saved, converted to cost at your team\'s fully-loaded rate',
+              'The percentage of invoices that will be fully automated with no human involvement',
+            ],
+            correct: 2,
+            explanation: 'Business cases land on financial impact, not volume or technology. Hours saved converted to cost is the clearest, most defensible number: (500 × 85% × 9 min saved) + (500 × 15% × negative 3 min) = net hours saved per month × fully-loaded hourly rate. Leadership can compare this directly to the tool cost and make a decision. Volume and tool names are supporting context, not the headline.',
+          },
+          outputComparison: {
+            label: 'Building an AI business case: wishful thinking vs. structured analysis',
+            vague: {
+              prompt: 'Help me write a business case for using AI in our warehouse operations',
+              output: 'AI can significantly improve warehouse operations by automating repetitive tasks and improving accuracy. Benefits include reduced labour costs, fewer errors, and faster processing times. Implementation costs will vary depending on the solution chosen. Overall, AI presents a strong opportunity for warehouse operations improvement and should deliver a positive return on investment.',
+            },
+            improved: {
+              prompt: 'Help me build a business case for AI-assisted pick list generation in our warehouse. Current state: 6 pickers, each manually reviewing and sequencing 40 orders/day (8 min per order = 320 min/day/picker). Error rate: 3.2% (wrong sequence adds 12 min per error on average). AI-assisted state: AI sequences orders optimally, picker reviews in 2 min. Expected error rate: 0.5%. Fully-loaded cost per picker: £28/hour. Tool cost: £800/month. Build me a 12-month financial case with conservative assumptions.',
+              output: '**AI Pick List Optimisation — 12-Month Business Case**\n\n**Efficiency savings**\nTime saved per picker: 6 min/order × 40 orders = 240 min/day = 4 hrs/day\n6 pickers × 4 hrs × 250 working days × £28/hr = £168,000/year\n\n**Quality savings**\nError reduction: 3.2% → 0.5% = 2.7% fewer errors\n6 pickers × 40 orders × 2.7% × 12 min × £28/hr × 250 days = £13,608/year\n\n**Total gross saving**: £181,608/year\n**Tool cost**: £9,600/year\n**Net saving (Year 1)**: £172,008\n**ROI**: 1,688%\n\n*Conservative assumption: assumes 70% of efficiency gain realised (new routine takes time to embed). Adjusted Year 1: £120,000 net.*',
+            },
+            insight: 'The vague prompt produces language that sounds like a business case but contains no numbers, no assumptions, and no basis for a decision. The specific prompt — with real current-state data, expected outcomes, and cost information — produces a model that leadership can scrutinise, adjust, and approve. The numbers came from you; AI structured them into a financial argument.',
+          },
+          applyThisWeek: {
+            action: 'Choose one AI opportunity and gather four numbers: current time per task, expected time with AI, frequency per month, and your team\'s approximate hourly cost. Use AI to turn these into a simple one-page business case.',
+            promptTemplate: 'Build a 12-month financial business case for AI in [process name]. Current state: [time per task], [frequency per month], [error rate if known], [team size involved]. AI-enabled state: [expected time per task], [expected error rate]. Fully-loaded staff cost: [£/hr]. Tool cost: [£/month or per year]. Use conservative assumptions (70% of projected gain in Year 1). Include: gross saving, tool cost, net saving, ROI.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'If you had to make the case for AI investment to your CFO tomorrow, what three numbers would you need that you do not currently have? What would it take to get them?',
           quiz: [
             {
               question:
@@ -469,6 +585,35 @@ AI can check your SOPs against this checklist automatically — paste any existi
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You want to use AI to document your goods inbound process. What input gives AI the best chance of producing a useful first draft?',
+            options: [
+              'The name of the process — AI can infer the steps from industry knowledge',
+              'A 5-minute voice recording of your warehouse supervisor walking through what they do, transcribed',
+              'The goal of the process — AI will fill in the operational steps',
+              'A list of the systems involved — AI can infer the workflow from the tools used',
+            ],
+            correct: 1,
+            explanation: 'AI cannot observe your operations — it only knows what you tell it. A transcribed walk-through from the person who does the work gives AI the raw material it needs: actual steps, decision points, tools used, and edge cases. The process name and goals tell AI nothing about how your specific team operates. Voice capture followed by AI structuring is the fastest path to an accurate first draft.',
+          },
+          outputComparison: {
+            label: 'SOP creation: template vs. actual process — the difference context makes',
+            vague: {
+              prompt: 'Write an SOP for our goods receiving process',
+              output: 'Standard Operating Procedure: Goods Receiving\n\n1. Receive delivery from supplier\n2. Check delivery against purchase order\n3. Inspect goods for damage\n4. Update inventory system\n5. Store goods in appropriate location\n6. File delivery documentation\n\nThis SOP should be reviewed annually.',
+            },
+            improved: {
+              prompt: 'Write an SOP for our goods receiving process at a 3PL warehouse handling ambient food products. Steps (from supervisor notes): delivery arrives at dock → driver checks in at gatehouse (vehicle reg and PO number logged) → dock allocated by shift manager → unloading team checks outer cases against delivery note → any shorts or damages photographed and noted on driver\'s POD → goods scanned into WMS by lot number and BBE → QC samples 10% of pallets for temp compliance → pallet labels printed and goods put away to designated bay within 2 hours. Owner: Warehouse Supervisor. Exceptions: chilled goods go to separate dock 4, POs over £20k require manager sign-off. Format: numbered steps with owner and decision point notes.',
+              output: '**SOP: Goods Receiving — Ambient Food Products**\nOwner: Warehouse Supervisor | Version: 1.0\n\n| Step | Action | Owner | Decision Points |\n|------|--------|-------|-----------------|\n| 1 | Driver check-in: log vehicle reg and PO number at gatehouse | Security | If PO not found: contact procurement before unloading |\n| 2 | Allocate dock bay | Shift Manager | Chilled goods → Dock 4 only |\n| 3 | Unload and check outer cases against delivery note | Unloading Team | Shorts/damages: photograph and note on driver\'s POD before signing |\n| 4 | Scan goods into WMS by lot number and BBE date | Warehouse Operator | POs over £20k: manager countersignature required |\n| 5 | QC temperature check on 10% of pallets | QC Technician | Temp breach: quarantine pallet, notify QC Manager immediately |\n| 6 | Print pallet labels and put away to designated bay | Warehouse Operator | Must complete within 2 hours of unloading |\n\n**Escalation**: Any unresolved discrepancy → Shift Manager within 30 minutes.',
+            },
+            insight: 'The vague prompt produces a six-step generic template that could apply to any warehouse anywhere. The specific prompt — with actual steps from the supervisor, exception rules, and format requirements — produces a table-format SOP with owners, decision points, and escalation paths. The substance came from the process expert; AI structured and formatted it.',
+          },
+          applyThisWeek: {
+            action: 'Pick one process your team does at least weekly that has no written documentation. Spend 5 minutes describing it out loud as if explaining to a new starter, then paste your notes into AI with the structuring prompt.',
+            promptTemplate: 'Turn these process notes into a formal SOP. Process name: [name]. Owner: [role]. Frequency: [how often]. Steps (in order, from my notes): [paste your notes]. Key decision points: [where things can go wrong or vary]. Tools/systems used: [list]. Exceptions or special cases: [list]. Format: table with Step, Action, Owner, and Decision Point columns. Audience: [new hire / experienced team].',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Which process in your team creates the most confusion when a new starter joins or someone is covering an absent colleague? What would it mean for your team\'s resilience if that process were properly documented?',
           quiz: [
             {
               question: 'Why does AI-assisted SOP creation reduce time so dramatically?',
@@ -560,6 +705,35 @@ This loop runs faster with AI — what used to take a month of analysis can ofte
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You paste three months of order processing cycle time data into AI and ask for patterns. AI identifies that cycle times spike every Tuesday. What should you do next?',
+            options: [
+              'Implement a fix immediately — if AI spotted it, the cause must be obvious',
+              'Ask AI to investigate the cause directly using the same data',
+              'Use AI to generate hypotheses about what might cause Tuesday spikes, then investigate each with your team',
+              'Dismiss the pattern as a statistical anomaly unless it appears for six months',
+            ],
+            correct: 2,
+            explanation: 'AI can spot patterns in data, but it cannot tell you why Tuesday is different without more information. The right next step is to use AI to expand your hypothesis set — what could cause a consistent Tuesday spike? Staffing levels, a specific delivery schedule, a system process that runs on Monday nights, a particular customer order type? Then your team investigates each hypothesis with operational knowledge AI does not have.',
+          },
+          outputComparison: {
+            label: 'Process bottleneck analysis: guesswork vs. structured AI-assisted investigation',
+            vague: {
+              prompt: 'Our order fulfilment is too slow. How do we fix it?',
+              output: 'To improve order fulfilment speed, you should look at your processes and identify bottlenecks. Common solutions include streamlining picking operations, improving inventory accuracy, and better communication between teams. You might also consider investing in automation or better technology to speed up processing.',
+            },
+            improved: {
+              prompt: 'Our order fulfilment cycle time has increased from 4.2 hours average to 6.8 hours over the past 6 weeks. Volume has stayed flat at ~180 orders/day. No new systems were introduced. The increase appears across all order types. Our process: order receipt → pick list generation (5 min) → picking (avg 2.5 hrs) → packing and QC check (45 min) → dispatch documentation (30 min) → carrier collection (variable). The picking step has gone from 2.5 hrs to 4.5 hrs average. What are the most likely causes of a 2-hour increase in picking time, and what data would help me investigate each?',
+              output: '**Most likely causes of 2-hour picking time increase:**\n\n1. **Inventory location changes** — if stock was relocated or the warehouse layout changed, pickers travel further. Check: any racking changes or product moves in the last 6-8 weeks?\n\n2. **New or inexperienced pickers** — a shift in team composition (seasonal workers, new starters) explains slower pick rates. Check: headcount and tenure data for the picking team over the period.\n\n3. **Increased pick density** — same order count but more lines per order means more locations visited. Check: average lines per order 6 weeks ago vs. now.\n\n4. **Pick list quality** — if pick lists are not optimised for travel path, pickers are covering extra distance. Check: has the pick list generation logic changed?\n\n5. **System or equipment issue** — scanner downtime or slow WMS response causes waiting. Check: IT helpdesk tickets from the picking team over this period.\n\n**Quick win**: interview two picking team members today. They will likely know exactly what has changed.',
+            },
+            insight: 'The vague prompt gets generic improvement advice that provides no starting point. The specific prompt — with actual cycle time data, process steps, and the identified bottleneck — gets a ranked hypothesis list with specific data to check for each. AI expanded the investigation framework in seconds; your team validates each hypothesis with operational knowledge.',
+          },
+          applyThisWeek: {
+            action: 'Export one week of data for your most important operational metric (cycle time, error rate, or throughput). Paste it into AI with process context and ask it to identify patterns and generate hypotheses to investigate.',
+            promptTemplate: 'Here is [metric name] data for my [process name] over the past [time period]: [paste data]. Context: our process is [brief description], average volume is [X per day/week], team size is [Y]. What patterns do you see? What might be causing them? What data would you want to investigate each hypothesis? Please rank your hypotheses by likelihood.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'What is the one operational metric that keeps your leadership up at night? Is your team currently investigating the root cause systematically, or responding reactively each time it spikes?',
           quiz: [
             {
               question:
@@ -647,6 +821,35 @@ Describe your typical quality metrics to Claude and ask: "What patterns in this 
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your quality team receives 80 defect reports per day across 12 product lines. What is the highest-value use of AI in this context?',
+            options: [
+              'Automatically closing defect reports that appear minor based on description',
+              'Pre-categorising every report by defect type, affected line, and severity so the team focuses on decision-making',
+              'Replacing the quality inspection process with AI image recognition',
+              'Generating monthly quality reports summarising the defect data',
+            ],
+            correct: 1,
+            explanation: 'Pre-categorisation is the highest-value use because it eliminates the bottleneck without removing human judgment from decisions. Your quality team\'s expertise is in solving problems and preventing recurrence — not in sorting reports. When AI handles the sorting, every quality professional starts their day with a prioritised, categorised inbox rather than an undifferentiated pile. Closing reports automatically (option A) removes the human decision-making that catches AI errors.',
+          },
+          outputComparison: {
+            label: 'Corrective action reports: rushed draft vs. AI-structured completeness',
+            vague: {
+              prompt: 'Write a corrective action report for a quality issue',
+              output: 'Corrective Action Report\n\nIssue: Quality problem identified\nDate: [date]\nAffected product: [product]\nRoot cause: To be investigated\nCorrective action: Review processes and implement improvements\nResponsible person: Quality Manager\nTarget date: [date]\n\nThis report will be updated as the investigation progresses.',
+            },
+            improved: {
+              prompt: 'Write an 8D corrective action report for the following issue: Customer complaint received 15 March. Product: 500g pasta sauce (batch L2403-18). Complaint: foreign body — small piece of blue plastic found in jar. Our investigation: plastic came from a broken scraper blade on Line 3 filling machine. Blade replacement was overdue by 11 days (scheduled maintenance missed during staff shortage). 3 other jars from same batch tested — 2 showed contamination. Affected batch: 1,200 jars, all dispatched to Retailer X. Retailer has been notified, recall initiated for affected SKUs. Corrective action: immediate blade replacement, batch quarantine, and retailer notification done. Preventive action needed: maintenance scheduling system and escalation process.',
+              output: '**8D Corrective Action Report**\nIssue Reference: CAR-2403-18 | Date: 15 March | Product: 500g Pasta Sauce (L2403-18)\n\n**D1 — Team**: Quality Manager (lead), Production Manager, Maintenance Supervisor, Customer Service\n\n**D2 — Problem Description**: Foreign body (blue plastic fragment) identified in 500g pasta sauce. Source confirmed as broken scraper blade on Line 3 filling machine. 3/4 jars from same batch tested positive for contamination.\n\n**D3 — Containment Actions** (completed):\n- Line 3 stopped immediately upon identification\n- Batch L2403-18 (1,200 jars) quarantined and flagged for recall\n- Retailer X notified within 4 hours of confirmation\n- Voluntary recall initiated for affected SKUs\n\n**D4 — Root Cause**: Scraper blade on Line 3 filling machine exceeded replacement interval by 11 days. Scheduled maintenance not completed due to staff shortage. No escalation triggered when maintenance deadline missed.\n\n**D5 — Corrective Actions** (completed):\n- Blade replaced on Line 3; machine inspected and cleared for production\n- All Line 3 blades inspected; one additional blade replaced preventively\n\n**D6 — Preventive Actions** (due 29 March):\n- Maintenance scheduling system to send automated alerts at T-3 days and T+0 for overdue items\n- Escalation path defined: overdue maintenance items escalate to Production Manager within 24 hours\n- Monthly maintenance compliance review added to QMR agenda\n\n**D7 — Effectiveness Verification**: Maintenance compliance rate reviewed at 30 and 90 days post-implementation.\n\n**D8 — Team Recognition**: Quality and maintenance teams for rapid containment response.',
+            },
+            insight: 'The vague prompt produces a placeholder template with no actual content — something anyone could write in two minutes. The specific prompt — with the actual incident details, investigation findings, and actions taken — produces a complete, audit-ready 8D report with all sections properly populated. The investigation work was yours; AI structured it into the required format and ensured no section was missed.',
+          },
+          applyThisWeek: {
+            action: 'Take the last corrective action report your team produced and paste it into AI. Ask it to identify what is missing, suggest a more complete root cause analysis, and rewrite the preventive action section with more specificity.',
+            promptTemplate: 'Review this corrective action report and identify: (1) any sections that are incomplete or lack specificity, (2) whether the root cause analysis goes deep enough (5 Whys test), (3) whether the preventive actions would actually prevent recurrence. Then rewrite the preventive actions section with more specific, measurable steps. Report: [paste report].',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Think about a quality issue your team experienced in the past year that recurred despite a corrective action. What does that tell you about the depth of your root cause analysis — and how might AI have helped you dig deeper?',
           quiz: [
             {
               question: 'What is the primary benefit of AI categorisation of defect reports?',
@@ -737,6 +940,35 @@ AI assistants can serve as on-demand process guides for your team. Train them to
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your most experienced shift supervisor is leaving in 8 weeks. She is the only person who knows how to handle supplier escalations and adjust production schedules during demand surges. What is the most effective AI-assisted knowledge capture approach?',
+            options: [
+              'Ask her to write a comprehensive handover document in her final two weeks',
+              'Have IT record all her system actions over the next 8 weeks for future analysis',
+              'Start structured conversation-based knowledge capture this week, with AI turning transcripts into documents',
+              'Trust that the remaining team has absorbed enough through observation over the years',
+            ],
+            correct: 2,
+            explanation: 'Eight weeks is enough time to capture most institutional knowledge if you start immediately. Waiting until the final two weeks means rushed, incomplete capture under emotional pressure. Conversation-based capture is faster and more natural than asking her to write — she describes what she does, AI structures it, she edits. Start with the most critical and unique knowledge first: the supplier escalation logic and the surge scheduling decisions no one else currently makes.',
+          },
+          outputComparison: {
+            label: 'Knowledge capture: asking someone to write vs. structured interview with AI',
+            vague: {
+              prompt: 'Create training material for our production scheduling process',
+              output: 'Training Material: Production Scheduling\n\nIntroduction: Production scheduling is an important part of operations management. It involves planning and organising production activities to meet customer demand efficiently.\n\nKey concepts:\n- Capacity planning\n- Demand forecasting\n- Resource allocation\n- Schedule optimisation\n\nBest practices: Always consider capacity constraints when scheduling. Communicate changes to relevant stakeholders promptly.',
+            },
+            improved: {
+              prompt: 'Turn these interview notes into a structured knowledge document for production scheduling at our bakery. From interview with Sarah (15 years experience): "When we get a surge order — anything over 150% of normal daily volume — I first check the flour and packaging stock, because those are always the constraints. If packaging is short I call [Supplier A] directly, not through the portal, because they can get us emergency stock within 4 hours if you speak to Dave. Then I rebuild the schedule starting with the highest-margin products and work down. I always keep Line 3 free until 2pm for rush jobs. The thing most people get wrong is they try to run everything at once — you need to sequence by line changeover time or you lose 45 minutes per switch." Format: key principles, step-by-step decision process, common mistakes, and contact/system references.',
+              output: '**Production Scheduling — Surge Order Handling**\nSource: Sarah [15 years experience] | Captured: [date]\n\n**When this applies**: Orders exceeding 150% of normal daily volume\n\n**Key Principles**\n1. Packaging and flour are always the binding constraints — check these first\n2. Sequence by highest margin, not arrival order\n3. Reserve Line 3 capacity until 14:00 for rush jobs — do not schedule it out in the morning\n4. Changeover sequencing matters: poorly sequenced line switches cost 45 min each\n\n**Decision Process**\n1. Confirm surge order volume and delivery deadline\n2. Check flour stock (system) and packaging stock (system + call warehouse)\n3. If packaging short: call Dave at [Supplier A] directly — 4-hour emergency lead time available (do NOT use portal for emergencies)\n4. Rebuild schedule: rank products by margin (report: [report name]), schedule highest-margin first\n5. Keep Line 3 unscheduled until 14:00\n6. Sequence each line by changeover similarity to minimise switch time\n7. Communicate revised schedule to production leads by [process]\n\n**Common Mistakes**\n- Running all lines simultaneously without sequencing → excessive changeover loss\n- Using the supplier portal for emergency packaging → 2-day lead time, not 4-hour\n- Scheduling Line 3 before 14:00 on surge days → no capacity for inevitable rush jobs\n\n**Key Contacts**: Dave at [Supplier A]: [phone number]',
+            },
+            insight: 'The vague prompt produces generic training content about scheduling concepts — nothing specific to your bakery, your suppliers, or how your team actually makes decisions. The interview-based prompt captures the actual decision logic, the supplier workaround, the Line 3 rule, and the common mistakes — because it came from someone who lived it. AI structured and formatted what the expert knew; you would never get this from asking her to write it herself.',
+          },
+          applyThisWeek: {
+            action: 'Identify one piece of knowledge that only one or two people on your team have. Spend 10 minutes in conversation with them, then paste your notes into AI to create a structured knowledge document and two training scenarios.',
+            promptTemplate: 'Turn these interview notes into a structured knowledge document. Topic: [process or decision area]. Source: [role, years of experience]. Notes from conversation: [paste notes]. Format the output as: Key Principles, Step-by-Step Decision Process, Common Mistakes, and any important contacts or system references. Then generate two realistic training scenarios based on this document, each with a correct response and two common mistakes.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'If your three most experienced people left next month, which operational decisions would your team struggle most to make correctly? What would it cost your operation — in errors, delays, or customer impact — to relearn that knowledge from scratch?',
           quiz: [
             {
               question:
@@ -839,6 +1071,35 @@ Before any supplier negotiation, feed AI your objectives, the supplier's likely 
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You are evaluating three new packaging suppliers and have received their RFI responses. Each response is 12-15 pages. What is the best use of AI in this step?',
+            options: [
+              'Ask AI to select the winning supplier based on the responses',
+              'Ask AI to score each supplier on your criteria and create a comparison table for human review',
+              'Use AI to write follow-up questions, since reviewing the responses is straightforward',
+              'Skip the comparison and rely on reference calls — AI cannot reliably assess supplier quality',
+            ],
+            correct: 1,
+            explanation: 'Creating a structured comparison table from lengthy RFI responses is exactly where AI compresses time most effectively. A procurement professional reading 45 pages of supplier responses to build a comparison takes half a day. AI does this in minutes. But the decision remains human — the table is an input to judgment, not a replacement for it. AI selecting the winner (option A) removes the human judgment that accounts for relationship, strategic fit, and factors not captured in RFI responses.',
+          },
+          outputComparison: {
+            label: 'Supplier negotiation prep: unstructured vs. AI-structured',
+            vague: {
+              prompt: 'Help me prepare for a supplier negotiation',
+              output: 'To prepare for a supplier negotiation, you should know what you want to achieve and understand the supplier\'s perspective. Research the market to understand pricing benchmarks. Prepare your key points and anticipate their objections. Be clear on your must-haves vs. nice-to-haves and know when you are willing to walk away.',
+            },
+            improved: {
+              prompt: 'Help me prepare for a contract renewal negotiation with our primary corrugate supplier. Context: current contract is £380k/year, 3-year term expiring in 6 weeks. Their last increase was 15% citing input cost rises. Market context: pulp prices have fallen 12% in the past 6 months. We buy 100% of our corrugate from them (single source). Our BATNA: we have had initial conversations with Supplier B — they quoted 8% below current price but have 10-week lead time vs. 3 weeks. Our objectives: hold price or reduce by 5%, extend to 2-year term, add a pricing mechanism linked to pulp index. Help me think through: my opening position, their likely counter, where I have leverage, and what I should concede vs. hold firm.',
+              output: '**Negotiation Preparation: Corrugate Contract Renewal**\n\n**Your position of strength**\n- Pulp prices down 12%: ask them to explain why your price should not fall\n- Supplier B quote: 8% below current — use this carefully (reveal existence, not specifics, to create urgency)\n- You are a £380k/year customer — meaningful relationship to protect\n\n**Your vulnerability**\n- 100% single source: switching to Supplier B carries real operational risk (10-week lead time gap)\n- 6-week timeline: rushing a switch risks supply disruption\n\n**Opening position**: Request 8% reduction (citing pulp index decline) + 2-year term + quarterly pulp index pricing review clause\n\n**Their likely counter**: 3-5% reduction, 3-year term, no index clause (they want long-term price certainty)\n\n**Where to land**: 5% reduction, 2-year term, semi-annual review mechanism. This is a good outcome.\n\n**Concede**: term length from 2 to 2.5 years if it secures the price reduction\n**Hold firm**: some form of price review mechanism — this protects you from another 15% surprise\n\n**Key question to ask them**: "Can you share your input cost breakdown so we can understand how pulp prices affect your pricing model?" — puts them on the back foot to justify any resistance.',
+            },
+            insight: 'The vague prompt gives negotiation principles that apply to any negotiation anywhere. The specific prompt — with actual contract value, market context, your BATNA, and your objectives — produces a tailored strategy with opening positions, concession logic, and specific questions to ask in the room. The negotiation intelligence came from your context; AI structured it into a practical preparation framework.',
+          },
+          applyThisWeek: {
+            action: 'For your next supplier conversation or negotiation, use AI to prepare your BATNA, opening position, likely counter-arguments, and one killer question to ask. Spend 20 minutes giving AI context; it will give you 45 minutes of structured preparation output.',
+            promptTemplate: 'Help me prepare for a supplier negotiation. Supplier: [name/category]. Contract value: [£ amount]. Current terms: [key terms]. My objectives: [list]. Market context: [any relevant pricing or supply trends]. My BATNA: [best alternative if this negotiation fails]. Key risks in switching: [list]. Give me: opening position, their likely counter, where I have leverage, what to concede vs. hold firm, and one key question to ask in the meeting.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Which supplier relationship in your portfolio carries the most risk — whether from single-source dependency, geographic concentration, or financial fragility? What would you need to know to feel confident about that risk level?',
           quiz: [
             {
               question:
@@ -931,6 +1192,35 @@ Any automated financial workflow requires clear governance: who approves the aut
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your team processes 600 invoices per month manually. Three-way matching catches discrepancies that require investigation. What is the right role for AI automation in this process?',
+            options: [
+              'AI should automatically approve all matched invoices and pay them without human review',
+              'AI should handle the matching and flag discrepancies, with humans reviewing only the exceptions',
+              'Humans should continue to review all invoices — AI is not reliable enough for financial processes',
+              'AI should generate the invoices directly from purchase orders, eliminating the matching step',
+            ],
+            correct: 1,
+            explanation: 'The right model is AI handling the routine matching work and surfacing only the exceptions for human review. This transforms a role from processing every invoice to managing the 5-10% that do not match. Full auto-approval without human review (option A) removes the control that protects against payment errors and fraud. Full human review (option C) eliminates the efficiency gain entirely. The goal is exception management, not elimination of oversight.',
+          },
+          outputComparison: {
+            label: 'Supplier query response: starting from scratch vs. AI-drafted template',
+            vague: {
+              prompt: 'Write a response to a supplier asking about their invoice payment status',
+              output: 'Dear Supplier,\n\nThank you for your email regarding your invoice. We are looking into the status of your payment and will get back to you as soon as possible.\n\nBest regards,\n[Name]',
+            },
+            improved: {
+              prompt: 'Draft a professional response to a supplier (Precision Parts Ltd) asking why Invoice #PP-2247 (£14,800, submitted 28 Feb) has not been paid. Our standard payment terms are 45 days, so it is not yet due (due date is 14 April). Our records show the invoice was received and matched to PO-8831 on 1 March with no discrepancies. Tone: professional and reassuring. Include: confirmation that invoice is in system, payment due date, what they should do if they need earlier payment.',
+              output: 'Dear [Name],\n\nThank you for getting in touch regarding Invoice #PP-2247.\n\nI can confirm that your invoice for £14,800 (submitted 28 February) has been received and successfully matched to Purchase Order PO-8831 with no discrepancies. It is progressing through our standard payment process.\n\nUnder our agreed 45-day payment terms, the payment due date for this invoice is 14 April. You should expect to receive funds on or before that date via [payment method].\n\nIf you have an urgent cash flow requirement and would like to discuss early payment options, please let me know and I will connect you with the relevant contact in our finance team.\n\nPlease do not hesitate to reach out if you have any further questions.\n\nBest regards,\n[Name]\n[Title] | [Company]',
+            },
+            insight: 'The vague prompt produces a holding response that gives the supplier no useful information — they still do not know when they will be paid. The specific prompt — with the invoice number, matched status, and due date — produces a response that answers the actual question, reduces supplier anxiety, and proactively addresses the early payment option. The same information was available in both cases; the difference is whether you gave it to AI or not.',
+          },
+          applyThisWeek: {
+            action: 'Map your current invoice processing steps and calculate the total monthly hours spent. Then use AI to design a semi-automated workflow where AI handles the routine steps and humans manage exceptions.',
+            promptTemplate: 'Help me design a semi-automated invoice processing workflow. Current process: [list your steps]. Volume: [X invoices per month]. Current time per invoice: [Y minutes]. My systems: [ERP name, any automation tools]. Exception rate: [approximately X% of invoices have discrepancies]. Design a workflow that automates the routine steps and identifies where human review is required. Include: what AI/automation handles, what triggers human review, and what governance controls should be in place.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'What is the actual cost to your organisation of processing each invoice manually — including staff time, error correction, and supplier relationship friction from slow responses? Have you ever calculated this number?',
           quiz: [
             {
               question: 'What is three-way matching in a procure-to-pay context?',
@@ -1028,6 +1318,35 @@ Describe your product, demand variability, and lead times to Claude and ask it t
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your AI demand forecast is consistently 18% below actual demand for one product category. What is the right response?',
+            options: [
+              'Replace the AI forecast with manual planning for that category immediately',
+              'Add 18% to every AI forecast for that category as a permanent fix',
+              'Investigate what systematic factor the model is missing, then fix the underlying cause',
+              'Increase safety stock by 18% to compensate for the bias and continue using the forecast',
+            ],
+            correct: 2,
+            explanation: 'A consistent bias signals a systematic gap in the model, not random error. Simply adding a percentage treats the symptom — and will be wrong whenever the underlying driver changes. The right response is to investigate: is there a promotional pattern not in the model? A new distribution channel? A seasonal factor the model does not see? Fixing the root cause produces a model that is accurate on its own terms, not one that requires manual correction indefinitely.',
+          },
+          outputComparison: {
+            label: 'Safety stock calculation: rule of thumb vs. AI-structured analysis',
+            vague: {
+              prompt: 'How much safety stock should I hold for my top-selling product?',
+              output: 'Safety stock depends on several factors including demand variability and lead times. A common rule of thumb is to hold 2-4 weeks of safety stock for high-demand products. You should also consider your service level targets and the cost of holding excess inventory. Review your safety stock levels quarterly.',
+            },
+            improved: {
+              prompt: 'Help me calculate optimal safety stock for our top-selling SKU. Data: average daily demand = 450 units, demand standard deviation = 85 units/day (from last 90 days). Average supplier lead time = 8 days, lead time standard deviation = 2 days. Target service level: 97.5%. Current safety stock: 1,200 units (set 18 months ago). Current reorder point: 4,800 units. Show me the calculation and tell me whether our current settings are over- or understocked for this service level.',
+              output: '**Safety Stock Calculation**\n\nFormula: Safety Stock = Z × √(LT × σ_d² + d² × σ_LT²)\n\nWhere:\n- Z (97.5% service level) = 1.96\n- LT (avg lead time) = 8 days\n- σ_d (demand std dev) = 85 units/day\n- d (avg daily demand) = 450 units\n- σ_LT (lead time std dev) = 2 days\n\nCalculation:\n√(8 × 85² + 450² × 2²) = √(57,800 + 810,000) = √867,800 = 931.6\nSafety Stock = 1.96 × 931.6 = **1,826 units**\n\n**Reorder Point** = (450 × 8) + 1,826 = 3,600 + 1,826 = **5,426 units**\n\n**Assessment**: Your current safety stock of 1,200 units is **understocked** by 626 units for your 97.5% service level target. Your reorder point of 4,800 should be raised to 5,426. At current demand, the gap creates approximately 1.4 days of exposure during each replenishment cycle.',
+            },
+            insight: 'The vague prompt gives a rule of thumb that has no connection to your actual demand variability or lead time data. The specific prompt — with real standard deviations and a defined service level — produces the mathematical calculation showing your current safety stock is insufficient by 626 units. That is an actionable finding that could prevent stockouts; the rule of thumb would not have revealed it.',
+          },
+          applyThisWeek: {
+            action: 'Choose your highest-risk SKU (one that has had both stockouts and excess inventory in the past year). Gather the last 90 days of demand data, your supplier lead time data, and use AI to calculate the optimal safety stock and reorder point.',
+            promptTemplate: 'Calculate optimal safety stock and reorder point for this SKU. Average daily demand: [X units]. Demand standard deviation (last 90 days): [Y units/day]. Average supplier lead time: [Z days]. Lead time standard deviation: [N days]. Target service level: [X%]. Current safety stock: [X units]. Current reorder point: [Y units]. Show the calculation, state whether current settings are over or understocked, and explain what would happen to service level if I left settings unchanged.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'For which of your SKUs does the cost of a stockout significantly exceed the cost of holding excess inventory — and are your safety stock levels actually calibrated to reflect that asymmetry?',
           quiz: [
             {
               question:
@@ -1122,6 +1441,35 @@ When supplier issues escalate — delivery failure, quality crisis, contract dis
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your procurement team responds to the same five types of supplier emails every day. What is the best AI-assisted workflow for managing these?',
+            options: [
+              'Set up AI to auto-send responses without team review — this is the only way to save significant time',
+              'Ask AI to draft responses to each category, which the team reviews and sends — reducing response time from hours to minutes',
+              'Have the team continue writing all responses manually — supplier communication is too relationship-sensitive for AI',
+              'Use AI to categorise incoming emails only, then route them to the appropriate team member for manual response',
+            ],
+            correct: 1,
+            explanation: 'Draft-and-review is the right balance: AI generates a high-quality first draft in seconds, the team reviews for accuracy and personalisation, and sends. This typically reduces response time from 20-30 minutes to 5 minutes per email — without removing human judgment about tone, relationship context, or information accuracy. Full auto-send (option A) removes oversight of content that represents your company; full manual writing (option C) eliminates the efficiency gain.',
+          },
+          outputComparison: {
+            label: 'Supplier delivery failure escalation: unstructured vs. AI-drafted formal letter',
+            vague: {
+              prompt: 'Write an email to a supplier who has missed a delivery',
+              output: 'Dear Supplier,\n\nWe are disappointed to note that your recent delivery did not arrive as scheduled. This has caused disruption to our operations. Please provide an explanation for the delay and confirm when we can expect delivery.\n\nWe expect better performance going forward.\n\nRegards,\n[Name]',
+            },
+            improved: {
+              prompt: 'Draft a formal escalation letter to our corrugated packaging supplier, PackRight Ltd, regarding a critical delivery failure. Facts: PO #CR-4421 for 50,000 units of corrugate (our entire week\'s production requirement) was due to arrive Monday 18 March. It has not arrived — today is Wednesday 20 March. Their account manager has not responded to three calls and two emails since Monday. The delay is causing our production line to stop from tomorrow morning. We need the delivery or a confirmed alternative by end of day today or we will source emergency stock from an alternative supplier at their cost. Tone: firm, professional, and factual. Include: specific impact, required action, and consequence if not resolved.',
+              output: 'Dear [Director Name],\n\nI am writing to formally escalate a critical delivery failure by PackRight Ltd that is directly threatening our production continuity.\n\n**The Issue**\nPurchase Order #CR-4421, covering 50,000 units of corrugate packaging required for our full production schedule this week, was due for delivery on Monday 18 March. As of today, Wednesday 20 March, the order has not been received. Despite three telephone calls and two emails to your account management team since Monday morning, we have received no response or explanation.\n\n**The Impact**\nWithout delivery by close of business today, our production line will be forced to stop tomorrow morning, 21 March. The cost of this stoppage, including idle labour, lost throughput, and customer delay penalties, is estimated at £12,000 per day.\n\n**Required Action**\nWe require one of the following by 17:00 today:\n1. Confirmed delivery of PO #CR-4421 by 08:00 Thursday 21 March, or\n2. A credible written plan for delivery, including date, time, and quantity confirmed\n\n**Consequence**\nIf we do not receive a satisfactory response by 17:00 today, we will source emergency stock from an alternative supplier. Any additional cost incurred will be invoiced to PackRight Ltd and deducted from future payments.\n\nI am available by phone at [number] and expect to hear from a senior representative within two hours.\n\nYours sincerely,\n[Name] | [Title]',
+            },
+            insight: 'The vague prompt produces a disappointment email that conveys frustration but creates no urgency, states no impact, and specifies no consequence. The specific prompt — with the PO number, exact delay duration, operational impact, and a clear deadline — produces a letter that is firm, factual, and actionable. Suppliers respond to specifics and consequences, not general expressions of disappointment. AI formatted the professionalism; you provided the facts.',
+          },
+          applyThisWeek: {
+            action: 'List your five most common supplier email types. Use AI to create a response template for each one. Have your procurement manager review each template, then save them as a shared resource for the team.',
+            promptTemplate: 'Draft a professional supplier email template for the following scenario: [describe the situation — e.g., late delivery, invoice dispute, forecast update request, quality hold notification]. Supplier relationship: [strategic partner / standard vendor / new supplier]. Tone: [professional and firm / collaborative / routine and efficient]. Include placeholders for: [list what needs to be personalised — e.g., PO number, dates, amounts]. The email should: [state the specific goal — confirm, escalate, request, inform].',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Which supplier relationship in your portfolio suffers most from inconsistent or slow communication — and what is the commercial cost of that friction in terms of relationship quality, lead time reliability, or pricing?',
           quiz: [
             {
               question:
@@ -1222,6 +1570,35 @@ When your dashboard shows an anomaly, AI can help you interpret it rapidly. Past
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your operations director wants a new dashboard. She says: "I want to see everything — all our KPIs in one place." What is the most important clarifying question to ask before building anything?',
+            options: [
+              'What BI tool does she want to use?',
+              'How many KPIs does she want to display on a single screen?',
+              'What decisions does she need to make daily, weekly, and monthly — and what information does she currently lack to make them well?',
+              'How often does she check the current dashboard?',
+            ],
+            correct: 2,
+            explanation: '"See everything" is the instruction that produces dashboards no one uses. The right starting question is about decisions, not data. Once you know the decisions — and specifically what information is currently missing for those decisions — you can design a dashboard that answers real questions rather than displaying available metrics. A dashboard linked to three specific daily decisions will be used; a comprehensive KPI display typically will not.',
+          },
+          outputComparison: {
+            label: 'Dashboard brief: data-led vs. decision-led',
+            vague: {
+              prompt: 'What metrics should be on an operations dashboard?',
+              output: 'A good operations dashboard should include: throughput and production volume, inventory levels, order fulfilment rate, supplier on-time delivery, quality defect rate, labour productivity, cost per unit, and machine utilisation. You might also consider adding trend lines and comparison to target for each metric.',
+            },
+            improved: {
+              prompt: 'I am designing a daily operations dashboard for the shift manager of a 3PL warehouse. Their three daily decisions are: (1) where to allocate picking staff at shift start — needs to know: current queue depth by zone, orders due for dispatch in the next 4 hours, available picker headcount; (2) whether to escalate any shipments to expedite carrier — needs: orders at risk of missing SLA, carrier collection times; (3) whether to call in overtime — needs: remaining order volume vs. current completion rate. Design a dashboard layout that directly supports these three decisions. Include: what metrics to show, what visualisation type, what cadence of update, and what threshold should trigger an alert.',
+              output: '**Shift Manager Daily Dashboard — Decision-Linked Design**\n\n**Decision 1: Staff allocation (visible at shift start)**\n- Zone queue depth: bar chart by zone, updated every 15 min\n- Orders due for dispatch in next 4 hours: count + list (sortable by SLA deadline)\n- Available headcount by zone: live count from scheduling system\n- Alert trigger: any zone queue >40% above capacity at 07:30\n\n**Decision 2: Shipment escalation (visible throughout shift)**\n- Orders at SLA risk: table — order ID, customer, SLA deadline, current status\n- Carrier collection times today: static list updated each morning\n- Alert trigger: any order within 90 minutes of SLA with status "picking not started"\n\n**Decision 3: Overtime call (visible from 14:00)**\n- Remaining orders vs. completion rate: gauge — % of today\'s volume completed vs. time elapsed\n- Projected completion time at current rate: calculated field\n- Alert trigger: projected completion time >17:30 flags at 14:00 to allow overtime decision\n\n**Layout**: two columns. Left: staff allocation (top), SLA risk table (bottom). Right: overtime gauge + projection.',
+            },
+            insight: 'The vague prompt produces a standard list of operational KPIs that could apply to any warehouse. The specific prompt — with the shift manager\'s three actual decisions and the information needed for each — produces a dashboard design with specific visualisations, update cadences, and alert thresholds. The difference is starting with decisions, not data. AI structured the design logic; the decision context came from you.',
+          },
+          applyThisWeek: {
+            action: 'Write down the three operational decisions you make most often. For each, identify what information you currently lack or have to hunt for. Use this as the brief for your AI-assisted dashboard design.',
+            promptTemplate: 'Design an operational dashboard for [role/team] that directly supports these decisions: Decision 1: [describe decision] — currently missing: [what data you need]. Decision 2: [describe decision] — currently missing: [what data you need]. Decision 3: [describe decision] — currently missing: [what data you need]. For each decision, suggest: the metric to display, the best visualisation type, the update frequency needed, and what threshold should trigger an alert.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'What operational decision do you currently make by gut instinct or informal conversation that would be better — and faster — if you had the right data in front of you every morning?',
           quiz: [
             {
               question: 'What is the most common reason operational dashboards fail to drive decisions?',
@@ -1311,6 +1688,35 @@ Automated reports are only valuable if they are accurate. Build in validation ch
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your team produces a weekly operations report that takes 4 hours to compile. The process involves pulling data from three systems, calculating variance to target, and writing a narrative commentary. Which step should you automate first?',
+            options: [
+              'The narrative commentary — AI writes better than most analysts',
+              'The variance calculations — these are the most error-prone',
+              'The data pull from three systems — this is consistently the most time-consuming and entirely rule-based',
+              'The formatting and distribution — this is the most visible step to leadership',
+            ],
+            correct: 2,
+            explanation: 'Automating the data pull first is the right sequencing for two reasons: it is entirely rule-based (connect to system, extract fields, combine), so automation is reliable from day one; and it unlocks all the subsequent steps — you cannot write or calculate until you have the data. Narrative generation (option A) is more sophisticated and depends on having clean, compiled data first. Fix the data pipeline before the commentary.',
+          },
+          outputComparison: {
+            label: 'Weekly operations report narrative: raw data dump vs. AI-generated commentary',
+            vague: {
+              prompt: 'Write a commentary for our weekly operations report',
+              output: 'This week\'s operations performance has been reviewed. Some metrics were above target while others were below. The team is working to address any issues identified. We will continue to monitor performance and take action where necessary.',
+            },
+            improved: {
+              prompt: 'Write a weekly operations report narrative commentary for distribution to the leadership team. Data for week ending 21 March: Throughput: 4,820 units (target: 4,600 — 4.8% above). On-time dispatch: 94.2% (target: 96% — 1.8pp below). Defect rate: 1.1% (target: <1.5% — within target). Supplier OTD: 88% (target: 92% — 4pp below, driven by Supplier B who had 3 late deliveries). Overtime: 142 hours (target: 80 hours — 78% above, linked to covering 4 absences). Next week: Bank holiday Monday — reduced volume planned at 3,200 units. Tone: factual, direct, under 200 words. Lead with the key story, not a metric-by-metric walkthrough.',
+              output: 'Week 21 March — Operations Summary\n\nThroughput outperformed target by 4.8%, driven by strong Line 2 productivity following Tuesday\'s equipment service. On-time dispatch fell short at 94.2% (target: 96%), with 60% of late shipments attributable to Supplier B, who recorded three late deliveries this week — a formal performance review has been scheduled.\n\nOvertime ran at 142 hours against an 80-hour budget, entirely driven by four unplanned absences. The operations team covered the volume without customer impact, but the absence rate warrants monitoring.\n\nDefect rate held within target at 1.1%.\n\nNext week: Bank holiday Monday reduces planned volume to 3,200 units. Full staffing expected from Tuesday. Supplier B performance remains the priority risk — escalation in progress.\n\nActions: (1) Supplier B performance review — [Name], by 28 March. (2) Absence root cause review — [Name], by 25 March.',
+            },
+            insight: 'The vague prompt produces a placeholder that communicates nothing. The specific prompt — with actual metrics, variances, explanations, and next week\'s context — produces a concise, story-driven narrative that leadership can act on. The insight connects performance to cause (Supplier B, absences), identifies the priority risk, and assigns actions. The data was yours; AI wrote it into a clear narrative in the right format and word count.',
+          },
+          applyThisWeek: {
+            action: 'Take your most time-consuming regular report and map every step. Identify which steps can be automated (data pulls), which can be AI-drafted (narrative commentary), and which require human judgment (strategic context, sensitive information). Then test the AI-drafted commentary with one real dataset.',
+            promptTemplate: 'Write a [weekly/monthly] operations report commentary for [audience]. Reporting period: [dates]. Key metrics and results: [paste your data table]. Targets for each metric: [list]. Key explanations for any misses or outperformance: [list]. Actions in progress: [list]. Next period context: [any known factors]. Tone: [direct and factual / balanced / confident]. Word limit: [X words]. Lead with the most important story, not a metric-by-metric list.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'How much time does your team spend this week producing reports versus acting on what the reports say? If you halved the reporting time, what higher-value work would your team actually do with the freed hours?',
           quiz: [
             {
               question:
@@ -1406,6 +1812,35 @@ For recurring judgment decisions, AI can help you build a decision framework: th
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You need to decide whether to move production of a key product from your internal factory to a contract manufacturer. What type of decision is this, and how should AI be involved?',
+            options: [
+              'Routine decision — AI should automate this based on cost comparison rules',
+              'Analytical decision — AI should structure the analysis and model scenarios, but the human makes the final call',
+              'Judgment decision — AI should not be involved; this is purely a strategic matter',
+              'Analytical decision — AI should make the recommendation and you should follow it unless you strongly disagree',
+            ],
+            correct: 1,
+            explanation: 'This is an analytical decision: it requires data (cost comparison, capacity, quality risk, lead times) and scenario modelling (what if demand surges? what if the CM has quality issues?). AI is excellent at structuring this analysis — generating the framework, identifying variables you might miss, modelling scenarios, and running a pre-mortem. But the final decision involves relationship context, strategic risk, and judgment about future uncertainty that AI cannot weigh. The human decides; AI sharpens the analysis.',
+          },
+          outputComparison: {
+            label: 'Capacity planning decision: instinct vs. AI-structured analysis',
+            vague: {
+              prompt: 'Should I add a second shift to meet increased demand?',
+              output: 'Adding a second shift can help meet increased demand and improve capacity utilisation. However, you need to consider the additional costs, including staffing, supervision, and any premium pay requirements. You should also assess whether the demand increase is likely to be sustained before making this investment. Compare the revenue opportunity against the cost of the second shift to make your decision.',
+            },
+            improved: {
+              prompt: 'Help me decide whether to add a second shift at our packaging facility. Context: current single shift runs 07:00-19:00 (12 hrs), produces 1,800 units/day at 94% utilisation. New contract would require 2,400 units/day starting in 8 weeks — 33% volume increase. Options: (1) add a second shift (19:00-07:00) — estimated cost: £28,000/month additional (supervisor + 6 operators + shift premium). (2) Outsource excess volume to contract packer — cost: £0.42/unit vs. our internal cost of £0.31/unit; minimum 6-month commitment. (3) Increase current shift output — our process engineer estimates max 5% efficiency gain possible. The new contract is worth £180,000/month for minimum 18 months. Help me think through this decision systematically, including what I might be missing.',
+              output: '**Capacity Decision Analysis**\n\n**Option 3 ruled out first**: 5% efficiency gain = 90 units/day — takes output to 1,890, still 510 units/day short. Does not solve the problem.\n\n**Option 1 vs. Option 2 comparison**\n| Factor | Second Shift | Contract Packer |\n|--------|-------------|------------------|\n| Cost for 600 units/day shortfall | £28,000/mo (fixed) | ~£7,560/mo (600×£0.42×30 days) |\n| Flexibility | Hard to unwind | 6-month commitment only |\n| Quality risk | Lower (your process) | Higher (new partner) |\n| Speed to implement | 4-6 weeks | 2-4 weeks |\n| Margin on contract | £180k - £28k = £152k/mo | £180k - £7.6k = £172k/mo |\n\n**Initial read**: Contract packer is lower cost and faster to implement. But...\n\n**What you might be missing**:\n1. Is the 18-month contract likely to extend? If yes, a second shift builds long-term capability; the CP option leaves you dependent.\n2. What is your quality risk exposure with the CP? One contamination event on their site is your product recall.\n3. Do you have a second shift supervisor candidate? Hiring quality supervisors in 8 weeks is a real constraint.\n4. What happens to the second shift team if the contract ends at 18 months?\n\n**Pre-mortem**: "We chose the contract packer and it failed because..." — quality issue at CP facility, 6-month minimum commits you to underutilised cost if volume drops.\n\n**Suggested next step**: Get one CP reference call to assess quality capability before deciding.',
+            },
+            insight: 'The vague prompt provides generic decision-making advice that applies to any capacity decision. The specific prompt — with actual costs, options, volumes, and the contract value — produces a comparative analysis, identifies a hidden third option weakness, surfaces four risks you might not have considered, and runs a pre-mortem. AI did not make the decision; it made the analysis rigorous and fast.',
+          },
+          applyThisWeek: {
+            action: 'Take a real operational decision you are currently wrestling with. Write out the options, the relevant costs, your key constraints, and what you are uncertain about. Feed this to AI using the structured decision prompt, then run a pre-mortem on your preferred option.',
+            promptTemplate: 'Help me make a structured decision about [topic]. The options I am considering: Option 1: [describe]. Option 2: [describe]. Option 3: [describe]. Key factors to weigh: [list — cost, speed, risk, quality, flexibility, etc.]. Constraints: [list]. What I am most uncertain about: [list]. Please: (1) compare the options against my key factors, (2) identify what I might be missing, (3) run a pre-mortem on my preferred option — assume it fails in 12 months. What went wrong?',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Think about a significant operational decision you made in the past year that did not go as planned. What information or analysis, if you had it at the time, would have changed your decision — or at least your confidence in it?',
           quiz: [
             {
               question:
@@ -1497,6 +1932,35 @@ Use AI itself to help you communicate: describe the results to Claude and ask it
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You have been using AI to draft supplier communications for 3 months and want to report the results to your operations director. What measurement approach is most credible?',
+            options: [
+              'Share positive team feedback about how much easier communication is now',
+              'Report the number of emails drafted with AI assistance as a measure of adoption',
+              'Compare average response time, consistency scores, and time per email before and after, using a pre-implementation baseline you recorded',
+              'Ask AI to calculate the estimated value of the improvement based on industry benchmarks',
+            ],
+            correct: 2,
+            explanation: 'Credible measurement requires a before-and-after comparison with a baseline established before implementation. Feedback (option A) is anecdotal. Volume of AI use (option B) measures adoption, not impact. AI-generated estimates from industry benchmarks (option D) are not your data and will not survive scrutiny from a finance director. Pre-implementation baselines measured the same way as post-implementation results are the only defensible evidence of impact.',
+          },
+          outputComparison: {
+            label: 'AI results communication: technology framing vs. business outcomes framing',
+            vague: {
+              prompt: 'Help me write an update to leadership about our AI implementation progress',
+              output: 'Dear Leadership Team,\n\nI am pleased to update you on our AI implementation. We have successfully deployed AI tools across the procurement team and are using them for various tasks including email drafting, supplier analysis, and report generation. The team has adapted well to the new tools and adoption rates are high. We will continue to expand AI use and explore new applications going forward.\n\nPlease let me know if you have any questions.',
+            },
+            improved: {
+              prompt: 'Write a 200-word executive update on our AI initiative results for our operations director. Frame around business outcomes, not technology. Results data: invoice processing time reduced from 8 min/invoice to 2.5 min/invoice (69% reduction). Error rate on invoices dropped from 4.1% to 0.8%. Volume: 580 invoices/month. Team: 3 people in AP, fully-loaded cost £38/hr. Also: supplier email response time dropped from 4.2 hours average to 47 minutes. No additional tooling cost — using existing Claude licence. Highlight the financial impact clearly.',
+              output: 'Operations AI Update — Q1 Results\n\nOur AI initiative has delivered measurable results across two core processes:\n\n**Invoice processing**: Time per invoice reduced from 8 to 2.5 minutes — a 69% improvement. At 580 invoices per month and a fully-loaded cost of £38/hour, this represents approximately £11,600/month in recovered capacity. Invoice error rate fell from 4.1% to 0.8%, reducing rework and supplier disputes.\n\n**Supplier communications**: Average response time dropped from 4.2 hours to 47 minutes. This has improved supplier relationships and reduced the delay between receiving a supplier query and confirming next steps — directly reducing friction in our supply chain.\n\n**Investment**: These results were delivered using our existing Claude licence — no additional tooling cost.\n\n**Next steps**: We are extending the same approach to purchase order processing and procurement reporting. A business case will follow within 30 days.\n\nNet annual impact (invoice processing alone): ~£139,200 in recovered team capacity.',
+            },
+            insight: 'The vague prompt produces an update about AI adoption that tells leadership nothing actionable. The specific prompt — with before-and-after metrics, volume, and cost data — produces an update that leads with £139,200 in recovered capacity and a 69% efficiency gain. Leadership funds the next AI initiative based on this kind of evidence, not adoption rates. The numbers were yours; AI formatted them into a compelling business narrative.',
+          },
+          applyThisWeek: {
+            action: 'For your current AI application, record the baseline metrics this week if you have not already. Then design a simple measurement plan: three metrics, how you will collect them, and when you will report results.',
+            promptTemplate: 'Help me design a measurement plan for an AI implementation. Process: [name]. What AI is doing: [describe]. Metrics I will track: [list — e.g. time per task, error rate, volume processed]. How I will collect each: [source — system report, manual log, time tracker]. Baseline (pre-AI): [values]. Review cadence: [weekly/monthly]. At [X weeks], draft an executive summary template I can use to report results, framed around business outcomes not technology adoption.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'If your AI initiative were cancelled tomorrow due to budget cuts, what evidence would you have to defend its value? Is that evidence strong enough — and if not, what would you measure starting this week?',
           quiz: [
             {
               question:
@@ -1599,6 +2063,35 @@ For job replacement fears: be honest about the intent. If AI is freeing time for
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You want to build AI capability across your 15-person operations team. What is the most effective approach?',
+            options: [
+              'Send everyone to a one-day AI training course delivered by an external provider',
+              'Require all team members to complete an online AI certification module by the end of the month',
+              'Have your two most AI-confident team members work on real operational problems with AI, then pair them with colleagues to share what they learned',
+              'Hire an AI specialist to manage all AI applications so the rest of the team does not need to learn',
+            ],
+            correct: 2,
+            explanation: 'Peer-based, real-work learning is consistently the most effective format for operations AI skills. Your internal AI-confident members already understand the operational context — they know which tasks matter, which systems you use, and which constraints exist. External training gives declarative knowledge ("AI can do X") without procedural skill ("here is how to do X for our goods receipt process"). Hiring a specialist (option D) creates dependency and does not build team capability.',
+          },
+          outputComparison: {
+            label: 'AI skills plan: generic training vs. operations-specific development',
+            vague: {
+              prompt: 'Create an AI training plan for my operations team',
+              output: 'AI Training Plan for Operations Team:\n\nModule 1: Introduction to AI (2 hours)\nModule 2: AI tools overview (2 hours)\nModule 3: Practical AI applications (3 hours)\nModule 4: AI safety and ethics (1 hour)\n\nDelivery: Online self-paced modules\nTimeline: Complete within 30 days\nAssessment: End-of-module quiz for each section',
+            },
+            improved: {
+              prompt: 'Design a 6-week AI skills development plan for a 12-person logistics operations team. Current state: 2 team members (coordinator and analyst) are already using Claude for report drafting and supplier emails. Remaining 10 are not using AI. Key processes we want AI to support: (1) defect report categorisation, (2) supplier communication, (3) weekly KPI report narrative. Learning must happen around operational work — no full-day training days available. Design: week-by-week, real-work focused, peer-led where possible.',
+              output: '**6-Week AI Skills Plan — Logistics Operations Team**\n\n**Week 1: Anchor the case internally**\n- Coordinator and Analyst present 2 real examples of AI saving them time (15-min team meeting)\n- Everyone reads 3 AI-drafted supplier emails vs. manual — discuss what AI got right and wrong\n- Goal: build curiosity, not compliance\n\n**Week 2: Defect report categorisation (all 12 people)**\n- Pair exercise: each person pastes 5 real defect reports into Claude and asks for categorisation\n- Compare outputs, discuss what context improved the result\n- Time: 30 min during a team meeting slot\n\n**Week 3: Supplier email drafting (pairs)**\n- Each person drafts their next real supplier email with AI, reviews and sends\n- Learning pairs: Coordinator + 2 team members, Analyst + 2 team members\n- Debrief: what did AI get right? What did you change?\n\n**Week 4: KPI report narrative (analyst-led)**\n- Analyst walks team through live AI-assisted report drafting\n- Two team members try it with last week\'s data\n\n**Week 5: Individual application**\n- Each person identifies one task in their own role where they will try AI this week\n- No rules — experiment and report back\n\n**Week 6: Share-back and standardise**\n- 30-min team session: what worked? What prompts are we keeping?\n- Build shared prompt library from best outputs\n- Nominate one person to own the library going forward',
+            },
+            insight: 'The vague prompt produces a four-module online training plan with no connection to your actual work, processes, or team dynamic. The specific prompt — with team size, current AI adoption, target processes, and a real constraint (no full training days) — produces a week-by-week plan built around real tasks, peer learning, and team debrief. Skills built on real operational problems stick; skills built on generic modules typically do not.',
+          },
+          applyThisWeek: {
+            action: 'Assess each of your team members\' current AI skill level (none, exploring, using regularly). Identify your two most AI-confident people and design one real-work AI exercise to run with the broader team in your next meeting slot.',
+            promptTemplate: 'Design a 30-minute AI skills exercise for my [X]-person operations team. Team context: [brief description of role and main tasks]. Most common task I want to start with: [describe]. Current AI skill level: [none / some have tried / a few use regularly]. Constraints: [e.g. no laptops for some team members / meeting time only / no IT support]. Design an exercise that: uses real work examples, has a clear output the team can discuss, and builds confidence rather than expertise.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Who on your team would be the most powerful AI champion — not necessarily the most tech-savvy, but the most respected by peers? What would it take to get that person confident and advocating for AI use?',
           quiz: [
             {
               question:
@@ -1693,6 +2186,35 @@ A practical operations AI governance framework fits on one page: approved tools,
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your procurement analyst wants to use a free consumer AI tool to analyse your supplier contract terms and identify renewal opportunities. What is the most important governance question to ask first?',
+            options: [
+              'Is the AI tool accurate enough to correctly interpret legal contract language?',
+              'Does the free tool store input data and potentially use it to train its models — and are our contract terms commercially sensitive?',
+              'Has the AI tool been approved by our IT department for general business use?',
+              'Will the analysis be fast enough to be worth the effort compared to reading the contracts manually?',
+            ],
+            correct: 1,
+            explanation: 'Data handling is the critical governance question for commercially sensitive information. Free consumer AI tools typically use input data for model training and may store it indefinitely. Supplier contract terms — pricing, volume commitments, exclusivity clauses, penalty structures — are among the most competitively sensitive data your company holds. Once this data enters an unauthorised system, you cannot control who accesses it or how it is used. Accuracy and speed are secondary concerns; data security is the threshold question.',
+          },
+          outputComparison: {
+            label: 'Governance framework: vague policy vs. practical one-pager',
+            vague: {
+              prompt: 'Write an AI governance policy for our operations team',
+              output: 'AI Governance Policy\n\n1. Purpose: This policy establishes guidelines for the responsible use of AI tools within the operations team.\n2. Scope: This policy applies to all team members.\n3. Approved tools: Team members should use approved AI tools only.\n4. Data handling: Sensitive data should be handled responsibly.\n5. Review: AI outputs should be reviewed before use.\n6. Compliance: Team members must comply with all applicable regulations.\n7. Review cadence: This policy will be reviewed annually.',
+            },
+            improved: {
+              prompt: 'Create a practical one-page AI governance framework for a 20-person operations team at a food manufacturer. We use Claude (enterprise licence) and Zapier for workflow automation. Write it so a team member can read it in 2 minutes and know exactly what they can and cannot do. Cover: (1) approved tools and what data can go into each, (2) the three most important human review requirements, (3) what to do when AI produces an error, (4) what requires manager approval before using AI. Make it practical, not legal-sounding.',
+              output: '**Operations AI Governance — One Page**\n*Updated: [date] | Owner: Operations Manager*\n\n**What tools are approved and what can you put in them?**\n| Tool | Use for | Do NOT put in |\n|------|---------|---------------|\n| Claude (enterprise) | Drafting, analysis, SOP writing, report narratives | Employee personal data, legally privileged info |\n| Zapier | Workflow automation between approved systems | Credentials, payment card data |\n| Consumer AI (ChatGPT free, Gemini free) | Personal/learning use only | Any company data — ever |\n\n**Three things that always need human review before action**\n1. Any AI-drafted communication to a supplier or customer before it is sent\n2. Any AI-generated analysis that will inform a decision over £10,000\n3. Any AI-produced report going to leadership or external stakeholders\n\n**When AI makes an error**\n1. Do not use the output — stop and correct\n2. Log it in the shared error log: [link] (takes 2 minutes)\n3. If the error caused an action that needs reversing, tell your manager the same day\n\n**When you need manager approval first**\n- Using AI for a new process not covered above\n- Connecting AI to a new system\n- Sharing AI outputs with anyone outside the company\n\n*Questions? Ask [Name] or post in #ai-operations Slack channel.*',
+            },
+            insight: 'The vague prompt produces a policy document full of statements that could mean anything ("handle data responsibly," "use approved tools"). A team member cannot read this and know what to actually do. The specific prompt — with real tools, real data types, and real scenarios — produces a framework a team member can apply immediately. The one-page format and practical table make this something people actually read and follow, not file and forget.',
+          },
+          applyThisWeek: {
+            action: 'Draft a one-page AI governance framework for your team using the template structure above. Share it with your manager to validate the approved tool list and review thresholds, then distribute to the team.',
+            promptTemplate: 'Create a practical one-page AI governance framework for my [X]-person [type] operations team. Approved tools we use: [list tools and licence type]. Most sensitive data types we handle: [list — e.g. supplier pricing, employee records, customer orders]. The three most common AI use cases in our team: [list]. Format it as: (1) approved tools and data rules table, (2) three mandatory human review requirements, (3) error reporting process, (4) what needs manager approval. Tone: practical and direct — a team member should be able to apply it immediately.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'If a team member in your organisation pasted your top supplier\'s pricing agreement into a free AI tool right now, would they know that was a problem? If not, what does that tell you about the current state of AI governance in your team?',
           quiz: [
             {
               question:
@@ -1789,6 +2311,35 @@ AI adoption scales fastest when it is visibly connected to operational performan
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your pilot — AI-assisted defect report categorisation in the quality team — was a clear success: 60% time saving, high team satisfaction. You want to scale it to the maintenance and logistics teams. What is the most important first step?',
+            options: [
+              'Roll it out immediately while enthusiasm is high — momentum is everything in change management',
+              'Ask IT to deploy the same tool configuration to the other teams\' systems',
+              'Document exactly what made the pilot work — the prompts, the workflow, the change management approach — before adapting for the new teams',
+              'Run the quality team\'s champion through a train-the-trainer programme immediately',
+            ],
+            correct: 2,
+            explanation: 'Documentation before scaling is the step most teams skip — and the reason most scaling efforts fail. Without a clear record of what the pilot actually did (the specific prompts, the workflow steps, the objections that were overcome, what the champion did that worked), the next team is starting from scratch. Documentation is what transforms a one-team success into a replicable playbook. Training the champion (option D) is the right second step — but you need the playbook first.',
+          },
+          outputComparison: {
+            label: 'AI pilot scaling: informal rollout vs. structured playbook',
+            vague: {
+              prompt: 'Help me scale our AI pilot to other teams',
+              output: 'To scale your AI pilot, start by sharing the results with other teams to build interest. Identify champions in each team who can lead the adoption. Provide training on the AI tools and support the teams as they get started. Monitor progress and address any issues that arise. Celebrate successes to maintain momentum.',
+            },
+            improved: {
+              prompt: 'Help me create a scaling playbook for our AI-assisted supplier email drafting pilot. Pilot details: Team: procurement (4 people). Process: incoming supplier emails routed through Claude for draft response → team reviews and sends. Results: response time from 4 hours to 48 minutes average, team reports saving 1.5 hrs/day combined. What worked: having a shared prompt library, weekly 15-min review of quality to refine prompts, starting with the 5 most common email types only. What was hard: two team members were sceptical initially, resolved by showing them a specific example where AI caught a tone issue. Next team: logistics operations (8 people, different email types — carrier communications, customer delivery queries). Create a scaling playbook that another team lead could follow without additional support.',
+              output: '**AI Email Drafting — Scaling Playbook**\n*Source: Procurement pilot | Version 1.0*\n\n**What this achieves**: Reduce supplier/carrier email response time by 70-80%. Typical saving: 1.5-2 hrs/day for a 4-8 person team.\n\n**Week 1: Understand the new team\'s email types**\n- List the 10 most common incoming email types the logistics team receives\n- Identify the 5 most frequent — these are your starting point only\n- Do NOT try to cover all email types at launch\n\n**Week 2: Build the prompt library (champion does this)**\n- For each of the 5 email types: draft one AI prompt, test on 3 real examples, refine\n- Review prompt outputs with logistics team lead — adjust tone for their supplier/carrier relationships\n- Save all 5 prompts in a shared doc the team can access\n\n**Week 3: Team launch (30-min session)**\n- Show 3 before-and-after examples (procurement pilot outputs work well)\n- Each person tries AI on one real email in the session — live practice\n- Acknowledge: "AI gets it wrong sometimes — here is what to do" (this defuses the scepticism)\n\n**Week 4-6: Pair review**\n- 15-min weekly team check-in: what emails did AI handle well? What prompts need updating?\n- Champion maintains the prompt library\n\n**Handling sceptics**: Show one real example where AI improved the tone or caught something. Do not argue — demonstrate.\n\n**Success metrics**: Track response time weekly for 6 weeks. Target: below 1 hour by week 4.',
+            },
+            insight: 'The vague prompt gives scaling advice so generic it could apply to any initiative anywhere. The specific prompt — with actual pilot metrics, what worked, what was hard, and the new team\'s context — produces a week-by-week playbook another team lead could execute independently. The procurement team\'s learnings become an asset for every subsequent team; that is what scaling infrastructure looks like.',
+          },
+          applyThisWeek: {
+            action: 'Document your best-working AI application in enough detail that a colleague from another team could replicate it without asking you questions. Include the exact prompts, the workflow, and what you learned about making it work.',
+            promptTemplate: 'Help me create a replication playbook for an AI application I want to scale. Application: [name and description]. Team it ran in: [context]. Results achieved: [metrics]. What worked well: [list]. What was hard and how we solved it: [list]. Next team I want to scale to: [context — size, different processes, different constraints]. Create a week-by-week playbook that a team lead with no AI experience could follow independently. Include: exact workflow steps, how to handle resistance, and what success looks like at 6 weeks.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'If your most effective AI application disappeared tomorrow — the tool shut down, the champion left — would the practice survive? What would need to be documented and embedded differently for it to be resilient to those kinds of changes?',
           quiz: [
             {
               question:
@@ -1879,6 +2430,35 @@ The operations leaders who will be most effective in three years are the ones bu
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You are building a 12-month AI roadmap for your operations function. Which approach gives you the most durable competitive advantage?',
+            options: [
+              'Adopt the most advanced AI tools available today and build all processes around them',
+              'Wait 12 months for the technology to mature before committing to any AI application',
+              'Build AI skills, use cases, and governance now — these transfer to better tools as they arrive',
+              'Focus exclusively on cost reduction applications to demonstrate clear ROI to leadership',
+            ],
+            correct: 2,
+            explanation: 'The tools will keep improving — but the capability to identify where AI adds value, write effective prompts, manage adoption, and govern responsibly is durable regardless of which tools are current. Teams that build these skills now will extract more value from better tools when they arrive than teams that wait. Building all processes around today\'s specific tools (option A) creates fragility; waiting (option B) gives competitors a head start.',
+          },
+          outputComparison: {
+            label: 'AI roadmap: wishful thinking vs. grounded 12-month plan',
+            vague: {
+              prompt: 'Create an AI roadmap for our operations team',
+              output: 'AI Roadmap for Operations:\n\nPhase 1 (Months 1-3): Explore AI tools and identify use cases\nPhase 2 (Months 4-6): Pilot two or three AI applications\nPhase 3 (Months 7-12): Scale successful pilots across the team\n\nKey success factors: leadership support, team training, clear governance. Review progress quarterly and adjust the roadmap as AI technology evolves.',
+            },
+            improved: {
+              prompt: 'Create a 12-month AI roadmap for a 25-person operations function at a mid-sized manufacturing company. Current state: we have successfully piloted AI for supplier email drafting (4 people, procurement) and defect report categorisation (quality team). No other AI applications active. Our biggest operational pain points: (1) weekly management reporting takes 6 hours to compile, (2) SOP documentation is severely out of date, (3) demand forecasting accuracy is poor (MAPE of 28%). Trends we want to position for: agentic AI and better ERP integration. Build a quarterly plan with specific applications, skill milestones, and governance checkpoints.',
+              output: '**12-Month Operations AI Roadmap**\n\n**Q1 (Months 1-3): Consolidate and extend current wins**\n- Scale supplier email drafting to logistics team (carrier comms, delivery queries) — use procurement pilot playbook\n- Launch AI-assisted SOP documentation sprint: 8 highest-risk undocumented processes in 6 weeks\n- Establish baseline metrics for management reporting (current: 6 hours/week)\n- Governance: publish one-page AI framework; all team members read and sign by end of Q1\n\n**Q2 (Months 4-6): Target biggest pain points**\n- Automate weekly management report data compilation (Zapier + existing ERP connections)\n- AI narrative generation for weekly report: test and refine with operations manager\n- Target: reporting time from 6 hours to <90 minutes by end of Q2\n- Demand forecasting: evaluate ERP built-in AI forecasting module — can it reduce MAPE from 28%?\n\n**Q3 (Months 7-9): Scale and deepen**\n- Roll out SOP documentation to all remaining processes; quality team owns maintenance\n- Deploy AI-assisted CAPA drafting in quality team (builds on existing AI confidence)\n- Skills milestone: all 25 team members at foundational level; 8 at intermediate\n\n**Q4 (Months 10-12): Position for agentic AI**\n- Map which current manual-AI hybrid processes could run autonomously with agentic AI\n- Evaluate ERP AI integrations launching in 2025 — identify 2 to pilot\n- Annual AI impact review: present results to leadership, secure Year 2 budget\n\n**Success at 12 months**: Reporting time <90 min, MAPE <20%, all SOPs documented, 25 team members AI-capable.',
+            },
+            insight: 'The vague prompt produces a three-phase template that applies to any team in any industry. The specific prompt — with current wins, pain points, and trends to position for — produces a quarterly plan with named applications, skill milestones, and specific success metrics. A roadmap that leadership can fund needs to be this specific; a generic phase plan is a wish list, not a strategy.',
+          },
+          applyThisWeek: {
+            action: 'Draft your personal 90-day AI action plan: three specific AI applications to start, one skill milestone for your team, and the one governance gap you will close. Share it with your manager to turn it into a commitment.',
+            promptTemplate: 'Help me build a 90-day AI action plan for my operations role. My current AI applications: [list what is working]. My biggest operational pain points: [list top 3]. Team size and current AI skill level: [describe]. My constraints: [time, budget, IT support, etc.]. Build a 90-day plan with: Week 1-2 quick win, Month 1 milestone, Month 2 milestone, Month 3 milestone. For each milestone: specific application, success metric, and what I need to do to make it happen. Also identify: one governance action I should take this week.',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'In three years, what will the best operations teams in your industry be doing with AI that the average team will not? And what decisions would you need to make this quarter to be in that leading group rather than catching up?',
           quiz: [
             {
               question: 'What does "agentic AI" mean in an operations context?',

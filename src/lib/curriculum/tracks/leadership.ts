@@ -61,6 +61,35 @@ Not: "Will AI replace my team?" But: "What would my team be able to accomplish i
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'As a leader, what is the most important reframe for thinking about AI\'s impact on your organisation?',
+            options: [
+              'From "how do we control AI risk?" to "how do we implement AI safely?"',
+              'From "what will AI replace?" to "what could my team accomplish with AI handling routine cognitive work?"',
+              'From "which AI tools should we buy?" to "which AI vendors are most credible?"',
+              'From "is AI ready for enterprise use?" to "are our employees ready to use AI?"',
+            ],
+            correct: 1,
+            explanation: 'The replacement framing triggers defensiveness and fear, which stalls adoption. The accomplishment framing opens a strategic conversation about what becomes possible when cognitive capacity is freed up. This reframe is the foundation of every productive AI leadership conversation because it aligns AI investment with organisational ambition rather than threat management.',
+          },
+          outputComparison: {
+            label: 'Briefing your board on AI: generic concern vs. grounded clarity',
+            vague: {
+              prompt: 'Write a briefing for my board about AI',
+              output: 'AI Overview for the Board\n\nArtificial Intelligence (AI) is transforming industries globally. As a board, it is important that we understand the opportunities and challenges that AI presents for our organisation.\n\nOpportunities include increased efficiency, cost savings, and competitive advantage. Challenges include implementation costs, data security risks, and the need for employee training.\n\nWe recommend exploring AI opportunities across our business functions and developing a strategy to ensure we remain competitive. Further discussion is needed to determine our approach.',
+            },
+            improved: {
+              prompt: 'Write a 350-word board briefing on AI for a 200-person professional services firm. Our context: competitors are deploying AI for research synthesis and document drafting; our consultants spend roughly 30% of billable-adjacent time on these tasks. Three things the board needs to understand: (1) what AI actually does well and what it cannot do, (2) where our immediate productivity opportunity is, and (3) the governance question they need to decide — specifically whether to approve an enterprise AI tool budget of £120k/year versus the current shadow AI risk. Tone: direct, evidence-based, decision-focused. End with one clear ask.',
+              output: 'Board Briefing: AI — What It Means for Us and the Decision We Need to Make\n\n**What AI does well — and what it does not**\nAI is highly capable at pattern recognition and text generation: synthesising research, drafting documents, summarising complex material, and generating options for human review. It cannot exercise judgment, build client relationships, or be accountable for decisions. These capabilities sit with our people.\n\n**Our immediate opportunity**\nOur consultants spend approximately 30% of non-client time on tasks AI handles well: research synthesis, first-draft documents, and data summarisation. Competitors are already deploying AI for exactly these tasks. Conservative estimates suggest 15-20% efficiency recovery in these areas, which translates to either capacity for more billable work or faster delivery with the same headcount.\n\n**The governance question requiring board decision**\nCurrently, an unknown number of staff are using consumer AI tools (ChatGPT, Claude free tier) with client-adjacent data. This creates unacceptable data security risk. The alternative is an enterprise-licensed deployment with appropriate data governance — cost £120k/year, compared to the reputational and regulatory exposure of a data incident.\n\n**Our ask**: Approve the enterprise AI tool budget and mandate the transition from consumer tools by Q2. We will report adoption and efficiency metrics quarterly.',
+            },
+            insight: 'The vague briefing says nothing actionable — "exploring opportunities" and "further discussion needed" tells the board nothing about the specific context, the real risk, or what decision they are being asked to make. The specific version grounds the discussion in the firm\'s actual situation, frames the board\'s role as a specific governance decision, and ends with a clear ask. The prompt forced the writer to think through what the board actually needs.',
+          },
+          applyThisWeek: {
+            action: 'Use AI as a thinking partner to prepare for a leadership meeting or difficult conversation you have this week. Ask it to identify perspectives you might be missing and questions you should be ready to answer.',
+            promptTemplate: 'I have a [meeting/conversation] about [topic] with [audience] on [date]. My current position is: [your view]. What perspectives am I likely not considering? What are the three strongest objections to my position? What questions should I be prepared to answer that I might not have thought of? Be direct.',
+            tool: 'Claude',
+          },
+          reflection: 'Which of your leadership tasks genuinely requires your specific judgment, relationships, and accountability — and which ones are consuming your time despite being largely pattern-based? What would change in how you lead if the second category was handled for you?',
           quiz: [
             {
               question:
@@ -157,6 +186,35 @@ Do not benchmark against announcements — benchmark against operational reality
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'A vendor shows you an impressive AI demo. What is the single most useful question to ask before drawing any conclusions?',
+            options: [
+              'What is the total cost of ownership including integration and training?',
+              'How does the demo scenario compare to our actual data quality, process complexity, and use conditions?',
+              'How many enterprise customers of similar size are using this tool today?',
+              'What is the vendor\'s roadmap for the next 12 months?',
+            ],
+            correct: 1,
+            explanation: 'Demos are engineered for best-case conditions: clean data, simple inputs, optimal prompts. Your organisation has messier data, more complex processes, and less ideal conditions. The gap between demo performance and real-world performance is precisely where AI projects fail or disappoint. Understanding that gap before committing is the most important due diligence step.',
+          },
+          outputComparison: {
+            label: 'Evaluating a competitor\'s AI announcement: reaction vs. intelligence',
+            vague: {
+              prompt: 'Our main competitor just announced an AI transformation programme. What should we do?',
+              output: 'Your competitor\'s AI announcement is a signal that you need to take AI seriously. You should:\n\n1. Launch your own AI strategy initiative immediately\n2. Communicate to your board that you are aware of this development\n3. Consider hiring an AI consultant to help you catch up\n4. Review your technology budget to allocate resources for AI\n\nMoving quickly is important to avoid falling behind in the market.',
+            },
+            improved: {
+              prompt: 'Our main competitor (a £500M professional services firm) just issued a press release announcing an "AI transformation programme" that will "reshape how they deliver client value." I need to produce a one-page intelligence brief for our CEO. Please help me structure an analysis that: (1) distinguishes what they have actually announced from what they have implied, (2) identifies what evidence we should monitor over the next 6-12 months to assess whether this is operational reality or marketing, (3) assesses whether this warrants a change to our own AI strategy timeline, and (4) notes what we should NOT do in response. Format as a structured brief.',
+              output: 'Competitive Intelligence Brief: [Competitor] AI Announcement\n\n**What has actually been announced vs. implied**\nAnnounced: an intention to deploy AI across service delivery. Implied (not stated): specific capabilities, timelines, client-facing applications, or evidence of current deployment. This is a strategy statement, not an operational announcement.\n\n**What to monitor over 6-12 months**\n• Client-facing product or service changes that demonstrate AI capability\n• Job postings (AI engineers, data scientists, prompt specialists) indicating genuine build\n• Case studies and references from clients — vendor-curated vs. independent\n• Response times and delivery quality changes that suggest operational AI\n• Pricing changes that would only make sense with genuine efficiency gains\n\n**Does this change our timeline?**\nNot on the basis of this announcement alone. The gap between announced AI strategy and operational reality is typically 12-24 months. Reactive acceleration in response to announcements is one of the most common causes of wasted AI investment. Reassess when evidence of real operational change emerges.\n\n**What not to do**\nDo not launch a reactive AI initiative to match their announcement. Do not increase our AI communications without corresponding operational progress — this creates the same empty announcement problem. Do not make this the primary input into our AI strategy timeline.',
+            },
+            insight: 'The vague response treats the announcement as a crisis requiring immediate reaction — which is exactly how organisations make poor AI investments. The specific version applies a structured intelligence framework that distinguishes signal from noise, defines what evidence would actually matter, and explicitly identifies what not to do. The prompt forced a discipline that the reactive framing bypasses entirely.',
+          },
+          applyThisWeek: {
+            action: 'Take one AI claim your organisation is currently evaluating — vendor pitch, internal proposal, or news article — and run it through the four-question framework: what specifically does it do, what does it require, what evidence exists, and what is the cost of waiting.',
+            promptTemplate: 'I am evaluating this AI claim: [describe the claim]. Help me apply a structured assessment: (1) What specifically does this do vs. what is implied? (2) What conditions and prerequisites are required for it to work as described? (3) What evidence exists beyond the vendor\'s own materials? (4) What is the realistic cost of waiting 6 months before deciding? Be critical and specific.',
+            tool: 'Claude',
+          },
+          reflection: 'When you last made a significant technology decision, how much of your confidence came from vendor presentations and analyst reports versus evidence from organisations that had actually implemented it? What would a better intelligence process have looked like?',
           quiz: [
             {
               question:
@@ -254,6 +312,35 @@ Governance response: maintain human oversight for any customer-facing AI; establ
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'An employee uses a standard free AI tool to draft a document containing client financial projections. What is the most significant risk?',
+            options: [
+              'The document may contain inaccurate financial figures',
+              'The client may discover the document was AI-drafted',
+              'Confidential client data may be stored and processed by the AI provider\'s systems',
+              'The employee may become over-reliant on AI for financial analysis',
+            ],
+            correct: 2,
+            explanation: 'Consumer AI tools typically store inputs and may use them for model training, making them inappropriate for confidential client data. This is a data security and confidentiality risk with potentially serious legal and reputational consequences. Governance requires clear policies distinguishing which tools can be used with which classifications of data — and this scenario represents exactly the high-risk use that should be restricted to approved enterprise tools.',
+          },
+          outputComparison: {
+            label: 'AI risk governance: vague policy vs. actionable framework',
+            vague: {
+              prompt: 'Write an AI risk policy for our company',
+              output: 'AI Risk Policy\n\nOur company is committed to the responsible use of artificial intelligence. All employees should be aware that AI tools carry risks including inaccuracy, bias, and data security concerns.\n\nEmployees should use AI tools responsibly and exercise judgment when reviewing AI outputs. Sensitive information should be handled with care. Any concerns about AI use should be raised with your manager.\n\nThis policy will be reviewed annually.',
+            },
+            improved: {
+              prompt: 'Help me write a practical one-page AI risk governance framework for a 150-person financial services firm. We need it to be actually usable — not a compliance document nobody reads. Cover: (1) approved tools by data classification (we have three tiers: public, internal, confidential client), (2) human review requirements for our three highest-risk AI use cases (credit analysis inputs, client communications, HR screening), (3) how employees report AI errors or unexpected outputs without fear, and (4) who owns this. Format as a reference card employees would actually pin up, not a policy document.',
+              output: 'AI Use Reference Card — [Firm Name]\n\n**Tool approvals by data type**\n| Data type | Approved tools | Never use |\n|-----------|---------------|----------|\n| Public / general | Claude Pro, ChatGPT Plus, Copilot | — |\n| Internal (non-client) | Claude Pro (firm account), Copilot M365 | Free/consumer tools |\n| Confidential client data | Claude Enterprise (our instance only) | All others |\n\n**Mandatory human review before use**\n• Credit analysis inputs: senior analyst sign-off before any AI summary goes to credit committee\n• Client communications: relationship manager review of any AI-drafted client-facing content\n• HR screening: hiring manager review of all applications, regardless of AI shortlist position\n\n**If something goes wrong**\nSpot an AI error, unexpected output, or uncertain data handling? Report to [Data Governance lead, name] via [channel] — no blame, just information. We track these to improve our guidelines.\n\n**Who owns this**\nOverall: [Chief Risk Officer]. Day-to-day: each function head. Questions: [AI governance email].\n\nLast reviewed: [date]. Next review: [date].',
+            },
+            insight: 'The vague policy is well-intentioned but operationally useless — "exercise judgment" and "handle with care" give employees no guidance for the specific decisions they face daily. The specific version creates a reference card that answers the actual question: "can I use this tool for this task right now?" The prompt forced the writer to think through real use cases rather than abstract principles.',
+          },
+          applyThisWeek: {
+            action: 'Audit your team\'s actual AI tool usage: ask each team member which AI tools they use and for what types of tasks. Compare against any existing approved tool guidance. Identify the top two data security gaps.',
+            promptTemplate: 'I am assessing AI data risk in my [size] [industry] organisation. We currently use or are considering: [list tools]. Our data classifications are: [describe]. Help me identify: (1) the top three data security risks in our current AI tool usage, (2) the governance rules we need that we likely don\'t have, and (3) how I should communicate approved tool guidance to my team without creating a culture of paranoia around AI use.',
+            tool: 'Claude',
+          },
+          reflection: 'If you asked every person in your team today which AI tools they use and what data they put into them, what do you think you would find? What is the gap between your assumed AI governance and the actual behaviour happening right now?',
           quiz: [
             {
               question:
@@ -347,6 +434,35 @@ You are ready to lead AI adoption credibly when you can: demonstrate at least th
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'A senior leader advocates strongly for AI adoption but has never personally used an AI tool in their own work. What is the most likely impact?',
+            options: [
+              'The advocacy will be effective if the leader has a strong track record of driving change',
+              'The team will adopt AI if it is mandated regardless of leader behaviour',
+              'The leader will lack the firsthand insight to answer practical questions credibly, and their advocacy will ring hollow to practitioners',
+              'The leader can delegate personal AI use to a Chief Digital Officer who can model it instead',
+            ],
+            correct: 2,
+            explanation: 'Credibility in AI adoption comes from demonstrated experience, not position or rhetoric. When a team member asks "what do you do when AI gets the context wrong?" — a leader without personal practice has no authentic answer. The gap between advocating for AI and actually using it is visible to teams, and it signals that AI is for others to implement rather than something the leader genuinely believes in.',
+          },
+          outputComparison: {
+            label: 'Preparing for a board discussion: minimal preparation vs. AI-augmented preparation',
+            vague: {
+              prompt: 'Help me prepare for a board meeting about our AI strategy',
+              output: 'Here are some tips for your board meeting:\n\n• Review your current AI initiatives and progress\n• Be prepared to discuss the budget\n• Have data to support your recommendations\n• Anticipate questions about risks\n• Practice your presentation beforehand\n\nMake sure you arrive prepared and confident. Good luck with your presentation!',
+            },
+            improved: {
+              prompt: 'I have a board discussion in 48 hours on our AI strategy. Context: we are a 300-person B2B software company, 18 months into an AI programme with mixed results — our sales team adoption has been strong (CRM automation, email drafting) but engineering\'s AI-assisted coding rollout has stalled. Two board members are AI enthusiasts; one is a vocal sceptic who has pushed back on costs. I need you to: (1) generate the 8 most likely board questions, categorised by which director is most likely to ask them, (2) draft a crisp answer to each, (3) identify the one question I am most likely to be underprepared for, and (4) suggest one reframe that positions the engineering stall as a learning rather than a failure. Be specific and challenging.',
+              output: '**Likely questions by director type**\n\nAI enthusiast directors:\n1. "Where are we versus where we expected to be 18 months in?" — Answer: Sales adoption exceeded projections (78% weekly active users vs. 60% target). Engineering stalled at 22% — root cause identified as integration friction with our dev toolchain, not capability or willingness.\n2. "What is the next capability unlock we should be investing in?" — Answer: Customer success AI (conversation analysis, health scoring) is our highest-value next application based on the sales team learnings.\n\nSceptic director:\n3. "What has this actually cost and what can we prove it has delivered?" — Answer: £340k total investment (tools + training + management time). Verified outcomes: 2.1 hours/week per sales rep recovered, pipeline created up 18% vs. prior period. Engineering ROI is negative on current trajectory — which is why we are taking a different approach.\n4. "Should we be cutting the programme given the engineering results?" — Answer: No. The sales results validate the approach. Engineering requires a different implementation model — peer-led, integrated into existing workflow, not a separate training mandate.\n\nAll directors:\n5. "How does this compare to what our competitors are doing?" — Prepare: specific competitor evidence, not general claims.\n6. "What is the governance structure and who is accountable?" — Have a clear answer with names.\n7. "What does the next 12 months look like in terms of investment and expected outcomes?" — Prepare: phased plan with decision gates.\n8. "What happens if we stop now?" — Prepare: the cost of reversal including momentum lost, tools contracted, and competitive position.\n\n**The question you are most underprepared for**: "How do we know the 18% pipeline increase is because of AI and not market conditions?" Prepare a counterfactual analysis — what was the trend before AI deployment, and what changed.\n\n**Reframe for the engineering stall**: "Our engineering rollout gave us something equally valuable to early success — a clear diagnosis of what makes AI adoption fail. We know exactly why it stalled and we have redesigned the approach based on that learning. The sales team\'s success and the engineering team\'s stall are two data points that together give us a much stronger implementation model than a uniform success would have."',
+            },
+            insight: 'The vague response gives generic meeting advice that could apply to any presentation. The specific version uses the board context, the actual programme data, and the specific director dynamics to generate genuinely useful preparation. The difference is not just better output — it is that constructing the specific prompt forced the leader to think through the real dynamics before the meeting, which is itself the most valuable preparation.',
+          },
+          applyThisWeek: {
+            action: 'Use AI to prepare for a real leadership challenge this week — a difficult conversation, a presentation, or a decision you are navigating. Then tell your team what you used it for and what you found useful or surprising.',
+            promptTemplate: 'I am preparing for [specific challenge] with [audience/context]. My current thinking is: [your position]. I want you to: (1) push back on my thinking — what am I missing or getting wrong? (2) generate the questions I am most likely to face and draft responses, (3) identify the one thing I am probably underprepared for. Be direct and challenging, not encouraging.',
+            tool: 'Claude',
+          },
+          reflection: 'If your team were asked "does our leader actually use AI in their own work?" — what would they say? And if the honest answer is no or rarely, what does that signal about how seriously they should take the AI adoption you are asking of them?',
           quiz: [
             {
               question:
@@ -445,6 +561,35 @@ The most effective change visions create urgency without fear. Not: "We must do 
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Which of these is the most effective AI vision statement for a healthcare organisation?',
+            options: [
+              '"We will become an AI-first healthcare organisation by 2027, leveraging technology to drive efficiency and innovation"',
+              '"We will implement AI tools across clinical, administrative, and operational functions within 24 months"',
+              '"AI will free our clinical teams from documentation so every appointment is spent on the patient in front of them, not the screen"',
+              '"We will invest in AI to reduce costs and improve our competitive position in the healthcare market"',
+            ],
+            correct: 2,
+            explanation: 'The third option connects AI capability to a specific, human outcome that clinicians and patients care about — time spent on the person, not the paperwork. It answers what changes (documentation burden), who benefits (clinical teams and patients), and why it matters (quality of care). The other options describe technology intentions or resource allocations without answering the question any clinical leader is actually asking: what will be different about my work and my patients\' experience?',
+          },
+          outputComparison: {
+            label: 'AI vision statement: technology declaration vs. purpose-driven direction',
+            vague: {
+              prompt: 'Write an AI vision statement for our company',
+              output: 'Our AI Vision\n\nWe are committed to harnessing the transformative power of artificial intelligence to drive innovation, efficiency, and growth across our organisation. By strategically deploying AI technologies, we will enhance our capabilities, deliver greater value to our clients, and position ourselves at the forefront of our industry.\n\nWe will embrace AI as a core competency, building the skills and infrastructure needed to compete in an AI-enabled future.',
+            },
+            improved: {
+              prompt: 'Write a 150-word AI vision statement for a 400-person management consulting firm. Our purpose: helping mid-market companies navigate complex strategic decisions. The specific problem: our consultants spend 35-40% of engagement time on data gathering and synthesis that does not require their strategic expertise. Our AI vision should answer: what changes for our consultants, what changes for our clients, and what we will be able to do in 18 months that we cannot do today. The tone should feel like leadership speaking honestly to smart professionals, not corporate announcement language. Connect AI directly to our purpose, not to "innovation" or "competitiveness" in the abstract.',
+              output: 'Our AI Vision\n\nWe exist to bring our best thinking to clients navigating consequential decisions. Right now, too much consultant time goes to work that data and AI can do — gathering, synthesising, formatting. That time belongs to clients.\n\nIn 18 months, AI handles the analytical groundwork on every engagement: data gathering, literature synthesis, benchmark research, first-pass analysis. Our consultants use the capacity this creates for deeper client relationships, sharper strategic challenge, and the original thinking that no AI produces.\n\nFor our clients, this means faster insight, more time with our senior people, and recommendations that are better-evidenced than what the research budget previously allowed.\n\nThis requires every consultant to develop a personal AI practice. We will invest in that. In return, we expect AI to become a genuine part of how you deliver your best work.',
+            },
+            insight: 'The generic version uses abstract language ("transformative power", "core competency") that could apply to any organisation at any time. The specific version names the actual problem (35-40% of time on data tasks), defines the specific change for consultants and clients, and addresses what the vision requires of people. It reads like a leader who has thought hard about the specifics, not one who has outsourced the thinking to a communications template.',
+          },
+          applyThisWeek: {
+            action: 'Draft a one-paragraph AI vision for your organisation or team. Test it by asking two colleagues: "After reading this, do you know what would be different about your work in 18 months?" If they cannot answer, revise.',
+            promptTemplate: 'Help me draft an AI vision for [organisation type, size, sector]. Our purpose is: [what we exist to do for whom]. The specific problem AI should solve: [where time is being lost or value is being compromised]. What should change for our [employees/clinicians/consultants/advisers]: [specific outcome]. What should change for our [customers/clients/patients]: [specific outcome]. Write 150 words, no corporate language, no abstract innovation claims. Make it specific enough that our team knows what we are actually committing to.',
+            tool: 'Claude',
+          },
+          reflection: 'If you asked ten people in your organisation "what is our AI vision and what does it mean for your work specifically?" — how consistent and concrete would their answers be? What does that tell you about the clarity of direction you have provided so far?',
           quiz: [
             {
               question:
@@ -536,6 +681,35 @@ Over-promising on timeline: AI implementation always takes longer than projected
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your board is reviewing an AI investment proposal. What does a credible AI business case require that most proposals miss?',
+            options: [
+              'A detailed technical architecture for the AI implementation',
+              'Endorsement from an independent AI analyst firm',
+              'A phased approach with decision gates, stated financial assumptions, and an honest risk picture',
+              'Evidence that at least three competitors have already implemented the same capability',
+            ],
+            correct: 2,
+            explanation: 'Boards fund AI programmes that show financial logic they can scrutinise, risks they can govern, and a sequenced approach they can review at each stage. A big-bang programme with optimistic projections and no visible risk discussion signals that leadership has not done the hard thinking. Phasing with decision gates allows boards to fund experiments rather than transformations — which is almost always more fundable and more likely to succeed.',
+          },
+          outputComparison: {
+            label: 'Board AI business case: surface-level proposal vs. decision-ready case',
+            vague: {
+              prompt: 'Write a business case for implementing AI in our HR function',
+              output: 'Business Case: AI in HR\n\nExecutive Summary\nThis business case proposes the implementation of artificial intelligence in our HR function to improve efficiency and reduce costs. AI will streamline recruitment, performance management, and employee engagement processes.\n\nBenefits\n• Faster recruitment processes\n• Reduced administrative burden on HR team\n• Improved employee experience\n• Cost savings through automation\n\nInvestment Required\n£150,000 for tools and implementation\n\nRecommendation\nWe recommend proceeding with AI implementation in HR as soon as possible to remain competitive.',
+            },
+            improved: {
+              prompt: 'Help me write a two-page executive summary for a board business case to implement AI in our HR function at a 600-person retail company. Specifics: HR team of 12, spending 60% of time on: CV screening (200+ applications per role), onboarding document processing, and policy query answering. Proposed AI applications: AI-assisted CV screening (human review of all shortlists), automated onboarding document workflow, AI chatbot for policy queries. Tool cost: £80k/year. My financial model shows: CV screening saves 1.5 hrs/role × 80 roles/year = 120 hrs; onboarding saves 3 hrs/new starter × 150/year = 450 hrs; policy chatbot saves 20 mins × 1,200 queries/year = 400 hrs. Total: ~970 hours, equivalent to 0.5 FTE at £45k loaded cost = £22.5k/year. I need the board to see: financial case with assumptions stated, top three risks with mitigations, governance approach, and a phased plan. Tone: direct, no hype.',
+              output: 'Board Executive Summary: AI in HR — Investment Case\n\n**The problem we are solving**\nOur 12-person HR team spends 60% of time on three high-volume, process-intensive activities: CV screening, onboarding administration, and policy query answering. This is time not spent on workforce planning, manager coaching, and the people issues that affect retention and performance.\n\n**Proposed investment**\nThree AI applications: (1) AI-assisted CV shortlisting — AI screens, human reviews all shortlists; (2) automated onboarding document workflow; (3) AI policy chatbot for standard queries. Total cost: £80,000/year.\n\n**Financial case**\n| Application | Hours saved/year | Basis |\n|-------------|-----------------|-------|\n| CV screening | 120 hrs | 1.5hrs × 80 roles |\n| Onboarding | 450 hrs | 3hrs × 150 starters |\n| Policy chatbot | 400 hrs | 20min × 1,200 queries |\n| **Total** | **970 hrs (0.54 FTE)** | |\n\nAt £45,000 loaded cost, annual saving: £24,300. Net of £80k tool cost: year 1 net cost £55,700; payback from year 2 ongoing. Note: savings are redeployed to strategic HR work, not headcount reduction.\n\n**Top three risks**\n1. CV screening bias — Mitigation: mandatory human review of all AI shortlists; quarterly bias audit against shortlist demographics\n2. Data security (employee data in AI tools) — Mitigation: enterprise tool with data processing agreement; no personal data in consumer AI\n3. Employee trust (perception of surveillance) — Mitigation: transparent communication about what AI does and does not decide\n\n**Phased approach**\nQ1: Policy chatbot only (lowest risk, fastest ROI proof). Q2: Onboarding workflow (operational efficiency). Q3: CV screening (highest risk, requires governance to be proven first). Decision gate after each phase.\n\n**Board ask**: Approve Phase 1 (£20k) with Q2 review before Phase 2 funding.',
+            },
+            insight: 'The vague case lists generic benefits with no evidence, states a cost with no financial model, and makes a recommendation with no risk picture. The specific version gives the board exactly what they need: assumptions they can challenge, a financial model they can validate, risks they can govern, and a phased structure they can fund incrementally. The prompt forced specificity that is itself the business thinking the board wants to see.',
+          },
+          applyThisWeek: {
+            action: 'For one AI initiative you are considering, build a simple financial model: identify the specific tasks AI would handle, estimate hours saved with stated assumptions, and calculate the annual value against tool costs.',
+            promptTemplate: 'Help me build a financial model for an AI business case. The AI application is: [describe]. It would handle these specific tasks currently done by humans: [list tasks]. Current volume: [how many per week/month/year]. Time per task: [estimate]. Fully-loaded staff cost: [£/hour or £/year per FTE]. Tool cost: [£/year]. Build me a simple model with stated assumptions that a CFO could challenge, and identify the two assumptions that most affect whether the case is positive.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last significant technology investment your organisation made. Did the financial case accurately predict the real costs and benefits? What was systematically underestimated? How will you build those lessons into your AI business cases?',
           quiz: [
             {
               question:
@@ -636,6 +810,35 @@ Sequence your portfolio to build momentum: start with a high-visibility, achieva
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You have four AI initiatives competing for limited budget. Which factor should be the tiebreaker when two initiatives have similar value and feasibility scores?',
+            options: [
+              'Which initiative has the most internal champions and enthusiasts',
+              'Which initiative the technology team finds most technically interesting',
+              'Which initiative most directly accelerates your stated organisational strategy',
+              'Which initiative can be completed in the shortest timeframe',
+            ],
+            correct: 2,
+            explanation: 'Strategic alignment is the tiebreaker because AI initiatives that directly serve your stated strategy attract compounding organisational energy — the CEO references them, budget decisions favour them, and leaders protect them under pressure. Initiatives that run alongside strategy get deprioritised when resources tighten. Alignment is a force multiplier that turns a good initiative into one the organisation actively supports.',
+          },
+          outputComparison: {
+            label: 'AI portfolio decision: gut-feel prioritisation vs. structured framework',
+            vague: {
+              prompt: 'Help me decide which AI projects to pursue first',
+              output: 'Here are some factors to consider when prioritising AI projects:\n\n• Start with quick wins to build momentum\n• Consider the technical complexity of each project\n• Think about which projects have the most stakeholder support\n• Evaluate the potential ROI of each initiative\n• Consider your team\'s current skill level with AI\n\nI recommend starting with two or three projects and expanding from there. Would you like more specific guidance?',
+            },
+            improved: {
+              prompt: 'I need to prioritise five AI initiatives for a 250-person insurance company. Help me build a structured evaluation. The five initiatives are: (1) AI-assisted claims triage — routing claims to the right team based on complexity; (2) AI underwriting support — flagging risk indicators in application data; (3) AI customer service chatbot — handling policy queries; (4) AI document processing — extracting data from incoming forms; (5) AI-assisted policy renewals — identifying at-risk customers and personalising outreach. For each, I need: a value score (1-5), a feasibility score (1-5) with reasoning, the data readiness issue if any, and a recommended sequencing rationale. Our strategic priority is reducing claims processing time and improving customer retention. Be specific and direct — challenge any that seem lower priority than they appear.',
+              output: '**AI Initiative Portfolio Assessment — Insurance Company**\n\n| Initiative | Value | Feasibility | Category |\n|-----------|-------|-------------|----------|\n| Document processing | 3 | 5 | Quick win |\n| Claims triage | 4 | 4 | Strategic anchor |\n| Customer chatbot | 3 | 3 | Optional/selective |\n| Policy renewals | 5 | 3 | Invest to unlock |\n| Underwriting support | 5 | 2 | Invest to unlock |\n\n**Detailed assessment**\n\n**Document processing (pursue first)**: Highest feasibility — structured data, clear process, measurable outcome. Value is real but modest. Do this first to build implementation muscle and demonstrate AI credibility internally. Estimated 3 months.\n\n**Claims triage (pursue second, concurrently where possible)**: Directly serves your strategic priority of reducing claims processing time. Data exists (claims history). Risk: triage errors could create regulatory exposure — build in human escalation and audit trail from the start. 4-6 months.\n\n**Policy renewals (invest to unlock)**: Highest value against your retention priority. Currently low feasibility because customer behaviour data is fragmented across legacy systems. Invest in data consolidation first (6 months), then AI is straightforward. Do not shortcut this.\n\n**Chatbot (optional)**: Moderate value, moderate feasibility. The risk: a poorly performing chatbot damages customer relationships more than no chatbot. Only pursue after you have demonstrated AI quality control internally.\n\n**Underwriting support (defer)**: High value but your claims and actuarial data need significant cleaning before AI can be trusted here. Regulatory scrutiny of AI in underwriting decisions is also increasing. 12+ months before this is ready.\n\n**Recommended sequence**: Document processing (start now) → Claims triage (Q2) → Data consolidation for renewals (Q2-3) → Policy renewals (Q4) → Underwriting and chatbot decisions based on learning from first four.',
+            },
+            insight: 'The vague guidance gives a generic checklist that provides no actual decision. The specific version applies the framework to the real initiatives, produces concrete scores and sequencing, and explicitly challenges the sequencing rationale — including identifying one initiative (chatbot) that seems attractive but carries hidden risk. The prompt forced the specificity that turns a framework discussion into an actual portfolio decision.',
+          },
+          applyThisWeek: {
+            action: 'List every AI initiative currently under discussion in your organisation. Score each on value and feasibility (1-5), then plot them and identify the one initiative you should say no to clearly — and draft the reasoning.',
+            promptTemplate: 'I need to prioritise my organisation\'s AI initiatives. We are a [size, industry] organisation. Our stated strategic priorities are: [list 2-3]. The initiatives under consideration are: [list each with a brief description]. For each, assess: (1) realistic value potential given our context (1-5 with reasoning), (2) implementation feasibility given our current data, processes, and skills (1-5 with reasoning), (3) strategic alignment with our priorities. Then recommend a sequence and identify the initiative I should say no to, with the reasoning I can use.',
+            tool: 'Claude',
+          },
+          reflection: 'Look at your current AI initiatives. Are they sequenced deliberately to build momentum and capability, or did they accumulate based on whoever championed them loudest? What would a portfolio designed around strategic logic look like — and what would you stop doing?',
           quiz: [
             {
               question:
@@ -726,6 +929,35 @@ Use AI to help draft and test your strategy communications. Describe your audien
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You are rolling out an AI strategy to your organisation. Which audience requires the most operationally specific communication?',
+            options: [
+              'The board — they set the strategic direction and need full context',
+              'External clients — they will experience the change most directly',
+              'Middle managers — they translate strategy into team action and their clarity determines whether adoption reaches the frontline',
+              'Technical teams — they implement the tools and need detailed requirements',
+            ],
+            correct: 2,
+            explanation: 'Strategy stalls at middle management. Boards can be aligned, frontline teams willing, and the initiative still fails if middle managers are uncertain about what AI adoption means for their team, unsure how to answer their team\'s questions, or ambivalent about whether it is really expected of them. Their operational clarity is the bottleneck that most AI strategies underinvest in.',
+          },
+          outputComparison: {
+            label: 'All-staff AI strategy communication: announcement vs. direction',
+            vague: {
+              prompt: 'Write an all-staff email about our AI strategy',
+              output: 'Subject: Our AI Journey\n\nDear Team,\n\nAs you may be aware, artificial intelligence is transforming the way businesses operate. We are excited to share that our organisation is embracing this opportunity.\n\nWe will be exploring how AI can help us work more efficiently and deliver even better results for our clients. More information about specific initiatives will be shared in the coming months.\n\nWe encourage everyone to embrace this exciting opportunity and approach AI with an open mind. Training and support will be provided.\n\nThank you for your continued dedication.\n\nLeadership Team',
+            },
+            improved: {
+              prompt: 'Write a 400-word all-staff email announcing our AI strategy to 180 employees at a law firm. Context: we\'ve been building to this for 6 months; starting Monday, all fee earners get access to an AI legal research and drafting assistant (Harvey, our enterprise legal AI). The honest context: partners have been using it in pilot and seeing 30-40% time reduction on research-heavy matters; some associates have been quietly using consumer AI (which creates data risk we need to end). Our ask: transition to Harvey by end of month, complete the 1-hour training module, and start using it on one matter this week. Anticipated concerns: job security, data security, quality control. Address them directly. Tone: confident, honest, practical. From the Managing Partner.',
+              output: 'Subject: AI at [Firm] — what it means for your work, starting Monday\n\nDear All,\n\nFrom Monday, every fee earner has access to Harvey — an AI legal research and drafting assistant built specifically for legal practice, with full data security for client matter content.\n\n**Why we are doing this**\nOur pilot partners have been using Harvey for six months on research-heavy matters. The consistent result: 30-40% time reduction on research and first-draft work. That is real capacity — time that belongs to more complex legal strategy, client relationships, and the work that builds careers.\n\n**What this means for your work**\nHarvey does not replace legal judgment. It handles research synthesis, first-draft documents, precedent identification, and regulatory scanning. You review, refine, and take responsibility for everything that goes to clients. That is unchanged.\n\n**On job security**\nI want to address this directly: we are not implementing AI to reduce headcount. We are implementing it to let our fee earners spend more time on the work they were trained for and less on the administrative cognitive work that currently fills too many evenings and weekends. Our intent is that this practice grows, not shrinks.\n\n**On data security**\nHarvey runs on our own secure instance — client matter content stays within our environment. This is why we are asking everyone to transition from any consumer AI tools (ChatGPT, general Claude) for work matters by end of month. Those tools do not carry the same data protections.\n\n**Your actions this week**\n1. Complete the 1-hour Harvey training module (link below) — required by Friday\n2. Use Harvey on one research or drafting task this week\n3. Questions: [AI Lead] is holding drop-in sessions Tuesday and Thursday 12-1pm\n\nThis is a significant capability change. I am confident it will make your work better.\n\n[Managing Partner]',
+            },
+            insight: 'The vague email says nothing — "exploring opportunities" and "more information coming" generates anxiety rather than direction. The specific version names the exact tool, gives the honest pilot results, addresses the three real concerns directly (jobs, data, quality), and ends with three concrete actions due this week. Employees know exactly what is changing, why, and what they need to do. The prompt forced the writer to think through every concern before drafting.',
+          },
+          applyThisWeek: {
+            action: 'Draft the AI strategy communication you have been putting off — for your team, your board, or an all-staff update. Use AI to draft it, then ask it to critique: "What concern does this leave unanswered? What might cause this audience to be resistant?"',
+            promptTemplate: 'Write a [email/memo/presentation outline] communicating our AI strategy to [audience: board/middle managers/all staff/clients]. Context: [what we are doing, why, and what is changing]. Key concerns this audience likely has: [list the real fears]. Our ask of them: [specific action]. Tone: [honest/confident/direct]. Then critique your own draft: what is unclear, what concern is not addressed, and what might trigger resistance in this specific audience?',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last major change you led. Which group — board, middle management, or frontline — was least well-prepared for it, and how did that gap show up operationally? What would you do differently when communicating the AI strategy?',
           quiz: [
             {
               question:
@@ -831,6 +1063,35 @@ Response: make it easier to change than to stay the same. Remove friction from a
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'A senior employee who has worked at your organisation for 15 years has not adopted AI tools despite multiple training sessions and encouragement. What is the most productive first step?',
+            options: [
+              'Make AI adoption mandatory with clear performance consequences',
+              'Pair them with an AI champion who can provide hands-on support',
+              'Have a direct conversation to understand the specific root cause of their resistance',
+              'Accept that some employees will not adopt AI and focus resources on willing adopters',
+            ],
+            correct: 2,
+            explanation: 'Resistance that persists through multiple training sessions and encouragement has a root cause that training is not addressing. It may be fear, past technology trauma, genuine scepticism, or values concerns — each requiring a different response. Understanding which one requires a direct conversation. Mandating adoption without addressing the root cause produces compliance theatre; accepting non-adoption from respected senior employees signals that AI is optional.',
+          },
+          outputComparison: {
+            label: 'Responding to team AI resistance: deflection vs. direct engagement',
+            vague: {
+              prompt: 'My team is resistant to using AI. What should I do?',
+              output: 'Resistance to AI is common. Here are some tips to help:\n\n• Communicate the benefits of AI clearly\n• Provide training and support\n• Start with small, low-risk applications\n• Celebrate early successes to build momentum\n• Be patient — change takes time\n• Lead by example\n\nRemember that resistance often comes from fear of the unknown. Help your team understand that AI is a tool to support them, not replace them.',
+            },
+            improved: {
+              prompt: 'I manage a 12-person strategy consulting team. We have had AI tools available for 3 months. Adoption is split: 4 people use it enthusiastically, 5 use it sporadically, and 3 have essentially not adopted at all. The 3 non-adopters are all senior (7+ years experience), high performers who the team respects. I need to understand the root cause of their resistance and design a response. Help me: (1) diagnose the most likely root causes for senior high performers specifically, (2) design a direct but non-confrontational conversation I can have with each of them, (3) identify what I should do differently based on each possible root cause, and (4) flag the risk if I handle this wrong.',
+              output: '**Diagnosing senior high-performer resistance**\n\nThe most likely root causes for this specific group, in order of probability:\n\n1. **Identity threat** (most common): Senior consultants define their value by their analytical and synthesis capability — the exact things AI does well. AI adoption can feel like acknowledging that their expertise is replicable. This is not fear of job loss so much as professional identity challenge.\n\n2. **Quality scepticism** (genuinely held): They have high standards and have tried AI outputs that did not meet them. Their resistance may be accurate — AI may not yet be adequate for senior-level strategic work without significant prompt expertise they have not developed.\n\n3. **Social positioning**: Three respected seniors not adopting gives implicit permission to the five sporadic adopters to deprioritise it. They may not intend to set this tone, but they are.\n\n4. **Fear of being seen struggling**: Senior people avoid situations where they look incompetent. If AI has a learning curve, they may not want their fumbling visible to junior team members who pick it up quickly.\n\n**The conversation**\nDo not frame this as adoption pressure. Frame it as genuine curiosity: "I\'ve been watching how different people are finding AI, and I\'m interested in your experience specifically. You haven\'t used it much — what has your impression been when you\'ve tried it?" Then listen. The answer tells you which root cause you are dealing with.\n\n**Response by root cause**\n• Identity threat: validate their expertise as the judgment layer; position AI as handling the lower-value work so they can do more of what only they can do\n• Quality scepticism: take it seriously, co-explore whether the quality concern is real or based on insufficient prompting; offer to work through a real task together\n• Fumbling fear: offer one-on-one sessions with an expert coach, not group training\n\n**The risk if handled wrong**\nIf you mandate adoption without addressing the root cause, you get resentful compliance — they use it minimally, share nothing positive about it, and their team reads their disengagement accurately. Three senior non-adopters who become reluctant compliers are worse than three non-adopters, because they actively poison the culture around AI.',
+            },
+            insight: 'The generic tips address surface-level resistance with standard change management advice. The specific version diagnoses the particular psychology of senior high performers, designs a conversation strategy based on listening rather than persuading, and explicitly names the risk of getting the response wrong. The prompt forced the analysis that distinguishes between looking like a good manager and actually solving the problem.',
+          },
+          applyThisWeek: {
+            action: 'Identify the one person in your team or organisation whose AI resistance is most important to address. Have a genuine conversation to understand the root cause — listen more than you advocate. Then design a response specific to what you hear.',
+            promptTemplate: 'I need to address AI resistance in my team. The person I am most concerned about is: [role, tenure, performance level]. Their resistance looks like: [describe specific behaviours]. Based on this description, help me: (1) diagnose the most likely root cause, (2) draft the opening of a conversation that will help me understand the real cause without triggering defensiveness, and (3) outline three possible responses depending on what I discover.',
+            tool: 'Claude',
+          },
+          reflection: 'Who in your organisation has the most influence over whether AI adoption succeeds — positively or negatively? Are they currently an active champion, a silent sceptic, or something more complicated? What would it take to genuinely engage with their concerns rather than work around them?',
           quiz: [
             {
               question:
@@ -925,6 +1186,35 @@ To develop this network:
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You want to build an AI champion network in your organisation. What is the most effective way to identify your first champions?',
+            options: [
+              'Ask each department head to nominate their most tech-savvy team member',
+              'Select the most senior people in each function who can mandate adoption in their area',
+              'Look for people who are already experimenting with AI, asking questions, and sharing what they learn with colleagues',
+              'Run an AI skills assessment and select the highest scorers from each team',
+            ],
+            correct: 2,
+            explanation: 'Appointed champions who lack genuine enthusiasm perform the role mechanically and have no authentic credibility. Natural champions are already demonstrating the behaviours — experimenting, sharing, helping colleagues — before anyone asked them to. The leadership task is identification and investment in these natural champions, not appointment. Skill assessments and seniority find the most capable or compliant people, not the most authentically motivated.',
+          },
+          outputComparison: {
+            label: 'Champion network activation: generic launch vs. purposeful brief',
+            vague: {
+              prompt: 'Write an invitation to our AI champion network launch',
+              output: 'Subject: Join Our AI Champion Network!\n\nDear [Name],\n\nWe are excited to launch our AI Champion Network! As someone who has shown interest in AI, we would like to invite you to join this exciting initiative.\n\nAs an AI Champion, you will:\n• Help promote AI adoption in your team\n• Share knowledge and best practices\n• Support colleagues in their AI journey\n• Participate in regular champion meetings\n\nWe believe this is an exciting opportunity to be at the forefront of our AI transformation journey.\n\nPlease confirm your participation by [date].\n\nBest regards,\nThe AI Programme Team',
+            },
+            improved: {
+              prompt: 'Write a personal invitation to our first six AI champions at a 400-person financial services firm. Context: these six people were not nominated — I identified them because they are already experimenting with AI, sharing what they learn, and helping colleagues. I want to: (1) acknowledge specifically why I am inviting them (their actual behaviour, not a generic compliment), (2) be honest about what I am asking of them and what it is not, (3) explain what support they will get, and (4) give them a genuine choice about whether to take this on. The tone should feel like a real ask from a real leader, not a programme communication. From me, the COO.',
+              output: 'Subject: An ask — and a genuine choice\n\n[Name],\n\nI have been watching how you approach AI over the last few months. You tried things before anyone asked you to, you shared what you found with your team, and I know at least two people who started using AI tools because you showed them how. That is different from enthusiasm — it is the actual behaviour that makes adoption happen.\n\nI am building a small group of people like you to be more deliberate about that role. Not to become AI trainers or programme ambassadors — I am not asking you to add presentations to your diary. I am asking whether you would be willing to be more visible about what you are doing, share your experiments in a monthly peer group, and be a go-to resource for colleagues who are struggling to get started.\n\nWhat you get: access to tools and training before they roll out broadly, a direct line to me when you hit barriers I can remove, and a peer group of people doing the same thing who you can learn with.\n\nWhat I am not asking: this is not a second job. The people I am asking are already doing most of this informally. I am asking you to do it with a bit more intentionality and visibility.\n\nWould you be up for a 20-minute conversation this week to talk through what this would actually involve?\n\n[COO name]',
+            },
+            insight: 'The generic invitation could have been written by anyone about anyone — it gives no signal that the person was actually seen or chosen deliberately. The specific version acknowledges the exact behaviours that made this person visible, is honest about what the ask is and is not, and treats them as someone making a genuine choice rather than being recruited into a programme. That specificity is what makes people feel genuinely valued rather than drafted.',
+          },
+          applyThisWeek: {
+            action: 'Identify your three most natural AI champions — the people already experimenting and sharing without being asked. Have a personal conversation with each to acknowledge what you have observed and explore whether they would take on a more visible role.',
+            promptTemplate: 'Help me design a champion activation plan for my [size, industry] organisation. I have identified [number] natural champions across [functions]. My goals for the first 90 days: [what I want the champion network to do]. Help me design: (1) the initial brief for champions — what they are and are not being asked to do, (2) the support structure — what they get from the organisation, (3) one first activation task that would be high-visibility and achievable, and (4) how I will recognise their contribution in a way that feels genuine rather than performative.',
+            tool: 'Claude',
+          },
+          reflection: 'Who are the two or three people in your organisation who, if they became visibly enthusiastic about AI, would shift the culture faster than any communication or mandate you could send? What is stopping you from investing specifically in them right now?',
           quiz: [
             {
               question: 'Why are sceptic allies potentially the most valuable members of an AI change coalition?',
@@ -1016,6 +1306,35 @@ Leaders who ask "what are we learning?" and "what is not working?" create differ
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'A team member tells you: "I tried to use AI for the client briefing last week and it produced something completely wrong — I nearly sent it." What is the most valuable leader response?',
+            options: [
+              '"That is why we have review processes — make sure you always check AI outputs before sending anything to clients."',
+              '"Thanks for catching that. What went wrong with the prompt, and what did you learn about where AI needs more careful review for this type of work?"',
+              '"That is concerning — let\'s pause AI use for client-facing materials until we understand the risk better."',
+              '"These things happen at the start. Keep practising and you\'ll get better at using it."',
+            ],
+            correct: 1,
+            explanation: 'The learning response treats the near-miss as exactly what it is — valuable information about AI limitations in a specific context. It signals that sharing AI failures is safe and useful, which makes future failures more likely to be reported rather than hidden. The other responses either add shame (the review process reminder), create over-caution (pausing AI use), or dismiss the experience (keep practising). Each of these makes the team less likely to share problems early.',
+          },
+          outputComparison: {
+            label: 'Running an AI learning review: compliance check vs. genuine learning',
+            vague: {
+              prompt: 'Help me run a team meeting about our AI adoption progress',
+              output: 'Here is an agenda for your AI adoption review meeting:\n\n1. Welcome and objectives (5 mins)\n2. Overview of AI usage statistics (10 mins)\n3. Success stories from team members (15 mins)\n4. Challenges and how to overcome them (10 mins)\n5. Next steps and commitments (10 mins)\n6. Q&A (10 mins)\n\nEncourage participation by creating a safe space for questions. Celebrate successes to build momentum.',
+            },
+            improved: {
+              prompt: 'Design a 45-minute team learning review for my 8-person commercial team, 6 weeks into an AI tool rollout. I want this to feel genuinely useful, not a compliance check or a celebration. The honest context: some people are enthusiastic, some are struggling, and I suspect one person has given up but is not saying so. I want to: surface what is actually not working (not just what is), understand where the tool is falling short vs. where the user needs more support, and leave with two or three things we will change. I need the meeting design to make it psychologically safe to share problems — especially for the person who has likely given up. Include specific questions to ask and how to structure the conversation.',
+              output: '**45-Minute AI Learning Review — Design**\n\n**Opening frame (5 mins)**\nStart by naming the purpose explicitly: "I want to understand what is actually happening with AI in your work — the frustrations and limitations as much as the wins. I am going to share one thing that has not worked for me first, because I want this to be a real conversation, not a progress report."\n\nThen share your own genuine frustration or failure. Do not manufacture one. This is not theatre — it is the signal that sets the tone.\n\n**Individual experience check-in (15 mins — pairs first, then share)**\nIn pairs (2 mins each): "Tell your partner one thing AI helped with and one thing that frustrated or disappointed you this week."\nThen each pair shares the frustration — not the win. This inverts the usual social pressure to report positively and makes the struggling person\'s experience normal.\n\n**Structured problem analysis (15 mins)**\nFor the top 2-3 frustrations surfaced: run a brief root cause check. Ask: "When this happened, was the issue the prompt, the tool\'s actual capability, or something about the workflow?" This matters because the interventions are different.\n\nFor the person you suspect has given up: this structure gives them a way to surface their experience through a shared frustration rather than personal admission. Listen for passive agreement rather than sharing — that is a signal.\n\n**Two decisions (10 mins)**\nClose with two concrete changes: one thing the organisation will do differently (a workflow adjustment, a new prompt template, a revised guidance) and one thing the team will experiment with next week. Not commitments to adopt more — commitments to change the approach based on what was learned.\n\n**Your follow-up (same day)**\nSpeak privately with the person you suspect has disengaged. Name what you observed: "You seemed quieter than usual today. I want to check in — what is your honest experience with the tool so far?" Then listen without fixing.',
+            },
+            insight: 'The generic agenda produces a compliance review dressed as a learning meeting — the success stories segment in particular signals that positive reporting is what is wanted. The specific design inverts the social pressure by making frustrations the primary topic, uses pairs to reduce individual exposure, and gives the leader specific guidance on the one person they are most worried about. The psychological safety is built into the meeting design, not bolted on as an aspiration.',
+          },
+          applyThisWeek: {
+            action: 'Share a genuine AI failure or limitation from your own practice with your team — something specific that went wrong, what you learned, and what you now do differently. Then ask: "What is not working for you that I should know about?"',
+            promptTemplate: 'Help me design a short team conversation (20-30 minutes) to surface honest feedback about our AI adoption. Context: [describe your team size, how long AI has been available, and what you suspect is not being said]. I want to make it safe for people to share what is not working. Design: (1) an opening that signals genuine curiosity rather than performance review, (2) 3-4 specific questions that will surface real problems rather than polished progress, (3) how to handle it if someone shares a significant failure or expresses that they have essentially given up.',
+            tool: 'Claude',
+          },
+          reflection: 'When your team encounters a problem with AI — a wrong output, a failed workflow, a use case that does not work — do they tell you proactively, or do you find out later? What does the answer reveal about the psychological safety you have created around AI in your team?',
           quiz: [
             {
               question:
@@ -1108,6 +1427,35 @@ You cannot manage what you do not measure. AI adoption is no different. Leaders 
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Three months into your AI rollout, 25% of your team are daily users but 60% have not logged in since the first week. What is the most useful diagnostic question?',
+            options: [
+              'Are the AI tools technically functioning and accessible to all users?',
+              'Did the non-adopters complete their initial training module?',
+              'What specific barriers does the non-adopting 60% cite when asked directly?',
+              'Which team managers have the highest adoption rates in their areas?',
+            ],
+            correct: 2,
+            explanation: 'Asking the non-adopting group directly what stopped them is the most diagnostic question because barriers vary significantly by individual and function. Some will cite access issues, some skill gaps, some workload pressure, some genuine scepticism. Each barrier requires a different intervention. Understanding the distribution of barriers tells you whether you have one systemic problem to fix or multiple individual ones — and prevents you from applying the wrong solution at scale.',
+          },
+          outputComparison: {
+            label: 'AI adoption report to the leadership team: activity count vs. meaningful measurement',
+            vague: {
+              prompt: 'Write a monthly AI adoption update for my leadership team',
+              output: 'AI Adoption Update — Month 3\n\nWe are pleased to report continued progress on our AI adoption journey. This month, we have seen increased usage of our AI tools across the organisation. Training completion rates have improved, and we are receiving positive feedback from early adopters.\n\nWe continue to promote AI adoption through our champion network and regular communications. Several teams have shared success stories that demonstrate the value of AI in their day-to-day work.\n\nWe will continue to monitor progress and provide updates next month.',
+            },
+            improved: {
+              prompt: 'Write a concise monthly AI adoption update for my 8-person leadership team at a 350-person professional services firm. We are 3 months in. Give me the actual data: 87 of 220 fee earners are weekly active users (40%); 45 have not logged in since onboarding (20%); average session: 12 minutes; top tasks: email drafting (38%), research summary (29%), document review (18%); 5 client-facing outputs have been flagged for quality review (all caught by human review, no incidents). My honest assessment: progress is reasonable but we are losing the middle — the 40% who tried it once and have drifted. I need the leadership team to own acceleration in their functions, not see this as a programme update. Format: one page, structured, with one clear ask of each function leader.',
+              output: 'AI Adoption — Month 3 Leadership Brief\n\n**Where we are**\n| Metric | This month | Target |\n|--------|-----------|--------|\n| Weekly active users | 87 (40%) | 55% by month 4 |\n| Not used since onboarding | 45 (20%) | Reduce to <10% |\n| Avg session length | 12 min | — |\n| Quality incidents | 0 (5 flagged, all caught) | 0 |\n\n**What is working**\nEmail drafting and research summary are driving consistent use among the 40% who are active. Human review is functioning — no incidents.\n\n**The real challenge**\nThe 40% who tried it once and drifted. This is not a tool problem or a training problem — it is a habit formation problem. They know how to use it but have not made it part of their workflow. This group will not be reached by more communications or mandatory retraining.\n\n**What moves this group**\nPeer demonstration from someone in their immediate team. Their manager explicitly referencing AI in team meetings and 1:1s. A specific workflow where AI is the obvious tool rather than an option.\n\n**Ask of each function leader — this month**\n• Identify one person in your team who is using AI well and ask them to demo their workflow in your next team meeting\n• Reference one specific AI use case in your next 1:1 check-ins — not as a performance conversation but as a practical tool question\n• Report back: how many of your team are in the "drifted" group, and what barrier did you hear most often?\n\nNext update: Month 4 — with adoption curve breakdown by function.',
+            },
+            insight: 'The vague update is reassuring but tells leadership nothing they can act on — "continued progress" and "positive feedback" provide no decision-relevant information. The specific version gives exact numbers, an honest diagnosis of the real problem (habit formation, not awareness), identifies the specific intervention that works for the drifting middle, and ends with a concrete ask that makes each leader accountable for movement in their function. The prompt forced the honest assessment that turns a status update into a management tool.',
+          },
+          applyThisWeek: {
+            action: 'Pull the actual usage data for your AI tools this week — not self-reported adoption, but logins, session frequency, and task types. Identify the 20% who have not returned since onboarding and ask three of them directly what stopped them.',
+            promptTemplate: 'Help me design an adoption acceleration plan for my [size, industry] organisation. Current state: [describe your adoption data — active users, non-users, usage patterns]. The barrier I hear most often from non-adopters is: [describe]. The intervention I am considering is: [describe]. Challenge my thinking: what is the most common reason this intervention fails, what am I likely underestimating about this group, and what intervention has the strongest evidence for moving people from "tried once" to "regular use"?',
+            tool: 'Claude',
+          },
+          reflection: 'If you graphed AI adoption in your organisation over the next 12 months, what shape would you predict it takes — and what would have to be true for it to reach 80% regular use? Which of those conditions are you actively creating, and which are you assuming will happen on their own?',
           quiz: [
             {
               question: 'What are activity metrics in AI adoption, and why are they important?',
@@ -1204,6 +1552,35 @@ The harder version: ask whether you would be comfortable if the people most affe
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your organisation wants to use AI to personalise marketing messages based on detailed customer behavioural data. The data use is technically legal. What is the most important ethical question to ask first?',
+            options: [
+              'Will this generate sufficient revenue to justify the data processing costs?',
+              'Would our customers, if they fully understood how their data is being used, find this use consistent with their reasonable expectations?',
+              'Have we disclosed this data use in our privacy policy?',
+              'Is this practice common among our competitors?',
+            ],
+            correct: 1,
+            explanation: 'Legal permission and ethical appropriateness are not the same thing. Many data uses that are technically disclosed in privacy policies are not actually within customers\' reasonable expectations of how their data will be used. The ethical test is not whether it is permitted but whether people — if they fully understood it — would consider it fair. This is a harder standard and a more trustworthy one, and it is the standard that prevents reputational damage when practices become public.',
+          },
+          outputComparison: {
+            label: 'Ethical AI decision-making: procedural sign-off vs. principled analysis',
+            vague: {
+              prompt: 'Review the ethics of using AI in our performance management process',
+              output: 'Using AI in performance management raises several considerations:\n\n• Ensure the AI system is unbiased and fair\n• Maintain transparency with employees about how AI is used\n• Ensure human oversight of AI decisions\n• Comply with relevant data protection regulations\n• Provide employees with the right to appeal decisions\n\nWe recommend consulting with HR and Legal before implementing AI in performance management.',
+            },
+            improved: {
+              prompt: 'I am evaluating whether to use AI to assist with performance management at a 500-person company. Specifically: AI would analyse data from our project management tools, communication platforms, and CRM to generate a "performance signal" for each employee that managers see during review conversations. I need a rigorous ethical analysis — not a checklist. Assess: (1) the transparency question — what do employees know and is that sufficient? (2) the fairness question — what biases could compound at scale? (3) the accountability question — who is responsible when the AI signal is wrong? (4) the autonomy question — does this change the nature of the manager-employee relationship in ways that matter? (5) your overall assessment of whether this is ethically sound as described, and what would need to change for it to be. Be direct — do not hedge.',
+              output: '**Ethical Analysis: AI-Assisted Performance Management**\n\n**Transparency — insufficient as described**\nEmployees likely do not know the extent of data being collected or that it is being algorithmically synthesised into a signal that influences their review. "Analyse data from project management tools, communication platforms, and CRM" is surveillance-level monitoring. The question is not whether it is disclosed somewhere in policy — it is whether employees would find this use consistent with what they understood when they agreed to use those tools. Almost certainly not. Minimum requirement: explicit disclosure of what data is collected, how the signal is generated, and what managers see.\n\n**Fairness — high risk**\nCommunication platforms and CRM data encode existing biases: people who work in high-visibility roles, who are extroverted in digital communication, who work with well-documented clients get better signals regardless of actual performance quality. People on parental leave, managing complex low-documentation work, or from communication cultures that are less visible in written channels will be systematically disadvantaged. A performance signal built on these inputs does not measure performance — it measures performance-correlated visibility.\n\n**Accountability — currently diffused**\nIf a manager uses the AI signal to justify a negative review and the employee challenges it, who is accountable? The AI generated a signal from data the manager did not analyse. This creates a blame-diffusion problem: "the system showed..." is not an adequate explanation, and it insulates managers from the accountability that motivates fair judgment.\n\n**Autonomy — the most important concern**\nThe manager-employee relationship in performance management is built on the manager\'s knowledge of the person. AI signals that replace or anchor that judgment change the nature of the relationship — subtly shifting it from human assessment to algorithmic validation. Managers may feel less confident contradicting the signal even when their direct knowledge of the employee\'s work should outweigh it.\n\n**Overall assessment**\nAs described, this application is not ethically sound. The monitoring scope is likely beyond reasonable employee expectations, the bias risks are material and would compound over time, and accountability is insufficiently clear. If you want to proceed: (1) redesign with explicit employee consent and full transparency, (2) limit data to role-relevant metrics agreed in advance with each employee, (3) make the signal advisory only with documented manager override required, (4) conduct a bias audit before any performance decisions are made using it.',
+            },
+            insight: 'The generic response is a checklist that could apply to any AI application — it gives the leader permission to proceed with compliance steps without genuinely thinking through the ethical substance. The specific version applies each ethical dimension to the actual application, reaches a clear conclusion, and states specifically what would need to change. That is the analysis a leader needs to make a genuinely principled decision rather than a procedurally covered one.',
+          },
+          applyThisWeek: {
+            action: 'Choose one AI application your organisation is using or considering that affects employees or customers directly. Apply the five ethical dimensions (transparency, fairness, privacy, accountability, autonomy) and identify the dimension where your assessment is most uncomfortable.',
+            promptTemplate: 'I need an ethical analysis of this AI application: [describe the application, what data it uses, who it affects, what decisions it influences]. Apply each of these five dimensions and be direct about where the application is ethically weak: (1) Transparency — do the people affected understand how AI is being used? (2) Fairness — what biases could this introduce or amplify at scale? (3) Privacy — is this use consistent with reasonable expectations? (4) Accountability — when something goes wrong, who is responsible? (5) Autonomy — does this respect human agency? Conclude with whether you consider this ethically sound as described and what would need to change.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the AI decisions you have made or are considering. If the people most affected by those decisions — your employees, your customers, your communities — could see the full reasoning behind them, would they consider it fair and respectful? Where is the gap between your internal justification and that external view?',
           quiz: [
             {
               question:
@@ -1296,6 +1673,35 @@ AI governance that is too restrictive slows adoption to the point where the orga
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your AI governance framework is being designed. What is the most important design principle to ensure it is actually followed?',
+            options: [
+              'Make it comprehensive — cover every possible AI use case and risk scenario',
+              'Require legal and compliance sign-off before any AI application is deployed',
+              'Make it proportionate and practical — heavy governance for high-risk applications, light for low-risk ones',
+              'Mandate annual governance training for all employees who use AI tools',
+            ],
+            correct: 2,
+            explanation: 'Governance that people cannot understand or cannot practically follow creates the appearance of control without the reality. If every AI use — including a writing assistant for internal notes — requires the same level of approval as an AI system influencing credit decisions, people will route around the governance entirely. Proportionality allows governance to be genuinely rigorous where it matters while enabling experimentation where the risk is low.',
+          },
+          outputComparison: {
+            label: 'AI governance policy: compliance document vs. usable framework',
+            vague: {
+              prompt: 'Write an AI governance policy for our company',
+              output: 'AI Governance Policy\n\n1. Purpose\nThis policy establishes guidelines for the responsible use of artificial intelligence within our organisation.\n\n2. Scope\nThis policy applies to all employees, contractors, and third parties who use AI tools on behalf of the company.\n\n3. Principles\nAll AI use must be: ethical, transparent, fair, accountable, and privacy-preserving.\n\n4. Approved Uses\nAI may be used for legitimate business purposes with appropriate oversight.\n\n5. Prohibited Uses\nAI must not be used in ways that violate laws, regulations, or company values.\n\n6. Governance\nThe AI Steering Committee will oversee AI governance.\n\n7. Review\nThis policy will be reviewed annually.',
+            },
+            improved: {
+              prompt: 'Help me write a practical AI governance framework for a 250-person insurance company — not a policy document, but something that actually guides daily decisions. We need it to cover: (1) tool approvals by data sensitivity (we have three tiers of data: public, internal ops, confidential customer/claims), (2) a simple three-level risk classification for use cases with examples from our specific context — insurance, customer service, claims, underwriting, HR, (3) human review requirements for our highest-risk applications, (4) a clear incident reporting path that does not require employees to navigate a bureaucracy. Format it as something a department head could hand their team and they would actually know what to do.',
+              output: '**AI Use Framework — [Company Name]**\n*One-page reference for all employees*\n\n---\n\n**Step 1: What data are you working with?**\n\n| Data type | Examples | Approved tools |\n|-----------|---------|----------------|\n| **Public / non-sensitive** | Published reports, market data, regulatory guidance | Any enterprise-approved AI tool |\n| **Internal operations** | Process docs, internal comms, performance data | Claude Enterprise (our account), Copilot M365 |\n| **Confidential** | Customer/claimant data, financial records, medical information, legal matters | Claude Enterprise only — no exceptions |\n\n*If unsure: treat it as confidential until confirmed otherwise.*\n\n---\n\n**Step 2: What type of application is this?**\n\n| Level | Description | Examples in our context | What to do |\n|-------|------------|------------------------|------------|\n| **Standard** | AI assists a task; human decides and is responsible | Email drafting, research summary, report formatting, internal analysis | Proceed — apply your normal review standards |\n| **Elevated** | AI output influences a significant decision or is customer-facing | Claims triage recommendations, customer correspondence, underwriting flags | Human review required before any action; document the review |\n| **High-risk** | AI significantly influences decisions affecting individuals\' rights, finances, or access to service | Credit or coverage decisions, claims settlement, HR hiring/performance | Requires manager sign-off and audit trail; legal review for new applications |\n\n---\n\n**Human review requirements for our highest-risk applications**\n- **Claims decisions**: senior claims handler sign-off before any AI-influenced settlement\n- **Customer communications**: relationship owner review of all AI-drafted correspondence\n- **Hiring shortlists**: hiring manager must review 100% of applications, not just AI shortlist\n\n---\n\n**If something goes wrong**\nAI gave a wrong output that affected a customer or decision? Report to [Data Governance: name, email] within 24 hours. No blame — we need to know so we can fix it. You will not be penalised for reporting in good faith.\n\n---\n\n**Questions?** [AI Governance lead, name, Slack channel]',
+            },
+            insight: 'The generic policy says everything and nothing — "legitimate business purposes with appropriate oversight" tells an employee absolutely nothing about whether they can use ChatGPT to draft a claims summary. The specific framework answers the actual daily question every employee faces: "can I use this tool for this task?" in about 30 seconds. The usability is intentional — governance that people cannot use is governance that will not be used.',
+          },
+          applyThisWeek: {
+            action: 'Review your current AI governance documentation. Ask three people who should be following it: "If you wanted to know whether you could use AI for a specific task, how would you find out?" Their answer reveals whether your governance is usable.',
+            promptTemplate: 'Help me design a practical AI governance framework for a [size, industry] organisation. Our data classifications are: [describe]. The highest-risk AI applications we are using or considering are: [list 3-5]. Design a framework that a department head could hand their team tomorrow. Include: (1) tool approvals by data type, (2) a three-level risk classification with real examples from our context, (3) human review requirements for our highest-risk applications, (4) an incident reporting path. Format it as a one-page reference card, not a policy document.',
+            tool: 'Claude',
+          },
+          reflection: 'If every person in your organisation who uses AI tools was asked "do you know exactly which tools you are allowed to use for which types of work?" — how many would give a confident, correct answer? What is the gap between your governance intentions and the clarity that actually exists at the point of daily use?',
           quiz: [
             {
               question:
@@ -1389,6 +1795,35 @@ Leaders who approach these obligations seriously build organisations that naviga
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'What is the most credible leadership position when employees ask about AI\'s impact on their jobs?',
+            options: [
+              '"No jobs will be lost — AI makes everyone more productive, which is good for the whole organisation."',
+              '"We cannot say yet — AI is still too new to know what the impact will be, so let\'s wait and see."',
+              '"Some roles will change significantly. Here is what we know, what we do not know, and what we will do to support you through it."',
+              '"We are focused on using AI to grow the business, which should protect jobs overall."',
+            ],
+            correct: 2,
+            explanation: 'False reassurance loses credibility when reality diverges — and some roles will change significantly. Indefinite deferral leaves a vacuum that rumour fills. Growth-focused framing is accurate but does not answer the individual\'s question about their own situation. The credible position acknowledges the genuine uncertainty, names what is actually known, and commits to the support the organisation will provide. This is harder to say but builds the trust that carries people through genuine change.',
+          },
+          outputComparison: {
+            label: 'Communicating workforce impact: false reassurance vs. honest leadership',
+            vague: {
+              prompt: 'Write a communication to my team about AI and job security',
+              output: 'Subject: AI and Our Team\n\nDear Team,\n\nI want to address some of the concerns I know you may have about artificial intelligence and what it means for our work.\n\nFirst and foremost, AI is a tool to help you do your job better — not to replace you. Our organisation values every member of our team and is committed to supporting you through any changes that may come.\n\nAI will help us be more efficient and competitive, which ultimately benefits everyone. We will provide training and support to help you adapt.\n\nIf you have concerns, please speak to your manager. We are all in this together.\n\nWarm regards,',
+            },
+            improved: {
+              prompt: 'Help me write a communication to my 60-person operations team about AI\'s impact on their work. Honest context: we are deploying AI that will automate approximately 40% of the data entry and document processing that currently takes 15 of our 60 team members most of their day. We are NOT planning immediate redundancies — our intent is to redeploy those people into client relationship support, quality control, and exception handling, which is growing faster than we expected. But I cannot guarantee what the roles look like in 3 years. I need to communicate: (1) what is actually changing and when, (2) what we are NOT doing (immediate cuts), (3) what we ARE doing (redeployment plan, retraining investment), (4) what I honestly do not know, and (5) what they should do if they have concerns. No false reassurance. No jargon. From me, the Operations Director.',
+              output: 'Subject: AI in our team — what is changing, what is not, and what I do not know yet\n\nTeam,\n\nI want to be direct with you about what is happening with AI in our function, because I would rather you hear this from me than piece it together from rumour.\n\n**What is changing**\nFrom Q3, we are deploying AI that will handle most of the routine data entry and document processing in our workflow. For the 15 or so people whose work is primarily those tasks, this will change what your day looks like significantly. I want to acknowledge that directly.\n\n**What we are not doing**\nWe are not planning redundancies as a result of this. That is not a promise I can make for all time, but it is our current intention and our current plan.\n\n**What we are doing**\nThe client relationship support and quality control work in our team is growing — faster than we anticipated. Our plan is to move people who are most affected by the AI automation into those roles. We are investing in the training to make that work. I am working with HR to define what that looks like individually for everyone whose role is significantly affected, and I will have those conversations personally over the next four weeks.\n\n**What I honestly do not know**\nI cannot tell you with certainty what our team looks like in three years. AI is changing faster than any forecast I would trust, and I am not going to give you false certainty in either direction. What I can commit to: I will tell you what I know as I know it, and I will give you enough time to make informed decisions about your own career.\n\n**If you have concerns**\nCome to me directly. My door is open Thursday afternoons specifically for these conversations. I would rather talk through your situation than have you worry without the full picture.\n\n[Operations Director]',
+            },
+            insight: 'The generic communication is exactly the kind of false reassurance that erodes trust — "AI is a tool to help you, not replace you" is not credible to someone who processes documents all day and can see that AI processes documents. The specific version names the actual change (15 people\'s roles affected), states the organisational intention clearly but honestly (no immediate redundancies, not a permanent guarantee), and commits to specific support (individual conversations, training investment). It is a harder communication to send and much more trustworthy to receive.',
+          },
+          applyThisWeek: {
+            action: 'Identify the three roles in your organisation most likely to be significantly affected by AI in the next 18 months. For each, write one paragraph: what changes, what remains, and what your organisation\'s obligation is to support the people in those roles.',
+            promptTemplate: 'Help me think through the workforce implications of our AI deployment at a [size, industry] organisation. The AI applications we are deploying are: [describe]. The roles most affected are: [list]. For each affected role, help me identify: (1) specifically what tasks AI replaces and what proportion of current work that represents, (2) what work remains that requires human judgment, (3) what reskilling or role evolution path exists, and (4) what I should communicate to people in these roles and when. Be honest about where the picture is unclear.',
+            tool: 'Claude',
+          },
+          reflection: 'If the people in your organisation whose roles will change most significantly due to AI were in the room right now, what would they want to hear from you that they have not heard yet? What is stopping you from saying it?',
           quiz: [
             {
               question:
@@ -1479,6 +1914,35 @@ AI regulation is moving faster than many leaders recognise. The regulatory envir
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your organisation operates in the EU and uses AI to assist credit decisions for business customers. What does the EU AI Act most likely require?',
+            options: [
+              'Annual self-assessment and an internal AI ethics review',
+              'Registration of the system on the EU AI Act database within 12 months',
+              'A conformity assessment, technical documentation, human oversight mechanisms, and transparency obligations to affected individuals',
+              'Legal sign-off from an EU-qualified AI lawyer before deployment',
+            ],
+            correct: 2,
+            explanation: 'Credit decisions fall into the EU AI Act\'s high-risk category, which triggers a specific set of requirements: conformity assessment demonstrating the system meets safety and accuracy standards, technical documentation of how the system works, human oversight mechanisms so a person can review and override AI-influenced decisions, and transparency obligations so individuals know AI was involved and can seek explanation. These are not aspirational standards — they are legal requirements with enforcement mechanisms.',
+          },
+          outputComparison: {
+            label: 'AI regulatory readiness: surface compliance vs. structured assessment',
+            vague: {
+              prompt: 'Check if our AI use is legally compliant',
+              output: 'To ensure your AI use is legally compliant, you should:\n\n• Review your privacy policy to ensure it covers AI data processing\n• Consult with your legal team about applicable regulations\n• Ensure you have appropriate data processing agreements with AI vendors\n• Consider whether your AI use requires any specific disclosures\n• Stay updated on AI regulations in your operating jurisdictions\n\nWe recommend engaging an external AI legal specialist for a comprehensive review.',
+            },
+            improved: {
+              prompt: 'Help me conduct a structured AI regulatory readiness assessment for a 300-person UK-headquartered financial services firm that also operates in Germany and serves clients across the EU. Our current AI applications include: (1) AI-assisted credit risk scoring for SME loan applications, (2) AI customer service chatbot handling account queries, (3) AI fraud detection flagging suspicious transactions, (4) AI-assisted HR screening for job applications, (5) AI tools for internal report drafting and research. For each application: assess the likely EU AI Act risk category, identify the top two regulatory obligations that apply, and flag whether we are likely compliant or at risk based on typical implementation patterns. Then prioritise the three highest-risk compliance gaps.',
+              output: '**AI Regulatory Readiness Assessment**\n\n| Application | EU AI Act category | Top obligations | Compliance risk |\n|-------------|-------------------|-----------------|----------------|\n| Credit risk scoring | High risk | Conformity assessment; human oversight with override; transparency to applicants | HIGH — most firms lack conformity documentation |\n| Customer service chatbot | Limited risk | Must identify itself as AI to users | MODERATE — easy to fix, often not yet done |\n| Fraud detection | High risk | Human review before account action; explainability for customer challenges | HIGH — automated flags without human review are non-compliant |\n| HR screening | High risk | Conformity assessment; bias audit; human review of all applications | HIGH — virtually no standard implementation is compliant |\n| Internal drafting/research | Minimal risk | Data security obligations under GDPR; no AI Act-specific requirements | LOW — main risk is data security, not AI Act |\n\n**Three highest-priority compliance gaps**\n\n**1. HR screening (most urgent)**: Using AI in any aspect of hiring without conformity assessment and documented human review of all applications puts you in direct violation of EU AI Act high-risk requirements. This is also the area of highest enforcement activity. Action: pause AI-influenced screening pending legal review and governance design.\n\n**2. Credit risk scoring**: If AI outputs are used in any credit decision without documented human oversight and explainability mechanisms, you face significant exposure. Under GDPR Article 22, individuals also have the right not to be subject to purely automated decisions in credit contexts. Action: legal review of current implementation within 30 days.\n\n**3. Fraud detection**: Flagging transactions and taking automated action (account freeze, rejection) without human review before the action is a conformity gap. Action: implement mandatory human review step for any action that affects the customer before executing.\n\n**GDPR note**: All five applications process personal data. Confirm data processing agreements with each AI vendor cover sub-processor relationships and EU data residency requirements.',
+            },
+            insight: 'The generic advice tells the leader to get legal help without giving them the framing to even have an informed conversation with their legal team. The specific version applies the regulatory framework to each actual application, distinguishes risk levels, and produces a prioritised action list. This is the analysis that lets a leader brief their board on regulatory risk status rather than just saying "we are working on it."',
+          },
+          applyThisWeek: {
+            action: 'Create an inventory of every AI tool and application in use across your organisation — not just IT-approved tools, but what people are actually using. For each, note what data it processes and who it affects. This is the prerequisite for all subsequent regulatory work.',
+            promptTemplate: 'Help me assess the regulatory risk of this AI application: [describe the application, what data it processes, what decisions it influences, who is affected, and in which jurisdictions it operates]. Specifically: (1) what EU AI Act risk category likely applies and why, (2) what are the specific regulatory obligations this creates, (3) what does a typical implementation look like vs. what full compliance requires, and (4) what are the practical first steps to close the gap?',
+            tool: 'Claude',
+          },
+          reflection: 'Do you know with confidence every AI application in use across your organisation, what data it processes, and whether it meets applicable regulatory requirements? If the answer is no, what is your plan to get there — and what is the cost of not having that clarity?',
           quiz: [
             {
               question:
@@ -1577,6 +2041,35 @@ AI-readiness is not a destination — it is an ongoing capability. Organisations
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Your organisation scores well on AI tool access and employee enthusiasm but poorly on data quality and process clarity. What should you prioritise?',
+            options: [
+              'Deploy AI tools broadly to maintain momentum — data and process clarity can improve over time',
+              'Invest in fixing data quality and documenting processes before scaling AI applications',
+              'Focus on the applications where data quality is not critical — text generation and drafting tools',
+              'Hire a Chief AI Officer to drive the data and process readiness work',
+            ],
+            correct: 1,
+            explanation: 'AI output quality is bounded by data input quality — the most sophisticated AI model applied to inaccurate or inaccessible data produces unreliable outputs. Organisations frequently invest in AI tools before fixing data problems, then attribute poor performance to the tool rather than the foundation. Deploying AI before fixing data readiness creates early failures that undermine organisational confidence in AI, making subsequent adoption harder, not easier.',
+          },
+          outputComparison: {
+            label: 'Org design for AI: ad hoc structure vs. deliberate architecture',
+            vague: {
+              prompt: 'How should we structure our organisation for AI?',
+              output: 'To structure your organisation for AI, consider:\n\n• Appointing an AI leader or Chief AI Officer\n• Creating cross-functional AI teams\n• Building an AI Centre of Excellence\n• Ensuring all functions have AI representation\n• Investing in AI training for all employees\n• Establishing an AI governance committee\n\nThe right structure depends on your organisation\'s size, maturity, and strategic priorities. We recommend starting small and scaling as you learn.',
+            },
+            improved: {
+              prompt: 'Help me design an AI organisational structure for a 500-person B2B SaaS company. Context: we have been running AI initiatives ad hoc for 18 months with mixed results — some functions (sales, marketing) have moved fast, others (engineering, customer success) have barely started. We have no central AI ownership, no shared data infrastructure, and no standard governance. The CEO wants to move from ad hoc to systematic. I need to recommend: (1) where AI ownership should sit and what that role does, (2) how to structure the relationship between central AI capability and function-level adoption, (3) what the first 90-day priorities should be for the AI ownership role, and (4) what I should NOT do — the common mistakes in this transition. Be specific to our context.',
+              output: '**AI Organisational Structure Recommendation — 500-person B2B SaaS**\n\n**Where AI ownership should sit**\nGiven your context — fast movers in sales/marketing, slow movers in engineering/CS, no central infrastructure — the AI ownership role needs authority and cross-functional mandate. Options:\n\n*Option A (recommended)*: VP of AI or Head of AI reporting to the COO, with dotted-line relationship to the CTO for technical infrastructure. This gives you operational authority and technical credibility. The COO reporting line means every function head sees this as an operational priority, not an IT initiative.\n\n*Option B*: AI mandate added to an existing CTO or CDO role. Only works if that person has genuine capacity and cross-functional respect. Typically underperforms because AI gets subordinated to other priorities.\n\n**Central vs. function-level structure**\nDo not build a centralised AI team that "does AI" for functions — this creates dependency and slow adoption. Instead:\n• Central role: standards, data infrastructure, governance, tooling decisions, measurement, shared learning\n• Function-level: embedded AI leads or champions (1 per major function) who own adoption within their area, supported by central resources\n• This is a "hub and spoke" model — central provides the platform, functions drive the application\n\n**First 90-day priorities for the AI ownership role**\n1. Audit current state: what is actually in use, what is working, what is not, where are the data gaps\n2. Standardise the foundation: approved tool list, data classification rules, one governance framework everyone can follow\n3. Pick two functions to move from ad hoc to systematic: document what good looks like and replicate it\n4. Do not start new initiatives — fix the infrastructure for what already exists\n\n**What not to do**\n• Do not build a Centre of Excellence that becomes a bottleneck — functions will route around it\n• Do not mandate uniformity across sales/marketing (fast) and engineering (slow) — you will slow the fast and not meaningfully accelerate the slow\n• Do not announce a restructure before you have the audit — you will design for the problem you imagine, not the one you have\n• Do not hire a team before you know what you need — the first hire should be a diagnostician, not a builder',
+            },
+            insight: 'The generic advice lists common structures without any connection to the actual organisational situation. The specific version diagnoses the existing dynamic (fast and slow movers, no central infrastructure), makes a specific structural recommendation with reasoning, and explicitly names what not to do — including the common mistake of building a centralised team that becomes a bottleneck. The prompt forced the writer to think through the specific transition rather than describe generic best practice.',
+          },
+          applyThisWeek: {
+            action: 'Score your organisation on each of the five AI readiness dimensions (data, process clarity, talent capability, governance, leadership commitment) on a 1-5 scale. Identify your lowest-scoring dimension and design one concrete improvement action for the next 90 days.',
+            promptTemplate: 'Help me assess the AI organisational readiness of a [size, industry] organisation. Score us on each of these five dimensions (1-5) based on the description I give you: (1) Data readiness: [describe your data situation], (2) Process clarity: [describe how documented your key processes are], (3) Talent capability: [describe current AI skills], (4) Governance: [describe your current governance], (5) Leadership commitment: [describe visible leadership behaviour]. Then identify: which weakness would, if fixed, have the most positive knock-on effect on the others? And design one specific 90-day action for that dimension.',
+            tool: 'Claude',
+          },
+          reflection: 'If you had to bet on the one dimension of AI readiness that will most constrain your organisation\'s AI progress over the next two years — data, process clarity, talent, governance, or leadership commitment — which would it be? And what are you actually doing about it right now?',
           quiz: [
             {
               question: 'Why is data readiness the foundation of AI organisational readiness?',
@@ -1668,6 +2161,35 @@ You cannot command a learning culture. But you can create the conditions for one
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'You want to build a genuine AI learning culture in your organisation. What is the most important thing you personally need to model?',
+            options: [
+              'High AI proficiency — demonstrating advanced use cases that inspire the team',
+              'Enthusiasm — regularly communicating how excited you are about AI\'s potential',
+              'Genuine curiosity and honest sharing of both what is working and what is not in your own AI practice',
+              'Consistent communication about the strategic importance of AI learning',
+            ],
+            correct: 2,
+            explanation: 'Leaders who project expertise and enthusiasm without genuine curiosity signal that AI is something to perform competence about, not to learn through. Leaders who share honest failures and surprises from their own practice — "I expected this and got that, and here is what I think it means" — normalise the learning process and make it safe for others to be genuinely curious rather than performatively competent. Authentic engagement with the learning journey, including its awkward parts, is the most powerful cultural signal a leader can send.',
+          },
+          outputComparison: {
+            label: 'AI learning programme: mandatory training vs. embedded learning architecture',
+            vague: {
+              prompt: 'Design an AI learning programme for my team',
+              output: 'Here is a suggested AI learning programme for your team:\n\n1. Introductory AI awareness training (all staff) — 2 hours\n2. Role-specific AI skills training — 4 hours by function\n3. Advanced AI tools training for power users — 8 hours\n4. Monthly AI tips newsletter\n5. Quarterly AI showcase event\n6. Access to online AI learning resources\n\nWe recommend making the first two levels mandatory and tracking completion rates. Consider offering certificates of completion to incentivise participation.',
+            },
+            improved: {
+              prompt: 'Help me design a 12-month AI learning architecture for a 120-person marketing agency. Context: our work is inherently creative — copywriting, strategy, design, client campaigns. AI is already being used inconsistently across the agency. Our challenges: (1) our best creatives are resistant — they see AI as a threat to what makes their work valuable, (2) account managers and ops people are keen but lack direction, (3) we have no budget for external training programmes. I need a learning architecture that: uses the knowledge already in the team, builds gradually, makes learning feel connected to our actual work rather than separate from it, and addresses the creative resistance directly. Avoid mandatory training as the primary mechanism.',
+              output: '**12-Month AI Learning Architecture — 120-person Marketing Agency**\n\n**Design principles for your context**\nMandatory training is the wrong mechanism for a creative agency — it signals that AI is imposed rather than useful, which directly reinforces creative resistance. Instead: make AI learning indistinguishable from getting better at your craft.\n\n---\n\n**Month 1-2: Surface what already exists**\n\n*AI Show and Tell* (monthly, 45 mins): A rotating colleague shows one thing they have tried with AI this month — what worked, what did not, what they learned. No agenda, no slides. The rule: you must show something you tried, not something that succeeded. Start with the ops team (lower stakes) to establish the norm before creative teams join.\n\n*Creative AI Challenge* (month 2): Pair one resistant creative with one keen account manager. Give them a real brief. Each produces a version: one entirely human-created, one AI-assisted. Present both to the team (anonymised) for discussion. Purpose: not to prove AI wins, but to have an honest conversation about what AI does and does not change about creative quality.\n\n---\n\n**Month 3-6: Build embedded practice**\n\n*Workflow integration sessions* (function-specific, 60 mins): Each team identifies two tasks AI could assist and designs the workflow together. The creative team designs their own — not a version handed to them. This matters because ownership drives adoption.\n\n*Learning pairs* (self-selected): Match keen adopters with resistant ones — not to convert them, but to give resisters a safe person to experiment with. The match should be peer-level, not hierarchical.\n\n---\n\n**Month 7-12: Deepen and share**\n\n*Client campaign retrospectives*: Add one question to every campaign retrospective: "Where could AI have changed how we worked on this?" This makes AI learning part of existing practice, not additional to it.\n\n*Cross-agency showcase* (quarterly): Projects where AI played a role, presented by the team that did the work. Emphasis on what the creative team decided, not what AI produced.\n\n---\n\n**Addressing creative resistance directly**\nDo not try to persuade creative staff that AI is not a threat — engage genuinely with the concern. The most effective approach: give them ownership of defining how AI is used in their creative process. Resistance often becomes advocacy when people are the architects rather than the recipients of change.',
+            },
+            insight: 'The generic programme is a training calendar — mandatory sessions, completion tracking, certificates. This is exactly what a creative agency should not build, because it signals AI as compliance rather than craft development. The specific architecture embeds learning in existing work rhythms, uses show-and-tell to normalise failure, and directly addresses the creative resistance through co-design rather than persuasion. The prompt forced thinking about the specific culture before designing the intervention.',
+          },
+          applyThisWeek: {
+            action: 'Design one learning touchpoint for your team this month that is embedded in work rather than separate from it — a Show and Tell, a retrospective question, or a paired experiment. Run it and report back what you learn.',
+            promptTemplate: 'Help me design a sustainable AI learning architecture for a [size, industry] team with [describe the main resistance or cultural challenge]. I have [describe budget and time constraints]. Design: (1) three learning touchpoints that can be embedded in our existing work rhythms rather than added on top, (2) one mechanism to surface and share what people are already learning informally, (3) how to address [specific resistance challenge] without making it a confrontational conversation, and (4) what I should personally do to model the learning culture I want.',
+            tool: 'Claude',
+          },
+          reflection: 'In your organisation, is AI learning something that happens in formal training sessions — or something that is genuinely embedded in how your team works and reflects together? What would have to change about how you run your team for learning to become as natural as doing?',
           quiz: [
             {
               question:
@@ -1758,6 +2280,35 @@ AI leadership produces results at multiple levels: individual efficiency, team c
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'An executive reports to the board: "We have deployed AI across six functions and completed 200 hours of AI training." What is the key limitation of this update?',
+            options: [
+              'Six functions and 200 hours suggests too broad a deployment for a focused strategy',
+              'Training hours and deployment counts measure activity rather than whether AI is delivering business value',
+              'The board needs function-level breakdowns, not aggregate numbers',
+              'This update should include competitive benchmarking to contextualise the numbers',
+            ],
+            correct: 1,
+            explanation: 'Deployment breadth and training completion are activity metrics — they measure that things happened, not whether those things delivered value. A board invests in AI because they expect improved business outcomes: faster decisions, better client service, stronger competitive position. Until the update connects AI activity to those outcomes — with baseline, current state, and attribution reasoning — it is a progress report, not a performance update.',
+          },
+          outputComparison: {
+            label: 'Quarterly AI impact report to the board: activity report vs. outcome-linked update',
+            vague: {
+              prompt: 'Write a quarterly AI update for our board',
+              output: 'Q3 AI Programme Update\n\nProgress this quarter:\n• Deployed AI tools to 3 additional teams\n• Completed AI training for 85% of staff\n• Launched 4 new AI use cases\n• Established AI governance committee\n• Positive feedback from early adopters\n\nPlans for Q4:\n• Continue rollout to remaining teams\n• Launch 2 additional use cases\n• Conduct AI maturity assessment\n\nThe AI programme continues to make good progress. We remain on track to achieve our AI transformation goals.',
+            },
+            improved: {
+              prompt: 'Write a one-page board-level AI impact update for Q3 at a 400-person logistics company. Our strategic objective for AI: reduce operational cost per shipment by 8% by year-end through route optimisation and exception handling automation. Actual results: route optimisation AI is live in 3 of 6 regions, delivering 4.2% cost reduction in live regions (target was 3.5%); exception handling AI is 6 weeks behind schedule — still in testing; 78% of operations staff are weekly active AI users (target 70%); one data quality incident in region 2 caused AI route recommendations to be paused for 4 days (resolved, root cause fixed). The board needs: honest performance vs. target, a revised forecast for year-end, the exception handling delay explained and addressed, and a decision they need to make about Q4 resource allocation.',
+              output: 'Q3 AI Impact Update — Board Report\n\n**Performance vs. target**\n| Initiative | Q3 target | Q3 actual | Status |\n|-----------|-----------|-----------|--------|\n| Route optimisation — cost reduction | 3.5% in live regions | 4.2% in live regions | Ahead |\n| Route optimisation — coverage | 4 of 6 regions live | 3 of 6 regions live | Behind |\n| Exception handling AI | Testing complete | 6 weeks behind | Behind |\n| Operations staff AI adoption | 70% weekly active | 78% weekly active | Ahead |\n\n**What is working**\nIn the three live regions, route optimisation is outperforming the cost model. If we replicate this performance across all six regions, year-end cost reduction projects at 5.8% — short of our 8% target but a meaningful outcome given the current timeline.\n\n**The exception handling delay**\nTesting revealed that our exception categorisation logic had insufficient training data for our highest-complexity cases (roughly 15% of volume). We have two options: (a) deploy with manual override for complex cases — live in 4 weeks but at 70% of projected saving — or (b) invest 8 additional weeks in retraining — full deployment in Q1, full saving. Recommendation: option (a). We should not delay the 70% of saving to get the 30%.\n\n**The data quality incident**\nRegion 2 operated on flawed route data for 4 days before AI recommendations were suspended. Financial impact: £18k in suboptimal routing. Root cause: supplier data feed validation gap, now resolved. Governance response: automated data quality checks before each AI recommendation cycle now live in all regions.\n\n**Board decision required**\nTo extend to regions 4-6 in Q4, we need to confirm an additional £45k in data preparation costs (regions 4-6 have the same supplier data quality issue we found in region 2). Without this, we cannot deploy. Do we approve the additional spend?\n\n**Year-end forecast**: 5.8-6.4% cost reduction vs. 8% target, assuming Q4 funding approved and exception handling option (a) deployed.',
+            },
+            insight: 'The generic update is a list of activities with no connection to the strategic objective or business outcomes. The specific version gives the board exactly what they need: performance against a clear target, an honest explanation of what is behind and why, a recommendation on the decision they face, and a revised year-end forecast. It treats the board as a decision-making body, not an audience for progress reassurance.',
+          },
+          applyThisWeek: {
+            action: 'For your most significant AI initiative, identify the strategic business objective it serves and the specific metric that would show whether AI is actually contributing to it. Establish the current baseline so you can measure change.',
+            promptTemplate: 'Help me build an AI impact measurement framework for my organisation. Our strategic objectives are: [list 2-3]. Our current AI initiatives are: [list each with a brief description]. For each initiative, help me: (1) identify the strategic outcome it should contribute to, (2) design one operational metric that shows whether it is working, (3) identify the baseline we need to establish, and (4) design a board-level metric that connects AI activity to strategic outcome. Then help me design a quarterly update structure that gives the board decision-relevant information rather than activity reports.',
+            tool: 'Claude',
+          },
+          reflection: 'If your board asked you today "what has AI actually delivered for this organisation in the last 12 months?" — could you answer with specific, evidence-based outcomes linked to your strategic objectives? If not, what does that reveal about how you have been measuring and governing the AI programme?',
           quiz: [
             {
               question: 'Why do boards need strategic and competitive metrics rather than operational metrics?',
@@ -1845,6 +2396,35 @@ The most important next steps are concrete and small: the first AI practice you 
             ],
             tool: 'Claude (claude.ai)',
           },
+          inlineCheck: {
+            question: 'Which of the four leadership qualities identified in this lesson is most likely to determine whether your AI strategy adapts effectively over a three-year horizon?',
+            options: [
+              'Ethical clarity — it ensures every AI decision is principled and defensible',
+              'Human-centred orientation — it keeps you connected to the impact on your people',
+              'Adaptive courage — it allows you to change direction when evidence requires it, even after public commitment',
+              'Intellectual honesty — it prevents you from over-claiming on AI progress',
+            ],
+            correct: 2,
+            explanation: 'AI is evolving faster than any strategic plan can fully anticipate. Leaders who commit publicly to specific approaches and cannot change when evidence warrants it — because changing would feel like inconsistency — will make increasingly poor decisions as the landscape shifts. Adaptive courage is what makes learning from evidence possible and what allows strategy to remain relevant as reality evolves. The other qualities are essential, but without adaptive courage, none of them can update the strategy.',
+          },
+          outputComparison: {
+            label: 'Personal AI leadership development: aspirational statement vs. concrete plan',
+            vague: {
+              prompt: 'Help me develop as an AI leader',
+              output: 'To develop as an AI leader, consider:\n\n• Stay informed about AI developments through reading and industry events\n• Build your personal AI practice by using AI tools regularly\n• Develop your team\'s AI capabilities\n• Build relationships with AI experts in your network\n• Champion AI adoption in your organisation\n• Reflect on the ethical dimensions of AI decisions\n\nLeadership development is a journey. Be patient with yourself as you build new skills.',
+            },
+            improved: {
+              prompt: 'Help me design a 90-day personal AI leadership development plan. My context: I am a CFO at a 600-person manufacturing company. I approved an AI programme 12 months ago but have been largely hands-off since. My honest gaps: I have never used AI tools myself in my actual work, I am not confident when board members ask detailed questions about our AI progress, and my team would probably say I talk about AI but do not visibly do it. I want to change that in a way that is genuine, not performative. Design a 90-day plan that: addresses my credibility gap, builds a real personal practice, and helps me have better board conversations about AI. Make the actions specific and achievable for a CFO who is genuinely time-constrained.',
+              output: '**90-Day AI Leadership Development Plan — CFO, Manufacturing**\n\n**The honest assessment**\nYour credibility gap is specific: you are the sponsor of a programme you do not use personally. Your team knows this. The fix is not more advocacy — it is genuine practice that you can then speak authentically about.\n\n---\n\n**Weeks 1-2: Start with your actual work**\n\nDo not start with demos or training. Start with one real CFO task. Choose one of these this week:\n• Draft the narrative for the next board finance update in Claude, then refine it\n• Ask Claude to challenge your assumptions on a budget decision you are facing\n• Use AI to synthesise the last three competitor earnings reports before your next strategic review\n\nNote: what worked, what surprised you, what you would do differently. This is your material for the board conversation.\n\n**Weeks 3-6: Build three regular practices**\n\nChoose three recurring CFO tasks where AI becomes your standard workflow:\n1. Board pack narrative drafting (monthly) — use Claude to draft, then refine with your judgment\n2. Pre-meeting synthesis — 15 minutes of AI briefing prep before your three most important weekly meetings\n3. Scenario stress-testing — for significant financial decisions, ask Claude to argue the opposite case\n\nMeasure: by week 6, you should have a genuine example of each to share.\n\n**Weeks 7-10: Build the board confidence**\n\nYou do not need to be an AI expert to have credible board conversations — you need to be honest and informed. Prepare:\n• A one-page honest assessment of your AI programme: what has it actually delivered, what is behind, and what you would do differently\n• Three questions your board is most likely to ask, and your specific answers based on real data\n• One story from your own AI practice that illustrates a genuine insight — what you tried, what happened, what you learned\n\nAsk Claude to play a sceptical board member and challenge your answers.\n\n**Weeks 11-13: Share it**\n\nAt your next leadership team meeting, share what you have done and what you have learned — including what did not work. This single action does more for your team\'s AI culture than any communication you could send.\n\n**What to avoid**: Do not announce the plan to your team. Just do it, then share the honest account of what happened.',
+            },
+            insight: 'The generic advice is a list of good intentions with no connection to the specific person\'s situation or actual gap. The specific plan diagnoses the real credibility problem (sponsor who does not use the tools), designs actions that address the gap directly (start with actual CFO work, not demos), and explicitly prepares the person for the board conversation they are dreading. It treats the leader as a real person with a real situation, not a generic AI leadership student.',
+          },
+          applyThisWeek: {
+            action: 'Write a one-paragraph honest assessment of your AI leadership so far: what you are proud of, what you have been avoiding, and one specific thing you will do differently in the next 30 days. Share it with one person whose opinion you respect.',
+            promptTemplate: 'Help me design my personal AI leadership development for the next 90 days. My role is [title] at a [size, industry] organisation. My honest gaps are: [describe what you are not doing that you should be]. The specific situation I want to address is: [describe the credibility or capability gap]. Design: (1) the first week action that would start building genuine practice (not a training course, a real use of AI in my actual work), (2) three practices I can build into my regular workflow, (3) how I prepare for the specific board/team conversation I am least confident about. Make actions specific and achievable given a time-constrained senior role.',
+            tool: 'Claude',
+          },
+          reflection: 'When you look back on your leadership career in ten years, how do you want to have navigated the AI era? Not in terms of initiatives launched or programmes delivered — but in terms of how you treated your people through the uncertainty, how honest you were about what you did not know, and what kind of organisation you left behind.',
           quiz: [
             {
               question:

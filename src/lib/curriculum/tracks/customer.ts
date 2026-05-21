@@ -68,6 +68,35 @@ With AI handling signal monitoring, preparation, and communication drafting, you
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A CSM with 80 accounts wants to start using AI. Which task should they try first?',
+            options: [
+              'Automating the annual renewal conversation to save time on a high-stakes call',
+              'Generating account preparation summaries before every customer call using available CRM and usage data',
+              'Letting AI respond directly to customer emails to increase response speed',
+              'Using AI to replace the kick-off call with new customers to reduce onboarding time',
+            ],
+            correct: 1,
+            explanation: 'Account preparation is the ideal starting point because it is high-volume, heavily data-driven, and low-relationship-risk. A CSM still reviews and adds context before every call — AI just compresses the data-gathering phase from 30 minutes to 5. Automating renewal conversations, direct customer emails, or kick-off calls introduces relationship risk before you have built confidence in AI-assisted workflows.',
+          },
+          outputComparison: {
+            label: 'Account preparation: raw data dump vs. structured AI synthesis',
+            vague: {
+              prompt: 'Summarise this customer account for me',
+              output: 'This is a customer account. They have been using your product and have some activity. You should check in with them and see how things are going. Review their usage data and consider scheduling a call.',
+            },
+            improved: {
+              prompt: 'Summarise the current state of this account for a 30-minute check-in call tomorrow. Customer: Hartfield Solutions, 200-person manufacturing company, $48k ARR, 18 months in. Data: health score dropped from 82 to 67 over 90 days; daily active users down 28%; the automation module (their primary use case) hasn\'t been accessed in 5 weeks; 3 support tickets in the past month (all about the reporting dashboard); last call was 6 weeks ago with Sarah (our champion). Output: current health summary, top 2 risks to address, 3 questions to ask on the call, and any open action items I should follow up on.',
+              output: 'Health Summary: Hartfield is showing moderate risk. Health score has declined 15 points over 90 days, driven primarily by a significant drop in automation module usage — their core use case. This is concerning given that automation ROI was the primary value proposition at renewal.\n\nTop Risks:\n1. Automation module abandonment — 5 weeks of zero usage suggests either a technical barrier, a process change internally, or a loss of the person who was driving adoption\n2. Champion gap — 6 weeks since your last call with Sarah; 3 recent support tickets suggest friction without a clear resolution path\n\nCall Questions:\n1. "What changed with the automation workflows in the last month or two — is the team still running them?" (diagnose usage drop without triggering defensiveness)\n2. "Who is managing the automation process day-to-day now?" (identify if Sarah is still the right contact)\n3. "The reporting dashboard tickets — are those blocking the team from getting data they need?" (connect support friction to the health risk)\n\nOpen Action Items: Resolve 3 outstanding support tickets before or during the call.',
+            },
+            insight: 'The vague prompt produces advice a CSM already knows without adding any value. The specific prompt — with actual data points, the anomaly that matters (automation module abandonment), and the relationship gap — produces a structured brief that walks into the call already knowing what to look for. The output names specific risks and gives the CSM diagnostic questions, not generic conversation starters.',
+          },
+          applyThisWeek: {
+            action: 'Before your next 3 customer calls, run a preparation prompt and compare the quality of context it gives you to your usual manual process. Note what the AI caught that you hadn\'t prioritised.',
+            promptTemplate: 'Summarise the current state of this account for a [call type] tomorrow. Customer: [company name], [company description], [ARR], [months/years in]. Data: [health score and trend], [usage summary], [recent support tickets], [last interaction date and with whom]. Output: current health summary, top 2 risks, 3 questions to ask on the call, and open action items.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a customer you lost to churn in the past year. Looking back at the 90 days before they left, what signals were there in your data that you didn\'t connect at the time? How would a weekly AI-generated account summary have changed what you noticed — and when?',
           quiz: [
             {
               question: 'Which customer success task benefits most from AI assistance?',
@@ -155,6 +184,35 @@ Before adding any tool, ask: what does this connect to? How will I actually use 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your CS team is evaluating two AI tools: Tool A has powerful features but requires copying data manually from your CRM and CS platform. Tool B has fewer features but connects directly to both. Which should you choose and why?',
+            options: [
+              'Tool A — more features always produce better outcomes for the CS team',
+              'Tool B — integration with existing systems reduces friction and increases the chance CSMs actually use it daily',
+              'Tool A — the team can build a process around the manual data copying',
+              'Neither — you should wait for a tool that integrates with everything automatically',
+            ],
+            correct: 1,
+            explanation: 'The best AI tool is the one that gets used consistently, not the one with the most features. A brilliant tool that requires manual data transfer between systems adds friction at exactly the moment a CSM is already busy — before a customer call or during a hectic week. Tools embedded in existing workflows have dramatically higher adoption. A moderately featured tool used every day beats a powerful tool used rarely.',
+          },
+          outputComparison: {
+            label: 'Tool selection advice: generic vs. stack-aware recommendation',
+            vague: {
+              prompt: 'What AI tools should a customer success team use?',
+              output: 'Customer success teams can benefit from many AI tools. Consider using ChatGPT or Claude for writing emails. Salesforce has AI features. You might also look at Gong for call recording. There are many options depending on your needs and budget.',
+            },
+            improved: {
+              prompt: 'Our CS team uses Gainsight for health scoring, HubSpot as our CRM, and Gmail for customer communication. We have 8 CSMs managing 150 accounts each. Our biggest time sinks are QBR preparation (2 hours per account) and writing personalised outreach. We don\'t currently use call recording. What AI tools or capabilities should we prioritise and in what order, given our existing stack?',
+              output: 'Given your stack, here\'s a prioritised approach:\n\n1. Immediate (this week): Use Claude or ChatGPT for QBR prep and outreach drafting — your biggest time sinks. Build a shared prompt library for the 5 most common scenarios. Estimated saving: 60–90 minutes per QBR.\n\n2. Short-term (this quarter): Audit Gainsight\'s native AI features — specifically whether their AI health scoring and automated playbooks are enabled. Many teams pay for these and don\'t use them. Check HubSpot\'s AI email drafting feature as well.\n\n3. Medium-term: If your CSMs are running 10+ calls per week, evaluate Gong. At 150 accounts per CSM, call intelligence will compound quickly — AI summaries of every call plus risk flag identification.\n\nSkip: standalone AI tools that don\'t connect to Gainsight or HubSpot. The data transfer friction will kill adoption within 3 weeks.',
+            },
+            insight: 'The vague answer lists tools without any context about what the team already has or what their actual problems are. The specific answer maps tools to the existing stack, prioritises by time-to-value, and includes an explicit warning about what to avoid. It treats the question as a workflow design problem, not a product recommendation question.',
+          },
+          applyThisWeek: {
+            action: 'Audit your current CS tool stack and identify which AI features you\'re already paying for but not using. Run one QBR prep or customer email through Claude and compare the time spent to your usual process.',
+            promptTemplate: 'Our CS team uses [list your tools: CS platform, CRM, communication tools, call recording]. We have [X] CSMs managing [Y] accounts each. Our biggest time sinks are [list 2-3]. What AI features in our existing tools should we enable first, and what gaps should we fill with a general-purpose AI like Claude?',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time your team adopted a new tool that didn\'t stick. What made adoption fail? Now think about your current AI tool experiment — what would need to be true about the workflow for every CSM on your team to use it every single week without being reminded?',
           quiz: [
             {
               question: 'What is the most important criterion when selecting an AI tool for a CS team?',
@@ -238,6 +296,35 @@ The key is defining the actions before you build the monitoring — otherwise AI
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You survey your customers quarterly and 80% rate satisfaction as "good" or "excellent." Yet your churn rate is 18% annually. What is the most likely explanation?',
+            options: [
+              'Your survey sample size is too small to produce accurate results',
+              'Self-reported satisfaction data doesn\'t reflect actual usage behaviour — customers who say they\'re satisfied are still churning because they\'re not getting enough value in practice',
+              'Your churn rate calculation is incorrect and needs to be recalibrated',
+              'Your product has a bug that causes churn after customers complete the survey',
+            ],
+            correct: 1,
+            explanation: 'This is the classic self-reported vs. behavioural data gap. Customers often rate satisfaction positively even when their actual usage patterns reveal low engagement. They may feel positive about the product concept while barely using it — and when renewal time comes, the budget conversation reveals they can\'t justify the cost. Behavioural data (login frequency, feature usage, seat utilisation) would have shown you the real picture months earlier.',
+          },
+          outputComparison: {
+            label: 'Churn risk identification: symptom-level vs. data-grounded analysis',
+            vague: {
+              prompt: 'Which of my customers are most at risk of churning?',
+              output: 'To identify customers at risk of churning, look for customers who haven\'t logged in recently, have low satisfaction scores, or have raised support tickets. You should also check if they are close to renewal. Consider reaching out to any customer who seems disengaged.',
+            },
+            improved: {
+              prompt: 'Based on the following data for my 40-account portfolio, identify the top 5 churn risks and explain the specific signal combination that flags each one. Data: [Company, Health Score, DAU/MAU Ratio, Last Login, Core Feature Usage, Support Tickets (30 days), NPS Score, Months to Renewal]. Prioritise accounts where behavioural signals (usage, logins) conflict with self-reported signals (NPS) — these are the ones where customers say they\'re happy but aren\'t actually using the product.',
+              output: 'Top 5 Churn Risks (ordered by signal strength):\n\n1. Nexus Corp — Health: 71, DAU/MAU: 0.12, Core Feature: not used in 34 days, NPS: 8. ALERT: Classic "happy but not using" profile. NPS masks very low engagement. Renewal in 4 months — not enough time to rebuild usage habits if you don\'t act this week.\n\n2. BlueLine Partners — Health: 58, DAU/MAU: 0.31, Support tickets: 7 (up from 2 last month), NPS: 6. ALERT: Support spike combined with declining health. 7 tickets in 30 days suggests a friction point that\'s frustrating the team. Needs root cause investigation before renewal conversation.\n\n3. [continues with accounts 3-5 with similar specificity]\n\nNotes: 3 accounts show the behavioural/self-report conflict you flagged — all have NPS ≥7 but DAU/MAU under 0.20. These are your highest-risk false positives in renewal forecasting.',
+            },
+            insight: 'The vague answer gives generic advice that any CSM already knows. The specific answer processes the actual portfolio, ranks accounts by specific signal combinations, and flags the most dangerous pattern — accounts where customers claim satisfaction but behaviour tells a different story. That last category is where optimism bias in renewal forecasting hits hardest.',
+          },
+          applyThisWeek: {
+            action: 'Pull behavioural data (login frequency, core feature usage) for your top 10 accounts by ARR. For any account where NPS or verbal feedback is positive but usage is declining, flag it as a hidden churn risk and schedule a proactive call.',
+            promptTemplate: 'Here is usage and sentiment data for [X] accounts in my portfolio: [paste data table with: company, health score, login frequency, core feature usage, NPS or CSAT, months to renewal]. Identify accounts where self-reported satisfaction conflicts with behavioural signals. Rank by churn risk and explain the specific signal combination for each flagged account.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last customer who churned unexpectedly — one that surprised you. Looking back, what were the behavioural signals (not what they said, but what they did) that you had access to but didn\'t act on? What would you need to track differently to catch that pattern 90 days earlier?',
           quiz: [
             {
               question: 'Why is behavioural data more reliable than self-reported data for churn prediction?',
@@ -310,6 +397,35 @@ Automation serves scale. Use judgment for the moments that define the relationsh
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You want to build an AI workflow for your CS work. Which approach will save the most time with the least relationship risk?',
+            options: [
+              'Use AI to send automated renewal reminders directly to customers without CSM review',
+              'Use AI to draft the preparation brief before every customer call, which you review and add relationship context to before the call',
+              'Use AI to write and send all customer emails without review to maximise efficiency',
+              'Use AI to decide which customers need attention so you don\'t have to monitor your portfolio',
+            ],
+            correct: 1,
+            explanation: 'The preparation pattern is the highest-value, lowest-risk AI workflow in CS because it compresses a data-gathering and synthesis task — not a relationship task. The CSM still owns the call and the relationship; AI just ensures they walk in fully briefed. Automating customer-facing communications without review, or letting AI make portfolio prioritisation decisions without oversight, introduces risks that outweigh the time savings.',
+          },
+          outputComparison: {
+            label: 'Weekly portfolio review: manual triage vs. AI-structured priority view',
+            vague: {
+              prompt: 'Help me review my CS accounts for the week',
+              output: 'To review your accounts, start by checking your health scores and look for any that have dropped recently. Reach out to customers who haven\'t been active. Make sure to follow up on any open action items from previous calls. Prioritise accounts with upcoming renewals.',
+            },
+            improved: {
+              prompt: 'Help me structure my CS week. I have 65 accounts. Here is a summary of signals from this week: [3 accounts with health score drops >10 points, 2 accounts with support ticket spikes, 1 account whose champion just left the company, 2 accounts with renewals in 30 days, 1 account that just hit a major usage milestone]. Rank my priorities for this week and suggest the right action and channel for each. Flag anything that needs immediate attention vs. can wait until end of week.',
+              output: 'Weekly Priority Stack:\n\n🔴 IMMEDIATE (act today):\n1. Champion departure account — email today, call tomorrow. Champion change is your highest churn risk signal. Goal: identify new stakeholder before momentum is lost.\n2. Account with renewal in 30 days + health score drop — call this week. Don\'t let this hit the final renewal conversation without addressing the health issue first.\n\n🟡 THIS WEEK (by Thursday):\n3-4. Two support ticket spike accounts — diagnose the tickets first, then decide: if it\'s a product issue, loop in support; if it\'s a training gap, schedule a working session.\n5-6. Two accounts with health drops >10 — review usage data to understand cause before reaching out. Don\'t call without knowing why.\n\n🟢 OPPORTUNITY (positive action):\n7. Usage milestone account — send a congratulations email today and use it as a natural opening for an expansion conversation.\n\n✅ STANDARD RENEWAL (second account): Renewal in 30 days with stable health — send standard renewal prep email, schedule QBR.',
+            },
+            insight: 'The vague answer restates what every CSM already knows. The specific answer takes actual signals from the week and produces a ranked action plan with clear urgency labels, recommended channels, and the diagnostic step to take before the outreach. It turns a scattered list of signals into a structured workweek.',
+          },
+          applyThisWeek: {
+            action: 'At the start of next Monday, run a weekly portfolio review prompt before you open your email. Compare how your AI-structured priority list differs from what you would have prioritised manually. Note any surprises.',
+            promptTemplate: 'Help me structure my CS week. I have [X] accounts. Here are signals from this week: [list health score changes, support ticket spikes, champion changes, upcoming renewals, usage milestones, and any other notable events]. Rank my priorities and suggest the right action and channel for each. Flag what needs immediate attention vs. can wait until end of week.',
+            tool: 'Claude',
+          },
+          reflection: 'You\'re juggling 70 accounts. Which ones are you most likely to under-serve this week — not because you don\'t care, but because nothing loud has happened with them? How would a weekly AI-generated portfolio review change which customers get your attention?',
           quiz: [
             {
               question: 'Which customer interaction should NOT be handled with an AI-drafted communication?',
@@ -393,6 +509,35 @@ The goal of a health score is early warning — ideally 60–90 days before a re
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your health score drops to red one week before a customer sends a cancellation notice. What does this tell you about your health model?',
+            options: [
+              'The health model is working correctly — it identified the problem',
+              'The health model is using lagging indicators that confirm churn is already happening rather than predicting it early enough to intervene',
+              'The customer cancelled unexpectedly and no model could have predicted it',
+              'The health score threshold needs to be set lower to trigger alerts earlier',
+            ],
+            correct: 1,
+            explanation: 'A health score that drops the week before cancellation is a lagging indicator — it confirms a decision the customer has already made, not a signal you can act on. Effective health models are built on leading indicators that change 60–90 days before churn risk materialises: feature adoption decline, dropping DAU/MAU ratios, champion disengagement. If your score drops days before the call, the model is retrospective, not predictive.',
+          },
+          outputComparison: {
+            label: 'Health score design: equal-weighted vs. signal-calibrated model',
+            vague: {
+              prompt: 'Help me build a customer health score',
+              output: 'A customer health score typically includes metrics like: NPS score, product usage, support ticket volume, contract size, and customer feedback. You can weight each of these equally or based on what seems most important. Aim for a score between 0 and 100 where 70+ is healthy.',
+            },
+            improved: {
+              prompt: 'Help me redesign our customer health score. We\'re a B2B SaaS company selling project management software to mid-market companies. Our current model equally weights: NPS (20%), login frequency (20%), support tickets (20%), training completion (20%), and contract renewal date (20%). Last year, 40% of churned accounts had a health score above 70 the quarter before they churned. Help me identify which signals to weight more heavily, which to deprioritise, and what we\'re likely missing that would catch at-risk accounts earlier.',
+              output: 'Your 40% false-negative rate suggests your model is over-weighting lagging signals. Here\'s an analysis:\n\nOver-weighted signals:\n— NPS: captures stated satisfaction, not behaviour. Keep it in the model at a lower weight (10%) as a sentiment check, but don\'t let it mask usage decline\n— Renewal date: this is not a health signal, it\'s a timing parameter. Remove from health scoring entirely and use it for renewal prioritisation separately\n\nUnder-weighted signals:\n— Login frequency: increase weight, but also look at who is logging in — if your power user left and only the admin is logging in, that\'s a critical risk signal you may be missing\n— Feature adoption depth: which specific features are they using? For project management tools, customers who only use basic task creation and never adopt reporting, automation, or integrations are much higher churn risk\n\nMissing signals to add:\n— Champion/economic buyer engagement: is the person who approved the purchase still active? Champion change is one of the highest churn predictors in B2B SaaS\n— Seat utilisation: what % of purchased seats are active? Under 60% utilisation is a strong churn predictor\n— Time since last value conversation: when did you last have a call where the customer articulated an ROI or business outcome?',
+            },
+            insight: 'The vague answer gives a generic template that won\'t fix the 40% false-negative problem. The specific answer diagnoses exactly what\'s wrong with the current model — which signals are lagging vs. leading — and adds the champion engagement and seat utilisation signals that are consistently strong churn predictors in B2B SaaS. The output is a redesign brief, not just advice.',
+          },
+          applyThisWeek: {
+            action: 'Look at your 5 most recent churned accounts and compare their health scores in the 90 days before they churned. Identify whether your health model was showing risk at 90, 60, or 30 days out — or only at the end. Use this to identify your most important lagging-to-leading signal improvement.',
+            promptTemplate: 'Here is our current customer health score formula: [list signals and their weights]. Here is what our churn data shows for the past [X] months: [describe patterns — when health scores dropped relative to churn, which signals changed first]. Identify which signals are likely lagging indicators, which are leading, and what signals we should consider adding to catch risk earlier. Our product is [describe] and our customers are [describe].',
+            tool: 'Claude',
+          },
+          reflection: 'If you had to reduce your health score to just three signals that most reliably predict which accounts will churn in the next 90 days — based on everything you\'ve seen in your portfolio over the past two years — what would those three signals be? How does that compare to what your current model actually measures?',
           quiz: [
             {
               question: 'What is the difference between a leading health indicator and a lagging health indicator?',
@@ -462,6 +607,35 @@ Every intervention outcome — whether the account was retained or churned — i
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'AI flags an account as at-risk. The customer\'s champion left 8 weeks ago, usage is slightly down, and no CSM has spoken to the new contact. The renewal is in 5 months. What is the most effective first intervention?',
+            options: [
+              'Send a renewal reminder email to ensure the new contact is aware of the upcoming renewal date',
+              'Reach out to the new contact to introduce yourself, understand their priorities, and rebuild the relationship before the renewal conversation',
+              'Offer a discount proactively to make the renewal decision easier for the new contact',
+              'Escalate internally to sales and ask them to handle the renewal given the champion change',
+            ],
+            correct: 1,
+            explanation: 'A champion change is a relationship reset, not a commercial problem. The new contact doesn\'t know you, hasn\'t built the same trust in the product, and may have different priorities than their predecessor. The intervention needed is relationship building — introducing yourself, understanding their goals, and demonstrating value before any renewal conversation happens. Jumping to a discount or renewal reminder treats a relationship problem as a commercial one.',
+          },
+          outputComparison: {
+            label: 'Churn intervention plan: generic action vs. cause-specific strategy',
+            vague: {
+              prompt: 'Write a churn intervention plan for an at-risk account',
+              output: 'For an at-risk account, you should: 1) Schedule a call with the customer, 2) Review their usage data, 3) Ask about their experience, 4) Offer to help them get more value from the product, 5) Consider a discount if needed. Make sure to follow up regularly.',
+            },
+            improved: {
+              prompt: 'Create a churn intervention plan for Meridian Group (180-person legal services firm, $72k ARR, renewal in 110 days). Risk profile: their main champion (David, Head of Operations) was promoted to COO 6 weeks ago. His replacement (Priya) joined 3 weeks ago and has never spoken to us. Usage has dropped 22% since the transition. The team is still using the product but only basic features — document generation, not the workflow automation that was David\'s main expansion project. No QBR has happened in this quarter. Identify the root cause of risk and give me a week-by-week intervention plan for the next 6 weeks.',
+              output: 'Root Cause: Champion transition + stalled expansion project. This is not a product-fit risk — the team is still using the product. The risk is that Priya doesn\'t yet see the value David saw, the automation project may have died with David\'s exit, and no one has made the case for renewal to the new decision-maker.\n\nWeek 1: Priya introduction call\n— Goal: relationship, not renewal. Learn her priorities, understand whether she inherited David\'s expansion roadmap or is resetting it. Don\'t mention renewal yet.\n— Preparation: review Priya\'s LinkedIn, understand her background, have David\'s automation project documentation ready in case she asks about it.\n\nWeek 2-3: Re-establish value\n— If automation project is still relevant to Priya, offer a working session to review the project David was building and show what\'s already been configured.\n— If she has different priorities, pivot: what does she care about that the product can address?\n\nWeek 4: QBR with Priya (and David if he\'ll attend as COO)\n— Show usage data and value delivered, frame around what Meridian has achieved, not just what features they use.\n— This is your renewal conversation — but only if weeks 1-3 have established trust.\n\nWeek 5-6: Renewal discussion\n— By this point Priya should have a view of the value. Present renewal as a decision she is making with full context, not a transaction.',
+            },
+            insight: 'The generic plan could apply to any at-risk account. The specific plan diagnoses the exact risk (champion transition, not product fit) and builds an intervention sequence timed to the relationship rebuild needed before any commercial conversation makes sense. The week-by-week structure respects the fact that Priya needs to trust the product before she\'ll sign a renewal.',
+          },
+          applyThisWeek: {
+            action: 'Identify one account currently flagged as at-risk in your portfolio. Before reaching out, write down your hypothesis for WHY they\'re at risk (not just THAT they are), then use AI to design an intervention plan that matches that specific root cause.',
+            promptTemplate: 'Create a churn intervention plan for [company name] ([size, industry], [ARR], renewal in [X] days). Risk profile: [health score, usage trend, champion status, last interaction]. Root cause hypothesis: [value not realised / champion change / product fit issue / budget pressure / competitive threat]. Give me a [X]-week intervention plan with specific actions, goals for each interaction, and what success looks like before the renewal conversation.',
+            tool: 'Claude',
+          },
+          reflection: 'Of the accounts you\'ve lost to churn in the past 18 months, what proportion were genuinely surprising vs. accounts where you had a nagging feeling something was off? For the ones where you sensed risk, what stopped you from acting earlier — and what would a structured AI-flagged intervention plan have changed?',
           quiz: [
             {
               question: 'Why is it important to identify WHY an account is at risk, not just THAT it is at risk?',
@@ -538,6 +712,35 @@ For highest impact, prioritise triggered outreach sequences over scheduled ones.
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You want to set up automated outreach for customers who haven\'t used a key feature after 45 days. Which approach will get the best response rate?',
+            options: [
+              'Send a generic "you haven\'t tried Feature X yet" email to everyone who meets the criteria',
+              'Trigger a personalised email that references the customer\'s specific use case and explains how Feature X solves a problem relevant to their industry and goals',
+              'Call every customer who hasn\'t used the feature within 24 hours of hitting 45 days',
+              'Wait until the next scheduled QBR to mention it, to avoid seeming pushy',
+            ],
+            correct: 1,
+            explanation: 'Automated outreach only works when it feels relevant to the specific customer. An email that says "you haven\'t tried Feature X" signals that you\'re monitoring their activity without showing you understand them. An email that says "customers in your industry use Feature X to solve [specific problem] — here\'s how it applies to what you\'re trying to achieve" demonstrates understanding. The trigger fires the email; the personalised context determines whether it gets a reply.',
+          },
+          outputComparison: {
+            label: 'Feature adoption nudge: scheduled blast vs. triggered personalised outreach',
+            vague: {
+              prompt: 'Write an email to a customer who hasn\'t used our analytics feature',
+              output: 'Subject: Have you tried our Analytics feature?\n\nHi [Name],\n\nWe wanted to let you know about our Analytics feature, which can help you get more insights from your data. Many customers find it very useful for tracking their progress.\n\nWould you like to schedule a demo to see how it works?\n\nBest,\n[CSM Name]',
+            },
+            improved: {
+              prompt: 'Write a feature adoption email for Claire at Brightway Consulting (50-person strategy consultancy, uses our platform for project tracking and client reporting). She\'s been a user for 4 months but hasn\'t touched the Analytics dashboard. Her team\'s main goal is reducing the time they spend on monthly client reports. The Analytics dashboard auto-generates the kind of progress summaries they currently build manually in PowerPoint. Tone: direct and useful, not sales-y. Under 120 words.',
+              output: 'Subject: Your monthly client reports — there\'s a faster way\n\nClaire,\n\nYour team is still building client progress reports manually — I saw the Analytics dashboard hasn\'t been set up yet.\n\nIt auto-generates exactly what you\'re creating in PowerPoint: milestone progress, budget tracking, timeline status. Consultancies like yours are cutting report prep from 3 hours to 20 minutes per client.\n\nTakes about 15 minutes to configure for your first project. Want me to walk you through it on a quick call, or would a setup guide be more useful?\n\n[CSM Name]',
+            },
+            insight: 'The generic email could have been written by anyone who knew the feature existed. The specific email proves the CSM knows what Claire\'s team does and what they\'re losing time on — and makes a direct, quantified case for trying the feature. The call-to-action offers a choice, which reduces friction. This email gets a reply because it\'s written for Claire\'s actual situation.',
+          },
+          applyThisWeek: {
+            action: 'Identify one customer who hasn\'t adopted a feature that would clearly benefit them given their use case. Draft a targeted adoption email using AI that references their specific goals and the concrete outcome the feature delivers. Compare it to your usual check-in email.',
+            promptTemplate: 'Write a feature adoption email for [contact name] at [company] ([size, industry]). They\'ve been a customer for [X months] but haven\'t used [feature name]. Their primary use case is [describe]. Their main goal is [specific outcome they told you]. This feature would help them by [specific benefit relevant to their goal]. Tone: [direct/helpful/consultative]. Under [X] words. Include a low-friction call-to-action.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last automated email your CS platform sent on your behalf. Would you have sent that exact message if you were writing it manually for that specific customer? If not, what was missing — and how would adding that context have changed the response rate?',
           quiz: [
             {
               question: 'What makes AI-personalised outreach genuinely feel personal rather than generic?',
@@ -608,6 +811,35 @@ AI can process your entire renewal portfolio and produce a stratified view: acco
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You forecast 95% renewal confidence for a key account because you have a strong relationship with the champion. AI analysis of the same account flags medium-high risk based on declining usage data. What should you do?',
+            options: [
+              'Trust your forecast — your relationship knowledge is more accurate than usage data for renewals',
+              'Investigate the gap: the relationship may be strong while the product adoption is weak, which is exactly the pattern that leads to surprise churn at renewal',
+              'Override the AI flag and remove it from the at-risk list — relationship signals are more important',
+              'Immediately offer a discount to secure the renewal before the risk worsens',
+            ],
+            correct: 1,
+            explanation: 'A strong champion relationship and weak product adoption is one of the most common surprise churn patterns in SaaS. The champion may like you personally and still not be able to justify the renewal to a CFO who sees low usage ROI. When your relationship confidence and usage data diverge, that gap deserves investigation — not dismissal. The goal is to validate whether the relationship truly overrides the risk signal, not to assume it does.',
+          },
+          outputComparison: {
+            label: 'Renewal pipeline review: gut-feel classification vs. data-calibrated assessment',
+            vague: {
+              prompt: 'Review my renewal pipeline and tell me which accounts are at risk',
+              output: 'To assess your renewal pipeline, look at each account\'s health score and your confidence level. Accounts with low health scores are at risk. Make sure you have a plan for each renewal and are in regular contact with your customers.',
+            },
+            improved: {
+              prompt: 'Review this renewal pipeline for the next 90 days and flag where my CSM confidence diverges from the data signals. For each divergence, identify the most likely reason and what I should do before the renewal conversation. [Table: Company, ARR, Health Score, Usage Trend, Champion Status, CSM Confidence, Days to Renewal]\n\nAcorn Digital: $85k, Health 78, Usage stable, Champion active, CSM: high confidence, 45 days\nClearpath Inc: $120k, Health 72, Usage -18%, Champion changed 2 months ago, CSM: high confidence, 60 days\nDelta Works: $34k, Health 55, Usage -30%, Champion active, CSM: medium, 75 days\nEcho Systems: $210k, Health 88, Usage +12%, Champion active, CSM: high, 90 days',
+              output: 'Divergence Analysis:\n\n🔴 HIGH CONCERN — Clearpath Inc ($120k, 60 days)\nYou\'re high confidence but: usage is down 18% AND champion changed 2 months ago. This is the classic false-confidence pattern. New champion doesn\'t know you, doesn\'t know the product, and will be making the renewal decision based on data you haven\'t shown them yet. Recommend: move this to active attention NOW — you have 60 days to build a relationship with the new champion, not 60 days to watch and hope.\n\n⚠️ VALIDATE — Delta Works ($34k, 75 days)\nUsage at -30% with medium confidence is appropriate, but -30% is significant. Root cause matters: is this seasonal, a headcount change, or disengagement? One call to diagnose this will tell you whether this is recoverable.\n\n✅ CONFIRM — Acorn Digital, Echo Systems\nBoth look aligned between health signals and your confidence. Echo Systems with +12% usage is your strongest renewal — consider timing an expansion conversation alongside the renewal discussion.',
+            },
+            insight: 'The vague answer produces generic guidance. The specific answer processes actual account data and flags the exact divergence that matters most — Clearpath, where high CSM confidence masks a champion change plus usage decline. That\'s the account most likely to become a surprise churn, and the one that deserves immediate attention despite the CSM\'s optimism.',
+          },
+          applyThisWeek: {
+            action: 'List your 10 upcoming renewals in the next 120 days. For each, write your confidence level (high/medium/low) and the primary data signals (health score, usage trend, champion status). Run them through an AI divergence analysis and identify where your confidence and your data tell different stories.',
+            promptTemplate: 'Review this renewal pipeline and flag where my confidence diverges from the data signals. For each divergence, tell me what might explain the gap and what I should do before the renewal conversation. [Paste table: Company, ARR, Health Score, Usage Trend (% change), Champion Status, My Confidence Level, Days to Renewal]',
+            tool: 'Claude',
+          },
+          reflection: 'Think about your renewal forecast for this quarter. Which accounts are you most confident about — and what is that confidence based on? Is it relationship quality, product usage data, or a combination? For the accounts where it\'s primarily relationship-based, what would you need to see in the data to maintain that confidence?',
           quiz: [
             {
               question: 'Why do CSM renewal forecasts often overestimate renewal probability?',
@@ -678,6 +910,35 @@ AI cannot replace the kick-off call. The human moment at the start of the custom
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A new customer at a 300-person healthcare company purchased your platform for clinical team scheduling. It\'s week 2 of onboarding and they haven\'t completed any of the three setup steps you sent. What should your AI-informed response be?',
+            options: [
+              'Wait until week 4 before following up — they may just be busy getting started',
+              'Send the standard onboarding reminder email sequence that all new customers receive',
+              'Flag this account as onboarding-at-risk, identify which step is blocking them, and send a targeted check-in offering a working session specific to their use case',
+              'Escalate to sales as a potential early churn signal and ask them to intervene',
+            ],
+            correct: 2,
+            explanation: 'Week 2 with zero milestone completion is an early activation risk signal — not a reason to wait or escalate to sales. The intervention needed is diagnostic: why haven\'t they started? Common blockers for healthcare teams include IT approval delays, admin access issues, or not knowing which step to prioritise. A targeted check-in that offers a 30-minute working session — framed around their specific clinical scheduling use case — is far more likely to unblock them than another generic reminder.',
+          },
+          outputComparison: {
+            label: 'New customer onboarding plan: generic checklist vs. use-case-specific roadmap',
+            vague: {
+              prompt: 'Write an onboarding plan for a new customer',
+              output: 'Welcome to the platform! Here is your onboarding plan:\nWeek 1: Set up your account and invite team members\nWeek 2: Complete the training modules\nWeek 3: Start using the main features\nWeek 4: Schedule a check-in call with your CSM\n\nPlease let us know if you have any questions!',
+            },
+            improved: {
+              prompt: 'Write a week-1 onboarding plan for a new customer at Northgate Clinics, a 120-person outpatient healthcare group. They purchased our scheduling platform to replace a manual shift-booking process managed by 4 department heads. Their goal: reduce the time coordinators spend on schedule changes by 50%. They have 3 department heads who will be admins and 85 clinical staff as end users. Common failure mode for healthcare customers: staff don\'t adopt the mobile app because no one sets up shift notifications properly. Format: 3 priority actions for week 1, the activation milestone that signals they\'ve achieved early value, and 2 things to avoid.',
+              output: 'Week 1 Priority Actions for Northgate Clinics:\n\n1. Admin setup session (with all 4 department heads, 60 minutes)\nGoal: all admins can create, modify, and publish schedules. Configure department permissions so each head only sees their own team. This is the prerequisite for everything else.\n\n2. Shift notification configuration\nThis is the #1 adoption barrier for clinical staff — if notifications don\'t work on mobile, staff won\'t check the platform. Configure push notifications for all staff accounts in this first week, not week 3.\n\n3. First live schedule published in the platform\nNorthgate should publish their first real schedule in the platform this week — even a simple 2-week schedule. The goal is for department heads to experience the workflow before clinical staff are introduced.\n\nActivation Milestone: All 4 department heads have published at least one schedule and received confirmation from their teams that shift notifications are working. This is the "they\'re going to stick with it" signal.\n\nAvoid:\n— Don\'t invite the 85 clinical staff until notifications are working (bad first experience kills adoption permanently)\n— Don\'t run the admin session with less than 3 of the 4 heads present — alignment now prevents conflicts later',
+            },
+            insight: 'The generic plan gives week-by-week milestones that apply to any customer. The specific plan front-loads the known failure mode for healthcare customers (notification setup), sequences the admin-first approach that makes clinical staff adoption possible, and defines an activation milestone tied to Northgate\'s actual situation. It reads like it was written specifically for them — because it was.',
+          },
+          applyThisWeek: {
+            action: 'Choose a customer who onboarded in the last 60 days. Compare the onboarding plan you gave them to what an AI-generated plan specific to their use case, team structure, and stated goals would look like. Identify the 1-2 most important things the generic plan missed.',
+            promptTemplate: 'Write a week-1 onboarding plan for a new customer at [company name], a [size] [industry] company. They purchased [product] to [replace what / achieve what outcome]. Their goal is [specific measurable outcome]. Their setup includes [number and type of admin users] and [number] end users. Common failure mode for [their industry/use case]: [if you know it]. Format: 3 priority actions for week 1, the activation milestone that signals early value achieved, and 2 things to avoid.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a customer who had a poor onboarding experience — one who took much longer than expected to activate or who churned within the first 6 months. At what point in weeks 1-4 did the warning signs first appear? What would a personalised, use-case-specific onboarding plan have done differently in week 1?',
           quiz: [
             {
               question: 'What is the most important human touchpoint to preserve in an AI-assisted onboarding process?',
@@ -747,6 +1008,35 @@ Customers renew when they believe they're getting value. AI can help calculate a
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'re preparing a QBR for a $150k ARR account. You have 2 hours before the meeting. AI has generated a data synthesis from your usage metrics, support history, and health score. What is the most important thing to add before the meeting?',
+            options: [
+              'More data points — pull additional metrics to strengthen the data section of the QBR',
+              'Better slide design — professional presentation design improves executive reception',
+              'Relationship context: the customer\'s current business priorities, any organisational changes, and the strategic initiative the executive sponsor is focused on this quarter',
+              'A discount offer — proactively offering commercial flexibility demonstrates CS value',
+            ],
+            correct: 2,
+            explanation: 'AI can synthesise data faster than any CSM. What AI cannot do is know that your champion is trying to justify a department expansion to the CFO, that the company is going through a restructure, or that the executive sponsor specifically cares about ROI evidence they can present upwards. This relationship context is what transforms a data presentation into a strategic conversation — and it\'s the only thing in the QBR that only you can supply.',
+          },
+          outputComparison: {
+            label: 'QBR narrative: data summary vs. business impact story',
+            vague: {
+              prompt: 'Write a QBR summary for a customer',
+              output: 'This quarter, the customer has been active on the platform. Key metrics include product usage data, support tickets, and feature adoption. Overall health is stable. Recommended next steps: continue regular check-ins and review success plan goals.',
+            },
+            improved: {
+              prompt: 'Write a QBR narrative for Compass Group, a 400-person professional services firm, $95k ARR, renewal in 5 months. Data: product usage up 34% this quarter; 180 active users vs. 120 at last QBR; their workflow automation module is now used by all 6 project teams; 1 support ticket in Q3 (down from 7 in Q2); health score 84 (up from 71). Their original success goal was to reduce project status reporting time by 40%. CSM relationship context: the VP of Operations (executive sponsor) is preparing a digital transformation presentation for the board next month and is actively looking for ROI evidence. Write the QBR narrative as a business impact story that she can use in her board presentation, not just as a product adoption report.',
+              output: 'Compass Group Q3 Business Review — Narrative\n\nHeadline: In Q3, Compass Group\'s operations teams reduced project reporting overhead and significantly increased team adoption — delivering measurable efficiency gains that are ready to present at board level.\n\nValue Delivered This Quarter:\nYour team scaled from 120 to 180 active users this quarter — a 50% increase in team coverage. Every one of your six project teams is now running workflow automation, which means your original goal of reducing reporting time is now happening at full scale, not just in pilot teams.\n\nROI Indicators:\n— Support tickets dropped from 7 to 1 this quarter: the team has moved from onboarding friction to productive use\n— Workflow automation adoption at 100% of project teams: this is the adoption milestone that typically signals durable retention and ROI\n— Usage growth of 34%: your team is using the platform more, not less, which indicates the value is real\n\nFor Your Board Presentation:\nThe data above can be framed as: "We scaled our project management platform to 180 users this year with a 34% increase in active usage and eliminated the reporting overhead previously managed manually by project leads." If you\'d like, I can draft that as a board-ready slide this week.\n\nNext Quarter Priorities: [...]',
+            },
+            insight: 'The vague narrative is a product adoption summary. The specific narrative is a business impact story calibrated to what the executive sponsor actually needs — evidence for her board presentation. That shift from "here\'s your usage data" to "here\'s your board-ready ROI narrative" only happens because the CSM knew the context AI couldn\'t have. That QBR deepens the relationship; the generic one just reports the numbers.',
+          },
+          applyThisWeek: {
+            action: 'Prepare your next QBR using the AI workflow: 10 minutes gathering data, 5 minutes generating a synthesis prompt, 10 minutes adding relationship context. Track how long it takes compared to your usual process, and note what the AI-generated narrative got right vs. what you had to change.',
+            promptTemplate: 'Write a QBR narrative for [company name], a [size, industry] company, [ARR], renewal in [X] months. Data: [usage trend, active users, key feature adoption, support ticket trend, health score change]. Their original success goal was [specific outcome]. Relationship context: [executive sponsor\'s current priorities, any organisational context, any strategic initiative they\'re pursuing]. Write this as [executive summary / business impact story / data report] for an audience of [who will be in the room]. Format: [headline, value delivered, ROI indicators, next quarter priorities].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the best QBR you\'ve ever run — one where the customer left energised and the relationship felt stronger. What made it work? Now think about the last QBR that felt like a box-ticking exercise. What was different? How much of the difference was about the data, and how much was about the conversation you had around it?',
           quiz: [
             {
               question: 'What is the most critical element that a CSM must add to an AI-prepared QBR that AI cannot supply?',
@@ -809,6 +1099,35 @@ AI makes this CS-to-product feedback loop faster and more systematic — which m
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You manually review your quarterly NPS comments and conclude that "reporting limitations" is the main detractor theme. An AI analysis of the same 200 comments identifies "reporting limitations" as third — with "slow support response times" and "missing mobile features" ahead of it. What is the most likely explanation?',
+            options: [
+              'The AI analysis has made an error — your manual reading is more accurate',
+              'You unconsciously over-weighted the comments you found most memorable or resonant, while AI counted all 200 with equal attention',
+              'The AI model doesn\'t understand the reporting product well enough to categorise correctly',
+              'Customers are writing about different problems depending on when in the quarter they responded',
+            ],
+            correct: 1,
+            explanation: 'This is sampling bias in action. Manual reading naturally elevates the comments that are most dramatic, most recent, or most aligned with what you already believe. AI processes all 200 comments with equal weight — so quieter but frequent themes that appear in 40 comments each surface even if no individual comment was particularly striking. This is exactly why AI feedback analysis produces different (and often more accurate) results than expert manual review.',
+          },
+          outputComparison: {
+            label: 'NPS analysis: summary impression vs. structured theme extraction',
+            vague: {
+              prompt: 'Analyse our NPS comments from this quarter',
+              output: 'Your NPS comments show a mix of positive and negative feedback. Customers who are happy mention the product features and customer service. Customers who are unhappy mention issues with the platform and wish things worked better. You should work on improving the areas that customers are dissatisfied with.',
+            },
+            improved: {
+              prompt: 'Analyse these 85 NPS comments from Q3 [paste comments]. We scored 42 NPS overall (detractors 28%, passives 31%, promoters 41%). For each segment provide: (1) top 3 themes with approximate frequency, (2) representative verbatim quotes for each theme, (3) any competitive mentions, (4) any themes that appear in passives but not detractors that could move them to promoters. Flag any comment that suggests immediate churn risk.',
+              output: 'Detractor Analysis (24 comments):\nTheme 1: Implementation complexity (11/24 comments)\n— "We spent 3 months on setup and still aren\'t using half the features we paid for"\n— "The configuration process required a consultant we hadn\'t budgeted for"\nTheme 2: Support response time (8/24 comments)\n— "Takes 2 days to get a response to a critical issue"\n— "Support is great when you reach them, reaching them is the problem"\nTheme 3: Reporting inflexibility (5/24 comments)\n\nPromote Analysis (35 comments):\nTheme 1: Time savings post-setup (18/35): "Once we got it working, we saved 8 hours per week on X"\nTheme 2: Team adoption ease (10/35)\nTheme 3: CSM responsiveness (7/35)\n\nPassive-to-Promoter Opportunity:\n12 passives mention implementation difficulty as the reason they\'re not enthusiastic — suggesting a smoother onboarding experience would move a significant portion to promoters.\n\nCompetitive Mentions: 3 detractor comments mention [Competitor X] by name — all in context of implementation speed comparison.\n\n🔴 Immediate Churn Risk: 2 comments suggest active evaluation of alternatives and should be escalated today.',
+            },
+            insight: 'The vague analysis produces no actionable output — "work on improving areas of dissatisfaction" is not a brief for anyone. The specific analysis produces themes with evidence, quotes ready to paste into a product team brief, a passive-to-promoter conversion opportunity, and two accounts to flag for immediate follow-up. The same 85 comments; completely different utility.',
+          },
+          applyThisWeek: {
+            action: 'Pull your last batch of NPS comments (even 20-30 is enough) and run a structured AI analysis. Compare the themes that emerge to your current assumptions about what customers like and dislike. Note anything that surprises you — those surprises are usually the most valuable signal.',
+            promptTemplate: 'Analyse these [X] NPS/CSAT comments from [time period] [paste comments]. We scored [NPS/CSAT score] overall. For each segment (detractors, passives, promoters) provide: top 3 themes with approximate frequency, representative verbatim quotes for each theme, and any competitive mentions. Identify the single most actionable insight for: (1) the product team, (2) the CS team. Flag any comment that suggests immediate churn risk.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a product complaint you\'ve been hearing from customers for months. Have you actually counted how many customers mention it versus how loud the individual complaints are? Is it a widespread pattern or a vocal minority? How would knowing the accurate frequency change how urgently you escalate it to your product team?',
           quiz: [
             {
               question: 'What is the main advantage of AI feedback analysis over manual reading of NPS comments?',
@@ -883,6 +1202,35 @@ An expansion conversation at the wrong time (mid-onboarding, immediately after a
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'AI flags an account as expansion-ready: they\'re at 94% of their seat limit and usage is growing. However, the account had a difficult support escalation 3 weeks ago that was just resolved. When should you have the expansion conversation?',
+            options: [
+              'Immediately — the seat limit is a natural conversation opener regardless of recent history',
+              'Wait 4-6 weeks after the escalation resolution to allow the relationship to recover before introducing a commercial conversation',
+              'Skip the expansion conversation entirely this cycle and revisit at next renewal',
+              'Have sales reach out instead of CS to avoid the relationship awkwardness',
+            ],
+            correct: 1,
+            explanation: 'An expansion conversation requires the customer to be in a positive relationship state — they need to trust you enough to agree to spend more money. Three weeks after a support escalation is too soon; the relationship may be repaired but not yet rebuilt. Waiting 4-6 weeks, delivering on whatever was promised during the escalation, and letting the relationship recover first dramatically increases the chance the expansion conversation is received positively rather than defensively.',
+          },
+          outputComparison: {
+            label: 'Expansion outreach: generic capacity pitch vs. outcome-anchored conversation opener',
+            vague: {
+              prompt: 'Write an email about expanding a customer\'s subscription',
+              output: 'Subject: Expanding Your Account\n\nHi [Name],\n\nI noticed that you\'re approaching your user limit. We\'d love to help you expand your subscription to accommodate your growing team. We have several options that might work for you.\n\nWould you be open to a call to discuss?\n\nBest,\n[CSM Name]',
+            },
+            improved: {
+              prompt: 'Write an expansion conversation opener for Sarah at Vantage Group (250-person consulting firm, $58k ARR, 18 months in). Context: they\'re at 91% seat utilisation (137 of 150 seats). Last QBR 6 weeks ago was excellent — Sarah told me the platform had saved her team 6 hours per week per project manager. She mentioned they\'re onboarding two new project teams in Q1. Health score: 86. No recent issues. Goal: open an expansion conversation that\'s framed around their Q1 growth, not around us needing more revenue. Under 100 words, email format.',
+              output: 'Subject: Your Q1 expansion — seats and setup\n\nSarah,\n\nYou mentioned two new project teams joining in Q1. Your current plan covers 150 seats — you\'re at 137 now, so the timing is good to get ahead of the onboarding crunch.\n\nI\'d love to get those teams set up properly from day one (rather than doing a rushed add-on mid-quarter). Can we spend 20 minutes in the next week or two to map out what you\'ll need?\n\n[CSM Name]',
+            },
+            insight: 'The generic email signals that the CSM is monitoring their account data and wants to sell more. The specific email proves the CSM remembered the Q1 conversation, thought about Vantage\'s situation proactively, and is framing the expansion as a setup success conversation rather than a commercial transaction. Same expansion goal; completely different reception.',
+          },
+          applyThisWeek: {
+            action: 'Review your portfolio for accounts with seat utilisation above 80%, recent positive QBR outcomes, or usage growth above 20% this quarter. For the top 3 expansion candidates, check their relationship health before scheduling outreach. Draft the opening email for the best-timed one.',
+            promptTemplate: 'Write an expansion conversation opener for [contact name] at [company name] ([size, industry], [ARR], [months as customer]). Context: they are at [X%] of their [seat/usage] limit. Last positive interaction: [describe]. They mentioned [specific future plan or goal from a recent call]. Health score: [X]. Recent issues: [none / describe if relevant]. Goal: open the expansion conversation framed around [their goal/growth plan], not around us selling more. Under [X] words.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about an expansion deal you\'ve closed in the last year. Looking back, was the timing right — or did you have the conversation before the customer was ready? What signals told you (or should have told you) that the moment was right? How would you build those timing signals into a systematic expansion monitoring process?',
           quiz: [
             {
               question: 'What combination of signals most strongly indicates expansion readiness?',
@@ -960,6 +1308,35 @@ Never trap a customer in self-service who needs a human. The frustration this cr
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your knowledge base has 200 articles. A customer submits a support ticket saying "my colleague can\'t see the reports I shared with her." What is the problem with a keyword search approach for this ticket?',
+            options: [
+              'Keyword search won\'t work because the ticket is too short to match anything',
+              'Keyword search will match on "reports" and "shared" but likely miss the relevant articles about user permissions and sharing settings, which don\'t use those exact words',
+              'Keyword search is actually ideal here because "reports" and "shared" are specific enough terms',
+              'The knowledge base doesn\'t need to handle this — it should go directly to human support',
+            ],
+            correct: 1,
+            explanation: 'The customer\'s natural language ("can\'t see the reports I shared") doesn\'t match the terminology in knowledge base articles ("user permissions," "visibility settings," "sharing roles"). Keyword search would surface articles containing "reports" and "shared" — most of which are irrelevant. AI-powered search understands the intent (a permission or visibility problem between users) and surfaces the relevant articles regardless of terminology mismatch. This is why AI search dramatically improves self-service success rates.',
+          },
+          outputComparison: {
+            label: 'Knowledge base article draft: generic instructions vs. support-ticket-grounded guide',
+            vague: {
+              prompt: 'Write a knowledge base article about user permissions',
+              output: 'User Permissions\n\nThis article explains user permissions in our platform. Permissions control what users can see and do. There are different permission levels: Admin, Editor, and Viewer. To change permissions, go to Settings > Users > Permissions. Select the user you want to change and update their permission level. Contact support if you have questions.',
+            },
+            improved: {
+              prompt: 'Write a knowledge base article about sharing reports and managing visibility between team members. Base this on these 5 support tickets we received in the past month about this issue [paste ticket summaries: tickets all relate to users sharing reports that colleagues can\'t view, admins not realising they need to set sharing scope, and confusion between "share with team" vs "share with workspace"]. Write it for a non-technical user. Include: what causes the "colleague can\'t see this" problem, step-by-step fix, and the one setting most people miss.',
+              output: '# Why Your Colleague Can\'t See Your Report (and How to Fix It)\n\nIf you\'ve shared a report and your colleague still can\'t access it, it\'s almost always caused by one of two things.\n\n**The Most Common Cause: Report visibility is set to "Only Me"**\nWhen you create a report, it defaults to "Only Me" visibility. Sharing the link doesn\'t change this — your colleague will see an access error.\n\nTo fix it:\n1. Open the report\n2. Click the Share button (top right)\n3. Change visibility from "Only Me" to "Team" or "Workspace"\n4. Click Save\n\nYour colleague should now be able to see it immediately — no need to reshare the link.\n\n**The Setting Most People Miss: Share scope vs. share link**\nSharing the link and setting visibility are two different actions. You need both.\n\n**Still not working?** If your colleague has Viewer permissions, they can see reports but not edit them. If they can\'t see the report at all, it\'s a visibility setting issue. If they can see it but not edit, it\'s a permissions issue — contact your admin.',
+            },
+            insight: 'The generic article describes the feature. The support-ticket-grounded article addresses the specific confusion pattern that\'s actually generating tickets — the "share link vs. share visibility" distinction that users consistently miss. It\'s written to resolve the support ticket, not to document the feature. That\'s what makes knowledge base articles actually deflect tickets.',
+          },
+          applyThisWeek: {
+            action: 'Pull your top 10 support ticket categories from the past month. Cross-reference against your knowledge base index. Identify the single highest-volume topic that either isn\'t covered or where customers are still submitting tickets despite existing articles. Use AI to draft an improved article based on the actual ticket language.',
+            promptTemplate: 'Write a knowledge base article about [topic]. Base this on these [X] support tickets we received about this issue [paste ticket summaries or descriptions]. Write for a non-technical [type of user]. Include: the most common cause of this problem, step-by-step resolution, and the one thing most users miss. Use the same language customers use in their tickets, not technical product terminology.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the questions your customers ask you most often that they could theoretically answer themselves. What stops them from finding the answer in your knowledge base? Is it a search problem, a coverage problem, or a clarity problem? Which of those would have the biggest impact if you fixed it?',
           quiz: [
             {
               question: 'How does AI-powered knowledge base search improve on standard keyword search?',
@@ -1034,6 +1411,35 @@ Every AI-assisted workflow improvement discovered by one CSM should be shared wi
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'One CSM on your team has built an excellent AI prompt for generating at-risk account intervention plans that saves 45 minutes per account. The rest of the team doesn\'t know about it. What is the most effective way to scale this across the team?',
+            options: [
+              'Ask that CSM to email the prompt to the team and let everyone try it on their own',
+              'Add the prompt to a shared CS AI playbook, run a 15-minute team demo showing the prompt in action with a real account, and include it in the onboarding process for new CSMs',
+              'Promote the CSM and have them train the team in a full-day workshop',
+              'Wait until more CSMs have discovered similar prompts before standardising anything',
+            ],
+            correct: 1,
+            explanation: 'Emailing a prompt is passive — most people won\'t use something they\'ve only seen in text. A live demo with a real account makes the value concrete and immediately reproducible. Adding it to a shared playbook ensures it\'s available to new CSMs from day one. This is the compound effect of team AI adoption: one CSM\'s discovery becomes the whole team\'s capability within a week, not a year.',
+          },
+          outputComparison: {
+            label: 'CS team prompt library: improvised vs. standardised and documented',
+            vague: {
+              prompt: 'Write a prompt I can use to prepare for customer calls',
+              output: 'Here is a prompt you can use: "Summarise the key information about this customer account so I can prepare for my call. Include their product usage, any issues they have had, and their overall health."',
+            },
+            improved: {
+              prompt: 'Create a standardised call preparation prompt template for our CS team that every CSM can use before any customer call. It should: work with data from our CRM (HubSpot) and CS platform (Gainsight), take 5 minutes to fill in, produce a structured brief in under 2 minutes, and include placeholders that clearly show what data to paste in from which system. Format it as a ready-to-use template with instructions for a CSM who has never used AI before.',
+              output: '--- CS CALL PREP TEMPLATE (copy this, fill in [brackets], paste into Claude) ---\n\nPrepare a call brief for [CUSTOMER NAME] ahead of my [TYPE: check-in / QBR / renewal / escalation] call on [DATE].\n\nFrom HubSpot:\n— Last interaction: [date and type — call, email, meeting]\n— Open action items: [paste from HubSpot tasks]\n— Recent notes: [paste last 2-3 CRM notes]\n\nFrom Gainsight:\n— Current health score: [X] (was [Y] last quarter)\n— Usage this month: [paste key metrics — DAU/MAU, feature adoption, support tickets]\n— Active playbooks or alerts: [list any active]\n\nMy context (add what\'s not in the systems):\n— Relationship status: [good / strained / rebuilding]\n— Key things they\'ve mentioned recently: [bullet points]\n— What I\'m hoping to achieve in this call: [your goal]\n\nOutput I need: 1) Account health summary (3 bullets), 2) Top 2 risks to address, 3) 3 questions to ask, 4) Any open action items to follow up on.',
+            },
+            insight: 'The vague prompt produces a generic prompt that each CSM would use differently, producing inconsistent results. The standardised template tells CSMs exactly which system to get each data point from, takes the same 5 minutes regardless of who uses it, and produces a consistently structured output. That\'s the difference between a prompt one person uses and a workflow the whole team uses.',
+          },
+          applyThisWeek: {
+            action: 'Identify the two AI prompts you use most frequently in your CS work. Document them as standardised templates with [placeholders] and brief instructions for someone who\'s never used AI. Share them with one colleague and get feedback on whether the instructions are clear enough to use without asking you questions.',
+            promptTemplate: 'Create a standardised AI prompt template for [specific CS task — e.g., call preparation / at-risk account analysis / renewal forecast review] that every CSM on our team can use consistently. We use [list your tools]. It should take [X] minutes to fill in and produce [describe the output]. Format as a ready-to-use template with [bracket placeholders] for the data to be filled in, and brief instructions for a first-time user.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the most time-consuming recurring task on your team that no one has yet tried to improve with AI. What would it take to build a shared prompt for it, get one CSM to test it this week, and have it in the team playbook within the month? What\'s actually stopping that from happening right now?',
           quiz: [
             {
               question: 'Why is a shared CS AI playbook more valuable than individual CSMs discovering AI workflows independently?',
@@ -1110,6 +1516,35 @@ Translate CS AI metrics into leadership language: revenue retained, cost efficie
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Six months after deploying AI-assisted QBR preparation, your renewal rate has improved from 87% to 91%. Your CS director wants to know how much of that improvement is due to AI. What is the honest answer?',
+            options: [
+              'All of it — the only thing that changed was the AI deployment',
+              'Without a controlled baseline and measurement plan established before deployment, you cannot attribute the improvement specifically to AI — other factors may have contributed',
+              'None of it — AI only helps with efficiency, not renewal rates',
+              'Exactly 50% — AI and relationship factors each contributed equally',
+            ],
+            correct: 1,
+            explanation: 'Attribution requires a pre-deployment baseline and ideally a controlled comparison. If you didn\'t document what your renewal rate was before AI, what other changes happened during the same period (new CSMs hired, product improvements, market changes), and which accounts received AI-assisted preparation vs. which didn\'t, you can\'t isolate AI\'s contribution. This is why establishing baselines before deployment is essential — not just for measurement, but for making a credible case to leadership.',
+          },
+          outputComparison: {
+            label: 'CS AI business case: activity report vs. revenue-impact narrative',
+            vague: {
+              prompt: 'Help me write a business case for AI investment in our CS team',
+              output: 'A business case for AI in customer success should include: the tools you want to invest in, the time savings you expect, and the improvements you anticipate. AI can help your team be more productive and improve customer satisfaction. Consider including a cost comparison of the tools and expected benefits.',
+            },
+            improved: {
+              prompt: 'Help me build a business case for expanding our CS AI investment. Here is our data: We have 6 CSMs, each managing 90 accounts, average ACV $28k. Before AI: QBR prep averaged 2.5 hours per account. After 4 months of AI-assisted prep: average 35 minutes per account. Renewal rate: 84% pre-AI, 89% post-AI (controlling for the same account cohort). We\'ve also increased portfolio size from 90 to 105 accounts per CSM without adding headcount. Tool cost: $8,400/year for the team. Calculate: time ROI, revenue impact of renewal rate improvement, capacity gain versus hiring cost, and format this as a one-page business case for our CFO.',
+              output: 'CS AI Business Case — CFO Summary\n\nInvestment: $8,400/year (AI tool licences for 6 CSMs)\n\nROI: Three measurable returns\n\n1. Time recovered: QBR prep reduced from 2.5 hours to 35 minutes per account. At 90 accounts per CSM × 6 CSMs × quarterly QBRs: 1,080 hours saved per year. At an average fully-loaded CSM cost of $45/hour: $48,600 in time value recovered annually. Current tool cost is recovered in 9 weeks.\n\n2. Renewal rate impact: 5-point improvement in renewal rate (84% → 89%) on a portfolio of 540 accounts at $28k ACV = $756k ARR base. 5% improvement = $37,800 in ARR retained that would otherwise have churned. Even attributing 50% of the improvement to AI: $18,900 ARR/year directly attributable.\n\n3. Capacity gain: Portfolio expanded from 90 to 105 accounts per CSM without additional headcount. Equivalent of 1 additional CSM\'s capacity at $80k fully-loaded cost per year: $80,000 in hiring cost avoided.\n\nTotal estimated annual value: $48,600 (time) + $18,900 (retention) + $80,000 (capacity) = $147,500\nTool cost: $8,400\nNet ROI: 17.6x',
+            },
+            insight: 'The vague prompt produces generic business case advice. The specific prompt — with real numbers from a real deployment — produces a quantified, CFO-ready calculation that isolates three distinct value streams, acknowledges attribution uncertainty (the 50% attribution caveat), and converts CS operational metrics into financial impact language. That\'s the difference between a business case that gets filed and one that gets funded.',
+          },
+          applyThisWeek: {
+            action: 'Establish your pre-AI baseline for the three metrics you most want to improve: QBR prep time, portfolio size per CSM, and renewal rate for the accounts receiving AI-assisted preparation. Document these numbers today so you can make a credible attribution case in 6 months.',
+            promptTemplate: 'Help me build a business case for CS AI investment. Here is our data: [X] CSMs, [Y] accounts per CSM, average ACV $[Z]. Before AI: [metric and baseline value]. After [X months] of AI-assisted [workflow]: [metric and new value]. Tool cost: $[X/year]. Calculate: time ROI, revenue impact, capacity gain vs. hiring cost, and format as a [one-page CFO brief / presentation slide / email summary] using revenue and cost language only.',
+            tool: 'Claude',
+          },
+          reflection: 'If your CS AI investment were cancelled tomorrow, which metric would deteriorate fastest — and by how much? The answer tells you which part of your AI workflow is delivering the most measurable value. Are you tracking that metric consistently enough to make the case if you needed to defend the investment?',
           quiz: [
             {
               question: 'Why is it important to establish baseline CS metrics before deploying AI?',
@@ -1183,6 +1618,35 @@ This programme is your foundation. From here:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A CSM is worried that AI will reduce the number of CS jobs because AI can handle monitoring, drafting, and analysis. What is the most accurate response to this concern?',
+            options: [
+              'The concern is valid — AI will eliminate most CS roles within 5 years',
+              'AI handles volume tasks, which means CSMs can manage more accounts — so organisations may need fewer CSMs per 100 accounts, but the work that remains is higher-value and harder to replace',
+              'AI will have no impact on CS headcount — only CS tooling will change',
+              'CS is fully protected from AI disruption because customer relationships require human empathy',
+            ],
+            correct: 1,
+            explanation: 'The honest answer is nuanced. AI does change the accounts-to-CSM ratio — teams can monitor and engage more accounts per person. This may reduce total CS headcount requirements at some organisations. But what remains is higher-value: executive relationships, complex churn interventions, strategic advisory work, and internal customer advocacy. CSMs who invest in these high-value skills — and who become fluent in using AI to handle the volume — are more valuable, not less. CSMs who rely only on volume tasks are more at risk.',
+          },
+          outputComparison: {
+            label: 'Career development planning: vague aspiration vs. specific AI-era CS skill roadmap',
+            vague: {
+              prompt: 'How should I develop my career as a CSM with AI?',
+              output: 'As AI changes customer success, it\'s important to stay current with new tools and adapt to the changing landscape. Focus on developing soft skills like communication and relationship building. Stay curious and keep learning about AI as the field evolves. Your unique human qualities will remain valuable.',
+            },
+            improved: {
+              prompt: 'I\'m a mid-market CSM with 4 years of experience, managing 65 accounts with average ACV of $40k. I\'m currently using AI for QBR preparation and email drafting. I want to be the most valuable CS professional in my organisation in 2 years as AI becomes more capable. Based on the direction AI is taking in CS, what specific skills should I develop, what should I demonstrate to leadership, and what AI-adjacent specialisation would make me hardest to replace?',
+              output: 'Given your profile, here is a specific 24-month development path:\n\nSkills to develop (next 6 months):\n1. Executive relationship management — request to join QBRs with your manager\'s most strategic accounts. Develop comfort presenting ROI and business impact to C-suite contacts. This is the skill AI cannot replace.\n2. Revenue attribution analysis — learn to connect CS activities to retention and expansion outcomes in your CRM data. CSMs who can prove their revenue impact in financial terms are protected from headcount cuts.\n3. AI fluency in your product — understand how your product\'s AI features work well enough to coach customers through their own AI adoption challenges. This is a growing differentiator.\n\nThings to demonstrate to leadership (next 12 months):\n— Increase your portfolio by 15-20 accounts without renewal rate decline (shows AI-powered scale)\n— Build and share the team\'s AI playbook (establishes you as the team\'s AI-capable leader)\n— Present one CS-to-revenue attribution analysis to your CS director (proves business impact thinking)\n\nAI-adjacent specialisation to pursue:\nAI adoption success — becoming the CSM who specialises in helping customers get value from the AI features in your product. This role will be in demand in every SaaS company within 24 months and doesn\'t yet have established expertise.',
+            },
+            insight: 'The vague answer offers reassurance but no direction. The specific answer produces a 24-month development plan with three distinct dimensions: skills to build, things to demonstrate to leadership, and a specialisation path that anticipates where CS value will concentrate as AI capability grows. That\'s actionable career development, not generic advice.',
+          },
+          applyThisWeek: {
+            action: 'Write a 90-day AI development goal for yourself: one specific AI workflow to master, one way to share that knowledge with your team, and one skill adjacent to AI that you\'ll develop. Share it with your manager as a development conversation starter.',
+            promptTemplate: 'I\'m a [role] with [X years] of experience, managing [X accounts] with average ACV of [Y]. I currently use AI for [list current AI workflows]. I want to be [specific career goal] in [X] years as AI becomes more capable in CS. What specific skills should I develop, what should I demonstrate to leadership, and what AI-adjacent specialisation would make me most valuable? Give me a [90-day / 6-month / 24-month] development plan with specific actions.',
+            tool: 'Claude',
+          },
+          reflection: 'Imagine your role in 3 years where AI handles all account monitoring, all first-draft communications, and all data analysis. What would you spend your time doing? Is that a version of CS you\'d find more meaningful — or less? What does your answer tell you about where to invest your career development now?',
           quiz: [
             {
               question: 'How does AI make strong CS professionals more valuable rather than less relevant?',
@@ -1273,6 +1737,35 @@ AI can help you close the loop systematically:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You run a quarterly NPS survey and get a 52 score with mostly positive comments. Meanwhile, your support team is seeing a surge in tickets about a new workflow change. Which source should you trust more for understanding customer health?',
+            options: [
+              'The NPS score — it\'s a standardised measure validated across industries',
+              'Both are important, but the support ticket surge may be more urgent: it reflects real-time behaviour in response to a specific change, while NPS captures a general sentiment snapshot',
+              'The support tickets — NPS surveys are too infrequent to be useful for tracking current issues',
+              'Neither — you need to run a targeted survey specifically about the workflow change before drawing conclusions',
+            ],
+            correct: 1,
+            explanation: 'NPS captures overall sentiment at a point in time. Support tickets capture specific friction in real time. When a product change triggers a ticket surge, that\'s a VoC signal happening right now — it doesn\'t wait for the next quarterly survey. A comprehensive VoC programme treats both as complementary: NPS tells you overall direction, support patterns tell you what\'s happening today. The discrepancy between a positive NPS and a support spike is itself important signal worth investigating.',
+          },
+          outputComparison: {
+            label: 'VoC report for product team: raw themes vs. structured brief with evidence',
+            vague: {
+              prompt: 'Summarise customer feedback for our product team',
+              output: 'Customers have been giving feedback about various aspects of the product. Some customers are happy with the features while others have mentioned issues. Common themes include usability, performance, and missing features. The product team should review this feedback and consider improvements.',
+            },
+            improved: {
+              prompt: 'Create a VoC brief for our product team based on Q3 customer feedback. Sources: 67 NPS responses (score: 38, down from 44 in Q2), 124 support tickets (top categories: reporting export errors, mobile app load time, API documentation gaps), and 8 QBR call notes where customers mentioned product friction. Identify the top 3 pain points evidenced across multiple channels, provide representative verbatim customer quotes for each, estimate the frequency and severity, and recommend a specific action for each. Format for a product manager who gets this every quarter and needs to prioritise it against other inputs.',
+              output: 'Q3 Voice of Customer Brief — Product Team\n\n---\nPain Point 1: Report export failures (HIGH — cross-channel, high frequency)\nFrequency: 31 support tickets (25% of total), mentioned in 4 NPS detractor comments, raised in 3 QBR calls\nCustomer language: "I can\'t export my weekly summary to send to my team," "The CSV export breaks on large datasets every time," "This has been broken for 2 months and we have no workaround"\nImpact: Multiple detractor comments specifically tied this to renewal consideration — customers are creating Excel workarounds that reduce platform stickiness\nRecommended action: P0 bug fix — this is generating churn risk, not just friction\n\n---\nPain Point 2: Mobile app load time (MEDIUM — two channels)\nFrequency: 18 support tickets, 6 NPS passive comments ("would recommend more if mobile was faster")\nCustomer language: "Takes 12+ seconds to load the dashboard on my phone," "I stopped using the app because it\'s too slow"\nImpact: Passives citing this as barrier to promoter status — fixing this is your clearest passive-to-promoter lever this quarter\nRecommended action: Performance optimisation sprint — quantify baseline load times and set a target\n\n---\nPain Point 3: API documentation gaps (LOWER — one channel, high-value segment)\nFrequency: 14 support tickets (concentrated in enterprise accounts), 2 QBR mentions\nRecommended action: Documentation sprint targeting the 5 most-requested endpoints',
+            },
+            insight: 'The vague brief tells the product team nothing they could prioritise on. The structured brief connects support tickets to NPS comments to QBR notes — showing the cross-channel evidence that makes each pain point undeniable — and gives the product manager the customer language they\'d need to brief engineering. It also flags the renewal risk dimension of Pain Point 1, which elevates it from a bug to a revenue risk.',
+          },
+          applyThisWeek: {
+            action: 'Identify one customer pain point that you\'ve heard across at least two feedback channels this quarter. Write a structured VoC brief for your product team using AI: the pain point, the cross-channel evidence, representative customer quotes, and a recommended action. Test whether the product team finds it more actionable than your usual feedback format.',
+            promptTemplate: 'Create a VoC brief for our product team based on [time period] customer feedback. Sources: [describe: X NPS responses with score, Y support tickets with top categories, Z QBR or call notes]. Identify the top [3] pain points evidenced across multiple channels, provide representative verbatim customer quotes for each, estimate frequency and severity, and recommend a specific action for each. Flag any pain point with an explicit churn risk signal. Format for a product manager who receives this quarterly.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the most common piece of feedback you hear from customers. Have you ever formally presented it to your product team with cross-channel evidence and a recommended action — or has it lived as an informal observation? What would need to change in your VoC process for that feedback to reliably make it to a product roadmap?',
           quiz: [
             {
               question: 'What does a discrepancy between formal NPS survey feedback and informal support or call feedback typically indicate?',
@@ -1359,6 +1852,35 @@ This translation from CS operational metrics to business outcome language is whe
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your CFO asks how much of this year\'s 92% renewal rate is attributable to the CS team\'s work. What is the most credible answer you can give?',
+            options: [
+              '"All of it — the CS team manages all customer relationships and renewals"',
+              '"We don\'t know exactly, but we can show you that accounts with active CS intervention renewed at 96% vs. 81% for accounts without intervention — that gap suggests significant CS impact on retention"',
+              '"Renewal rates are primarily driven by product quality, not CS activities"',
+              '"CS contributed to approximately 7% of the renewal rate based on our internal estimates"',
+            ],
+            correct: 1,
+            explanation: 'Attribution in CS is rarely a clean number, and claiming full attribution is not credible to a financially literate audience. The most compelling case is a controlled comparison: accounts that received proactive CS intervention vs. those that didn\'t. If the intervention group renewed at a materially higher rate, that difference is the most credible measure of CS contribution. It shows causality, not just correlation, and it acknowledges that other factors also contribute.',
+          },
+          outputComparison: {
+            label: 'CS value presentation: activity metrics vs. revenue impact story',
+            vague: {
+              prompt: 'Write a summary of what my CS team achieved this quarter',
+              output: 'The customer success team had a productive quarter. We completed 45 QBRs, sent 230 customer emails, resolved 68 support escalations, and maintained an average health score of 76 across the portfolio. The team worked hard and is looking forward to continued success next quarter.',
+            },
+            improved: {
+              prompt: 'Help me write a CS team quarterly summary for our CFO. Data: 8 CSMs, 520 accounts, average ACV $32k. This quarter: gross renewal rate 91% (up from 86% last quarter); 23 accounts were flagged as at-risk and received proactive intervention — 18 renewed (78% save rate); CS team initiated expansion conversations with 12 accounts, 7 converted totalling $184k new ARR; onboarding completion improved from 64% to 81% — cohort analysis shows 90-day retention rate for accounts completing onboarding is 94% vs. 71% for those who don\'t. Tool investment this quarter: $4,200. Frame this in revenue language for a CFO audience.',
+              output: 'CS Team Q3 Business Impact Summary\n\nRevenue retained: The team\'s 91% gross renewal rate on a $16.6M ARR portfolio retained $15.1M. Of the 23 accounts flagged as at-risk, proactive CS intervention saved 18 — representing approximately $580k in ARR that was actively at risk. The 5-point improvement in renewal rate vs. last quarter equates to $800k additional ARR retained.\n\nRevenue grown: CS-initiated expansion conversations generated $184k new ARR this quarter — 7 of 12 conversations converted. This expansion pipeline was identified through proactive usage monitoring rather than inbound customer requests.\n\nCapacity efficiency: AI-assisted workflows enabled the team to manage 520 accounts (65 per CSM) without additional headcount. Equivalent portfolio management at previous staffing ratios would require approximately 10 CSMs — 2 additional hires at fully-loaded cost of approximately $170k annually.\n\nOnboarding ROI: Onboarding completion rate improved from 64% to 81%. The 23-point cohort retention differential (94% vs. 71%) between accounts that complete vs. don\'t complete onboarding represents the strongest leverage point for long-term NRR improvement.\n\nTool investment ROI: $4,200 invested in CS AI tools this quarter; estimated value from time savings alone (QBR prep, communication drafting): ~$28,000 at average fully-loaded CSM cost. 6.7x tool ROI.',
+            },
+            insight: 'The vague summary reports activity. The specific summary converts every CS activity into revenue language: ARR retained, ARR grown, headcount cost avoided, tool ROI. It also quantifies the at-risk save rate — a direct demonstration of CS intervention value that a CFO can benchmark against the cost of the CS team. That\'s the difference between a team that gets cut in cost reviews and one that gets investment.',
+          },
+          applyThisWeek: {
+            action: 'For your last quarter, calculate two numbers: (1) the renewal rate for accounts that received proactive CS intervention vs. those that didn\'t, and (2) the ARR impact of any expansion conversations your team initiated. These two numbers are the core of your CS attribution story.',
+            promptTemplate: 'Help me write a CS quarterly impact summary for a [CFO / CEO / CS leadership] audience. Data: [X] CSMs, [Y] accounts, average ACV $[Z]. This quarter: renewal rate [X%] (vs. [Y%] last quarter); [X] at-risk accounts received intervention, [Y] renewed; CS initiated [X] expansion conversations, [Y] converted totalling $[Z] ARR; [any onboarding or health score improvements]. Frame in revenue language: ARR retained, ARR grown, cost efficiency, and any tool ROI data.',
+            tool: 'Claude',
+          },
+          reflection: 'If you had to defend your CS team\'s headcount in a budget review tomorrow, what is the single most compelling revenue argument you could make? Do you currently have the data to make that argument? If not, what measurement would you need to start tracking today to be able to make it in 6 months?',
           quiz: [
             {
               question: 'What is the most credible way to demonstrate CS intervention ROI to a CFO?',
@@ -1441,6 +1963,35 @@ The most effective executive reports tell a story: this is what happened, this i
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'re presenting CS results to the CEO. You have a slide with 12 metrics: health score average, NPS, churn rate, expansion ARR, QBR completion rate, onboarding completion, seat utilisation, support ticket resolution time, CSAT, time-to-value, renewal rate, and portfolio size. What is wrong with this approach?',
+            options: [
+              'Nothing — comprehensive metric reporting demonstrates the depth of CS operations',
+              'Too many metrics force the CEO to do the analytical work of identifying what matters — the report should lead with the 1-2 metrics that tell the story and use the others as supporting evidence',
+              'The slide should include even more metrics to be comprehensive — quarterly reports should be exhaustive',
+              'The metrics are fine but the slide needs better visualisation to be executive-ready',
+            ],
+            correct: 1,
+            explanation: 'A 12-metric slide gives a CEO no clear signal. They\'ll scan it, not read it, and leave the meeting without a clear view of customer health. Executive reporting requires editorial discipline: choose the 1-2 metrics that best capture CS health (typically NRR and renewal rate), lead with them, show the trend, and use the other metrics as evidence in the supporting story sections. The CS leader\'s job is to do the analytical work before the meeting, not present raw data for the executive to interpret.',
+          },
+          outputComparison: {
+            label: 'CS executive report: metric table vs. structured narrative with conclusion-first format',
+            vague: {
+              prompt: 'Write an executive report on our CS results this quarter',
+              output: 'Customer Success Q3 Report\n\nThis quarter, our CS team managed 480 accounts. Key metrics are as follows: Health score average: 74, NPS: 41, Renewal rate: 88%, Churn rate: 12%, Expansion ARR: $95k, QBR completion: 73%, Support CSAT: 4.2/5. The team completed 38 QBRs and sent 420 customer communications. Next quarter we will focus on improving health scores and renewal rates.',
+            },
+            improved: {
+              prompt: 'Write a quarterly CS executive report for our CEO. Structure it as: (1) one-paragraph headline with the most important story, (2) three supporting insight sections each with a metric, context, and recommended action, (3) one specific decision or investment request. Data: 480 accounts, average ACV $38k, NRR 104% (up from 98% last quarter), gross renewal rate 88%, churn driven primarily by 2 customer segments (early-stage startups and companies under 50 employees), CS-initiated expansion generated $220k new ARR. Key development: we added AI-assisted onboarding monitoring and 90-day retention for accounts completing onboarding improved from 69% to 87%. Leadership context: we\'re planning to expand CS headcount by 2 in Q4.',
+              output: 'Q3 CS Executive Report\n\nHeadline: Our customer base is healthier than it was 6 months ago. NRR improved from 98% to 104% this quarter, meaning we are now growing revenue from existing customers faster than we lose it to churn. The improvement was driven by two things: CS-initiated expansion conversations that generated $220k new ARR, and a step-change in 90-day retention from better onboarding.\n\nInsight 1 — Where churn risk concentrates\nOur 12% gross churn is not evenly distributed. It is concentrated in early-stage startups and sub-50-employee companies. These segments account for 67% of churned accounts but only 22% of ARR. Recommendation: develop a differentiated low-touch CS model for this segment rather than investing senior CSM time in accounts where CAC recovery is marginal.\n\nInsight 2 — Onboarding as a retention lever\n90-day retention improved from 69% to 87% for accounts completing our structured onboarding (implemented this quarter). This is now the single highest-leverage retention investment we have evidence for. Recommendation: fund the resource to make structured onboarding available to all new accounts, not just enterprise tier.\n\nInsight 3 — CS-initiated expansion opportunity\n$220k of expansion ARR this quarter came from proactive CS-initiated conversations. Our conversion rate on these conversations (58%) suggests an expansion pipeline we are currently underworking. Recommendation: dedicate 15% of Q4 senior CSM time to structured expansion outreach.\n\nDecision Request: Q4 headcount addition — approve 2 CSM hires with the brief of managing the onboarding-at-scale model for SMB accounts. Expected impact: reduce churn in the startup/SMB segment by 15-20 points.',
+            },
+            insight: 'The generic report presents data for the CEO to interpret. The structured report leads with the headline story (NRR crossed 100%), uses three focused insight sections each with a conclusion and recommended action, and ends with a specific decision request. Every section is written for a reader who spends 3 minutes with this report, not 30.',
+          },
+          applyThisWeek: {
+            action: 'Take your most recent CS report to leadership and rewrite it using the three-layer structure: one headline paragraph, three supporting story sections (metric + context + recommended action), one decision request. Share it with a colleague and ask which version they\'d actually read.',
+            promptTemplate: 'Write a quarterly CS executive report for [CEO / CFO / board] audience. Structure as: (1) one-paragraph headline with the most important story this quarter, (2) three supporting insight sections — each with a metric, context explaining what it means, and a recommended action, (3) one specific decision or investment request. Data: [paste your key metrics and trends]. Key developments this quarter: [describe 2-3 most important things that happened]. Context for leadership: [any strategic priorities or decisions relevant to the request]. Write for someone who has 3 minutes to read this.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last executive presentation you gave on CS results. Did leadership leave with a clear view of what they needed to do differently, approve, or fund? If not, what was the gap between the information you presented and the decision they needed to make? How would starting with the conclusion have changed that?',
           quiz: [
             {
               question: 'What is the fundamental problem with most CS executive reports that AI can help address?',
@@ -1532,6 +2083,35 @@ CS leaders who build AI-powered functions are increasingly valuable to their org
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'ve deployed a new AI tool for QBR preparation and sent the team a guide on how to use it. After 6 weeks, only 2 of your 8 CSMs are using it consistently. What is the most likely root cause?',
+            options: [
+              'The tool is too complicated and needs a simpler interface',
+              'Access was provided without demonstrating value, building the habit, or making it easier to use than the current process',
+              'CSMs are resistant to AI on principle and need a mandatory policy',
+              'The tool is not suitable for QBR preparation and a different tool should be selected',
+            ],
+            correct: 1,
+            explanation: 'When AI adoption stalls after a tool rollout, it\'s almost never a tool quality problem — it\'s a change management problem. Without seeing the tool produce a better output faster than their current process, most CSMs default to familiar habits. A guide explains how to use the tool; a live demonstration that shows the actual time saving and output quality creates the motivation to change behaviour. The 2 who are using it consistently likely saw it work firsthand.',
+          },
+          outputComparison: {
+            label: 'CS team AI introduction: announcement email vs. demonstration-first launch',
+            vague: {
+              prompt: 'Write an email introducing AI tools to my CS team',
+              output: 'Hi team,\n\nI\'m excited to share that we\'re introducing AI tools to help improve our customer success work. We have access to Claude and ChatGPT, which can help with email drafting, QBR preparation, and more. Please check out the attached guide and start exploring. Let me know if you have any questions!\n\n[Manager Name]',
+            },
+            improved: {
+              prompt: 'Write a team communication and 60-minute session plan for introducing AI to my 7-person CS team. Context: most CSMs are sceptical about AI — they\'re worried it will produce generic outputs that damage customer relationships. The goal of the first session is not to explain AI but to make them feel it work with their own hands on a real account. Design the session to: start with a live demo on a real account (not a fake one), have each CSM try the QBR prep prompt with one of their own accounts, and end with a specific commitment from each person. Include the team communication to send beforehand.',
+              output: 'Team Email (send 2 days before the session):\n\nSubject: 30 minutes saved on QBR prep — let me show you\n\nTeam,\n\nNext Thursday at 2pm, I want to show you something before I ask you to use it. I\'m going to run our QBR prep for [specific account name] live in the session — using an AI prompt I\'ve been testing for the past 3 weeks. You\'ll see the actual output alongside how I normally prepare. Then you\'ll each do the same with one of your own accounts.\n\nI\'m not here to sell you on AI. I want you to judge it for yourselves on a real account. Bring one account you have an upcoming QBR or renewal call for.\n\n---\nSession Plan (60 minutes):\n\n0-15 min: Live demo\n— Run the QBR prep prompt on [specific account] in real time, showing every step\n— Show the output side-by-side with how you\'d normally prepare\n— Be explicit about what\'s good and what you had to add manually\n\n15-40 min: Hands-on with real accounts\n— Each CSM runs the prep prompt with their own account\n— You circulate and help — focus on getting a good output, not explaining how AI works\n— Pair the most sceptical CSM with the most enthusiastic one\n\n40-55 min: Debrief\n— What worked? What did AI get wrong? What did you have to add?\n— Collect the prompts that produced the best results — these go in the playbook\n\n55-60 min: Commitment\n— Each CSM names ONE call in the next 2 weeks they\'ll use this for\n— You follow up individually after those calls — not to check compliance but to hear what happened',
+            },
+            insight: 'The announcement email informs. The session plan changes behaviour. The key difference is sequence: demonstrate value on a real account before asking for adoption, then have everyone do it themselves (not read about it), then get a specific commitment on a specific call. The debrief also captures the prompts that worked — turning the session into the first version of the playbook.',
+          },
+          applyThisWeek: {
+            action: 'Identify the one AI workflow on your team with the lowest adoption. Design a 45-minute session that starts with a live demo on a real account and ends with every CSM committing to use it for one specific interaction in the next 2 weeks. Run it before the end of next month.',
+            promptTemplate: 'Design a [X]-minute team session to introduce [specific AI workflow] to my [X]-person CS team. Context: the team is [describe their current attitude toward AI — sceptical / curious / early adopters]. The goal is not to explain the tool but to make them experience it working with their own accounts. Design the session to: [demo approach], [hands-on practice], [debrief structure], and [specific commitment at the end]. Include the team communication to send beforehand.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a change initiative you\'ve led or observed where adoption was higher than expected. What made people actually change their behaviour — not because they were told to, but because they wanted to? Now think about your AI transformation plan: does it create that same motivation, or does it rely on compliance?',
           quiz: [
             {
               question: 'Why do CS AI transformations often fail when they are treated as tool rollouts rather than change programmes?',

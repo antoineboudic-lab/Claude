@@ -66,6 +66,35 @@ Begin with tasks where errors are catchable before they cause harm: summarising 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A colleague says AI hallucinations are not a concern in legal work because the AI sounds very confident and uses correct formatting. What is wrong with this view?',
+            options: [
+              'AI is always accurate in legal contexts because it has been trained on legal documents',
+              'Confident tone and correct formatting have no relationship to factual or legal accuracy — AI can be wrong with complete apparent authority',
+              'Hallucinations only occur when AI is asked about very obscure legal topics',
+              'Formatting errors are actually the most reliable sign of an AI hallucination',
+            ],
+            correct: 1,
+            explanation: 'One of the most dangerous properties of LLM hallucinations is that the false content is typically formatted perfectly and written confidently — indistinguishable in style from accurate content. A fabricated case citation looks exactly like a real one. This is why every legal reference must be independently verified through authoritative databases, regardless of how convincing the AI output appears.',
+          },
+          outputComparison: {
+            label: 'AI capabilities in legal work: hype vs. honest picture',
+            vague: {
+              prompt: 'What can AI do for lawyers?',
+              output: 'AI can help lawyers in many ways. It can assist with legal research, document drafting, contract review, and client communication. AI tools can save time and improve efficiency across many legal tasks. Many law firms are now adopting AI to stay competitive. AI can also help with billing and practice management.',
+            },
+            improved: {
+              prompt: 'I am a corporate lawyer at a mid-sized UK firm. Give me a specific, honest assessment of where AI genuinely adds value in my work today, where it requires significant caution, and where I should not rely on it. Focus on commercial transactions and contract work.',
+              output: '**Where AI adds genuine value now:**\n- First-draft generation for NDAs, board minutes, and standard commercial terms — cuts initial drafting time by 50–70%\n- Structured contract review: identifying specific clause types, flagging non-standard language against a baseline you provide\n- Summarising long agreements into plain-English commercial summaries for non-lawyer stakeholders\n- Drafting client update letters and internal memos from bullet points you supply\n\n**Where significant caution is required:**\n- Legal research: AI can map the legal landscape and suggest search terms, but every citation must be verified in Westlaw or LexisNexis — AI fabricates plausible-looking but false case references regularly\n- Jurisdiction-specific drafting: AI knows general legal principles but may get jurisdiction-specific rules wrong\n- Defined term interactions across complex agreements: AI may miss how a defined term recharacterises a provision\n\n**Where AI should not be relied upon:**\n- Final legal advice to clients without full lawyer review\n- Confirming whether a specific clause is enforceable in a specific jurisdiction\n- Privilege determinations\n\n*Note: These observations apply to general-purpose AI tools. Specialist legal platforms with verified database integration have different capability profiles.*',
+            },
+            insight: 'The vague prompt produces a general list that any marketing brochure could have written. The specific prompt produces a role-specific, honest capability map — including the critical cautions — that a lawyer can actually use to make decisions about where to apply AI. Specificity about your role and context transforms the quality of the guidance.',
+          },
+          applyThisWeek: {
+            action: 'Pick one document you are currently working on — a contract clause, a board minute, or an internal memo. Use AI to generate a first draft, then compare the time taken and what you needed to correct. Note both where AI saved time and where your professional judgment was essential.',
+            promptTemplate: 'I am a [role] at a [type of organisation]. Draft a [document type] for [purpose]. Key parameters: [list 3–5 specific requirements]. This is a first draft for my review — I will apply professional judgment before use. [Include any specific jurisdiction or requirements].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last week of legal work. Which tasks required your deepest professional judgment — and which were largely mechanical? If AI could handle 60% of the mechanical work, what would you do with that recovered time, and how would it change the value you deliver to clients?',
           quiz: [
             {
               question: 'Which of the following is the most significant risk when using AI for legal research?',
@@ -167,6 +196,35 @@ For most legal teams without a specialist platform, a practical workflow is:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your firm is evaluating a free-tier AI chatbot for legal research. A partner argues it is fine because the tool produces accurate-looking summaries. What is the critical problem with this approach?',
+            options: [
+              'Free tools are slower than paid tools and will reduce productivity',
+              'Without an enterprise data protection agreement, client data submitted to the tool may be used for model training or stored outside your control',
+              'Free tools are banned by all bar associations and law societies',
+              'The accuracy of free tools is identical to paid tools, so the distinction does not matter',
+            ],
+            correct: 1,
+            explanation: 'The accuracy-looking output is a separate question from the data governance problem. Free-tier tools typically operate under consumer terms that permit use of submitted content for model improvement. For legal professionals with confidentiality obligations, submitting client data or privileged content to such tools creates a serious professional responsibility risk, regardless of how good the output looks. Enterprise agreements with appropriate data handling commitments are the minimum standard.',
+          },
+          outputComparison: {
+            label: 'Tool evaluation: surface-level vs. governance-focused assessment',
+            vague: {
+              prompt: 'Compare ChatGPT and Harvey for legal work',
+              output: 'ChatGPT and Harvey are both AI tools used in the legal profession. ChatGPT is a general-purpose tool made by OpenAI that can help with many tasks. Harvey is a legal-specific AI platform designed for law firms. Both can assist with drafting and research. Harvey is more specialised for legal work. ChatGPT is more widely available. The choice depends on your firm\'s needs and budget.',
+            },
+            improved: {
+              prompt: 'I am evaluating AI tools for a 50-lawyer UK commercial firm. Compare general-purpose LLMs (Claude, ChatGPT enterprise) with legal-specific platforms (Harvey, Lexis+ AI) on four dimensions: (1) data governance and privacy, (2) citation reliability and hallucination risk for legal research, (3) integration with matter management systems, (4) cost and licensing model. We handle M&A, commercial contracts, and employment. Be specific about limitations of each category.',
+              output: '**Data Governance:**\n- Enterprise tiers of Claude/ChatGPT offer data processing agreements, no-training commitments, and UK/EU data residency options — suitable for client matters if agreements are in place\n- Legal platforms (Harvey, Lexis+ AI) are built for law firm data governance with firm-specific isolation and standard DPA terms\n- Free or consumer tiers of any tool: not appropriate for client matters\n\n**Citation Reliability:**\n- General-purpose LLMs: hallucinate legal citations regularly — can produce convincing but false case references. Must verify every citation through Westlaw/LexisNexis\n- Legal-specific platforms with database integration: ground responses in verified legal databases — significantly lower (not zero) hallucination risk for citations\n\n**Practice Management Integration:**\n- General-purpose tools: no native integration — copy-paste workflow\n- Legal platforms: native or API integration with major DMS and practice management systems (Clio, iManage, NetDocuments)\n\n**Cost:**\n- Enterprise LLMs: per-user or consumption-based, typically £15–40/user/month\n- Legal platforms: typically £50–150+/user/month depending on modules\n\n**Recommendation for your firm:** For M&A and contract review at volume, a legal-specific platform with database integration is worth the premium. For drafting and internal analysis, Claude or ChatGPT Enterprise with appropriate DPAs offers good value.\n\n*Note: Pricing and features change frequently — verify current terms with vendors before procurement decisions.*',
+            },
+            insight: 'The vague prompt produces a generic comparison that says almost nothing useful for a procurement decision. The specific prompt produces a structured, dimension-by-dimension analysis that directly addresses the key concerns for a firm with legal professional obligations — data governance first, then capability trade-offs. The output gives the firm the framework to make an informed decision.',
+          },
+          applyThisWeek: {
+            action: 'Check whether the AI tool you currently use (or plan to use) for any legal work has an enterprise data processing agreement in place with your organisation. If not, identify what steps are needed before you can use it for client-related work.',
+            promptTemplate: 'I am evaluating [AI tool name] for use in a [type of legal practice/organisation]. Help me draft a list of data governance questions I should ask the vendor before approving use for client matters. Focus on: data retention, training use, data residency, breach notification, and any relevant [UK/EU/other] regulatory requirements.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'What AI tools are currently being used — formally or informally — in your team or organisation? Are you confident that each of those tools has the data governance controls required for the type of content being submitted? Where are the gaps?',
           quiz: [
             {
               question: 'What is the primary advantage of legal-specific AI platforms over general-purpose LLMs for legal research?',
@@ -253,6 +311,35 @@ A separate question: can AI-generated legal work product attract privilege? The 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A solicitor is working on a sensitive acquisition and wants to use AI to help draft the confidentiality provisions. The firm does not yet have an enterprise AI agreement. What is the safest approach?',
+            options: [
+              'Use the free tier of any AI tool because the content is only temporary',
+              'Anonymise the parties and deal-specific details, replacing them with placeholders, before submitting to the AI',
+              'Email the full contract to a colleague who has a personal ChatGPT subscription',
+              'Use AI freely because confidentiality provisions are standard boilerplate anyway',
+            ],
+            correct: 1,
+            explanation: 'Anonymisation removes client-identifying and deal-specific information before it reaches the AI provider\'s servers. If a data incident occurs, the exposed content cannot be traced back to a specific client or matter. This is the most practical mitigation when an enterprise-grade tool with appropriate data processing agreements is not yet available. Even boilerplate drafting can reveal client identity through context.',
+          },
+          outputComparison: {
+            label: 'Data minimisation: full-context vs. anonymised prompt',
+            vague: {
+              prompt: 'Review the confidentiality clause in this agreement between Acme Corp and BrightTech Solutions for their software development project. Flag any issues.',
+              output: 'The confidentiality clause between Acme Corp and BrightTech Solutions appears to be a standard mutual confidentiality provision. It covers both parties\' confidential information and applies for the duration of the agreement. There are no obvious red flags, though you may want to ensure the definition of confidential information is appropriately broad.',
+            },
+            improved: {
+              prompt: 'Review the following confidentiality clause for a software development agreement. I have anonymised the parties as [COMPANY A] (client) and [COMPANY B] (supplier). Flag: (1) whether the definition of Confidential Information is broad enough to cover source code and technical specifications, (2) whether post-termination obligations are specified and for how long, (3) whether there are appropriate carve-outs for information that enters the public domain. This is for internal review only — not for client distribution. [Paste anonymised clause]',
+              output: '**Definition scope (Clause 3.1):** The definition covers "business information" but does not explicitly include source code, technical specifications, or product roadmaps. For a software development relationship, these are the most commercially sensitive items — recommend adding explicit coverage.\n\n**Post-termination obligations:** The clause states obligations continue "for the duration of the agreement" only. There is no post-termination tail. Standard market practice is 2–3 years post-termination for software IP — recommend adding a specific post-termination period.\n\n**Public domain carve-out:** Present and correctly drafted. Covers information that (a) was already public at disclosure, (b) becomes public through no fault of [COMPANY B], or (c) was independently developed.\n\n**Overall:** The clause needs strengthening on scope and post-termination duration before this is suitable for a software development context.\n\n*This is an internal review aide — have a qualified solicitor review before relying on this analysis.*',
+            },
+            insight: 'The first prompt unnecessarily exposes real company names and deal context to the AI provider. The improved prompt achieves the same analytical goal using anonymised placeholders — and produces a far more useful output because it asks specific, targeted questions rather than a general review. The combination of anonymisation and specificity is the gold standard for AI use on sensitive legal matters.',
+          },
+          applyThisWeek: {
+            action: 'Take a standard clause or template from a document you are currently working on. Anonymise any client or deal-specific identifiers by replacing them with bracketed placeholders. Submit the anonymised version to AI for review or redrafting. Compare the output quality to what you would have got from a generic prompt.',
+            promptTemplate: 'Review the following [clause type] from a [agreement type]. I have anonymised the parties as [PARTY A] and [PARTY B]. Flag any provisions that: (1) [specific concern 1], (2) [specific concern 2], (3) [specific concern 3]. Indicate whether each point is standard market practice or unusual. This is for internal triage only — not for client distribution. [Paste anonymised clause]',
+            tool: 'Claude',
+          },
+          reflection: 'In your current practice, which matters involve the most sensitive client information that you would never want to expose — even accidentally — through an AI tool? What protocols would need to be in place before you could safely use AI on those matters?',
           quiz: [
             {
               question: 'What is the primary confidentiality risk when using AI tools without an enterprise data processing agreement?',
@@ -343,6 +430,35 @@ Consistency builds confidence and reveals which AI approaches work best for your
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A junior lawyer uses AI to draft a client advice letter and sends it directly without reviewing it. The letter contains an incorrect statement about a statutory deadline. Who bears professional responsibility?',
+            options: [
+              'The AI provider, because the error originated in their model',
+              'The supervising lawyer, because professional responsibility for all work product remains with the qualified lawyer',
+              'The junior lawyer only, since they sent the email',
+              'No one, because AI-assisted letters carry a built-in disclaimer',
+            ],
+            correct: 1,
+            explanation: 'Professional responsibility for legal work product always rests with the supervising qualified lawyer, regardless of how the draft was generated. AI is a tool; the lawyer who approves and sends the advice is accountable for its accuracy and appropriateness. This is exactly why the three-step workflow — brief, review, apply judgment — is not optional: it is the professional responsibility structure that makes AI use safe.',
+          },
+          outputComparison: {
+            label: 'Workflow briefs: vague instruction vs. structured three-step prompt',
+            vague: {
+              prompt: 'Help me with legal work',
+              output: 'I can help you with a wide range of legal tasks. I can assist with drafting documents, researching legal issues, reviewing contracts, and more. What specific legal task would you like help with today? Please note that I cannot provide legal advice and all outputs should be reviewed by a qualified lawyer.',
+            },
+            improved: {
+              prompt: 'I am a commercial lawyer at a UK firm. I need to produce a first-pass review of a supplier services agreement. My role is to identify issues for a client in the customer position. The document is 30 pages. Please structure the review as follows: (1) one-paragraph commercial overview, (2) list of all liability and indemnity provisions with clause references and a one-sentence summary of each, (3) any clauses that are non-standard or particularly onerous for the customer, (4) key dates and renewal terms. Flag anything that requires specialist legal analysis. Output in a format I can paste into a Word document. This is for internal lawyer review only — not for client distribution.',
+              output: '**Commercial Overview:**\nThis is a standard-form IT services agreement on supplier paper, strongly favouring the supplier. The liability cap is set at 3 months\' fees, the IP assignment favours the supplier, and there is no termination for convenience right. The customer\'s ability to exit is significantly restricted.\n\n**Liability and Indemnity Provisions:**\n- Clause 11.1: Mutual limitation of liability — capped at fees paid in preceding 3 months. Below market for a services agreement of this type (12 months is more standard).\n- Clause 11.4: Supplier indemnity for IP infringement only. No reciprocal indemnity for data breach or service failures causing customer loss.\n- Clause 12.2: Consequential loss exclusion — broad, covering loss of profit, data, and business interruption. Standard but worth flagging to client.\n\n**Non-Standard / Onerous Provisions:**\n- Clause 7.3: IP in all deliverables remains with supplier — customer gets a licence only. Flag for negotiation if client expects to own custom-developed outputs.\n- Clause 15.1: No termination for convenience. Locked in for full initial term of 3 years unless supplier materially breaches.\n- Clause 9.2: Benchmarking right is excluded. Client cannot require supplier to price-match competitors during the term.\n\n**Key Dates:**\n- Initial term: 3 years from commencement\n- Auto-renewal: 12 months unless 90 days\' written notice given (Clause 15.3) — flag this to client well in advance\n- SLA review: annually (Clause 6.4)\n\n*This is a first-pass triage for internal lawyer review. All provisions must be reviewed by a qualified solicitor before any client advice is given.*',
+            },
+            insight: 'The vague prompt generates a non-answer that offers nothing. The structured three-step prompt — with role context, specific task, and clear output format — generates a usable first-pass review that a lawyer can work from directly. The instruction about internal use only appropriately frames the AI output as a working document rather than final advice.',
+          },
+          applyThisWeek: {
+            action: 'Choose one recurring legal task you do at least weekly (e.g., drafting file notes, summarising case updates, preparing agenda items for team meetings). Use AI for that task every day this week. Track how long it takes with AI versus without, and what you routinely need to correct.',
+            promptTemplate: 'I am a [role] at a [type of organisation]. I need to [specific task]. Context: [2–3 sentences of relevant background]. Please produce: [specific output format]. Constraints: [any relevant tone, length, or content requirements]. This is for [internal review/client communication] — [describe who will review before use].',
+            tool: 'Claude',
+          },
+          reflection: 'If you mapped your week\'s legal tasks on a grid — time cost on one axis, error tolerance on the other — where would most of your work sit? Are there tasks you currently spend significant time on that AI could handle well, and tasks where the error cost means you should not shortcut your personal review?',
           quiz: [
             {
               question: 'Where should a legal professional start when building an AI workflow?',
@@ -435,6 +551,35 @@ First-pass AI review speeds you up. It does not replace your comprehensive revie
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A colleague suggests using AI to draft an NDA for a new vendor relationship and sending it directly without legal review. What is the main risk?',
+            options: [
+              'AI cannot draft NDAs — it lacks access to your company\'s templates',
+              'AI may produce plausible-sounding but legally flawed clauses that create unforeseen obligations',
+              'The vendor will know the NDA was AI-generated and lose trust',
+              'AI NDAs are not legally binding in most jurisdictions',
+            ],
+            correct: 1,
+            explanation: 'AI can produce well-structured, professional-looking legal documents that contain subtle errors — incorrect governing law, missing carve-outs, or unenforceable clauses. These are hard to spot without legal expertise, which is why AI-drafted legal documents always require qualified review before use.',
+          },
+          outputComparison: {
+            label: 'Contract summary: generic scan vs. issue-focused review',
+            vague: {
+              prompt: 'Summarise this contract',
+              output: 'This is a service agreement between two parties. It covers the scope of services, payment terms, intellectual property rights, confidentiality, termination, and liability. The agreement is governed by [jurisdiction] law. Both parties have various rights and obligations as described in the document.',
+            },
+            improved: {
+              prompt: 'Review this SaaS vendor contract from the perspective of the customer (us). Flag: (1) any liability caps that are below 12 months of contract value, (2) data processing obligations — do they meet GDPR Article 28 requirements? (3) termination rights — can we exit without cause with 30 days\' notice? (4) IP ownership — do we own outputs generated using their platform? Summarise each issue in plain English with the relevant clause number. Note: this is for internal review only, not legal advice.',
+              output: '**Liability Cap (Clause 12.3):** Capped at 3 months of fees paid — below your 12-month threshold. Consider negotiating to 12 months for a contract of this size.\n\n**Data Processing (Clause 8):** References GDPR compliance but does not include a Data Processing Agreement (DPA) as a schedule. GDPR Article 28 requires a written DPA — request one before signing.\n\n**Termination (Clause 15.2):** Only allows termination for cause (material breach uncured after 30 days). No termination for convenience. You are locked in for the full term unless they breach.\n\n**IP Ownership (Clause 10.1):** Outputs generated using the platform are licensed to you, not owned. The vendor retains ownership. Review whether this is acceptable for your use case.\n\n*Note: This summary is for internal triage only. Have qualified legal counsel review before any decisions.*',
+            },
+            insight: 'The vague prompt produces a description that tells you nothing you couldn\'t see from the table of contents. The specific prompt produces a targeted risk triage on the four issues that matter most — because you told AI exactly what to look for and from whose perspective. The output is genuinely useful as a starting point for a lawyer\'s review.',
+          },
+          applyThisWeek: {
+            action: 'Take one contract or policy document you\'ve been meaning to review. Use AI to create a plain-English summary of the key obligations and any clauses that stand out as unusual or risky. Have a lawyer review the AI summary alongside the original.',
+            promptTemplate: 'Review this [contract/policy type] from the perspective of [your role/company]. Summarise in plain English: (1) our key obligations, (2) their key obligations, (3) any clauses that seem unusual or potentially problematic, (4) anything that requires specialist legal review. Note any jurisdiction-specific issues. This is for internal triage only. [Paste document]',
+            tool: 'Claude',
+          },
+          reflection: 'Which legal tasks in your current role take the most time but require the least specialist judgment — document formatting, first-pass review, plain-English summaries, tracking obligations? Which of those could AI accelerate while you focus on the analysis that actually requires your expertise?',
           quiz: [
             {
               question: 'Which of the following is the most appropriate use of AI in a contract review process?',
@@ -515,6 +660,35 @@ When reviewing data rooms for counterparty documents, confidentiality and privil
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'During M&A due diligence, an associate proposes that all documents AI flags as "low risk" can skip lawyer review entirely to save time. What is the primary problem with this approach?',
+            options: [
+              'AI cannot classify documents as low or high risk',
+              'Eliminating human review of any documents creates accountability gaps and may miss issues AI cannot assess, such as commercial context and defined term interactions',
+              'It is not cost-effective because AI review is more expensive than lawyer review',
+              'Buyers always require 100% lawyer review in acquisition agreements, so shortcuts are contractually prohibited',
+            ],
+            correct: 1,
+            explanation: 'AI is excellent at triage and summarisation but it cannot assess commercial context, the significance of defined terms, or how a clause interacts with the deal dynamics the lawyers understand. Eliminating human review of any documents — even apparently low-risk ones — creates a gap that cannot be defended if the due diligence process is later challenged. AI changes the level of review applied, not the principle that all documents receive some human attention.',
+          },
+          outputComparison: {
+            label: 'Due diligence brief: undefined scope vs. structured issue-spotting',
+            vague: {
+              prompt: 'Review these supplier contracts for due diligence',
+              output: 'I have reviewed the supplier contracts provided. They cover various services and products. Key areas include payment terms, service levels, confidentiality, and termination. Some contracts have standard terms while others may have specific provisions worth noting. Overall, the contracts appear to be typical commercial agreements. You should have a lawyer review them in detail.',
+            },
+            improved: {
+              prompt: 'I am conducting buy-side due diligence on a mid-market software company. Review this set of supplier contracts and flag, for each agreement: (1) automatic renewal clauses and notice periods required to exit, (2) change of control provisions — does the acquisition trigger any consent requirements or termination rights? (3) any minimum commitment or volume obligations that would bind the acquirer post-closing, (4) jurisdiction and governing law. Format as a table with one row per contract. Flag any contract that has a change of control provision or minimum commitment above £50k as HIGH PRIORITY. This is for internal DD triage only.',
+              output: '| Contract | Auto-Renewal | Change of Control | Min Commitment | Governing Law | Priority |\n|---|---|---|---|---|---|\n| AWS Services (Cloud Infrastructure) | Yes — annual, 90 days notice to exit | Clause 12.3: consent required — supplier may terminate | None specified | English law | HIGH |\n| Salesforce CRM | Yes — annual, 60 days notice | No change of control provision | £180k/year minimum | California law | HIGH |\n| Office Supplies (XYZ Ltd) | No | No | None | English law | Standard |\n| HR Software (PeopleFirst) | Yes — annual, 30 days notice | Clause 8: notification only, no consent required | £24k/year | English law | Standard |\n\n**Summary:** Two HIGH PRIORITY items require immediate attention: (1) AWS consent requirement may need renegotiation before closing or post-closing migration plan; (2) Salesforce minimum commitment of £180k/year will bind acquirer and is governed by California law.\n\n*Internal triage only — have a qualified lawyer review each high-priority contract before any acquisition decisions are made.*',
+            },
+            insight: 'The vague prompt produces an observation so generic it adds no value to the due diligence process. The structured prompt — with specific risk categories, a defined output format, and a priority threshold — produces a triage table that immediately focuses lawyer attention on the two contracts that could affect the deal. The format difference is as important as the content difference.',
+          },
+          applyThisWeek: {
+            action: 'Design a five-field AI summary template for one category of agreement in your practice (supplier contracts, employment agreements, IP licences). Write the prompt, test it on a publicly available agreement, and assess whether the output would be usable directly in a due diligence report.',
+            promptTemplate: 'You are assisting with due diligence on [type of transaction]. Review this [agreement type] and complete the following template for each document:\n1. Parties and their roles\n2. Term and renewal terms (with notice period to exit)\n3. [Key commercial term relevant to your practice]\n4. Change of control provisions (if any)\n5. Any non-standard provisions that require lawyer attention\n\nFlag any item with [specific risk threshold] as HIGH PRIORITY. This is for internal DD triage only. [Paste agreement]',
+            tool: 'Claude',
+          },
+          reflection: 'In a due diligence exercise, where has your team historically found the most significant issues — in the documents everyone expected to be high-risk, or in ones that initially seemed routine? What does that tell you about the value of consistent, systematic review even for apparently low-risk documents?',
           quiz: [
             {
               question: 'What is the most appropriate use of AI in a large-scale due diligence exercise?',
@@ -607,6 +781,35 @@ AI drafts require systematic review:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'When should a lawyer NOT ask AI to produce a first draft of a legal document?',
+            options: [
+              'When the document is longer than 10 pages',
+              'When the lawyer is uncertain about the correct legal position the document should reflect',
+              'When the document will be reviewed by another lawyer before sending',
+              'When the client has requested a plain-English style',
+            ],
+            correct: 1,
+            explanation: 'Drafting must follow the legal analysis, not substitute for it. If you do not yet know what the correct legal position is — what obligations to include, what the governing law requires, what protections your client needs — AI drafting an agreement will produce a document that looks professionally structured but reflects the wrong legal position. Determine the correct legal analysis first; use AI to express it efficiently.',
+          },
+          outputComparison: {
+            label: 'Legal drafting prompts: bare request vs. five-part structured prompt',
+            vague: {
+              prompt: 'Draft an NDA',
+              output: 'NON-DISCLOSURE AGREEMENT\n\nThis Non-Disclosure Agreement ("Agreement") is entered into between Party A and Party B.\n\n1. Confidential Information: Party A agrees to keep all information received from Party B confidential.\n2. Term: This Agreement shall remain in effect for one year.\n3. Governing Law: This Agreement shall be governed by applicable law.\n\nNote: This is a simplified example. Consult a lawyer for a legally binding agreement.',
+            },
+            improved: {
+              prompt: 'You are assisting a UK commercial lawyer. Draft a mutual non-disclosure agreement for use in preliminary M&A discussions where both parties will share confidential business information. Parameters: (1) mutual obligations — both parties are disclosing; (2) definition of Confidential Information should explicitly include business plans, financial data, customer lists, and technical specifications, with standard carve-outs for public domain, independently developed, and legally compelled disclosure; (3) obligations continue for 3 years post-termination; (4) governed by English law, courts of England and Wales; (5) no licence to use confidential information beyond evaluation purposes; (6) recipients may share with advisers and employees on a need-to-know basis. Use numbered clauses. Approximately 800 words. This is a first draft for lawyer review — not for direct client use.',
+              output: 'MUTUAL NON-DISCLOSURE AGREEMENT\n\nThis Mutual Non-Disclosure Agreement ("Agreement") is made between [PARTY A] ("Company A") and [PARTY B] ("Company B") (each a "Party", together the "Parties") and is effective from [DATE].\n\n**1. Purpose**\nThe Parties intend to explore a potential business transaction and in connection with that exploration may disclose to each other certain confidential information. This Agreement governs that disclosure.\n\n**2. Confidential Information**\n2.1 "Confidential Information" means all non-public information disclosed by one Party (the "Disclosing Party") to the other (the "Receiving Party"), whether in writing, orally, or in any other form, including but not limited to: business plans, financial data and projections, customer lists and customer data, technical specifications and know-how, and the existence and nature of the potential transaction...\n\n[continues with complete, properly structured clauses covering: carve-outs, obligations of confidentiality, permitted disclosure to advisers, no licence, term and survival, governing law and jurisdiction]\n\n*This is a first draft prepared with AI assistance for review by a qualified solicitor. It should not be used directly without legal review and adaptation to the specific parties and circumstances.*',
+            },
+            insight: 'The vague prompt produces an unusable skeleton with a disclaimer that admits its inadequacy. The five-part structured prompt — role context, document type, key parameters, format, and review framing — produces a properly structured first draft that a UK commercial lawyer can review and refine rather than write from scratch. The time saving is in the drafting; the legal judgment is still the lawyer\'s.',
+          },
+          applyThisWeek: {
+            action: 'Choose one standard document you draft repeatedly in your practice. Write a five-part structured prompt using the formula from this lesson. Generate a first draft and time the process. Then review the draft against your usual output — what did AI get right, what needed your expertise to fix?',
+            promptTemplate: 'You are assisting a [jurisdiction] [type of] lawyer. Draft a [document type] for [purpose and context]. Key parameters: (1) [party roles and key obligations], (2) [specific provisions required], (3) [term and duration], (4) [governing law and jurisdiction], (5) [any specific requirements or exclusions]. Use [numbered clauses / standard sections]. Approximately [word count]. This is a first draft for lawyer review — not for direct client use without qualified review and adaptation.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last document you drafted from scratch. How much of that time was spent on structure and standard provisions, versus on the genuinely novel legal issues specific to that matter? Could AI have handled the former — freeing you to focus entirely on the latter?',
           quiz: [
             {
               question: 'Which element is most commonly missing from legal AI drafting prompts, leading to poor output quality?',
@@ -694,6 +897,35 @@ When sharing AI-assisted summaries with clients, consider whether to disclose th
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A general counsel sends an AI-generated executive summary of a 60-page acquisition agreement to the board without reviewing it. The summary omits a material MAC clause. What is the primary failure here?',
+            options: [
+              'The AI model was not designed for legal summarisation',
+              'The GC failed to spot-check the AI summary against the source document before sending — a mandatory quality control step',
+              'Executive summaries should never be produced by AI',
+              'The board should have read the full agreement themselves instead of relying on a summary',
+            ],
+            correct: 1,
+            explanation: 'For AI document summaries, you always have the source document to check against. Spot-checking a sample of provisions against the original text is the non-negotiable quality control step. AI summaries can omit provisions, simplify in ways that change meaning, or misstate obligations — and the AI has no way to know what is most significant commercially. The human reviewing the summary is responsible for catching these errors before the summary goes anywhere.',
+          },
+          outputComparison: {
+            label: 'Document summary: generic output vs. audience-matched summary',
+            vague: {
+              prompt: 'Summarise this commercial lease for me',
+              output: 'This is a commercial lease agreement between a landlord and a tenant. It covers the premises, term, rent, and various obligations of both parties. The lease includes provisions on permitted use, repairs, alterations, assignment, and break rights. The rent is subject to periodic review. The lease is governed by the law of the relevant jurisdiction.',
+            },
+            improved: {
+              prompt: 'Summarise this commercial lease for a non-lawyer CFO who needs to understand the financial and operational commitments before board approval. Cover: (1) annual rent and any rent review mechanism — when does it happen, what is the basis? (2) break rights — can we exit early and on what terms? (3) repair and dilapidations obligations — what condition must we return the premises in? (4) key restrictions — what are we not allowed to do without landlord consent? (5) any personal guarantees or security required. Plain English, no legal jargon, maximum 400 words. This is for internal briefing — not a legal opinion.',
+              output: '**Annual Rent and Review:** The rent is £240,000 per year, payable quarterly in advance. The rent is reviewed every 5 years on an open market basis — this means the rent could increase (but not decrease) to the current market rate at each review. The next review is in 2027.\n\n**Break Rights:** You have a tenant break right at year 5 (2028), exercisable by giving 6 months\' written notice. To exercise the break, there must be no arrears of rent at the break date and the lease must be "materially complied with" — conditions that should be monitored in the year leading up to the break.\n\n**Repair and Dilapidations:** You are responsible for keeping the premises in good repair throughout the lease and returning them in that condition at the end. In practice, this typically means a dilapidations assessment at or near lease end — budget for potential reinstatement costs.\n\n**Key Restrictions:** You cannot (a) assign or sublet without landlord consent, (b) carry out structural alterations without consent, (c) use the premises for anything other than general office use.\n\n**Security:** No personal guarantee required. A rent deposit of 3 months\' rent (£60,000) is required on signing.\n\n*This is an internal briefing summary only. Have your legal team review the full lease before signing. This does not constitute legal advice.*',
+            },
+            insight: 'The generic summary tells the CFO almost nothing they can act on — it describes what the lease covers without answering any of the commercially significant questions. The audience-specific prompt produces a summary that directly addresses the financial and operational decisions the CFO needs to make, in language they can understand, with the appropriate disclaimer. The difference is entirely in knowing your audience and asking specific questions.',
+          },
+          applyThisWeek: {
+            action: 'Choose a legal document that a non-lawyer colleague, client, or board member needs to understand. Use AI to produce a plain-English executive summary tailored to their specific role and decisions. Spot-check three provisions against the original before sharing.',
+            promptTemplate: 'Summarise this [document type] for a [recipient\'s role — e.g., non-lawyer CFO / HR director / board member] who needs to understand [specific decisions they need to make]. Cover: (1) [key commercial or financial term], (2) [key obligation or restriction], (3) [exit or termination rights], (4) [any risks or unusual provisions]. Plain English only, no legal jargon. Maximum [word count]. This is an internal briefing summary — not legal advice, and should be reviewed by a qualified lawyer before any decisions are made.',
+            tool: 'Claude',
+          },
+          reflection: 'Which stakeholders in your organisation most struggle to engage with legal documents — and what decisions are they making without fully understanding the terms? How much clearer would those decisions be if they had an AI-assisted plain-English summary with appropriate caveats?',
           quiz: [
             {
               question: 'What is the most effective way to quality-check an AI-generated legal document summary?',
@@ -787,6 +1019,35 @@ Use Westlaw, LexisNexis, or official government sources for verification. Never 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A trainee solicitor uses AI to research a limitation of liability issue and cites three cases in a client advice letter — without checking them in Westlaw. A partner reviews and finds one case does not exist. What should the trainee have done?',
+            options: [
+              'Used a more advanced AI model that does not hallucinate',
+              'Verified every case citation through an authoritative legal database before including it in any legal work',
+              'Added a disclaimer to the letter stating cases were AI-generated',
+              'Cited only English cases, where AI is more reliable',
+            ],
+            correct: 1,
+            explanation: 'AI hallucinations in legal research are a documented and serious professional risk. The AI generates case citations that look authentic — correct format, plausible names, realistic holdings — but may be entirely fabricated. The verification step through Westlaw, LexisNexis, or an official case law database is mandatory before any citation is used in legal work. No level of AI sophistication eliminates this risk entirely.',
+          },
+          outputComparison: {
+            label: 'Legal research scoping: open-ended query vs. structured issue map',
+            vague: {
+              prompt: 'Research employment law for me',
+              output: 'Employment law is a broad area that covers the relationship between employers and employees. Key areas include contracts of employment, working time regulations, discrimination law, unfair dismissal, redundancy, TUPE, and health and safety. There have been many developments in employment law in recent years. I recommend consulting Westlaw or LexisNexis for authoritative legal information.',
+            },
+            improved: {
+              prompt: 'I am advising a UK employer on the following situation: they want to introduce a mandatory AI monitoring system that tracks employee productivity through computer activity logging. Help me scope the legal research I need to do. List: (1) the specific legal issues I should research, (2) the relevant UK statutory frameworks and regulations, (3) the key distinctions I need to understand (e.g., where monitoring is permissible vs. where it creates exposure), (4) suggested search terms for Westlaw. Do not cite specific cases — I will verify those through authoritative sources myself.',
+              output: '**Legal Issues to Research:**\n1. Data protection law — lawful basis for processing employee monitoring data under UK GDPR (Article 6), necessity and proportionality requirements\n2. Employment law — whether mandatory monitoring constitutes a change to terms and conditions requiring employee consent or consultation\n3. Worker rights — whether monitoring could give rise to constructive dismissal claims if introduced without adequate notice\n4. Transparency obligations — ICO Employment Practices Code requirements for employee notice of monitoring\n5. Works councils / collective consultation — if applicable, whether any obligation to consult employee representatives applies\n\n**Relevant Statutory Framework:**\n- UK GDPR and Data Protection Act 2018 (primary framework)\n- Employment Rights Act 1996 (constructive dismissal, contractual terms)\n- Human Rights Act 1998 / Article 8 ECHR (privacy in the workplace)\n- Regulation of Investigatory Powers Act 2000 (may apply depending on scope of monitoring)\n- ICO Employment Practices Code and guidance on monitoring at work\n\n**Key Distinctions:**\n- Monitoring with employee notice vs. covert monitoring (very different legal treatment)\n- Monitoring of work equipment vs. personal devices\n- Proportionality — is the level of monitoring necessary for the stated purpose?\n- Whether monitoring is to assess performance, security, or compliance — each may have different legal treatment\n\n**Suggested Westlaw Search Terms:**\n- "employee monitoring" AND "UK GDPR"\n- "productivity monitoring" AND "constructive dismissal"\n- "Article 8" AND "workplace surveillance"\n- ICO guidance: "employment practices" monitoring',
+            },
+            insight: 'The vague prompt produces a textbook overview that no lawyer needed AI to generate. The structured prompt — specific jurisdiction, specific scenario, specific research tasks — produces a detailed issue map and statutory framework that genuinely accelerates the research process. Crucially, it avoids case citations and asks for search terms instead, because the researcher understands AI\'s limitations and uses it for what it does well.',
+          },
+          applyThisWeek: {
+            action: 'For a current or recent matter, use AI to map the legal issues and relevant statutory framework. Ask for search terms for your legal database rather than case citations. Then use those search terms in Westlaw or LexisNexis and compare what primary sources you find against the AI\'s issue map.',
+            promptTemplate: 'I am advising on the following situation: [2–3 sentence description of facts and legal context]. Jurisdiction: [jurisdiction]. Help me scope my legal research by identifying: (1) the specific legal issues I should research, (2) the relevant statutory frameworks and regulatory regimes, (3) the key distinctions I need to understand, (4) suggested search terms for legal database research. Do not cite specific cases — I will verify those through [Westlaw/LexisNexis] myself.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time you had to research an unfamiliar area of law quickly. How did you scope the issues — and how much time did that initial scoping take? Could AI have given you a useful starting framework in 2 minutes that would have taken you 30 minutes to build manually? What would you still need to do that AI cannot?',
           quiz: [
             {
               question: 'What is the appropriate use of AI in the legal research process?',
@@ -869,6 +1130,35 @@ Memo drafts from AI require the same review standard as any other legal work:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A lawyer asks AI to "research and draft a memo on the enforceability of non-compete clauses in employment contracts." What is the critical flaw in this approach?',
+            options: [
+              'AI cannot draft memos — it can only produce bullet points',
+              'The lawyer is asking AI to do the research and drafting together, without verifying the legal authorities first — creating serious hallucination risk in a client document',
+              'The topic is too complex for AI to handle at all',
+              'Non-compete clauses are jurisdiction-specific, so AI should never be involved',
+            ],
+            correct: 1,
+            explanation: 'Asking AI to research and draft simultaneously means AI will generate both the legal propositions and the writing — and the citations it relies on may be fabricated. The correct workflow is: the lawyer conducts and verifies the research through authoritative databases, then provides those verified authorities to AI for structured drafting. AI drafts from your research, not from its own unverified knowledge.',
+          },
+          outputComparison: {
+            label: 'Legal memo drafting: open brief vs. research-first prompt',
+            vague: {
+              prompt: 'Write a legal memo about GDPR consent requirements for marketing emails',
+              output: 'MEMORANDUM\n\nTo: [Client]\nRe: GDPR Consent Requirements for Marketing Emails\n\nUnder the General Data Protection Regulation (GDPR), organisations must obtain valid consent before sending marketing emails. Consent must be freely given, specific, informed, and unambiguous. The landmark case of [Fictional Case Name] [2021] EWCA Civ 123 confirmed that pre-ticked boxes do not constitute valid consent. You should update your privacy notices accordingly.\n\nConclusion: Ensure your email marketing practices comply with GDPR consent requirements.',
+            },
+            improved: {
+              prompt: 'I am drafting a legal memo advising a UK e-commerce company on GDPR consent requirements for email marketing. I have completed my research and identified the following verified authorities: (1) UK GDPR Article 6(1)(a) — consent as lawful basis; (2) UK GDPR Article 7 — conditions for consent; (3) PECR Regulation 22 — specific requirement for electronic marketing consent; (4) ICO Direct Marketing Guidance (2020) — confirms double opt-in best practice; (5) Planet49 (Case C-673/17) — CJEU ruling on pre-ticked boxes (applied in UK post-Brexit by ICO). Using these authorities, draft a structured memo with: (1) issue statement, (2) legal framework covering both UK GDPR and PECR, (3) specific application to email marketing sign-up flows, (4) practical recommendations. Formal but accessible tone. This is a first draft for lawyer review.',
+              output: 'LEGAL MEMORANDUM\n\n**To:** [Client] **From:** [Solicitor] **Date:** [Date]\n**Re:** GDPR and PECR Consent Requirements for Email Marketing\n\n**1. Issue**\nThis memo addresses the lawful basis requirements for sending marketing emails to customers and prospects under the UK General Data Protection Regulation (UK GDPR) and the Privacy and Electronic Communications Regulations 2003 (PECR).\n\n**2. Legal Framework**\n\n*2.1 Dual Regime*\nEmail marketing is subject to two overlapping regimes. First, UK GDPR (Article 6(1)(a)) requires a lawful basis for processing personal data — for marketing purposes, consent is the most appropriate basis. Second, PECR Regulation 22 imposes a specific, additional consent requirement for electronic marketing communications, which sits alongside and is stricter than the general UK GDPR requirement.\n\n*2.2 What Constitutes Valid Consent*\nUnder UK GDPR Article 7, consent must be freely given, specific, informed, and unambiguous — demonstrated by a clear affirmative act. Importantly, the Court of Justice (whose Planet49 decision continues to influence UK ICO guidance post-Brexit) confirmed that pre-ticked boxes do not satisfy this standard...\n\n[continues with complete structured analysis through recommendations]\n\n*This is a first draft prepared for lawyer review. All legal propositions should be verified before this memo is finalised and sent to the client. This document does not constitute legal advice until reviewed and approved by a qualified solicitor.*',
+            },
+            insight: 'The vague prompt generates a hallucinated case citation in the very first draft — a serious professional risk if not caught. The research-first prompt, where the lawyer supplies verified authorities and asks AI to structure and draft from them, produces a far superior memo with no risk of fabricated citations. The extra work (verifying the research first) is exactly the professional step that makes AI drafting safe.',
+          },
+          applyThisWeek: {
+            action: 'Choose a legal memo or advice letter you are currently working on. Complete your research first, noting the verified statutory provisions and cases you are relying on. Then use AI to draft the structure and framework sections from your verified sources. Compare the output quality to asking AI to research and draft simultaneously.',
+            promptTemplate: 'I am drafting a [type of memo/advice] on [topic] for a [type of client]. I have researched and verified the following authorities: [list 3–5 specific statutory provisions or cases]. Using these authorities, draft a memo with the following structure: (1) issue statement, (2) legal framework, (3) application to the client\'s situation, (4) practical recommendations. Tone: [formal/accessible]. This is a first draft for lawyer review — it does not constitute legal advice until reviewed and approved.',
+            tool: 'Claude',
+          },
+          reflection: 'How much of the time you spend writing legal memos goes on structure and transitions, versus the actual legal analysis? If AI could handle structure and drafting from your research notes in 10 minutes, what would you do with the time you currently spend on the mechanical aspects of memo writing?',
           quiz: [
             {
               question: 'When using AI to draft a legal memorandum, what should the lawyer provide to the AI as input?',
@@ -949,6 +1239,35 @@ Regulatory compliance errors have real consequences. Apply the same verification
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A compliance officer relies on AI to proactively alert them to new regulatory publications from their sector regulator, without setting up any other monitoring. What is the fundamental problem with this approach?',
+            options: [
+              'AI reads regulatory publications too slowly to be useful for compliance deadlines',
+              'AI does not proactively monitor external sources — it only processes content the user provides. The officer will miss new publications entirely.',
+              'Regulators do not publish their guidance in a format AI can read',
+              'AI regulatory summaries are always inaccurate for financial services regulation',
+            ],
+            correct: 1,
+            explanation: 'AI tools do not actively browse regulator websites, subscribe to feeds, or alert you to new publications. They process content when you provide it to them. The human workflow — regulator website monitoring, subscription alerts, industry body bulletins — is still essential for sourcing new regulatory material. AI\'s role is to process that material faster once the human has identified it.',
+          },
+          outputComparison: {
+            label: 'Regulatory summary: generic request vs. impact-focused analysis',
+            vague: {
+              prompt: 'Summarise this FCA guidance for me',
+              output: 'The FCA has published new guidance covering several important areas. The guidance addresses various obligations for regulated firms, including reporting requirements, consumer protection measures, and operational standards. Firms should review their current practices against the guidance and take appropriate steps to ensure compliance. The guidance is effective from the date stated in the document.',
+            },
+            improved: {
+              prompt: 'I am the compliance officer at a UK retail bank. Summarise this new FCA Consumer Duty guidance with the following focus: (1) what is new or changed from the previous regime — be specific about what obligations did not previously exist, (2) what specific deadlines apply — list each one separately, (3) what are the highest-priority compliance actions for a retail bank with consumer lending, current accounts, and payment services, (4) what the FCA has said it will prioritise in supervision. Format as a compliance briefing I can share with my senior leadership team. This is for internal briefing only — not legal advice.',
+              output: '**FCA Consumer Duty — Compliance Briefing for [Bank Name] Senior Leadership**\n\n**What\'s New (vs. Previous Regime):**\n- Outcome-based standard: firms must now demonstrate good customer outcomes, not merely follow prescriptive rules — a significant shift in regulatory philosophy\n- Four outcomes now explicitly defined and reportable: products & services, price & value, consumer understanding, consumer support\n- New obligation on manufacturers to conduct annual product reviews and assess whether products continue to deliver fair value\n- Distributors must now conduct more rigorous due diligence on manufacturers\' products before distributing\n\n**Key Deadlines:**\n- [DATE]: Duty applies to all new and existing products and services for retail customers\n- [DATE]: Annual board report on Consumer Duty implementation required\n- Ongoing: Annual product reviews required for all products in scope\n\n**Priority Actions for Retail Banking:**\n1. Review all consumer lending products against price and value outcome — document the assessment\n2. Audit customer communication and complaint handling processes against consumer support outcome\n3. Map your distribution chain for any third-party distributed products — enhanced due diligence required\n\n**FCA Supervisory Focus:**\nFCA has indicated it will prioritise firms that cannot demonstrate consumer outcome measurement and those with high complaint rates in key product lines.\n\n*This briefing is based on AI-assisted summarisation of FCA source guidance. Verify all deadlines against the original FCA publication. This does not constitute legal or regulatory advice — seek specialist advice on your specific compliance obligations.*',
+            },
+            insight: 'The vague summary is so generic it applies to any FCA publication and gives a compliance officer nothing to act on. The role-specific, impact-focused prompt produces a structured briefing with the specific new obligations, exact deadlines, and priority actions relevant to a retail bank — the output a compliance officer can actually take to their senior leadership team. The value is entirely in the specificity of the brief.',
+          },
+          applyThisWeek: {
+            action: 'Find one regulatory publication from your sector that came out in the last three months. Paste the key sections into AI and ask for a structured impact assessment: what is new, what are the deadlines, and what are the highest-priority actions for your organisation. Verify the deadline dates against the original source.',
+            promptTemplate: 'I am the [role] at a [type of organisation regulated by X]. Summarise this [regulator] guidance with the following focus: (1) what is new or changed from the previous position — be specific, (2) all deadlines — list each separately with exact dates, (3) the highest-priority compliance actions for [type of organisation], (4) any supervisory enforcement priorities the regulator has signalled. Format as an internal compliance briefing. Verify all deadlines against the source before sharing. This is for internal briefing only — not regulatory or legal advice.',
+            tool: 'Claude',
+          },
+          reflection: 'How does your organisation currently track regulatory changes across the jurisdictions and regulators you deal with? Where are the gaps — regulations that have changed without your team noticing until it was almost too late? What would a better process look like, and where could AI compress the time from publication to compliance action?',
           quiz: [
             {
               question: 'What is a key limitation of using AI for regulatory monitoring?',
@@ -1029,6 +1348,35 @@ AI-drafted client communications carry the same professional responsibility as m
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A partner asks an associate to use AI to draft a client update letter from a set of bullet points. The associate sends the AI-drafted letter directly to the client. What is the critical step that was skipped?',
+            options: [
+              'The associate should have used a legal-specific AI tool, not a general-purpose one',
+              'The responsible lawyer must review the AI-drafted letter for accuracy, correct legal position, and appropriateness before sending',
+              'The client should have been asked to approve the use of AI before the letter was drafted',
+              'All AI-drafted communications require IT department sign-off before external use',
+            ],
+            correct: 1,
+            explanation: 'AI-drafted client communications carry the same professional responsibility as manually drafted ones. The supervising lawyer is responsible for everything in the letter — the accuracy of the matter update, the correctness of any legal position stated, and the appropriateness of the advice for this specific client. No AI disclaimer changes this obligation. Review by the responsible lawyer before sending is non-negotiable.',
+          },
+          outputComparison: {
+            label: 'Client update letter: bullet points dumped in vs. structured brief',
+            vague: {
+              prompt: 'Write a client update letter: we received their statement of case, we need to respond by 21 days, we recommend a without prejudice call, they need to give us instructions',
+              output: 'Dear Client,\n\nI am writing to update you on your matter.\n\nWe have received the statement of case. We need to respond within 21 days. We recommend a without prejudice call. Please provide us with your instructions.\n\nPlease do not hesitate to contact us if you have any questions.\n\nYours sincerely,',
+            },
+            improved: {
+              prompt: 'Draft a professional client update letter for the partner\'s review based on the following points: (1) we received the claimant\'s Schedule of Loss last Tuesday — total claim is now £485k, higher than their original estimate of £300k, (2) we need to respond to the Schedule within 21 days — the deadline is [DATE], (3) before responding formally, we recommend a without prejudice call to explore whether there is a realistic settlement range, which could save the client significant litigation costs, (4) we need the client\'s instructions on two things: (a) whether they want to explore settlement, and (b) their position on quantum. Tone: professional, clear, direct. The client is a CFO at a manufacturing firm — no legal jargon. Under 300 words. Remind them of the deadline prominently. This is a first draft for the partner\'s review before sending.',
+              output: 'Dear [CFO Name],\n\nI am writing to update you on the litigation and to seek your instructions on next steps.\n\n**Development:** We received the claimant\'s Schedule of Loss last Tuesday. Their total claim has increased to £485,000 — significantly higher than their earlier estimate of approximately £300,000. I wanted to flag this increase to you promptly.\n\n**Deadline — Action Required by [DATE]:** We are required to respond to the Schedule of Loss within 21 days. Our deadline to respond formally is [DATE]. We need your instructions before that date.\n\n**Our Recommendation:** Before filing a formal response, we recommend having a without prejudice conversation with the other side to understand whether there is a realistic basis for settlement. Given the increase in the claim value, an early settlement — if achievable at the right level — could represent a significant saving compared to the cost of continuing to trial. A WP call carries no risk: nothing said can be used against you in proceedings.\n\n**Instructions Needed:**\n1. Do you want us to approach the other side to arrange a without prejudice call?\n2. What is your current thinking on the quantum — do you dispute the full £485k or does any part of it reflect your internal estimates of loss?\n\nPlease come back to us by [DATE MINUS 3 DAYS] so we have time to prepare before the deadline.\n\n*This letter is a first draft for partner review — not for sending until approved.*',
+            },
+            insight: 'The minimal prompt produces a letter that technically covers the bullet points but communicates almost nothing — no context for the client, no urgency, no clear call to action. The structured prompt — with tone, audience, purpose, and specific content requirements — produces a letter the CFO will actually understand and act on. The time saving is in drafting; the value is in the clarity that builds client confidence.',
+          },
+          applyThisWeek: {
+            action: 'Draft your next client update letter using AI from a set of bullet points you would normally expand manually. Compare the time taken and the quality of the first draft. Note what you need to change — and whether AI saved you meaningful time on a task you do frequently.',
+            promptTemplate: 'Draft a professional client update letter based on the following points: [list 3–5 key developments or required actions]. The client is [describe: role, background, legal sophistication]. Tone: professional and clear, no legal jargon. Cover: (1) [key development and its significance], (2) [any deadline — make it prominent], (3) [recommendation and rationale], (4) [specific instructions needed from the client]. Under [word count]. This is a first draft for [supervising lawyer]\'s review before sending.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the client communications you send in a typical week. Which ones follow a similar structure each time — matter updates, instruction requests, settlement advice summaries? If AI could produce a solid first draft of each one from your bullet points in 2 minutes, how many hours a week could you recover — and what would you use that time for?',
           quiz: [
             {
               question: 'What is the most effective prompt technique for ensuring AI-drafted client communications have the right tone?',
@@ -1122,6 +1470,35 @@ Before deploying AI for compliance monitoring, ensure you have:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A compliance team proposes deploying AI to automatically issue disciplinary warnings to employees when their communications are flagged for policy violations, without any human review of flagged items. What is the primary problem with this design?',
+            options: [
+              'AI cannot read employee communications accurately enough for this purpose',
+              'Automated enforcement without human review creates accountability gaps, fairness risks, and potential employment law exposure — AI flags should always be reviewed by a compliance officer before action is taken',
+              'This approach is too expensive to implement at most organisations',
+              'Employees would object to any form of AI monitoring regardless of the design',
+            ],
+            correct: 1,
+            explanation: 'AI compliance monitoring should operate on a flag-and-review model, never automated enforcement. AI flags potential issues based on patterns; a trained compliance officer reviews each flagged item and makes the human judgment about whether action is warranted. Automated enforcement without review creates fairness and proportionality risks, removes the professional accountability that employment and privacy law require, and may constitute unfair treatment if AI flags contain false positives.',
+          },
+          outputComparison: {
+            label: 'Compliance gap analysis: generic check vs. policy-specific assessment',
+            vague: {
+              prompt: 'Check if our processes are compliant',
+              output: 'To assess compliance, I would need more information about which regulations apply to your organisation and what processes you are checking. Generally, compliance involves following applicable laws and regulations, having appropriate policies and procedures, and maintaining records. I recommend consulting a compliance professional for a thorough assessment.',
+            },
+            improved: {
+              prompt: 'I am a compliance officer at a UK financial services firm. We are conducting an internal review of our third-party due diligence process against FCA requirements for oversight of outsourced functions (SYSC 8). Below are five descriptions of our current practice. For each one, assess: (1) whether it appears consistent with the SYSC 8 requirements I have listed, (2) any gap or risk, (3) what additional information or evidence would be needed to confirm compliance. Note: This is an internal triage exercise — conclusions require review by a qualified compliance professional before any decisions are made.\n\nSYSC 8 requirements I am checking against: [list 4–5 specific requirements]\n\nOur current practices:\n1. [Practice description]\n2. [Practice description]\n3. [Practice description]',
+              output: '**Practice 1 — [Description]:**\n- SYSC 8 Assessment: Appears consistent with the requirement for initial due diligence before appointment. However, the described process does not address ongoing monitoring obligations — SYSC 8.1.8 requires continuous oversight, not one-time assessment.\n- Gap: No mention of annual review or trigger-based reassessment when material changes occur at the service provider.\n- Evidence needed: Review process documentation and any evidence of ongoing monitoring activity.\n\n**Practice 2 — [Description]:**\n- SYSC 8 Assessment: The described escalation path appears to meet the requirement for senior management accountability. However, board-level reporting cadence is not mentioned.\n- Gap: SYSC 8.1.9 requires the governing body to be informed of material outsourcing arrangements. Confirm whether the described process includes this.\n- Evidence needed: Board papers or equivalent showing outsourcing arrangements have been reported.\n\n[continues for each practice]\n\n*This assessment is an AI-assisted internal triage exercise. All conclusions must be reviewed by a qualified compliance professional before any decisions are made. This does not constitute regulatory or legal advice.*',
+            },
+            insight: 'The vague prompt is not even a question — it produces nothing actionable. The structured prompt specifying the regulatory standard, the current practices, and the assessment format produces a gap analysis that a compliance team can actually work from. Providing the specific regulatory requirements to check against is what makes AI useful for compliance work — it cannot determine the requirements itself with the reliability needed for compliance decisions.',
+          },
+          applyThisWeek: {
+            action: 'Choose one compliance process in your organisation that you know well. List the three to five most important regulatory requirements it must meet. Use AI to assess whether your described process appears to meet each requirement, and identify the gaps. Have a compliance professional review the output before any action is taken.',
+            promptTemplate: 'I am a [compliance/legal role] at a [type of organisation]. I am conducting an internal review of our [process name] against [regulatory standard]. Below are the specific requirements I am checking against: [list requirements]. Here are descriptions of our current practices: [list practices]. For each practice: (1) assess whether it appears consistent with the stated requirements, (2) identify any apparent gap, (3) note what evidence would confirm compliance. This is an internal triage exercise — conclusions require qualified review before any compliance decisions are made.',
+            tool: 'Claude',
+          },
+          reflection: 'In your compliance programme, which areas do you monitor comprehensively and which do you only review on a sample basis — because full review would take too much time? Where could AI-assisted monitoring expand your coverage meaningfully? And what would the human review process need to look like to make that expansion safe?',
           quiz: [
             {
               question: 'What is the most important structural feature of an AI-assisted compliance monitoring programme?',
@@ -1200,6 +1577,35 @@ Policy drafting requires legal knowledge of the applicable framework. AI cannot 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A legal team asks AI to draft a data retention policy and takes the output directly to the board for approval without a compliance review. What is the key risk?',
+            options: [
+              'AI-drafted policies always use informal language unsuitable for board presentation',
+              'AI cannot determine what a policy must contain — if the regulatory analysis was not done first, the policy may have gaps or inaccuracies that create compliance exposure',
+              'Board members will object to AI-drafted governance documents',
+              'AI policies are too long for effective board review',
+            ],
+            correct: 1,
+            explanation: 'Policy drafting has two distinct stages: the regulatory analysis (what must the policy contain and why) and the expression of that analysis in policy form. AI can help significantly with the second stage but cannot reliably do the first. A data retention policy drafted without a prior analysis of applicable legal obligations — UK GDPR, sector-specific regulations, employment law — may look professional while missing critical requirements. The legal and compliance analysis always precedes and informs the drafting.',
+          },
+          outputComparison: {
+            label: 'Policy drafting: vague brief vs. structured regulatory-informed prompt',
+            vague: {
+              prompt: 'Write a data protection policy for our company',
+              output: 'DATA PROTECTION POLICY\n\n1. Introduction\nOur company is committed to protecting personal data in accordance with applicable laws.\n\n2. Principles\nWe will process personal data lawfully, fairly, and transparently.\n\n3. Data Subject Rights\nIndividuals have the right to access, rectify, and erase their personal data.\n\n4. Security\nWe will implement appropriate technical and organisational measures to protect personal data.\n\n5. Breaches\nWe will report data breaches to the relevant authority where required.\n\nNote: This policy template requires legal review before adoption.',
+            },
+            improved: {
+              prompt: 'I am the DPO at a 200-person UK professional services firm. I have completed the required GDPR compliance analysis and determined that our data protection policy must address: (1) the six lawful bases and which ones we rely on for our main processing activities (legitimate interests for client data, contract for employee data, consent for marketing), (2) our retention periods by data category — I will supply these in a schedule, (3) data subject rights procedures including response timelines (one month under UK GDPR), (4) our data breach response procedure including the 72-hour ICO notification obligation, (5) our approach to international transfers post-Brexit, (6) the name and contact details of the DPO. Audience: all staff. Tone: clear and accessible, avoiding unnecessary legal jargon. Include a compliance checklist at the end. This is a first draft for legal review before adoption.',
+              output: 'DATA PROTECTION POLICY\n\n**Effective Date:** [DATE] | **Review Date:** [DATE + 1 year] | **Owner:** Data Protection Officer\n\n**1. Purpose and Scope**\nThis policy sets out how [Firm Name] collects, uses, stores, and protects personal data, and explains the rights of individuals whose data we process. It applies to all employees, contractors, and third parties acting on our behalf.\n\n**2. Our Lawful Bases for Processing**\nWe rely on the following lawful bases for our main processing activities under UK GDPR Article 6:\n- *Client and matter data:* Legitimate interests (providing professional services) — balanced against client privacy rights\n- *Employee data:* Performance of a contract and compliance with legal obligations\n- *Marketing communications:* Consent (explicit opt-in required)\n\n**3. How Long We Keep Data (Retention Schedule)**\nSee Schedule A. Key periods:\n- Client matter files: [X years from matter close]\n- Employee records: [X years from employment end]\n- Marketing contacts: [X years from last interaction or consent withdrawal, whichever is earlier]\n\n**4. Your Rights**\nYou have the following rights regarding your personal data [lists rights with UK GDPR references and one-month response timeline]\n\n**5. Data Breach Response**\nWe are legally required to notify the ICO of certain breaches within 72 hours. Our breach response procedure is set out in the Data Breach Response Policy. All suspected breaches must be reported immediately to the DPO at [contact].\n\n[continues through international transfers, DPO details, and staff compliance checklist]\n\n*This draft is for review by the DPO and legal counsel before adoption. Ensure Schedule A retention periods are completed and verified against applicable legal requirements before this policy is finalised.*',
+            },
+            insight: 'The vague prompt produces a generic policy skeleton that cannot be adopted — it lacks the firm-specific details, lawful bases, retention periods, and procedural specifics that make a GDPR policy compliant. The structured prompt — where the DPO has done the regulatory analysis first and supplies it to AI — produces a usable first draft that is specific to the firm\'s processing activities. The regulatory knowledge is the DPO\'s; AI\'s role is to express it clearly and consistently.',
+          },
+          applyThisWeek: {
+            action: 'Choose one policy in your organisation\'s policy library that needs updating. Before asking AI for help, identify the specific regulatory changes or requirements that necessitate the update. Then use AI to identify which sections of the existing policy need to change and to draft the revised language.',
+            promptTemplate: 'I am the [role] at a [type of organisation]. I need to update our [policy name] in response to [specific regulatory change or requirement]. Our existing policy text for the relevant section is: [paste existing text]. The new requirement that must be reflected is: [specific obligation]. Draft updated policy language that: (1) addresses the new requirement specifically, (2) is consistent in style with the existing policy, (3) is clear for a [staff/management] audience. This is a first draft for legal review before any policy is updated.',
+            tool: 'Claude',
+          },
+          reflection: 'How current is your organisation\'s policy library — and how often do policies get updated in response to regulatory changes versus being left to drift out of date? What would it take to build a systematic process where AI helps your team identify regulatory triggers for policy updates and draft the revised sections within days rather than months?',
           quiz: [
             {
               question: 'What is the correct sequencing for AI-assisted policy drafting?',
@@ -1283,6 +1689,35 @@ If your organisation operates in the EU or deploys AI systems there, the EU AI A
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A technology team proposes deploying an AI system that automatically scores job applicants and filters them before any human review. Where does this sit in a risk-based AI governance framework?',
+            options: [
+              'Low risk — screening is a standard HR process that does not require special governance',
+              'High risk — automated decisions affecting individuals\' employment prospects require enhanced governance, human oversight, and potentially specific regulatory assessment',
+              'Medium risk — appropriate as long as the AI model is accurate enough',
+              'No risk — AI cannot make final decisions so no governance is needed',
+            ],
+            correct: 1,
+            explanation: 'Automated decisions that affect individuals\' access to employment are classified as high-risk applications in most AI governance frameworks — including under the EU AI Act, which explicitly includes employment-related AI systems in its high-risk category. High-risk use cases require enhanced oversight, impact assessments, human review of individual decisions, and specific accountability structures. This is precisely the type of use case where legal and compliance teams need to lead the governance assessment before deployment.',
+          },
+          outputComparison: {
+            label: 'AI governance: ad hoc rules vs. structured framework design',
+            vague: {
+              prompt: 'Help us create some rules for using AI at our company',
+              output: 'Here are some rules for using AI at your company:\n1. Use AI responsibly\n2. Do not share confidential information with AI tools\n3. Always review AI outputs before using them\n4. Follow applicable laws and regulations\n5. Report any issues to your manager\n\nThese rules should be reviewed by legal counsel before implementation.',
+            },
+            improved: {
+              prompt: 'I am the General Counsel of a 500-person UK financial services firm. We are building an AI governance framework from scratch. Our current AI use includes: general-purpose LLMs for drafting and research (used by legal, compliance, and marketing teams), an AI-powered compliance monitoring tool (screening employee communications), and we are evaluating a customer-facing AI chatbot for basic account queries. Help me design the governance framework structure. For each element of the framework, specify: what it covers, who is responsible, and what is the minimum viable implementation for a firm our size. Reference the EU AI Act high-risk categories where relevant, and UK regulatory expectations for financial services.',
+              output: '**AI Governance Framework — [Firm Name] — Framework Design**\n\n**1. Tool Approval Process**\n*What it covers:* Assessment of any AI tool before deployment — data governance, security, regulatory compliance, professional responsibility implications.\n*Owner:* Technology Risk Committee (chaired by GC/CCO)\n*Minimum viable implementation:* Standard assessment checklist covering: data processing agreement in place? SOC 2 / ISO 27001 certification? FCA-relevant regulatory review? Data residency confirmed as UK/EEA?\n\n**2. Use Case Risk Classification**\n*What it covers:* Classifying all current and proposed AI uses by risk level to determine review standards.\n*Owner:* Legal and Compliance team\n*Framework:*\n- Low risk: Internal drafting, summarisation, research assistance — standard use with training\n- Medium risk: Customer-facing outputs (chatbot), regulatory submissions — enhanced review before use, documented sign-off\n- High risk: Automated decisions affecting individuals (employment, credit, compliance enforcement) — impact assessment required, mandatory human review of individual decisions\n\n*EU AI Act note:* Your employee communication monitoring tool may fall within the EU AI Act\'s workplace monitoring category (high-risk if deployed in EU). Your proposed customer chatbot — if it gives financial guidance — may engage FCA PRIN 12 / Consumer Duty requirements. Legal review recommended.\n\n**3. Acceptable Use Policy**\n*What it covers:* What tools employees may use, for what purposes, with what data, subject to what review.\n*Owner:* HR / Legal\n*Key provisions:* Approved tools list (maintained by Tech Risk); prohibited data categories for AI submission without enterprise agreement; mandatory review before external use of AI outputs; incident reporting obligation.\n\n**4. Accountability Structure**\n*Owner:* GC / CCO co-ownership recommended\n*Roles:* AI Ethics Lead (designated senior person), Business Unit AI Champions, IT for tool security, HR for training and culture.\n\n**5. Audit and Review Cycle**\n*Frequency:* Minimum annual review; triggered review when new tools are considered, incidents occur, or regulatory guidance changes.\n\n*Next steps:* The employee communication monitoring tool and the proposed chatbot both warrant immediate specific legal review given their risk profiles.*',
+            },
+            insight: 'The five-bullet list from the vague prompt is not a governance framework — it is a set of platitudes that creates no accountability, no process, and no protection. The structured prompt — specifying the firm\'s actual AI use cases, size, and regulatory context — produces a framework skeleton that maps each governance element to an owner, a scope, and a minimum viable implementation. It also flags specific legal review triggers based on the firm\'s actual situation.',
+          },
+          applyThisWeek: {
+            action: 'Map the AI tools currently used in your organisation — formally approved or not. For each tool, identify: (1) what data is being submitted to it, (2) whether a data processing agreement is in place, (3) what risk category the use case falls in. This audit is the first step in building an AI governance framework.',
+            promptTemplate: 'I am the [GC/CCO/DPO] at a [size] [sector] organisation in [jurisdiction]. Help me design an AI governance framework for our organisation. Our current AI use includes: [list tools and use cases]. Our most significant concerns are: [list 2–3 governance gaps]. For each framework element — tool approval, risk classification, acceptable use policy, accountability, and audit cycle — specify: what it covers, who should own it, and the minimum viable implementation for an organisation our size. Note any [EU AI Act / FCA / sector regulatory] requirements that apply to our use cases.',
+            tool: 'Claude',
+          },
+          reflection: 'Who in your organisation is currently responsible for deciding which AI tools can be used and for what purposes? Is that decision-making structured, or does it happen informally? What is the risk if an employee uses an AI tool in a way that the organisation has not approved — and is there currently any mechanism to prevent or detect that?',
           quiz: [
             {
               question: 'Which element of an AI governance framework classifies different AI applications by their potential impact?',
@@ -1367,6 +1802,35 @@ The competitive advantage is not AI alone — it's AI applied with excellent leg
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A senior partner argues that AI will not affect their practice because their work is too complex and relationship-driven for technology to replace. What is the more nuanced truth?',
+            options: [
+              'The partner is completely right — AI will only affect lower-level legal work',
+              'AI will not replace complex legal judgment or client relationships, but it will compress the time cost of the preparatory and volume work that currently supports those services — changing economics and expectations',
+              'The partner is wrong — AI will replace all legal roles within ten years',
+              'AI only affects technology law practices, not general commercial practice',
+            ],
+            correct: 1,
+            explanation: 'The impact of AI on legal practice is not binary. AI is not replacing the complex legal judgment, advocacy, or client relationships that define senior legal work. But it is compressing the cost and time of the volume work — research orientation, document review, first drafts, standard summarisation — that currently underpins the delivery of those complex services. This changes what clients expect to pay, what associates spend their time on, and what efficiency looks like in a competitive practice.',
+          },
+          outputComparison: {
+            label: 'Personal AI strategy: generic ambition vs. role-specific 90-day plan',
+            vague: {
+              prompt: 'How should I use AI in my legal career?',
+              output: 'AI offers many opportunities for legal professionals. You should learn to use AI tools for research, drafting, and document review. Consider taking courses on AI and law. Stay up to date with developments in legal technology. Use AI to improve your efficiency. The legal profession is changing and AI literacy will be increasingly important.',
+            },
+            improved: {
+              prompt: 'I am a 5-year PQE commercial solicitor at a UK mid-market firm, specialising in M&A and private equity transactions. I want to build a practical 90-day AI development plan. My highest time-cost tasks are: first-pass SPA review, due diligence summarisation, drafting transaction documents, and client update letters. Help me design a 90-day plan that: (1) identifies the three AI use cases I should prioritise given my practice area, (2) specifies a concrete week-by-week development plan for the first month, (3) identifies the skills I need to develop (not just the tools to use), (4) flags AI-related legal areas I should develop knowledge in to serve clients better in M&A. Be specific — not generic career advice.',
+              output: '**90-Day AI Development Plan — Commercial Solicitor (M&A / PE)**\n\n**Three Priority Use Cases for Your Practice:**\n1. **SPA first-pass review:** AI identification of unusual indemnification, warranty, and MAC provisions — highest time saving on your highest-stakes documents\n2. **Due diligence summarisation at scale:** Standardised contract summary template that produces consistent one-page summaries across a data room\n3. **Client update letters:** AI drafts from bullet points — reduces letter drafting from 20 minutes to 5 minutes per letter\n\n**Month 1 — Week by Week:**\n- Week 1: Master the SPA review prompt. Take a publicly available acquisition agreement (US SEC filings have many). Build and refine a prompt that identifies: indemnification caps and baskets, MAC definition scope, seller warranty limitations, and earn-out mechanics.\n- Week 2: Build your DD summary template. Create a five-field template and test it on ten different agreements from a public data room (many listed company M&A deals publish data room indices).\n- Week 3: Client letter workflow. Write your standard letter prompt, test on three current matter scenarios, and time the process vs. manual drafting.\n- Week 4: Integrate into a real matter. Use all three workflows on a current transaction and assess what works and what needs refinement.\n\n**Key Skills to Develop (Beyond Tool Familiarity):**\n- Prompt specificity for legal tasks — the ability to brief AI as precisely as you would brief a good associate\n- AI output review skills — recognising hallucinations and missing provisions in AI contract reviews\n- Workflow integration — building AI steps into matter management so they become habits, not one-off experiments\n\n**AI-Related Legal Knowledge for M&A Clients:**\n- AI Act due diligence: increasingly relevant in tech company acquisitions — how to assess an AI system\'s regulatory risk classification\n- IP ownership of AI-generated outputs: arising in deals involving AI-forward targets\n- AI governance representations and warranties: emerging in tech M&A SPA warranties\n\n*Note: This plan is a starting framework — adapt based on your specific matters and firm systems. All AI-assisted work should be reviewed before client use.*',
+            },
+            insight: 'The generic advice produces career platitudes that any law student could have generated. The specific prompt — current role, practice area, specific time-cost tasks, 90-day timeframe — produces an actionable development plan with concrete weekly steps, specific skills, and emerging client service areas to develop. The specificity of the AI response is entirely determined by the specificity of what you ask.',
+          },
+          applyThisWeek: {
+            action: 'Write a three-sentence personal AI development statement: (1) which AI-assisted workflow you will build in the next 30 days, (2) which emerging AI-related legal issue you will develop knowledge in this quarter, (3) how you will measure whether AI has added value to your practice. Use this as your development plan entry.',
+            promptTemplate: 'I am a [seniority and role] at a [type of organisation], working in [practice area or compliance function]. My highest time-cost tasks are: [list 3–4]. Help me design a 90-day AI development plan that: (1) identifies the three AI use cases I should prioritise, (2) outlines a concrete week-by-week plan for the first month, (3) identifies the skills I need to develop, (4) flags any AI-related legal or regulatory areas I should develop knowledge in to serve my clients or organisation better.',
+            tool: 'Claude',
+          },
+          reflection: 'In five years, what do you expect the most time-consuming parts of your current legal role to look like? Which of those will still require your professional judgment and expertise — and which will AI have compressed significantly? What should you be building now to be in the strongest position when that shift arrives?',
           quiz: [
             {
               question: 'Which type of legal work is most likely to be transformed by AI in the next five years?',
@@ -1457,6 +1921,35 @@ AI produces a framework; the lawyer applies the judgment.`,
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An AI tool produces a case chronology that appears comprehensive and correctly formatted. A litigator decides to use it directly in the case without checking it against the underlying documents. What is the primary risk?',
+            options: [
+              'The chronology format will not be accepted by the tribunal',
+              'AI can misattribute dates, conflate separate events, or miss context-dependent significance — errors a lawyer must catch before the chronology influences case strategy',
+              'Other parties will be able to tell the chronology was AI-generated and challenge it',
+              'AI chronologies are always incomplete because AI cannot read attachments',
+            ],
+            correct: 1,
+            explanation: 'A case chronology drives case strategy — it determines which facts you emphasise, which witnesses matter, and where the gaps are. AI processes text to extract events but cannot assess which ambiguous dates are legally significant, whether two events that appear separate are actually linked, or where a gap in the chronology reveals a missing document. These contextual judgments require a lawyer who knows the case. The AI scaffold saves hours; the lawyer\'s review ensures it is reliable.',
+          },
+          outputComparison: {
+            label: 'Case analysis brief: narrative description vs. structured legal issue mapping',
+            vague: {
+              prompt: 'Analyse this commercial dispute for me',
+              output: 'Based on the information provided, this appears to be a commercial dispute involving a breach of contract. The key issues seem to be whether the defendant breached the agreement and what damages the claimant is entitled to. The strength of the case depends on the evidence available. You should consult with a barrister regarding litigation strategy.',
+            },
+            improved: {
+              prompt: 'I am a disputes solicitor acting for the claimant in a commercial breach of contract case. The facts are: [3–4 paragraph description of the dispute, key events, and documents available]. Help me structure a case analysis by: (1) identifying the elements of the breach of contract claim I need to establish and the evidence I have for each, (2) identifying the most significant factual disputes between the parties, (3) identifying what facts I need to establish through disclosure or witness evidence that I don\'t yet have, (4) suggesting the key legal issues I should research — do not cite cases, give me the doctrines and search directions. Format as a structured working document for lawyer review.',
+              output: '**Case Analysis — [Matter Ref] — Claimant\'s Working Document**\n\n**1. Elements of the Breach of Contract Claim and Available Evidence**\n\n*Existence of a valid contract:*\n- Element: Offer, acceptance, consideration, intention to create legal relations\n- Evidence available: Signed agreement dated [DATE], board approval minutes, exchange of emails confirming commercial terms\n- Gap: No evidence yet of [specific point] — to be addressed in disclosure\n\n*Breach:*\n- Alleged breach: Failure to deliver [specific obligation] by [DATE]\n- Evidence available: Delivery schedule in contract, correspondence dated [DATE] showing non-delivery, client\'s internal records\n- Strength: Strong contemporaneous documentation\n\n*Causation and Loss:*\n- Element: Loss must flow from the breach — defendant will likely argue intervening cause\n- Evidence available: Loss calculations prepared by CFO, but these will need expert evidence support\n- Gap: Need disclosure of defendant\'s internal communications around the delivery failure to establish they knew of likely consequences\n\n**2. Key Factual Disputes**\n- Whether the delivery obligation was modified by a later oral agreement (defendant\'s anticipated position)\n- Whether the claimant\'s loss is attributable to the breach or to their own subsequent decisions\n\n**3. Disclosure Priorities**\n- Defendant\'s internal communications around [delivery date] — knowledge of breach and its consequences\n- Any correspondence supporting a claimed oral variation\n- Defendant\'s delivery records for comparable contracts — establishes what was achievable\n\n**4. Legal Research Directions**\n- Oral variation of written contracts — rule in BTT v Chantrey (seek current authority)\n- Mitigation of loss — claimant\'s obligations after breach\n- Remoteness of damage — Hadley v Baxendale test application\n- Recovery of consequential loss — search: "consequential loss commercial contract"\n\n*This is a working document for lawyer review and strategy discussion. All legal propositions must be verified through primary sources before reliance.*',
+            },
+            insight: 'The vague prompt produces a statement of the obvious that any second-year law student could have written. The structured brief — acting role, specific facts, specific analytical tasks, explicit instruction not to cite cases — produces a working document that maps the evidence to the legal elements, identifies disclosure gaps, and gives the litigator search directions for the specific research needed. The brief is a litigation tool, not a generic observation.',
+          },
+          applyThisWeek: {
+            action: 'Take a current or recent matter and use AI to build a case issue map: the legal elements of the claim, the evidence you have for each, the gaps you need to fill through disclosure or witnesses. Use this map as the agenda for your next internal case strategy meeting.',
+            promptTemplate: 'I am a [role] acting for [claimant/defendant] in a [type of dispute]. The key facts are: [2–4 paragraph description]. Help me structure a case analysis covering: (1) the elements of the [cause of action] and the evidence I have or need for each, (2) the key factual disputes between the parties, (3) what I need to establish through disclosure or witness evidence that I don\'t yet have, (4) the key legal issues I should research — give doctrines and search directions, not case citations (I will verify those through [Westlaw/LexisNexis]). Format as a structured working document for internal lawyer review.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last complex case you worked on. How long did it take to build a clear, structured picture of the evidence across all the legal issues? If AI could compress that initial structuring to a fraction of the time, where would you direct the recovered time — deeper factual investigation, stronger legal research, more thorough client communication?',
           quiz: [
             {
               question: 'Why must an AI-generated case chronology always be reviewed against the source documents?',
@@ -1541,6 +2034,35 @@ Witness preparation is subject to professional rules: you can prepare witnesses 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A litigation associate uses AI to generate cross-examination questions for the opposing witness and uses them directly in the deposition without reviewing them. Three questions contain legally incorrect assumptions about the standard of care. What is the professional responsibility issue?',
+            options: [
+              'There is no issue — AI-generated questions are the opposing party\'s problem if they are wrong',
+              'The associate failed to review AI output before use — the lawyer is professionally responsible for the quality and legal correctness of deposition questions',
+              'The issue is that the associate should have used a more advanced AI tool',
+              'Deposition questions are not subject to professional responsibility standards',
+            ],
+            correct: 1,
+            explanation: 'Professional responsibility for all work product — including deposition questions — rests with the lawyer using the AI tool. AI-generated questions require legal review for accuracy, appropriateness, tactical soundness, and compliance with deposition rules. Questions containing incorrect legal assumptions can damage your case, confuse witnesses in ways that benefit the other side, and create professional conduct issues. AI is a generator of raw material; the lawyer reviews, selects, and takes responsibility.',
+          },
+          outputComparison: {
+            label: 'Witness preparation: generic briefing vs. adversarial-focused question analysis',
+            vague: {
+              prompt: 'Give me some deposition questions for a breach of contract case',
+              output: 'Here are some deposition questions for a breach of contract case:\n1. Please state your name and current role.\n2. What is your relationship to the defendant company?\n3. Are you familiar with the contract at issue?\n4. Did you sign the contract?\n5. Do you believe the contract was breached?\n6. What damages have you suffered?\n\nThese are basic questions. You will need to develop more specific questions based on the facts of your case.',
+            },
+            improved: {
+              prompt: 'I am deposing the defendant\'s operations director in a commercial dispute involving an alleged failure to deliver software by a contractual deadline. The defendant\'s position is that delays were caused by the claimant\'s failure to provide necessary specifications on time. Key documents include: an email chain in March where the witness requested specification documents; an internal Slack message where the witness wrote "we can still make the deadline if they get us the specs by April 15"; the claimant\'s records showing specs were delivered April 12. Generate a focused question sequence for the witness covering: (1) the witness\'s understanding of the delivery obligation and timeline, (2) what specifications the defendant needed and when they needed them, (3) the March email chain, (4) the Slack message — including what the witness understood "can still make the deadline" to mean, (5) internal communications after April 12 about delivery status. Flag any areas where the witness is likely to try to reframe or deflect.',
+              output: '**Deposition Question Sequence — Operations Director**\n\n**Section 1: Understanding of Delivery Obligation**\n- "What was your understanding of the delivery date specified in the contract?"\n- "Were you personally responsible for ensuring that date was met?"\n- "What were the internal milestones your team needed to hit to deliver on time?"\n\n**Section 2: Specification Requirements**\n- "What technical specifications did your team need from the claimant to begin development?"\n- "When did you first identify that you needed those specifications?"\n- "Why were those specifications necessary — could work have begun without them?"\n*[Expected deflection: witness will try to characterise specification gap as a major blocker. Follow up: "So you are saying that without the specifications, no work at all could be done?"]*\n\n**Section 3: March Email Chain (Document DEF-0234)**\n- "I\'m showing you a document marked DEF-0234. Do you recognise this email chain?"\n- "In your email dated [DATE], you requested the specifications. Who made the decision to make this request at that time rather than earlier?"\n- "After sending this email, did you follow up if you did not receive a response?"\n\n**Section 4: The Slack Message**\n- "I\'m showing you Exhibit 7 — an internal Slack message you sent on [DATE]. Can you read it for the record?"\n- "When you wrote \'we can still make the deadline if they get us the specs by April 15\', what was your basis for that assessment?"\n- "That statement implies that if specs arrived by April 15, delivery was still achievable. Do you stand by that today?"\n*[This is a critical exchange — the message is an admission that the deadline was achievable conditional on specs. Do not rush past it.]*\n\n**Section 5: Post-April 12 Internal Communications**\n- "The claimant\'s records show specifications were delivered April 12 — three days before your stated deadline. What did your team do after receiving them?"\n- "Are there any internal communications from April 12 onwards about the delivery timeline?"\n\n*These questions are a starting draft for lawyer review. Sequence, phrasing, and tactical decisions should be reviewed by the supervising litigator before use.*',
+            },
+            insight: 'The generic questions are essentially a checklist of deposition basics that any junior lawyer already knows — they add no value and could be used in any case regardless of the facts. The document-specific prompt produces a question sequence targeted at the specific documents, the specific inconsistency (the Slack message), and the defendant\'s anticipated defence — the kind of preparation that changes how a deposition goes. The adversarial thinking AI brings — identifying where the witness will deflect — is what makes it valuable.',
+          },
+          applyThisWeek: {
+            action: 'For a current or upcoming witness preparation exercise, use AI to generate the most damaging cross-examination questions the other side might ask your witness. For each question, identify what weakness it targets. Then use this exercise to focus your preparation session on the areas where your witness is most vulnerable.',
+            promptTemplate: 'I am preparing a witness for [deposition/examination] in a [type of dispute]. The witness\'s evidence is: [brief summary]. The other side\'s case is: [brief summary of their position]. Generate the 8–10 most damaging cross-examination questions opposing [counsel/party] is likely to ask this witness. For each question: (1) identify what weakness or inconsistency they are targeting, (2) flag if this is an area where the witness needs preparation. This is for internal preparation use only — not for the witness to see or memorise answers.',
+            tool: 'Claude',
+          },
+          reflection: 'In your experience of witness preparation, where do witnesses most often get into difficulty under cross-examination — questions they did not anticipate, documents they forgot about, or inconsistencies between their evidence and other witnesses? Which of those vulnerabilities could AI help you identify more systematically in preparation?',
           quiz: [
             {
               question: 'What is the most valuable use of AI in preparing for a witness deposition?',
@@ -1623,6 +2145,35 @@ A memo that clearly explains to a client why a particular settlement is in their
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A litigator uses AI to model a settlement range and takes the AI\'s probability-of-success estimates directly to the client without adjusting them. What is missing from this approach?',
+            options: [
+              'Nothing — AI probability estimates are statistically reliable for litigation outcomes',
+              'The lawyer\'s professional judgment on the specific evidence quality, witness reliability, and judicial approach in this case — which the AI cannot assess',
+              'The client should calculate the settlement range themselves without AI assistance',
+              'AI can only model settlement ranges for contract disputes, not other claim types',
+            ],
+            correct: 1,
+            explanation: 'A settlement model is only as reliable as its inputs. AI can structure the framework and run the arithmetic, but the probability of success figures require the lawyer\'s judgment about the specific evidence — the quality of witness testimony, the strength of documentary support, the judge\'s known approach to similar cases, and the weaknesses the other side will exploit. These assessments require professional expertise that AI cannot supply. The model holds the structure; the lawyer supplies the substance.',
+          },
+          outputComparison: {
+            label: 'Settlement analysis: intuitive advice vs. structured scenario model',
+            vague: {
+              prompt: 'Should my client settle this case?',
+              output: 'Whether your client should settle depends on several factors including the strength of the evidence, the likely damages, the costs of proceeding to trial, and the client\'s risk appetite. Settlement provides certainty while trial involves uncertainty. You should advise your client of the pros and cons and let them make an informed decision. I recommend seeking specialist litigation advice.',
+            },
+            improved: {
+              prompt: 'I am advising a defendant in a commercial contract dispute. Claimed damages: £850,000. My assessment: (1) probability of success on liability — 55% in our favour; (2) if we lose on liability, likely damages range: £600k–£850k; (3) estimated trial costs to verdict: £180,000 (shared); (4) case will take approximately 18 months to resolve at trial. The claimant has offered to settle at £350,000. Help me structure a risk-adjusted settlement analysis for three scenarios and draft the key numbers I should present to my client to explain whether £350k represents a rational settlement.',
+              output: '**Risk-Adjusted Settlement Analysis — Defendant**\n\n**Scenario 1: Strong Case (65% chance of winning)**\n- Expected trial outcome: 65% x £0 + 35% x £600k = £210,000 expected damages payment\n- Plus trial costs: £180,000\n- Total expected cost of going to trial: £390,000\n- Settlement offer: £350,000\n- Verdict: At £350k, settlement is slightly below expected trial cost — marginally rational to settle\n\n**Scenario 2: Moderate Case (55% chance of winning — your base estimate)**\n- Expected trial outcome: 55% x £0 + 45% x £700k (midpoint) = £315,000 expected damages\n- Plus trial costs: £180,000\n- Total expected cost of going to trial: £495,000\n- Settlement offer: £350,000\n- Verdict: Settlement at £350k saves approximately £145,000 compared to expected trial cost — clearly rational to consider\n\n**Scenario 3: Weaker Case (40% chance of winning)**\n- Expected trial outcome: 40% x £0 + 60% x £800k = £480,000 expected damages\n- Plus trial costs: £180,000\n- Total expected cost of going to trial: £660,000\n- Settlement offer: £350,000\n- Verdict: Settlement saves £310,000 — strongly in favour of settlement\n\n**Key Message for Client:**\nAcross all three scenarios, settlement at £350,000 is at or below the expected cost of going to trial. The key uncertainty is the probability of success on liability — if your lawyer\'s 55% assessment is correct, settling saves approximately £145,000. The question is whether you have confidence in that liability assessment, and whether the certainty of settlement at £350k is worth more to you than the chance of a better outcome at trial.\n\n**Additional Factors for Client Discussion:**\n- Business disruption of 18 months of litigation\n- Reputational considerations of public trial\n- Is the £350k demand the claimant\'s best offer, or is there room to negotiate?\n\n*This model is a structured framework based on inputs you provided. The probability assessments and quantum estimates require your professional legal judgment and should be discussed with the client as estimates, not certainties. This does not constitute legal advice — it is an internal analysis tool.*',
+            },
+            insight: 'The generic advice tells the client nothing they couldn\'t have thought of themselves. The structured model — where the lawyer supplies the probability and quantum inputs and AI structures the arithmetic — produces a clear, quantified analysis that shows the client exactly why settlement at £350k makes economic sense across all three scenarios. The model makes the decision framework transparent, which helps the client make an informed choice rather than relying on instinct.',
+          },
+          applyThisWeek: {
+            action: 'For a current contentious matter, use AI to structure a three-scenario settlement analysis (strong, moderate, and weak case). Input your own probability and quantum estimates. Use the output to structure your next settlement advice conversation with the client — present the three scenarios and let the numbers speak.',
+            promptTemplate: 'I am advising [claimant/defendant] in a [type of dispute]. Claimed damages: [amount]. My professional assessment: (1) probability of success on liability — [X]% in our favour; (2) if we lose, likely damages range: [range]; (3) estimated trial costs to verdict: [amount]; (4) expected time to trial: [timeframe]. [If applicable: current settlement offer: [amount].] Structure a risk-adjusted settlement analysis for three scenarios — strong, moderate, and weak case — showing the expected cost of going to trial vs. the settlement value in each scenario. Also list the non-financial factors the client should consider. Note: probability estimates are my professional assessment, not actuarial certainties.',
+            tool: 'Claude',
+          },
+          reflection: 'How do you currently communicate settlement advice to clients? Do you present a clear quantified framework, or is it primarily qualitative and based on your professional instinct? Which clients would benefit most from seeing a structured scenario analysis — and how might that change the quality of their settlement decisions?',
           quiz: [
             {
               question: 'What are the most important inputs to a risk-adjusted settlement analysis that require lawyer judgment rather than AI?',
@@ -1714,6 +2265,35 @@ Litigation practices that build systematic AI workflows will deliver more rigoro
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A litigator submits an AI-assisted skeleton argument to a court that has issued a standing order requiring disclosure of AI use in filed documents. The litigator did not disclose this. What professional obligation has been breached?',
+            options: [
+              'None — AI is just a drafting tool and its use in document preparation is never disclosable',
+              'The candour obligation to the tribunal — courts with standing disclosure orders require honesty about how filed documents were prepared',
+              'Only the billing obligation is relevant — the issue is whether AI time was charged to the client',
+              'The obligation to use court-approved AI tools only',
+            ],
+            correct: 1,
+            explanation: 'Courts in various jurisdictions are developing specific rules about disclosure of AI use in submitted documents. Where a court has issued a standing order or practice direction requiring such disclosure, non-disclosure is a breach of the lawyer\'s candour obligation to the tribunal — a fundamental professional duty. Separately, even where no court rule exists, professional competence obligations require the lawyer to understand and take responsibility for all AI-assisted work product. Knowing the applicable rules in your jurisdiction is a professional obligation.',
+          },
+          outputComparison: {
+            label: 'Litigation AI workflow: ad hoc use vs. systematic matter workflow',
+            vague: {
+              prompt: 'How can I use AI in litigation?',
+              output: 'AI can be helpful in litigation in many ways. You can use AI for legal research, document review, drafting pleadings, and preparing for trial. AI can save time on time-consuming tasks. Make sure to review all AI outputs carefully and comply with any court rules about AI use. AI cannot replace the judgment of an experienced litigator.',
+            },
+            improved: {
+              prompt: 'I am a commercial litigation solicitor handling disputes from £500k to £5m in value. My team of three lawyers handles approximately 15 active matters. I want to design a systematic AI workflow that integrates AI at every stage of our matter lifecycle. For each of the following stages, specify: (1) which specific AI tasks are appropriate, (2) the prompt approach that works for this stage, (3) the review standard before the output is used, (4) any professional responsibility considerations I need to address. Stages: matter intake and assessment, disclosure and document review, witness preparation, settlement analysis, trial preparation. Be specific to UK commercial litigation practice.',
+              output: '**Systematic AI Workflow — Commercial Litigation Practice**\n\n**Stage 1: Matter Intake and Assessment**\n*AI tasks:* Case summary from client brief; initial issue identification; limitation period checker (flag the question — verify through primary research); initial research on relevant legal framework\n*Prompt approach:* "I will provide a client brief for a commercial dispute. Produce: (1) a one-page case summary, (2) the key legal issues to research, (3) any immediate limitation or procedural deadlines I should flag for verification, (4) initial strength assessment framework."\n*Review standard:* Lawyer review before client acknowledgement — check limitation dates independently\n*Professional responsibility:* All limitation dates must be verified through primary sources — never rely on AI for procedural deadlines\n\n**Stage 2: Disclosure and Document Review**\n*AI tasks:* Document categorisation by relevance; privilege log drafting assistance; theme identification across a large document set; chronology building from source documents\n*Prompt approach:* "Review these documents. For each: (1) categorise as highly relevant / potentially relevant / background / irrelevant to [issues list], (2) flag any document that appears privileged for lawyer assessment, (3) identify any document that contradicts the client\'s account."\n*Review standard:* Full lawyer review of all privilege designations — AI cannot make final privilege determinations\n*Professional responsibility:* Disclosure obligations require human legal judgment — AI identifies; lawyers decide\n\n**Stage 3: Witness Preparation**\n*AI tasks:* Deposition question set generation; cross-examination anticipation; witness briefing document drafts; inconsistency identification across witness statements\n*Prompt approach:* Document-specific, adversarial framing (see Module 5-L2 prompt approach)\n*Review standard:* All questions reviewed by supervising litigator for legal accuracy and tactical soundness\n*Professional responsibility:* Professional rules on witness preparation apply — never coach evidence you know to be false\n\n**Stage 4: Settlement Analysis**\n*AI tasks:* Three-scenario financial modelling; settlement advice memo drafting; heads of terms first drafts\n*Prompt approach:* Lawyer supplies probability and quantum inputs; AI structures the arithmetic and presentation\n*Review standard:* Full lawyer review of all outputs — financial model reviewed by client before any settlement position is communicated\n*Professional responsibility:* Settlement advice carries professional responsibility — the lawyer signs off the advice, not the AI\n\n**Stage 5: Trial Preparation**\n*AI tasks:* Skeleton argument structure; opening statement narrative; chronology of key evidence by issue; witness summary cross-referencing\n*Prompt approach:* "Based on the case theory [describe] and the evidence [summarise], draft a skeleton argument structure with: (1) proposed argument sequence, (2) key propositions for each issue, (3) evidence references for each proposition."\n*Review standard:* All court documents require full lawyer review and sign-off; check any jurisdiction\'s AI disclosure obligations before filing\n*Professional responsibility:* Court disclosure requirements — check standing orders in your specific court/tribunal before filing any AI-assisted document\n\n*Implementation note: Start with one stage, build the prompt library, then roll out. Trying to implement all five stages simultaneously creates more workflow disruption than benefit.*',
+            },
+            insight: 'The generic advice lists use cases without telling the litigator anything about how to actually build the workflow. The structured prompt — with specific matter context, team size, and stage-by-stage requirements — produces a practice blueprint the litigator can implement directly: specific prompt approaches for each stage, appropriate review standards, and professional responsibility considerations flagged at each point. This is the difference between understanding that AI is useful in litigation and knowing exactly how to use it.',
+          },
+          applyThisWeek: {
+            action: 'Map your litigation practice matter lifecycle onto five to seven stages. For the stage where AI could save the most time, write a template prompt that you and your team can use consistently. Test it on a current matter this week and refine based on the output quality.',
+            promptTemplate: 'I am a [litigation role] handling [type of disputes] in [jurisdiction]. I want to design a systematic AI workflow for [specific stage of litigation — e.g., disclosure review / witness preparation / trial preparation]. For this stage, help me design: (1) the specific AI tasks that are appropriate, (2) a template prompt I can use consistently across matters, (3) the review standard before the output is used, (4) any professional responsibility or court rule considerations I need to address in [jurisdiction]. This should be a practical implementation guide for a [size] litigation team, not general advice.',
+            tool: 'Claude',
+          },
+          reflection: 'If you had to choose one stage of your litigation practice to systematically integrate AI this quarter — where would you get the biggest return? What would it take to get your whole team using a consistent AI-assisted approach at that stage, and what would you need to put in place to ensure the quality and professional responsibility standards are maintained?',
           quiz: [
             {
               question: 'What is the most important professional obligation when using AI in document preparation for litigation proceedings?',

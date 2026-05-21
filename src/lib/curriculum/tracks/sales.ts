@@ -66,6 +66,35 @@ Reps who adopt this mental model see immediate productivity gains without losing
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'A colleague says AI will soon replace salespeople because it can handle most of the work. What is the most accurate response?',
+            options: [
+              'They are right — AI will automate discovery calls and negotiations within five years',
+              'AI eliminates low-leverage prep work so reps can focus on relationships and decisions that require human judgment',
+              'They are wrong — AI has no practical application in sales at this stage',
+              'AI only helps managers with reporting and has little impact on individual reps',
+            ],
+            correct: 1,
+            explanation: 'AI\'s real value is compressing the administrative work that surrounds selling — research, drafting, scheduling — not replacing the conversations, trust, and judgment that close deals. Buying decisions in B2B involve risk, relationships, and negotiation that remain deeply human.',
+          },
+          outputComparison: {
+            label: 'AI for sales prep: vague request vs. context-rich brief',
+            vague: {
+              prompt: 'Help me prepare for a sales call',
+              output: 'Sure! Here are some tips for your sales call:\n\n1. Research the company beforehand\n2. Know your product well\n3. Listen actively to the prospect\n4. Handle objections confidently\n5. Ask for the next step at the end\n\nGood luck with your call!',
+            },
+            improved: {
+              prompt: 'I have a discovery call tomorrow with Marcus Webb, VP of Operations at Clearfield Manufacturing (320 employees, industrial equipment, UK). They just announced a 40% production expansion and are hiring 80 new floor staff. We sell AI-powered workforce scheduling software. Marcus posted on LinkedIn last week about the challenge of onboarding at scale without losing quality. Give me: (1) the three business priorities Marcus likely has right now, (2) two discovery questions that connect our solution to his expansion, (3) one likely objection and a strong response.',
+              output: '**Marcus\'s likely priorities:**\n1. Getting 80 new hires productive without slowing existing operations — onboarding at speed without quality loss\n2. Scheduling complexity: coordinating shifts across an expanded workforce without manual chaos\n3. Maintaining production targets during the transition — the expansion cannot disrupt current commitments\n\n**Discovery questions:**\n- "As you scale to 80 new staff, how are you currently managing the scheduling complexity — and where are the gaps in your current process?"\n- "What does \'good\' look like for you six months after the expansion? How will you know the onboarding worked?"\n\n**Likely objection:** "We\'re too busy with the expansion to implement new software right now."\n**Response:** "That\'s exactly when the ROI hits fastest — three of our customers implemented during a growth phase specifically because manual scheduling was breaking under the new volume. The setup takes two weeks, and customers typically see scheduling time cut by 60% in the first month."',
+            },
+            insight: 'The vague request produced generic sales advice Marcus already knows. The specific prompt gave Marcus\'s actual situation — his expansion, his LinkedIn post, his likely concerns — and produced targeted questions and a precise objection response that could only apply to this call. Specificity is what separates useful AI output from generic noise.',
+          },
+          applyThisWeek: {
+            action: 'Pick one upcoming call and spend 5 minutes writing everything you know about the prospect into an AI prompt. Ask for priorities, discovery questions, and one likely objection. Compare the output to how you would have prepared without AI.',
+            promptTemplate: 'I have a [discovery/follow-up] call with [name], [title] at [company]. Context: [company size, recent news, what you already know]. We sell [your solution]. Their likely challenge: [your hypothesis]. Give me: (1) their top 3 priorities right now, (2) two discovery questions, (3) one likely objection and a response.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Think about the last week of sales activity. How much of your time went to research, drafting, and administrative tasks versus actual conversations with prospects and customers? What would you do with an extra 5 hours per week?',
           quiz: [
             {
               question: 'Which of the following is the most accurate description of AI\'s role in modern sales?',
@@ -165,6 +194,35 @@ Every AI tool shares the same limitation: output quality is capped by input qual
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'You need to research a prospect\'s company for a meeting this afternoon. Which tool is best for finding current news and recent announcements?',
+            options: [
+              'Claude, because it has the most advanced reasoning capabilities',
+              'Your CRM\'s contact history, because it shows your past interactions',
+              'Perplexity, because it retrieves live web data with cited sources',
+              'LinkedIn Sales Navigator, because it shows who viewed your profile',
+            ],
+            correct: 2,
+            explanation: 'Perplexity pulls live web data and shows its sources, making it the right tool for any research that depends on current information — recent funding, leadership changes, news coverage, or announcements. Claude and ChatGPT have training cutoffs and may not have up-to-date company information.',
+          },
+          outputComparison: {
+            label: 'Choosing the right AI tool: vague use vs. deliberate stack',
+            vague: {
+              prompt: 'What AI tools should I use for sales?',
+              output: 'There are many great AI tools for sales! Here are some popular ones:\n\n- Salesforce Einstein\n- HubSpot AI\n- Gong\n- ChatGPT\n- LinkedIn Sales Navigator\n- Apollo\n- Outreach\n\nThese tools can help with various aspects of your sales process. Choose the ones that fit your needs and budget!',
+            },
+            improved: {
+              prompt: 'I am an individual AE selling SaaS to mid-market operations teams. I spend most of my time on prospect research, writing cold emails, and updating the CRM after calls. I already use Salesforce. I want to start small — one or two tools that will have the biggest immediate impact. What specifically should I use and for what exact tasks?',
+              output: 'Given your role and current pain points, here is a lean starting stack:\n\n**1. Claude (daily — highest immediate impact)**\nUse for: cold email drafts from trigger events, call briefs from your research, post-call CRM extraction (paste rough notes → get structured fields), and objection prep before high-stakes meetings.\n\n**2. Perplexity (before every call)**\nUse for: "What has changed at [Company] in the last 30 days?" before any outreach or call. It cites sources so you can verify before using facts in a meeting.\n\n**Skip for now:** Gong (great for managers, overkill for solo AE), Apollo (better for SDR volume prospecting). Your Salesforce already has Einstein — turn on the deal scoring feature this week.\n\nStart with these two for 30 days before evaluating anything else.',
+            },
+            insight: 'The vague prompt produced a list that helps no one — it does not account for role, workflow, or actual pain points. The specific prompt produced a prioritised recommendation with exact use cases and a clear rationale for what to skip. The same principle applies to every AI tool request: context produces recommendations, vagueness produces lists.',
+          },
+          applyThisWeek: {
+            action: 'Pick the one AI tool from this lesson you have not yet used and complete one real sales task with it this week — a research brief, an email draft, or a CRM update. Note what worked and what you would do differently.',
+            promptTemplate: 'I am an [AE/SDR/sales manager] selling [product] to [buyer type]. My biggest time drain is [specific task]. Help me complete this task right now using the following information: [paste your actual details].',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Which part of your sales workflow currently feels most chaotic or time-consuming? Is there a tool in this lesson\'s stack that could address it — and what has stopped you from trying it yet?',
           quiz: [
             {
               question: 'What is Perplexity most useful for in a sales context?',
@@ -262,6 +320,35 @@ The reps who win with AI are almost always the reps who already had disciplined 
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'Your manager asks why the AI deal scoring tool is producing unreliable recommendations for your team. What is the most likely root cause?',
+            options: [
+              'The AI tool needs more training data from other companies in your industry',
+              'The CRM data is inconsistent — missing close dates, skipped stages, or no activity logging',
+              'AI deal scoring does not work for deals under $50,000 in value',
+              'The tool requires a direct integration with your email system to function properly',
+            ],
+            correct: 1,
+            explanation: 'AI tools in sales find patterns in existing CRM data. If that data has inconsistent stage names, missing close dates, or incomplete activity records, the patterns AI finds will be unreliable or meaningless. Clean, consistently entered data is the prerequisite — not a nice-to-have — for useful AI intelligence.',
+          },
+          outputComparison: {
+            label: 'Pipeline analysis: gut feel vs. data-grounded review',
+            vague: {
+              prompt: 'Which of my deals should I focus on this week?',
+              output: 'To decide which deals to focus on, consider:\n\n1. Deals closing soonest\n2. Largest deals by value\n3. Deals where you have momentum\n4. Accounts with the warmest relationships\n\nPrioritise the deals where you feel you can make the most impact this week.',
+            },
+            improved: {
+              prompt: 'Here is my current pipeline. Please flag any deals I should be concerned about and tell me where to focus my time this week.\n\nDeal 1: Nexbridge Group — $85K — Proposal Sent — close date 31 May — last activity: 18 days ago — no next step logged\nDeal 2: Fortis Media — $42K — Discovery — close date 30 June — last activity: 3 days ago — demo scheduled Friday\nDeal 3: Altura Logistics — $120K — Negotiation — close date 15 May — last activity: 7 days ago — verbal commitment, waiting on legal\nDeal 4: Creston Retail — $29K — Cold Outreach — close date 30 June — last activity: 2 days ago — replied positively\nMy average "Proposal Sent" to close time is 12 days.',
+              output: '**Immediate concerns:**\n\n🔴 **Nexbridge Group** — highest risk this week. Proposal Sent for 18+ days with no activity and no next step when your average is 12 days. This deal is stalled. Call today, not email — find out if the proposal is being reviewed, if a competitor has appeared, or if there is an internal blocker. Do not let this slip silently.\n\n🟡 **Altura Logistics** — close date is 15 May (6 days away) and it is sitting in legal with 7 days of silence. Follow up with your champion today to confirm legal has the documents and ask if there is anything slowing the review.\n\n**Where to focus:**\n1. Nexbridge call — today\n2. Altura champion check-in — today\n3. Fortis demo prep — this will be your next proposal if Friday goes well\n\nCreston is early stage — good momentum, but do not invest heavy time until post-discovery.',
+            },
+            insight: 'The vague request produced general prioritisation advice that applies to any sales rep anywhere. The data-rich prompt produced a specific action plan for these four deals — flagging the stalled deal, the at-risk close, and the right sequence of moves. Data transforms AI from an advisor into a genuine deal analyst.',
+          },
+          applyThisWeek: {
+            action: 'Pull your current pipeline from your CRM and paste it into Claude with key fields — deal name, stage, close date, last activity date. Ask it to flag at-risk deals and suggest your top three priorities for the week.',
+            promptTemplate: 'Here is my current pipeline. Flag any deals I should be worried about and tell me where to focus this week. My average [stage] to close time is [X] days.\n\n[Paste deal list: name, stage, value, close date, last activity date, next step if logged]',
+            tool: 'Claude',
+          },
+          reflection: 'When did you last spend 20 minutes reviewing your pipeline metrics rather than just your deal list? What might you discover about your own patterns if you looked at conversion rates by stage over the last 6 months?',
           quiz: [
             {
               question: 'Why does CRM data quality directly affect AI output quality in sales?',
@@ -360,6 +447,35 @@ This structure adds under 30 minutes of AI time per day while compressing hours 
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'You have been using AI for three weeks but keep getting inconsistent, mediocre results. What is the most likely reason?',
+            options: [
+              'The AI tools you are using are not advanced enough for professional sales work',
+              'You are using AI for tasks it cannot help with, like relationship-building',
+              'You are using AI ad hoc without a defined workflow — inconsistent use produces inconsistent results',
+              'AI requires at least three months of use before the outputs become reliably useful',
+            ],
+            correct: 2,
+            explanation: 'The most common failure mode with AI is sporadic, ad-hoc use. Without defined moments in your workflow — before calls, after calls, weekly reviews — AI becomes something you try occasionally with varying prompts and get varying results. A structured workflow is what converts experiments into compounding productivity.',
+          },
+          outputComparison: {
+            label: 'Building a prompt vs. starting from scratch every time',
+            vague: {
+              prompt: 'Write me a post-call follow-up email',
+              output: 'Subject: Following Up on Our Conversation\n\nHi [Name],\n\nThank you for taking the time to speak with me today. I enjoyed learning more about your business and I believe we can help.\n\nAs discussed, I will send over some more information about our solution. Please let me know if you have any questions.\n\nLooking forward to our next steps.\n\nBest regards,\n[Your name]',
+            },
+            improved: {
+              prompt: 'Write a post-call follow-up email for a discovery call I just had with Priya Sharma, Head of Sales Enablement at Dunmore Financial (180-person fintech, Series C). She told me their biggest challenge is getting new reps to productive quota in under 90 days — they are currently at 130 days. She mentioned their current LMS is too generic and reps do not engage with it. We sell AI-powered sales readiness software. Agreed next step: I send a case study from a comparable fintech by Friday, and we reconnect on 28 May. Tone: warm, specific, no buzzwords. Under 120 words.',
+              output: 'Subject: Case study + 28 May — Dunmore onboarding\n\nPriya,\n\nGreat conversation today. The gap between 90 days and your current 130-day ramp is exactly the pattern we see before teams switch — and it is very solvable.\n\nAttached is the case study from Vertex Capital (similar profile — Series C fintech, 200 reps). They cut ramp time from 124 to 87 days in one quarter. The key was replacing generic content with role-specific readiness tracks.\n\nLooking forward to our call on 28 May. Anything you want me to prepare in advance?\n\n[Your name]',
+            },
+            insight: 'The vague prompt produced a placeholder email that could have been written by any rep for any call — Priya would recognise it as a template immediately. The specific prompt produced an email that references her exact numbers, her exact challenge, the agreed deliverable, and the specific next step. It treats her like a person, not a contact record.',
+          },
+          applyThisWeek: {
+            action: 'Create a "My AI Sales Prompts" document and write your first reusable prompt: a post-call follow-up email template customised for your product and typical buyer. Test it on a real recent call and refine it once based on the output.',
+            promptTemplate: 'Write a post-call follow-up email for [name], [title] at [company]. Key things discussed: [2-3 specific points from the call]. Their main challenge: [what they described]. Agreed next step: [what you both committed to]. Our solution: [one sentence]. Tone: [warm/professional/brief]. Under [word count]. No generic sales language.',
+            tool: 'Claude',
+          },
+          reflection: 'What is the one sales task you do every week that feels like it takes longer than it should? Is there a prompt you could write once that would cut that time in half every time you use it?',
           quiz: [
             {
               question: 'Why do many salespeople try AI and conclude it is not worth the effort?',
@@ -467,6 +583,35 @@ This is not a shortcut. It is a better process than most reps follow when they s
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'You ask AI to help you prepare for a discovery call. What information should you provide to get the most useful output?',
+            options: [
+              'Just the prospect\'s company name — AI can find everything else',
+              'The prospect\'s name, company, role, and what you already know about their situation',
+              'Your product features and pricing — so AI can build the pitch',
+              'Nothing specific — AI works better with open-ended requests',
+            ],
+            correct: 1,
+            explanation: 'AI cannot access live data about your prospect, so you need to provide the context. The more specific your input — company, role, known pain points, deal stage — the more targeted and useful the preparation will be.',
+          },
+          outputComparison: {
+            label: 'Cold email: generic vs. research-led — the difference is stark',
+            vague: {
+              prompt: 'Write a cold email to a sales director',
+              output: 'Subject: Improve Your Sales Performance\n\nHi [Name],\n\nI hope this email finds you well. I\'m reaching out because I believe our solution could help improve your sales team\'s performance.\n\nOur platform helps sales teams like yours achieve better results through innovative technology.\n\nWould you be open to a quick 15-minute call to discuss how we could help?\n\nBest regards,\n[Your name]',
+            },
+            improved: {
+              prompt: 'Write a cold outreach email to Sarah Chen, VP of Sales at Meridian Logistics (150 people, Series B, last-mile delivery). They just raised $12M and are expanding to 3 new cities. We sell AI-powered route optimisation software. Sarah\'s LinkedIn shows she posted about driver retention challenges last month. Email should be under 100 words, reference the expansion, connect driver retention to route efficiency, and have one clear CTA: a 20-minute call this week. No buzzwords.',
+              output: 'Subject: Driver retention + your 3-city expansion\n\nSarah,\n\nExpanding to three cities while keeping driver turnover under control is a brutal combination — congrats on making both happen simultaneously.\n\nWe help logistics companies cut driver fatigue (and churn) by optimising routes before the day starts, not reactively. One customer reduced turnover 23% in 90 days after switching.\n\nWorth 20 minutes this week to see if the numbers work for Meridian?\n\n[Name]',
+            },
+            insight: 'The vague email is instantly recognisable as a template — it says nothing specific to Sarah or Meridian. The improved version references her exact situation (expansion + retention post), connects it to a specific outcome, and earns attention because it proves you did the work.',
+          },
+          applyThisWeek: {
+            action: 'Pick one prospect you\'ve been meaning to reach out to. Research them for 5 minutes (LinkedIn, company news, recent funding). Then write a cold email or call opener using AI with all that context in the prompt.',
+            promptTemplate: 'Write a [email/call opener] for [prospect name], [role] at [company]. Context: [2-3 specific things you know about them or their situation]. We sell [what you sell]. Their likely pain: [your hypothesis]. CTA: [specific next step]. Under [word count]. No buzzwords.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last deal you lost or stalled. At which stage did things go wrong — prospecting, discovery, proposal, or closing? Which of those stages would benefit most from AI support, and what would you need to give the AI to make it useful?',
           quiz: [
             {
               question: 'Which tool is best suited for researching recent company news and trigger events before a sales call?',
@@ -567,6 +712,35 @@ If any answer is no, edit before sending. AI is the first draft engine. You are 
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'Which of the following cold email subject lines is most likely to generate a strong open rate?',
+            options: [
+              '"Transforming Sales Performance with AI — Let\'s Talk"',
+              '"Quick question about your Q3 expansion into Southeast Asia"',
+              '"Following Up on Our Last Conversation"',
+              '"Exclusive Offer for [Company Name] — Limited Time"',
+            ],
+            correct: 1,
+            explanation: 'Specific subject lines that reference a real, known detail about the prospect\'s situation outperform generic or clever ones because they signal that the email is worth reading. The subject line is a relevance signal — specificity earns the open, vagueness loses it.',
+          },
+          outputComparison: {
+            label: 'Cold outreach: template blast vs. hook-driven personalisation',
+            vague: {
+              prompt: 'Write a cold email to a VP of HR about our employee engagement software',
+              output: 'Subject: Boost Employee Engagement at Your Company\n\nHi [Name],\n\nEmployee engagement is one of the biggest challenges facing HR leaders today. Our award-winning platform helps companies like yours create a more engaged, productive workforce.\n\nKey features include:\n- Real-time pulse surveys\n- Manager dashboards\n- Action planning tools\n\nI\'d love to schedule a 30-minute demo to show you what\'s possible. Are you available next week?\n\nBest,\n[Name]',
+            },
+            improved: {
+              prompt: 'Write a cold email to Claire Fontaine, VP of HR at Brixton Group (UK retail, 2,200 employees, recently cited in HR Magazine for rolling out a 4-day work week pilot). We sell employee engagement software. The 4-day week pilot is unusual and probably generating a lot of internal data about productivity and morale. Email should be under 90 words, open with the pilot as the hook, connect our software to measuring what the pilot is producing, and ask for a 15-minute call. One subject line option included.',
+              output: 'Subject: The data your 4-day week pilot is generating\n\nClaire,\n\nYour 4-day week pilot is one of the more interesting HR experiments in UK retail right now — and probably generating data you\'re not fully capturing yet.\n\nWe help HR teams like yours turn engagement signals into actionable insight — so you can measure what\'s actually shifting in morale and output, not just anecdotally.\n\nWould 15 minutes to look at what we\'re seeing with similar pilots be useful?\n\n[Name]',
+            },
+            insight: 'The generic email lists features no one asked to hear about and asks for a 30-minute meeting from a cold start — both signals of high-effort, low-relevance outreach. The personalised version uses a specific, public fact about Claire\'s team to create a genuine connection to the product\'s value. The ask is smaller, the relevance is higher, and the email sounds like it was written for Claire specifically.',
+          },
+          applyThisWeek: {
+            action: 'Find a real trigger event for one prospect (a funding round, a hiring surge, a published article, a LinkedIn post). Write your outreach email using that specific trigger as the opening hook, and run it through the four-part quality check before sending.',
+            promptTemplate: 'Write a cold [email/LinkedIn message] to [name], [title] at [company]. Hook: they recently [specific trigger event]. We sell [solution] that helps [buyer type] with [outcome]. Ask: [small, specific CTA]. Under [word count]. No generic sales language. Include a subject line.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Look at the last five cold outreach messages you sent. Would a recipient reading them think "this person researched me" or "this is a template"? What one change to your process would move more of them into the first category?',
           quiz: [
             {
               question: 'What is the most important element of a high-converting cold email subject line?',
@@ -667,6 +841,35 @@ This step prevents you from sending irrelevant outreach just because you detecte
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'You see that a target company just hired a new Chief Revenue Officer. Before reaching out, what should you do with this trigger?',
+            options: [
+              'Send an immediate outreach email congratulating them on the hire',
+              'Wait three months until the new CRO has settled in and has budget authority',
+              'Ask AI whether this trigger is relevant to your solution before acting on it',
+              'Add the new CRO to your LinkedIn connections and nurture them for six months',
+            ],
+            correct: 2,
+            explanation: 'Not every trigger is relevant to every solution. A new CRO hire might signal tool evaluation and openness to new vendors — or it might be irrelevant if they are focused on a completely different priority. Using AI to evaluate the relevance before reaching out prevents sending outreach that feels forced or disconnected.',
+          },
+          outputComparison: {
+            label: 'Trigger-based outreach: ignored signal vs. timely relevance',
+            vague: {
+              prompt: 'Write an outreach email to a company that just raised Series B funding',
+              output: 'Subject: Congratulations on Your Series B!\n\nHi [Name],\n\nCongratulations on your recent Series B funding! This is a huge milestone for your company.\n\nI\'m reaching out because we help growing companies like yours scale their operations more effectively. As you expand, having the right tools in place is critical.\n\nI\'d love to find 20 minutes to show you what we do. Are you available this week?\n\nBest,\n[Name]',
+            },
+            improved: {
+              prompt: 'Write a trigger-based outreach email to James Okafor, VP of Finance at Lumen Health (digital health startup, just raised $18M Series B). They are expanding from 40 to 120 staff in the next 12 months. We sell spend management and financial controls software for scaling startups. The trigger: their CFO gave an interview saying they need "to put infrastructure in place before we outgrow our current systems." James owns the finance stack. Email under 100 words, open with the CFO quote, connect it to our solution, one CTA. No congratulations opener.',
+              output: 'Subject: "Infrastructure before we outgrow our systems" — this is the window\n\nJames,\n\nYour CFO\'s comment about getting infrastructure in place before the growth curve hits is exactly the right instinct — and exactly the right timing to look at spend management.\n\nWe work with Series B health tech teams building finance controls that scale without becoming a bottleneck at 100+ headcount. Most of our customers implement in the 6 months after their B.\n\nWorth 20 minutes to see if the timing fits for Lumen?\n\n[Name]',
+            },
+            insight: 'The generic funding email is instantly recognisable and likely gets deleted — every company that raises money receives dozens of these. The trigger-specific version references the CFO\'s actual words, connects the trigger directly to the product\'s value, and uses the growth timeline to create genuine urgency. The prospect can see that you did real research.',
+          },
+          applyThisWeek: {
+            action: 'Set up Google Alerts for your top 5 target accounts today. When a trigger fires this week, run the AI evaluation prompt before reaching out: "I sell [solution]. [Company] just [trigger]. Is this a buying signal for my solution and what angle would resonate most?"',
+            promptTemplate: 'I sell [solution] to [buyer type]. [Company name] just [specific trigger event]. Evaluate: is this a meaningful buying signal for my solution? If yes, what angle would resonate most in outreach to [title]? If no, explain why. Be direct.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Think about a deal you won in the past year. Was there a trigger event that made the prospect receptive when you reached out? How systematically are you monitoring for those same kinds of triggers across your other target accounts right now?',
           quiz: [
             {
               question: 'Why are the weeks immediately after a funding announcement a high-receptivity window for salespeople?',
@@ -767,6 +970,35 @@ This discipline keeps your pipeline full of deals that have a genuine probabilit
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your company\'s existing ICP says "B2B SaaS companies with 100-500 employees." Why is this insufficient for effective prospecting?',
+            options: [
+              'The headcount range is too broad — narrow it to 200-300 for better targeting',
+              'It lacks technographic, behavioural, and trigger attributes that predict actual conversion',
+              'ICPs should be based on revenue, not headcount, to accurately reflect deal size',
+              'This ICP is too specific — broader targeting is better for volume prospecting',
+            ],
+            correct: 1,
+            explanation: 'A useful ICP goes far beyond firmographic basics. Knowing that a company has 100-500 employees does not tell you whether they have the buying signals, tech stack, decision-making process, or trigger events that actually predict conversion. Firmographics alone produce large prospect lists with low conversion rates.',
+          },
+          outputComparison: {
+            label: 'ICP development: gut feel vs. data-driven pattern analysis',
+            vague: {
+              prompt: 'Help me define my ideal customer profile for HR software',
+              output: 'A strong Ideal Customer Profile for HR software typically includes:\n\n- Company size: 100-1,000 employees\n- Industries: Technology, Professional Services, Healthcare\n- Title: HR Directors, CHROs, People Ops leaders\n- Pain points: Manual processes, employee turnover, compliance\n- Tech stack: Common HRIS platforms\n\nUse this profile to target your outreach and content strategy.',
+            },
+            improved: {
+              prompt: 'I sell HR analytics software. Here are my last 15 won deals: [Company A — 340 employees, professional services, Head of People, deal value $38K, trigger: headcount grew 80% in 12 months, sales cycle 6 weeks] [Company B — 220 employees, fintech, HR Director, deal value $29K, trigger: first dedicated HR hire, sales cycle 8 weeks] [Company C — 410 employees, SaaS, VP People, deal value $45K, trigger: preparing for Series C due diligence, sales cycle 5 weeks]... [12 more similar entries]. Build an ICP with firmographic, trigger, and anti-ICP attributes from these patterns.',
+              output: '**ICP: HR Analytics Software**\n\n**Core profile:** 200-450 employees, professional services / fintech / B2B SaaS, company in active growth phase (Series B-C or post-funding).\n\n**Buyer:** First dedicated People/HR leader OR VP People at a company scaling from scrappy to structured. Typically 2-5 years in role.\n\n**Trigger pattern (appears in 11/15 deals):** Rapid headcount growth (50%+ in 12 months) OR a compliance or fundraising milestone requiring people data. Act within 4 weeks of trigger.\n\n**Anti-ICP:** Mature HR teams with existing analytics solutions (long sales cycles, low close rate), and companies under 150 people (not yet painful enough).\n\n**Technographic signal:** Using spreadsheets or basic HRIS with no reporting layer — this is the replacement signal.',
+            },
+            insight: 'The generic ICP is a reasonable starting point but describes thousands of companies with wildly varying conversion rates. The data-driven version reveals the specific triggers (rapid growth, fundraising milestones), the exact buyer profile, and the anti-ICP patterns that prevent wasted pipeline time. The difference is the source: one is theory, the other is your own won deal evidence.',
+          },
+          applyThisWeek: {
+            action: 'Pull your last 10 won deals from your CRM. List company size, industry, buyer title, and any trigger or reason they bought. Paste the list into Claude and ask it to find the patterns. Compare the output to your current ICP.',
+            promptTemplate: 'Here are my last [N] won deals: [paste list with: company size, industry, buyer title, deal size, reason they bought / trigger event if known]. Identify the common patterns and build an Ideal Customer Profile with firmographic attributes, buyer profile, trigger patterns, and anti-ICP signals based on what you see.',
+            tool: 'Claude',
+          },
+          reflection: 'Be honest: when you add a new prospect to your pipeline, do you consciously check them against an ICP — or do you go on instinct? What patterns have you noticed about the prospects that ultimately do not convert that you could turn into explicit anti-ICP criteria?',
           quiz: [
             {
               question: 'What data source produces the most accurate Ideal Customer Profile?',
@@ -869,6 +1101,35 @@ Before sending, run a final check: could this proposal be sent to any other pros
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A prospect receives your proposal and skims it in 90 seconds. What is the most likely reason they did not read it properly?',
+            options: [
+              'The proposal was too long and detailed for their attention span',
+              'The proposal led with your company overview and product features rather than their specific situation',
+              'They needed the proposal in a different file format',
+              'They shared it with stakeholders who made the initial call not to proceed',
+            ],
+            correct: 1,
+            explanation: 'Proposals that lead with the seller\'s perspective — company history, product features, awards — give buyers no reason to invest attention. Proposals that open with a precise description of the buyer\'s situation earn engagement because the buyer sees themselves in the document immediately.',
+          },
+          outputComparison: {
+            label: 'Proposal opening: feature-led vs. situation-led',
+            vague: {
+              prompt: 'Write the opening section of a sales proposal for a logistics company',
+              output: '**About Meridian Solutions**\n\nFounded in 2018, Meridian Solutions is a leading provider of enterprise logistics software serving over 500 customers globally. Our award-winning platform combines real-time tracking, route optimisation, and inventory management in a single integrated solution.\n\nWe are proud to work with some of the world\'s leading logistics and supply chain organisations, helping them achieve operational excellence and competitive advantage.\n\n**Our Proposal for [Company Name]**\n\nBased on our conversation, we believe Meridian Solutions is well-positioned to support your logistics operations...',
+            },
+            improved: {
+              prompt: 'Write the opening situation summary section of a proposal for Renova Freight, a 280-person freight forwarding company. From my discovery notes: they are currently managing 40+ daily shipments with a spreadsheet-based system built in 2019. When volumes spike — which is happening more as they win new ports contracts — the spreadsheet breaks down, causing missed SLAs and manual reconciliation that takes 2 FTEs two days per week. Their Head of Operations, Dan Marsh, said their current system "was never built for this volume" and that two enterprise clients have flagged SLA concerns. Write this to feel like a mirror — Dan should read it and think we actually listened.',
+              output: '**Renova Freight — Current Situation**\n\nRenova\'s freight operations have grown materially in the past 18 months, particularly as new ports contracts have come onstream. The system that supported a lower-volume business — a spreadsheet built in 2019 — has not scaled with that growth.\n\nThe consequences are now visible: during volume spikes, the manual reconciliation process consumes two full-time team members for two days per week. Two enterprise clients have raised SLA concerns. The risk is not hypothetical — it is already affecting the relationships that underpin Renova\'s growth trajectory.\n\nDan Marsh\'s own framing is precise: "it was never built for this volume." This proposal addresses what that means operationally, and what solving it looks like.',
+            },
+            insight: 'The generic opening is entirely about the seller — Meridian\'s history, awards, and global footprint. Dan Marsh does not care about any of that. The situation-led opening demonstrates that you absorbed what he said, names the specific consequences he described, and uses his own language. He reads this and thinks "they get it" — which is the precondition for reading the rest.',
+          },
+          applyThisWeek: {
+            action: 'Take the discovery notes from your most recent qualified call and paste them into Claude. Ask it to draft the situation summary section of a proposal using only what you heard — no product features allowed. Check whether it sounds like the prospect\'s situation or a generic problem statement.',
+            promptTemplate: 'Here are my discovery notes from [company name]: [paste notes]. Draft the situation summary section of a proposal. It should describe their current state, the specific challenge they described, and the cost of not solving it. Use their specific language where possible. Do not include any product features or company background. It should feel like a mirror — they should read it and think "they actually listened."',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a proposal you sent in the last quarter that you were proud of. Could that document have been sent — with minor edits — to a different company? If yes, what would you need to change to make it impossible to repurpose?',
           quiz: [
             {
               question: 'What is the primary differentiator of proposals that win compared to proposals that lose?',
@@ -961,6 +1222,35 @@ The break-up email is underused and highly effective. It signals that you are en
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your prospect attended a demo two weeks ago and has not responded to your two follow-up emails. What is the best next step?',
+            options: [
+              'Assume they are not interested and move them to inactive in your CRM',
+              'Send one final email with a significant discount to re-engage them',
+              'Continue a structured sequence that varies the channel and adds value with each touch',
+              'Call their manager directly to understand the internal situation',
+            ],
+            correct: 2,
+            explanation: 'Two follow-ups after a demo is too early to give up — most closed deals require five or more touches, and silence does not mean no. A structured sequence that varies the approach (email, LinkedIn, phone) and adds value at each step maintains momentum without feeling repetitive or desperate.',
+          },
+          outputComparison: {
+            label: 'Follow-up sequence: checking in vs. adding value at every touch',
+            vague: {
+              prompt: 'Write a follow-up email to a prospect who hasn\'t responded',
+              output: 'Subject: Following Up\n\nHi [Name],\n\nI just wanted to follow up on my previous email. I haven\'t heard back from you and wanted to check in to see if you had any questions.\n\nPlease let me know if you\'d like to schedule a call to discuss further.\n\nBest regards,\n[Your name]',
+            },
+            improved: {
+              prompt: 'Write touch 3 of a follow-up sequence for Alex Donovan, Head of Procurement at Carver Building Supplies (mid-market construction materials). He attended our product demo 2 weeks ago and has not responded to two emails. We sell procurement automation software. This touch should: switch from email to LinkedIn, add genuine value (not just check in), reference something specific from the demo conversation, and be under 60 words.',
+              output: 'LinkedIn message:\n\nAlex — saw this piece on procurement bottlenecks in construction supply chains and thought of our demo conversation, specifically the part about your PO approval delays.\n\n[link to relevant industry article]\n\nPage 3 has a benchmark for average approval cycle times that might be useful context for your team. Happy to send the ROI model we built for a comparable distributor if that would help.',
+            },
+            insight: 'The "just following up" message adds nothing and signals that you have nothing new to say — it is one of the weakest follow-up patterns in sales. The value-add touch switches channels (LinkedIn vs. email), references a specific moment from the demo, provides something genuinely useful, and makes a soft, low-friction offer. Alex gets something from reading it, which is what earns a response.',
+          },
+          applyThisWeek: {
+            action: 'Identify one prospect who has gone quiet after a positive interaction. Use AI to build a 5-touch follow-up sequence for them that varies the channel and adds value at each step. Launch touches 1 and 2 this week.',
+            promptTemplate: 'Build a [N]-touch follow-up sequence for [name] at [company] who [described their situation] but has gone quiet after [last interaction]. Each touch should vary the channel and add genuine value — not just check in. Include a break-up email as the final touch. My solution is [X] and the main value is [Y].',
+            tool: 'Claude',
+          },
+          reflection: 'How many deals in your pipeline right now have you followed up with fewer than three times and mentally written off? Pick one and commit to completing a full sequence before moving it to inactive.',
           quiz: [
             {
               question: 'What is the most common reason sales deals die without an explicit rejection?',
@@ -1057,6 +1347,35 @@ This kind of deliberate practice is available on demand, at no cost, and without
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A prospect says "the timing is not right." What should you do before responding?',
+            options: [
+              'Immediately propose a delayed start date to remove the timing objection',
+              'Accept the objection and schedule a follow-up call for next quarter',
+              'Clarify what "timing" means — budget cycle, internal capacity, or competing priorities',
+              'Present your strongest case study to re-establish urgency',
+            ],
+            correct: 2,
+            explanation: '"The timing is not right" is one of the most common surface objections that masks a different underlying concern. It might mean budget is frozen, internal buy-in is missing, a competing project is taking priority, or the prospect is not convinced enough to push for it internally. Clarifying before responding ensures you address the real concern, not an assumption.',
+          },
+          outputComparison: {
+            label: 'Objection response: reactive defense vs. framework-led handling',
+            vague: {
+              prompt: 'Help me respond to "your pricing is too high"',
+              output: 'When a prospect says your price is too high, try these responses:\n\n1. "Our solution pays for itself within the first year"\n2. "Think of it as an investment, not a cost"\n3. "Compared to the cost of not solving this problem..."\n4. "We\'re actually competitively priced for the value we deliver"\n5. "Let me see what flexibility we have"\n\nRemember to emphasise value over price!',
+            },
+            improved: {
+              prompt: 'Help me respond to the objection "your pricing is too high" using the acknowledge-clarify-respond-check framework. Context: I sell HR onboarding software at £18,000/year. My buyer is a Head of People at a 300-person SaaS company. From our discovery, their current pain is high new hire churn — 22% leave in the first 90 days, each replacement costs roughly £12,000. They are currently using a mix of Google Docs and Slack for onboarding. Give me a complete response I can actually use in a live conversation.',
+              output: '**Acknowledge:** "Completely fair — £18K is a real budget decision and I wouldn\'t expect you to commit without being sure it pays off."\n\n**Clarify:** "Before I respond to the pricing — is the concern about the absolute number, or about whether you can justify it internally to your finance team? Those are quite different problems and I want to make sure I address the right one."\n\n**Respond (if it\'s about ROI):** "Based on what you told me about your 90-day churn rate — 22% and roughly £12K per replacement — you\'re losing somewhere in the region of £792K annually just in replacement costs alone. If we reduce that by even a third, the software has paid for itself fourteen times over in year one. The number that worries me is not £18K — it\'s the £792K that is currently invisible."\n\n**Check:** "Does that change how the pricing looks, or is there still a concern I haven\'t addressed?"',
+            },
+            insight: 'The generic response lists five deflection tactics that experienced buyers have heard a hundred times. The framework-driven response does three things the generic version does not: it validates the concern without caving, it asks a clarifying question that uncovers whether this is a genuine budget problem or an internal justification problem, and it uses the prospect\'s own discovery data to make the ROI case specific and credible.',
+          },
+          applyThisWeek: {
+            action: 'List your three most common objections. For each one, write a complete four-step response using the acknowledge-clarify-respond-check framework. Test the responses in a roleplay with Claude by asking it to play a sceptical buyer in your target market.',
+            promptTemplate: 'You are a [buyer title] at a [company type]. You are evaluating my proposal for [solution]. Your main concerns are [list 2 real objections]. I will present my response to each objection and you will stay in character — push back if my response is weak and confirm if it actually addresses your concern. Start by raising the first objection.',
+            tool: 'Claude',
+          },
+          reflection: 'What is the objection you find hardest to handle in a live conversation? Is it hard because you do not have a good response, or because you have not practised it enough to feel confident? How would you approach preparing for it differently this week?',
           quiz: [
             {
               question: 'What is the purpose of the "clarify" step in the objection-handling framework?',
@@ -1151,6 +1470,35 @@ Executives ask different questions than operational buyers. They focus on: risk,
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You have 15 minutes with a CFO who has not been in any of your previous conversations. How should you open the presentation?',
+            options: [
+              'Start with your company\'s background and client list to establish credibility',
+              'Begin with the technical integration details so they can assess feasibility immediately',
+              'Open by describing the current business situation and the challenge it creates — then connect your solution',
+              'Lead with your pricing structure so they can determine fit before investing time',
+            ],
+            correct: 2,
+            explanation: 'Executive buyers, especially CFOs, need context before solution. Opening with the current situation — what is happening in their business and why it matters — establishes that you understand their world. This creates the credibility that earns their attention for the rest of the conversation. Features, credentials, and pricing come after.',
+          },
+          outputComparison: {
+            label: 'Executive presentation: feature dump vs. narrative-driven story',
+            vague: {
+              prompt: 'Help me prepare a pitch for a CFO',
+              output: 'When pitching to a CFO, focus on:\n\n1. ROI and financial metrics\n2. Total cost of ownership\n3. Payback period\n4. Risk mitigation\n5. Integration with existing financial systems\n\nCFOs care about numbers, so lead with data. Use a professional slide deck and be prepared for detailed financial questions.',
+            },
+            improved: {
+              prompt: 'Build executive talking points for a 15-minute presentation to Helen Voss, CFO of Ashgrove Insurance (UK, 600 employees, publicly listed, mid-market). Context from discovery: they close their books monthly using a highly manual process — finance team of 8 spends 9 days per month on close, 3 of those days are purely reconciliation. Their external auditors flagged process risk in the last audit. We sell financial close automation software. Use the situation-complication-resolution-evidence-decision framework. Write as talking points, not slides.',
+              output: '**Situation:**\n"Ashgrove has a finance team of eight running a close process that works — but at a cost. Nine days per month, three of which are pure reconciliation. For a listed company, that\'s not just inefficiency, it\'s a timeline your investors and auditors can see."\n\n**Complication:**\n"Your most recent audit flagged the reconciliation process as a control risk. That\'s a signal, not just a comment. In a listed environment, process risk in finance close is the kind of thing that becomes a disclosure issue if it persists. The question isn\'t whether to fix it — it\'s when."\n\n**Resolution:**\n"We automate the reconciliation and matching steps that currently consume your team for three days. Close time goes from nine days to three to four. Audit risk is eliminated because the process is documented, timestamped, and rule-based."\n\n**Evidence:**\n"Quantum Financial — similar profile, 550 employees, listed — cut close time from 11 days to 3 in one quarter. Their audit partner signed off on the process improvement in the first cycle."\n\n**Decision:**\n"The logical next step is a 30-minute session with your Financial Controller to map the reconciliation workflow. That gives us enough to model your specific close time reduction and cost impact. I can have that scheduled this week if you want to move forward."',
+            },
+            insight: 'The generic advice told you what topics to cover but gave no structure or language. The narrative-driven talking points use the CFO\'s specific situation — the audit finding, the 9-day close, the listed company context — to build a story that has genuine urgency. Helen can follow the logic from situation to consequence to solution without needing slides. The decision step is specific and low-friction.',
+          },
+          applyThisWeek: {
+            action: 'Take your next upcoming senior buyer meeting and build the narrative using the SCRED framework. Feed your discovery notes to Claude and ask it to write talking points for each section. Then prepare for the five most likely executive questions using a second prompt.',
+            promptTemplate: 'Using the situation-complication-resolution-evidence-decision framework, build executive talking points for a [time]-minute presentation to [title] at [company]. Their situation: [describe from discovery]. The complication: [the business risk or cost]. Our solution: [one sentence]. Evidence: [case study or data]. The ask: [specific next step]. Write as talking points, not slides.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time you presented to a senior buyer and felt you lost their attention. At what moment did the energy shift — and looking back, was it because you moved into feature or detail territory before establishing the business narrative?',
           quiz: [
             {
               question: 'What do executive buyers primarily want to understand from a sales presentation?',
@@ -1251,6 +1599,35 @@ The goal is not a perfect CRM — it is a useful one. A CRM that is 80% accurate
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'After a 45-minute discovery call, what is the fastest way to get structured, CRM-ready notes?',
+            options: [
+              'Write detailed notes by hand immediately after the call while memory is fresh',
+              'Ask a colleague who was on the call to write up a summary',
+              'Paste your rough notes into AI and ask it to extract pain points, stakeholders, next steps, and objections',
+              'Wait until the end of the day and reconstruct the key points from memory',
+            ],
+            correct: 2,
+            explanation: 'Pasting rough notes into AI and asking for a structured extraction is the fastest path from a messy post-call brain-dump to clean, CRM-ready fields. It takes under five minutes, preserves specificity, and removes the cognitive burden of structuring while the next call is approaching.',
+          },
+          outputComparison: {
+            label: 'Post-call CRM update: manual typing vs. AI extraction',
+            vague: {
+              prompt: 'Summarise this sales call for my CRM',
+              output: 'Here is a summary of the sales call:\n\nThe call was a discovery meeting. The prospect seemed interested in the product and had some questions about pricing and implementation. They mentioned some challenges with their current solution. There may be an opportunity here. Next steps were discussed.',
+            },
+            improved: {
+              prompt: 'Extract the following from these call notes and format as a structured CRM entry: (1) pain points identified, (2) key stakeholders mentioned and their roles, (3) agreed next steps with dates, (4) objections raised, (5) competitive mentions, (6) deal stage recommendation. Notes: Called with Tom Rafferty, IT Director at Stackline Systems. Also joined by his colleague Anya, who handles procurement. Tom frustrated with current vendor — support tickets taking 5-7 days to resolve, caused two production outages in Q1. Budget owner is the CTO, not Tom. Anya said they go to legal review after any selection. Asked about our uptime SLA and whether we offer 24/7 support. We currently use competitor Cloudridge — Tom said Cloudridge "dropped the ball" on their last renewal. Agreed: I send SLA documentation by Thursday, Tom will get CTO intro by end of next week. Still early but Tom seems like a genuine champion.',
+              output: '**Pain Points:**\n- Current vendor (Cloudridge) has 5-7 day support ticket resolution; caused 2 production outages in Q1\n- Tom used phrase "dropped the ball" on renewal — trust has eroded\n\n**Stakeholders:**\n- Tom Rafferty, IT Director — main contact, likely champion\n- Anya [surname unknown], Procurement — joins legal review after selection decision\n- CTO [name unknown] — economic buyer, controls budget; Tom to facilitate intro\n\n**Agreed Next Steps:**\n- Send SLA documentation to Tom by Thursday\n- Tom to arrange CTO introduction by end of next week\n\n**Objections Raised:**\n- Uptime SLA query (not yet resolved — send documentation)\n- 24/7 support capability questioned\n\n**Competitive:** Replacing Cloudridge — active dissatisfaction, not just evaluation\n\n**Recommended Stage:** Discovery → Solution Validation (pending CTO intro)\n**Deal Flag:** No CTO access yet — gate before moving to Proposal',
+            },
+            insight: 'The vague summary is almost useless for CRM — it contains no names, no specific pain points, no actionable next steps, and no competitive intelligence. The structured extraction from rough notes gives every field a manager or AI tool would need to analyse this deal, including a stage recommendation and a risk flag. The raw notes took 2 minutes to write; the extraction took 30 seconds.',
+          },
+          applyThisWeek: {
+            action: 'After your next sales call, write rough bullet notes as usual — do not slow down for structure. Then immediately paste them into Claude with the extraction prompt and compare the output to what you would have typed manually. Time both approaches.',
+            promptTemplate: 'Extract the following from these call notes and format as a CRM entry: (1) pain points identified, (2) stakeholders mentioned with their roles, (3) agreed next steps with dates if mentioned, (4) objections raised, (5) competitive mentions, (6) recommended next stage. Notes: [paste your rough notes]',
+            tool: 'Claude',
+          },
+          reflection: 'How long after a call do you typically update your CRM? And how much detail do you actually capture versus what you remember thinking was important? What does a one-week-old CRM note tell you that a five-minute structured extraction would not?',
           quiz: [
             {
               question: 'What is the primary reason CRM data quality degrades over time in most sales teams?',
@@ -1347,6 +1724,35 @@ This replaces the intuition-driven deal review with a structured, data-informed 
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'You have a deal in "negotiation" stage that has been there for 35 days. Your average negotiation stage is 10 days. What does this signal?',
+            options: [
+              'Nothing unusual — complex deals naturally take longer and this one is worth waiting for',
+              'The deal is likely stalled and deserves active investigation — not just continued waiting',
+              'You should lower your price immediately to accelerate the decision',
+              'The deal is on track — 35 days is within a normal range for enterprise negotiation',
+            ],
+            correct: 1,
+            explanation: 'Deal age within a stage is one of the clearest at-risk signals. A deal sitting at 3.5x the average time in negotiation is almost certainly experiencing an internal blocker, competitive threat, or waning priority — none of which resolve themselves through waiting. Active investigation and a direct conversation with your champion is the right move.',
+          },
+          outputComparison: {
+            label: 'Deal review: gut feel ranking vs. data-grounded scoring',
+            vague: {
+              prompt: 'Which of my deals should I focus on?',
+              output: 'Focus on deals that are:\n- Closest to closing\n- Highest in value\n- Where you have the strongest relationships\n- Where there is clear momentum\n\nPrioritise your time on deals where you feel you can make a difference this week.',
+            },
+            improved: {
+              prompt: 'Score each of these deals from 1-10 on probability of closing in the stated timeframe. Explain the key risk factor for each. Deal 1: Halloway Tech — $95K — Proposal Sent — 14 days in stage, avg is 9 days — economic buyer not yet engaged — no defined timeline from prospect — close date 30 June. Deal 2: Brightwell Media — $38K — Negotiation — 6 days in stage, avg is 12 days — champion is Head of Marketing, economic buyer (CFO) confirmed next week — verbal commitment given — close date 15 June. Deal 3: Crestwood Retail — $62K — Discovery — 3 days in stage — demo scheduled Thursday — found us via referral from existing customer — close date 31 July.',
+              output: '**Deal 1: Halloway Tech — Score: 3/10**\nRisk: Proposal has been sitting 56% longer than your average without response, and the economic buyer is not engaged. A proposal without executive access is rarely approved — it is sitting in a champion\'s inbox waiting for attention that never comes. Action: Call your champion today and ask directly who needs to approve this and whether they can set up a 20-minute review with that person.\n\n**Deal 2: Brightwell Media — Score: 8/10**\nLow risk: You have a verbal commitment, CFO meeting confirmed, and you are within the normal negotiation window. Primary risk is the CFO call next week — prepare a one-page ROI summary specific to their situation. Do not let this slip by being passive.\n\n**Deal 3: Crestwood Retail — Score: 6/10**\nModerate confidence: Referral source and scheduled demo are both positive signals. Too early to score highly — discovery not yet complete. Priority is converting Thursday\'s demo to a qualified next step. Ask about timeline, budget authority, and decision process before the call ends.',
+            },
+            insight: 'The vague request produced generic prioritisation advice. The structured deal data produced a specific risk assessment for each deal — including the exact action needed and why. The Halloway deal looks active on paper but scores 3/10 once you account for stage age and missing economic buyer access. Without the scoring lens, a rep could spend the week on the wrong deal.',
+          },
+          applyThisWeek: {
+            action: 'Run the deal scoring prompt on your top 5 pipeline deals this week. For any deal that scores below 5, identify the single biggest risk factor and schedule one specific action to address it before Friday.',
+            promptTemplate: 'Score each of these deals from 1-10 on probability of closing in the stated timeframe and identify the key risk factor for each. [Paste deal list with: name, value, stage, days in current stage, your average for that stage, economic buyer status, last activity, close date, and any known concerns]',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Pick the deal in your pipeline you feel best about right now. Now write down — honestly — the three biggest things that could prevent it from closing. Does your confidence match the evidence, or is optimism doing some of the work?',
           quiz: [
             {
               question: 'What is the "pipeline optimism problem" and how does AI help address it?',
@@ -1439,6 +1845,35 @@ This four-step process produces a forecast that is defensible with data rather t
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'Your Q2 forecast shows $450K committed, but your historical close rate for "proposal sent" deals is 35% and you have $600K of your forecast sitting in that stage. What does this suggest?',
+            options: [
+              'The forecast is accurate — $450K is achievable if you work hard on those deals',
+              'You are likely overcounting those proposal-stage deals — the expected value of that $600K is closer to $210K',
+              'You need to discount your pricing to improve close rates before the quarter ends',
+              'The historical close rate does not apply because your current deals are stronger than average',
+            ],
+            correct: 1,
+            explanation: 'Applying your historical close rate to the proposal-stage deals: $600K × 35% = $210K expected value, not $600K. If you are counting that full $600K in your forecast, you have a significant optimism bias. The committed number should reflect historical probability, and any excess should be flagged as upside rather than committed.',
+          },
+          outputComparison: {
+            label: 'Sales forecast: gut-feel submission vs. data-anchored projection',
+            vague: {
+              prompt: 'Help me put together my sales forecast for this quarter',
+              output: 'To build your sales forecast:\n\n1. List all your active deals\n2. Assign a close probability to each\n3. Multiply the deal value by the probability\n4. Add them up to get your expected revenue\n5. Adjust for any deals you feel particularly strong or weak about\n\nMake sure to update this weekly as deals progress!',
+            },
+            improved: {
+              prompt: 'Help me build a more accurate Q2 forecast. Here is my pipeline and my historical win rates by stage:\n\nHistorical rates: Discovery 15% | Demo Completed 28% | Proposal Sent 35% | Negotiation 72% | Verbal Commitment 88%\n\nCurrent pipeline: Nexacom $85K Negotiation (engaged CFO, timeline confirmed) | Brightfield $120K Proposal Sent (22 days in stage, no activity) | Carrell Group $55K Demo Completed (demo was 4 days ago, strong engagement) | Waveform Inc $40K Verbal Commitment (contract being drafted) | Pelton Media $70K Proposal Sent (8 days in stage, champion responsive) | My current committed forecast: $320K\n\nCalculate my statistically expected revenue and flag where my forecast likely diverges from the data.',
+              output: '**Statistically Expected Revenue:**\n- Nexacom $85K × 72% = $61K (adjusted up: CFO engaged + confirmed timeline → treat as 80%) = **$68K**\n- Brightfield $120K × 35% = $42K — *flag: 22 days in stage, no activity — this deal is stalled. Apply 20% probability until re-engaged* = **$24K**\n- Carrell Group $55K × 28% = $15K\n- Waveform Inc $40K × 88% = $35K\n- Pelton Media $70K × 35% = $25K\n\n**Total expected value: ~$167K**\n\n**Your forecast gap:** You committed $320K. The data supports ~$167K as a reliable base. The $153K gap is upside — not committed.\n\n**Key actions:**\n1. Call Brightfield today — deal age is your biggest forecast risk\n2. Waveform: protect this deal, don\'t let contract stage stall\n3. Do not count Brightfield in your committed number until re-engaged',
+            },
+            insight: 'The generic approach confirms what you already know — multiply value by probability — but gives no guidance on where your current assumptions might be wrong. The data-driven approach surfaces the specific gap between what you are committing and what the historical rates actually support, flags the stalled deal that is distorting the number, and produces a prioritised action list. The difference between $320K committed and $167K expected is a conversation you want to have internally before the end of the quarter.',
+          },
+          applyThisWeek: {
+            action: 'Pull your historical close rates by stage from your CRM (or estimate based on memory). Apply them to your current pipeline deals and calculate the expected value. Compare it to your current committed forecast and investigate any significant gap.',
+            promptTemplate: 'Here are my historical close rates by pipeline stage: [list stage and %]. Here is my current pipeline: [deal name, stage, value, days in stage, notable context for each]. Calculate the statistically expected revenue, compare it to my committed forecast of [amount], and flag any deals where I may be over-counting based on stage age or activity gaps.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'When you submit your forecast each month, are you reporting what you genuinely believe based on evidence — or what you hope will happen? What would need to change in your pipeline process for your forecast to be a number you would bet your own money on?',
           quiz: [
             {
               question: 'What is the most reliable anchor for an accurate sales forecast?',
@@ -1537,6 +1972,35 @@ Then: "What concerns, if any, do you have about their approach?" This often surf
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'A prospect mentions they are also evaluating your main competitor. What should you do first?',
+            options: [
+              'Present your comparison matrix showing your advantages across all key criteria',
+              'Offer a discount or additional incentive to make the financial decision easier',
+              'Ask what attracted them to the competitor in the first place',
+              'Provide a reference customer who switched from that competitor to you',
+            ],
+            correct: 2,
+            explanation: 'Asking what attracted them to the competitor surfaces their actual evaluation criteria without triggering defensiveness. It gives you critical intelligence about what matters most to them and positions you to address their real priorities rather than the ones you assumed they had.',
+          },
+          outputComparison: {
+            label: 'Competitive conversation: defensive reaction vs. intelligence-led positioning',
+            vague: {
+              prompt: 'How do I handle it when a prospect says they are also looking at Veridian (our main competitor)?',
+              output: 'When a prospect mentions a competitor, try these approaches:\n\n1. Stay calm and confident\n2. Focus on your unique value proposition\n3. Don\'t badmouth the competitor\n4. Emphasise your strengths\n5. Offer to do a side-by-side comparison\n6. Provide customer references\n\nRemember: the best way to handle competition is to focus on what makes you great!',
+            },
+            improved: {
+              prompt: 'Help me prepare for a competitive situation where my prospect (Head of IT at a 400-person manufacturing company) is also evaluating Veridian. We sell IT asset management software. Based on publicly available G2 reviews, Veridian\'s consistent low-star complaints are: complex implementation (often 6+ months), poor customer support responsiveness, and a pricing model that scales steeply as asset count grows. Our strengths: 6-week implementation, dedicated onboarding team, flat-rate pricing. Give me: (1) two questions to ask the prospect that surface Veridian\'s weaknesses without naming them, (2) how to position our differences honestly if they bring up the comparison directly.',
+              output: '**Questions that surface Veridian weaknesses without naming them:**\n\n1. "What does your IT team\'s capacity look like over the next 3-6 months? I ask because implementation complexity and internal resource requirements vary a lot between platforms — it\'s worth understanding what you\'re signing up for before selection."\n\n2. "As your asset count grows, how important is pricing predictability? Some platforms in this space are very affordable at current scale but get expensive quickly as you add assets."\n\nBoth questions let the prospect surface their own concerns without you positioning as the competitor.\n\n**If they bring up Veridian directly:**\n"Veridian is a solid platform — they\'ve been in the market a long time. The two things I hear most often from customers who evaluated both: implementation timeline and what happens to the cost as your environment grows. Our implementation is 6 weeks with a dedicated team; our pricing is flat-rate regardless of asset count. Happy to walk through both side by side so you can decide which matters more for your situation."',
+            },
+            insight: 'The generic advice tells you to "focus on your strengths" without telling you what to actually say. The structured response gives you specific questions that surface competitor weaknesses through the prospect\'s own answers — not through you claiming they are bad. The direct comparison language is honest, confident, and specific to the real differences. It positions without attacking.',
+          },
+          applyThisWeek: {
+            action: 'Build a one-page competitive profile for your most common competitor using AI. Include their positioning, typical strengths, and the patterns that appear in their low-star reviews. Then write two questions you can ask in a discovery call that would surface their weaknesses without mentioning their name.',
+            promptTemplate: 'Build a competitive intelligence profile for [competitor name] for a rep who sells [your solution]. Include: their positioning and key strengths, common weaknesses from publicly available review data (G2, Capterra), and two discovery questions I can ask a prospect that would surface their weaknesses without explicitly naming the competitor.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Think about a deal you lost to a competitor in the last year. At what point in the sales process did the competitive dynamic start working against you — and what, if anything, could you have done earlier to change the outcome?',
           quiz: [
             {
               question: 'What is the most effective first response when a prospect mentions they are also evaluating a competitor?',
@@ -1641,6 +2105,35 @@ This keeps your plan dynamic — responding to the actual signals in your territ
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'You have 80 accounts in your territory and 10 prospecting hours per week. What is the most effective way to allocate that time?',
+            options: [
+              'Contact every account at least once per quarter to maintain broad coverage',
+              'Focus exclusively on the 10 largest accounts by revenue potential',
+              'Segment accounts by potential and probability, then concentrate time on Tier 1 accounts',
+              'Prioritise accounts where you have existing relationships regardless of potential',
+            ],
+            correct: 2,
+            explanation: 'Trying to cover 80 accounts equally with limited time produces shallow engagement everywhere and deep impact nowhere. Segmenting by both potential (how large could this deal be) and probability (how likely is conversion given ICP match and signals) lets you direct your finite time where it generates the highest return.',
+          },
+          outputComparison: {
+            label: 'Territory planning: unstructured list vs. tiered coverage plan',
+            vague: {
+              prompt: 'Help me prioritise my sales territory',
+              output: 'To prioritise your sales territory:\n\n1. Focus on your highest-value accounts\n2. Identify accounts with the most potential\n3. Balance new business with existing account growth\n4. Use your CRM to track engagement levels\n5. Review your territory regularly to adjust priorities\n\nRemember to balance short-term wins with long-term relationship building.',
+            },
+            improved: {
+              prompt: 'Segment this account list into three tiers for a software sales rep selling project management tools to construction companies. Tier 1: pursue actively this quarter. Tier 2: warm and develop. Tier 3: nurture only. Base the segmentation on ICP match (my ICP: construction companies, 100-500 employees, growing, using spreadsheets or legacy tools), deal potential, and any signals provided.\n\nAccounts:\n- Halcyon Civil Engineering — 380 employees, currently using MS Project, recently won £40M infrastructure contract\n- Bright Brothers Construction — 45 employees, family-run, no known tech stack\n- Carver Developments — 210 employees, using our competitor BuildFlow, satisfied per their LinkedIn\n- Northgate Infrastructure — 450 employees, published article about "digitising operations in 2024", IT Director recently hired\n- Summit Groundworks — 90 employees, referred by an existing customer, meeting already booked\n- Arrowood Civil — 320 employees, no recent signals, in ICP range',
+              output: '**Tier 1 — Active pursuit this quarter:**\n\n**Summit Groundworks** — Referral from existing customer + meeting already booked. Highest-probability deal regardless of size; move fast.\n\n**Northgate Infrastructure** — Clear buying signal ("digitising operations"), new IT Director (often triggers vendor evaluation), right size at 450 employees. This is a live opportunity.\n\n**Halcyon Civil Engineering** — Right size, in ICP, just won a major contract (trigger: growth and new project complexity). Approach angle: managing the increased project complexity from the new contract.\n\n**Tier 2 — Warm and develop:**\n\n**Arrowood Civil** — In ICP range, no negative signals, but no active trigger either. Add to a nurture sequence and monitor for trigger events.\n\n**Tier 3 — Nurture only:**\n\n**Bright Brothers** — Too small (45 employees), likely below budget threshold. Low priority.\n\n**Carver Developments** — Active competitor customer with positive sentiment. Do not pursue until there is a displacement signal (renewal, pricing complaint, leadership change).',
+            },
+            insight: 'The generic advice produces a process description without any actual prioritisation. The specific prompt — with real account data — produced a tiered plan with rationale for each placement and a specific angle for the Tier 1 accounts. Summit and Northgate were clearly identified as the immediate priorities; Carver was correctly excluded. This is the difference between a prioritisation framework and a prioritisation decision.',
+          },
+          applyThisWeek: {
+            action: 'Export your account list from your CRM with available fields and paste it into Claude. Ask it to segment into three tiers with rationale for the Tier 1 assignments. Override any placements where you have field intelligence the AI does not.',
+            promptTemplate: 'Segment this account list into three tiers. Tier 1: focus this quarter. Tier 2: warm and develop. Tier 3: nurture only. Base segmentation on ICP match ([describe your ICP]), deal potential, and the signals provided. Explain your rationale for each Tier 1 assignment.\n\nAccounts: [paste list with company name, size, industry, last activity, known signals]',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'If you look at how you spent your prospecting time last quarter, does the distribution match where the actual revenue opportunity was? Which accounts got too much attention relative to their potential — and which got too little?',
           quiz: [
             {
               question: 'What is the core strategic question in territory planning?',
@@ -1733,6 +2226,35 @@ Use AI to build a rep-specific development plan: "Based on this rep's performanc
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You notice that one of your reps has a strong pipeline but low conversion from demo to proposal. What is the most effective coaching approach?',
+            options: [
+              'Tell them their demo-to-proposal conversion is below target and they need to improve',
+              'Share a link to a sales training course on discovery and proposal writing',
+              'Show them the specific pattern in their data and ask them to walk you through how their recent demos typically unfold',
+              'Assign them a more experienced rep as a buddy for their next three demos',
+            ],
+            correct: 2,
+            explanation: 'Specific, evidence-based coaching that invites self-diagnosis produces more durable behaviour change than instruction or assignment. Showing the rep their own data and asking how their demos unfold puts them in the problem-solving seat — they are more likely to identify and own the fix.',
+          },
+          outputComparison: {
+            label: 'Coaching agenda: generic feedback vs. AI-powered insight',
+            vague: {
+              prompt: 'Help me prepare feedback for my rep\'s performance review',
+              output: 'For an effective performance review:\n\n1. Start with positives — acknowledge what they\'ve done well\n2. Address areas for improvement diplomatically\n3. Set clear goals for the next period\n4. Ask for their feedback on how you can support them\n5. Document everything agreed\n\nMake sure to be specific and use examples where possible.',
+            },
+            improved: {
+              prompt: 'Help me prepare a specific, evidence-based coaching agenda for a one-on-one with Jamie, one of my AEs. Here is their performance data for the last 60 days:\n\n- Outbound activity: 42 calls/week, 18 emails/week (team avg: 35 calls, 22 emails)\n- Meetings booked: 6 (team avg: 9)\n- Demo-to-proposal conversion: 33% (team avg: 58%)\n- Pipeline created: $380K (team avg: $310K)\n- Won: $0 — two deals lost in negotiation (both to "price" according to CRM)\n- Call recordings show avg talk ratio: 78% Jamie talking, 22% prospect (team avg: 55/45)\n\nIdentify the two most significant performance gaps, give me observation-based coaching openers for each, and suggest a specific development focus.',
+              output: '**Gap 1: Talk ratio — likely root cause of demo conversion issue**\nJamie\'s talk ratio (78%) is significantly above team average (55%) and is the most likely driver of the low demo-to-proposal rate. Reps who dominate the conversation rarely uncover the specific pain that makes a proposal compelling — the prospect disengages.\n\n**Coaching opener:** "I\'ve been listening to a few of your recent demo recordings and noticed something I want to explore with you. In the Carrington and Northgate demos, who do you think was doing most of the talking? Walk me through how those conversations typically unfold."\n\n**Development focus:** Ask-to-statement ratio. For the next 3 calls, Jamie aims for 2 prospect questions before every product statement. Review together in the following 1:1.\n\n---\n\n**Gap 2: Price objection pattern — possible discovery gap or champion issue**\nTwo negotiation losses both cited "price" — this is either a genuine positioning problem or deals reaching negotiation without sufficient economic buyer buy-in.\n\n**Coaching opener:** "Both deals that went to negotiation came back as price losses. Before we talk about discount strategy — tell me about the economic buyer situation on each of those. Were they in the room for the proposal conversation, or did we mainly deal through a champion?"\n\n**Development focus:** Economic buyer access earlier in the cycle. Before moving any deal to "proposal sent," Jamie needs to confirm: who approves, and have they been part of a conversation.',
+            },
+            insight: 'The generic advice produces a meeting structure, not a coaching agenda. The AI-powered analysis turned Jamie\'s specific data into two focused, evidence-based coaching points with exact conversation openers and measurable development actions. The manager arrives at the 1:1 with insight, not just intentions.',
+          },
+          applyThisWeek: {
+            action: 'Before your next 1:1 with a rep, paste their last 30 days of activity and pipeline data into Claude. Ask it to identify their top two performance gaps and give you observation-based coaching openers for each. Use those openers to lead the conversation.',
+            promptTemplate: 'Prepare a coaching agenda for a 1:1 with [rep name]. Here is their performance data for the last [period]: [paste activity metrics, conversion rates, pipeline health, any call summary patterns]. Identify the two most significant performance gaps. For each, give me: (1) an observation-based coaching opener, (2) a specific development action I can assign, (3) how to measure progress.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a rep on your team who has been stuck at a certain performance level for a while. Have they received genuinely specific, behaviour-level feedback — or mostly general encouragement and general goals? What would change in one conversation if you came in with their exact data?',
           quiz: [
             {
               question: 'What is the primary failure mode of most sales coaching?',
@@ -1831,6 +2353,35 @@ The first question signals that you are a data partner. The second question unlo
             ],
             tool: 'Claude or ChatGPT',
           },
+          inlineCheck: {
+            question: 'Your RevOps team tells you that their lead routing model is performing poorly. What is the most likely contribution your team is making to the problem?',
+            options: [
+              'The sales team is not following up with routed leads quickly enough',
+              'Inconsistent stage definitions and missing close reasons in the CRM are corrupting the attribution data',
+              'The RevOps team\'s model is not sophisticated enough for your market',
+              'Lead routing models do not work well in outbound-heavy sales motions',
+            ],
+            correct: 1,
+            explanation: 'AI-powered lead routing and attribution models depend on clean, consistent CRM data from sales. If stage definitions vary by rep, close reasons are skipped, or contact roles are not documented, the model\'s input is corrupted — and its output is unreliable. Sales data quality directly determines RevOps model quality.',
+          },
+          outputComparison: {
+            label: 'RevOps relationship: passive consumer vs. active data partner',
+            vague: {
+              prompt: 'How should I work with our RevOps team?',
+              output: 'To work effectively with RevOps:\n\n1. Follow their processes and guidelines\n2. Keep your CRM updated regularly\n3. Attend their training sessions\n4. Ask for the reports you need\n5. Give feedback when something isn\'t working\n\nRevOps exists to support sales, so treat them as a resource and communicate your needs clearly.',
+            },
+            improved: {
+              prompt: 'I am an AE in a 25-person sales team. We have a RevOps team of two. I know our CRM data is inconsistent — reps use stage names differently and close reasons are rarely filled in. I want to become a genuine RevOps partner and also get more value from their data. Write me: (1) two specific questions I should ask the RevOps team in our next conversation, (2) three specific data entry habits I should change immediately based on what RevOps typically needs, (3) what I could ask RevOps for that would improve my own deal prioritisation.',
+              output: '**Two questions to ask RevOps:**\n\n1. "Which CRM fields are most incomplete or inconsistent in my records specifically — and which gaps hurt your models most?" This signals you are a willing data partner and gets you specific guidance rather than general advice.\n\n2. "What patterns have you seen in our attribution data about which lead sources or early activities most reliably predict a closed-won deal? Is there anything I should be doing differently in how I source or qualify?" This unlocks intelligence RevOps has but rarely shares proactively.\n\n**Three data habits to change immediately:**\n\n1. Fill in close reasons on every won and lost deal — this is the #1 input for attribution models and the most commonly skipped field\n2. Document contact roles (economic buyer, champion, blocker) on every deal above $20K — multi-touch attribution depends on knowing who influenced what\n3. Use consistent stage definitions — if you are unsure what "verbal commitment" means for your team, clarify with RevOps and apply it consistently\n\n**What to ask RevOps for:**\n"Can you show me which of my current pipeline accounts match the profile of deals that historically convert fastest? And flag any that match our lost deal profile so I can de-prioritise them."',
+            },
+            insight: 'The generic advice is about compliance — follow processes, attend training. The specific version reframes the RevOps relationship as a value exchange: you provide data quality, they provide intelligence you can act on. The two-question approach alone will unlock insights that most reps never receive because they never ask.',
+          },
+          applyThisWeek: {
+            action: 'Send a message to your RevOps contact this week with one of the two questions from this lesson. Also check your last 10 closed deals in your CRM — how many have a close reason documented? Commit to filling in every missing one.',
+            promptTemplate: 'I learned from my RevOps team that [specific insight about what data they need or what patterns they have found]. Based on this, what should I change about how I: (1) enter data into my CRM, (2) qualify and source leads, (3) prioritise my current pipeline? Be specific and actionable.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Do you currently think of RevOps as something that affects you, or something you actively contribute to? What would change in your results if you had better intelligence from RevOps — and what data would you need to provide to earn it?',
           quiz: [
             {
               question: 'What is the primary function of Revenue Operations in a modern sales organisation?',
@@ -1927,6 +2478,35 @@ You do not need to transform the entire culture at once. Start with one team nor
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your team has access to strong AI tools and a well-maintained CRM, but adoption is low and data quality is still poor. What is the most likely root cause?',
+            options: [
+              'The AI tools are not well integrated with the CRM and need a technical fix',
+              'Reps need more formal training before they can use AI tools effectively',
+              'The team culture does not value data or experimentation — tools cannot fix a culture gap',
+              'Management has not provided enough financial incentives for AI adoption',
+            ],
+            correct: 2,
+            explanation: 'Technology adoption is ultimately a cultural problem. Teams that value data, experimentation, and learning from failure adopt tools naturally and use them deeply. Teams that do not will find ways to work around any system — regardless of how good the tools are or how much training they receive. Culture is the operating system.',
+          },
+          outputComparison: {
+            label: 'Building a data culture: announcement vs. designed team ritual',
+            vague: {
+              prompt: 'How do I get my sales team to be more data-driven?',
+              output: 'To build a data-driven sales team:\n\n1. Set clear metrics and KPIs\n2. Use dashboards everyone can see\n3. Review data in your team meetings\n4. Reward reps who hit their metrics\n5. Provide training on how to use your CRM and reporting tools\n6. Lead by example\n\nConsistency is key — data culture takes time to build!',
+            },
+            improved: {
+              prompt: 'I manage a 7-person B2B sales team. Our biggest cultural gap is that we never analyse our losses — reps avoid talking about lost deals and we miss the learning. I want to introduce one low-friction weekly ritual that makes loss analysis feel normal and useful, not punishing. Design a specific meeting format, agenda, and facilitation approach that would work for a team that is currently resistant to this kind of conversation. Make it psychologically safe and keep it under 10 minutes.',
+              output: '**Ritual: "One Deal We Learned From" — 8 minutes, end of weekly team meeting**\n\n**Format:**\nRotating ownership — a different rep each week volunteers one deal (not necessarily a loss — it can be a stalled deal, a surprise win, or a near-miss). No one is assigned a loss to report; volunteers go first.\n\n**Agenda (8 minutes):**\n- Rep shares: what happened, what they tried, where it ended (2 min)\n- Team asks two questions only: "What signal, in hindsight, told you where things went wrong?" and "What would you do at that stage next time?" (4 min)\n- Manager closes with one action: "We will try [X] on the next similar situation." (2 min)\n\n**Psychological safety design:**\n- Manager goes first in week 1 with their own recent loss — this sets the norm\n- No blame language in the facilitation ("what happened" not "what went wrong with you")\n- Explicitly reward the analysis, not the outcome: "Thank you — this is exactly how we get better as a team"\n- After 4 weeks, ask the team: "Is this useful? What would make it better?"',
+            },
+            insight: 'The generic answer describes outcomes (set KPIs, use dashboards) without addressing the cultural resistance or designing the actual behaviour change. The specific response designs a ritual that accounts for the psychological barriers — volunteering instead of assignment, manager modelling the behaviour first, rewarding the analysis not the outcome. Culture changes through repeated behaviour, not announcements.',
+          },
+          applyThisWeek: {
+            action: 'Identify the one cultural gap that most limits your team\'s ability to learn and improve. Use AI to design a specific, low-friction weekly ritual that addresses it — with a clear format, time limit, and facilitation approach. Pilot it in your next team meeting.',
+            promptTemplate: 'I manage a sales team and want to introduce one cultural norm that builds a more data-driven approach. Our key gap is [X — e.g. no loss analysis, no experimentation, poor data quality, no shared metrics]. Design a specific team ritual — meeting format, agenda, timing, and facilitation approach — that would address this gap. Keep it under [time] minutes and make it psychologically safe. Include how the manager should model the behaviour first.',
+            tool: 'Claude',
+          },
+          reflection: 'Be honest about your own team\'s culture right now. If a rep entered inaccurate data in your CRM, would they feel safe telling you? If a deal lost for a reason that reflected a skill gap, would the debrief be a learning conversation or a difficult one? What does your answer reveal about where to start?',
           quiz: [
             {
               question: 'What is the foundational condition that determines whether AI tools are adopted by a sales team?',

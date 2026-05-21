@@ -68,6 +68,35 @@ With AI handling research synthesis and production work, consulting value increa
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A senior partner wants to increase engagement value by using AI. Where should they focus first?',
+            options: [
+              'Using AI to automate client relationship management and replace check-in calls',
+              'Applying AI to production tasks — research synthesis, draft writing, formatting — to free time for judgment-intensive work',
+              'Replacing junior analysts with AI to reduce engagement cost',
+              'Using AI to generate final recommendations directly, reducing review cycles',
+            ],
+            correct: 1,
+            explanation: 'AI creates the most value in consulting when it removes production overhead — the hours spent on secondary research, document drafting, and synthesis — so that consultants can invest more time in the high-judgment work that clients actually pay for. Starting with production tasks is lower risk and higher return than applying AI to judgment-intensive work like recommendations or client relationships.',
+          },
+          outputComparison: {
+            label: 'Consulting AI value: vague question vs. structured task mapping',
+            vague: {
+              prompt: 'How can I use AI in my consulting work?',
+              output: 'AI can help consultants in many ways:\n1. Research and data analysis\n2. Writing and documentation\n3. Project management\n4. Client communication\n5. Presentations\n\nConsider exploring tools like ChatGPT, Claude, or Microsoft Copilot to get started.',
+            },
+            improved: {
+              prompt: 'I am a management consultant on a 12-week strategy engagement. My team spends time on: secondary research (competitive landscape, market sizing), synthesising 20+ stakeholder interviews, writing interim memos and the final deck, building the issue tree, and preparing client updates. For each, tell me: (a) whether this is a production or judgment task, (b) where AI accelerates it most, and (c) what professional judgment AI cannot supply.',
+              output: 'Secondary research — Production task. AI synthesises multiple sources rapidly; accelerates competitive landscape and market sizing by 60–70%. Cannot supply: your assessment of source credibility or client-specific market nuances.\n\nInterview synthesis — Production + light judgment. AI extracts themes and divergences from transcripts quickly. Cannot supply: non-verbal signals, interviewee credibility assessments, or the organisational subtext you observed in the room.\n\nMemo and deck writing — Production. AI drafts structure and content from your bullet points. Cannot supply: the client-specific language, the relationship-aware framing, or the assertion that this is the right recommendation for this client.\n\nIssue tree development — Judgment-heavy. AI generates MECE structures quickly; you evaluate which branches matter given the client\'s actual situation. Cannot supply: the prioritisation logic based on your knowledge of the client.\n\nClient updates — Production. AI drafts status updates from your bullet points in minutes. Cannot supply: the political calibration of how much to disclose and to whom.',
+            },
+            insight: 'The vague prompt produces a generic tool list that any Google search would return. The specific prompt produces a task-by-task analysis that directly maps to the consultant\'s engagement, distinguishes production from judgment work, and names exactly what AI cannot do — which is where the consultant must invest their time. Specificity about context and what you actually need turns a generic answer into a usable workflow plan.',
+          },
+          applyThisWeek: {
+            action: 'List your ten most time-consuming tasks on a current engagement. For each, classify it as production or judgment work, then pick one production task and use AI for it this week.',
+            promptTemplate: 'I am a consultant on a [type] engagement for a [industry] client. My most time-consuming tasks this week include: [list 5 tasks]. For each task, classify it as: (a) production (research, writing, formatting) or judgment (analysis, recommendations, client navigation), and (b) rate the AI acceleration potential as high/medium/low with one sentence of explanation.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last engagement where you felt stretched for time on deliverables. Which specific hours were spent on tasks a capable junior analyst could have done with better tools — and what analysis or client work did those hours displace?',
           quiz: [
             {
               question: 'Which consulting task has the highest potential for AI acceleration?',
@@ -146,6 +175,35 @@ Consistency matters more than tool sophistication. One tool used systematically 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your firm has no formal AI policy yet. You have client financial data you want to synthesise using a public AI tool. What is the right approach?',
+            options: [
+              'Use the public AI tool — the efficiency gains justify any risk',
+              'Anonymise the client data before entering it, and flag to risk/IT that a policy is needed',
+              'Wait until the firm has a formal policy before using AI on any engagement',
+              'Ask the client for permission, then use whichever tool is most powerful',
+            ],
+            correct: 1,
+            explanation: 'When firm policy is absent, the professional obligation is to apply the most conservative reasonable standard: anonymise client-identifying information before using any unapproved tool, and escalate the policy gap internally. Waiting entirely is overly cautious and forgoes genuine value; using public tools with raw client data without checking is a confidentiality risk. Anonymisation is the practical middle path.',
+          },
+          outputComparison: {
+            label: 'AI tool setup: generic advice vs. consulting-specific workflow',
+            vague: {
+              prompt: 'What AI tools should I use for work?',
+              output: 'Here are some popular AI tools for professionals:\n- ChatGPT: Great for writing and answering questions\n- Claude: Good for analysis and longer documents\n- Copilot: Integrated with Microsoft Office\n- Gemini: Google\'s AI assistant\n\nTry a few and see which one you like best!',
+            },
+            improved: {
+              prompt: 'I am a management consultant. My main work tasks are: (1) secondary research synthesis from industry reports and analyst notes, (2) synthesising 15–25 stakeholder interviews per engagement, (3) drafting interim memos and client decks, (4) writing proposals and RFP responses, (5) preparing executive briefing notes. Build me a recommended AI tool stack covering each task type, and flag any client data protocol considerations I should check with my firm before using each tool.',
+              output: 'Recommended consulting AI stack:\n\n1. Secondary research synthesis — Claude or ChatGPT (upload reports, extract structured themes). Protocol check: confirm whether pasting excerpts from paid analyst reports violates your firm\'s licensing agreements.\n\n2. Interview synthesis — Claude (strong at long documents and thematic extraction). Protocol check: anonymise client-identifying names and company references before pasting transcripts into any public AI tool.\n\n3. Memo and deck drafting — Claude or ChatGPT (strong first drafts from bullet points). Protocol check: if the memo contains proprietary client strategy, use only firm-approved tools.\n\n4. Proposals and RFPs — Claude (context window handles long documents). Protocol check: proposals may reference confidential client relationships — check whether your approved tool list covers BD work.\n\n5. Executive briefings — Claude (strong at structured synthesis and executive voice). Protocol check: anonymise before use if the briefing contains sensitive financial or organisational data.\n\nPriority action: confirm your firm\'s approved tool list and data entry rules before using any tool on live engagement data.',
+            },
+            insight: 'The vague prompt returns a generic tool comparison list — useful for a general audience, useless for a consultant with specific professional obligations. The specific prompt maps tools to actual consulting task types and surfaces the client data protocol question for each one, which is the most important setup consideration consultants overlook. Defining your professional context and task structure produces output you can actually act on.',
+          },
+          applyThisWeek: {
+            action: 'Audit your current AI setup: identify which tools you have, check your firm\'s AI policy (or ask IT), and establish one AI-first workflow habit for the next five working days.',
+            promptTemplate: 'I am a [role] at a [firm type] consulting firm. My most common engagement tasks are [list 3–4 tasks]. Recommend a minimal AI tool stack (2–3 tools maximum) that covers these tasks, and for each tool tell me: (a) the primary use case, (b) the setup I need to get started, and (c) the client data consideration I should verify before use.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'What is the most sensitive type of client information that passes through your hands on a typical engagement? How would you handle it differently if you had a clear firm policy versus the current situation?',
           quiz: [
             {
               question: 'What is the most important step before using any AI tool on a client engagement?',
@@ -217,6 +275,35 @@ AI defaults to a generic professional voice. Consulting output needs to be more 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You ask AI to "analyse the retail banking sector." The output is well-written but generic. What is the most likely cause?',
+            options: [
+              'The AI model is not trained on banking data',
+              'The prompt lacks the analytical framework, client context, and output format specification that consulting analysis requires',
+              'Retail banking is too complex for AI to analyse accurately',
+              'The prompt is too short — it needs to be at least 200 words to produce useful output',
+            ],
+            correct: 1,
+            explanation: 'Generic prompts produce generic output because AI defaults to the most broadly applicable response. A consulting-grade prompt specifies the framework (e.g., Porter\'s Five Forces), the client context (e.g., a challenger bank assessing market entry), the evidence standard (e.g., three specific observations per point), and the output format (e.g., structured analysis for a C-suite memo). Each specification narrows the output toward what a consultant actually needs.',
+          },
+          outputComparison: {
+            label: 'Competitive landscape: generic prompt vs. consulting-grade prompt',
+            vague: {
+              prompt: 'Give me a competitive landscape of the UK private equity market',
+              output: 'The UK private equity market is a dynamic and competitive landscape with several key players:\n\n**Major firms:** Apax Partners, CVC Capital Partners, Cinven, and BC Partners are among the largest UK-headquartered PE firms.\n\n**Market trends:** The market has seen increased competition, with more capital chasing fewer quality deals. ESG considerations are becoming more prominent.\n\n**Challenges:** Rising interest rates have impacted deal economics, and exit markets have been more challenging.\n\nOverall, the UK PE market remains one of Europe\'s most active, though conditions have become more selective in recent years.',
+            },
+            improved: {
+              prompt: 'I am advising a mid-market UK private equity fund (£500M–£2B AUM, focus: B2B services and industrials) on their competitive positioning. Using the following structure, produce a competitive landscape: (1) segment the competitive set by fund size and strategy — who are the direct competitors vs. adjacent players, (2) for each competitor segment, identify their apparent sourcing strategy and portfolio positioning, (3) identify the white spaces or positioning gaps in the mid-market that our client could exploit, (4) close with the two most important strategic implications for our client\'s positioning. Use consulting-standard language: assertion-led, specific, and directly actionable.',
+              output: '**Competitive segmentation:**\nDirect competitors (£500M–£2B, B2B services/industrials): Bridgepoint, Equistone, Inflexion, LDC. These firms compete for similar deal flow in the £20M–£150M enterprise value range. Adjacent: large-cap overhang from firms like CVC deploying into lower mid-market on selective deals; family office direct investment increasing in the £30–£80M range.\n\n**Sourcing and positioning:**\nInflexion: proprietary sourcing via long-term founder relationships; strong in professional services. LDC: regional office network drives origination differentiation; strong in northern England industrials. Equistone: pan-European platform with UK mid-market execution — less differentiated on sourcing.\n\n**White spaces:**\nIndustrials sub-sector with tech-enablement thesis is underserved — most mid-market funds lack the operational expertise to credibly run a technology transformation value creation thesis in manufacturing. B2B services with recurring revenue in regulated sectors (legal, compliance, healthcare administration) is attracting attention but remains less competed than pure software.\n\n**Strategic implications:**\n1. The client\'s differentiation must be thesis-specific, not generic "operational value add" — competitors claim the same. A demonstrable sector specialism (e.g., industrials digitalisation) with a named operating partner is more defensible.\n2. Proprietary sourcing at the sub-£75M entry point is the most defensible moat — competing on price at auction for larger deals is a losing strategy given LP return expectations.',
+            },
+            insight: 'The vague output reads like a Wikipedia summary — accurate but generic, and useless for strategic decision-making. The specific prompt defines the client\'s fund size, strategy, and competitive question; specifies the analytical structure; and requests assertion-led language with implications. The result is a competitive analysis that immediately tells the client what it means for them, which is the standard consulting analysis must meet.',
+          },
+          applyThisWeek: {
+            action: 'Write one consulting-grade prompt for a task you do on every engagement. Test it, refine it, and save it as the first entry in your personal prompt library.',
+            promptTemplate: 'I am working on a [type of engagement] for a [client type] in [industry]. The central analytical question is: [state the question]. Apply the [framework name] framework to this question. For each component, provide: (a) an assessment (high/medium/low or specific rating), (b) three specific supporting observations relevant to this client context, and (c) the strategic implication for the client. Conclude with the two most important overall insights. Write in the voice of a senior consultant for a C-suite audience: assertion-led, specific, and action-oriented.',
+            tool: 'Claude',
+          },
+          reflection: 'On your last engagement, where did the analytical output — whether from AI or your own drafting — fall short of client-ready standard? Was it the structure, the evidence, the specificity, or the voice? What would a better prompt have specified?',
           quiz: [
             {
               question: 'What distinguishes a consulting-grade AI prompt from a general-purpose prompt?',
@@ -289,6 +376,35 @@ The mistake is applying the same review standard to both — either over-reviewi
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You receive an AI-generated strategic analysis section. It is well-structured, professionally written, and contains specific-sounding data points. What is your first quality check?',
+            options: [
+              'Check the word count and formatting against the client\'s template',
+              'Verify the specific data points and statistics against primary sources before including them in any client deliverable',
+              'Ask AI to review its own output for accuracy',
+              'Share the section with a colleague to check the writing quality',
+            ],
+            correct: 1,
+            explanation: 'AI output that "looks right" is the specific quality risk in consulting. Hallucinated statistics, outdated market data, and fabricated competitive facts can appear in fluent, confident AI prose. Verifying specific data points — market sizes, growth rates, company positions — against primary sources before client delivery is the non-negotiable first quality check. Formatting and writing quality come after accuracy.',
+          },
+          outputComparison: {
+            label: 'Strategic analysis quality: AI first draft vs. consultant-reviewed output',
+            vague: {
+              prompt: 'What are the top strategic challenges for UK retail banks?',
+              output: 'UK retail banks face several major strategic challenges:\n\n1. **Digital transformation**: Banks must modernise their technology infrastructure to compete with digital-first challengers like Monzo and Starling.\n\n2. **Rising competition**: Fintechs and big tech companies are entering financial services, taking market share in payments and lending.\n\n3. **Cost pressures**: High operating costs from legacy systems and branch networks make it difficult to compete on price.\n\n4. **Regulatory compliance**: Increasing regulatory requirements create compliance costs and constrain product innovation.\n\n5. **Customer expectations**: Customers expect seamless digital experiences similar to those offered by tech companies.\n\nRetail banks that successfully navigate these challenges will be well-positioned for the future.',
+            },
+            improved: {
+              prompt: 'Analyse the top three strategic challenges for UK retail banks in 2024. For each challenge, I need: (a) a specific assertion about the challenge (not just a description), (b) two to three data points or concrete examples that support it — I will verify these, so flag any you are uncertain about, (c) the strategic implication for a traditional bank\'s leadership team, and (d) one contrarian view a sceptical CFO might raise. Write in the style of a senior consultant briefing a banking CEO.',
+              output: '**1. Digital challenger unit economics have permanently reset customer acquisition cost expectations**\nAssertion: Traditional banks can no longer profitably acquire current account customers at the rates required to offset branch and legacy system cost — the structural cost gap with digital challengers is now a strategic liability, not a temporary disadvantage.\nEvidence: Monzo\'s cost-to-income ratio was reported at approximately 60% in FY2023, improving from 170%+ in 2019 — directionally closing on incumbents whose ratios typically sit at 55–65% [verify: Monzo annual report]. NatWest cited c.£1B in technology investment in 2023 with multi-year runway remaining [verify: NatWest annual report].\nStrategic implication: Leadership must decide whether to compete head-on in digital current accounts or cede that segment and focus margin defence in mortgages, wealth, and business banking where relationship and trust still command premium.\nCFO objection: "Our digital app satisfaction scores have improved significantly — the challenger threat is overstated."\n\n**2. The mortgage margin cycle has structurally reduced the profitability of the core retail banking product**\n[continues with same structure...]',
+            },
+            insight: 'The vague output produces five categories any analyst could identify — useful as a starting list, not useful as strategic analysis. The specific prompt forces AI to make assertions (not just describe), to flag data points that need verification, to add the strategic implication that makes it actionable, and to include the CFO objection that stress-tests the argument. The consultant then verifies the flagged data and calibrates the implications to the specific client — the AI did the scaffolding, the consultant did the judgment.',
+          },
+          applyThisWeek: {
+            action: 'Take one section of a current deliverable that AI drafted or that you wrote quickly. Run it through the four-point quality checklist: factual accuracy, analytical quality (so what?), client context, and professional standard.',
+            promptTemplate: 'Review this consulting analysis section for quality: [paste section]. Check for: (1) any specific data points or statistics that should be verified — list each one and flag your confidence level, (2) any observations that are descriptive ("what") rather than prescriptive ("so what") — rewrite those as assertions with implications, (3) any content that is generic rather than specific to a [industry/client type] context — flag it, (4) overall: does this meet the standard of a senior consultant writing for a C-suite audience? Rewrite the two weakest sentences.',
+            tool: 'Claude',
+          },
+          reflection: 'Has AI-generated content ever made it further toward a client than it should have — a draft shared too early, a statistic used without checking? What was the moment you caught it, and what quality gate should have caught it sooner?',
           quiz: [
             {
               question: 'What is the most common analytical quality issue in AI-generated consulting content?',
@@ -367,6 +483,35 @@ AI can generate what appears to be research: market size estimates, competitor p
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A colleague asks AI to "give me the market size and growth rate for the UK logistics sector." They use the figures in a client deck without checking them. What is the professional risk?',
+            options: [
+              'None — AI has access to accurate market data through its training',
+              'The figures may be hallucinated, outdated, or unverifiable — using them in a client deliverable without sourcing them is a professional credibility risk',
+              'The risk is only to the firm\'s reputation, not to the client',
+              'The risk is low because AI figures are usually approximately correct',
+            ],
+            correct: 1,
+            explanation: 'AI can generate market size figures with confident precision that has no basis in real data — this is hallucination. Even when figures are broadly accurate, they may be based on data that is two or three years old, sourced from a specific study that doesn\'t apply to the client\'s context, or represent a different geographic or segment cut than the client needs. Every specific number in a client deliverable requires a verifiable source.',
+          },
+          outputComparison: {
+            label: 'Market research synthesis: asking AI directly vs. synthesising real sources',
+            vague: {
+              prompt: 'What is the market size and competitive landscape of UK contract logistics?',
+              output: 'The UK contract logistics market is valued at approximately £25–30 billion and is growing at around 4–6% annually. Key players include DHL Supply Chain, XPO Logistics, Wincanton, and GXO Logistics.\n\nThe market is characterised by:\n- Consolidation among large providers\n- Growing demand for e-commerce fulfilment\n- Driver shortages and labour cost pressures\n- Increasing technology investment in warehouse automation\n\nThe market is expected to continue growing as outsourcing penetration increases and e-commerce volumes rise.',
+            },
+            improved: {
+              prompt: 'I have gathered the following research materials on UK contract logistics: [paste excerpts from Transport Intelligence 2024 report, Wincanton FY2024 investor presentation, and FT article on logistics market consolidation]. Synthesise these three sources into a structured competitive landscape covering: (1) market size and growth — note where sources agree or diverge on figures, (2) the competitive positioning of the top five players, (3) the structural trends each source identifies — flag any trend only one source mentions, (4) the most important strategic implication for a new market entrant. Cite which source supports each claim.',
+              output: 'Market size: Transport Intelligence reports UK 3PL market at £28.4B in 2023 (TI 2024, p.12); Wincanton\'s investor presentation uses a broader "logistics services" definition of £45B+ which includes in-house operations — the figures are not directly comparable. Growth consensus: both TI and Wincanton cite 3–5% CAGR for outsourced logistics through 2027; FT article notes this assumes continued outsourcing penetration growth, which some analysts now question.\n\nCompetitive positioning: DHL Supply Chain (market leader, broad sector coverage); XPO (strong in retail and e-commerce, technology differentiator); Wincanton (UK-focused, strong in retail and defence — see investor deck p.8); GXO (automation-led, targets high-volume e-commerce).\n\nTrends consensus (all three sources): automation investment accelerating; driver cost pressure structural not cyclical. Single-source trend (FT only): potential regulatory change on driver classification may increase labour costs further — requires monitoring.\n\nStrategic implication for new entrant: sector specialisation is the differentiation strategy; broad-coverage competition with DHL and XPO without a specific sector edge or technology advantage is unlikely to win on price alone.',
+            },
+            insight: 'The vague output produces plausible-sounding figures (£25–30B, 4–6% growth) with no source and no way to verify whether they apply to the client\'s specific question. The source-based synthesis identifies where sources agree and diverge, attributes every claim, and flags the single-source trend that needs more investigation. The first approach creates professional risk; the second creates a defensible, verifiable research base.',
+          },
+          applyThisWeek: {
+            action: 'For a current research question on an engagement, gather two to three real sources and use AI to synthesise them — rather than asking AI to generate the answer directly. Note one specific data point that needed verification.',
+            promptTemplate: 'I have gathered the following sources on [research topic]: [paste key excerpts or summaries from each source]. Synthesise across these sources to produce: (1) where sources agree on [key question], (2) where they diverge — and why the divergence might exist, (3) the three most important insights a consultant advising [client type] should take from this research, (4) any specific data points that I should verify against the original source before using in a client deliverable.',
+            tool: 'Claude',
+          },
+          reflection: 'On your last engagement, how much of the secondary research was verified against primary sources before it went into the deck? At what point in the process did verification typically happen — and was that early enough?',
           quiz: [
             {
               question: 'What is the critical distinction between AI-generated research and AI-synthesised research?',
@@ -435,6 +580,35 @@ AI produces the forest; the consultant navigates it.`,
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'re structuring a problem for a new client engagement. What is the most useful thing AI can help you do at this stage?',
+            options: [
+              'Generate the answer — AI has seen thousands of similar problems',
+              'Challenge your hypothesis and identify gaps in your problem structure',
+              'Replace the need for client interviews by synthesising industry data',
+              'Produce the final slide deck so you can focus on client relationships',
+            ],
+            correct: 1,
+            explanation: 'In the problem-structuring phase, AI is most valuable as a thinking partner — asking "what am I missing?", "what would break this hypothesis?", or "what alternative structures exist for this type of problem?" It surfaces blind spots quickly. It cannot replace the client-specific insight that only comes from interviews and observation.',
+          },
+          outputComparison: {
+            label: 'Issue tree: vague brainstorm vs. structured hypothesis',
+            vague: {
+              prompt: 'Help me structure a consulting problem about declining sales',
+              output: 'Here are some possible reasons for declining sales:\n1. Market factors (competition, economy, demand changes)\n2. Internal factors (pricing, product quality, sales team performance)\n3. Customer factors (satisfaction, retention, acquisition)\n4. Operational factors (supply chain, fulfillment, service)\n\nYou should investigate each of these areas to find the root cause.',
+            },
+            improved: {
+              prompt: 'Build an issue tree for this consulting problem: A European mid-market SaaS company (€40M ARR, 300 customers, 5-year-old product) has seen net revenue retention drop from 108% to 91% over 18 months. New logo acquisition is flat. Leadership believes it\'s a product problem but hasn\'t ruled out CS or pricing. Structure the problem as a MECE issue tree with 3 levels: (1) top-level hypotheses, (2) sub-hypotheses per branch, (3) the key question that would confirm or kill each. Be specific to SaaS metrics.',
+              output: 'Issue Tree: NRR Decline from 108% to 91%\n\n1. EXPANSION REVENUE FELL (upsell/cross-sell)\n   1a. Product: New features not driving seat expansion — Key Q: Has seat count per customer changed? Which cohorts expanded vs. contracted?\n   1b. CS Motion: Upsell conversations not happening at right moment — Key Q: What % of QBRs include expansion discussion? What\'s conversion rate?\n   1c. Pricing: Expansion pricing too high relative to perceived value — Key Q: What\'s the win rate on upsell proposals? Where in the funnel do they drop?\n\n2. CONTRACTION REVENUE INCREASED (downgrades/churners)\n   2a. Product-market fit degrading: Competitors closing capability gap — Key Q: What features are churned customers citing? Which competitors are winning the deals?\n   2b. Champion turnover: Buyers leaving, new buyers less committed — Key Q: What\'s the correlation between champion change and churn rate?\n   2c. ROI not visible: Customers can\'t demonstrate value internally — Key Q: Do churned customers have a named business outcome on file?\n\n3. GROSS CHURN RATE INCREASED (logos leaving)\n   3a. ICP drift during growth phase — Key Q: Does churn rate vary by customer segment, size, or vertical?\n   3b. Onboarding failure: Customers not reaching activation — Key Q: What\'s time-to-first-value? Does it correlate with churn timing?',
+            },
+            insight: 'The vague output is a category list any MBA student could write — it\'s not structured, not MECE, and gives no direction on what to investigate first. The specific version produces a hypothesis tree with diagnostic questions at every node, because the prompt defined the company type, the specific metric, the time window, and the existing hypotheses to build on. AI formatted and organised; the consulting thinking came from the specificity of the prompt.',
+          },
+          applyThisWeek: {
+            action: 'Take a current client problem you\'re working on. Use AI to build an issue tree or challenge your existing hypothesis. Give it the specific context (company type, metric, timeline) and ask it to identify what you might be missing.',
+            promptTemplate: 'Build a MECE issue tree for this consulting problem: [describe the problem with specific company context, metric, and timeframe]. Current hypothesis: [your current view]. Structure to 3 levels: (1) top-level hypotheses, (2) sub-hypotheses, (3) the key diagnostic question per node. Flag any blind spots in my current framing.',
+            tool: 'Claude',
+          },
+          reflection: 'On your current or most recent engagement, where did the team spend the most time on activities that didn\'t require consultant-level judgment — formatting slides, searching for benchmarks, writing email updates? What could AI have handled, and what would that have freed you to do?',
           quiz: [
             {
               question: 'What is the consultant\'s most important contribution when using AI for issue tree development?',
@@ -503,6 +677,35 @@ AI applies frameworks generically. It doesn't know that your client's operationa
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'AI applies Porter\'s Five Forces to your client\'s industry and rates supplier power as "moderate." Your knowledge of the client tells you they depend on three suppliers for 80% of their critical inputs. What should you do?',
+            options: [
+              'Accept AI\'s assessment — it has access to more industry data than you do',
+              'Override the assessment with your client-specific knowledge and rewrite it as "high, due to concentrated supply dependency"',
+              'Split the difference and rate supplier power as "moderate to high"',
+              'Conduct more research before drawing any conclusion about supplier power',
+            ],
+            correct: 1,
+            explanation: 'AI applies frameworks using general industry averages. When your client-specific knowledge contradicts the generic assessment — as it frequently will — your knowledge takes precedence. The consultant\'s job is to replace AI\'s generic observations with client-specific ones. A framework calibrated to the real situation is always more valuable than one that is accurate on average but wrong for this client.',
+          },
+          outputComparison: {
+            label: 'Porter\'s Five Forces: generic industry output vs. client-calibrated analysis',
+            vague: {
+              prompt: 'Apply Porter\'s Five Forces to the UK facilities management sector',
+              output: 'Porter\'s Five Forces Analysis — UK Facilities Management:\n\nThreat of New Entrants: Moderate. Low capital requirements make entry possible, but established relationships and scale advantages provide some protection.\n\nSupplier Power: Low to Moderate. Labour is the primary input; the competitive labour market reduces supplier power.\n\nBuyer Power: High. FM contracts are typically put out to competitive tender, giving buyers significant pricing leverage.\n\nThreat of Substitutes: Low. Facilities services are necessary for any physical estate.\n\nCompetitive Rivalry: High. The market is fragmented with many providers competing on price.\n\nConclusion: The FM sector has moderate overall attractiveness, with buyer power and rivalry as the primary margin pressures.',
+            },
+            improved: {
+              prompt: 'Apply Porter\'s Five Forces to the UK facilities management sector for a client context: a mid-market FM provider (£80M revenue, integrated hard and soft services, primarily NHS and local government contracts). For each force, provide: (a) an intensity rating (high/medium/low), (b) three observations specific to the public sector FM segment (not generic FM), (c) the strategic implication specifically for a provider of this size and client mix. Then identify which force represents the greatest strategic threat to this client and why.',
+              output: 'Porter\'s Five Forces — UK Public Sector FM (NHS + Local Government focus):\n\nBuyer Power: HIGH (most significant force for this client)\nPublic sector buyers operate under procurement frameworks (Crown Commercial Service, NHS Shared Business Services) that commoditise FM provision. Multi-year contracts provide revenue stability but lock in margin at tender-stage pricing. Client\'s NHS concentration creates dependency — losing one large trust contract could represent 15–20% revenue loss. Strategic implication: the client must build switching cost through service integration and contract relationship depth before next tender cycle.\n\nCompetitive Rivalry: HIGH\nPublic sector FM attracts both national integrators (Mitie, Sodexo, Serco) and regional specialists. National players cross-subsidise public sector bids from commercial work to buy share. At £80M scale, the client cannot match their balance sheet but can compete on service responsiveness and local relationship. Implication: differentiation must be on contract performance and relationship, not price.\n\nThreat of New Entrants: LOW for integrated hard+soft\nIntegrated service provision requires both capability and a Clean Pass security clearance history for NHS work. These create meaningful barriers for pure-play entrants.\n\nSupplier Power: MODERATE, trending higher\nLabelled labour cost is the primary input; National Living Wage increases have compressed margins on fixed-price contracts signed pre-2022. Staff retention in cleaning and maintenance is a structural cost issue.\n\nGreatest strategic threat: Buyer power, specifically the tender cycle risk. The client should prioritise contract extension and scope expansion conversations 18 months before each tender — after that window, the relationship advantage is competed away.',
+            },
+            insight: 'The generic output produces accurate but actionless observations about the average FM firm. The client-calibrated output identifies the specific buyer power dynamics of NHS procurement frameworks, names the strategic implication of the client\'s revenue concentration, and produces a prioritised strategic warning about the tender cycle. The difference is not the framework — it\'s the client context embedded in the prompt.',
+          },
+          applyThisWeek: {
+            action: 'Apply one consulting framework (Porter\'s, SWOT, or 7-S) to a current client using AI, then go through the output and replace every generic observation with a client-specific one based on your engagement knowledge.',
+            promptTemplate: 'Apply [framework name] to this specific client situation: [company type, size, sector, and the strategic question they face]. For each component of the framework, provide: (a) an assessment calibrated to this specific company (not the industry average), (b) two to three observations that are specific to their situation — not generic sector characteristics, (c) the strategic implication for their leadership team. Close with: which element of this framework represents the greatest strategic priority, and why.',
+            tool: 'Claude',
+          },
+          reflection: 'On your last engagement where you used a consulting framework, what percentage of the content was genuinely specific to that client versus applicable to any company in the same sector? What made the specific insights — and where did they come from?',
           quiz: [
             {
               question: 'What is the consultant\'s primary task after AI applies a consulting framework?',
@@ -570,6 +773,35 @@ AI synthesis of primary research requires careful review: it will sometimes over
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'After synthesising 18 stakeholder interviews with AI, the output shows strong consensus: "All interviewees are aligned on the strategic direction." You recall two interviewees who seemed hesitant but said supportive things. What should you do?',
+            options: [
+              'Trust the AI synthesis — it processed more text than you can hold in memory',
+              'Investigate the apparent consensus — AI cannot detect hesitation, careful phrasing, or the gap between what people said and what they meant',
+              'Conduct additional interviews to confirm the alignment before proceeding',
+              'Note your concern in the appendix but proceed with the consensus finding',
+            ],
+            correct: 1,
+            explanation: 'AI synthesis identifies recurring words and themes — it cannot detect the gap between stated and actual views. "I think the strategy makes sense" said with a pause and a qualified tone is meaningfully different from genuine alignment. When your observations from the room contradict the AI-generated consensus, investigate: ask what language those interviewees used, whether their quotes were representative, and whether the divergence matters for the change programme.',
+          },
+          outputComparison: {
+            label: 'Interview synthesis: ask AI to summarise vs. structured theme extraction',
+            vague: {
+              prompt: 'Here are notes from my stakeholder interviews. Can you summarise what people said?',
+              output: 'Based on the interview notes, stakeholders expressed a range of views on the transformation programme:\n\n- Most people are supportive of the direction but have concerns about the pace of change\n- There is some uncertainty about how roles will change\n- Communication was mentioned as an area that could be improved\n- People appreciate the leadership\'s ambition but want more clarity on the implementation plan\n\nOverall, the sentiment is cautiously positive with concerns about execution.',
+            },
+            improved: {
+              prompt: 'Here are notes from 14 stakeholder interviews about a proposed operating model restructuring at a financial services firm. The interviews covered: senior leaders (4), middle managers (6), and frontline staff (4). Synthesise across these three groups using the following structure:\n(1) Identify the 5 most important themes across all interviews — for each: a clear label, a one-sentence description, which groups mentioned it, and two representative quotes\n(2) Where do senior leaders and frontline staff diverge most significantly? What does that divergence imply for the change management approach?\n(3) Before these interviews, our hypothesis was that resistance would centre on job security. What does the interview evidence say — supported, contradicted, or uncertain?\n(4) What is the single most important finding that the programme leadership team may not expect?\n[paste interview notes]',
+              output: 'Theme 1: Structural clarity is valued, but the decision rationale is not understood\nAll groups. Senior leaders describe the new structure clearly and confidently. Middle managers and frontline staff report not understanding why the structure is changing, only that it is. Quotes: "I understand what\'s changing but not why this particular model" (middle manager). "The org chart makes sense but I\'m not sure what problem it\'s solving" (frontline).\n\nTheme 2: Pace of change is a middle management concern, not a frontline one\nMiddle managers only. Frontline staff expressed less concern about pace — they\'re more uncertain about their specific role. Middle managers are worried about implementing change while maintaining performance targets.\n\n[continues with themes 3–5]\n\nSenior / frontline divergence: Senior leaders believe the change rationale is well-communicated; frontline staff do not feel informed. This is the classic "cascade illusion" — communication has happened at senior levels and is assumed to have reached frontline. The change management approach must address this gap directly.\n\nHypothesis test (job security): Partially supported for frontline, not supported for middle management. Frontline concerns are about role clarity, not job loss. Middle managers\' primary concern is performance delivery during transition, not their own security.\n\nUnexpected finding: The strongest resistance signal comes from a sub-group of high-performing middle managers who feel the restructuring undervalues their current team relationships — this group is flight risk, not resistance risk.',
+            },
+            insight: 'The vague synthesis produces five sentences that could describe almost any change programme — no specificity, no group-level analysis, no hypothesis testing. The structured prompt extracts themes with group attribution, identifies the senior/frontline divergence that determines the change management approach, tests the pre-interview hypothesis, and surfaces the unexpected finding that a standard summary would bury. The analytical structure in the prompt is what produces the analytical value in the output.',
+          },
+          applyThisWeek: {
+            action: 'Take interview notes from a current or recent engagement (anonymise as needed). Use the structured theme extraction prompt to synthesise them, then compare AI\'s themes to your own reading of the interviews.',
+            promptTemplate: 'Here are notes from [number] stakeholder interviews on [topic]. The interviewees include: [describe groups — e.g., senior leaders, middle managers, frontline]. Please synthesise using this structure: (1) identify the [4–6] most important themes — for each: a label, one-sentence description, which groups raised it, and two representative quotes; (2) where do [group A] and [group B] diverge most significantly, and what does that imply for [change programme / recommendation]? (3) Before these interviews, our hypothesis was [state it] — what does the evidence say: supported, contradicted, or uncertain? Cite specific evidence. [paste anonymised notes]',
+            tool: 'Claude',
+          },
+          reflection: 'In your experience conducting stakeholder interviews, what is the most important thing you have learned from what interviewees did NOT say — the hesitation, the subject change, the answer that was technically true but clearly incomplete? How would you capture that in your interview notes so AI synthesis could at least flag it?',
           quiz: [
             {
               question: 'Which interview insight can only be captured by the consultant who conducted the interview?',
@@ -647,6 +879,35 @@ The executive summary is often the only section the decision-maker reads. AI pro
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A partner asks you to send the AI-generated proposal draft to the client after a light proofread. What is the professional risk of doing so?',
+            options: [
+              'The client may notice inconsistent formatting',
+              'The proposal will lack client-specific language, relevant track record, and evidence of understanding their situation — the elements that actually win proposals',
+              'The AI draft may be too long for the client to read',
+              'There is no significant risk if the grammar and spelling are correct',
+            ],
+            correct: 1,
+            explanation: 'Proposals win on specificity: the client\'s own language reflected back, examples from your track record that are genuinely relevant, and evidence that your team understands their specific situation better than competitors. AI drafts are structurally complete but generically professional — they read like a proposal for any company, not this company. Sending an unmodified AI draft is sending a generic proposal, which is unlikely to win against a team that tailored theirs.',
+          },
+          outputComparison: {
+            label: 'Proposal executive summary: AI generic draft vs. client-tailored version',
+            vague: {
+              prompt: 'Write an executive summary for a consulting proposal for a retail client',
+              output: 'Executive Summary\n\nOur client faces significant challenges in an increasingly competitive retail environment. Changing consumer behaviours, digital disruption, and margin pressures are creating strategic urgency for action.\n\nOur firm proposes a comprehensive strategic review and operational transformation programme. Drawing on our deep retail expertise and proven methodology, we will help you identify and capture the opportunities that will position your business for sustainable growth.\n\nOur team of experienced consultants will work closely with your leadership to deliver actionable recommendations and support implementation. We look forward to partnering with you on this critical journey.',
+            },
+            improved: {
+              prompt: 'Write a five-sentence executive summary for a proposal to a UK mid-market grocery retailer (£450M revenue, 120 stores, independent) whose like-for-like sales have declined 3.2% over two years while the sector average grew 1.4%. They want help on: category and ranging strategy, supplier negotiation capability, and pricing architecture. Our firm\'s relevant track record includes similar work with two independent grocery chains. Lead with the client\'s specific problem, our response, and the primary reason to choose us. Avoid methodology jargon. Every sentence should make a client who is sceptical about consulting feel that we\'ve already understood their problem.',
+              output: 'Your 4.6-point performance gap versus sector average over 24 months signals a structural issue in ranging and margin management that is not self-correcting through the current trading cycle. This engagement will identify and prioritise the category, pricing, and commercial levers that will rebuild like-for-like performance — with a specific focus on the ranging decisions and supplier terms that are most directly driving the gap. Our approach combines customer-level sales data analysis with a structured assessment of your category and supplier management processes, producing recommendations that are specific enough to implement, not just directions to change. We have delivered comparable programmes for two independent grocery retailers in the past three years, both of which returned to positive like-for-like within twelve months of implementation. We propose a ten-week engagement with a joint team structure — your category and trading directors working alongside our analysts from week one so that the recommendations are owned by your people before we leave.',
+            },
+            insight: 'The generic executive summary could be copied into any retail proposal — it describes no specific problem, references no specific track record, and gives the client no reason to believe this team understands their situation. The tailored version uses the client\'s actual performance gap, specifies the exact work streams, references relevant track record, and closes with an implementation model that addresses the most common client concern about consulting proposals. Every sentence is specific to this client.',
+          },
+          applyThisWeek: {
+            action: 'Take the executive summary from an existing proposal (or draft one for a current opportunity). Run it through AI to identify every sentence that is generic rather than client-specific, then rewrite those sentences.',
+            promptTemplate: 'Here is a draft executive summary for a proposal to [client type] facing [specific problem]: [paste draft]. Please: (1) identify every sentence that is generic — applicable to any client in this situation rather than specific to this client, (2) rewrite those sentences using the following client-specific information: [paste: client\'s actual metric/situation, your firm\'s relevant track record, the client\'s stated priorities from the brief]. The final version should make a sceptical decision-maker feel that we have already understood their specific problem better than any competitor.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last proposal your team won and the last one you lost. What do you think made the difference? How much of that difference was in the content of the document versus the relationship and credibility the client already had with your team?',
           quiz: [
             {
               question: 'What is the most important element a consultant must add to an AI-generated proposal draft?',
@@ -715,6 +976,35 @@ AI builds content, not visual design. The actual slide layout, data visualisatio
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A slide title reads: "Customer satisfaction analysis." What is wrong with it from a consulting perspective?',
+            options: [
+              'It is too short — slide titles should be at least ten words',
+              'It describes the topic rather than stating a finding — the client has to read the body to understand what the slide is saying',
+              'It uses the word "analysis" which is too technical for executive audiences',
+              'Nothing is wrong — descriptive titles are appropriate for analytical slides',
+            ],
+            correct: 1,
+            explanation: 'A descriptive title tells the reader the subject; an assertion title tells them the insight. "Customer satisfaction analysis" forces the reader to process the body content to understand what the slide argues. "Customer NPS has declined 12 points in 18 months, driven by post-purchase experience failure" tells the reader the finding in the title itself. Consulting decks are read by executives who often scan titles — if the title doesn\'t carry the message, the message may not land.',
+          },
+          outputComparison: {
+            label: 'Slide storyboard: generic structure vs. assertion-led narrative',
+            vague: {
+              prompt: 'Give me a slide structure for a consulting deck about digital transformation for a retail bank',
+              output: 'Suggested slide structure:\n1. Executive Summary\n2. Market Context\n3. Current State Assessment\n4. Gap Analysis\n5. Digital Transformation Approach\n6. Implementation Roadmap\n7. Expected Benefits\n8. Investment Required\n9. Risks and Mitigations\n10. Next Steps\n\nThis structure covers the key elements of a transformation proposal.',
+            },
+            improved: {
+              prompt: 'I am building a 12-slide recommendation deck for the board of a UK retail bank. My core recommendation is: the bank should invest £85M over three years to rebuild its digital current account proposition, starting with the mobile app experience. The three supporting arguments are: (1) 31% of current account customers are at risk of switching based on satisfaction data, (2) digital channel cost-to-serve is 4× lower than branch, and (3) the bank\'s NPS trails the sector average by 18 points, concentrated in the 25–45 age segment. Build a slide-by-slide storyboard with: an assertion-based title for each slide, and two to three bullet points of body content that support the title. Sequence the slides to build the argument persuasively before revealing the recommendation.',
+              output: 'Slide 1 — Situation: "One in three current account customers is at active switching risk — the bank\'s core franchise is more exposed than leadership has recognised"\n• 31% of current account holders scored below 6/10 on satisfaction — industry threshold for switching risk\n• Switching risk is concentrated in 25–45 segment (42% at risk vs. 21% among 45+)\n• [data source placeholder]\n\nSlide 2 — Complication: "The bank\'s 18-point NPS deficit versus sector average reflects a mobile experience that consistently underperforms on the interactions customers value most"\n• NPS gap is entirely attributable to digital channel — branch and telephone scores are at or above sector\n• Top three customer complaints: mobile app reliability, payment journey complexity, account opening process length\n• Competitor NPS leaders have invested £60–100M in app redesign in the past 24 months\n\nSlide 3 — Stakes: "Recovering this NPS gap is a £40M annual revenue question — not a customer experience project"\n• Each NPS point improvement historically correlates with 0.3% reduction in churn for this bank\n• Current churn rate in at-risk cohort is 2.1× the stable cohort; closing this gap recovers an estimated £40M in annual revenue at risk\n\n[continues through slides 4–12 building to the £85M investment recommendation with financial case and implementation roadmap]',
+            },
+            insight: 'The generic structure is a table of contents — it tells the deck\'s shape but not its argument. A reader scanning the titles would have no idea what the recommendation is or why it\'s right. The assertion-led storyboard tells the full argument through titles alone: the problem, its scale, what\'s causing it, and what the investment justification is. Fixing the storyboard at this stage takes 30 minutes; fixing a fully produced deck with the wrong argument structure takes two days.',
+          },
+          applyThisWeek: {
+            action: 'Take a current or recent presentation. List all the slide titles. Identify which are descriptive (topic labels) and which are assertion-based (findings). Use AI to convert the descriptive ones to assertion titles.',
+            promptTemplate: 'Here are the slide titles from a consulting deck I am building: [list all titles]. For each title, tell me: (a) is it descriptive (labels the topic) or assertion-based (states the finding)? (b) for every descriptive title, rewrite it as an assertion title using the following evidence from that slide: [paste the key data point or finding for each slide]. The rewritten titles should tell the full argument when read in sequence.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last deck you presented. If a board member had only read the slide titles — not the body content — would they have understood the argument and the recommendation? What would they have missed, and what does that tell you about the deck\'s structure?',
           quiz: [
             {
               question: 'What is the difference between a descriptive slide title and an assertion-based slide title?',
@@ -789,6 +1079,35 @@ Client communications require human review for:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You need to tell a client that their preferred strategic option is not viable based on the financial analysis. Using the pyramid principle, how should you structure that message?',
+            options: [
+              'Build the financial case in detail first so the client understands the reasoning before hearing the conclusion',
+              'Start with the bottom-line conclusion (the option is not viable), then provide the supporting financial evidence',
+              'Frame the message as a question to soften the impact: "Have you considered whether Option A is financially viable?"',
+              'Present all options equally and let the client draw their own conclusion from the data',
+            ],
+            correct: 1,
+            explanation: 'The pyramid principle leads with the conclusion, then provides supporting evidence. In a difficult message scenario, this means stating the conclusion clearly and early — "Option A is not financially viable based on three factors" — before explaining those factors. Burying the conclusion at the end after extensive analysis forces the client to process information before they know what question it answers, which reduces comprehension and increases the chance the difficult message is softened past the point of clarity.',
+          },
+          outputComparison: {
+            label: 'Difficult client message: buried conclusion vs. pyramid principle structure',
+            vague: {
+              prompt: 'Help me write an email to a client about project delays',
+              output: 'Dear [Client],\n\nI hope this email finds you well. I wanted to reach out regarding the current status of our engagement.\n\nAs you know, we have been working hard on the analysis and deliverables. However, we have encountered some challenges that have impacted our timeline. The data availability issues and some complexity in the analysis have meant that we need a bit more time to ensure the quality of our work.\n\nWe remain committed to delivering the highest quality output and are working to minimise any impact on your planning. We will be in touch shortly with an updated timeline.\n\nKind regards',
+            },
+            improved: {
+              prompt: 'I need to communicate to the CFO of a manufacturing client that we will miss the final report deadline by two weeks, from June 15 to June 30. The cause is that the client\'s ERP data was significantly more fragmented than scoped — we discovered three separate legacy systems with inconsistent cost coding that require manual reconciliation. The CFO has a board presentation on July 1 that depends on our findings. Structure this message using pyramid principle: bottom line first, then cause, then impact on their situation, then what we are doing about it. Tone: direct and professional — no hedging, no over-apologising. One paragraph per element. No more than 250 words.',
+              output: 'The final report delivery date is moving from June 15 to June 30. This is a two-week extension, and I want to give you full visibility on why and what it means for your July 1 board preparation.\n\nThe cause is data complexity we could not fully anticipate in scoping: your cost data sits across three legacy ERP systems with inconsistent coding conventions that require manual reconciliation before our margin analysis can be reliable. We identified this issue in week three and have been working to resolve it; the reconciliation is now complete, and the analysis is underway.\n\nGiven your July 1 board presentation, the June 30 delivery gives you one day for review — which is too tight. We propose two options: (a) we deliver a board-ready executive summary and key findings on June 27, with the full report following June 30, or (b) we schedule a working session on June 28 to walk through findings before you finalise your board materials.\n\nI will call you at 2pm today to confirm which approach works. We are fully committed to ensuring your board presentation is well-supported by our analysis.',
+            },
+            insight: 'The vague draft buries the actual news (delay) behind two sentences of pleasantries, uses passive constructions ("we have encountered some challenges") that obscure accountability, and ends without a clear next step. The pyramid principle version leads with the decision the CFO needs to know (deadline change), explains the cause clearly and without hedging, maps the impact to the CFO\'s specific situation (board presentation), and closes with a concrete choice and a follow-up commitment. It is shorter, clearer, and more respectful of the client\'s time.',
+          },
+          applyThisWeek: {
+            action: 'Draft a difficult or complex message you need to send to a client or stakeholder this week. Use AI with the pyramid principle prompt to restructure it — bottom line first, then evidence, then implications and next steps.',
+            promptTemplate: 'I need to communicate the following to [stakeholder role] at [client type]: [describe the message — the decision, finding, or update]. Context: [describe their situation and what matters most to them]. Structure this message using pyramid principle: (1) bottom-line conclusion in one sentence, (2) the three supporting reasons or evidence points, (3) the implication for their specific situation, (4) the decision or action I am asking them to take. Tone: [direct/sensitive/collaborative]. Maximum [X] words. No hedging language.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a recent difficult message you had to deliver to a client — a missed deadline, a finding they wouldn\'t want to hear, a recommendation that contradicted their existing view. How did you sequence it? In hindsight, would leading with the conclusion earlier have made the conversation more or less productive?',
           quiz: [
             {
               question: 'What is the pyramid principle in consulting communication?',
@@ -857,6 +1176,35 @@ The consultant is professionally responsible for every recommendation. AI can he
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'AI generates five strong objections to your recommendation. One of them reveals a genuine gap in your supporting analysis. What is the right response?',
+            options: [
+              'Ignore it — AI doesn\'t have access to the full client context that justifies the recommendation',
+              'Prepare a response that deflects this objection during the client presentation',
+              'Investigate the gap before the presentation and either strengthen the recommendation or adjust it if the analysis shows it\'s flawed',
+              'Add a caveat to the recommendation acknowledging the limitation',
+            ],
+            correct: 2,
+            explanation: 'If an objection reveals a genuine analytical gap, the professional response is to address it — not to prepare a deflection. Pressure-testing is most valuable precisely because it sometimes reveals that the recommendation needs strengthening or reconsidering. A recommendation that cannot survive AI pressure-testing deserves more work before it faces a sceptical CFO. The goal is a better recommendation, not a better defence of a flawed one.',
+          },
+          outputComparison: {
+            label: 'Recommendation narrative: unstructured draft vs. SCR-structured argument',
+            vague: {
+              prompt: 'Help me write up my recommendation to a client to outsource their IT infrastructure',
+              output: 'We recommend that the client consider outsourcing their IT infrastructure. This approach has several potential benefits including cost savings, access to specialised expertise, and the ability to focus on core business activities.\n\nThere are different models available, including full outsourcing, partial outsourcing, and managed services arrangements. The client should evaluate these options based on their specific needs and risk tolerance.\n\nImplementation will require careful change management and vendor selection. We suggest beginning with a pilot programme to test the approach before full commitment.',
+            },
+            improved: {
+              prompt: 'Build a recommendation narrative for this consulting finding: a UK insurance company (£1.2B GWP, 800 IT staff) should outsource its core infrastructure management to a tier-1 managed services provider, retaining only its data and security architecture teams in-house. Structure the narrative using situation-complication-resolution: (1) situation — what is the current state, (2) complication — why the current state is no longer viable, (3) resolution — our recommendation and why it is the right answer, (4) three supporting arguments with specific evidence, (5) the primary objection the CFO will raise and how we address it, (6) call to action — the specific decision we need at this meeting. Client-ready language. The CFO has 15 minutes.',
+              output: 'Situation: The client\'s IT infrastructure is operating on a self-managed model built for a business half its current scale. 800 IT staff manage an estate that has grown through three acquisitions in five years, resulting in fragmented infrastructure across four data centre locations.\n\nComplication: The current model cannot scale cost-effectively. Infrastructure operating cost is £94M annually — 27% above the peer benchmark for comparable insurers — and the team is spending 70% of capacity on maintenance, leaving insufficient capacity for the technology investment the business strategy requires. Two of the four data centres will reach end-of-life within 18 months.\n\nResolution: We recommend a managed services transition for infrastructure operations, retaining the 120-person data and security architecture team in-house. This is the only model that simultaneously solves the cost problem, addresses the data centre end-of-life issue, and preserves the in-house capability the business genuinely needs for its data strategy.\n\nSupporting arguments: (1) Benchmarked managed services pricing for this estate profile produces a £22–28M annual saving versus current run rate. (2) A tier-1 provider brings the cloud migration capability the team currently lacks — reducing the 18-month data centre risk. (3) Peer insurers who have made this transition (Aviva, Direct Line) report 15–20% speed improvement in technology delivery.\n\nCFO objection we expect: "We tried outsourcing in 2015 and it failed." Our response: the 2015 failure was a full outsource including applications — this proposal retains the architectural and security teams that made re-insourcing necessary last time. We\'re outsourcing operations, not capability.\n\nCall to action: We need a decision to proceed to vendor shortlisting by end of this month to hit the data centre deadline. Delay beyond 30 days puts the 18-month window at risk.',
+            },
+            insight: 'The unstructured draft is polite hedging — it uses "consider," "potential benefits," and "different models available" without making a clear recommendation or anticipating the CFO\'s inevitable challenge. The SCR-structured version makes a specific, time-bound recommendation, supports it with benchmarked evidence, pre-empts the most likely objection with a direct answer, and closes with a specific decision request. The structure forces clarity of argument at every stage.',
+          },
+          applyThisWeek: {
+            action: 'Before your next client presentation, run your primary recommendation through the AI pressure-test. Generate the five strongest objections, then assess: which one reveals a gap you should address before the meeting?',
+            promptTemplate: 'Here is the recommendation I am presenting to [client role] at [client type]: [state the recommendation clearly]. The supporting logic is: [summarise in 2–3 sentences]. Generate the five strongest objections that a sceptical [CFO / board member / operating committee] would raise. For each objection: (a) assess whether it reveals a genuine weakness in my analysis (yes/no), (b) suggest how I should pre-empt or respond to it in the presentation. Then build the recommendation narrative using situation-complication-resolution structure.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a recommendation you have presented that received significant pushback. Looking back, was the pushback something you could have anticipated and pre-empted? What would a pre-presentation pressure-test have surfaced — and would it have changed the recommendation itself or just your preparation?',
           quiz: [
             {
               question: 'Why should a consultant pressure-test a recommendation with AI before presenting it to a client?',
@@ -927,6 +1275,35 @@ Consulting often requires building financial models, running scenario analysis, 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A client asks for a financial model with specific market growth assumptions. You use AI to generate those assumptions without sourcing them. What is the risk?',
+            options: [
+              'AI assumptions will always be too conservative and understate the opportunity',
+              'AI-generated assumptions may be plausible-sounding but unverifiable, which undermines the model\'s credibility in CFO-level scrutiny',
+              'The risk is low if the model structure is sound — assumptions matter less than the model logic',
+              'There is no risk if the AI is confident in its estimates',
+            ],
+            correct: 1,
+            explanation: 'Financial models are only as defensible as their assumptions. If a CFO or board member asks "where does this growth rate come from?" and the honest answer is "AI\'s best estimate," the model loses credibility immediately. AI can help document assumption rationale, structure scenario logic, and translate outputs into narrative — but the specific inputs that drive the model must come from verifiable sources the client or their auditors can review.',
+          },
+          outputComparison: {
+            label: 'Business case narrative: raw model outputs vs. executive-ready financial story',
+            vague: {
+              prompt: 'Write up the results of our business case model for a client',
+              output: 'The business case model shows positive results. Revenue is projected to grow from £50M to £78M over three years, representing a CAGR of 16%. EBITDA margins are expected to improve from 12% to 18%. The NPV of the investment is £24M with a payback period of 2.8 years.\n\nThese results support proceeding with the investment. Sensitivity analysis shows the model is robust under various scenarios.',
+            },
+            improved: {
+              prompt: 'Translate these financial model outputs into a five-sentence executive narrative for a board presentation. The model is for a £12M investment in a new B2B sales capability for a UK professional services firm. Outputs: Year 1 revenue uplift £3.2M, Year 3 revenue uplift £9.8M, EBITDA impact Year 3 +£4.1M, NPV at 10% discount rate £8.4M, payback 3.1 years. The board\'s primary concern is capital allocation — they have four competing investment proposals. Write the narrative to: (1) lead with the strategic rationale, not the financials, (2) put the financial return in language a non-financial director can evaluate, (3) directly address the capital allocation question — why this investment over alternatives. Avoid financial jargon.',
+              output: 'The proposed sales capability investment addresses the firm\'s most significant growth constraint: the current model cannot scale revenue beyond £85M without structural change to how it sources and converts new clients. The investment generates £9.8M in additional annual revenue by year three — a return of 82p for every £1 invested, with payback achieved in the first quarter of year four. To put that in context for this board\'s capital allocation decision: this proposal delivers a higher NPV per pound invested (£0.70) than the technology infrastructure proposal (£0.43) and the office expansion proposal (£0.38), while carrying lower execution risk as the capability being built is proven in comparable professional services firms. The downside scenario — where revenue uplift is 30% below base case — still produces positive NPV of £2.1M and full payback within the four-year investment horizon. We recommend approval at this meeting to begin the six-month capability build before the January sales cycle.',
+            },
+            insight: 'The generic write-up lists the numbers but makes no argument — a board member still has to interpret what £24M NPV and 2.8-year payback mean relative to the decision they face. The executive narrative leads with the strategic rationale, translates the financials into comparative terms (pence per pound invested), directly answers the capital allocation question the board is actually asking, and closes with a specific recommendation and timing rationale. The numbers are the same; the narrative does the persuasive work.',
+          },
+          applyThisWeek: {
+            action: 'Take the outputs of a financial model or business case you are working on. Use AI to translate the key figures into a five-sentence executive narrative that leads with strategic rationale and directly addresses the decision-maker\'s primary concern.',
+            promptTemplate: 'Translate these financial model outputs into a [3–5] sentence executive narrative for a [board / CFO / investment committee] presentation. Model outputs: [list the key figures — revenue, margin, NPV, payback]. The investment is: [describe in one sentence]. The decision-maker\'s primary concern is: [capital allocation / risk / speed to payback / strategic fit]. Structure the narrative to: (1) lead with the strategic rationale, (2) present the financial return in terms the audience can evaluate without financial expertise, (3) directly address [the primary concern], (4) close with the specific decision being requested. No financial jargon.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time a financial model you presented was challenged by a client or stakeholder. Was the challenge about the model structure, the assumptions, or the way the results were communicated? Which of those three would have benefited most from better AI-assisted preparation?',
           quiz: [
             {
               question: 'Which stage of financial modelling does AI accelerate most effectively?',
@@ -991,6 +1368,35 @@ When clients ask about your firm's AI capabilities, be ready to discuss:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A client\'s COO says: "We\'ve bought the AI tools. Now we need help getting our people to actually use them." Which consulting service best fits this need?',
+            options: [
+              'AI vendor selection — the tools may not be the right fit for the organisation',
+              'AI change management — adoption failure is the primary reason AI tools don\'t deliver their intended business impact',
+              'AI governance framework — the organisation needs policies before driving adoption',
+              'AI opportunity identification — the COO may be solving the wrong problem',
+            ],
+            correct: 1,
+            explanation: 'When tools have been purchased but are not being used, the problem is adoption, not technology or governance. This is the most common AI programme failure pattern: the technology works, but employee behaviour hasn\'t changed. Change management — training that translates to daily workflow, management modelling of AI use, measurement of adoption rates — is what closes the gap between tool deployment and business impact. This is high-value consulting because it is where most AI programmes stall.',
+          },
+          outputComparison: {
+            label: 'AI consulting offer: generic capability statement vs. structured service design',
+            vague: {
+              prompt: 'Help me write a pitch for AI consulting services',
+              output: 'We offer comprehensive AI consulting services to help your organisation harness the power of artificial intelligence. Our experienced team provides:\n\n- AI strategy development\n- Technology assessment and vendor selection\n- Implementation support\n- Change management\n- Training and capability building\n\nWe have deep expertise in AI and work across multiple industries. Contact us to learn how we can help your organisation transform with AI.',
+            },
+            improved: {
+              prompt: 'Design a consulting service offering called "AI Adoption Sprint" for mid-market financial services firms (500–3,000 employees) that have deployed AI tools in the past 12 months but are seeing low adoption rates and limited business impact. Define: (1) the client problem in their language — what they say when they call us, (2) what we do in 2–3 sentences, (3) the specific deliverables, (4) the typical engagement duration and team, (5) the three outcomes the client can expect and how we would measure them, (6) why external consulting adds value over the client\'s internal L&D or IT team doing this.',
+              output: 'Client problem (in their words): "We invested in Copilot / Claude / [AI tool] six months ago. Usage is at 20% of licences. The people who do use it aren\'t using it for the high-value tasks we hoped for. Our IT team says it\'s a people problem, our HR team says it\'s a technology problem, and nobody is accountable for making it work."\n\nWhat we do: We identify the specific workflow barriers preventing AI adoption in each business unit, redesign the workflows where AI can be embedded naturally rather than bolted on, and build the manager capability to sustain behaviour change after we leave.\n\nDeliverables: (1) Adoption diagnostic — current usage data by role, identified barriers, and prioritised workflow opportunities; (2) three redesigned workflows with AI embedded and documented prompts; (3) manager playbook with coaching guides for sustaining adoption; (4) 90-day measurement framework with leading indicators.\n\nDuration and team: 6 weeks; 2 consultants (1 change management lead, 1 AI workflow specialist).\n\nMeasured outcomes: (1) licence utilisation from 20% to 60%+ within 90 days; (2) at least one measurable productivity improvement (time saved per task) documented per redesigned workflow; (3) manager confidence score on AI coaching improves by 30%+.\n\nWhy external: Internal L&D teams build training; they don\'t redesign workflows. Internal IT teams deploy tools; they don\'t change behaviour. The gap between "training done" and "adoption achieved" is a change management problem that requires external objectivity and cross-firm experience of what adoption interventions actually work.',
+            },
+            insight: 'The generic capability statement lists every possible AI service with no differentiation, no client specificity, and no indication of what a client would receive. It sounds like every other consulting firm\'s AI page. The structured service design defines a specific client problem (in language the client uses), concrete deliverables, measurable outcomes, and the clear argument for why an external consultant adds value over internal alternatives. The second version can be used in a client conversation immediately; the first cannot.',
+          },
+          applyThisWeek: {
+            action: 'Design one AI consulting service offering for a client type you regularly work with. Use the structured service design prompt to define the problem, deliverables, outcomes, and external value proposition.',
+            promptTemplate: 'Design a consulting service offering called "[name]" for [target client type — size, sector] facing [specific AI challenge]. Define: (1) the client problem in their language — what they say when they call us, (2) what we do in 2–3 sentences that a non-technical client would understand, (3) the specific deliverables they receive, (4) typical engagement duration and team composition, (5) the three outcomes the client can measure, (6) the two qualifying questions that tell me this offering is the right fit for a given client, (7) why external consulting adds value over the client doing this internally.',
+            tool: 'Claude',
+          },
+          reflection: 'In your client base, which organisations have the biggest gap between AI tool investment and actual business impact from AI adoption? What do you think is driving that gap — and is there a consulting engagement in it?',
           quiz: [
             {
               question: 'Why do most AI adoption programmes underperform against their business case?',
@@ -1074,6 +1480,35 @@ Regardless of how much AI is used in a consulting engagement, the following rema
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A client\'s engagement letter does not mention AI. You plan to use Claude to synthesise their confidential financial data to produce a cost analysis. What is the right course of action?',
+            options: [
+              'Proceed — the engagement letter doesn\'t prohibit AI use, so it is implicitly permitted',
+              'Check whether Claude is on your firm\'s approved tool list and whether the client\'s data handling requirements permit this use before proceeding',
+              'Ask the client for explicit written permission to use AI on all deliverables',
+              'Use AI for internal working documents only and produce the final deliverable manually',
+            ],
+            correct: 1,
+            explanation: 'Silence in the engagement letter does not mean permission. The correct sequence is: (1) check your firm\'s approved tool list for the specific tool, (2) review the client\'s data classification and any data processing restrictions in the engagement letter, (3) if unclear, ask your risk or legal team. Client financial data is highly sensitive; using an unapproved tool or processing data in a way not covered by the client agreement creates professional and contractual risk, regardless of whether the letter explicitly prohibits it.',
+          },
+          outputComparison: {
+            label: 'AI ethics self-assessment: vague checklist vs. engagement-specific review',
+            vague: {
+              prompt: 'Give me an ethics checklist for using AI in consulting',
+              output: 'AI Ethics Checklist for Consultants:\n✓ Use AI responsibly\n✓ Protect client confidentiality\n✓ Review AI outputs for accuracy\n✓ Be transparent with clients\n✓ Avoid bias in AI-generated content\n✓ Follow your firm\'s policies\n✓ Use approved tools only\n✓ Document your AI use',
+            },
+            improved: {
+              prompt: 'I am a consultant starting a new engagement for a UK private equity firm conducting due diligence on a healthcare acquisition target. I plan to use Claude and Perplexity in my workflow. Design a pre-engagement AI ethics checklist specific to this context. Cover: (1) tool approval — what I need to verify with my firm before using each tool, (2) data handling — what types of data from this engagement should not be entered into any AI tool without specific clearance, (3) disclosure — what should I proactively discuss with the PE client about AI use, and when, (4) bias risk — where AI analysis of the healthcare sector might carry specific biases I should watch for, (5) quality gates — for what types of output should I require human verification before it goes to the client?',
+              output: 'Pre-Engagement AI Ethics Checklist — PE Due Diligence, Healthcare Target\n\n1. Tool approval:\n   □ Confirm Claude and Perplexity are on firm\'s approved tool list for DD work\n   □ Confirm whether PE client has a data processing agreement with your firm — if so, check whether third-party AI tool use is covered\n   □ Flag: Perplexity uses web search — confirm no client-specific content will be submitted as search queries (risk of exposure)\n\n2. Data handling — DO NOT enter without explicit clearance:\n   □ Target company name, financials, or any identifiable transaction details into public AI tools unless approved\n   □ Patient data, clinical outcomes data, or any GDPR-regulated healthcare data\n   □ Unpublished regulatory filings or clinical trial data\n   □ Management team names or compensation data\n   Practice: Use "a mid-market UK healthcare services company" as the anonymised descriptor for all AI prompts.\n\n3. Disclosure:\n   □ Raise AI tool use in kickoff with PE client — frame as "here\'s how we use AI to accelerate research quality"\n   □ Confirm PE client\'s own AI policy (some PE firms have restrictions on AI use in their deal processes)\n   □ Do not disclose AI use to the target company without PE client agreement\n\n4. Bias risk:\n   □ Healthcare sector data in AI training is often US-centric — verify UK-specific regulatory and market dynamics through primary sources\n   □ AI may over-index on listed healthcare company data — this target is private; apply appropriate discount to public comparables\n   □ NHS reform dynamics change rapidly — AI training data may be 12–18 months behind current policy environment\n\n5. Quality gates (require human verification before client delivery):\n   □ Any financial benchmark or valuation comparable\n   □ Any regulatory claim about CQC requirements or NHS contracting\n   □ Any assertion about the target\'s competitive position',
+            },
+            insight: 'The generic checklist is eight bullet points of obvious obligations — useful as a reminder but impossible to act on in a specific context. The engagement-specific version identifies the exact data types that cannot be entered into public AI tools for this deal, the specific disclosure conversation to have with the PE client, the healthcare-specific biases to watch for, and the quality gates that apply to this type of analysis. It was generated by specifying the engagement type, the tools being used, and the relevant sensitivities — proof that the ethics checklist itself benefits from consulting-grade prompting.',
+          },
+          applyThisWeek: {
+            action: 'Before your next AI-assisted engagement task, run through a three-question check: (1) Is this tool approved for this type of data? (2) Is any client-identifying information in what I\'m about to paste? (3) Would the client want to know I\'m using AI here?',
+            promptTemplate: 'I am starting a new task on a [type] engagement for a [client type]. I plan to use [AI tool] for [specific task]. Help me run a quick pre-task AI ethics check covering: (1) what data handling restrictions I should verify before proceeding, (2) whether there are any disclosure considerations for this specific task type, (3) any bias or accuracy risks specific to [industry/task type] that I should watch for in the AI output, (4) the quality check I should apply before this output goes to the client.',
+            tool: 'Claude',
+          },
+          reflection: 'If your most important client knew exactly how you currently use AI in their engagement — which tools, what data you enter, what outputs go directly into deliverables — would they be comfortable? If not, what would you change, and why haven\'t you changed it already?',
           quiz: [
             {
               question: 'When should a consultant disclose their use of AI to a client?',
@@ -1148,6 +1583,35 @@ Over the next 12 months:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Two consultants both use Claude daily. One uses it for research synthesis and drafting. The other also advises clients on where to invest in AI and what it means for their competitive position. Which has the stronger career position, and why?',
+            options: [
+              'The first — they have more operational experience and are less distracted by advisory work',
+              'They are equal — both are using AI effectively',
+              'The second — they have combined productivity fluency with subject matter expertise, which opens client advisory opportunities in the fastest-growing consulting market',
+              'The second — but only if they have a computer science background',
+            ],
+            correct: 2,
+            explanation: 'Layer 1 fluency (using AI for personal productivity) is increasingly the baseline for all consultants. Layer 3 fluency — being able to advise clients credibly on their AI strategy, governance, and adoption — is where consulting value and fee growth are concentrated. The second consultant has the same productivity advantage as the first plus an advisory capability that the first consultant hasn\'t developed. Subject matter expertise about AI as a business challenge, not just a tool, is what distinguishes the career trajectories.',
+          },
+          outputComparison: {
+            label: 'AI development planning: vague aspiration vs. 90-day structured plan',
+            vague: {
+              prompt: 'How can I get better at using AI in my consulting career?',
+              output: 'Here are some ways to improve your AI skills as a consultant:\n\n1. Practice using AI tools regularly\n2. Stay up to date with the latest AI developments\n3. Take online courses in AI and machine learning\n4. Experiment with different AI tools\n5. Read case studies about AI in business\n6. Network with others who are using AI in consulting\n7. Try to apply AI to your daily work tasks\n\nConsistency is key — the more you practice, the better you\'ll get.',
+            },
+            improved: {
+              prompt: 'I am a consultant at a mid-size strategy firm, four years into my career, specialising in financial services. I currently use AI primarily for research synthesis and document drafting (Layer 1). I want to develop to Layer 3 — being able to advise financial services clients credibly on their AI strategy and adoption. Design a 90-day development plan. Structure it as: (1) weeks 1–4: build foundation, (2) weeks 5–8: develop expertise, (3) weeks 9–12: demonstrate and test. For each phase, specify: what to learn, how (reading, practice, or client application), and the observable outcome that tells me I\'ve completed that phase. Be specific to financial services AI applications.',
+              output: 'Phase 1 — Weeks 1–4: Build the Knowledge Foundation\nFocus: Understand the AI landscape specific to financial services — where value is being created and where it isn\'t.\nActions:\n• Read: PwC Global FinTech Report (AI section), McKinsey "AI in Banking" (2024), FCA AI Discussion Paper DP5/22 — these give you the regulatory and commercial context your clients navigate\n• Practice: For each client interaction this month, spend 15 minutes before the call researching one AI development relevant to their specific business (e.g., if your client is a retail bank, research what NatWest/Lloyds have announced on AI this quarter)\n• Apply: Use AI to generate a briefing on "the five most significant AI use cases in [specific financial services segment] and the evidence of business impact for each" — critique the output against what you know\nOutcome: You can answer the question "what are the most important AI opportunities for a [bank/insurer/asset manager]?" with specific examples and evidence, not general observations.\n\nPhase 2 — Weeks 5–8: Develop a Point of View\nFocus: From knowledge to perspective — you need a distinctive angle, not just a summary of what others have said.\nActions:\n• Choose one specific topic in FS AI where you want to develop an original perspective: e.g., "AI adoption barriers in UK retail banking" or "why most insurers\' AI programmes fail to reach production"\n• Write a 600-word internal note arguing your perspective — share with one senior colleague for critique\n• Apply on a live engagement: find one opportunity to contribute an AI observation to client analysis or a client conversation\nOutcome: You have a documented point of view on one FS AI topic that you could defend in a client conversation.\n\nPhase 3 — Weeks 9–12: Test and Demonstrate\nActions:\n• Offer to brief your practice on your chosen AI topic — 20-minute internal presentation\n• Propose one AI advisory element in an upcoming engagement scope, even as a small add-on\n• Write and publish one LinkedIn post on your AI perspective (500 words)\nOutcome: One internal presentation delivered, one client conversation where you contributed AI advisory content, one published piece of writing.',
+            },
+            insight: 'The generic advice produces a list of obvious platitudes — no timeline, no specificity to financial services, no way to know whether you\'ve made progress. The 90-day plan specifies exactly what to read (named reports), what to practice (specific pre-call research habit), what observable outcome to aim for at each phase, and how to test the expertise in a real client context. The structure forces specificity about what "better at AI" actually means and creates accountability checkpoints.',
+          },
+          applyThisWeek: {
+            action: 'Assess your current AI fluency honestly across three layers. Identify your most important gap, then use AI to design a 30-day focus plan to close it.',
+            promptTemplate: 'I am a [role] at a [firm type], specialising in [practice area/sector]. My current AI fluency: Layer 1 (daily productivity use) — [honest self-assessment]. Layer 2 (insight quality improvement) — [honest self-assessment]. Layer 3 (client AI advisory) — [honest self-assessment]. My most important career gap is [Layer X]. Design a 30-day plan to build this capability. Specify: what to learn, how to practise it, how to apply it in my current engagement context, and the observable outcome that tells me I\'ve made real progress. Be specific to [practice area/sector].',
+            tool: 'Claude',
+          },
+          reflection: 'If a client asked you tomorrow to lead a conversation about what AI means for their industry\'s competitive dynamics over the next three years, how confident would you feel? What specific knowledge or perspective do you currently lack that would make you more valuable in that conversation?',
           quiz: [
             {
               question: 'What distinguishes a Layer 3 AI-fluent consultant from a Layer 1 AI-fluent consultant?',
@@ -1228,6 +1692,35 @@ The flagged sections are where you invest human time. AI handles the structural 
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You are preparing for a first meeting with a new prospect. You ask AI to brief you on the company. What should you add before the meeting that AI cannot supply?',
+            options: [
+              'A longer version of the same briefing with more financial detail',
+              'Your relationship intelligence: what peers, competitors, or former employees have told you about the company that doesn\'t appear in public sources',
+              'A list of the company\'s subsidiaries and legal structure',
+              'Additional information about the CEO\'s career history',
+            ],
+            correct: 1,
+            explanation: 'AI compiles and synthesises everything publicly available — which is valuable but incomplete. What it cannot access is your network\'s informal intelligence: what a partner at a peer firm heard from a shared client, what a former employee posted about their experience, what you observed in a previous interaction with someone from that organisation. This informal intelligence, layered onto AI\'s systematic research, is what distinguishes a briefing that feels genuinely prepared from one that merely covers the public facts.',
+          },
+          outputComparison: {
+            label: 'Prospect briefing: unstructured search vs. AI-assisted structured briefing',
+            vague: {
+              prompt: 'Tell me about Tesco',
+              output: 'Tesco is a British multinational groceries and general merchandise retailer headquartered in Welwyn Garden City, Hertfordshire. It is the third-largest retailer in the world measured by gross revenues.\n\nTesco operates stores in the UK, Ireland, and several other countries. Its UK operations include Tesco Extra, Tesco Superstores, Tesco Metro, and Tesco Express formats.\n\nThe company was founded in 1919 by Jack Cohen. Its current CEO is Ken Murphy.\n\nTesco has been implementing various digital and loyalty initiatives, including its Clubcard programme and its Tesco Bank operations.',
+            },
+            improved: {
+              prompt: 'I am meeting the Chief Commercial Officer of Tesco in two weeks to explore a potential commercial strategy engagement. Prepare a briefing covering: (1) the three most significant strategic challenges Tesco\'s leadership is likely focused on right now — based on recent results, announcements, and analyst commentary, (2) the competitive dynamics most affecting their commercial decisions (pricing, format, private label, loyalty), (3) what their recent investor communications signal about leadership priorities, (4) two or three areas where external consulting would typically add value for a retailer in their position, (5) three questions I should ask the CCO that would demonstrate genuine understanding of their commercial challenges — not generic retail questions. Note any claims I should verify before the meeting.',
+              output: 'Tesco Strategic Briefing — CCO Meeting Preparation\n\n1. Leadership\'s current strategic focus (based on FY2024 results and recent announcements):\n• Margin recovery after inflationary period: Tesco\'s adjusted operating profit recovered to £2.8B in FY2024 — leadership is focused on sustaining margin improvement while holding price competitiveness against Aldi/Lidl [verify: FY2024 annual report]\n• Clubcard as commercial engine: Tesco has been expanding Clubcard Prices and using Clubcard data for personalised promotions — this is a strategic differentiator and likely a topic the CCO cares deeply about\n• Value perception vs. discounters: Despite strong Clubcard proposition, Aldi/Lidl combined share has grown — Tesco\'s commercial strategy balances premium private label (Finest) with value tier (Exclusively at Tesco) to address the full customer spectrum\n\n2. Commercial dynamics most relevant to CCO:\n• Supplier negotiations: Tesco has been more assertive on supplier terms following inflationary period — the CCO manages these relationships directly\n• Own-label penetration: Private label now approximately 50% of volume — strategic decision about where branded vs. own-label serves different category objectives\n• Format performance: Express and Metro formats show different commercial dynamics to superstores — understanding which format the CCO prioritises is a useful opening question\n\n3. Three CCO-specific questions:\n• "How is the Clubcard data informing your category and ranging decisions — and where is that capability still underdeveloped?"\n• "Where is the competitive pressure from discounters most acute commercially — and how is your promotional strategy responding?"\n• "What is the biggest commercial decision you\'re facing in the next 12 months where external perspective would add value?"\n\nNote: Verify all financial figures against Tesco\'s published FY2024 annual report before the meeting.',
+            },
+            insight: 'The generic briefing is a Wikipedia summary — accurate but useless for a senior client meeting. The structured briefing identifies the CCO\'s likely current priorities from recent financial performance, maps the commercial dynamics to the specific role, and generates questions calibrated to demonstrate strategic understanding rather than generic research. The consultant then layers in their own network intelligence — what they\'ve heard about Tesco\'s commercial team\'s priorities from industry contacts — which transforms a good briefing into a great one.',
+          },
+          applyThisWeek: {
+            action: 'Before your next significant client meeting or prospect interaction, use AI to generate a structured briefing. Then add two pieces of intelligence from your own network or previous interactions that AI couldn\'t know.',
+            promptTemplate: 'I am meeting [role] at [company] in [timeframe] to discuss [potential engagement or relationship goal]. Prepare a structured briefing covering: (1) the three most significant strategic challenges this company\'s leadership is likely focused on based on recent results and announcements, (2) the competitive dynamics most relevant to [their role / our potential engagement topic], (3) what their recent communications signal about leadership priorities, (4) two to three areas where external consulting adds most value for a company in their position, (5) three questions I should ask [role] that would demonstrate genuine understanding of their situation — not generic questions. Flag any claims I should verify before the meeting.',
+            tool: 'Claude or ChatGPT',
+          },
+          reflection: 'Think about the best client conversation you have had in the last year — one where the client genuinely felt understood. What made them feel that way? How much of it was based on research you had done, and how much was based on what you picked up in the conversation itself?',
           quiz: [
             {
               question: 'What is the most important human contribution to an AI-assisted prospect briefing?',
@@ -1319,6 +1812,35 @@ White papers require more substance than articles — client data, primary resea
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A colleague uses AI to generate five article ideas on consulting topics, picks the best one, and publishes it with light editing. What is the most likely outcome for their professional reputation?',
+            options: [
+              'Strong engagement — AI generates well-researched, credible ideas that resonate with professional audiences',
+              'The content is competent but forgettable — it lacks the specific experience and distinctive perspective that makes thought leadership worth following',
+              'The content will be flagged as AI-generated and create professional risk',
+              'No impact either way — thought leadership doesn\'t influence consulting relationships',
+            ],
+            correct: 1,
+            explanation: 'AI generates plausible, well-structured content about any consulting topic — which is exactly the problem. When every consultant uses AI for ideas, the resulting content is uniformly reasonable and completely indistinguishable. The thought leadership that builds reputation comes from specific experience: the counterintuitive pattern observed across six engagements, the framework developed from a specific client challenge, the observation that contradicts the conventional consulting wisdom. These can only come from a practitioner who has actually done the work.',
+          },
+          outputComparison: {
+            label: 'Thought leadership draft: AI-generated idea vs. practitioner-anchored perspective',
+            vague: {
+              prompt: 'Write a LinkedIn article about AI in consulting',
+              output: 'The Future of Consulting in the Age of AI\n\nArtificial intelligence is transforming every industry, and consulting is no exception. As AI tools become more sophisticated, consultants must adapt to remain relevant and deliver value to their clients.\n\nAI can help consultants with research, analysis, report writing, and data processing. This frees up time for higher-value activities like strategic thinking and client relationship management.\n\nHowever, AI also presents challenges. Consultants must ensure they use AI ethically and responsibly, maintaining the trust of their clients. They must also continuously upskill to stay ahead of the technology curve.\n\nThe consultants who thrive will be those who embrace AI as a tool while continuing to develop the human skills that clients value most. The future is not AI replacing consultants — it is AI-enabled consultants replacing those who haven\'t adapted.',
+            },
+            improved: {
+              prompt: 'I want to write a 700-word LinkedIn article for a senior consulting audience arguing this specific perspective: "Most consultants are using AI to become faster at producing the same work. The ones who will build lasting advantage are using AI to become bolder in their analysis — generating more hypotheses, stress-testing more recommendations, and arriving at client meetings with positions that are harder to take without AI support." This perspective comes from observing that AI is often used to compress time on existing tasks rather than to raise analytical ambition. Structure: (1) a provocative opening hook, (2) the observation that challenges conventional wisdom about AI in consulting, (3) a specific contrast between "faster-same" vs. "bolder-different" AI use with a concrete example of each, (4) a practical implication for the reader, (5) a closing question that invites reflection. Generate a draft that I will then edit to add specific examples from my own experience.',
+              output: 'Most consultants are using AI to do their existing work faster. The few who are using it to do fundamentally bolder work are building an advantage the rest won\'t see coming.\n\nHere\'s the pattern I\'ve observed: when consultants first adopt AI, they reach for it where the time pressure is most acute. Research synthesis takes half the time. Slide drafts take a third of the time. Status update emails take minutes instead of an hour. This is real and valuable — but it\'s optimisation of the existing, not transformation of the output.\n\nThe consultants who are pulling ahead are doing something different. They\'re using the time AI saves on production to raise the analytical bar. Instead of presenting one issue tree, they\'re stress-testing three. Instead of one recommendation narrative, they\'re pressure-testing it against the strongest executive objections before the meeting. Instead of one competitive scenario, they\'re modelling five. The AI didn\'t make their analysis faster — it made their analysis bolder, because the analytical raw material is no longer limited by the time available.\n\n[concrete example placeholder — add a specific anonymised scenario from your practice here]\n\nThe practical implication: look at where AI has saved you time this week. What would you have done with those hours if you\'d been fully present for them? If the answer is "produced the same deliverable more efficiently," that\'s table stakes. If the answer is "explored two more hypotheses and arrived at the recommendation more confidently," that\'s the AI advantage that compounds.\n\nWhat does AI make you bolder to explore — and are you actually exploring it?',
+            },
+            insight: 'The AI-generated article uses generic language ("AI is transforming every industry") and predictable takes ("AI won\'t replace consultants who embrace it"). It is correct but forgettable — it could have been written by anyone. The practitioner-anchored draft starts from a specific and contrarian observation (faster vs. bolder), provides a structural contrast the reader can apply immediately, and leaves a placeholder for the consultant\'s specific experience to make it credible. The perspective came from the consultant; AI provided the production.',
+          },
+          applyThisWeek: {
+            action: 'Identify one observation from your consulting work that contradicts common advice or that you\'ve seen consistently misunderstood. Write two to three sentences capturing your distinctive view, then use AI to draft a LinkedIn post from that seed.',
+            promptTemplate: 'I want to write a [600-word article / LinkedIn post] for [audience: senior consultants / CFOs / strategy leaders] arguing this specific perspective from my experience: [write 2–3 sentences stating your distinctive view — something that challenges conventional wisdom or names a pattern you\'ve observed]. Structure: (1) a hook that challenges the conventional wisdom, (2) the observation from experience that supports my perspective, (3) a concrete contrast showing what this looks like in practice vs. the alternative approach, (4) one practical implication the reader can act on, (5) a closing question. Generate a draft I will edit to add specific examples from my own work.',
+            tool: 'Claude',
+          },
+          reflection: 'What is the most counterintuitive thing you have observed in your consulting career — a pattern that contradicts what business school or the conventional consulting playbook says should happen? That observation is the seed of your most valuable thought leadership. Have you ever written it down?',
           quiz: [
             {
               question: 'What is the primary risk of using AI to generate the ideas for thought leadership content?',
@@ -1405,6 +1927,35 @@ Pricing consulting services is an art, not a formula. Considerations for AI advi
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A potential client calls and says they want help with their "AI strategy." Without further information, which offering should you propose first?',
+            options: [
+              'A full AI strategy engagement — this is what the client asked for',
+              'An AI implementation programme — strategy without implementation is where consulting value is lost',
+              'An AI diagnostic — you need to understand their current state before recommending a strategy',
+              'An AI governance framework — governance is the foundation any AI strategy requires',
+            ],
+            correct: 2,
+            explanation: 'When a client says they want an "AI strategy," they have named the symptom (confusion about AI) not the diagnosis (where they actually are and what they actually need). A diagnostic identifies: their current AI maturity, the specific decisions they need to make, and whether the constraint is knowledge, governance, capability, or prioritisation. Without this, you risk designing a strategy for the wrong problem. Diagnostics also build the relationship credibility and context that makes the subsequent strategy engagement more successful.',
+          },
+          outputComparison: {
+            label: 'AI service pitch: generic capability claim vs. designed service offer',
+            vague: {
+              prompt: 'Write a pitch for AI advisory consulting services',
+              output: 'We offer comprehensive AI advisory services to help organisations navigate the rapidly evolving AI landscape. Our experienced consultants provide:\n\n• Strategic AI roadmaps aligned with your business objectives\n• Governance and risk frameworks\n• Implementation support and change management\n• ROI measurement and value tracking\n\nWith deep expertise across industries and a proven methodology, we help organisations move from AI aspiration to AI impact. Let us help you unlock the potential of AI for your business.',
+            },
+            improved: {
+              prompt: 'Design a pitch for a specific AI advisory service: a 4-week "AI Readiness Diagnostic" for UK mid-market manufacturing companies (250–2,000 employees) that want to understand where AI could create value in their operations but don\'t know where to start. Include: (1) the client problem in their language — what they say when they\'re stuck, (2) what the diagnostic covers — specifically, not generically, (3) what they receive at the end, (4) why they can\'t do this assessment themselves, (5) the price anchoring rationale, (6) what the diagnostic leads to next. Write as a one-page service description a partner could leave behind after a first meeting.',
+              output: 'AI Readiness Diagnostic — Manufacturing\nWhere does AI create real value in your operations — and where would it be a distraction?\n\nWhat we hear from manufacturers like you:\n"Everyone is talking about AI, and I\'m getting pressure from the board to have a position. But I don\'t know whether we should be automating our production line, improving our demand forecasting, or using AI in procurement. We\'ve had three vendor pitches in the last six months, all telling us different things."\n\nWhat the Diagnostic covers (4 weeks, 2 consultants):\nWeek 1: Operational mapping — we map your current workflows across production, supply chain, quality, and commercial operations to identify where manual effort, data bottlenecks, or decision complexity are highest.\nWeek 2: Opportunity scoring — we assess each identified opportunity against three criteria: value potential, data readiness, and implementation complexity. We rank the full opportunity set.\nWeek 3: Peer benchmarking — we identify 3–5 comparable manufacturers who have implemented AI in the highest-priority areas and assess what worked, what didn\'t, and what it cost.\nWeek 4: Findings and roadmap — we present a prioritised AI opportunity map with a 12-month implementation sequence and an investment estimate for each initiative.\n\nWhat you receive:\n• Prioritised AI opportunity map (12–15 evaluated opportunities)\n• Recommended 12-month roadmap with sequencing rationale\n• Investment estimates and expected ROI ranges for the top three priorities\n• A one-page brief you can use with your board\n\nWhy external:\nYour operational team knows your processes deeply but lacks the cross-industry AI implementation benchmarks to assess what\'s genuinely achievable. Your IT team can evaluate technology but not operational value. This diagnostic combines both.\n\nWhat comes next:\nMost clients proceed to a focused implementation programme on their top one or two opportunities. The diagnostic creates the decision quality to make that investment confidently rather than reactively.',
+            },
+            insight: 'The generic pitch could describe any consulting firm\'s AI services — it is undifferentiated and gives the client no reason to choose this firm or understand what they would receive. The designed service offer defines a specific client type (UK mid-market manufacturing), uses the client\'s own language to describe the problem, specifies exactly what the four-week diagnostic covers and produces, and explains both the external value and what comes next. A client reading the second version knows exactly what they\'d get and why they\'d pay for it.',
+          },
+          applyThisWeek: {
+            action: 'Design one AI diagnostic service offering for a client type you regularly work with. Define the client problem in their language, the specific scope, the deliverables, and the qualifying questions that tell you it\'s the right fit.',
+            promptTemplate: 'Design a [4–8] week AI diagnostic service for [target client type — sector, size] that want to understand [specific AI opportunity or challenge]. Include: (1) the client problem in their own language — what they say when they call, (2) the specific activities in the diagnostic — week by week, (3) the deliverables they receive at the end, (4) why they need external help rather than doing this internally, (5) the two or three qualifying questions that tell me in a first conversation whether this offering is the right fit, (6) what this diagnostic typically leads to as a follow-on engagement. Write as a service description I could leave behind after a first meeting.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a client that came to you with a request for "X" and it turned out what they actually needed was "Y." What was the diagnostic moment — the question, the observation, or the data point — that revealed the real problem? How could you systematise that diagnostic insight into a repeatable service?',
           quiz: [
             {
               question: 'Why should most consultants start their AI advisory practice with diagnostic services rather than strategy or implementation?',
@@ -1493,6 +2044,35 @@ Competitive advantage in consulting is built over years, not weeks. The AI-era v
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You have been using AI consistently for six months across multiple engagements. What is the most important thing you should have built by now that most colleagues who also use AI daily won\'t have?',
+            options: [
+              'Familiarity with the latest AI model releases',
+              'A refined prompt library calibrated through real engagement use that consistently produces high-quality outputs for your specific task types',
+              'Certification from an AI training programme',
+              'A larger network of AI-focused contacts',
+            ],
+            correct: 1,
+            explanation: 'The prompt library is the most underrated compounding asset in consulting AI use. A generic prompt produces generic outputs. A prompt refined across six engagements for a specific task type — issue tree development for SaaS businesses, competitive landscape for financial services M&A — produces consistently better outputs than anything a new AI user can generate. This library is proprietary, it grows with every engagement, and it cannot be replicated by someone who just signed up for a Claude subscription.',
+          },
+          outputComparison: {
+            label: 'AI staying-current practice: reactive tool chasing vs. structured learning system',
+            vague: {
+              prompt: 'How should I keep up with AI developments as a consultant?',
+              output: 'Here are some ways to stay current with AI:\n\n1. Follow AI news sources like TechCrunch and MIT Technology Review\n2. Subscribe to AI newsletters\n3. Follow AI researchers and companies on LinkedIn and Twitter\n4. Take online courses when new capabilities emerge\n5. Join professional communities focused on AI\n6. Experiment with new tools as they are released\n7. Attend conferences and webinars about AI\n\nThe key is to stay curious and engaged with the rapidly evolving landscape.',
+            },
+            improved: {
+              prompt: 'I am a consultant specialising in healthcare and life sciences strategy. Design a structured staying-current system for AI developments that is relevant to my practice area — not general AI news. The system should: (1) tell me what to monitor and how frequently, (2) distinguish between AI developments that are immediately applicable to my consulting work vs. those that are relevant to advising my healthcare clients, (3) require no more than 60 minutes per week, (4) produce a usable output I can apply to client work or internal conversations. Design it as a weekly and monthly practice I can actually maintain.',
+              output: 'Healthcare AI Staying-Current System (60 min/week)\n\nWeekly (20 minutes, Monday morning):\n• 10 min: Scan one source specifically for healthcare AI: NEJM AI, NHS AI Lab announcements, or Health Affairs AI section — look for: clinical AI regulatory decisions (MHRA/FDA), NHS procurement or pilot announcements, major health system deployments\n• 10 min: Run this prompt in Claude: "What are the most significant AI developments in healthcare and life sciences in the past two weeks that would be relevant to a strategy consultant advising [NHS trusts / pharmaceutical companies / medical device manufacturers — rotate weekly]? Focus on: regulatory decisions, commercial deployments, and failure cases. Summarise in five bullet points."\n• Output: One "AI development to mention" in your next relevant client conversation\n\nMonthly (40 minutes, first Friday):\n• 20 min: Review one piece of longer-form research on healthcare AI — McKinsey Healthcare AI report, Deloitte AI in Life Sciences, or NHS England AI strategy documents\n• 10 min: Update your client AI briefing template: add one new question about AI that you\'ll ask in client discovery conversations based on what you\'ve learned\n• 10 min: Update your prompt library with one refined prompt based on the past month\'s engagement use\n• Output: One insight you can use in a thought leadership post or internal briefing\n\nQuarterly (not counted in weekly hours):\n• Run your current engagement prompts and assess: are they producing the quality they did six months ago, or have AI capabilities improved enough to warrant updating?\n• Review whether any new tool has become genuinely relevant to healthcare consulting work — apply the test: "Would this tool change how I do a specific task on a client engagement?" If not, ignore it.',
+            },
+            insight: 'The generic advice produces a list of reactive consumption habits — following news, attending conferences — with no connection to consulting work or healthcare specifically. The designed system distinguishes between AI developments relevant to the consultant\'s own practice and those relevant to client advisory, sets a specific time budget, and produces an actionable output (the client question to add, the prompt to update) rather than just information consumed. The system compounds because each monthly update improves the tools used on the next engagement.',
+          },
+          applyThisWeek: {
+            action: 'Design your personal AI staying-current system. Define: what to monitor (specific to your practice area), how frequently, the time budget, and what usable output it produces for your client work.',
+            promptTemplate: 'I am a consultant specialising in [practice area / sector]. Design a structured staying-current system for AI developments relevant to my work. Requirements: (1) distinguish between AI developments applicable to my own consulting workflow vs. those relevant to advising my [sector] clients, (2) maximum [X] minutes per week, (3) specific sources to monitor (not generic "stay curious" advice), (4) a weekly prompt I can run to get a curated AI briefing for my practice area, (5) a monthly practice that updates my prompt library and client advisory knowledge. Make it a system I can actually maintain, not an aspiration.',
+            tool: 'Claude',
+          },
+          reflection: 'Look at your consulting work over the past six months. Where has your analytical output actually improved because of AI — not just become faster, but become genuinely better or bolder? And where are you still doing the same analysis the same way, just with AI as a faster typist? What would it take to move the second category into the first?',
           quiz: [
             {
               question: 'What distinguishes a consultant\'s AI competitive advantage from access to AI tools?',

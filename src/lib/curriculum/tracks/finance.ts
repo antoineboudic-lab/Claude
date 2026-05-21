@@ -68,6 +68,35 @@ The finance professional's role shifts toward: asking better questions of AI, in
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A colleague says AI will soon replace junior finance analysts entirely because it can process data faster. What is the most accurate response?',
+            options: [
+              'Agreed — AI already handles all the analytical work junior analysts do',
+              'AI accelerates the groundwork (summarising, drafting, structuring) but judgment, accountability, and novel situations remain human responsibilities',
+              'Junior analysts are safe because AI cannot access financial databases',
+              'AI only affects senior roles — junior work is too routine to be automated',
+            ],
+            correct: 1,
+            explanation: 'AI is genuinely changing the mix of tasks in finance roles — accelerating documentation, research synthesis, and narrative drafting. But the judgment layer — interpreting what analysis means for a specific business, making recommendations under uncertainty, and being accountable for financial decisions — remains distinctly human. Junior analysts who learn to work with AI become more strategically valuable, not redundant.',
+          },
+          outputComparison: {
+            label: 'Why context changes everything — see it in action',
+            vague: {
+              prompt: 'What tasks can AI help with in finance?',
+              output: 'AI can help finance professionals with many tasks including data analysis, report writing, forecasting, and risk assessment. It can process large amounts of data quickly and help automate repetitive tasks. AI tools like ChatGPT can assist with various finance functions to improve efficiency and productivity.',
+            },
+            improved: {
+              prompt: 'I am a finance business partner at a mid-size UK manufacturer. My time is split between monthly management accounts commentary (3 hours), board pack narrative sections (2 hours), summarising analyst reports for the CFO (1.5 hours), and ad hoc data requests (variable). Which of these tasks would benefit most from AI, and what would I need to provide to get useful output for each?',
+              output: 'Based on your time breakdown, here is the priority order:\n\n1. Management accounts commentary (3 hrs) — highest ROI. Provide the variance table, the three drivers you already know, the audience, and the tone. AI drafts in minutes; you verify and add operational context. Expect to cut this to under 1 hour.\n\n2. Analyst report synthesis (1.5 hrs) — near-complete automation. Paste the reports and ask for: consensus view, biggest disagreement, and key catalysts. Review takes 15 minutes.\n\n3. Board pack narrative (2 hrs) — 50-60% reduction. Structure the narrative arc with AI first, then draft section by section. Your judgment on what the board needs to hear stays essential.\n\n4. Ad hoc data requests — lower priority, as these require your direct operational knowledge.',
+            },
+            insight: 'The vague prompt produces generic marketing copy. The specific prompt produces a prioritised action plan calibrated to this professional\'s actual workflow. The difference is role, task breakdown, and time allocation — context that lets AI give genuinely useful advice instead of a list of capabilities.',
+          },
+          applyThisWeek: {
+            action: 'List every significant task you completed this week and mark each D (documentation), A (analysis), R (research), or J (judgment/relationship). Use AI to draft one D or R task from scratch and note how much editing it needs.',
+            promptTemplate: 'I am a [your finance role] at a [business type]. My task is to [specific task description]. I will provide [what you\'ll paste in]. Please produce [specific output format] in a [tone] tone suitable for [audience].',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'Think about the last time you stayed late to finish a finance task. Was the bottleneck the judgment and interpretation — or the writing, summarising, and structuring that surrounded it? Which part would AI have handled?',
           quiz: [
             {
               question: 'Which finance task is MOST suited to AI assistance?',
@@ -172,6 +201,35 @@ Before using any AI tool with financial data, classify the data:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A finance analyst wants to use ChatGPT to analyse a spreadsheet with customer revenue data to help write a sales report. What is the correct first step?',
+            options: [
+              'Upload the spreadsheet immediately — ChatGPT is GDPR-compliant',
+              'Remove the customer names and then upload — anonymisation is sufficient',
+              'Check the organisation\'s AI data policy to determine whether this data is approved for use in ChatGPT',
+              'Only upload if the customer count is under 50',
+            ],
+            correct: 2,
+            explanation: 'Customer revenue data is typically classified as confidential regardless of whether names are removed. The correct first step is always to check your organisation\'s AI data policy and determine which tools are approved for which data categories. Many organisations have enterprise versions of AI tools with appropriate data agreements — but using an unapproved tool with confidential data can constitute a policy or regulatory breach.',
+          },
+          outputComparison: {
+            label: 'Why tool selection and data context matter — see it in action',
+            vague: {
+              prompt: 'Analyse this financial data and tell me what\'s interesting.',
+              output: 'Looking at your data, I can see there are various numbers and figures. Revenue appears to fluctuate across different periods. Some months are higher than others. Overall, the data shows mixed performance with some positive and negative trends. You might want to investigate the causes of these variations further.',
+            },
+            improved: {
+              prompt: 'I\'m analysing 12 months of revenue data for a UK B2B SaaS business (data pasted below). Column A is the month, Column B is new ARR (£000s), Column C is expansion ARR (£000s), Column D is churned ARR (£000s). Month 9 includes a one-off £120K deal that should be excluded from trend analysis. Identify: (1) the net ARR growth trend, (2) whether expansion or new logo acquisition is driving growth, and (3) the month of most anomalous churn and likely explanation.',
+              output: 'Net ARR growth trend: positive but decelerating — net new ARR averaged £85K/month in months 1-6 and £52K/month in months 7-12 (excluding month 9 one-off).\n\nGrowth driver: expansion revenue is doing the heavy lifting. Expansion ARR averaged £67K/month vs new logo ARR at £31K/month — suggesting strong product-market fit with existing customers but slower new acquisition.\n\nChurn anomaly: Month 11 shows churned ARR of £180K vs a 6-month average of £45K. This is likely a single large customer departure — worth investigating whether this is related to the deceleration in new logo acquisition (pipeline quality) or an isolated event.',
+            },
+            insight: 'The vague prompt produces observations with no analytical value. The specific prompt — with column definitions, currency, period, and a flagged anomaly — produces actionable insight about growth deceleration, where growth is coming from, and a specific churn event to investigate. Same data, completely different output.',
+          },
+          applyThisWeek: {
+            action: 'Map your five most common finance tasks to the right AI tool using the data classification test: Public (any tool), Internal (enterprise or policy-approved tool), Confidential (check policy first). Test one Public task this week.',
+            promptTemplate: 'I\'m a [finance role] working on [task description]. The data involved is [public / internal / non-confidential]. Using [Claude / ChatGPT], help me [specific output needed] based on the following [data or context]: [paste].',
+            tool: 'ChatGPT or Claude',
+          },
+          reflection: 'What financial data do you work with most often — and have you ever thought about how it would be classified under your organisation\'s data policy? What would you do differently if you knew a task involved confidential data?',
           quiz: [
             {
               question: 'Which AI tool is best suited for analysing a 60-page offering memorandum and extracting key financial terms and risk factors?',
@@ -267,6 +325,35 @@ Any specific number in an AI output that will appear in an external document mus
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An AI tool confidently states that a competitor\'s gross margin improved by 340 basis points last quarter. What should you do before including this in a board presentation?',
+            options: [
+              'Trust it — AI is trained on large financial datasets and tends to be accurate with metrics',
+              'Include it but add a footnote saying the figure is AI-sourced',
+              'Verify the figure against the competitor\'s published financial statements before using it anywhere',
+              'Only use it for internal analysis, not external presentations',
+            ],
+            correct: 2,
+            explanation: 'LLMs can state specific financial figures with complete confidence even when those figures are hallucinated or outdated. The number sounds plausible — which makes it dangerous in a board context. Any specific figure that will appear in an external document must be verified against a primary source (published accounts, regulatory filings) before inclusion. The cost of verification is minutes; the cost of an incorrect number in a board pack is significant.',
+          },
+          outputComparison: {
+            label: 'Why data context prevents analysis errors — see it in action',
+            vague: {
+              prompt: 'Here\'s my revenue data. What are the trends? [pastes table with no labels or context]',
+              output: 'Looking at your data, the numbers show an overall upward trend with some variation. The highest value appears in position 7 and there is a notable dip around position 4. Overall the trajectory appears positive, though there is some volatility worth monitoring. The data suggests growth is occurring, particularly in the second half of the dataset.',
+            },
+            improved: {
+              prompt: 'Here is 12 months of revenue data for our business (Jan-Dec 2024, GBP thousands). Column A: month, Column B: recurring subscription revenue, Column C: professional services revenue, Column D: total revenue. Note: Month 4 includes a one-off £180K professional services project that should be excluded from trend analysis. Identify (1) the underlying subscription revenue trend, (2) the month-on-month growth rate for recurring revenue, and (3) whether professional services revenue is trending up or down when the Month 4 anomaly is excluded.',
+              output: 'Subscription revenue (Column B) shows consistent month-on-month growth averaging 3.2% — an annualised rate of approximately 46%. This is a strong underlying trend.\n\nProfessional services (Column C), excluding the Month 4 one-off of £180K, averages £42K/month with no clear directional trend — relatively flat with normal variability.\n\nTotal revenue growth has been driven almost entirely by the subscription line, which is a positive signal for recurring revenue quality. The Month 4 spike would significantly distort a straight-line trend analysis if not excluded — flagging it was the right call.',
+            },
+            insight: 'The vague prompt produces meaningless positional references ("position 7") with no analytical value. The specific prompt — with column definitions, currency, period, and a flagged anomaly — produces a genuine trend analysis with actionable conclusions. Labelling your data is the single highest-leverage preparation step.',
+          },
+          applyThisWeek: {
+            action: 'Take a dataset you\'ve already reviewed manually this month and paste it into Claude with full context labels, period, currency, and any known anomalies. Ask for the four-point analysis: trends, anomalies, correlations, and causal hypotheses. Note what it found that you hadn\'t.',
+            promptTemplate: 'Here is [description of dataset] covering [period] in [currency/units]. Column definitions: [list each]. Note: [any known anomalies or one-off items]. Please identify: (1) the main trend, (2) any anomaly, (3) any correlation between columns, and (4) the three most plausible explanations for [specific pattern you want explained].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a time you included a number in a report that later turned out to be wrong. Where did the error come from — source data, calculation, or assumption? How would you catch that same error if it came from an AI tool rather than your own spreadsheet?',
           quiz: [
             {
               question: 'When providing financial data to an AI for analysis, what is the most important preparatory step?',
@@ -357,6 +444,35 @@ AI can perpetuate and amplify biases in financial analysis. If training data ref
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your firm is considering using a consumer AI tool to help draft commentary for an M&A transaction you\'re advising on. What is the primary concern?',
+            options: [
+              'Consumer AI tools produce lower-quality M&A analysis than specialised tools',
+              'The transaction details constitute material non-public information — entering them into a consumer AI tool creates serious data leakage and regulatory risk',
+              'M&A commentary is too complex for AI tools to handle accurately',
+              'There is no concern if the AI tool is used only for drafting, not final analysis',
+            ],
+            correct: 1,
+            explanation: 'Material non-public information (MNPI) — target company names, deal terms, unreleased financials — must never enter consumer AI tools. Prompt data may be stored, reviewed by provider staff, or used for model training. This creates regulatory risk under market abuse and insider dealing regulations. Only tools explicitly approved by legal for MNPI use, with appropriate data isolation, should be used for any confidential transaction work.',
+          },
+          outputComparison: {
+            label: 'Why compliance framing changes AI output quality — see it in action',
+            vague: {
+              prompt: 'What are the compliance rules for using AI in finance?',
+              output: 'When using AI in finance, there are several compliance considerations. You should ensure data privacy, follow GDPR regulations, and check with your legal team. AI outputs should be reviewed before use. Financial institutions should have policies in place for AI usage. Always verify AI-generated information and maintain appropriate documentation.',
+            },
+            improved: {
+              prompt: 'I am a finance manager at a UK-listed company. I want to use Claude to help draft the variance commentary for our quarterly investor report. The data I would paste in includes: period revenue and EBITDA figures, budget comparisons, and known variance drivers — all of which are pre-published or will be published in this report. What compliance obligations apply to this use case, and what specific safeguards should I put in place?',
+              output: 'For this specific use case — drafting commentary for figures that will be publicly released — the main compliance obligations are:\n\n1. Accuracy responsibility: You remain professionally accountable for every figure in the investor report regardless of how the commentary was drafted. Verify every AI-generated number against your source data before submission.\n\n2. Documentation: Note in your working papers that commentary was AI-assisted and reviewed by [your name and date]. This creates an audit trail consistent with your existing documentation standards.\n\n3. Data sensitivity: The figures are pre-public, which reduces concern — but confirm with your legal team that using these figures in Claude falls within your approved AI tool list before the first use.\n\n4. Review gate: No AI-assisted text should flow into the investor report without a finance team member reading and signing off every paragraph.\n\nThis is a reasonable and relatively low-risk use case, provided these four safeguards are in place.',
+            },
+            insight: 'The vague prompt produces generic compliance boilerplate. The specific prompt — with role, use case, data type, and output destination — produces actionable guidance that a finance professional can actually implement. Compliance advice is only useful when it is calibrated to the specific situation.',
+          },
+          applyThisWeek: {
+            action: 'Locate your organisation\'s AI or data policy (or IT acceptable use policy). Identify which data categories are defined and which AI tools are explicitly approved. For your most common AI use case, confirm it is within approved boundaries.',
+            promptTemplate: 'Draft a [one-page / five-point] AI use policy for a [finance team / FP&A function / CFO office] covering: (1) data classification tiers and which AI tools apply to each, (2) review and verification requirements before external publication, (3) documentation standard for AI-assisted work, (4) prohibited uses, and (5) tool approval process. Make it practical and usable, not legalese.',
+            tool: 'Claude',
+          },
+          reflection: 'If your manager asked you to explain exactly how and where you used AI in producing this month\'s management accounts, could you give a clear, confident answer? What would change about how you document your work if that question were asked routinely?',
           quiz: [
             {
               question: 'A finance analyst uses ChatGPT to help write the variance commentary for the quarterly investor report, and includes one AI-generated figure without verifying it. The figure is later found to be incorrect. Who is responsible?',
@@ -461,6 +577,35 @@ This logic-check step catches structural errors before you build on a flawed fou
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'re building a three-year P&L forecast for a subscription business. When in the process does AI add the most value?',
+            options: [
+              'Entering formulas and populating the spreadsheet with numbers',
+              'Designing the model structure, generating assumption sets with rationale, and checking model logic before building in Excel',
+              'Formatting the spreadsheet with colour-coded tabs and consistent fonts',
+              'Running IFRS compliance checks on the completed model',
+            ],
+            correct: 1,
+            explanation: 'The highest-value AI contribution in financial modelling is at the design stage — before any numbers are entered. A model built on a flawed structure requires expensive rebuilding. AI can generate a complete model blueprint, three-scenario assumption sets with explicit rationale, and a logic check on your key formulas in the time it would otherwise take to sketch the structure on paper.',
+          },
+          outputComparison: {
+            label: 'Why model design context produces better blueprints — see it in action',
+            vague: {
+              prompt: 'Help me build a financial model for a SaaS business.',
+              output: 'For a SaaS financial model, you\'ll want to include revenue projections, costs, and profitability metrics. Key metrics for SaaS include MRR, ARR, churn rate, and customer acquisition costs. Your model should have tabs for assumptions, P&L, cash flow, and balance sheet. Make sure to include sensitivity analysis for key variables.',
+            },
+            improved: {
+              prompt: 'I need to build a three-year P&L forecast for a B2B SaaS business with £1.8M ARR, 8% monthly churn, an average contract value of £24K per year, 75% gross margin, and £1.1M annual fixed operating costs. The model will be used to support a Series A fundraise. Generate: (1) a recommended tab structure, (2) the 8 key input assumptions with current values and plausible ranges, (3) the 5 calculated outputs investors will focus on, and (4) the 3 most important sensitivity variables to include in the model.',
+              output: 'Tab structure: Assumptions → Revenue Build (logo count, expansion, churn) → P&L → Cash Flow → Scenarios → Outputs Summary.\n\nKey assumptions (with current values and ranges):\n- New logo acquisition/month: [current: X] range: 3-8\n- Monthly gross churn: 8% (range: 5-12%)\n- Average contract value: £24K (range: £18K-£32K with mix shift)\n- Expansion revenue rate: [define %] range: 10-25% of existing ARR\n- Gross margin: 75% (range: 70-80% depending on CS scaling)\n- Sales & marketing as % of revenue: [define] range: 30-50% for growth stage\n- G&A fixed cost growth: 15% annually (range: 10-20%)\n- R&D as % of revenue: [define] range: 15-25%\n\nInvestor-focused outputs: ARR growth, net revenue retention, CAC payback period, Rule of 40, months to cash breakeven.\n\nTop 3 sensitivities: monthly churn (±2%), new logo acquisition rate (±2/month), ACV expansion rate (±10%).',
+            },
+            insight: 'The vague prompt produces a generic SaaS model checklist any textbook could provide. The specific prompt — with actual business metrics, funding context, and output purpose — produces a model blueprint calibrated to this company\'s specific situation, with ranges investors will actually scrutinise. The inputs to the prompt are the model design work.',
+          },
+          applyThisWeek: {
+            action: 'Before opening Excel for your next model, spend 20 minutes writing a 100-word business description and running the model design prompt. Compare the AI-suggested structure with what you would have built instinctively. Note any structural elements you hadn\'t considered.',
+            promptTemplate: 'I need to build a [type of model] for a [business description] with these key metrics: [list current figures]. The model will be used for [purpose: board review / fundraise / budget]. Generate: (1) recommended tab structure, (2) [number] key input assumptions with current values and plausible ranges, (3) the calculated outputs [audience] will focus on, and (4) the top 3 sensitivity variables.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a financial model you built that took longer than expected or needed significant rework. Was the delay in the design phase, the build phase, or the assumption-setting? Would starting with an AI-generated blueprint have changed the outcome?',
           quiz: [
             {
               question: 'What is the highest-value use of AI in the early stages of financial model building?',
@@ -562,6 +707,35 @@ Different audiences need different registers.`,
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You ask AI to write variance commentary for your management accounts. The output correctly states the numbers but explains that "increased marketing spend drove the cost overrun." You know the real cause was an unbudgeted team offsite. What should you do?',
+            options: [
+              'Use the AI explanation — it\'s plausible and close enough for internal reporting',
+              'Ask AI to guess the real cause based on the other numbers in the table',
+              'Replace the AI explanation with the correct operational context — the offsite — and quantify it',
+              'Remove the explanation entirely and leave the numbers to speak for themselves',
+            ],
+            correct: 2,
+            explanation: 'AI generates explanations based on plausible inference from the numbers it can see — not knowledge of what actually happened. A board reader who trusts the commentary would believe marketing drove the overrun, which has different implications for future budget decisions than an unbudgeted offsite. Correcting AI explanations with accurate operational context is not optional — it is the finance professional\'s core contribution to the variance commentary process.',
+          },
+          outputComparison: {
+            label: 'Why variance drivers transform commentary quality — see it in action',
+            vague: {
+              prompt: 'Write variance commentary for October. Revenue was £1.2M vs £1.4M budget.',
+              output: 'October revenue of £1.2M was £200K below the budgeted £1.4M, representing a 14.3% adverse variance. Revenue underperformed due to lower than expected sales activity during the period. Market conditions may have contributed to the shortfall. Management should review the sales pipeline to identify opportunities to recover the variance in the remaining months of the year.',
+            },
+            improved: {
+              prompt: 'Write three-paragraph variance commentary for October management accounts. Audience: CFO. Tone: direct and analytical, no hedging. Data: Revenue £1.2M vs £1.4M budget (£200K adverse). Known drivers: (1) Enterprise deal with Meridian Group delayed to November — worth £150K, procurement process extension notified 14 October. (2) Two new SMB customers onboarded mid-month, contributing £47K. (3) Budget assumed 3 new enterprise wins; we won 1. Format: Para 1 = overall position, Para 2 = driver decomposition with numbers, Para 3 = outlook and action.',
+              output: 'October revenue of £1.2M was £200K (14%) below budget, driven by a delayed enterprise close and partially offset by stronger-than-expected SMB acquisition.\n\nThe £200K adverse variance decomposes as follows: the Meridian Group enterprise deal (£150K) was delayed into November following a procurement review extension notified on 14 October. Two new SMB customers contributed £47K in their first partial month. The net position reflects an enterprise pipeline miss — we budgeted 3 new enterprise wins in October and closed 1.\n\nNovember forecast assumes the Meridian deal closes as now scheduled, which would recover £150K of the October slip. The remaining £50K gap is expected to be closed through the existing SMB pipeline. No revision to full-year guidance is proposed at this stage.',
+            },
+            insight: 'The vague prompt produces analysis-free commentary that could describe any business in any month. The specific prompt — with named drivers, exact amounts, and audience tone — produces commentary that a CFO can actually act on. The only difference is the three known drivers you provided before prompting.',
+          },
+          applyThisWeek: {
+            action: 'Before writing your next variance commentary, spend 5 minutes writing down the three actual drivers you know caused the main variances. Use these as the core input to the AI prompt and compare the output quality to what you\'d have written from scratch.',
+            promptTemplate: 'Write [number]-paragraph variance commentary for [period] management accounts. Audience: [CFO / Board / Finance team]. Tone: [direct / measured / technical]. Data: [metric] was [actual] vs [budget] ([variance] [favourable/adverse]). Known drivers: (1) [driver + amount], (2) [driver + amount], (3) [driver + amount]. For any unexplained variance, note it as "under investigation" — do not generate an explanation. Format: Para 1 = overall position, Para 2 = driver decomposition, Para 3 = outlook and action.',
+            tool: 'Claude',
+          },
+          reflection: 'When you write variance commentary, how much of your time goes on the writing versus identifying what actually caused the variances? If AI could handle the writing in minutes, would that change which part of the process you invest more time in?',
           quiz: [
             {
               question: 'What is the single most important input to provide when asking AI to write variance commentary?',
@@ -656,6 +830,35 @@ This generates hypotheses you can test — turning a data curiosity into an inve
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'AI flags an anomaly in your expense data for Month 14. The month shows costs 3x higher than the prior 6-month average. What is the correct next step?',
+            options: [
+              'Accept the flagged anomaly as a confirmed finding and escalate it immediately to the CFO',
+              'Discard the finding — anomaly detection algorithms produce too many false positives to be useful',
+              'Pull the underlying transactions for Month 14, identify the actual cause, and then ask AI to generate hypotheses to guide your investigation',
+              'Ask AI to remove the anomaly from the trend data so it doesn\'t distort the analysis',
+            ],
+            correct: 2,
+            explanation: 'An AI-flagged anomaly is a hypothesis, not a finding. The correct response is to investigate: pull the actual transactions for that month to understand what drove the spike. Once you have the raw data, asking AI for likely hypotheses structures your investigation — but the validation requires you to check the source. Escalating without investigation risks mischaracterising a legitimate business event (a large annual payment, a year-end accrual) as a problem.',
+          },
+          outputComparison: {
+            label: 'Why structured pattern analysis finds what manual review misses — see it in action',
+            vague: {
+              prompt: 'Look at my revenue data and tell me if there are any patterns.',
+              output: 'Looking at your revenue data, I can see that revenue varies from month to month. There appear to be some months that are higher and some that are lower. Overall the trend seems generally positive with some fluctuations. You might want to investigate the months that show lower revenue to understand what caused the variations.',
+            },
+            improved: {
+              prompt: 'Here is 24 months of monthly revenue data by product line for our B2B services business (Jan 2023 - Dec 2024, GBP thousands). Three product lines: Consulting, Managed Services, and Software Licences. Identify: (1) any trend consistently strengthening or weakening for more than 3 consecutive periods, (2) any seasonal pattern within the year, (3) any correlation between product lines — when one declines, does another rise?, and (4) the single most anomalous month and why it stands out. For each finding, explain what business hypothesis it suggests and what data would confirm it.',
+              output: 'Strengthening trend: Managed Services has grown for 7 consecutive months (June-December 2024), accelerating from £85K to £134K. This suggests a deliberate shift or successful upsell motion — worth examining whether a pricing change or sales focus change coincides.\n\nSeasonal pattern: Consulting revenue peaks in Q1 (January) and Q3 (July) with consistent Q2 and Q4 dips. This is classic professional services seasonality — clients begin projects at fiscal year-start and mid-year.\n\nCorrelation: When Consulting declines, Software Licences tend to rise (correlation visible in Q2 2023, Q2 2024). This may indicate consultants recommending software during engagements — a potential cross-sell signal worth investigating.\n\nMost anomalous month: March 2024 — Consulting revenue £310K vs 12-month average of £145K. Likely a large one-off engagement. If not already excluded from trend analysis, this will distort any growth rate calculation.',
+            },
+            insight: 'The vague prompt produces content-free observations. The specific prompt — with column definitions, period, and four structured questions — produces four genuine findings with testable business hypotheses. The cross-sell correlation and the seasonal pattern are exactly the type of insight that manual review normalises away over time.',
+          },
+          applyThisWeek: {
+            action: 'Export 12 months of any financial time series you track (revenue by product, costs by category, or headcount) and run the four-point pattern analysis: trends, seasonality, correlations, and most anomalous period. Note the one finding that surprises you most.',
+            promptTemplate: 'Here is [number] months of [metric] data for [business description] ([period], [currency/units]). The data has [number] series: [list and define each]. Note: [any known one-off items to flag]. Identify: (1) any trend consistently strengthening or weakening for 3+ consecutive periods, (2) any seasonal pattern, (3) any correlation between series, and (4) the most anomalous period. For each finding, state the business hypothesis it suggests and what data would confirm it.',
+            tool: 'Claude',
+          },
+          reflection: 'Is there a gradual trend in your financial data that you\'ve stopped questioning because it\'s been happening slowly for months? What would it mean for the business if that trend continued for another 12 months unchecked?',
           quiz: [
             {
               question: 'What is the main advantage of AI pattern recognition in financial data over human review?',
@@ -748,6 +951,35 @@ You can then build the specific spreadsheet analysis with confidence that you\'r
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your CFO asks you to present three budget scenarios. You present base, upside, and stress cases with different revenue numbers but identical underlying assumptions. What is the most important thing missing?',
+            options: [
+              'A probability weighting for each scenario',
+              'A different exchange rate assumption for each scenario',
+              'Each scenario needs a single, differentiated key assumption that explains why the outcomes differ — not just different numbers',
+              'A fourth scenario showing the breakeven position',
+            ],
+            correct: 2,
+            explanation: 'Three scenarios with different numbers but identical assumptions are not really scenarios — they are sensitivity outputs. A credible scenario has a named, differentiated key assumption: what specific condition makes the upside possible? What specific risk drives the stress case? Boards and investors expect scenarios grounded in specific, named assumptions that they can evaluate and challenge. Without the differentiated assumption, the scenarios have no analytical substance.',
+          },
+          outputComparison: {
+            label: 'Why assumption-driven scenarios are more credible than number-driven ones — see it in action',
+            vague: {
+              prompt: 'Give me three scenarios for my FY26 budget: base, upside, and downside.',
+              output: 'Here are three scenarios for your FY26 budget:\n\nBase case: Revenue grows 15%, costs increase 10%, EBITDA margin 18%.\n\nUpside case: Revenue grows 25%, costs increase 12%, EBITDA margin 22%.\n\nDownside case: Revenue grows 5%, costs increase 8%, EBITDA margin 12%.\n\nThese scenarios reflect different levels of business performance and can be used for planning purposes.',
+            },
+            improved: {
+              prompt: 'Build three FY26 budget scenarios for a UK B2B software company with £4.2M ARR, 115% NRR, and 18 months runway. Key uncertainties: enterprise sales cycle length, churn rate among SMB customers, and planned headcount expansion pace. For each scenario: (1) the single differentiating assumption, (2) the specific inputs that change (list each), (3) revenue and EBITDA outcomes, and (4) the probability I should assign. Include the assumption interrogation: what would have to be true for each differentiating assumption to hold?',
+              output: 'Base case (55% probability): Differentiating assumption — enterprise sales cycle holds at 90 days. Inputs: 4 new enterprise logos/quarter, SMB churn 1.2%/month, 6 net new hires in H1. Revenue: £5.8M (+38%). EBITDA: -£420K (investing in growth). What must be true: pipeline quality maintained, no procurement freezes at target accounts.\n\nUpside case (25% probability): Differentiating assumption — NRR expands to 125% driven by two enterprise expansion deals. Inputs: existing customer expansion adds £380K incremental ARR, SMB churn holds at 0.8%/month. Revenue: £6.4M (+52%). EBITDA: £110K breakeven. What must be true: two named accounts (Hargreaves, Stellantis) expand as anticipated in Q2.\n\nStress case (20% probability): Differentiating assumption — SMB churn spikes to 2.5%/month in H1 as customers face budget pressure. Inputs: net ARR growth stalls at £90K/month, enterprise pipeline extends by 30 days, hiring frozen. Revenue: £4.9M (+17%). EBITDA: -£890K. What must be true: economic conditions tighten and SMB budget freeze mirrors 2022 pattern.',
+            },
+            insight: 'The vague prompt produces three rows of different percentages with no analytical substance. The specific prompt produces scenarios that a CFO can challenge, defend, and plan against — because each has a named assumption, specific input changes, and the explicit conditions under which it would materialise. The assumption interrogation is what separates financial planning from guessing.',
+          },
+          applyThisWeek: {
+            action: 'For your next budget or forecast cycle, run the three-scenario design prompt before opening Excel. Focus on defining one differentiated key assumption per scenario, then run the assumption interrogation: "what would have to be true?" Validate each answer against your operational knowledge.',
+            promptTemplate: 'I\'m building three scenarios for [purpose: budget / forecast / board presentation] for a [business description] with these current metrics: [list key figures]. Key uncertainties: [list 2-3 variables]. For each scenario (base, upside, stress): (1) the single differentiating assumption, (2) the inputs that change, (3) revenue and [EBITDA / cash / margin] outcomes, and (4) estimated probability. For the base case, include: what would have to be true for each key assumption to hold?',
+            tool: 'Claude',
+          },
+          reflection: 'When your organisation presents financial scenarios to the board or leadership team, are the scenarios grounded in named, specific assumptions — or are they just different percentages applied to the same model? What would change about how leadership makes decisions if scenarios were more assumption-driven?',
           quiz: [
             {
               question: 'What makes a "stress scenario" different from a "base scenario" in a financial plan?',
@@ -854,6 +1086,35 @@ The best AI-assisted reports are structurally consistent (easier to read for reg
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'re building an AI prompt template for your monthly management accounts commentary. Which instruction is most critical to include to prevent the highest-risk AI behaviour in financial reporting?',
+            options: [
+              'Instructions to use formal language and avoid contractions throughout',
+              'Instructions to include all variances regardless of their materiality',
+              '"Do not explain any variance I have not provided a driver for — note unexplained items as under investigation"',
+              'Instructions to compare current period to the same period last year',
+            ],
+            correct: 2,
+            explanation: 'Without this instruction, AI fills unexplained variances with plausible-sounding but fabricated explanations. A made-up explanation for a variance can pass undetected, be accepted by the CFO, and create a false shared understanding of what\'s driving business performance. This is the most dangerous AI behaviour in financial reporting — more dangerous than a factual error, because the explanation sounds credible. Explicitly instructing AI not to explain what you haven\'t explained is the critical safeguard.',
+          },
+          outputComparison: {
+            label: 'Why a template prompt produces better reports faster — see it in action',
+            vague: {
+              prompt: 'Write the management accounts commentary for this month. Here are the numbers: [pastes table].',
+              output: 'This month\'s management accounts show mixed performance across the business. Revenue came in slightly below expectations while costs were generally in line with budget. The main areas of variance were in the sales function and operations. Overall, the business continues to perform in a challenging environment and management is focused on improving results in the coming months.',
+            },
+            improved: {
+              prompt: 'I\'m producing our monthly management accounts commentary. Period: November 2024. Audience: CFO. Format: three sections — (1) Executive Summary (2 sentences), (2) Revenue Variance (one paragraph, active language, specific drivers), (3) Cost Variance (one paragraph, active language, specific drivers). Tone: direct, no passive voice, no hedging. Data: Revenue £1.35M vs £1.5M budget (£150K adverse). Known revenue drivers: (1) Retail sector customers delayed Q4 orders — £120K slip, (2) New contract with Farrow & Sons signed 28 November — first invoice in December. Cost: £980K vs £1.0M budget (£20K favourable). Known cost driver: headcount hire delayed by 6 weeks — £25K underspend on salary, partially offset by £5K consultancy overspend. DO NOT explain any variance I have not listed — note as "under investigation."',
+              output: 'Executive Summary: November revenue of £1.35M was £150K below budget, driven by a sector-wide delay in retail customer purchasing. Costs came in £20K favourable following a hiring delay.\n\nRevenue variance: Revenue underperformed budget by £150K (10% adverse). The primary driver was order delays from retail sector customers, who pushed £120K of expected Q4 orders into December and January amid year-end budget constraints. A new contract with Farrow & Sons was signed on 28 November; the first invoice of £35K will recognise in December.\n\nCost variance: Costs were £20K favourable against budget. A six-week delay in filling the Head of Operations role produced a £25K salary underspend, partially offset by £5K in additional consultancy cover. No other material variances to note.',
+            },
+            insight: 'The vague prompt produces empty prose that communicates nothing. The template prompt — with format, sections, audience, tone, specific drivers, and the critical "do not fabricate" instruction — produces commentary a CFO can read in 90 seconds and act on. The template does the structural thinking once; you only update the data and drivers each month.',
+          },
+          applyThisWeek: {
+            action: 'Build one prompt template for your most time-consuming recurring report. Test it with last month\'s data. Save it in a document titled "Finance AI Prompt Library" with the date tested. Use it next month and note how much time you saved.',
+            promptTemplate: 'I\'m producing our [report name]. Period: [month/quarter]. Audience: [CFO / Board / Finance team]. Format: [describe your standard sections]. Tone: [direct / measured / technical]. Data: [paste your variance table]. Known drivers: [list each driver with the associated amount]. DO NOT explain any variance I have not listed — note unexplained items as "under investigation." Output must be under [word count].',
+            tool: 'Claude',
+          },
+          reflection: 'Which recurring report do you find most tedious to write each month — not because the analysis is hard, but because the writing is mechanical? What would you do with the time freed if that report took 20 minutes instead of 90?',
           quiz: [
             {
               question: 'What is the most important instruction to include in a prompt for AI-assisted variance commentary?',
@@ -945,6 +1206,35 @@ Boards are decision-making bodies. Every slide should either inform a decision o
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'re preparing a board financial presentation. Your cash slide shows the 12-month cash balance trend chart and a waterfall for the quarter. What is most likely missing?',
+            options: [
+              'A second chart showing cash as a percentage of monthly costs',
+              'A clear implication or recommendation — what should the board think or do because of this data?',
+              'A comparison with the same quarter last year',
+              'A technical footnote explaining the cash flow calculation methodology',
+            ],
+            correct: 1,
+            explanation: 'Boards are decision-making bodies, not information-receiving audiences. A cash slide that shows data without stating the implication — "at current burn rate, cash runway is 5 months; management recommends X action by Y date" — forces board members to do the interpretive work themselves. The "so what" is what converts a data slide into a decision-support slide. Every board slide should communicate one clear implication or recommendation.',
+          },
+          outputComparison: {
+            label: 'Why narrative structure transforms board presentations — see it in action',
+            vague: {
+              prompt: 'Help me prepare a board presentation on our Q3 financials.',
+              output: 'For your Q3 board presentation, I recommend covering the following: overview of financial performance, revenue analysis, cost analysis, cash flow statement, key financial metrics, and outlook for Q4. Include charts and graphs where possible. Make sure all numbers are accurate and clearly labelled. The presentation should be professional and easy to understand for board members.',
+            },
+            improved: {
+              prompt: 'I\'m presenting Q3 financials to our board. Key facts: Revenue £3.2M vs £3.8M budget (£600K adverse, driven by 3 enterprise deals slipping to Q4). EBITDA: -£520K vs -£200K budget. Cash: £1.6M with 4.5 months runway at current burn. Management recommendation: cost reduction of £180K/month starting November. The board needs to decide whether to approve the cost reduction plan or explore bridge financing instead. Draft: (1) the narrative flow — what slides, in what order, with the single message of each, and (2) the opening two minutes — what does the CFO say first?',
+              output: 'Narrative flow (6 slides):\n1. Headline position — one slide, one message: "Q3 was a pipeline timing miss, not a demand signal — three deals worth £600K slipped to Q4. Here is what the board needs to decide today."\n2. Revenue: what happened — decompose the £600K into deal-by-deal detail. Message: "Deals slipped, not lost."\n3. Cost and EBITDA — message: "Costs ran ahead of the reduced revenue, creating a £320K additional EBITDA miss beyond the revenue impact."\n4. Cash position — message: "4.5 months runway at current burn requires a decision before December."\n5. Two options — message: "Management recommends Option A (cost reduction). Here are both options with implications."\n6. Decision required — message: "Board approval needed today to implement November cost reduction."\n\nOpening two minutes: "Thank you. I\'m going to give you the headline in 30 seconds, then take you through the detail. Q3 revenue was £600K below budget — entirely attributable to three enterprise deals that slipped into Q4, all of which remain active. The financial impact is a cash position that requires action before December. We have two options for the board today and we recommend Option A. I\'ll take questions after the detail."',
+            },
+            insight: 'The vague prompt produces a standard slide list any consultant would suggest. The specific prompt — with actual numbers, the board decision required, and the management recommendation — produces a complete narrative arc and an opening that puts the board in the right frame before the first slide appears. The structure serves the decision, not the data.',
+          },
+          applyThisWeek: {
+            action: 'Before building your next board or leadership presentation, write the narrative flow first: list each slide, its single message (one sentence), and the decision or action it builds toward. Use AI to draft this structure from your key facts before opening PowerPoint.',
+            promptTemplate: 'I\'m presenting [financial topic] to [Board / CFO / Leadership team]. Key facts: [list 4-6 headline data points]. Management recommendation: [state it clearly]. The audience needs to decide: [specific decision]. Draft: (1) the narrative flow — [number] slides, in order, each with its single message, and (2) the opening [60 / 90 / 120] seconds — what I say before the first slide. Tone: [direct / measured].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last financial presentation you attended as an audience member. At what point did you understand what the presenter wanted you to think or do? How much earlier could that have been communicated if the narrative started with the conclusion?',
           quiz: [
             {
               question: 'What is the "one-message-per-slide rule" and why is it important for financial presentations?',
@@ -1041,6 +1331,35 @@ Never rely solely on AI extraction for consequential decisions. For material con
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'ve used AI to synthesise three analyst reports on your sector and it identifies a "point of greatest disagreement" between analysts. What is the most analytically useful follow-up?',
+            options: [
+              'Ask AI which analyst is most likely to be correct',
+              'Average the three analyst views to get a consensus estimate',
+              'Ask: "What underlying assumptions or data lead each analyst to a different conclusion, and what evidence would resolve the disagreement?"',
+              'Remove the outlier analyst view and work with the remaining two',
+            ],
+            correct: 2,
+            explanation: 'Points of analyst disagreement are often the most analytically valuable data — they reveal genuine uncertainty about a key variable (interest rate sensitivity, competitive dynamics, regulatory outcome). Understanding what drives the disagreement tells you exactly where your analysis should focus. The question to resolve is not who is right, but what evidence would determine who is right — and whether that evidence is available or forthcoming.',
+          },
+          outputComparison: {
+            label: 'Why extraction prompts transform document review speed — see it in action',
+            vague: {
+              prompt: 'Summarise this annual report for me.',
+              output: 'This annual report covers the company\'s performance over the last financial year. The company has reported revenue and profit figures along with information about its strategy and operations. Key highlights include information about growth initiatives and market conditions. The report also discusses risks facing the business and how management plans to address them. Overall the company appears to be performing in line with market expectations.',
+            },
+            improved: {
+              prompt: 'I\'m analysing Whitmore Group\'s 2024 annual report to assess them as a potential supplier. Extract specifically: (1) any revenue guidance or forward-looking financial statements management has made, (2) the risk factors rated as most material — list the top 5 with their description, (3) any changes in accounting policy since the prior year report, (4) customer concentration — do they disclose any customer representing more than 10% of revenue?, and (5) any going concern language or auditor qualifications. Paste the relevant sections: [document text].',
+              output: '1. Revenue guidance: Management does not provide explicit financial guidance. The CEO letter references "continued growth in line with market expectations" — no specific figures given.\n\n2. Top 5 material risks: (i) Supply chain concentration — 62% of components sourced from two Asian suppliers. (ii) Customer concentration — top 3 customers represent 41% of revenue (disclosed on p.47). (iii) FX exposure — 35% of revenue in USD with limited hedging. (iv) Regulatory — pending EU product classification change could affect 18% of SKUs. (v) Key person dependency — CTO noted as critical, no disclosed succession plan.\n\n3. Accounting policy changes: Revenue recognition updated to reflect IFRS 15 amendments effective January 2024 — accelerates recognition on multi-year contracts by approximately £1.2M.\n\n4. Customer concentration: Yes — p.47 discloses Customer A = 18% of revenue, Customer B = 14%, Customer C = 9%.\n\n5. Going concern: No going concern language. Auditors issued an unqualified opinion.',
+            },
+            insight: 'The vague prompt produces a paragraph that tells you nothing you wouldn\'t know without reading the report. The specific extraction prompt — with named purpose, five precise questions, and page-level references — produces structured intelligence that would take 2 hours of careful reading to assemble manually. The extraction prompt is the work; the document is the data.',
+          },
+          applyThisWeek: {
+            action: 'Choose one public company annual report in your sector (investor relations page, freely available). Run the five-point extraction prompt — strategic priorities, financial guidance, material risks, accounting policy changes, and one question specific to your purpose. Note which extractions you\'d verify before using in analysis.',
+            promptTemplate: 'I\'m analysing [company name]\'s [year] annual report for [purpose: competitive analysis / supplier assessment / investment research]. Extract specifically: (1) [question 1], (2) [question 2], (3) [question 3], (4) [question 4], (5) any language or disclosures that seem non-standard or that require follow-up. Flag anything that should be verified against the original document. Relevant sections: [paste text].',
+            tool: 'Claude',
+          },
+          reflection: 'How many annual reports, analyst notes, or financial documents are sitting in your inbox or downloads folder that you\'ve started but not fully read? If you could extract the specific information you need from each in 20 minutes, which would you read first?',
           quiz: [
             {
               question: 'What is the most appropriate use of AI in reviewing a material financial contract?',
@@ -1135,6 +1454,35 @@ Different audiences need different views. AI helps you think through which metri
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your finance dashboard currently shows 22 metrics. The CFO says she finds it hard to use for weekly decision-making. What is the most likely root cause?',
+            options: [
+              'The dashboard needs better colour-coding and visual design',
+              'The metrics should be updated more frequently — weekly instead of monthly',
+              'The dashboard was designed around available metrics, not around the specific decisions the CFO makes — too many metrics that are interesting but not decision-relevant',
+              'The CFO needs training on how to interpret financial dashboards',
+            ],
+            correct: 2,
+            explanation: 'Dashboard overload is almost always a design problem, not a user problem. When dashboards are built around what data is available rather than what decisions need to be made, they accumulate metrics that are individually interesting but collectively unusable. The fix is to start with the decisions — specifically, what three to five decisions does the primary user make with this dashboard, and which metrics directly inform each one? Everything else should be moved to a supplementary view.',
+          },
+          outputComparison: {
+            label: 'Why decision-first design produces better dashboards — see it in action',
+            vague: {
+              prompt: 'What metrics should I include on a finance dashboard?',
+              output: 'A comprehensive finance dashboard should include: revenue, gross profit, EBITDA, net profit, cash balance, accounts receivable, accounts payable, budget vs actual, headcount, revenue per employee, customer count, and churn rate. You may also want to include working capital, debt to equity ratio, and current ratio. Make sure to include trend lines and period comparisons for each metric.',
+            },
+            improved: {
+              prompt: 'I\'m designing a weekly financial dashboard for the CFO of a £12M ARR B2B SaaS company. She uses the dashboard to make three decisions: (1) whether to accelerate or slow hiring this month, (2) whether to intervene in the sales pipeline, and (3) whether cash position requires any treasury action. Recommend the 8-10 metrics for this dashboard. For each: metric name, definition, update frequency, and which of her three decisions it directly informs. Exclude any metric that is interesting but does not inform one of those three decisions.',
+              output: 'Decision 1 (Hiring): Net ARR Added (monthly), Gross Margin % (trailing 3-month), Cash Runway (months at current burn) — together these determine whether growth trajectory justifies new headcount.\n\nDecision 2 (Sales Pipeline): Pipeline Coverage (pipeline value / quarterly revenue target), Weighted Pipeline by Stage, Average Sales Cycle (days, trending), Qualified Deals Added This Week — these flag whether pipeline is thin before the quarter end.\n\nDecision 3 (Treasury): Closing Cash Balance (weekly), Accounts Receivable Overdue >45 days (£ and %), Largest Upcoming Payments (next 30 days) — these enable proactive treasury management.\n\nExcluded (interesting but not decision-relevant for this use case): Revenue per employee, debt/equity ratio, headcount by department — move to monthly CFO review pack, not weekly dashboard.',
+            },
+            insight: 'The vague prompt produces a 15-metric list with no decision context. The specific prompt — with named user, three named decisions, and the "exclude interesting-but-not-relevant" constraint — produces a dashboard blueprint where every metric earns its place. The exclusions are as valuable as the inclusions.',
+          },
+          applyThisWeek: {
+            action: 'Take one dashboard you currently produce and list the decisions its primary user makes with it. For each metric on the dashboard, ask: which decision does this directly inform? Any metric that doesn\'t answer that question is a candidate for removal or relegation to a supplementary view.',
+            promptTemplate: 'I\'m designing a [weekly / monthly] financial dashboard for [role] at a [business description with key metrics]. They use the dashboard to make these decisions: (1) [decision], (2) [decision], (3) [decision]. Recommend [number] metrics for this dashboard. For each: name, definition, update frequency, and which decision it informs. Exclude any metric that does not directly inform one of those decisions.',
+            tool: 'Claude',
+          },
+          reflection: 'Who is the primary user of the financial reports or dashboards you produce? When did you last ask them which metrics they actually use to make decisions versus which ones they scroll past? What might you remove if you had that conversation?',
           quiz: [
             {
               question: 'What is the most important question to answer before designing a financial dashboard?',
@@ -1233,6 +1581,35 @@ For each identified risk:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your finance team\'s risk register focuses on credit risk and operational risk — the two risks that caused problems in the past two years. What is the most likely problem with this approach?',
+            options: [
+              'Credit and operational risk are not real financial risks and should be removed',
+              'The register reflects recency bias — it focuses on risks recently experienced and may miss emerging or novel risks in other categories',
+              'The register is too comprehensive — most risk registers should focus on one or two categories',
+              'Risk registers should only cover risks that have already materialised',
+            ],
+            correct: 1,
+            explanation: 'Human risk identification is heavily influenced by recency bias — finance teams focus on risks they have recently experienced or that are prominent in current industry discussion. A risk register built primarily from experience will underweight risks in categories (regulatory, strategic, liquidity) that haven\'t recently caused problems. AI systematically covers all risk categories regardless of what was salient last quarter, which is its primary advantage over experience-based identification.',
+          },
+          outputComparison: {
+            label: 'Why structured risk prompts surface risks teams miss — see it in action',
+            vague: {
+              prompt: 'What are the main risks for our business?',
+              output: 'The main risks for your business include market risk, competition, economic downturns, regulatory changes, and operational disruptions. You should also consider cybersecurity risks, key person dependencies, and supply chain issues. It\'s important to have a risk management framework in place to identify, assess, and mitigate these risks on an ongoing basis.',
+            },
+            improved: {
+              prompt: 'We are a £6M ARR B2B software company serving UK financial services clients. 42% of our revenue comes from our three largest clients. We have £1.4M cash and 9 months runway. We are in the process of hiring a new CTO following an unexpected departure. Conduct a financial risk assessment across six categories: credit risk, liquidity risk, market risk, operational risk, regulatory risk, and strategic risk. For each category: identify the top two risks specific to our situation, rate each as high/medium/low probability and impact, and name two measurable early warning indicators I should monitor monthly.',
+              output: 'Credit risk: (1) Customer concentration — 42% revenue from 3 clients. High impact, medium probability. Indicators: invoice payment days trending longer, any client reducing contracted seat count. (2) Contract renewal risk at year-end. Medium impact, medium probability. Indicators: renewal conversations initiated >90 days before expiry, client satisfaction score.\n\nLiquidity risk: (1) 9-month runway with no committed credit facility. High impact if growth stalls — medium probability. Indicators: monthly cash burn vs forecast, ARR growth rate. (2) AR collection delay — financial services clients can be slow payers. Medium impact. Indicators: DSO trending above 45 days, overdue AR >10% of total.\n\nOperational risk: (1) CTO departure and knowledge concentration. High impact, materialising now. Indicators: key engineering deliverable delays, team engagement scores. (2) Single-codebase architecture creates deployment risk. Medium impact. Indicators: incident frequency, deployment success rate.\n\n[Continues for market, regulatory, strategic...]',
+            },
+            insight: 'The vague prompt produces a generic risk list any business could receive. The specific prompt — with revenue concentration, cash position, headcount situation, and client sector — produces a risk assessment calibrated to this company\'s actual exposure, with measurable indicators that a finance team can monitor monthly. The indicators are what convert identified risks into managed risks.',
+          },
+          applyThisWeek: {
+            action: 'Run the six-category risk identification prompt for your business, providing specific context: sector, size, revenue concentration, current cash position, and any known operational vulnerabilities. Compare the output to your current risk register. Identify one risk category that is underrepresented.',
+            promptTemplate: 'We are a [business description] with [key metrics: revenue, cash, runway]. [Key concentration or vulnerability: largest customer %, key hire dependency, etc.]. Conduct a financial risk assessment across six categories: credit, liquidity, market, operational, regulatory, and strategic risk. For each: (1) the top two risks specific to our situation, (2) probability and impact rating (high/medium/low), and (3) two measurable early warning indicators I can monitor monthly from standard financial data.',
+            tool: 'Claude',
+          },
+          reflection: 'Looking at your current risk register, which risks on it have actually materialised in the past three years — and which haven\'t? Are the risks you monitor the ones most likely to threaten the business, or the ones that felt most urgent when the register was last updated?',
           quiz: [
             {
               question: 'What is the primary advantage of using AI for risk identification compared to relying on the finance team\'s experience?',
@@ -1325,6 +1702,35 @@ The "decision point" framing is critical — it converts a forecast into an acti
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You present a cash flow forecast to the CEO showing a single closing balance of £1.4M in six months. She says "I don\'t know what to do with this." What is missing?',
+            options: [
+              'A chart showing the monthly opening and closing cash balance',
+              'The full list of assumptions used in the forecast',
+              'A range of outcomes (central, upside, downside), the sources of uncertainty, and the specific decision point — when does she need to act if the downside materialises?',
+              'A comparison with the same forecast from six months ago',
+            ],
+            correct: 2,
+            explanation: 'A single-point cash forecast creates false precision and leaves the CEO without context for action. The three elements she needs are: a range of outcomes (so she understands the uncertainty), the specific sources of uncertainty (what drives the downside), and the decision point (by when does she need to act to avoid running out of options). Without the decision point, the forecast is informational but not actionable.',
+          },
+          outputComparison: {
+            label: 'Why range-based forecasting creates better CEO decisions — see it in action',
+            vague: {
+              prompt: 'What will our cash position be in 6 months?',
+              output: 'Based on your current cash balance and burn rate, your cash position in six months will depend on your revenue performance and cost management. If revenue grows as expected and costs stay under control, you should have a reasonable cash position. However, if there are delays in collections or unexpected expenses, this could be lower. I would recommend monitoring your cash position closely and reviewing your forecast regularly.',
+            },
+            improved: {
+              prompt: 'I\'m building a 6-month cash flow forecast for our CFO to share with the CEO. Current cash: £1.8M. Monthly burn rate: £280K. Our key uncertainties: (1) collections — current DSO is 48 days, budget assumes 38 days, (2) two enterprise deals worth £180K each expected to close in months 2 and 4. Build three cases: central (trend continues, one deal closes month 2, one month 5), upside (DSO improves to 35 days, both deals close on schedule), and downside (DSO stays at 48 days, one deal slips out of period). Show monthly closing cash for each case and state the month at which the downside case hits £400K (our minimum operating cash threshold). Then write a 150-word CEO narrative: current position, range, key uncertainty, and the specific decision point.',
+              output: 'Month-by-month closing cash:\nCentral: £1.52M → £1.28M → £1.44M → £1.18M → £1.36M → £1.11M\nUpside: £1.57M → £1.40M → £1.62M → £1.44M → £1.64M → £1.47M\nDownside: £1.47M → £1.17M → £0.90M → £0.65M → £0.42M → £0.18M\n\nDownside hits £400K in Month 5.\n\nCEO narrative: We enter the next six months with £1.8M cash and a burn rate of £280K/month. In our central case, we maintain £1.1M at month-end — comfortable. In the downside case — where customer collections stay slow and one enterprise deal slips past month 6 — we approach our minimum threshold of £400K in month 5. The single biggest driver of the downside is DSO: we are currently collecting 10 days slower than budget. If DSO has not improved to 42 days by month 3, you will need to decide by then whether to draw on the credit facility or accelerate collections activity. No action is required today; the earliest decision point is month 3.',
+            },
+            insight: 'The vague prompt produces content-free hedging. The specific prompt — with actual numbers, three named scenarios, and a minimum cash threshold — produces a forecast a CEO can act on, complete with the precise decision point she needs to plan around. The decision point is what converts a forecast into a tool for management.',
+          },
+          applyThisWeek: {
+            action: 'Run a three-case cash flow narrative for the next quarter using your actual cash position and burn rate. Define your minimum cash threshold before you run the prompt. Note the month in the downside case where you hit that threshold — that is your earliest decision point.',
+            promptTemplate: 'I\'m building a [number]-month cash flow forecast. Current cash: [£amount]. Monthly burn rate: [£amount]. Key uncertainties: (1) [collections / revenue timing uncertainty], (2) [specific deal or payment uncertainty]. Build three cases: central ([assumptions]), upside ([assumptions]), downside ([assumptions]). Show monthly closing cash for each case. Identify the month in the downside case where cash hits [minimum threshold]. Then write a [word count]-word CEO narrative covering: current position, range of outcomes, key uncertainty, and the specific decision point.',
+            tool: 'Claude',
+          },
+          reflection: 'When did you last have a conversation about cash that was forward-looking and action-oriented, rather than reporting what the cash balance was last month? What would it take to shift your cash reporting from historical to decision-focused?',
           quiz: [
             {
               question: 'What information should always be included in a cash position narrative for a CEO?',
@@ -1415,6 +1821,35 @@ AI cannot predict macro outcomes. It cannot tell you where interest rates will b
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A finance manager uses AI to monitor macro trends and the tool states: "Interest rates will fall by 75bps over the next 12 months, improving your cost of borrowing significantly." How should this be treated?',
+            options: [
+              'Update the financial model immediately to reflect the lower borrowing cost',
+              'Share it with the CFO as a reliable macro forecast',
+              'Treat it as a scenario to stress-test, not a prediction — verify rate expectations against central bank communications and market consensus before any model change',
+              'Discard it — AI cannot provide useful macro analysis',
+            ],
+            correct: 2,
+            explanation: 'AI cannot predict macro outcomes. It can help structure scenarios and translate macro signals into planning assumption changes — but specific forward predictions (rates will fall 75bps) are extrapolations, not forecasts. Any rate assumption change should be validated against primary sources: central bank minutes, market forwards, and professional economic forecasts. The value of AI in macro analysis is translation and structuring, not prediction.',
+          },
+          outputComparison: {
+            label: 'Why business-specific macro context produces actionable planning intelligence — see it in action',
+            vague: {
+              prompt: 'What is the current macro environment and how does it affect my business?',
+              output: 'The current macroeconomic environment is characterised by elevated inflation, rising interest rates, and economic uncertainty in many markets. These factors can affect businesses in various ways including higher borrowing costs, reduced consumer spending, and supply chain pressures. It is important to monitor economic indicators and adjust your business strategy accordingly. Consider reviewing your cost base and pricing strategy in light of current conditions.',
+            },
+            improved: {
+              prompt: 'I\'m updating planning assumptions for a UK-based specialist food manufacturer. Our key macro exposures are: (1) energy costs (gas and electricity — 18% of COGS), (2) GBP/EUR exchange rate (40% of sales to EU customers, invoiced in EUR), and (3) consumer confidence in the UK premium food segment. Based on current macro conditions (Bank of England rate at 4.75%, CPI at 2.9%, GBP/EUR at 1.17), assess: (a) the directional impact of each macro factor on our planning assumptions over the next 12 months, (b) which of our three exposures creates the highest uncertainty in our FY26 forecast, and (c) one scenario we should stress-test based on current conditions.',
+              output: 'Energy costs: With UK gas futures pricing trending down and wholesale electricity stabilising, the directional impact for your FY26 COGS is cautiously positive — energy as a % of COGS may reduce from 18% toward 15-16% if wholesale prices hold. However, given typical 6-12 month energy contract structures, this benefit may only partially flow through in FY26.\n\nGBP/EUR: At 1.17, GBP is stronger than the FY25 average of 1.13 — a 3.5% headwind on EUR-denominated EU revenue when translated to GBP. If GBP strengthens further to 1.20 (plausible given rate differential), EU revenue contribution falls by approximately 2.5% in GBP terms before any volume change.\n\nConsumer confidence: UK premium food is currently showing resilience (sector PMI data indicates mid-single-digit growth) but this category is particularly sensitive to mortgage cost pressures. With fixed-rate mortgages resetting through 2025-26, consumer spending on premium food could come under pressure in H2 2026.\n\nHighest uncertainty: GBP/EUR rate — because it affects 40% of sales and is less predictable than energy.\n\nRecommended stress test: Model a GBP/EUR rate of 1.22 combined with 5% volume softness in EU markets from H2 2026.',
+            },
+            insight: 'The vague prompt produces generic macro commentary that applies to every UK business equally. The specific prompt — with named exposures, current rates, and planning context — produces a calibrated assessment with directional guidance for each of the three exposures that actually affect this business\'s P&L. Macro analysis is only useful when it is translated into specific planning assumption changes.',
+          },
+          applyThisWeek: {
+            action: 'Identify your business\'s three most important macro exposures (interest rates, FX, commodity costs, consumer confidence, regulatory environment). Run the macro translation prompt with current macro conditions and ask for directional impact on each exposure and one scenario to stress-test.',
+            promptTemplate: 'I\'m updating planning assumptions for a [business description]. Our three key macro exposures are: (1) [exposure + current value or rate], (2) [exposure + current value], (3) [exposure + current value]. Based on current conditions — [list 2-3 current macro data points] — assess: (a) the directional impact of each exposure on our planning assumptions over the next 12 months, (b) which exposure creates the highest planning uncertainty, and (c) one specific scenario we should stress-test based on current trends.',
+            tool: 'Claude',
+          },
+          reflection: 'When your team discusses macro conditions in planning meetings, does the conversation typically end with specific assumption changes in your model — or does it end with "we\'re monitoring the situation"? What would make macro analysis more actionable in your planning process?',
           quiz: [
             {
               question: 'What is the most valuable contribution of AI to macro-economic analysis for finance professionals?',
@@ -1507,6 +1942,35 @@ Pre-emptive mitigations — taking action before the scenario materialises — a
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'Your stress test shows that if revenue falls 20%, the business hits its minimum cash threshold in month 8. What is the most valuable output management should take from this analysis?',
+            options: [
+              'Reassurance that the business can survive for 8 months in the stress scenario',
+              'A response playbook — the specific pre-emptive actions management can take now to reduce scenario severity before it materialises',
+              'A board presentation proving the stress test was conducted',
+              'A revised budget that reflects the stress scenario assumptions',
+            ],
+            correct: 1,
+            explanation: 'Knowing that month 8 is the stress point tells you when the crisis becomes acute — but the value of stress testing is in what you do before month 8. The response playbook identifies actions management can take now, when options are still open: building cash reserves, securing a credit facility before it\'s needed, diversifying revenue concentration, or setting trip-wire conditions for a contingency plan. Pre-emptive action costs less and preserves more options than reactive management after the crisis is confirmed.',
+          },
+          outputComparison: {
+            label: 'Why specific stress scenarios drive better board decisions — see it in action',
+            vague: {
+              prompt: 'Can you do a stress test on my financial plan?',
+              output: 'I can help you stress test your financial plan. Common stress test scenarios include revenue declining by 10%, 20%, or 30%, cost increases of 10-15%, or a combination of both. You should model the impact of these scenarios on your P&L and cash flow. It\'s also useful to consider interest rate changes and FX movements. Make sure to review your results with your CFO and board.',
+            },
+            improved: {
+              prompt: 'I\'m running a stress test for a UK B2B services firm with £8.2M revenue, £640K EBITDA, and £1.1M cash. Our most material single risk is our largest client (£2.1M revenue, 26% of total) who is undergoing a strategic review. Design a specific stress scenario for this risk: (1) describe the scenario specifically — trigger event, timeline, and notice period, (2) the financial assumptions that change (revenue, cost reduction options, timing), (3) the month-by-month P&L and cash impact for 12 months post-trigger, and (4) two early warning indicators I should be monitoring now. Then generate a response playbook: three pre-emptive actions management can take in the next 90 days to reduce scenario severity.',
+              output: 'Scenario: "Structured client withdrawal — strategic review results in scope reduction." Trigger: Client notifies in month 1 of a 60% scope reduction (retaining £840K, eliminating £1.26M), effective month 4. This is more likely than full termination based on strategic review language.\n\nFinancial assumptions: Revenue impact from month 4: -£105K/month. Cost reduction options: 3 FTEs can be redeployed/reduced by month 5 (£180K annual saving), discretionary project spend £40K/month suspended. Net EBITDA impact: -£65K/month from month 4 after mitigations.\n\nMonth-by-month cash: Opens £1.1M, reaches £842K by month 4 (pre-trigger), falls to £447K by month 10. Minimum threshold (£400K) approached in month 11.\n\nEarly warning indicators: (1) Client internal contacts becoming less responsive to QBR scheduling — sign of disengagement. (2) Client\'s own headcount in the division you serve trending down — sign of budget pressure upstream.\n\nResponse playbook (next 90 days): (1) Initiate pipeline acceleration targeting 3 new clients at £200K-£400K each — reduces single-client dependency from 26% regardless of outcome. (2) Negotiate a £500K revolving credit facility now, while the P&L is strong — preserves optionality without signalling distress. (3) Open a retention conversation with the client\'s CFO: understand the strategic review scope and present a restructured engagement that reduces their cost while preserving the relationship.',
+            },
+            insight: 'The vague prompt produces generic percentage scenarios with no connection to actual business risk. The specific prompt — with named client, revenue figure, strategic context, and 12-month modelling — produces a scenario the board can immediately recognise and engage with, plus pre-emptive actions with a 90-day horizon. Stress testing is only valuable when it leads to specific action, not just awareness.',
+          },
+          applyThisWeek: {
+            action: 'Identify your business\'s single most material risk (largest customer, key supplier, key hire). Run the full stress test design prompt: specific scenario, financial assumptions, monthly P&L/cash impact, and the response playbook. Present the response playbook to your manager as a recommended action.',
+            promptTemplate: 'I\'m running a stress test for a [business description] with [key metrics: revenue, EBITDA, cash]. Our most material single risk is [describe specific risk]. Design a stress scenario: (1) the specific trigger event, timeline, and notice period, (2) financial assumptions that change, (3) month-by-month P&L and cash impact for 12 months, identifying when cash hits [minimum threshold]. Also: (4) two measurable early warning indicators I should monitor now, and (5) a response playbook of three pre-emptive actions management can take in the next 90 days.',
+            tool: 'Claude',
+          },
+          reflection: 'Does your organisation currently have a named, specific response plan for your most material financial risk — one that leadership has agreed on before the risk materialises? Or would the response be improvised? What would change if there were a pre-agreed playbook?',
           quiz: [
             {
               question: 'What is the difference between a good stress test scenario and a poor one?',
@@ -1603,6 +2067,35 @@ Post-decision:
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'An AI analysis of a target company\'s three-year financials flags "potential aggressive revenue recognition in Year 2 — multi-year contracts may be front-loaded." What is the correct immediate next step?',
+            options: [
+              'Reduce the acquisition bid price by 10% to account for the risk',
+              'Discard the finding — revenue recognition analysis requires professional accountants, not AI',
+              'Ask the target company to confirm or deny the AI finding before proceeding',
+              'Treat it as a starting hypothesis for your accounting team to investigate — examine the specific contracts and recognition policy before quantifying any adjustment',
+            ],
+            correct: 3,
+            explanation: 'An AI-flagged revenue recognition concern is a direction for investigation, not a confirmed finding. The correct response is to direct your accounting team or advisors to examine the specific transactions and accounting policy for the flagged period. Only after verifying against source documents and applicable standards can you determine whether recognition was aggressive and quantify any Quality of Earnings adjustment. AI accelerates the identification of issues; professionals validate and quantify them.',
+          },
+          outputComparison: {
+            label: 'Why structured due diligence prompts surface Quality of Earnings risks faster — see it in action',
+            vague: {
+              prompt: 'Analyse these financial statements and tell me if there are any problems.',
+              output: 'Looking at the financial statements, the company shows revenue growth and improving margins. There are some expenses that appear significant. The balance sheet shows assets and liabilities in line with a typical business of this size. You should review the notes to the accounts carefully and consider having a professional accountant review the statements before making any decisions.',
+            },
+            improved: {
+              prompt: 'I am reviewing three years of financial statements (FY2022-FY2024) for a potential acquisition target — a B2B professional services firm with £4.8M FY2024 revenue. These are management accounts provided in the data room (not yet audited). Identify: (1) any revenue recognition patterns that appear aggressive or inconsistent year-over-year, (2) non-recurring items included in EBITDA that inflate the recurring earnings picture, (3) working capital movements that suggest cash collection is deteriorating, (4) any significant changes in accounting policy between periods, and (5) EBITDA adjustments I should propose to the seller for the Quality of Earnings discussion. Statements: [paste].',
+              output: '1. Revenue recognition: Year 2 (FY2023) shows a spike in Q4 revenue of £380K — 31% above Q4 FY2022 and Q4 FY2024. With a professional services firm, this could reflect year-end project completions or accelerated recognition. Worth requesting the underlying project schedules and milestone billing documentation for Q4 FY2023.\n\n2. Non-recurring EBITDA items: FY2023 EBITDA of £740K includes a £95K "settlement receipt" (Note 7) and a £60K "grant income" (Note 9) — both are one-off. Adjusted recurring EBITDA FY2023: approximately £585K, not the headline £740K.\n\n3. Working capital: DSO has increased from 38 days (FY2022) to 54 days (FY2024) — a 16-day deterioration. This may indicate collection difficulty or billing disputes. Accounts receivable at FY2024 year-end is £680K; ask for an aged debtors analysis.\n\n4. Policy changes: No accounting policy changes disclosed — but confirm the basis of preparation is consistent (especially revenue recognition basis for long-term contracts).\n\n5. Proposed QoE adjustments: -£155K for one-off items (FY2023), -£80K for normalised working capital impact. Adjusted FY2024 EBITDA basis: £[X] — would recommend running a clean EBITDA bridge before pricing discussions.',
+            },
+            insight: 'The vague prompt produces a generic review with no analytical content. The specific prompt — with company type, revenue size, document context (management accounts, not audited), and five precise Quality of Earnings questions — produces a structured due diligence finding set with specific investigation directions and proposed EBITDA adjustments. The structured output directly informs the pricing conversation.',
+          },
+          applyThisWeek: {
+            action: 'Practice the Quality of Earnings analysis prompt using a public company\'s annual report (no MNPI concern). Apply the five-point extraction: revenue recognition patterns, non-recurring items, working capital trend, accounting policy changes, and proposed EBITDA adjustments. This builds the analytical muscle before you need it in a live transaction.',
+            promptTemplate: 'I am reviewing [number] years of financial statements for a potential [acquisition / investment / partnership] target — a [business description] with [revenue] in [most recent year]. These are [audited accounts / management accounts]. Identify: (1) revenue recognition patterns that appear aggressive or inconsistent, (2) non-recurring items included in EBITDA, (3) working capital movements suggesting collection deterioration, (4) accounting policy changes between periods, and (5) EBITDA adjustments I should raise in due diligence discussions. Statements: [paste].',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a financial decision you were involved in — an acquisition, a major contract, or a significant investment — where the due diligence process was thorough. What questions did the process reveal that you hadn\'t thought to ask before it started? Could AI have helped surface those questions earlier?',
           quiz: [
             {
               question: 'Why must M&A-related AI analysis use only specifically approved tools?',
@@ -1689,6 +2182,35 @@ The investor question preparation is particularly valuable — AI anticipates qu
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'re preparing for a quarterly investor call. Your revenue was 18% below target. AI has drafted an opening statement. How should you use it?',
+            options: [
+              'Read it verbatim — AI-prepared statements are more precise than improvised ones',
+              'Discard it — investor communications are too sensitive for AI involvement',
+              'Use it as a structural foundation, verify every figure against source data, and deliver it in your own voice adapted to how questions are actually asked',
+              'Have legal review the statement before any use of AI-prepared investor content',
+            ],
+            correct: 2,
+            explanation: 'AI-prepared investor communications are starting points, not scripts. The value is in having structured the key messages, verified the numbers, and thought through the logic in advance — then delivering naturally in your own voice. Reading an AI-prepared statement verbatim sounds rehearsed and lacks the credibility that investor relationships require. The preparation builds confidence; the human delivery builds trust.',
+          },
+          outputComparison: {
+            label: 'Why investor question preparation transforms earnings call confidence — see it in action',
+            vague: {
+              prompt: 'Help me prepare for my investor call. We missed revenue this quarter.',
+              output: 'For your investor call, I recommend being transparent about the revenue miss while highlighting the positive aspects of your business. Explain the reasons for the miss clearly and focus on your plan to recover. Investors appreciate honesty and a clear plan. You should also prepare to discuss your pipeline and outlook for the next quarter. Practice your talking points before the call.',
+            },
+            improved: {
+              prompt: 'I\'m preparing for a quarterly investor call with our three Series B investors. Q3 results: Revenue £2.1M vs £2.55M target (18% miss, £450K). EBITDA: -£380K vs -£220K target. Cash: £2.4M, 7 months runway. Context: miss driven by two enterprise deals (£300K combined) that slipped to Q4 due to procurement delays — both remain active and signed in the first 2 weeks of Q4. Generate: (1) a 90-second opening statement — direct, honest, confident — leading with the deals that slipped being now closed, (2) the 6 hardest questions these investors are likely to ask, and (3) for each question, a direct, non-defensive response that acknowledges the miss, demonstrates understanding of the cause, and articulates why we are confident in the trajectory.',
+              output: 'Opening statement (90 seconds): "Thank you all for joining. I want to lead with the most important update: the two enterprise deals that drove our Q3 miss — £300K combined — both signed in the first two weeks of October. They\'re in Q4 revenue. That context matters as I walk you through Q3.\n\nQ3 revenue was £2.1M, £450K below our target of £2.55M. EBITDA was -£380K versus a -£220K target. Cash stands at £2.4M with 7 months runway. The miss was real — two deals we expected to close in September moved through extended procurement timelines, which we should have anticipated earlier. We\'ll talk about what we\'re changing in our forecasting. But the pipeline is strong, both deals are closed, and I\'m confident in Q4."\n\nHardest questions:\n1. "How do we know Q4 forecasting is reliable if you couldn\'t predict this slip?" — Response: "Fair question. We\'re implementing a new milestone-gating system with procurement as a specific stage — if a deal hasn\'t had legal review by week 8 of the quarter, we move it to the following quarter in our forecast. We should have caught this in August. We\'ve already applied this to the Q4 pipeline — 4 of our 6 deals are past legal review."\n\n2. "At 7 months runway, when do you need to raise?" — Response: [continues for all 6 questions]',
+            },
+            insight: 'The vague prompt produces generic communication advice. The specific prompt — with actual numbers, deal context, investor relationship stage, and request for the hardest questions — produces a complete investor preparation package: an honest opening that leads with good news, and pre-prepared responses to the six most challenging questions. The difference between a confident call and a defensive one is often how well the hard questions were anticipated.',
+          },
+          applyThisWeek: {
+            action: 'Identify your most significant investor or stakeholder communication in the next month. Run the hard questions prompt: given your current financial performance, generate the 6 toughest questions and draft honest, direct responses to each. Practice delivering two of them out loud.',
+            promptTemplate: 'I\'m preparing for [investor call / board meeting / stakeholder update] with [audience description]. Recent performance: [key metrics with actuals vs targets]. Context: [key drivers of any underperformance or overperformance]. Generate: (1) a [length]-second opening statement that is direct and honest, leading with [most important positive context], (2) the [number] hardest questions [audience] is likely to ask, and (3) for each question, a direct, non-defensive response that acknowledges [the issue], demonstrates understanding of the cause, and articulates confidence in the path forward.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a challenging investor or board conversation you\'ve had where you were caught off-guard by a question. If you had anticipated that question and prepared a response in advance, how would the conversation have gone differently? What does that tell you about the value of question preparation?',
           quiz: [
             {
               question: 'What is the most valuable output of using AI to prepare for an earnings call or investor meeting?',
@@ -1777,6 +2299,35 @@ This forward-looking failure analysis builds contingency thinking into your budg
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'You\'ve completed your FY26 budget with a 22% revenue growth assumption. Before presenting it to the board, you run the pre-mortem technique. What is this technique asking you to do?',
+            options: [
+              'Ask an external auditor to review the budget assumptions for reasonableness',
+              'Imagine it is end of FY26 and you significantly missed the budget — identify the five most likely reasons it failed and what early warning you would have seen by Q1',
+              'Run a sensitivity analysis on the top three revenue assumptions',
+              'Review last year\'s budget variances to calibrate this year\'s assumptions',
+            ],
+            correct: 1,
+            explanation: 'The pre-mortem technique is a forward-looking failure analysis: before committing to a plan, you imagine it has already failed and ask why. This surfaces assumptions and dependencies that optimism bias causes planners to overlook. The early warning indicators — specific, measurable signals visible by Q1 that the plan is tracking toward failure — are the most actionable output. They allow early intervention rather than reactive management after the miss is confirmed in Q2 or Q3.',
+          },
+          outputComparison: {
+            label: 'Why assumption-backed budget frameworks produce stronger challenge sessions — see it in action',
+            vague: {
+              prompt: 'Help me set assumptions for our annual budget.',
+              output: 'For your annual budget, you should consider setting assumptions for revenue growth, cost inflation, headcount changes, and capital expenditure. Review last year\'s performance and adjust for expected changes. Consider market conditions and competitor activity. Make sure your assumptions are realistic and achievable. You may also want to include contingency provisions for unexpected expenses.',
+            },
+            improved: {
+              prompt: 'I\'m setting assumptions for our FY26 budget. We are a UK engineering consultancy with £9.4M FY25 revenue, 68% staff cost ratio, and current utilisation at 74%. Macro context: UK infrastructure spending is increasing under the current government, but our sector is seeing wage inflation of 6-7%. FY25 vs budget: revenue was 3% ahead, margins were 1.2pp behind due to higher salary costs. Generate a structured assumption framework covering: (1) top-line growth assumptions with sensitivity ranges and rationale, (2) cost inflation factors by category (staff, overhead, subcontractors), (3) key operating assumptions (utilisation rate, rate card uplift, headcount net change), and (4) one macro scenario that would invalidate our base case, with the Q1 early warning indicator.',
+              output: 'Top-line growth: Base case 8% (£10.15M), range 5-12%. Rationale: pipeline coverage at 1.7x for H1; government infrastructure pipeline visible through FY26 supports sustained demand. Upside requires winning 2 target framework contracts (Q1 decision). Downside if procurement timelines extend (common pattern in government infrastructure).\n\nCost inflation by category:\n- Staff costs (68% of revenue): 6.5% salary inflation assumed, held at 68% ratio only if revenue grows ≥8%. Risk: wage inflation above 7% compresses margin without headcount reduction.\n- Overhead (property, IT, professional fees): 3% inflation. Lease renewal in Q3 — flag as variable.\n- Subcontractor rates: 4% inflation. Market tight; specialist subcontractors showing 5-8% increases.\n\nOperating assumptions:\n- Utilisation: base 76% (up 2pp from FY25). Requires disciplined project staffing — flag to operations.\n- Rate card uplift: 4% across all service lines. Rationale: client contracts allow annual uplift; market supports 4-5%.\n- Net headcount: +4 FTEs in H1, consistent with pipeline. No H2 hiring in base case.\n\nInvalidating scenario: Government procurement freeze in H2 (election-related or fiscal tightening). Q1 early warning: if two or more bids in final stage move to "on hold" before April, the base case growth assumption is at risk.',
+            },
+            insight: 'The vague prompt produces a generic assumption checklist. The specific prompt — with actual revenue, cost ratios, utilisation data, macro context, and FY25 performance — produces a calibrated framework with rationale for each assumption, ranges that reflect actual business uncertainty, and a named invalidating scenario with a Q1 early warning indicator. A board can challenge this; they cannot challenge a percentage applied to last year\'s numbers.',
+          },
+          applyThisWeek: {
+            action: 'Run the assumption-setting prompt for your next budget cycle with specific business context. Then run the pre-mortem: "Imagine it\'s end of the budget year and we missed significantly — what are the 5 most likely reasons, and what early warning would we have seen by Q1?" Incorporate the top two early warning indicators into your budget monitoring plan.',
+            promptTemplate: 'I\'m setting assumptions for our [fiscal year] budget. We are a [business description] with [revenue, key cost ratios, key operating metrics]. Macro context: [2-3 relevant macro conditions]. FY[prior year] vs budget: [performance summary]. Generate: (1) top-line growth assumption with sensitivity range and rationale, (2) cost inflation by category, (3) key operating assumptions with rationale, and (4) one scenario that would invalidate the base case with the Q1 early warning indicator.',
+            tool: 'Claude',
+          },
+          reflection: 'In your organisation\'s last budget cycle, how much time was spent on the assumption-setting phase versus the Excel modelling phase? If the ratio was skewed toward modelling, what does that suggest about where the quality risk in your budget actually sits?',
           quiz: [
             {
               question: 'What is the "pre-mortem technique" in budget planning, and why is it valuable?',
@@ -1879,6 +2430,35 @@ Make the impact visible to justify ongoing investment and to surface where AI is
             ],
             tool: 'Claude',
           },
+          inlineCheck: {
+            question: 'A finance team has trained all members on AI tools and built a shared prompt library. Several team members use AI regularly. Which maturity level does this describe — and what is the next step?',
+            options: [
+              'Level 4 (Strategic Advantage) — no further action needed',
+              'Level 1 (Experimentation) — the next step is to introduce governance',
+              'Level 2 (Standardisation) — the next step is to integrate AI into standard workflows so it is used by default, not by choice',
+              'Level 3 (Process Integration) — the next step is to measure cost savings',
+            ],
+            correct: 2,
+            explanation: 'A shared prompt library and trained team is Level 2 Standardisation — a strong foundation. Level 3 Process Integration means AI is in the default workflow: when producing variance commentary, the team always uses the AI drafting workflow; when reviewing a budget submission, challenge questions are always generated with AI first. Integration removes the friction of deciding whether to use AI — it becomes how things are done. Moving from Level 2 to Level 3 is where the largest efficiency gains appear.',
+          },
+          outputComparison: {
+            label: 'Why governance design determines whether AI adoption creates value or risk — see it in action',
+            vague: {
+              prompt: 'How should our finance team use AI responsibly?',
+              output: 'Your finance team should use AI responsibly by ensuring data privacy, verifying outputs before use, and following relevant regulations. It\'s important to maintain human oversight of AI-generated content and to document your AI usage. Make sure team members are trained on appropriate AI use and that you have policies in place. Consider the ethical implications of AI in financial decision-making.',
+            },
+            improved: {
+              prompt: 'I\'m designing AI governance for a 6-person finance team at a UK-listed SME (£45M revenue). We handle management accounts, board reporting, investor communications, and FP&A. We want to start using Claude and Microsoft Copilot. Draft the four governance components we need before we start: (1) data classification policy — define public, internal, confidential, and restricted with one finance example for each, (2) review and verification requirements — who must review AI-assisted outputs before external publication and what the review covers, (3) documentation standard — the one-line note that goes in working papers when AI was used, and (4) tool approval checklist — what we must confirm before approving a new AI tool for finance use.',
+              output: '1. Data classification policy:\n- Public: Data already in the public domain. Examples: competitor annual report extracts, Bank of England rate data, sector benchmarks from published sources. Any AI tool may be used.\n- Internal: Non-confidential internal data. Examples: anonymised budget summaries, internal process documentation, management commentary on public figures. Use approved enterprise tools (Claude Teams, Microsoft Copilot under M365 agreement).\n- Confidential: Commercially sensitive internal data. Examples: customer revenue by name, unannounced product roadmap, board pack financials pre-publication. Use only tools with signed data processing agreements and explicit finance team approval.\n- Restricted: Legally sensitive or regulated data. Examples: M&A target information, material non-public information, personal financial data of employees. No AI tool permitted without explicit legal sign-off.\n\n2. Review and verification requirements:\n- For external publications (investor reports, regulatory filings, board packs): finance controller must review every AI-assisted section. Review covers: all figures verified against source data, no unexplained variance explanations, tone appropriate for audience.\n- For internal reports: producing analyst self-reviews; manager spot-checks quarterly.\n\n3. Documentation standard:\n"[Date]: This [section / commentary / analysis] was drafted with AI assistance using [Claude / Copilot]. All figures verified against [source]. Reviewed by [name]."\n\n4. Tool approval checklist:\n- Data residency: Where is data stored? Must be UK or EU.\n- Training data usage: Does the provider use our inputs to train their models? Must be confirmed as "no" for internal-and-above data.\n- Data processing agreement: Is a DPA in place or available? Required for confidential data.\n- Access controls: Can we limit access to approved team members?\n- Approval authority: Finance Director sign-off required for tools handling internal data.',
+            },
+            insight: 'The vague prompt produces generic responsibility principles. The specific prompt — with team size, listed company context, named tools, and four precise governance components — produces a governance framework the team can implement this week. Governance is only useful when it is specific enough to act on; general principles produce compliance theatre, not actual protection.',
+          },
+          applyThisWeek: {
+            action: 'Draft the four-part governance framework for your finance team\'s AI use. Start with data classification — list five pieces of financial data you work with and classify each as public, internal, confidential, or restricted. This single step prevents the most common compliance failures.',
+            promptTemplate: 'Draft AI governance for a [number]-person finance team at a [business description]. We handle [list key finance functions]. We plan to use [AI tools]. Draft the four components: (1) data classification policy with [public / internal / confidential / restricted] tiers and one finance-specific example for each, (2) review and verification requirements for external publications, (3) the documentation standard (one-line working papers note), and (4) a tool approval checklist covering data security, training data usage, data processing agreements, and approval authority.',
+            tool: 'Claude',
+          },
+          reflection: 'If your team\'s AI use was reviewed by your compliance team or external auditors tomorrow, would they find consistent, documented practices — or would they find inconsistent individual habits with no governance trail? What is the gap between where you are and where you\'d want to be in that review?',
           quiz: [
             {
               question: 'What distinguishes a Level 3 "Process Integration" finance AI function from a Level 2 "Standardisation" function?',
