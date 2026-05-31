@@ -20,7 +20,8 @@ export interface AssessmentAnswers {
   currentTools: string[]
   experience: Experience        // derived from currentTools
   skillScore: number            // 0–2 from skill check
-  challenge: string
+  challenges: string[]
+  challenge?: string   // kept for backward compat with existing DB rows
   goals: string[]
   timePerWeek: TimeCommitment
 }

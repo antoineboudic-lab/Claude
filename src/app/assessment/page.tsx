@@ -876,7 +876,7 @@ const DEFAULT_ANSWERS: AssessmentAnswers = {
   currentTools: [],
   experience: 'none',
   skillScore: 0,
-  challenge: '',
+  challenges: [],
   goals: [],
   timePerWeek: 'moderate',
 }
@@ -948,7 +948,7 @@ export default function AssessmentPage() {
       case 'context': return answers.industry !== undefined && answers.companySize !== undefined
       case 'tools': return answers.currentTools.length > 0
       case 'skillCheck': return true // managed internally
-      case 'challenge': return answers.challenge !== ''
+      case 'challenge': return answers.challenges.length > 0
       case 'goals': return answers.goals.length > 0
       case 'time': return true
       default: return false
@@ -1063,10 +1063,10 @@ export default function AssessmentPage() {
                         onClick={() => setAnswers(a => {
                           const isSelected = a.roles.includes(role.id)
                           if (isSelected) {
-                            return { ...a, roles: a.roles.filter(r => r !== role.id), subRole: '', goals: [], challenge: '' }
+                            return { ...a, roles: a.roles.filter(r => r !== role.id), subRole: '', goals: [], challenges: [] }
                           }
                           if (a.roles.length >= 3) return a
-                          return { ...a, roles: [...a.roles, role.id], subRole: '', goals: [], challenge: '' }
+                          return { ...a, roles: [...a.roles, role.id], subRole: '', goals: [], challenges: [] }
                         })}
                         className="p-4 rounded-2xl text-left transition-all hover:scale-[1.02]"
                         style={{
@@ -1298,15 +1298,20 @@ export default function AssessmentPage() {
             {currentStep === 'challenge' && (
               <motion.div key="challenge" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
                 <StepHeader
-                  question="What's your biggest challenge right now?"
-                  sub="We'll make sure your path tackles this head-on."
+                  question="What are your biggest challenges right now?"
+                  sub="Select all that apply — we'll make sure your path tackles them head-on."
                 />
                 <div className="space-y-3 mb-8">
                   {challenges.map(ch => {
-                    const sel = answers.challenge === ch.id
+                    const sel = answers.challenges.includes(ch.id)
                     return (
                       <button key={ch.id}
-                        onClick={() => setAnswers(a => ({ ...a, challenge: ch.id }))}
+                        onClick={() => setAnswers(a => ({
+                          ...a,
+                          challenges: sel
+                            ? a.challenges.filter(c => c !== ch.id)
+                            : [...a.challenges, ch.id],
+                        }))}
                         className="w-full flex items-center gap-4 p-5 rounded-2xl text-left transition-all hover:scale-[1.01]"
                         style={{ background: sel ? '#DBEAFE' : '#FFFFFF', border: `1px solid ${sel ? '#2563EB' : '#E2E8F0'}` }}>
                         <div className="flex-1">

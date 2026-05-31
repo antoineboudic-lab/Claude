@@ -132,7 +132,12 @@ export function buildAssessmentResult(answers: AssessmentAnswers): AssessmentRes
         if (GOAL_MODULE_BOOST[goal]?.includes(modIdx)) moduleScore += 2
       }
 
-      if (CHALLENGE_MODULE_BOOST[answers.challenge]?.includes(modIdx)) moduleScore += 2
+      const effectiveChallenges = answers.challenges?.length
+        ? answers.challenges
+        : (answers.challenge ? [answers.challenge] : [])
+      for (const ch of effectiveChallenges) {
+        if (CHALLENGE_MODULE_BOOST[ch]?.includes(modIdx)) moduleScore += 2
+      }
 
       mod.lessons.forEach((lesson, lessonIdx) => {
         lessons.push({
