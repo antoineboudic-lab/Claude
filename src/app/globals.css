@@ -128,4 +128,10 @@
   html {
     @apply font-sans;
   }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
