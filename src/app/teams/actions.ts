@@ -19,7 +19,7 @@ export async function submitDemoRequest(formData: {
 
   const { error } = await resend.emails.send({
     from: 'OpusLearn <hello@opuslearn.ai>',
-    to: 'antoine@opuslearn.ai',
+    to: 'antoine.boudic@gmail.com',
     replyTo: email,
     subject: `Demo request — ${company} (${size})`,
     html: `
