@@ -118,6 +118,7 @@ export default function TeamsPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [formData, setFormData] = useState({ name: '', email: '', company: '', size: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [emailId, setEmailId] = useState<string | undefined>(undefined)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const { openSignUp, user } = useAuth()
@@ -171,11 +172,11 @@ export default function TeamsPage() {
     setSubmitError(null)
     try {
       const result = await submitDemoRequest(formData)
-      console.log('submitDemoRequest result:', JSON.stringify(result))
       if (!result.ok) {
-        setSubmitError(result.error ?? 'Something went wrong — please try again.')
+        setSubmitError(result.error ?? result.debug ?? 'Something went wrong — please try again.')
         return
       }
+      setEmailId(result.emailId)
       setSubmitted(true)
     } catch {
       setSubmitError('Something went wrong — please try again.')
@@ -561,6 +562,7 @@ export default function TeamsPage() {
               <p className="text-sm" style={{ color: '#64748B' }}>
                 Someone from our team will reach out within one business day to schedule your demo.
               </p>
+              {emailId && <p className="text-xs mt-3" style={{ color: '#94A3B8' }}>Ref: {emailId}</p>}
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
