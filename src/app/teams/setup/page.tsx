@@ -26,6 +26,9 @@ export default function TeamSetupPage() {
     const accessToken = params.get('access_token')
     const refreshToken = params.get('refresh_token')
 
+    const nameParam = new URLSearchParams(window.location.search).get('name')
+    if (nameParam) setName(nameParam)
+
     if (!accessToken || !refreshToken) {
       setStep('invalid')
       return

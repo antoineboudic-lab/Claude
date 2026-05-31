@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
-  const { companyName, adminEmail, seatLimit } = await req.json() as {
-    companyName?: string; adminEmail?: string; seatLimit?: number
+  const { companyName, adminEmail, adminName, seatLimit } = await req.json() as {
+    companyName?: string; adminEmail?: string; adminName?: string; seatLimit?: number
   }
   if (!companyName || !adminEmail) {
     return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
   const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
     type: 'recovery',
     email: adminEmail,
-    options: { redirectTo: `${BASE_URL}/teams/setup` },
+    options: { redirectTo: `${BASE_URL}/teams/setup${adminName ? `?name=${encodeURIComponent(adminName)}` : ''}` },
   })
 
   if (linkError || !linkData?.properties?.action_link) {
