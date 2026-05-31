@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { Resend } from 'resend'
 import Link from 'next/link'
 import { CheckCircle2, ArrowLeft } from 'lucide-react'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 async function submitForm(formData: FormData) {
   'use server'
@@ -16,6 +17,15 @@ async function submitForm(formData: FormData) {
   const message = (formData.get('message') as string)?.trim()
 
   if (name && email && company && size) {
+    // Save to DB for admin visibility
+    const admin = createAdminClient()
+    await admin.from('leads').upsert({
+      email,
+      source: 'demo_request',
+      role: title || null,
+      metadata: { name, company, website: website || null, industry: industry || null, size, message: message || null },
+    }, { onConflict: 'email' })
+
     const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
       from: 'OpusLearn <hello@opuslearn.ai>',

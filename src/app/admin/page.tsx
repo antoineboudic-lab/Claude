@@ -72,6 +72,21 @@ interface LeadRow {
   created_at: string
 }
 
+interface DemoRequestRow {
+  id: string
+  email: string
+  role: string | null
+  created_at: string
+  metadata: {
+    name?: string
+    company?: string
+    website?: string
+    industry?: string
+    size?: string
+    message?: string
+  }
+}
+
 interface ReferralRow {
   id: string
   referrer_id: string
@@ -295,6 +310,7 @@ export default async function AdminPage({
   let emailLogs: EmailLogRow[] = []
   let teams: TeamRow[] = []
   let teamMembers: TeamMemberRow[] = []
+  let demoRequests: DemoRequestRow[] = []
   let leads: LeadRow[] = []
   let referrals: ReferralRow[] = []
   let subscriptions: SubscriptionRow[] = []
@@ -304,12 +320,14 @@ export default async function AdminPage({
     emailLogs = data ?? []
   }
   if (tab === 'teams') {
-    const [{ data: td }, { data: md }] = await Promise.all([
+    const [{ data: td }, { data: md }, { data: dr }] = await Promise.all([
       admin.from('teams').select('*').order('created_at', { ascending: false }),
       admin.from('team_members').select('team_id, status'),
+      admin.from('leads').select('id, email, role, created_at, metadata').eq('source', 'demo_request').order('created_at', { ascending: false }),
     ])
     teams = td ?? []
     teamMembers = md ?? []
+    demoRequests = (dr ?? []) as DemoRequestRow[]
   }
   if (tab === 'leads') {
     const { data } = await admin.from('leads').select('*').order('created_at', { ascending: false }).limit(200)
@@ -716,6 +734,43 @@ export default async function AdminPage({
         {/* ═══════════════════ TEAMS ═══════════════════ */}
         {tab === 'teams' && (
           <>
+            {/* Demo requests */}
+            <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)', marginBottom: 24 }}>
+              <div style={{ padding: '16px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <Mail size={14} style={{ color: '#2563EB' }} />
+                  <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Demo Requests</span>
+                  <span style={{ fontSize: 11, fontWeight: 600, padding: '1px 7px', borderRadius: 20, background: '#EFF6FF', color: '#2563EB' }}>{demoRequests.length}</span>
+                </div>
+              </div>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                  <TableHead cols={['Name', 'Email', 'Company', 'Job title', 'Industry', 'Website', 'Team size', 'Message', 'Date']} />
+                  <tbody>
+                    {demoRequests.length === 0 ? <EmptyRow cols={9} message="No demo requests yet" /> : demoRequests.map((r, i) => (
+                      <tr key={r.id} style={{ borderBottom: i < demoRequests.length - 1 ? '1px solid #EFF6FF' : 'none' }}>
+                        <td style={{ padding: '12px 16px', fontWeight: 600, color: '#0F172A', whiteSpace: 'nowrap' }}>{r.metadata?.name ?? '—'}</td>
+                        <td style={{ padding: '12px 16px', color: '#475569' }}>{r.email}</td>
+                        <td style={{ padding: '12px 16px', color: '#0F172A', whiteSpace: 'nowrap' }}>{r.metadata?.company ?? '—'}</td>
+                        <td style={{ padding: '12px 16px', color: '#475569', whiteSpace: 'nowrap' }}>{r.role ?? '—'}</td>
+                        <td style={{ padding: '12px 16px', color: '#475569', whiteSpace: 'nowrap' }}>{r.metadata?.industry ?? '—'}</td>
+                        <td style={{ padding: '12px 16px' }}>
+                          {r.metadata?.website
+                            ? <a href={r.metadata.website.startsWith('http') ? r.metadata.website : `https://${r.metadata.website}`} target="_blank" rel="noopener noreferrer" style={{ color: '#2563EB', textDecoration: 'none', fontSize: 12 }}>{r.metadata.website}</a>
+                            : <span style={{ color: '#CBD5E1' }}>—</span>}
+                        </td>
+                        <td style={{ padding: '12px 16px', color: '#475569', whiteSpace: 'nowrap' }}>{r.metadata?.size ?? '—'}</td>
+                        <td style={{ padding: '12px 16px', color: '#64748B', maxWidth: 200 }}>
+                          <span style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{r.metadata?.message || '—'}</span>
+                        </td>
+                        <td style={{ padding: '12px 16px', color: '#CBD5E1', whiteSpace: 'nowrap' }}>{fmt(r.created_at)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
             <CreateEnterpriseTeamForm />
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
               <StatCard icon={Building2} label="Total teams" value={teams.length} color="#2563EB" />
