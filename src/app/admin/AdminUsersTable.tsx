@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Flame, CheckCircle2, XCircle, ExternalLink, Search } from 'lucide-react'
+import { Flame, CheckCircle2, XCircle, ExternalLink, Search, Trash2 } from 'lucide-react'
 
 interface AdminUser {
   id: string
@@ -65,15 +65,33 @@ function timeAgo(d: string | null) {
 
 export function AdminUsersTable({ users, progressById, latestAssessmentByUser }: Props) {
   const [query, setQuery] = useState('')
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null)
+  const [deleting, setDeleting] = useState<string | null>(null)
+  const [deletedIds, setDeletedIds] = useState<Set<string>>(new Set())
 
-  const filtered = query.trim() === ''
-    ? users
-    : users.filter(u => {
-        const name = (u.user_metadata?.full_name ?? '').toLowerCase()
-        const email = (u.email ?? '').toLowerCase()
-        const q = query.toLowerCase()
-        return name.includes(q) || email.includes(q)
-      })
+  async function handleDelete(userId: string) {
+    setDeleting(userId)
+    const res = await fetch('/api/admin/delete-user', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId }),
+    })
+    if (res.ok) {
+      setDeletedIds(prev => new Set([...prev, userId]))
+    }
+    setDeleting(null)
+    setConfirmDelete(null)
+  }
+
+  const filtered = users
+    .filter(u => !deletedIds.has(u.id))
+    .filter(u => {
+      if (query.trim() === '') return true
+      const name = (u.user_metadata?.full_name ?? '').toLowerCase()
+      const email = (u.email ?? '').toLowerCase()
+      const q = query.toLowerCase()
+      return name.includes(q) || email.includes(q)
+    })
 
   return (
     <div>
@@ -178,13 +196,30 @@ export function AdminUsersTable({ users, progressById, latestAssessmentByUser }:
                     {fmt(u.created_at)}
                   </td>
                   <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' }}>
-                    <div style={{ display: 'flex', gap: 6 }}>
+                    <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                       <Link href={`/admin/users/${u.id}`} style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#EFF6FF', color: '#2563EB', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3 }}>
                         <ExternalLink size={10} /> View
                       </Link>
                       <Link href={`/api/admin/impersonate?userId=${u.id}`} target="_blank" style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#FFFBEB', color: '#D97706', textDecoration: 'none', fontWeight: 600 }}>
                         Impersonate
                       </Link>
+                      {confirmDelete === u.id ? (
+                        <span style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                          <button onClick={() => handleDelete(u.id)} disabled={deleting === u.id}
+                            style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#FEE2E2', color: '#DC2626', border: 'none', cursor: 'pointer', fontWeight: 700 }}>
+                            {deleting === u.id ? '…' : 'Confirm'}
+                          </button>
+                          <button onClick={() => setConfirmDelete(null)}
+                            style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#F1F5F9', color: '#64748B', border: 'none', cursor: 'pointer', fontWeight: 600 }}>
+                            Cancel
+                          </button>
+                        </span>
+                      ) : (
+                        <button onClick={() => setConfirmDelete(u.id)}
+                          style={{ fontSize: 11, padding: '3px 8px', borderRadius: 5, background: '#FFF1F2', color: '#E11D48', border: 'none', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 3 }}>
+                          <Trash2 size={10} /> Delete
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
