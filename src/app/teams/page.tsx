@@ -171,6 +171,7 @@ export default function TeamsPage() {
     setSubmitError(null)
     try {
       const result = await submitDemoRequest(formData)
+      console.log('submitDemoRequest result:', JSON.stringify(result))
       if (!result.ok) {
         setSubmitError(result.error ?? 'Something went wrong — please try again.')
         return
