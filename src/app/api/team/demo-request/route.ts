@@ -12,23 +12,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
-  try {
-    await resend.emails.send({
-      from: 'OpusLearn <hello@opuslearn.ai>',
-      to: 'antoine@opuslearn.ai',
-      replyTo: email,
-      subject: `Demo request — ${company} (${size})`,
-      html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Company:</strong> ${company}</p>
-        <p><strong>Team size:</strong> ${size}</p>
-        ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
-      `,
-    })
-    return NextResponse.json({ ok: true })
-  } catch (err) {
-    console.error('Demo request email failed:', err)
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+  const { data, error } = await resend.emails.send({
+    from: 'OpusLearn <hello@opuslearn.ai>',
+    to: 'antoine@opuslearn.ai',
+    replyTo: email,
+    subject: `Demo request — ${company} (${size})`,
+    html: `
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Company:</strong> ${company}</p>
+      <p><strong>Team size:</strong> ${size}</p>
+      ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
+    `,
+  })
+
+  if (error) {
+    console.error('Demo request email failed:', error)
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
+
+  console.log('Demo request email sent:', data?.id)
+  return NextResponse.json({ ok: true })
 }
