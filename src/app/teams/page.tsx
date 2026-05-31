@@ -162,8 +162,13 @@ export default function TeamsPage() {
     setInviteLoading(false)
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    await fetch('/api/team/demo-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    }).catch(() => {})
     setSubmitted(true)
   }
 
