@@ -11,6 +11,7 @@ import {
   Star, Brain, X, CheckCircle2,
   Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
+import Logo from '@/components/Logo'
 import type { AssessmentAnswers, Role, TimeCommitment, Industry, CompanySize } from '@/lib/assessment/types'
 import { buildAssessmentResult, deriveExperience } from '@/lib/assessment/engine'
 import { useAuth } from '@/context/AuthContext'
@@ -969,10 +970,7 @@ export default function AssessmentPage() {
       <header className="flex items-center justify-between px-6 py-4 flex-shrink-0"
         style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={16} className="text-white" />
-          </div>
-          <span className="font-bold text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
+          <Logo size="md" />
         </Link>
 
         {currentStep !== 'processing' && (

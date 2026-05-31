@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lock, Eye, EyeOff, Zap, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
+import { Lock, Eye, EyeOff, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { createClient } from '@/lib/supabase/client'
 
 type Step = 'loading' | 'form' | 'success' | 'invalid'
@@ -79,10 +80,7 @@ export default function ResetPasswordPage() {
         <div className="h-1 w-full" style={{ background: '#2563EB' }} />
         <div className="px-8 pt-7 pb-9">
           <div className="flex items-center gap-2 mb-8">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-              <Zap size={13} className="text-white" />
-            </div>
-            <span className="font-black text-sm" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>OpusLearn</span>
+            <Logo size="md" />
           </div>
 
           <AnimatePresence mode="wait">

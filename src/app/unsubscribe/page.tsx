@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { CheckCircle2, AlertCircle, Zap } from 'lucide-react'
+import Logo from '@/components/Logo'
 
 function UnsubscribeContent() {
   const params = useSearchParams()
@@ -16,10 +17,7 @@ function UnsubscribeContent() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-10">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={15} className="text-white" />
-          </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
+          <Logo size="md" />
         </div>
 
         <div className="rounded-2xl p-8 text-center"

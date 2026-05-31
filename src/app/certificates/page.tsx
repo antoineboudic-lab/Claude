@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Award, CheckCircle2, ArrowRight, Shield, Building2, Star, ExternalLink } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { useGame } from '@/context/GameContext'
 import { useAuth } from '@/context/AuthContext'
 import { getTrack } from '@/lib/curriculum'
@@ -80,10 +81,7 @@ export default function CertificatesPage() {
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Award size={13} className="text-white" />
-          </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
+          <Logo size="md" />
         </Link>
         <Link href="/assessment"
           className="px-4 py-2 rounded-lg text-sm font-semibold text-white"

@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Zap, Users, Check, ArrowRight, Building2 } from 'lucide-react'
+import { Users, Check, ArrowRight, Building2 } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
 import { createTeam, getAdminTeam } from '@/lib/supabase/teams'
 import type { Team } from '@/lib/supabase/teams'
@@ -59,10 +60,7 @@ export default function CreateTeamPage() {
       <div className="fixed top-0 left-0 right-0 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={13} className="text-white" />
-          </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
+          <Logo size="md" />
         </Link>
         <Link href="/dashboard" className="text-sm font-medium hover:underline" style={{ color: '#64748B' }}>
           Back to my dashboard

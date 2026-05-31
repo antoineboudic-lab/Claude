@@ -10,6 +10,7 @@ import {
   Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search, ExternalLink, RotateCcw,
   Bookmark, Brain, Calendar, CreditCard, Crown, Trophy, Settings,
 } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { useTranslations } from 'next-intl'
 import { useBookmarks } from '@/hooks/useBookmarks'
 import { useSubscription } from '@/hooks/useSubscription'
@@ -1052,13 +1053,7 @@ export default function DashboardPage() {
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(16px)', borderBottom: '1px solid #E2E8F0' }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)' }}>
-              <Zap size={13} className="text-white" />
-            </div>
-            <span className="font-bold text-sm" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              OpusLearn
-            </span>
+            <Logo size="md" />
           </Link>
 
           <div className="flex items-center gap-4">

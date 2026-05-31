@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import type { AssessmentResult, AssessmentAnswers, PriorityLesson } from '@/lib/assessment/types'
 import type { TrackId } from '@/lib/curriculum/types'
+import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
 import { loadLatestAssessment } from '@/lib/supabase/db'
 
@@ -284,12 +285,7 @@ export default function AssessmentResultsPage() {
       <header className="flex items-center justify-between px-6 py-4"
         style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={16} className="text-white" />
-          </div>
-          <span className="font-bold" style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: '#0F172A' }}>
-            OpusLearn
-          </span>
+          <Logo size="md" />
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/assessment"

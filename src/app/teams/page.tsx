@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 import { useInView } from 'framer-motion'
 import {
-  Zap, Users, BarChart3, Award, CheckCircle2, ArrowRight,
+  Users, BarChart3, Award, CheckCircle2, ArrowRight,
   ChevronDown, Building2, Shield, Headphones, Globe,
   BookOpen, TrendingUp, Star, UserPlus, X,
 } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
 import { getAdminTeam, type Team } from '@/lib/supabase/teams'
 
@@ -167,10 +168,7 @@ export default function TeamsPage() {
       <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={13} className="text-white" />
-          </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
+          <Logo size="md" />
         </Link>
         <div className="flex items-center gap-4">
           <Link href="/tracks" className="text-sm font-medium" style={{ color: '#64748B' }}>Tracks</Link>

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Zap, CheckCircle2, Users, BookOpen, ArrowRight, AlertCircle, Clock } from 'lucide-react'
+import { CheckCircle2, Users, BookOpen, ArrowRight, AlertCircle, Clock } from 'lucide-react'
+import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
 import { getInviteByToken, acceptInvite, type TeamInvite } from '@/lib/supabase/teams'
 
@@ -156,10 +157,7 @@ export default function JoinPage() {
       <div className="fixed top-0 left-0 right-0 px-6 py-4 flex items-center"
         style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: '#2563EB' }}>
-            <Zap size={13} className="text-white" />
-          </div>
-          <span className="font-black text-base" style={{ color: '#0F172A' }}>OpusLearn</span>
+          <Logo size="md" />
         </Link>
       </div>
 
