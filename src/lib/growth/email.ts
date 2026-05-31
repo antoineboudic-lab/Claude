@@ -157,7 +157,7 @@ function signupHtml(name: string): string {
         </tr>
       </table>
     `, 8)}
-    ${row(`<p style="margin:0;font-size:12px;color:#94A3B8;">No credit card required to start. Cancel anytime.</p>`, 28)}
+    ${row(`<p style="margin:0;font-size:12px;color:#94A3B8;">7-day free trial · Cancel anytime.</p>`, 28)}
   `)
 }
 
@@ -187,7 +187,7 @@ function welcomeHtml(name: string, trackLabel: string): string {
     ${row(`
       <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
         ${[
-          ['✅', 'Free forever — no credit card needed'],
+          ['✅', '7-day free trial included'],
           ['⚡', '15 min/day is all it takes'],
           ['🏆', 'Earn XP, badges and certificates'],
         ].map(([icon, text]) => `
@@ -208,7 +208,7 @@ function leadWelcomeHtml(name: string, email: string): string {
     ${spacer(8)}
     ${row(`
       <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">Your AI learning path is ready, ${name}</h1>
-      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">You completed the assessment and we've built your personalised curriculum. Create your free account to access it — takes 30 seconds, no credit card needed.</p>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">You completed the assessment and we've built your personalised curriculum. Create your account to access it — takes 30 seconds.</p>
     `, 20)}
     ${row(infoBox(`
       <strong style="display:block;margin-bottom:6px;font-size:13px;color:#1E40AF;text-transform:uppercase;letter-spacing:0.5px;">What's waiting for you</strong>
@@ -223,7 +223,7 @@ function leadWelcomeHtml(name: string, email: string): string {
     ${spacer(20)}
     ${row(btn('Create my free account →', signupUrl))}
     ${spacer(12)}
-    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Free forever · No credit card required · Takes 30 seconds</p>`, 28)}
+    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">7-day free trial · Cancel anytime · Takes 30 seconds</p>`, 28)}
   `)
 }
 

@@ -394,7 +394,6 @@ export default function AssessmentResultsPage() {
                   </h3>
                   <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                     Enter your email to see your complete lesson plan, priority modules, and AI-generated recommendations.
-                    Free forever — no credit card needed.
                   </p>
                   <form onSubmit={handleEmailCapture} className="space-y-3">
                     <div className="flex gap-2">
@@ -423,7 +422,7 @@ export default function AssessmentResultsPage() {
                     )}
                   </form>
                   <div className="flex items-center gap-4 mt-4">
-                    {['Free forever', 'No credit card', '3,200+ professionals'].map(t => (
+                    {['7-day free trial', '3,200+ professionals'].map(t => (
                       <div key={t} className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                         <Check size={10} color="#10B981" /> {t}
                       </div>

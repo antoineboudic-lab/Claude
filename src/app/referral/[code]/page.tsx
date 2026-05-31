@@ -184,7 +184,7 @@ export default async function ReferralPage({
           {[
             'Personalised to your role',
             '15 min/day',
-            'Free forever',
+            'Start your 7-day free trial',
           ].map((bullet) => (
             <div key={bullet} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span style={{ color: '#2563EB', fontWeight: 700, fontSize: 16 }}>✓</span>

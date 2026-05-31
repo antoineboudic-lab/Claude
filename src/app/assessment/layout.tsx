@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Find My AI Learning Path",
   description:
-    "Take the 3-minute AI literacy assessment and get a personalised learning path built for your role, industry, and goals. Free, no credit card required.",
+    "Take the 3-minute AI literacy assessment and get a personalised learning path built for your role, industry, and goals.",
   openGraph: {
     title: "Find My AI Learning Path | OpusLearn",
     description:

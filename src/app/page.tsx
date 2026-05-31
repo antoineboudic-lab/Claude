@@ -1417,7 +1417,7 @@ const FAQS = [
   },
   {
     q: 'Can I try it before committing?',
-    a: 'Yes. The free plan gives you full access to Module 1 of your track — 4 complete lessons — with no credit card required. Professional and Team plans also include a 7-day free trial.',
+    a: 'Yes. You can start with a 7-day free trial — no commitment needed. Professional and Team plans give you full access to all tracks and lessons.',
   },
   {
     q: 'Is there a plan for teams or companies?',
