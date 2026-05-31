@@ -5,6 +5,11 @@ import { upsertSubscription, getUserIdByCustomerId } from '@/lib/supabase/subscr
 
 export const runtime = 'nodejs'
 
+function toIso(epoch: number | null | undefined): string | null {
+  if (!epoch) return null
+  return new Date(epoch * 1000).toISOString()
+}
+
 async function handleSubscription(sub: Stripe.Subscription) {
   const customerId = typeof sub.customer === 'string' ? sub.customer : sub.customer.id
   const userId = await getUserIdByCustomerId(customerId)
@@ -17,13 +22,19 @@ async function handleSubscription(sub: Stripe.Subscription) {
   const priceId = item?.price.id ?? null
   const plan = priceId === process.env.STRIPE_ANNUAL_PRICE_ID ? 'pro_annual' : 'pro_monthly'
 
+  // In trial mode, current_period_end may be null — fall back to billing_cycle_anchor
+  const rawSub = sub as unknown as Record<string, unknown>
+  const periodEnd = (rawSub.current_period_end as number | null)
+    ?? (rawSub.billing_cycle_anchor as number | null)
+    ?? null
+
   await upsertSubscription(userId, {
     stripe_customer_id: customerId,
     stripe_subscription_id: sub.id,
     status: sub.status as 'active' | 'trialing' | 'past_due' | 'canceled' | 'inactive',
     plan,
-    current_period_end: new Date((sub as any).current_period_end * 1000).toISOString(),
-    trial_end: sub.trial_end ? new Date(sub.trial_end * 1000).toISOString() : null,
+    current_period_end: toIso(periodEnd),
+    trial_end: toIso(sub.trial_end ?? null),
   })
 }
 
@@ -61,7 +72,6 @@ export async function POST(req: Request) {
           })
         }
 
-        // Fetch full subscription to get accurate status
         const sub = await stripe.subscriptions.retrieve(subscriptionId)
         await handleSubscription(sub)
         break
