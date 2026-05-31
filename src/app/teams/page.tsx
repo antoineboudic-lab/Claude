@@ -175,11 +175,11 @@ export default function TeamsPage() {
         <div className="flex items-center gap-4">
           <Link href="/tracks" className="text-sm font-medium" style={{ color: '#64748B' }}>Tracks</Link>
           <Link href="/certificates" className="text-sm font-medium" style={{ color: '#64748B' }}>Certificates</Link>
-          <a href="#contact"
+          <Link href="/teams/demo"
             className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
             style={{ background: '#2563EB' }}>
             Get a demo
-          </a>
+          </Link>
         </div>
       </nav>
 
@@ -206,11 +206,11 @@ export default function TeamsPage() {
               Role-specific tracks for every function. Team progress visibility. Group certificates your organisation can stand behind.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
-              <a href="#contact"
+              <Link href="/teams/demo"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90"
                 style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.28)' }}>
                 Get a demo <ArrowRight size={16} />
-              </a>
+              </Link>
               <a href="#plans"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base transition-all hover:bg-slate-100"
                 style={{ background: '#EFF6FF', color: '#334155', border: '1px solid #E2E8F0' }}>
@@ -464,14 +464,14 @@ export default function TeamsPage() {
                     </li>
                   ))}
                 </ul>
-                <a href="#contact"
+                <Link href="/teams/demo"
                   className="block text-center py-3 rounded-xl font-semibold text-sm transition-all hover:opacity-90"
                   style={{
                     background: plan.highlight ? '#FFFFFF' : '#2563EB',
                     color: plan.highlight ? '#2563EB' : '#FFFFFF',
                   }}>
                   {plan.name === 'Enterprise' ? 'Contact us' : 'Get started'}
-                </a>
+                </Link>
               </div>
             ))}
           </div>
