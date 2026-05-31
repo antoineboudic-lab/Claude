@@ -3,13 +3,23 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 204, headers: CORS_HEADERS })
+}
+
 export async function POST(req: NextRequest) {
   let body: { name?: string; email?: string; company?: string; size?: string; message?: string }
-  try { body = await req.json() } catch { return NextResponse.json({ error: 'Invalid body' }, { status: 400 }) }
+  try { body = await req.json() } catch { return NextResponse.json({ error: 'Invalid body' }, { status: 400, headers: CORS_HEADERS }) }
 
   const { name, email, company, size, message } = body
   if (!name || !email || !company || !size) {
-    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    return NextResponse.json({ error: 'Missing required fields' }, { status: 400, headers: CORS_HEADERS })
   }
 
   const { data, error } = await resend.emails.send({
@@ -28,9 +38,9 @@ export async function POST(req: NextRequest) {
 
   if (error) {
     console.error('Demo request email failed:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: error.message }, { status: 500, headers: CORS_HEADERS })
   }
 
   console.log('Demo request email sent:', data?.id)
-  return NextResponse.json({ ok: true, emailId: data?.id })
+  return NextResponse.json({ ok: true, emailId: data?.id }, { headers: CORS_HEADERS })
 }
