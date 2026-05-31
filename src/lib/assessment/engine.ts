@@ -1,4 +1,4 @@
-import type { AssessmentAnswers, AssessmentResult, PriorityLesson } from './types'
+import type { AssessmentAnswers, AssessmentResult, PriorityLesson, Role } from './types'
 import type { TrackId } from '../curriculum/types'
 import { getTrack } from '../curriculum'
 
@@ -97,52 +97,67 @@ const GOAL_LABELS: Record<string, string> = {
 }
 
 export function buildAssessmentResult(answers: AssessmentAnswers): AssessmentResult {
-  const primaryTrackId = ROLE_TO_TRACK[answers.role] as TrackId
-  const track = getTrack(primaryTrackId)!
+  // Backward compat: old DB rows have `role` (singular), new ones use `roles`
+  const effectiveRoles: Role[] = answers.roles?.length
+    ? answers.roles
+    : (answers.role ? [answers.role] : ['marketing' as Role])
 
-  const lessons: PriorityLesson[] = []
+  const primaryTrackId = ROLE_TO_TRACK[effectiveRoles[0]] as TrackId
 
-  track.modules.forEach((mod, modIdx) => {
-    let moduleScore = 1
+  const allLessons: PriorityLesson[] = []
 
-    // Experience and skill score together shape foundation module weight
-    if (modIdx === 0) {
-      if (answers.experience === 'none') moduleScore += 4
-      else if (answers.experience === 'some') moduleScore += 1
-      else moduleScore -= 2
-      // Low skill score boosts foundational content regardless of stated experience
-      if (answers.skillScore <= 1) moduleScore += 2
-      else if (answers.skillScore >= 3) moduleScore -= 1
-    }
+  // Distribute essential/recommended slots proportionally across tracks
+  const essentialPerTrack = Math.max(3, Math.ceil(5 / effectiveRoles.length))
+  const recommendedPerTrack = Math.max(5, Math.ceil(12 / effectiveRoles.length))
 
-    for (const goal of answers.goals) {
-      if (GOAL_MODULE_BOOST[goal]?.includes(modIdx)) moduleScore += 2
-    }
+  for (const role of effectiveRoles) {
+    const trackId = ROLE_TO_TRACK[role] as TrackId
+    const track = getTrack(trackId)
+    if (!track) continue
 
-    if (CHALLENGE_MODULE_BOOST[answers.challenge]?.includes(modIdx)) moduleScore += 2
+    const lessons: PriorityLesson[] = []
 
-    mod.lessons.forEach((lesson, lessonIdx) => {
-      lessons.push({
-        trackId: primaryTrackId,
-        lessonId: lesson.id,
-        moduleId: mod.id,
-        lessonTitle: lesson.title,
-        moduleTitle: mod.title,
-        moduleIndex: modIdx,
-        lessonIndex: lessonIdx,
-        score: moduleScore - lessonIdx * 0.3,
-        priority: 'optional',
+    track.modules.forEach((mod, modIdx) => {
+      let moduleScore = 1
+
+      if (modIdx === 0) {
+        if (answers.experience === 'none') moduleScore += 4
+        else if (answers.experience === 'some') moduleScore += 1
+        else moduleScore -= 2
+        if (answers.skillScore <= 1) moduleScore += 2
+        else if (answers.skillScore >= 3) moduleScore -= 1
+      }
+
+      for (const goal of answers.goals) {
+        if (GOAL_MODULE_BOOST[goal]?.includes(modIdx)) moduleScore += 2
+      }
+
+      if (CHALLENGE_MODULE_BOOST[answers.challenge]?.includes(modIdx)) moduleScore += 2
+
+      mod.lessons.forEach((lesson, lessonIdx) => {
+        lessons.push({
+          trackId,
+          lessonId: lesson.id,
+          moduleId: mod.id,
+          lessonTitle: lesson.title,
+          moduleTitle: mod.title,
+          moduleIndex: modIdx,
+          lessonIndex: lessonIdx,
+          score: moduleScore - lessonIdx * 0.3,
+          priority: 'optional',
+        })
       })
     })
-  })
 
-  const sorted = [...lessons].sort((a, b) => b.score - a.score)
-  sorted.forEach((l, i) => {
-    if (i < 5) l.priority = 'essential'
-    else if (i < 12) l.priority = 'recommended'
-  })
+    const sorted = [...lessons].sort((a, b) => b.score - a.score)
+    sorted.forEach((l, i) => {
+      if (i < essentialPerTrack) l.priority = 'essential'
+      else if (i < essentialPerTrack + recommendedPerTrack) l.priority = 'recommended'
+    })
 
-  lessons.sort((a, b) => a.moduleIndex * 10 + a.lessonIndex - (b.moduleIndex * 10 + b.lessonIndex))
+    lessons.sort((a, b) => a.moduleIndex * 10 + a.lessonIndex - (b.moduleIndex * 10 + b.lessonIndex))
+    allLessons.push(...lessons)
+  }
 
   const goalText = answers.goals
     .map(g => GOAL_LABELS[g])
@@ -150,17 +165,19 @@ export function buildAssessmentResult(answers: AssessmentAnswers): AssessmentRes
     .slice(0, 2)
     .join(' and ')
 
+  const trackLabel = effectiveRoles.length > 1 ? `${effectiveRoles.length} tracks` : 'your track'
+
   const reasoning = goalText
-    ? `Your path is built around ${goalText}. The lessons marked Essential are the highest-impact starting points for your specific goals and role.`
-    : 'Your path is sequenced to build practical AI capability progressively, starting where you are right now.'
+    ? `Your path spans ${trackLabel} and is built around ${goalText}. The lessons marked Essential are the highest-impact starting points for your specific goals and roles.`
+    : 'Your path is sequenced to build practical AI capability across your selected roles, starting where you are right now.'
 
   return {
     answers,
     primaryTrackId,
-    customPath: lessons,
+    customPath: allLessons,
     estimatedWeeks: TIME_TO_WEEKS[answers.timePerWeek] ?? 8,
-    totalLessons: lessons.length,
-    essentialCount: lessons.filter(l => l.priority === 'essential').length,
+    totalLessons: allLessons.length,
+    essentialCount: allLessons.filter(l => l.priority === 'essential').length,
     reasoning,
   }
 }

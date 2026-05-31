@@ -11,7 +11,8 @@ export type CompanySize = 'startup' | 'scaleup' | 'midmarket' | 'enterprise'
 
 export interface AssessmentAnswers {
   name: string
-  role: Role
+  roles: Role[]
+  role?: Role        // kept for backward compat with existing DB rows
   subRole: string
   roleDescription: string
   industry: Industry

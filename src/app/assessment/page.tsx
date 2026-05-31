@@ -868,7 +868,7 @@ const slideIn = {
 
 const DEFAULT_ANSWERS: AssessmentAnswers = {
   name: '',
-  role: 'marketing',
+  roles: [],
   subRole: '',
   roleDescription: '',
   industry: 'technology',
@@ -896,10 +896,11 @@ export default function AssessmentPage() {
   // Dynamic steps based on role (branching)
   const STEPS = useMemo<StepId[]>(() => {
     const base: StepId[] = ['welcome', 'role']
-    if (answers.role !== 'other' && answers.role !== 'leadership') base.push('subRole')
+    const primary = answers.roles[0]
+    if (answers.roles.length === 1 && primary !== 'other' && primary !== 'leadership') base.push('subRole')
     base.push('roleDescription')
     return [...base, 'context', 'tools', 'skillCheck', 'challenge', 'goals', 'time', 'processing']
-  }, [answers.role])
+  }, [answers.roles])
 
   const currentStep = STEPS[stepIdx]
   const contentStepCount = STEPS.length - 1 // exclude processing
@@ -928,7 +929,7 @@ export default function AssessmentPage() {
             const derived = deriveExperience(answers.currentTools)
             const finalAnswers = { ...answers, experience: derived }
             const result = buildAssessmentResult(finalAnswers)
-            localStorage.setItem('opuslearn-assessment', JSON.stringify(result))
+            localStorage.setItem('ai-literacy-assessment', JSON.stringify(result))
             if (user) await saveAssessment(user.id, result).catch(() => {})
           } catch { /* ignore */ }
           router.push('/assessment/results')
@@ -941,7 +942,7 @@ export default function AssessmentPage() {
   function canProceed(): boolean {
     switch (currentStep) {
       case 'welcome': return answers.name.trim().length > 0
-      case 'role': return true
+      case 'role': return answers.roles.length > 0
       case 'subRole': return true
       case 'roleDescription': return true
       case 'context': return answers.industry !== undefined && answers.companySize !== undefined
@@ -954,9 +955,12 @@ export default function AssessmentPage() {
     }
   }
 
-  const challenges = CHALLENGES[answers.role] ?? CHALLENGES.other
-  const skillQs = SKILL_QUESTIONS[answers.role] ?? SKILL_QUESTIONS.other
-  const goals = ROLE_GOALS[answers.role] ?? ROLE_GOALS.other
+  const primaryRole = answers.roles[0] ?? 'other'
+  const allChallengeOptions = answers.roles.flatMap(r => CHALLENGES[r] ?? CHALLENGES.other)
+  const challenges = allChallengeOptions.filter((c, i, arr) => arr.findIndex(x => x.id === c.id) === i)
+  const skillQs = SKILL_QUESTIONS[primaryRole] ?? SKILL_QUESTIONS.other
+  const allGoalOptions = answers.roles.flatMap(r => ROLE_GOALS[r] ?? ROLE_GOALS.other)
+  const goals = allGoalOptions.filter((g, i, arr) => arr.findIndex(x => x.id === g.id) === i)
   const progressPct = Math.round((stepIdx / contentStepCount) * 100)
 
   return (
@@ -1037,17 +1041,39 @@ export default function AssessmentPage() {
               <motion.div key="role" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
                 <StepHeader
                   question={`What best describes your role, ${answers.name}?`}
-                  sub="This shapes which track we recommend and how we personalise it."
+                  sub="Select all that apply — up to 3. We'll build a blended path across your tracks."
                 />
+                {answers.roles.length > 0 && (
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: '#DBEAFE', color: '#2563EB' }}>
+                      {answers.roles.length} selected
+                    </span>
+                    {answers.roles.length >= 3 && (
+                      <span className="text-xs" style={{ color: '#94A3B8' }}>Maximum reached</span>
+                    )}
+                  </div>
+                )}
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-8">
                   {ROLES.map(role => {
                     const Icon = role.icon
-                    const sel = answers.role === role.id
+                    const sel = answers.roles.includes(role.id)
+                    const atMax = answers.roles.length >= 3
                     return (
                       <button key={role.id}
-                        onClick={() => setAnswers(a => ({ ...a, role: role.id, subRole: '', goals: [], challenge: '' }))}
+                        onClick={() => setAnswers(a => {
+                          const isSelected = a.roles.includes(role.id)
+                          if (isSelected) {
+                            return { ...a, roles: a.roles.filter(r => r !== role.id), subRole: '', goals: [], challenge: '' }
+                          }
+                          if (a.roles.length >= 3) return a
+                          return { ...a, roles: [...a.roles, role.id], subRole: '', goals: [], challenge: '' }
+                        })}
                         className="p-4 rounded-2xl text-left transition-all hover:scale-[1.02]"
-                        style={{ background: sel ? `${role.color}08` : '#FFFFFF', border: `1px solid ${sel ? role.color : '#E2E8F0'}` }}>
+                        style={{
+                          background: sel ? `${role.color}08` : '#FFFFFF',
+                          border: `1px solid ${sel ? role.color : '#E2E8F0'}`,
+                          opacity: !sel && atMax ? 0.45 : 1,
+                        }}>
                         <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: `${role.color}12` }}>
                           <Icon size={17} color={role.color} />
                         </div>
@@ -1058,7 +1084,7 @@ export default function AssessmentPage() {
                     )
                   })}
                 </div>
-                <NavButtons canProceed onNext={goNext} onBack={goBack} />
+                <NavButtons canProceed={canProceed()} onNext={goNext} onBack={goBack} />
               </motion.div>
             )}
 
@@ -1070,7 +1096,7 @@ export default function AssessmentPage() {
                   sub="This helps us surface the most relevant lessons and examples."
                 />
                 <div className="grid sm:grid-cols-2 gap-3 mb-8">
-                  {(SUB_ROLES[answers.role] ?? []).map(sr => {
+                  {(SUB_ROLES[answers.roles[0]] ?? []).map(sr => {
                     const sel = answers.subRole === sr.id
                     return (
                       <button key={sr.id}
@@ -1094,8 +1120,10 @@ export default function AssessmentPage() {
 
             {/* ── Role description ── */}
             {currentStep === 'roleDescription' && (() => {
-              const tips = ROLE_DESCRIPTION_TIPS[answers.role] ?? ROLE_DESCRIPTION_TIPS.other
-              const roleLabel = ROLES.find(r => r.id === answers.role)?.label ?? 'your role'
+              const tips = ROLE_DESCRIPTION_TIPS[primaryRole] ?? ROLE_DESCRIPTION_TIPS.other
+              const roleLabel = answers.roles.length > 1
+                ? answers.roles.map(r => ROLES.find(x => x.id === r)?.label).filter(Boolean).join(' & ')
+                : (ROLES.find(r => r.id === primaryRole)?.label ?? 'your role')
               return (
                 <motion.div key="roleDescription" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
                   <StepHeader

@@ -394,7 +394,7 @@ export default function AssessmentResultsPage() {
                     </p>
                   </div>
                   <h3 className="text-xl font-black mb-2" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                    Your personalised {result ? TRACK_META[result.primaryTrackId]?.label : 'AI'} curriculum is ready
+                    Your personalised {result ? (result.answers.roles?.length > 1 ? 'multi-track' : TRACK_META[result.primaryTrackId]?.label) : 'AI'} curriculum is ready
                   </h3>
                   <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                     Enter your email to see your complete lesson plan, priority modules, and AI-generated recommendations.
