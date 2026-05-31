@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Eye, EyeOff, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
@@ -11,7 +10,6 @@ import Logo from '@/components/Logo'
 type Step = 'loading' | 'form' | 'success' | 'invalid'
 
 export default function TeamSetupPage() {
-  const router = useRouter()
   const [step, setStep] = useState<Step>('loading')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -60,7 +58,9 @@ export default function TeamSetupPage() {
     }
 
     setStep('success')
-    setTimeout(() => router.push('/dashboard/team'), 1500)
+    // Hard navigation so the new page reads the session fresh from cookies
+    // (avoids a race with onAuthStateChange SIGNED_OUT in the SPA context)
+    setTimeout(() => { window.location.href = '/dashboard/team' }, 1500)
   }
 
   const inputStyle: React.CSSProperties = {
