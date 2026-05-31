@@ -19,12 +19,12 @@
       "headingAccent": "your role demands.",
       "subheading": "Personalised learning paths for business professionals. Apply AI to your actual work — no technical background required.",
       "cta": "Find my learning path",
-      "ctaSub": "No credit card required",
+      "ctaSub": "7-day free trial included",
       "seeHowItWorks": "See how it works",
       "pickYourRole": "Pick your role and start today",
       "rating": "from {count}+ professionals",
-      "trustFree": "Free forever",
-      "trustNoCard": "No credit card required",
+      "trustFree": "7-day free trial",
+      "trustNoCard": "Cancel anytime",
       "trustStart": "Start in 2 minutes"
     },
     "social": {
@@ -42,7 +42,7 @@
       "heading": "From zero to AI fluency in three steps",
       "sub": "No setup. No prerequisites. Start your first lesson in under 5 minutes.",
       "cta": "Start with the free assessment",
-      "ctaSub": "Takes 3 minutes · No credit card required",
+      "ctaSub": "Takes 3 minutes · 7-day free trial included",
       "step1Tag": "Free",
       "step1Title": "Take the Assessment",
       "step1Desc": "Answer 5 quick questions about your role, industry, and goals. Takes 3 minutes and shapes everything that follows.",
@@ -111,7 +111,7 @@
       "sub": "3-minute assessment. Personalised path. First lesson in under 5 minutes.",
       "cta": "Take the free assessment",
       "browseAllTracks": "Browse all tracks",
-      "note": "No credit card required · Free plan available · Cancel anytime"
+      "note": "7-day free trial · Cancel anytime"
     },
     "footer": {
       "rights": "All rights reserved.",
@@ -141,7 +141,7 @@
     },
     "stickyBar": {
       "title": "Join {count}+ professionals mastering AI",
-      "sub": "Free forever · No credit card required",
+      "sub": "7-day free trial · Cancel anytime",
       "buildPlan": "Build my learning plan"
     },
     "loggedIn": {
@@ -326,7 +326,7 @@
     "noPathStep3Title": "Get your curriculum",
     "noPathStep3Desc": "A personalised lesson sequence built only for you, ready to start.",
     "buildPersonalizedPath": "Build my personalized learning path",
-    "freeForever": "Free forever · Takes 2 minutes · No credit card",
+    "freeForever": "7-day free trial · Takes 2 minutes · Cancel anytime",
     "best": "Best",
     "days": "days",
     "lessonsCompletedMsg": "You've completed {count} lesson{plural} — keep the momentum going.",
@@ -351,7 +351,7 @@
     "billedAnnually": "billed annually",
     "mostPopular": "Most popular",
     "custom": "Custom",
-    "trialNote": "All plans include a 7-day free trial. No credit card required.",
+    "trialNote": "All plans include a 7-day free trial. Cancel anytime.",
     "faq": "Frequently asked questions",
     "faqSub": "Everything you need to know before signing up.",
     "signIn": "Sign in",
