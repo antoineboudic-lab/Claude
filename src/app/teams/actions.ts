@@ -1,7 +1,5 @@
 'use server'
 
-import { Resend } from 'resend'
-
 export type DemoRequestState = {
   status: 'idle' | 'success' | 'error'
   emailId?: string
@@ -22,31 +20,19 @@ export async function sendDemoRequest(
     return { status: 'error', error: 'Please fill in all required fields.' }
   }
 
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
-    return { status: 'error', error: 'Email service not configured (missing API key).' }
+  try {
+    const res = await fetch('https://www.opuslearn.ai/api/team/demo-request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, company, size, message }),
+    })
+    const json = await res.json() as { ok?: boolean; emailId?: string; error?: string }
+    if (!res.ok || !json.ok) {
+      return { status: 'error', error: json.error ?? 'Something went wrong.' }
+    }
+    return { status: 'success', emailId: json.emailId }
+  } catch (err) {
+    console.error('Demo request server action failed:', err)
+    return { status: 'error', error: 'Network error — please try again.' }
   }
-
-  const resend = new Resend(apiKey)
-  const { data, error } = await resend.emails.send({
-    from: 'OpusLearn <hello@opuslearn.ai>',
-    to: 'antoine.boudic@gmail.com',
-    replyTo: email,
-    subject: `Demo request — ${company} (${size})`,
-    html: `
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Company:</strong> ${company}</p>
-      <p><strong>Team size:</strong> ${size}</p>
-      ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
-    `,
-  })
-
-  if (error) {
-    console.error('Demo request failed:', JSON.stringify(error))
-    return { status: 'error', error: error.message }
-  }
-
-  console.log('Demo request sent, emailId:', data?.id)
-  return { status: 'success', emailId: data?.id }
 }
