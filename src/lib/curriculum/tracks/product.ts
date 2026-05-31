@@ -2128,5 +2128,681 @@ The risk is not that AI replaces PMs. The risk is that PMs who don't engage with
         },
       ],
     },
+    {
+      id: 'product-m6',
+      title: 'AI-Native Product Strategy',
+      description:
+        'Design products for AI-assisted users, build LLM-powered features responsibly, understand agent-based architectures, and position yourself for the rapidly evolving role of the PM in the AI era.',
+      lessons: [
+        {
+          id: 'product-m6-l1',
+          title: 'Designing for AI-Assisted Users',
+          duration: 17,
+          description:
+            'Learn the UX design principles that separate AI features users actually adopt from AI features that get ignored — and audit your own product against them.',
+          content: `## How AI Changes the Way Users Interact with Products
+
+The mental model users bring to most software was formed in the era of navigation and search: find the right screen, fill in the right fields, click the right button. AI breaks this model in two ways.
+
+First, **conversation replaces navigation** for information-dense workflows. Instead of navigating to a report, filtering 15 dimensions, and reading a table, a user asks "what drove the revenue dip last Thursday?" The interface is language, not hierarchy.
+
+Second, **generation replaces search** as the primary way to get a starting point. Instead of finding a template and adapting it, a user describes what they want and gets a draft. The blank page disappears.
+
+These shifts are not incremental UI improvements — they change what "good UX" means for AI-powered features.
+
+## Five UX Principles for AI-Augmented Workflows
+
+**1. Progressive disclosure of AI capabilities**
+Don\'t reveal all AI capabilities at once — users who are shown everything AI can do upfront adopt less, not more. Surface capabilities contextually, in the moment when they would help. The user who is staring at an empty form field is the right moment to offer "let AI draft this for you."
+
+**2. User agency and control**
+AI should feel like an assistant the user controls, not a system that acts for them. Design for: easy edit of AI output, clear undo paths, explicit confirmation before AI takes consequential actions. Users who feel in control of AI adopt it more and trust it more.
+
+**3. Graceful failure when AI is wrong**
+AI will be wrong sometimes — and how the product handles that failure determines whether the user trusts the feature long-term. The worst failure mode: AI is wrong and the user has no path to correct it. Design explicit failure recovery: "This doesn\'t look right? Edit here," or "Not helpful — tell me why."
+
+**4. Trust calibration**
+Users who over-trust AI miss errors; users who under-trust AI don\'t use the feature. Help users calibrate: show confidence levels where you have them, highlight where AI is drawing on limited information, and make verification easy. The goal is appropriate reliance, not maximum reliance.
+
+**5. Show your work**
+Users who understand why AI produced an output are better at judging whether to trust it. Where possible, make AI reasoning visible: "I suggested this because your last three projects used similar frameworks" or "Based on the user feedback from March and April, the top theme is X." Transparency drives adoption.
+
+## The Adoption Curve Problem
+
+Research from enterprise AI deployments consistently shows that users who understand AI use it 3× more than users who don\'t. The adoption problem in AI products is not capability — it\'s comprehension.
+
+> "I am a PM designing the onboarding experience for an AI feature that drafts weekly status updates from project data. Users historically struggle to trust AI-generated content. Design a 3-step onboarding flow that: (1) sets accurate expectations about what the AI can and cannot do, (2) builds early trust through a low-stakes first interaction, (3) explains the editing workflow so users feel in control. Make it specific — not just principles but actual copy and interaction design."
+
+## Emerging Standard Patterns for AI UX
+
+As AI features mature across B2B products, some patterns are becoming standard:
+
+- **Edit-not-generate:** AI produces a starting point; users edit, not approve/reject. Editing feels safer and results in better adoption than binary accept/reject.
+- **Confidence indicators:** Subtle signals (a lighter text colour, a small indicator) that the AI is less certain about part of its output. Users learn to pay more attention to flagged content.
+- **Inline suggestions over modal interruptions:** AI suggestions in context (like Google Docs suggesting completions) outperform modal "AI has a suggestion" interruptions in adoption and task completion rates.`,
+          keyTakeaways: [
+            'AI shifts user interaction from navigation → conversation and search → generation — UX must be designed for these new interaction models, not retrofitted from traditional UI',
+            'Progressive disclosure of AI capabilities (contextual, in the moment) drives higher adoption than upfront feature showcases',
+            'Graceful failure design is as important as the AI capability itself — users who experience a bad AI failure with no recovery path churn faster than users who never used the AI feature',
+            'Users who understand AI use it 3× more — onboarding that builds comprehension, not just awareness, is the highest-leverage adoption investment',
+            'Edit-not-generate, confidence indicators, and inline suggestions are emerging as standard patterns for AI UX because they preserve user agency',
+          ],
+          exercise: {
+            title: 'AI Feature UX Audit',
+            description:
+              'Audit one AI feature in your product (or a competitor\'s) against 5 UX principles for AI-assisted design. Identify 2 improvements.',
+            steps: [
+              'Choose an AI feature in your product or a competitor product you use regularly (examples: Notion AI, GitHub Copilot, Grammarly, ChatGPT in a third-party integration)',
+              'Open Claude and prompt: "Act as a UX reviewer specialising in AI product design. Evaluate the following AI feature against these 5 principles: progressive disclosure, user agency and control, graceful failure handling, trust calibration, and showing AI reasoning. Feature: [describe the feature in detail — what it does, how users invoke it, what it produces, how they interact with the output]. For each principle: rate the feature 1-5, describe what it does well and what is missing, and suggest one specific improvement."',
+              'Review Claude\'s assessment — do you agree? Add your own observation from using the feature that the AI audit missed',
+              'Select the 2 improvements with highest impact and lowest implementation complexity',
+              'Draft a 3-sentence product brief for each improvement: the user problem, the proposed solution, and how you would measure success',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A PM\'s AI drafting feature has a 40% adoption rate — users open the feature but 60% switch back to manual drafting immediately. Research shows the primary reason is that users don\'t trust the AI output. Which intervention is most likely to improve adoption?',
+            options: [
+              'Add a warning that users must review AI output carefully',
+              'Make the AI output larger and more prominent so users engage with it more',
+              'Redesign the interaction to show the AI\'s reasoning (sources, key themes it detected) alongside the draft, and make editing in-context easier than switching to manual drafting',
+              'Reduce the AI feature\'s scope so it makes smaller suggestions that are easier to trust',
+            ],
+            correct: 2,
+            explanation: 'When users distrust AI output, the intervention is transparency and friction reduction for editing — not warnings (which reinforce distrust) or prominence (which doesn\'t address the trust deficit). Showing the AI\'s reasoning (the data sources, the themes it extracted, the logic it applied) helps users calibrate their trust appropriately — they can see why the AI produced the output and judge whether that reasoning is sound. Making editing easy reduces the perceived cost of using AI: even if the draft isn\'t perfect, fixing it is faster than starting from scratch. These two interventions together address the actual problem (distrust and perceived high correction cost).',
+          },
+          outputComparison: {
+            label: 'Vague vs. specific AI UX design prompt',
+            vague: {
+              prompt: 'How should I design the UX for an AI feature?',
+              output: 'Designing UX for AI features requires careful consideration of user needs and expectations. Make sure users understand what the AI can do. Provide clear feedback when AI makes mistakes. Allow users to control and edit AI outputs. Consider progressive disclosure of features. Test with real users to understand adoption barriers. Overall, focus on building trust and making the AI feel helpful rather than threatening.',
+            },
+            improved: {
+              prompt: 'I am the PM for a B2B project management tool. We are launching an AI feature that automatically drafts project status updates by reading task completion data, milestone progress, and recent comments. Users are project managers who currently write these manually and are protective of their voice and relationship with stakeholders. Design the UX for the initial AI invocation and the editing experience. Specifically: (1) how do we surface the AI capability at the right moment, (2) what does the user see when AI produces a draft — including how we show the AI\'s reasoning, (3) what editing affordances make it easy to adjust without starting over, (4) how do we handle the case where the AI misread the project status. Design this for a PM who is sceptical of AI replacing their work.',
+              output: `**AI Status Update UX Design — Sceptical PM Persona**
+
+**1. Surfacing the Capability (Progressive Disclosure)**
+Do not add an "AI Status Update" button to the main nav — this signals "AI will do your job." Instead:
+- When the PM opens a blank status update field, show a subtle inline prompt: *"Pull in this week\'s highlights? →"* (not "AI will write this for you")
+- In the onboarding week only, show a non-intrusive coach mark on the first Friday: *"68% of your tasks closed this week. Want a starting point for your update?"*
+- After first use, the CTA adapts: *"Same as last week: generate a draft from this sprint\'s data?"*
+
+**2. The Draft Display (Showing Reasoning)**
+Present the draft in an edit-first layout:
+- Draft text in an editable field (not a preview modal — immediately editable)
+- Collapsible sidebar: *"Where this came from"* — showing the 3-5 data points the AI used (task completions, milestone hit, top comment themes)
+- Any section where data was sparse shows a subtle amber underline with tooltip: *"Limited data — you may want to verify this"*
+- Opening line always editable first — this is where the PM\'s voice matters most
+
+**3. Editing Affordances**
+- Inline regeneration: highlight any sentence → *"Rewrite this section"* or *"Make this more concise"*
+- Tone slider: "More formal / More conversational" — single click, instant regeneration of tone without changing facts
+- "Replace with my version" — click any paragraph to replace with blank space that keeps the rest of the AI draft intact
+- No "Accept All" button — accepting is done by submitting; editing is the default state
+
+**4. AI Misread Handling**
+When AI gets the status wrong (e.g., marks a milestone complete that is actually blocked):
+- PM edits inline — no special flow needed if editing is easy enough
+- After edit: *"Got it — should I remember this correction for future updates?"* (one-click yes/no)
+- If PM deletes more than 60% of the draft: trigger one-time survey: *"What didn\'t work this time?"* — 2-option max (wrong data / wrong tone)`,
+            },
+            insight: 'The improved prompt specifies the product context, the exact feature, the user persona (sceptical, protective of their voice), and asks for specific UX — not principles. This gives Claude enough context to produce interaction design specifics: exact copy, specific affordances, the conditional logic for edge cases. The output is something a designer could actually work from. The vague prompt produces a list of UX principles you could find in any AI design article — useful for a first read, not for making product decisions.',
+          },
+          applyThisWeek: {
+            action: 'Run the 5-principle UX audit on one AI feature in your product and write up findings as a product brief for the team.',
+            promptTemplate: 'I am a PM at a [company type] building [product type]. We have an AI feature that [describe what it does]. Our adoption rate is [X%] and the main drop-off is [describe where users stop]. Audit this feature against the 5 AI UX principles (progressive disclosure, user agency, graceful failure, trust calibration, show your work) and recommend the 2 highest-impact changes to improve adoption.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about an AI feature you use regularly — what made you trust it enough to rely on it? Could you replicate that trust-building moment in your own product?',
+          quiz: [
+            {
+              question: 'A PM is designing an AI feature that automatically categorises customer support tickets. Early testing shows 85% accuracy. Which UX design decision is most important for this accuracy level?',
+              options: [
+                'Hide the AI categorisation from support agents so they process tickets without bias',
+                'Display the AI categorisation with a confidence level, make it easy to correct with one click, and track correction rates to identify systematic errors',
+                'Only show AI categorisation when it is 95% confident, hiding it otherwise',
+                'Display a warning on every AI-categorised ticket to ensure agents review it',
+              ],
+              correct: 1,
+              explanation: 'At 85% accuracy, AI is genuinely useful but wrong 15% of the time. The right design: show the categorisation (it\'s right most of the time), show confidence so agents learn when to be more careful, make correction trivially easy (one click to recategorise), and track corrections to find systematic errors that training data can fix. Hiding AI from agents eliminates the human oversight benefit. Hiding low-confidence categorisations creates inconsistent experiences. Warnings on every ticket create alert fatigue and undermine trust even on the 85% of accurate categorisations.',
+            },
+            {
+              question: 'Research shows your AI writing assistant has 40% adoption among new users in the first week, but 85% adoption among users who complete the interactive tutorial. The tutorial takes 8 minutes. What does this data suggest?',
+              options: [
+                'The tutorial should be mandatory for all users to force 85% adoption',
+                'The comprehension gap between tutorial-completers and non-completers is the primary adoption driver — invest in shorter, contextual education moments throughout onboarding rather than a single 8-minute tutorial',
+                'The AI feature is not good enough and should be improved before focusing on adoption',
+                'The 40% who don\'t do the tutorial are not the target user for this feature',
+              ],
+              correct: 1,
+              explanation: 'The data clearly shows comprehension, not capability, drives adoption — consistent with the finding that users who understand AI use it 3× more. But making an 8-minute tutorial mandatory will create friction and resentment, and completion rates will drop. The more effective intervention: extract what the tutorial teaches (likely: what the AI can do, how to invoke it, how to edit output) and deliver those insights in context, at the moment the user would benefit. Progressive, contextual education achieves the comprehension benefit without the upfront investment barrier.',
+            },
+            {
+              question: 'A user edits 80% of AI-generated content before sending it. A stakeholder argues this proves the AI feature is not working. What is the PM\'s best response?',
+              options: [
+                'Agree — an effective AI feature should require minimal editing',
+                'Editing rate is the wrong metric: if users are editing and sending (not deleting and starting over), AI is delivering value. The metric to watch is time-to-complete-task and user satisfaction — high edit rates with fast completion times indicate AI is successfully providing a useful starting point',
+                'The AI model should be retrained to require less editing',
+                'The 80% edit rate is a product failure that requires a full feature redesign',
+              ],
+              correct: 1,
+              explanation: 'Edit-not-generate is actually a design principle, not a failure mode. Users editing AI output is expected and healthy — it means AI is providing a starting point that users refine, which is faster than starting from scratch. The relevant metrics are: task completion time (is the user faster with AI than without?), user satisfaction (do users feel the AI is helpful?), and abandonment rate (do users delete the AI output entirely and start over?). High edit rates combined with fast completion and high satisfaction indicate a well-functioning AI assist feature. Low edit rates could actually indicate over-trust — users accepting AI output without appropriate review.',
+            },
+          ],
+        },
+        {
+          id: 'product-m6-l2',
+          title: 'Building LLM-Powered Features Responsibly',
+          duration: 18,
+          description:
+            'Write product requirements that actually work for LLM features — covering failure modes, evaluation criteria, and the cost-quality-latency tradeoffs that determine whether your feature ships successfully.',
+          content: `## Why LLM Features Are Different to Specify
+
+Traditional feature requirements describe what the system should do in the happy path. LLM feature requirements must describe what the system should do when the AI is wrong — because the AI will be wrong, in ways that are sometimes predictable and sometimes not.
+
+This requires a different way of thinking about product requirements. Instead of "the system produces X," you need "the system produces X when input is Y, produces Z gracefully when input is ambiguous, and does W when the AI output fails quality thresholds." The failure modes are part of the feature.
+
+## The PM\'s Guide to LLM Technical Risks
+
+You don\'t need to understand transformers to be an effective PM on LLM features. You do need to understand these five risks well enough to specify against them:
+
+**1. Hallucination**
+LLMs generate plausible-sounding content that is factually wrong. For features that rely on factual accuracy (legal research, medical information, financial data), hallucination is a critical failure mode. Requirement: specify what happens when the LLM produces uncertain content — show a confidence indicator, cite sources, require human verification for high-stakes outputs.
+
+**2. Prompt Injection**
+Malicious users can include text in their inputs designed to override the system prompt and make the AI behave in unintended ways. For any user-facing LLM feature where users provide free-text input, this is a security concern. Requirement: specify input sanitisation, output monitoring for anomalous responses, and what constitutes a security incident.
+
+**3. Cost Blowouts**
+LLM API costs scale with token count. A feature that works fine in testing can become economically unviable at scale if users input long documents or trigger multi-step reasoning. Requirement: specify token budgets, cost per user session at P50 and P99, and the trigger for cost review.
+
+**4. Latency**
+LLMs are slow relative to traditional APIs — even fast models may take 5-15 seconds for complex outputs. For synchronous user-facing features, this is a UX problem. Requirement: specify maximum acceptable latency, streaming requirements (showing output as it generates), and the fallback when latency exceeds threshold.
+
+**5. Model Deprecation**
+LLM providers deprecate models. If your feature is built on GPT-4-turbo-2024-04-09 and that model is deprecated, your feature breaks. Requirement: specify model versioning strategy, testing requirements when models are upgraded, and the communication plan for performance changes after model updates.
+
+> "I am a PM writing requirements for an LLM feature that [describe feature]. Help me write the failure mode specifications covering: (1) the specific hallucination risk in this feature and how the UX handles it, (2) the prompt injection risk surface and mitigation, (3) the token cost model at 1K, 10K, and 100K monthly active users, (4) the latency requirement and streaming strategy, (5) the model versioning plan. Make each specification concrete enough for an engineer to implement."
+
+## Evaluation Frameworks: How to Know It\'s Good Enough
+
+The hardest question in LLM product development: when is the feature good enough to ship? Traditional feature QA (does the button work? does the form submit?) doesn\'t apply to probabilistic AI outputs.
+
+A practical evaluation framework has three components:
+
+**Human evaluation (gold standard):** A panel of domain experts rates a sample of AI outputs on the dimensions that matter (accuracy, helpfulness, tone, safety). Establish a baseline score and a minimum acceptable score for launch.
+
+**Automated metrics:** Where ground truth exists, measure it. Factual accuracy against a verified dataset, precision/recall for classification features, BLEU/ROUGE scores for summarisation. These run continuously, not just at launch.
+
+**Production monitoring:** Track correction rates (how often users edit AI output), abandonment rates (how often users delete AI output and start over), and negative feedback signals. These are leading indicators of quality problems in production.
+
+## The Cost-Quality-Latency Tradeoff
+
+Every LLM feature involves a three-way tradeoff:
+
+- **Better quality** (larger models) → higher cost and slower latency
+- **Lower cost** (smaller, cheaper models) → lower quality
+- **Lower latency** (smaller models or aggressive caching) → lower quality or cost
+
+The PM\'s job is to decide where to sit on this tradeoff based on the use case:
+- A real-time AI writing assistant needs low latency → favour speed over depth
+- A once-daily AI analysis report needs high quality → favour quality over latency
+- A high-volume, low-margin AI feature needs low cost → constrain model choice accordingly`,
+          keyTakeaways: [
+            'LLM feature requirements must specify failure modes explicitly — hallucination handling, prompt injection mitigation, cost ceilings, latency thresholds, and model versioning are all specifiable',
+            'The five technical risks to understand as a PM: hallucination, prompt injection, cost blowouts, latency, and model deprecation — each requires a specific requirement, not a general "be careful" note',
+            'Ship only when you have an evaluation framework: human evaluation baseline, automated metrics where ground truth exists, and production monitoring for correction and abandonment rates',
+            'The cost-quality-latency tradeoff is a PM decision, not an engineering one — your use case determines where to sit on the tradeoff',
+            'Model versioning strategy belongs in the PRD: what gets tested when the model is updated, and who owns the decision to deploy a model change',
+          ],
+          exercise: {
+            title: 'LLM Feature Product Requirements Document',
+            description:
+              'Write a product requirements document for one LLM-powered feature, including failure mode specifications and evaluation criteria.',
+            steps: [
+              'Choose an LLM feature you are working on, have worked on, or are considering — it should be specific enough to write real requirements (not "an AI assistant" but "an AI that summarises customer support tickets for Tier 1 agents")',
+              'Open Claude and prompt: "I am a PM writing a PRD for an LLM feature: [describe the feature]. Write the technical requirements section covering: (1) happy path specification — what a good output looks like and how we measure it, (2) failure mode specifications for each of the five LLM risks (hallucination, prompt injection, cost, latency, model deprecation), (3) evaluation framework — the human evaluation methodology, the automated metrics, and the production monitoring plan, (4) cost model at 1K, 10K, and 100K MAU, (5) model selection rationale and versioning strategy."',
+              'Review the PRD section — identify any failure modes specific to your feature that Claude missed',
+              'Add the UX specifications: what does the user see when each failure mode occurs?',
+              'Share the draft with one engineer on your team and ask: is there anything unspecified that would block implementation?',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'Your AI customer support feature achieves 90% accuracy in internal testing with a team of 5 people evaluating 100 outputs. Before launch to 50,000 users, what is the most important gap in your evaluation framework?',
+            options: [
+              'The sample size of 100 is large enough — 90% accuracy is sufficient to launch',
+              'The evaluation panel is too small, but accuracy is the right metric',
+              'Internal testing with a small expert panel does not capture: the distribution of real user inputs (which will be messier and more varied than test cases), the failure modes that appear at scale, or how users actually respond to the 10% error rate in production — production monitoring must be in place before launch',
+              'The feature should reach 100% accuracy before any launch',
+            ],
+            correct: 2,
+            explanation: 'Internal testing with a curated sample is a necessary but insufficient evaluation step. The gaps before a 50K user launch: (1) distribution gap — internal testers use representative cases; real users use edge cases, adversarial inputs, typos, and use cases you didn\'t anticipate; (2) scale gap — failure modes that appear 0.1% of the time are invisible at 100 samples but generate 50 daily incidents at 50K users; (3) production response gap — you don\'t know how users react to errors until you see real correction and abandonment rates. The right approach: soft launch to 1-5% of users with production monitoring instrumented, establish correction and abandonment rate baselines, then ramp.',
+          },
+          outputComparison: {
+            label: 'Vague vs. specific LLM feature requirements prompt',
+            vague: {
+              prompt: 'Write requirements for an AI summarisation feature',
+              output: 'The AI summarisation feature should produce accurate and relevant summaries of input content. The summary should be concise and capture the key points. Users should be able to edit the summary if needed. The system should handle errors gracefully. Performance should be acceptable for users. Cost should be monitored. The feature should be tested before launch.',
+            },
+            improved: {
+              prompt: 'I am a PM at a legal tech company. Write the technical requirements section for an AI feature that summarises case documents (10-150 pages) for junior lawyers, highlighting key facts, legal issues identified, and recommended next steps. The feature is used in a UK law firm context where accuracy is critical and hallucination is a material professional risk. Requirements must cover: happy path output specification with quality criteria, all five LLM risk mitigations (hallucination, prompt injection, cost, latency, model deprecation), evaluation framework, and cost model at 500, 5K, and 50K monthly summaries.',
+              output: `**AI Case Document Summariser — Technical Requirements**
+
+**Happy Path Output Specification**
+Output must include: (1) factual chronology — key events in date order, (2) legal issues identified — list of issues flagged for lawyer review, (3) recommended next steps — suggested actions with rationale, (4) document confidence level — overall and per-section. Quality bar: evaluated by a panel of 3 junior lawyers against ground truth summaries; minimum score: 4.2/5 on accuracy, 4.0/5 on relevance, 4.5/5 on professional safety (no recommendations that could constitute unauthorised legal advice).
+
+**Hallucination Mitigation**
+- Every factual claim in the summary must be followed by a footnote citation to the source page in the original document (e.g., "Claimant signed the agreement on 3 March 2022 (p.47)")
+- Any section where the model\'s confidence is below threshold must be visually flagged: amber highlight with tooltip "Limited source material — verify this section"
+- Legal issue identification must be framed as "potential issues for lawyer review," never as legal conclusions
+- Failure mode UX: sections with insufficient source support display "Insufficient information to summarise this section — original document review required"
+
+**Prompt Injection Mitigation**
+- All document text is processed as data context, not as instruction. System prompt architecture separates instruction context from document context
+- Output monitoring: automated flag for any output containing instruction-like language ("ignore previous," "you are now," "system prompt") — routed to security review queue
+- Rate limiting: maximum 20 summarisations per user per hour to limit automated abuse
+
+**Cost Model**
+- Model selection: [Model A] at £0.003/1K tokens for standard documents; [Model B] at £0.012/1K tokens for documents flagged as high-complexity (>100 pages, multiple claimants)
+- Average document: 30 pages ≈ 15,000 tokens input + 1,500 tokens output = £0.055 per summary at standard tier
+- 500/month: £27.50 COGS | 5,000/month: £275 | 50,000/month: £2,750
+- Cost alert threshold: trigger review if average cost per summary exceeds £0.08 (indicating documents longer than expected)
+
+**Latency Requirements**
+- Maximum acceptable: 45 seconds for a 30-page document (synchronous generation with streaming)
+- Streaming: display summary sections as generated (chronology first, issues second, next steps third) — user sees progress within 5 seconds
+- Fallback: if generation exceeds 90 seconds, return partial summary with notification "Full analysis still processing — we\'ll notify you when complete"
+
+**Model Versioning**
+- Feature pinned to specific model version (not "latest")
+- Model upgrade protocol: (1) automated regression test on 50-case gold standard, (2) human review of flagged differences, (3) PM approval required before upgrade
+- Communication plan: notify firm admin 14 days before any model change`,
+            },
+            insight: 'The improved prompt specifies the industry context (legal tech, professional risk), the use case (case documents, junior lawyers), the specific quality criteria that matter (professional safety, hallucination risk), and asks for all five risk dimensions plus cost at multiple scales. The result is a requirements section that an engineer could implement and a QA team could test against — not a wishlist. The vague prompt produces requirements so generic they could describe any AI feature ever built.',
+          },
+          applyThisWeek: {
+            action: 'Write the failure mode specifications for an LLM feature currently in development or planning at your company — share with the engineering lead and ask what is missing.',
+            promptTemplate: 'I am a PM at a [company type] building an LLM feature that [describe the feature]. Write the failure mode specifications covering: (1) the specific hallucination risk and UX response, (2) the prompt injection surface and mitigation, (3) the cost model at [X], [Y], [Z] monthly active users, (4) the latency requirement and streaming strategy, (5) the model versioning and change management plan.',
+            tool: 'Claude',
+          },
+          reflection: 'What is the most expensive LLM failure mode for your current product — the one that would cost the most in user trust, revenue, or safety if it occurred at scale?',
+          quiz: [
+            {
+              question: 'A PM decides to use the largest, most capable LLM model for a feature that suggests emoji reactions to Slack messages. What is wrong with this decision?',
+              options: [
+                'Nothing — the largest model always produces the best output',
+                'The cost-quality-latency tradeoff is misaligned: a high-quality, expensive, slow model is inappropriate for a low-stakes, high-frequency, latency-sensitive feature where a smaller, cheaper, faster model would produce equivalent user value',
+                'The largest models are not capable of emoji tasks',
+                'The decision is only wrong if the cost exceeds budget — if cost is not a concern, the largest model is always the right choice',
+              ],
+              correct: 1,
+              explanation: 'The cost-quality-latency tradeoff must match the use case. Emoji reaction suggestions are: low-stakes (a wrong emoji recommendation causes no harm), high-frequency (many calls per user per day), and latency-sensitive (users expect instant suggestions in a chat interface). A small, fast, cheap model that gets emoji suggestions right 80% of the time is a better product decision than a large, slow, expensive model that gets it right 95% of the time. The PM\'s job is to make this tradeoff explicitly, not default to "biggest model = best."',
+            },
+            {
+              question: 'Your LLM feature\'s production monitoring shows: users correct AI output 12% of the time (down from 18% at launch), and they abandon AI output entirely 5% of the time. How should you interpret this data?',
+              options: [
+                'The 12% correction rate is too high — the feature needs significant quality improvement before continuing',
+                'The trend (correction rate falling from 18% to 12% over time) and the low abandonment rate (5%) suggest a healthy feature: quality is improving, users are finding the output useful enough to edit rather than discard, and adoption is likely growing',
+                'The data is inconclusive — you need to stop the feature and conduct user interviews',
+                'The abandonment rate of 5% is the critical metric — this represents complete AI failure and must be reduced to zero before the feature is considered successful',
+              ],
+              correct: 1,
+              explanation: 'The data paints a healthy picture. Declining correction rate (18% → 12%) indicates quality improvement over time — likely from model improvements, prompt engineering, or better scope definition. A 5% abandonment rate means 95% of users who engage with AI output find it worth editing rather than discarding, which is a strong signal of value delivery. Edit-not-generate is the intended interaction model; a 12% correction rate is not a problem, it is evidence that users are engaging with the AI output as a starting point. The metric to worry about would be a rising abandonment rate or negative satisfaction scores.',
+            },
+            {
+              question: 'An engineer tells a PM that the team should build the LLM feature to automatically upgrade to the latest model version whenever the provider releases one. What is the PM\'s correct response?',
+              options: [
+                'Agree — using the latest model ensures the best possible quality at all times',
+                'Disagree — model updates must be treated as releases that go through regression testing and PM approval, because model changes can alter output style, accuracy, and safety in ways that break the product experience for users',
+                'Agree, but only for minor model updates — major version changes should require approval',
+                'Defer to the engineering team — model versioning is a technical decision, not a product decision',
+              ],
+              correct: 1,
+              explanation: 'Auto-updating to the latest LLM model is a high-risk practice that several teams have discovered the hard way: when OpenAI or Anthropic updates a model, the output style, length, format, and quality profile can change significantly. A feature tuned to produce 3-bullet summaries may start producing 7-bullet summaries after a model update. A feature with specific safety-filtered outputs may become more or less conservative. Model updates must be treated as deployments: regression test against a gold standard, review flagged differences, PM approval before production. This is a product decision because model changes affect user experience — not a pure engineering call.',
+            },
+          ],
+        },
+        {
+          id: 'product-m6-l3',
+          title: 'Agent-Based Product Architecture',
+          duration: 16,
+          description:
+            'Build a PM\'s mental model for AI agents — what makes them different, where they fail, and how to spec an agent feature with the right autonomy level and failure recovery design.',
+          content: `## What an AI Agent Is in Product Terms
+
+An AI agent is not a smarter chatbot. The structural difference is consequential: a chatbot generates text in response to input; an agent takes actions in the world.
+
+An agent has access to tools: it can search the web, run code, call APIs, send emails, modify documents, or trigger workflows. When you ask an agent to "schedule a meeting with the team," it doesn\'t suggest a time — it checks everyone\'s calendar, drafts an invitation, and sends it. The output is an action, not a suggestion.
+
+This changes everything about how you design, specify, and govern an agent feature.
+
+## The PM\'s Mental Model for Agent Architecture
+
+Four components define what an agent can do:
+
+**Tools:** The specific capabilities the agent can invoke. A customer support agent might have tools for: querying the order management system, issuing refunds up to $X, sending email to customers, escalating to a human agent, and tagging tickets. What you put in the tool list defines the agent\'s power — and its risk surface.
+
+**Memory:** What the agent knows and remembers. Short-term memory (context within a conversation), long-term memory (stored facts about a user or case), and retrieval (ability to search documents or databases). More memory = more personalised and coherent behaviour; more memory also = more privacy surface.
+
+**Planning:** How the agent decides what to do. Simple agents follow a fixed flow; sophisticated agents decompose a goal into steps and execute them in sequence, adapting when steps fail. For product design, the critical question is: does the agent plan one step at a time (lower risk, more controllable) or does it plan multi-step sequences before executing (higher capability, harder to intercept)?
+
+**Action:** What the agent does with its plan. The irreversibility of actions is the key design variable: reading data is reversible (it has no effect); sending an email is not reversible; deleting a record is not reversible; charging a credit card is not reversible. Design the highest autonomy for reversible actions and the highest human oversight for irreversible ones.
+
+## The Design Questions Unique to Agent Products
+
+> "I am designing an agent feature that [describe the agent and its tools]. Help me think through: (1) which actions should the agent take autonomously vs. require user confirmation, (2) what the failure recovery looks like when an agent action produces an unexpected result, (3) how users will understand what the agent is doing and why, (4) what the audit trail looks like for agent actions, (5) what happens when the agent gets stuck — the escalation path."
+
+**Autonomy calibration:** The spectrum from "suggest and wait for approval" to "execute without asking." The right level depends on: action reversibility (irreversible = high oversight), user trust level (new users = more confirmation), stakes of the domain (medical/financial = more oversight regardless of trust).
+
+**Trust and transparency:** Successful agent products show their work. A travel booking agent that says "I found 3 options and chose this one because it matched your preference for direct flights and morning departures" creates more trust than one that just books. Visibility into agent reasoning is not a nice-to-have — it\'s a trust infrastructure investment.
+
+**Failure recovery:** An agent that gets stuck can be more damaging than a feature that returns an error. Design for: explicit stuck states ("I need more information to proceed — here\'s what I\'m missing"), rollback capability for reversible actions, and clear escalation paths to human agents.
+
+## Where Agent Products Fail
+
+Three failure patterns that have caused agent product launches to underperform:
+
+**Too autonomous:** The agent takes actions users didn\'t expect and can\'t undo. One bad experience (agent sent an email the user didn\'t want) destroys trust across the whole feature. Solution: start conservative, earn autonomy through demonstrated trust.
+
+**Too unpredictable:** The agent behaves inconsistently — sometimes does step X automatically, sometimes asks for permission. Users can\'t build a mental model of what the agent will do, so they stop relying on it. Solution: make autonomy rules explicit and consistent.
+
+**Too slow:** Multi-step agent execution takes 30-60+ seconds. Without progress visibility, users don\'t know if the agent is working or broken. Solution: stream agent steps to the user as they execute, with a real-time log of what the agent is doing.
+
+## Speccing an Agent Feature: What\'s New in the Requirements
+
+Beyond standard LLM requirements, agent features need:
+- **Tool manifest:** exact list of tools, parameters, and constraints (e.g., "can issue refunds up to $50 without approval")
+- **Autonomy policy:** explicit rules for which actions require confirmation, which are autonomous
+- **Audit log specification:** every agent action logged with reasoning, timestamp, user context
+- **Rollback specification:** which actions can be undone and by whom
+- **Stuck state specification:** what the agent does when it cannot proceed`,
+          keyTakeaways: [
+            'An AI agent takes actions in the world — it has tools that let it call APIs, modify data, send communications, and trigger workflows — which makes failure modes fundamentally different from chatbot features',
+            'Four agent architecture components for PMs: tools (what it can do), memory (what it knows), planning (how it decides), and action (what it executes) — each is a product design decision, not just an engineering one',
+            'Autonomy calibration maps to action reversibility: give maximum autonomy to reversible, low-stakes actions; require explicit confirmation for irreversible or high-stakes actions',
+            'Three agent failure patterns: too autonomous (unexpected irreversible actions), too unpredictable (inconsistent autonomy rules), and too slow with no progress visibility',
+            'Agent feature requirements need additions beyond standard LLM PRDs: tool manifest with constraints, autonomy policy, audit log specification, rollback specification, and stuck-state escalation path',
+          ],
+          exercise: {
+            title: 'Agent Architecture Design for a Product Feature',
+            description:
+              'Design the agent architecture for one feature in your product — define the tools it has access to, the decisions it makes autonomously vs escalates, and the failure recovery.',
+            steps: [
+              'Identify a feature in your product that could be rebuilt as an agent (examples: a customer support flow, an onboarding automation, a data analysis workflow, a scheduling feature)',
+              'Open Claude and prompt: "I am a PM designing an agent feature for [describe the product and feature]. Design the agent architecture covering: (1) the complete tool manifest — every capability the agent needs and the constraints on each (e.g., can send email but only to users in the system, can issue refunds up to $25), (2) the autonomy policy — a table of every action type mapped to: autonomous / confirm-once / confirm-every-time, (3) the memory requirements — what the agent needs to remember within a session and across sessions, (4) failure recovery — what the agent does when a tool call fails, when it gets stuck, and when an action produces an unexpected result, (5) the audit log specification."',
+              'Review the tool manifest — are there any capabilities the agent would need that are missing? Any capabilities listed that you\'d actually want to restrict?',
+              'Review the autonomy policy — is there any action mapped as "autonomous" that you\'d want to add a confirmation step for?',
+              'Draft the user-facing transparency design: how does the user know what the agent is doing at each step?',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'An AI agent has been given access to the following tools: search customer database, retrieve order history, issue refunds up to $100, send email to customer, and escalate to human agent. A customer asks the agent to "cancel my last 5 orders and refund them all." Which action should require explicit user confirmation before execution?',
+            options: [
+              'Searching the customer database and retrieving order history',
+              'Sending the confirmation email after cancellation',
+              'Issuing 5 separate refunds (potentially up to $500 total) — this exceeds per-transaction limits, is irreversible, and the cumulative impact is significantly higher than the agent\'s individual refund authority',
+              'Escalating to a human agent',
+            ],
+            correct: 2,
+            explanation: 'The per-transaction refund limit ($100) exists precisely to constrain autonomy for high-value irreversible actions. Five refunds totalling up to $500 is qualitatively different from a single $100 refund: it exceeds the autonomy threshold by 5×, it\'s irreversible (refunds issued cannot easily be reversed), and the user\'s request ("cancel my last 5 orders") may reflect a misunderstanding of what they want. The correct agent design: retrieve and display the 5 orders with total refund value, explicitly confirm "I will issue refunds totalling $X — shall I proceed?", and then execute after confirmation. Searching and reading data is appropriately autonomous; large irreversible financial actions require human confirmation.',
+          },
+          outputComparison: {
+            label: 'Vague vs. specific agent architecture design prompt',
+            vague: {
+              prompt: 'Design an AI agent for customer support',
+              output: 'An AI agent for customer support could handle common customer inquiries automatically. It would use natural language processing to understand customer questions and provide relevant answers. The agent could escalate complex issues to human agents. It should be able to access customer data to provide personalised responses. The agent should be designed to handle multiple customers simultaneously. Regular monitoring and improvement would be important.',
+            },
+            improved: {
+              prompt: 'I am a PM at a B2B SaaS company (project management software, 15K business customers, average contract $8K/year). Design an AI support agent for our Tier 1 support queue. Currently Tier 1 handles: password resets (30% of volume), billing questions — invoice copies, plan changes (25%), integration troubleshooting — Slack, GitHub, Jira (20%), and feature questions (25%). Design the agent architecture: (1) complete tool manifest with specific constraints, (2) autonomy policy mapping each action type, (3) stuck-state escalation (when to hand off to human Tier 1), (4) the audit log structure, (5) user-facing transparency — what does the customer see as the agent works?',
+              output: `**AI Support Agent Architecture — B2B SaaS Tier 1**
+
+**Tool Manifest**
+| Tool | Capability | Constraints |
+|---|---|---|
+| user_lookup | Retrieve user/account details | Read-only; accessible to agent automatically |
+| password_reset | Trigger password reset email | Max 3 per user per 24h; log all resets |
+| invoice_retrieve | Fetch and send invoice copies | For verified account owner only |
+| plan_query | Return current plan details and options | Read-only |
+| plan_change | Upgrade plan | Autonomous up to next tier; downgrades → human Tier 1 (revenue risk) |
+| integration_docs | Search and return relevant integration documentation | Unrestricted |
+| integration_test | Run connectivity test for Slack/GitHub/Jira | Requires user confirmation (creates test data) |
+| ticket_escalate | Escalate to human Tier 1 with full context | Automatic trigger conditions below |
+| session_log | Append to audit log | Always on; no constraints |
+
+**Autonomy Policy**
+- Autonomous (no confirmation): user_lookup, invoice_retrieve, integration_docs, password_reset (within limits)
+- Confirm-once: plan_change (upgrade), integration_test
+- Human Tier 1 required: plan_change (downgrade), any request mentioning "cancel," "refund," "legal," "complaint," or frustrated sentiment detected
+
+**Stuck-State Escalation Triggers**
+Auto-escalate when: (1) same issue unresolved after 3 agent turns, (2) customer explicitly requests human, (3) required tool fails twice consecutively, (4) issue type not in Tier 1 scope, (5) customer sentiment score below threshold for 2 consecutive turns. Escalation handoff includes: full conversation transcript, tools called and results, agent assessment of issue type, and recommended Tier 1 action.
+
+**Audit Log Structure**
+Each agent session logs: session_id, user_id, account_id, timestamp, each tool called (with parameters and result), autonomy policy applied, escalation trigger if fired, and resolution classification.
+
+**Customer-Facing Transparency**
+- Agent identifies itself as AI at session start: "I\'m an AI assistant — I can handle most Tier 1 requests instantly, or connect you with our team."
+- During multi-step actions: real-time status ("Checking your account... Found your March invoice... Sending to [email]...")
+- Before any confirmation-required action: "I\'m about to [specific action]. Shall I proceed?" with summary of what will happen
+- At escalation: "This one needs a human — I\'ve sent your Tier 1 specialist the full context so you won\'t need to repeat yourself. Average wait: [X] minutes."`,
+            },
+            insight: 'The improved prompt specifies the company context (B2B SaaS, contract value, customer type), the exact support ticket distribution by type, and asks for concrete architectural outputs rather than general guidance. The result is an architecture a team could actually build from: specific tools with specific constraints, explicit autonomy policy rules, defined escalation triggers, and a customer-facing transparency design. The vague prompt produces content that could describe any support chatbot built in the last five years.',
+          },
+          applyThisWeek: {
+            action: 'Map one manual workflow in your product that could be agent-automated and produce the tool manifest and autonomy policy for it.',
+            promptTemplate: 'I am a PM at a [company type] building [product type]. A workflow our users currently do manually is [describe workflow in detail — steps, decisions, systems involved]. Design the agent architecture for automating this workflow: the complete tool manifest with constraints, the autonomy policy for each action type, the stuck-state escalation path, and the user-facing transparency design.',
+            tool: 'Claude',
+          },
+          reflection: 'What is the highest-value workflow in your product that users currently perform manually — and what would need to be true about user trust and system reliability before you would make an agent autonomous in that workflow?',
+          quiz: [
+            {
+              question: 'A travel booking agent has been running for 3 months. Data shows: 40% of users say the agent "sometimes books things they didn\'t want." The PM proposes fixing this by making the agent ask for confirmation before every action. What is the flaw in this approach?',
+              options: [
+                'No flaw — confirmation before every action is the safest design',
+                'Confirmation before every action eliminates the agent\'s core value proposition (autonomous execution) and degrades the experience to a guided form-filling exercise. The fix is to identify the specific action types causing unintended bookings and add confirmation only for those, while keeping autonomous execution for actions users consistently approve',
+                'The PM should reduce the agent\'s tool access rather than adding confirmations',
+                'The problem is the AI model quality, not the autonomy policy',
+              ],
+              correct: 1,
+              explanation: 'Blanket confirmation for every action is a product failure in the other direction: it makes the agent so cautious it provides no value over manual booking. The data points to a specific problem — some action types are generating unintended outcomes — which calls for a targeted intervention, not a system-wide one. The PM should analyse which action types correlate with the "didn\'t want this" feedback, add confirmation specifically to those actions, and keep autonomous execution for the action types that users consistently approve. This preserves the agent\'s value while fixing the specific trust breakdown.',
+            },
+            {
+              question: 'A user asks an agent: "Send an email to all our customers announcing our new pricing." The agent has access to the customer email list and an email-sending tool. There are 50,000 customers. What should the agent do?',
+              options: [
+                'Execute immediately — the user gave a clear instruction',
+                'Refuse — sending mass emails is outside the agent\'s scope',
+                'Confirm the action with specifics before executing: show the user the number of recipients, a draft of the email, and the irreversibility of the action — requiring explicit confirmation before sending a mass communication that cannot be unsent to 50,000 contacts',
+                'Send to 10 customers first as a test, then ask if the user wants to proceed',
+              ],
+              correct: 2,
+              explanation: 'Mass email to 50,000 contacts is one of the highest-stakes irreversible actions an agent could take: it cannot be unsent, it affects tens of thousands of real customers, and a pricing announcement has revenue and legal implications. The correct design: pause before execution, surface the full scope (50,000 recipients), generate a draft for review, and require explicit confirmation. The user may not have realised the agent had access to the full customer list, may want to review the email first, or may want to send a test to a subset first. Confirm-before-execute for irreversible, high-stakes actions is a core agent design principle, not an optional feature.',
+            },
+            {
+              question: 'Two engineering approaches are proposed for an agent planning system: (A) the agent plans all steps upfront and executes the full sequence, or (B) the agent plans and executes one step at a time, checking in after each consequential action. Which approach is generally preferable for a new agent feature and why?',
+              options: [
+                'Approach A — planning all steps upfront is more efficient and produces better outcomes',
+                'Approach B — executing one step at a time with checkpoints is generally preferable for new agent features because it creates more interception points, reduces the blast radius of errors, and builds user trust through demonstrated step-by-step competence before earning broader autonomy',
+                'Both approaches are equivalent — the choice is a pure engineering decision',
+                'Approach A is preferable if the agent is accurate, Approach B if it is less accurate',
+              ],
+              correct: 1,
+              explanation: 'For a new agent feature, step-by-step execution with checkpoints is the safer product approach for several reasons: (1) blast radius reduction — if the agent makes an error at step 3 of 5, only steps 1-3 have executed, not all 5; (2) interception opportunity — users can stop the sequence before it completes; (3) trust building — users who see each step build confidence in the agent before it has earned broad autonomy; (4) debugging — step-by-step execution makes it much easier to identify where in a multi-step flow something went wrong. As the agent earns trust and demonstrates competence, you can progressively reduce checkpoint frequency for well-understood action sequences.',
+            },
+          ],
+        },
+        {
+          id: 'product-m6-l4',
+          title: 'The PM\'s Role in the AI Era',
+          duration: 19,
+          description:
+            'Understand how the PM role is evolving, which skills to invest in, and how to build the career capital that will be most valuable as AI reshapes the product profession.',
+          content: `## How the PM Role Is Actually Changing
+
+The first thing to understand about AI\'s impact on product management is that it is not uniform. AI is not simply making PMs "10× more productive" at everything — it is making some parts of the job dramatically faster and leaving other parts entirely unchanged.
+
+**Parts of the PM role AI accelerates:**
+- Document drafting (PRDs, one-pagers, update emails, user stories)
+- Qualitative research synthesis (summarising interview recordings, clustering feedback themes)
+- Competitive analysis (aggregating public information, identifying patterns)
+- First-pass data analysis (interpreting dashboards, surfacing anomalies to investigate)
+- Communication drafting (stakeholder updates, launch announcements, escalations)
+
+**Parts of the PM role AI does not materially change:**
+- Strategic judgment: deciding what to build and why, given organisational constraints AI doesn\'t understand
+- User proximity: the relationship intuition built from spending time with real users
+- Stakeholder navigation: the political and relational work of aligning organisations
+- Taste: knowing what a great product experience feels like, and caring when it falls short
+- Ethical judgment: deciding what your product should and shouldn\'t do
+
+The net effect is not that PMs do less — it\'s that PMs can do more of the work that matters, with less of their time consumed by the production work that surrounds it.
+
+## Skills That Become More Valuable
+
+**Product judgment and taste**
+When AI can produce a PRD in 10 minutes, the differentiation moves to what goes in the PRD. The PM who can tell a good product decision from a bad one — who has taste — is more valuable, not less. Taste is built through user proximity, breadth of product study, and accumulated judgment from decisions that worked and ones that didn\'t.
+
+**System design thinking**
+AI-era products are systems: models, APIs, agent loops, evaluation pipelines, feedback mechanisms. The PM who understands how these components interact — without needing to build them — can make better decisions about scope, risk, and architecture. This is not programming literacy; it\'s systems thinking applied to AI product architecture.
+
+**AI ethics and responsible design**
+As AI products make consequential decisions (credit, healthcare, employment, content moderation), the PM is increasingly responsible for the ethical design of those systems. This is not a legal or trust-and-safety function — it\'s a product function. What should the system do when it\'s uncertain? Who should be able to appeal an AI decision? How do we detect and correct systematic bias?
+
+**Prompt engineering as product craft**
+Writing effective prompts for AI features is a new product skill. The PM who can specify AI behaviour precisely — through system prompt design, few-shot examples, and output format specification — can ship better AI features faster. This is not a developer skill; it\'s a product craft skill.
+
+## The PM\'s New Responsibility: AI Feature Ethics
+
+> "I am a PM shipping an AI feature that [describe the feature and its impact]. Help me think through the ethical dimensions: (1) who could be harmed by this feature and how, (2) what failure modes could systematically disadvantage specific groups, (3) what human oversight mechanisms should be in the product, (4) what the appeals or correction mechanism should be, (5) what I should disclose to users about how the AI works and its limitations."
+
+AI features that make consequential decisions create product ethics obligations that didn\'t exist for most traditional features. The PM who ignores these until the trust-and-safety team raises them is behind. The PM who bakes them into the spec is building a more durable product.
+
+## Career Strategy for PMs in the AI Era
+
+**Build an AI product portfolio**
+The most effective career signal for AI-era PMs is not writing about AI — it\'s having shipped AI features that work. Document your AI feature work: what you built, the key decisions you made, the metrics you moved, and what you learned from failures.
+
+**Study the best AI products**
+Perplexity, Cursor, Superhuman, Notion AI, GitHub Copilot, Granola — each represents a design philosophy about how AI should be integrated into user workflows. Understanding these products at the level of their design decisions (not just their features) builds the taste that differentiates strong AI PMs.
+
+**The organisations that need AI-fluent PMs most**
+In the next five years: financial services (AI in credit, compliance, customer service), healthcare technology (AI diagnostics, clinical decision support), legal tech, HR tech, enterprise software with AI embedded across workflows, and any company building AI-native products from scratch. These sectors are hiring PMs who can bridge business, user needs, and AI capability.
+
+## Building Your AI Product Strategy
+
+A personal AI product strategy has three components: the skills you\'ll develop (be specific — not "learn AI" but "develop system prompt design and LLM evaluation skills"), the products you\'ll study (commit to a specific set of AI products to use deeply, not just watch), and the feature you\'ll champion next (the AI feature you will spec, advocate for, and ship in your current role in the next 90 days).`,
+          keyTakeaways: [
+            'AI accelerates PM production work (drafting, synthesis, analysis) while leaving strategic judgment, user proximity, and stakeholder navigation unchanged — the net effect is that PMs can invest more time in the work that matters',
+            'Skills becoming more valuable for AI-era PMs: product judgment and taste, system design thinking for AI architectures, AI ethics and responsible design, and prompt engineering as a product craft',
+            'AI feature ethics is a PM responsibility, not just a legal or trust-and-safety function — the PM should spec ethical guardrails, appeals mechanisms, and systematic bias detection as core feature requirements',
+            'Building an AI product portfolio (shipped features with documented decisions and metrics) is the most effective career signal for AI-era PMs, more than certifications or blog posts',
+            'A personal AI product strategy needs three elements: specific skills to develop, specific AI products to study deeply, and a specific AI feature to champion in the next 90 days',
+          ],
+          exercise: {
+            title: 'Personal AI Product Strategy',
+            description:
+              'Write a personal AI product strategy: the skills you\'ll develop, the AI products you\'ll study, and the AI feature you\'ll champion in the next 90 days.',
+            steps: [
+              'Open Claude and prompt: "I am a PM with [X years] experience in [industry/product type]. My current role is [describe role]. Help me build a personal AI product strategy covering: (1) the 3 AI-specific skills most valuable for my career trajectory — be specific about what each skill means and how I would develop it, (2) the 5 AI products I should study deeply in the next 6 months and why each one represents a distinct design philosophy worth understanding, (3) the 1 AI feature I could champion in my current role in the next 90 days — including how to frame it for my organisation, what success looks like, and what I would learn from shipping it."',
+              'Evaluate the skills list: are these skills you could actually develop given your context, or do they require access you don\'t have?',
+              'Evaluate the AI products list: have you used any of these deeply? Which would give you the most new perspective on AI UX?',
+              'For the 90-day AI feature: is this actually possible in your current role? What would need to be true for it to move forward?',
+              'Write a one-paragraph commitment statement: the specific skill you will develop this quarter, the product you will study this month, and the AI feature you will pitch in the next two weeks',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A PM who has been managing a traditional SaaS product for 5 years wants to position themselves for AI-era PM roles. They are considering: (A) completing an online AI certification course, (B) building and shipping a personal AI side project, (C) getting an AI feature shipped in their current product and documenting the decisions and outcomes, (D) writing blog posts about AI product management trends. Which option builds the most valuable career capital?',
+            options: [
+              'Option A — certifications signal commitment to AI learning',
+              'Option B — personal projects demonstrate technical capability',
+              'Option C — shipping an AI feature in production, with documented decisions and outcomes, demonstrates actual PM capability on AI products in a professional context — this is the most durable and credible career signal',
+              'Option D — thought leadership establishes expertise in the field',
+            ],
+            correct: 2,
+            explanation: 'Career capital in product management is built on demonstrated outcomes, not demonstrated interest. A certification proves you completed a course. A blog post proves you can write about AI. A personal project proves you built something. But an AI feature shipped in production — with documented product decisions, the challenges you navigated, the metrics you moved, and the lessons learned — proves you can do the PM job on AI products in a professional context with real constraints, real stakeholders, and real users. This is what hiring managers and VPs of Product are looking for when staffing AI-focused roles. Options A, B, and D are all better than doing nothing — but Option C is in a different tier of career value.',
+          },
+          outputComparison: {
+            label: 'Vague vs. specific personal AI product strategy prompt',
+            vague: {
+              prompt: 'How should I build my career as a PM in the age of AI?',
+              output: 'Building a PM career in the age of AI requires staying current with AI trends and developing relevant skills. Learn about large language models and how they work. Build experience shipping AI features. Stay connected with the PM community to share learnings. Read about AI product case studies. Develop your prompting skills. Be adaptable as the landscape changes quickly. Consider getting certifications in AI-related areas. Network with other PMs working in AI.',
+            },
+            improved: {
+              prompt: 'I am a PM with 4 years of experience in B2B fintech (payments, fraud detection). I currently manage a fraud alerts product used by 200 bank clients. I have no direct AI feature experience but I use AI tools personally every day. My career goal is to move into a senior PM role focused on AI-powered financial services products in the next 18 months. Build a specific personal AI product strategy: (1) the 3 skills I need to develop and how I develop each one given my specific context, (2) the 5 AI products I should study deeply and what each one would teach me that is relevant to AI in fintech, (3) the 1 AI feature I could champion in my current fraud alerts product in the next 90 days, with the business case framing for my leadership team.',
+              output: `**Personal AI Product Strategy — B2B Fintech PM, 18-Month Horizon**
+
+**3 Skills to Develop**
+
+*1. LLM Evaluation and Quality Assurance*
+Why: AI features in financial services live or die on reliability — you need to be able to specify, test, and evaluate AI quality for regulated environments. How to develop: (a) Read the RAGAS paper and 2-3 LLM evaluation frameworks; (b) In your current role, propose an evaluation framework for one rule-based fraud model — practice the discipline of defining ground truth and measuring against it; (c) Build a small personal project: take 50 fraud alert descriptions from public datasets and evaluate two LLMs on their accuracy. Document your methodology. This is portfolio material.
+
+*2. System Prompt Design and AI Behaviour Specification*
+Why: The PM who can write precise system prompts and specify AI behaviour through examples is 2× more effective in AI feature development — less back-and-forth with engineers, better outputs from the start. How to develop: (a) Read Anthropic\'s prompt engineering guide; (b) Spend 2 hours per week for 6 weeks iterating on complex prompts for your own work tasks — track which prompt changes produce the biggest quality improvements; (c) In your fraud alerts product, draft a system prompt specification for the AI feature below.
+
+*3. AI Regulatory and Compliance Literacy for Financial Services*
+Why: AI in fintech is the most regulated space for AI — CFPB guidance on credit AI, model risk management (SR 11-7), fair lending implications of ML models. A fintech AI PM who understands the regulatory environment is rare and highly valuable. How to develop: (a) Read the CFPB\'s AI/ML supervisory guidance and SR 11-7; (b) Request a briefing from your compliance team on how your current fraud models are validated; (c) Follow CFPB and OCC AI guidance updates — subscribe to their regulatory release feeds.
+
+**5 AI Products to Study Deeply**
+
+1. *Sardine (AI fraud detection)* — Direct relevance: your sector. Study their case-based reasoning approach and how they surface AI decisions to analyst teams. What to understand: how they present AI confidence to human reviewers.
+2. *Darktrace (cybersecurity AI)* — Adjacent domain with sophisticated anomaly detection UX. Study how they visualise AI threat detection for non-technical security analysts. Transferable to fraud UX.
+3. *Perplexity* — The best current example of AI that shows its reasoning and sources in a consumer product. Study how trust calibration is built into the core experience.
+4. *Cursor* — Best example of AI working alongside an expert user who maintains control. The "AI suggests, human decides" interaction model is directly applicable to fraud analyst workflows.
+5. *Unit21 (fraud operations platform)* — Direct competitor space. Study how they are layering AI onto case management and where the human-in-the-loop moments are.
+
+**1 AI Feature to Champion in the Next 90 Days**
+
+*Feature: AI Alert Triage Scoring for Fraud Analysts*
+What it does: AI scores incoming fraud alerts by case complexity and estimated investigation time, automatically routing simple alerts to junior analysts and surfacing complex patterns to senior analysts — with AI reasoning visible to all reviewers.
+Business case framing: "Our Tier 1 analysts spend 40% of their time on alerts that take under 5 minutes to close. Our Tier 2 analysts are backlogged on complex multi-account patterns. An AI triage layer routes cases more efficiently — estimated 15% reduction in average case resolution time and 20% improvement in complex case throughput. This requires a 6-week engineering sprint and 3 months of evaluation before full deployment."
+What you\'ll learn: evaluation methodology for AI in a regulated context, how to navigate model risk management requirements, how fraud analysts respond to AI recommendations — all directly relevant to senior AI PM roles in fintech.`,
+            },
+            insight: 'The improved prompt gives Claude the PM\'s specific experience (fintech, fraud, B2B), specific goal (senior AI PM role in 18 months), and specific current product context. This allows Claude to produce career advice that is immediately actionable rather than generically applicable to any PM. The skill development plans reference the PM\'s actual current work. The AI products list is specific to fintech AI. The 90-day feature is grounded in the PM\'s actual product. This is the difference between advice you file and advice you act on.',
+          },
+          applyThisWeek: {
+            action: 'Write your personal AI product strategy and identify the one AI feature you will pitch to your leadership team in the next two weeks.',
+            promptTemplate: 'I am a PM with [X years] experience in [industry]. I currently work on [product type] serving [user type]. My career goal is [specific goal] in [timeframe]. Build a personal AI product strategy covering: (1) the 3 AI-specific skills most valuable for my trajectory with specific development plans, (2) the 5 AI products I should study that are most relevant to my domain, (3) the 1 AI feature I could champion in my current role in the next 90 days with a business case framing for my leadership team.',
+            tool: 'Claude',
+          },
+          reflection: 'In 3 years, what will you wish you had started doing about your AI product skills today — and what is stopping you from starting it this week?',
+          quiz: [
+            {
+              question: 'A PM argues that AI ethics and responsible design should be handled by a dedicated trust-and-safety team, not by individual PMs. What is the strongest counterargument?',
+              options: [
+                'There is no counterargument — trust-and-safety teams are the appropriate function for this work',
+                'Trust-and-safety teams review products after they are designed; PMs who embed ethical design into the product spec prevent problems at the lowest-cost stage — before they are built. The PM who says "T&S will handle it" ships products that generate T&S incidents that could have been avoided in the PRD',
+                'PMs should handle ethics because trust-and-safety teams are not technical enough',
+                'Ethics should be handled by legal teams, not PMs or T&S',
+              ],
+              correct: 1,
+              explanation: 'Trust-and-safety teams are essential — but they typically review products that have already been designed and built. The cost of fixing an ethical design problem at the PRD stage is near-zero (change the spec). The cost of fixing it after launch is enormous: engineering rework, user trust damage, potential regulatory scrutiny, and often a public incident. The PM who incorporates ethical design questions into the spec — who asks "who could be harmed, what\'s the appeals mechanism, how do we detect systematic bias" before the feature is built — prevents the incidents that T&S teams are then called to manage. This is a complement to T&S, not a replacement for it.',
+            },
+            {
+              question: 'An AI feature a PM shipped 6 months ago is generating significant user value but the PM moved on to other projects. A colleague asks whether they should add this to their "AI product portfolio." What is the most valuable thing to document?',
+              options: [
+                'The technical specifications of the AI model used',
+                'The launch announcement and press coverage',
+                'The key product decisions made during development (including decisions that turned out to be wrong), the metrics before and after launch, the failure modes that appeared in production and how they were addressed, and the lessons learned — this is what demonstrates PM judgment, not just output',
+                'The user testimonials collected at launch',
+              ],
+              correct: 2,
+              explanation: 'A product portfolio that documents only what worked is a launch announcement, not a demonstration of PM capability. What hiring managers and senior leaders actually want to understand is how a PM thinks and decides — which is best demonstrated through the decisions made during development (especially the close calls and the ones that turned out to be wrong), the honest metrics (not just the wins), the failure modes that appeared in production (and whether the PM anticipated them), and what the PM would do differently. This is the professional equivalent of a case study — it shows judgment, not just output.',
+            },
+            {
+              question: 'What does "using AI to do better work" mean for a PM, as opposed to just faster work?',
+              options: [
+                'Producing the same outputs more quickly and using the saved time for breaks',
+                'Using AI to test more hypotheses, synthesise more user research, and pressure-test more decisions than would be possible without AI',
+                'Delegating all documentation to AI so PMs focus only on meetings',
+                'Using the highest-cost AI models to ensure maximum quality',
+              ],
+              correct: 1,
+              explanation: '"Faster work" means using AI to produce the same PRDs, research summaries, and analyses you already produce, but in less time. "Better work" means using the time AI saves to do things you previously couldn\'t afford: testing ten growth hypotheses instead of two, synthesising 30 user interviews instead of five, pressure-testing a recommendation from six stakeholder perspectives instead of one. The PMs who build the most career capital are those who use AI to expand the scope of their thinking, not just the speed of their drafting.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

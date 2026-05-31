@@ -2578,5 +2578,546 @@ Track: time saved per week (self-reported), content output volume, content quali
         },
       ],
     },
+    {
+      id: 'marketing-m6',
+      title: 'Multimodal AI & the AI-Era Marketer',
+      description:
+        'Go beyond text. Learn to direct AI image and video generation, integrate multimodal AI into your creative process, and build a personal AI workflow that compounds your output over time.',
+      lessons: [
+        {
+          id: 'marketing-m6-l1',
+          title: 'AI Image Generation for Marketing',
+          duration: 16,
+          description:
+            'Learn how diffusion models work, how to write brand-consistent image prompts, and when AI image generation earns its place in your marketing stack — and when it doesn\'t.',
+          content: `## How Image Generation Actually Works
+
+Unlike text AI, image generation tools use **diffusion models** — they start with random noise and iteratively refine it toward a coherent image guided by your text prompt. Think of it like a sculptor starting with a block of marble and chipping away toward a form. You don\'t write code; you write descriptions. The quality of that description determines the quality of the output.
+
+Major tools: **Midjourney** (highest aesthetic quality, Discord-based), **DALL-E 3** (built into ChatGPT, great for iteration), **Adobe Firefly** (commercially safe, trained on licensed images).
+
+## The Anatomy of an Effective Image Prompt
+
+Every strong image prompt has five layers:
+
+1. **Subject** — what is the central element? ("A confident professional woman at a standing desk")
+2. **Style** — what visual language? ("in the style of clean corporate photography, not stock photo")
+3. **Lighting** — how is it lit? ("soft natural window light, slightly warm")
+4. **Mood** — what feeling? ("calm, focused, aspirational but not cheesy")
+5. **Format** — what dimensions/framing? ("landscape 16:9, subject off-centre with space for text overlay")
+
+Vague: *"a business photo for our website"*
+Specific: *"A 35-year-old woman reviewing a dashboard on a laptop in a minimal, light office. Clean corporate photography style. Soft natural light from the left. Aspirational but approachable. 16:9 format, subject in left third, negative space on right for headline text."*
+
+## Use-Case Playbook for Marketing
+
+> "Generate a series of Instagram images for a SaaS HR platform. Style: clean editorial photography, warm neutrals. Mood: human-centred, professional. Subjects: diverse teams collaborating. 1:1 format. No text in image."
+
+> "Create a presentation cover image for a financial services company annual report. Style: abstract data visualisation meets fine art photography. Colour palette: deep navy and gold. No people, no text."
+
+> "Generate a social ad image for a B2B email tool. Style: bold flat illustration, 2025 design aesthetic. Primary colour: electric blue. Subject: an inbox with a glowing \'sent\' confirmation. 4:5 vertical format."
+
+## What AI Image Generation Can\'t Do Reliably
+
+- **Hands** — they come out wrong almost every time. Request images without visible hands.
+- **Text in images** — AI-generated text is garbled or misspelled. Add text in Canva or your design tool.
+- **Your actual logo** — it will approximate, not reproduce, brand assets faithfully.
+- **Precise faces** — specific real people require ControlNet or reference image techniques.
+
+## When to Use AI vs Hire a Designer
+
+Use AI when: you need quantity (social calendars, A/B test variants, presentation backgrounds, internal decks). Hire a designer when: you need brand-critical work (logo, hero imagery, campaign hero), precise human subjects, or highly polished final production assets. AI image generation is fastest when it\'s producing *raw material* for a creative workflow, not final deliverables.`,
+          keyTakeaways: [
+            'Diffusion models require prompt layers: subject, style, lighting, mood, and format — missing any layer degrades output significantly',
+            'Midjourney produces the highest aesthetic quality; DALL-E 3 excels at fast iteration; Adobe Firefly is safest for commercial use (licensed training data)',
+            'Never request visible hands or text within images — these are reliable failure points across all current image generation tools',
+            'AI image generation adds most value at scale: social calendars, A/B test image variants, and presentation backgrounds, not brand-critical hero assets',
+            'Always specify that no logo or brand text should appear in the image, then add brand elements in your design tool post-generation',
+          ],
+          exercise: {
+            title: 'Generate 3 Versions of a Product Social Image',
+            description:
+              'Use Midjourney to generate three style variants of a social media image for a product or service, then evaluate which performs best against your brief.',
+            steps: [
+              'Choose a product or service and write a one-sentence description of the audience and the feeling you want the image to evoke',
+              'Write your base prompt using all five layers: subject, style, lighting, mood, and format — keep it under 100 words',
+              'Generate image variant 1 using your base prompt in Midjourney (/imagine)',
+              'Modify the style layer only for variant 2 (e.g. swap "corporate photography" for "bold flat illustration") and generate',
+              'Modify the mood layer only for variant 3 (e.g. swap "calm and aspirational" for "energetic and disruptive") and generate — then evaluate all three against your brief and write one sentence on which you\'d use and why',
+            ],
+            tool: 'Midjourney',
+          },
+          inlineCheck: {
+            question: 'You need 20 variations of a product image for A/B testing a Meta ad campaign. What is the best approach?',
+            options: [
+              'Commission a photographer for all 20 — AI images look fake in ads',
+              'Use AI image generation with systematic prompt variations to create the 20 variants, then validate the strongest with a real designer before final spend',
+              'Use the same image for all 20 ads and vary the copy instead',
+              'Use AI to generate all 20 and run them immediately without review',
+            ],
+            correct: 1,
+            explanation: 'This is exactly the high-volume, iteration-friendly use case where AI image generation saves significant budget. 20 photography shoots would cost thousands and weeks. AI generation takes hours. The correct approach uses AI to create the raw variants, then applies human creative judgment to select and polish the strongest before committing media spend. Running AI outputs without review risks brand-inconsistent or technically poor images appearing in paid placements.',
+          },
+          outputComparison: {
+            label: 'Vague image prompt vs. layered specific prompt',
+            vague: {
+              prompt: 'A business image for a tech company',
+              output: 'A generic stock-photo-style image of a smiling person at a computer in a bright office. No distinctive style, neutral colours, no clear mood. Could be from any stock library. Does not communicate anything specific about the company or audience.',
+            },
+            improved: {
+              prompt: 'A 30-something woman reviewing a glowing analytics dashboard on a large monitor in a minimal, dark-toned modern office. Editorial photography style, not stock photo. Dramatic side lighting — cool blue from the screen, warm amber from a desk lamp. Mood: focused, intelligent, quietly confident. 16:9 format, woman positioned left of frame, right side open for text overlay. No visible hands, no text on screen.',
+              output: '**Result:** A cinematic, brand-quality image with clear visual hierarchy. The contrast between cool screen light and warm ambient light creates instant visual interest. The off-centre framing creates space for a headline. The "editorial not stock" instruction eliminated the artificial smile and posed awkwardness. The mood instruction ("quietly confident") pushed the expression toward genuine concentration. This image could anchor a homepage hero or a LinkedIn sponsored post without looking AI-generated.',
+            },
+            insight: 'The five-layer prompt structure (subject, style, lighting, mood, format) is what separates marketable AI images from generic noise. Each layer does specific creative work: style sets the visual language, lighting creates drama and depth, mood shapes the emotional register. Removing any layer collapses the output toward the average of everything the model has seen — which is exactly what stock photos look like.',
+          },
+          applyThisWeek: {
+            action: 'Identify one upcoming content need — a social post, presentation background, or blog header — and generate it using AI image generation instead of your usual process. Use the five-layer prompt structure and generate at least three variants before selecting.',
+            promptTemplate: 'I need a [format and dimensions] image for [specific use case — social post / presentation / ad]. Subject: [central element]. Style: [visual language — photography style, illustration style, abstract]. Lighting: [quality and direction of light]. Mood: [emotional register]. Constraints: no visible hands, no text in the image, no stock-photo aesthetic.',
+            tool: 'Midjourney',
+          },
+          reflection: 'Think about the last time you had to use a stock photo because you couldn\'t afford bespoke photography. How would the campaign have been different with brand-right imagery? What does that gap cost in brand equity over time?',
+          quiz: [
+            {
+              question: 'A marketer asks AI to generate an image of two colleagues shaking hands to celebrate a partnership announcement. What is the most likely problem with the output?',
+              options: [
+                'The image will be in black and white by default',
+                'The hands will almost certainly be malformed — AI image models struggle reliably with hands, making this a poor prompt choice',
+                'AI cannot generate images of two people in the same frame',
+                'The image will include unwanted text overlaid automatically',
+              ],
+              correct: 1,
+              explanation: 'Hands are one of the most reliably problematic elements in current AI image generation. Diffusion models consistently produce anatomically incorrect hands — extra fingers, merged fingers, or wrong proportions. The solution is to either request the image without visible hands (frame closer, use gestures that hide hands) or plan to edit hands out using a tool like Photoshop\'s generative fill. This is a known limitation, not a model failure — it reflects the difficulty of generating anatomically precise structures.',
+            },
+            {
+              question: 'You want to use AI-generated images in a commercial marketing campaign. Which tool is most appropriate and why?',
+              options: [
+                'Midjourney — it produces the highest quality images regardless of usage rights',
+                'Any tool — all AI image outputs are copyright-free',
+                'Adobe Firefly — it is trained on licensed and Adobe Stock imagery, making it the safest choice for commercial use without IP risk',
+                'DALL-E 3 — OpenAI has resolved all copyright issues with their training data',
+              ],
+              correct: 2,
+              explanation: 'Adobe Firefly was deliberately trained on licensed content and Adobe Stock imagery, making it the lowest-risk choice for commercial use. Midjourney and other tools have faced legal challenges regarding their training data. While the legal landscape is still evolving, using Firefly for commercial campaigns reduces IP exposure. For non-commercial or internal use, quality-first tools like Midjourney are appropriate. Always check your organisation\'s legal guidance before using AI-generated images in paid advertising.',
+            },
+            {
+              question: 'Which scenario is the BEST use case for AI image generation in a B2B marketing context?',
+              options: [
+                'Replacing the brand identity system with AI-generated logo variants',
+                'Generating a hero image for the company\'s IPO prospectus',
+                'Creating 30 background image variants for a LinkedIn ad A/B test to identify which visual style resonates with the target audience',
+                'Generating headshot replacements for the leadership team page',
+              ],
+              correct: 2,
+              explanation: 'AI image generation earns its highest ROI on high-volume, iteration-intensive tasks where brand precision is secondary to creative exploration. 30 ad background variants would cost thousands in photography or illustration; AI generates them in an afternoon. This lets you run statistically meaningful A/B tests to find what actually resonates before committing to expensive production. Brand-critical assets (logos, IPO materials, leadership headshots) require human craft and precise control that current AI tools cannot reliably provide.',
+            },
+          ],
+        },
+        {
+          id: 'marketing-m6-l2',
+          title: 'AI Video and Audio for Marketing',
+          duration: 18,
+          description:
+            'Understand the current landscape of AI video and voice tools, identify where they genuinely save time for B2B marketers, and avoid the traps that make AI video look cheap.',
+          content: `## The AI Video Landscape in Plain English
+
+The category is moving fast, but here is the reliable map as of 2025:
+
+**Text-to-video** (Runway Gen-3, Sora, Kling): You write a description, the tool generates short video clips. Best for abstract visuals, product visualisations, and B-roll. Not yet reliable for realistic human subjects.
+
+**AI avatar video** (HeyGen, Synthesia): A realistic AI avatar reads your script. Best for explainer videos, onboarding content, and product demos where you want a presenter without camera time.
+
+**AI voiceover** (ElevenLabs, Murf, Descript): Clone your own voice or choose from a library of AI voices. Excellent for narration, audio content, and video voiceover at scale.
+
+**AI video editing** (Descript, CapCut): Transcription-based editing (cut words from transcript to cut video), automatic captions, filler-word removal. High ROI for teams producing regular video content.
+
+## Where AI Video Saves Real Time for B2B Marketers
+
+> "I need a 90-second product explainer for our new integration. Script: [paste script]. Generate a HeyGen video with a professional male avatar, formal business style, subtitle overlay, no background music."
+
+This replaces: booking studio time, hiring a presenter, recording, and editing. Total time: 45 minutes vs 3 days.
+
+> "I have a 10-minute English webinar recording. Use ElevenLabs to create French, German, and Spanish audio tracks, then sync them to the video for three localised versions."
+
+Localisation at this speed was previously impossible without large translation and dubbing budgets.
+
+## When AI Video Looks Cheap
+
+AI video reads as artificial when:
+- Avatar lip-sync is slightly off (visible in close-up shots)
+- The script sounds like it was written for a robot (monotone, no pauses)
+- The background is a generic virtual set with no brand identity
+- There is no editing rhythm — just a talking head for 3 minutes straight
+
+The fix: **script for voice first.** AI voices read written prose woodenly. Write how you speak: short sentences, natural pauses, contractions. Then direct the pacing (add "[pause]" markers in ElevenLabs scripts).
+
+## Approving AI Video to Stakeholders
+
+When presenting AI-generated video to internal stakeholders or clients, be transparent. Frame it as: "This is an AI-produced video. We\'ve used it here because [speed / localisation / volume]. We can replace with live-action production if the quality bar requires it." This prevents the uncanny valley reaction that happens when AI video is presented as live-action without disclosure.
+
+## The Right Mental Model
+
+AI video tools are production accelerators, not production replacements. A human still needs to: write the script, direct the creative, review the output, add brand elements, and make the editorial decisions. What AI removes is camera time, studio time, and the technical production overhead.`,
+          keyTakeaways: [
+            'AI avatar tools (HeyGen, Synthesia) replace studio time for explainer and demo videos — not for brand hero content where authenticity is critical',
+            'ElevenLabs voiceover and AI video localisation can turn one webinar into multilingual content in hours, not months',
+            'Script AI voiceover the way you speak — short sentences, contractions, and "[pause]" markers — not how you write formal documents',
+            'Be transparent with stakeholders when presenting AI-generated video; framing it as "AI-produced for speed/scale" avoids the trust erosion of undisclosed AI content',
+            'AI video editing tools (Descript) offer the highest immediate ROI for teams already producing video — transcription-based editing alone saves 60% of editing time',
+          ],
+          exercise: {
+            title: 'Script and Generate a 30-Second AI-Narrated Product Explainer',
+            description:
+              'Write a script specifically optimised for AI voiceover and generate a narrated explainer using ElevenLabs.',
+            steps: [
+              'Choose a product, feature, or service to explain. Write a 30-second script (approximately 75 words) — use short sentences, contractions, and natural pauses',
+              'Mark up the script with ElevenLabs-style pacing: add "[pause]" where a human speaker would breathe, and mark key words for emphasis with asterisks',
+              'Upload your script to ElevenLabs, select a voice that matches your brand tone (professional, warm, energetic), and generate the audio',
+              'Listen critically: does it sound natural? Adjust pacing markers and regenerate if the delivery sounds robotic or rushed',
+              'Export the audio and sync it against a simple slide deck or product screen recording using CapCut or Descript — note the total time spent vs your usual video production process',
+            ],
+            tool: 'ElevenLabs',
+          },
+          inlineCheck: {
+            question: 'A B2B SaaS company wants to create product demo videos for 12 different customer segments, each with slightly different messaging. What is the strongest argument for using AI avatar video?',
+            options: [
+              'AI avatar videos are indistinguishable from live-action and will be perceived as more authentic',
+              'Creating 12 live-action video variants would require 12 separate filming sessions; AI avatar video allows 12 script variants to be produced in a single day at a fraction of the cost',
+              'AI avatar tools are always cheaper than any alternative',
+              'Customers prefer AI avatars to real people in product demos',
+            ],
+            correct: 1,
+            explanation: 'The economic and speed argument for AI video is strongest when volume and personalisation intersect. 12 live-action filming sessions would require significant budget, scheduling, and post-production time. AI avatar video scales linearly with your script count — 12 scripts become 12 videos in a day. This is segment-specific personalisation at a scale that was previously only available to large marketing organisations with large budgets. The output won\'t be as emotionally resonant as the best live-action, but it will be sufficiently high quality for most digital channels.',
+          },
+          outputComparison: {
+            label: 'Formal prose script vs. voice-optimised script',
+            vague: {
+              prompt: 'Script for AI voiceover: "Our platform delivers comprehensive workflow automation capabilities that enable organisations to achieve significant operational efficiency improvements across their core business processes."',
+              output: 'AI voiceover output: A flat, robotic-sounding sentence delivered without natural rhythm, with equal emphasis on every syllable. The abstract language gives the voice nothing to land on. The result sounds like a terms-and-conditions recording.',
+            },
+            improved: {
+              prompt: 'Script for AI voiceover: "Here\'s the problem. Your team is spending hours on work that should take minutes. [pause] Our platform automates the repetitive stuff — so your people can focus on the work that actually matters. [pause] Less admin. More impact. [pause] Let\'s show you how."',
+              output: '**AI voiceover output:** A natural-sounding narration with clear rhythm and emphasis. The short sentences give the voice natural landing points. The pauses create space and urgency. The conversational language ("the repetitive stuff", "the work that actually matters") sounds like a confident human speaker, not corporate copy. The result is a compelling 20-second hook that works as a product demo opening or paid video ad.',
+            },
+            insight: 'AI voices are trained on human speech patterns — so the closer your script is to natural speech, the better the output. Formal written language breaks down when spoken aloud because it was never designed for the ear. The simple fix is to write your script out loud first: speak it, then transcribe how you said it. That transcription will outperform anything written at a desk as prose.',
+          },
+          applyThisWeek: {
+            action: 'Identify a piece of written content (a product page, a sales email, a case study) that could be adapted into a short video explainer. Rewrite the opening 30 seconds as a voice-optimised script and generate an AI voiceover to experience the difference.',
+            promptTemplate: 'I am a [role] at a [company type] selling [product/service] to [audience]. I need a [duration]-second voiceover script for [use case: product demo / explainer / ad]. The tone should be [professional/warm/energetic/authoritative]. Key message: [one sentence]. The script should open with the problem, not the product. Include [pause] markers. Avoid jargon. Write for the ear, not the eye.',
+            tool: 'ElevenLabs',
+          },
+          reflection: 'Think about a piece of content your team produces regularly that would benefit from video but has never been produced as video because of the cost and time involved. What would it unlock commercially if that content existed as video? What is the cost of not having it?',
+          quiz: [
+            {
+              question: 'A marketer is producing a 5-minute training video for new customers using an AI avatar tool. The script was written as formal documentation prose. What is the most likely problem with the output?',
+              options: [
+                'The avatar will refuse to read formal language',
+                'The video will be too long for AI generation',
+                'The voiceover will sound robotic and unnatural because AI voices are trained on conversational speech patterns, not formal prose',
+                'The avatar\'s lip-sync will fail on sentences longer than 10 words',
+              ],
+              correct: 2,
+              explanation: 'Formal written prose and spoken language have different rhythms, sentence structures, and vocabulary. AI voices are trained primarily on natural speech, so they render formal prose in a flat, metronomic way that sounds automated. The solution is simple: rewrite the script for the ear. Short sentences, contractions, natural pauses, conversational vocabulary. A voice-optimised script will produce output that sounds genuinely human even from an AI voice model.',
+            },
+            {
+              question: 'Which of these is the MOST appropriate use case for AI avatar video in a B2B marketing context?',
+              options: [
+                'The keynote address at the company\'s annual customer conference',
+                'A CEO interview for a profile piece in a national business publication',
+                'Product onboarding tutorials for 8 different customer segments with tailored messaging per segment',
+                'The company\'s brand film for use at industry events and in investor materials',
+              ],
+              correct: 2,
+              explanation: 'AI avatar video earns its strongest ROI when volume, personalisation, and speed intersect — and when the emotional stakes of "is this a real person?" are low. Onboarding tutorials prioritise clarity and information over emotional authenticity. 8 segment variants would require 8 filming sessions with a human presenter; AI allows all 8 to be produced in a day with consistent quality. High-stakes, high-visibility appearances (keynotes, media interviews, brand films) require authentic human presence that AI avatars cannot replicate without damaging trust.',
+            },
+            {
+              question: 'You are presenting an AI-avatar explainer video to your CMO for approval. She asks "Is this a real person?" What is the correct response?',
+              options: [
+                'Confirm it is a real person — the quality is good enough and admitting it\'s AI might kill the project',
+                'Be transparent: explain it is an AI-generated avatar, the reasons you chose this approach (speed/cost), and offer live-action as an alternative if the quality bar requires it',
+                'Avoid the question and redirect to discussing the content',
+                'Explain that modern AI avatars are legally classified as \'virtual presenters\' and do not require disclosure',
+              ],
+              correct: 1,
+              explanation: 'Transparency about AI-generated content is both an ethical obligation and a practical risk management strategy. If AI video is presented as live-action and the deception is discovered — by your CMO, by stakeholders, or publicly — the trust damage far outweighs the project risk. Framing the conversation proactively ("this is AI-generated, here\'s why, here\'s the alternative") positions you as a strategic decision-maker rather than someone hiding a shortcut. Most stakeholders, when given the business rationale, will approve well-executed AI video.',
+            },
+          ],
+        },
+        {
+          id: 'marketing-m6-l3',
+          title: 'The AI-Augmented Creative Brief',
+          duration: 17,
+          description:
+            'Learn to use AI to write creative briefs that produce better work from designers and agencies, rapidly prototype campaign territories, and give structured creative feedback — without replacing human creative judgment.',
+          content: `## Why Creative Briefs Fail
+
+The single most common source of wasted creative production budget is a bad brief. Briefs fail when they are: too vague ("we want it to feel premium and modern"), too prescriptive (listing executions instead of territories), or missing critical strategic context (target audience, competitive landscape, mandatory constraints).
+
+AI doesn\'t fix bad strategic thinking — but it does three things that dramatically improve briefs:
+1. Forces you to articulate what you actually mean
+2. Generates creative territories you wouldn\'t have considered
+3. Identifies gaps and contradictions in your brief before it reaches a designer
+
+## Using AI to Sharpen the Brief
+
+Before writing a brief, use AI as a thinking partner:
+
+> "I\'m briefing a designer on a social media campaign for a B2B project management tool targeting ops directors at mid-market companies. The campaign goal is to drive trial sign-ups. The product differentiator is ease of setup — competitors are powerful but complex. What are the five most important things the creative brief should communicate to ensure the designer creates work that will convert ops directors who have been burned by complex software before?"
+
+Then use the output to pressure-test your own brief before sending it.
+
+## Generating Campaign Concept Territories
+
+A "territory" is a creative direction — a theme or strategic angle, not a specific execution. Using AI to generate territories lets you explore the space cheaply before committing design resource.
+
+> "Generate 5 distinct creative territories for a campaign promoting a new AI-powered compliance tool for financial services firms. Each territory should have: a one-line strategic insight, a creative expression idea, a sample headline, and a tone descriptor. Make them genuinely different from each other — explore emotional, rational, provocative, and aspirational angles."
+
+This produces 5 territories in 3 minutes. You evaluate them with your creative judgment, select the strongest, and brief that single territory to your designer — who now has a much clearer creative mandate.
+
+## AI as Creative Sounding Board
+
+Use AI to stress-test creative concepts before production:
+
+> "Here is a campaign concept: [describe concept]. The target audience is [description]. The campaign goal is [goal]. What are the three biggest risks with this creative direction? What audience insight might we be missing? What competitor has already done something similar?"
+
+This is the \'kill the baby\' test before you\'ve invested production budget. AI will surface objections your internal team is too close to the work to raise.
+
+## Giving AI Feedback on Creative Work
+
+AI can help you articulate feedback more precisely:
+
+> "I\'m reviewing a designer\'s first round of concepts for our campaign. Here is my gut reaction: [describe your feeling — \'it feels flat\', \'it\'s too corporate\', \'I don\'t know why but it\'s not working\']. Help me translate this into specific, actionable creative feedback that identifies what is actually not working and why."
+
+This protects the designer-client relationship by replacing vague subjective reactions with constructive creative direction.`,
+          keyTakeaways: [
+            'Use AI before writing the brief, not instead of writing it — AI surfaces what you must articulate before a designer can execute effectively',
+            'Generate at least 5 campaign territories with AI before selecting one to brief; the cost of exploration is minutes, not weeks',
+            'A territory is a strategic direction with a headline and tone, not an execution — brief territories to designers, not executions',
+            'AI stress-testing of creative concepts surfaces the risks and competitive overlaps your team is too close to the work to see',
+            'AI can translate your gut reaction to creative work into specific, actionable feedback — protecting the client-agency relationship from vague subjective direction',
+          ],
+          exercise: {
+            title: 'Generate 5 Campaign Territories and Brief the Strongest',
+            description:
+              'Use Claude to generate five distinct campaign concept territories for an upcoming campaign, evaluate them, and write a refined brief for the strongest.',
+            steps: [
+              'Choose an upcoming campaign (real or hypothetical). Write one paragraph describing: the product, target audience, campaign goal, and the one thing that makes the product different from competitors',
+              'Prompt Claude to generate 5 distinct creative territories, each with a strategic insight, creative expression idea, sample headline, and tone descriptor — and to make them genuinely different from each other',
+              'Evaluate the 5 territories against your audience insight and campaign goal. Score each 1-5 and note your reasoning — which territory is truest to the audience\'s actual problem?',
+              'Select the strongest territory and use Claude to expand it into a full creative brief: audience definition, insight, territory, mandatories, tone, success metrics',
+              'Review the brief and add anything AI missed — the local market nuance, the brand constraint, the executional precedent from a previous campaign — then assess how much time this process saved vs your usual briefing approach',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A marketing team uses AI to generate 8 campaign concepts and presents all 8 to their agency without internal evaluation. What is the most significant problem with this approach?',
+            options: [
+              'AI-generated concepts are not allowed to be presented to agencies',
+              'The agency will charge more if they know AI was used in the briefing process',
+              'Presenting all 8 without internal evaluation abdicates the strategic judgment that is the client\'s job — the agency receives no clear direction and must guess which direction the client actually believes in',
+              'AI can only generate 5 concepts maximum in a single prompt',
+            ],
+            correct: 2,
+            explanation: 'AI generates options; humans make strategic decisions. Presenting 8 concepts to an agency without a clear view from the client is not using AI to improve the brief — it is offloading strategic responsibility to the agency, which will produce confused creative work and a frustrating client-agency dynamic. The correct model: AI generates territories cheaply, the marketing team applies their audience knowledge and business judgment to select the strongest, and the agency receives a single clear brief for one territory. AI accelerates exploration; human judgment makes the call.',
+          },
+          outputComparison: {
+            label: 'Generic brief vs. AI-augmented territory brief',
+            vague: {
+              prompt: 'Creative brief: We want a social media campaign for our project management software. Target: businesses. Goal: get more sign-ups. Feel: professional and modern. Make it stand out.',
+              output: 'A brief that will produce generic creative work. The designer has no insight into the target audience\'s specific pain, no strategic direction to explore, and \'professional and modern\' as the only creative constraint — which describes approximately 90% of B2B software advertising. The result will be competent but undifferentiated.',
+            },
+            improved: {
+              prompt: 'Campaign territory brief generated with Claude:\n\n**Territory: "You\'ve been burned before"**\n\n**Strategic insight:** Mid-market ops directors have tried 2-3 project management tools and abandoned each one after 6 weeks because the setup was too complex and team adoption failed. They\'re not looking for \'more features\' — they\'re looking for a tool their team will actually use.\n\n**Creative expression:** Campaigns that acknowledge the exhaustion and scepticism of the audience directly — then demonstrate effortless setup in a way that feels honest, not salesy.\n\n**Sample headline:** "Set up in a day. Used by your team by Friday. Or your money back."\n\n**Tone:** Direct, honest, confident. No corporate superlatives. No stock-photo energy. Real teams, real timelines, real relief.',
+              output: '**What this brief unlocks:** The designer now has a specific audience psychology to respond to (exhausted, sceptical, burned before). The creative territory ("you\'ve been burned before") gives them a clear emotional register — empathy first, proof second. The headline sets a measurable, specific claim that the creative must live up to. The tone descriptor eliminates 80% of wrong creative directions before a single concept is sketched. This brief will produce work that is faster to approve and more likely to convert.',
+            },
+            insight: 'The strategic insight in a brief is the single most powerful input. "Businesses want project management software" produces generic creative. "Ops directors have been burned by complex tools and are sceptical" produces creative that speaks directly to a real audience psychology. AI can help you find and articulate that insight — but only if you give it enough context about the audience to work with. The depth of your audience understanding is the ceiling on brief quality, with or without AI.',
+          },
+          applyThisWeek: {
+            action: 'Take one upcoming brief — even a small one — and run the territory generation exercise before briefing the designer. Generate at least 5 territories, evaluate them yourself, and brief only the strongest. Compare the quality of creative output from this brief to your usual approach.',
+            promptTemplate: 'I am briefing a [designer / agency / content creator] on a [campaign type] for [product/service]. Target audience: [specific description including their current pain point or situation]. Campaign goal: [specific metric]. Our key differentiator: [what makes us different from the top 2 competitors]. Generate 5 distinct creative territories, each with: a one-line strategic insight, a creative expression idea, a sample headline, and a tone descriptor. Make the territories genuinely different — explore emotional, rational, provocative, and aspirational angles.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time a designer or agency delivered work that missed the mark. Was the problem the execution — or was it the brief? If you had given them a more precise creative territory with a clear audience insight, would the output have been different? What is the cost of a single round of wasted creative revisions?',
+          quiz: [
+            {
+              question: 'What is the difference between a creative "territory" and a creative "execution"?',
+              options: [
+                'A territory is a single ad, an execution is a full campaign',
+                'A territory is a strategic direction and tone that can be expressed in many ways; an execution is a specific realisation of that direction in a particular format',
+                'They are the same thing — the terms are interchangeable in creative briefing',
+                'A territory is what designers produce; an execution is what marketers approve',
+              ],
+              correct: 1,
+              explanation: 'Briefing a territory ("we are exploring the angle of acknowledging customer scepticism directly — honest, proof-based, no hype") gives a designer creative latitude to find the best executional expression. Briefing an execution ("create a LinkedIn carousel with 6 slides and a before/after structure") constrains the designer to your idea of the solution, which may not be the best one. The division of responsibility: client briefs the strategic territory, designer finds the best execution within it. AI helps you generate and evaluate territories before that handoff.',
+            },
+            {
+              question: 'A marketer uses Claude to stress-test a campaign concept and the AI identifies that a major competitor ran a nearly identical campaign 8 months ago. What is the most valuable next step?',
+              options: [
+                'Discard the concept entirely — any overlap with a competitor disqualifies the direction',
+                'Ignore it — the target audience probably didn\'t see the competitor\'s campaign',
+                'Research the competitor\'s campaign to understand how it performed, then either differentiate the approach significantly or select a different territory that has clear white space',
+                'Launch the campaign immediately before the competitor can sue for creative theft',
+              ],
+              correct: 2,
+              explanation: 'Competitive overlap in creative direction is a genuine strategic risk — not necessarily fatal, but worth understanding. If the competitor\'s campaign performed well, you risk being seen as a follower. If it performed poorly, you risk repeating their mistake. The right response is to investigate: find out what the campaign looked like, how it performed, and whether your target audience saw it. Then make an informed decision: differentiate meaningfully, or select a territory with true creative white space. This is exactly the kind of strategic risk AI can surface that internal teams too close to the work often miss.',
+            },
+            {
+              question: 'Which of the following represents AI being used correctly in the creative briefing process?',
+              options: [
+                'Replacing the strategic brief with an AI-generated campaign concept and sending it directly to the designer',
+                'Using AI to generate territory options, applying human judgment to select the strongest, and then using AI to expand that territory into a detailed brief for the designer',
+                'Asking AI to evaluate which creative work is best after the designer submits concepts',
+                'Using AI to write the brief, then sending it to the designer without human review',
+              ],
+              correct: 1,
+              explanation: 'The correct model keeps human judgment at the decision points and uses AI to accelerate the exploration and articulation work on either side of those decisions. AI generates territory options (cheap exploration), human selects the strongest based on audience knowledge and business context (strategic judgment), AI helps articulate that territory into a detailed brief (efficient documentation). The designer receives a brief that reflects genuine human strategic direction — not an AI output presented as strategic thinking. This produces better creative work and maintains the right division of responsibility.',
+            },
+          ],
+        },
+        {
+          id: 'marketing-m6-l4',
+          title: 'Building Your Personal AI Marketing Stack',
+          duration: 19,
+          description:
+            'Design a personal AI workflow that compounds over time, build a reusable prompt library, and develop the habits that separate AI-native marketers from those who use AI occasionally.',
+          content: `## Why Most People Use AI 20% as Effectively as They Could
+
+The pattern is consistent: a marketer discovers AI, uses it intensively for two weeks, produces impressive results, then gradually defaults back to old workflows. Three months later, AI is something they \'sometimes use for emails.\'
+
+The problem is not motivation — it\'s system. Without a deliberately designed workflow, AI use is reactive (you remember it when stuck) rather than proactive (it\'s built into every task). The marketers who compound results from AI are the ones who systematised it.
+
+## The 80/20 of AI Tools for Marketers
+
+Most marketers need fewer tools than they think. The highest-ROI stack for most B2B marketers:
+
+**Core LLM (pick one primary):** Claude for nuanced writing, complex analysis, and long documents. ChatGPT for speed and broad capability. Gemini if you\'re deep in Google Workspace.
+
+**Image generation (one tool):** Midjourney for quality-first creative work, Adobe Firefly for commercial-safe generation.
+
+**Research (one tool):** Perplexity for sourced, current information with citations.
+
+**Video/audio (as needed):** ElevenLabs for voiceover, Descript for editing, HeyGen for avatar video.
+
+**Rule:** Add a new tool only when you have a clear use case that your current stack cannot handle. Tool-switching costs 2-3 hours of recalibration every time.
+
+## Building Your Prompt Library
+
+A prompt library is the single highest-leverage investment you can make in your AI workflow. It means you never write the same prompt twice, you improve prompts over time based on output quality, and it becomes institutional knowledge your team can share.
+
+Structure your library by workflow stage:
+- **Research prompts:** audience analysis, competitive research, trend synthesis
+- **Content prompts:** blog posts, social copy, email sequences, ad copy
+- **Analysis prompts:** campaign performance, data interpretation, reporting
+- **Strategy prompts:** campaign planning, brief writing, channel strategy
+- **Communication prompts:** stakeholder updates, presentations, board reports
+
+> "Here is a prompt I\'ve been using for LinkedIn post generation: [paste prompt]. I\'ve noticed the outputs tend to be [too formal / too generic / missing specific examples]. Improve this prompt so it produces output that is [more conversational / more industry-specific / includes a concrete case study reference]. Show me the improved prompt and explain what you changed and why."
+
+This is prompt engineering as an iterative discipline — not a one-time task.
+
+## The AI-Native Work Pattern
+
+AI-native work means AI is the starting point, not the fallback. In practice:
+
+**Before any writing task:** Generate 3 angles or outlines with AI before writing a single word yourself. Select the strongest direction, then write.
+
+**Before any analysis task:** Define the question with AI\'s help before analysing the data. Ask: "I have [data]. What are the 5 most useful questions I could answer with this data for a [marketing/leadership] audience?"
+
+**After any first draft:** Run every first draft through a review prompt: "Review this for: clarity, specificity, and whether it passes the \'so what\' test for a [CMO / prospect / ops director] audience. Identify the weakest sentence."
+
+## Measuring Personal Productivity Gains
+
+Track these three metrics for 30 days:
+1. **Hours saved per week** (self-reported, rounded to the nearest 30 minutes per task)
+2. **Output volume** (pieces of content produced per week vs your 30-day baseline)
+3. **Quality rating** (score your own output 1-5 before and after AI-assisted work)
+
+At the end of 30 days, you\'ll have a personal ROI number that tells you exactly where AI is creating value — and where it isn\'t. That data shapes your next month\'s investment in tools and skills.`,
+          keyTakeaways: [
+            'AI use collapses without a system — build AI into your workflow at defined trigger points rather than remembering to use it when stuck',
+            'The highest-ROI AI stack for most B2B marketers is 4-5 tools maximum — resist adding tools without a clear use case your current stack cannot serve',
+            'A prompt library is the highest-leverage AI investment: categorised, versioned, and shared — it compounds value as prompts improve over time',
+            'AI-native work means AI is the starting point for every task, not the fallback when you\'re stuck; this mindset shift produces 3-5x more value than occasional AI use',
+            'Measure AI\'s personal impact with three metrics for 30 days: hours saved, output volume, and quality rating — data makes the value visible and guides your next skill investment',
+          ],
+          exercise: {
+            title: 'Build Your Personal AI Prompt Library',
+            description:
+              'Audit your AI tool use, identify your 3 highest-ROI tools, and build a prompt library of 10 reusable prompts across key workflow stages.',
+            steps: [
+              'List every AI tool you currently use. For each, estimate: how many times per week you use it, and the single highest-value task it does for you. Identify the 3 tools where you could not easily go back to your pre-AI workflow',
+              'For each of the 3 highest-ROI tools, write the single best prompt you currently use. If you don\'t have a go-to prompt for a tool, that\'s the gap to fill',
+              'Identify the 5 most time-consuming recurring writing tasks in your role. For each, prompt Claude to generate a reusable prompt template you can adapt each time',
+              'Identify the 2 most time-consuming recurring analysis tasks. For each, build an analysis prompt template that includes: context to provide, question to ask, and output format to request',
+              'Organise all 10 prompts in a simple document with categories (content, analysis, strategy) and store it somewhere you\'ll access before every task. Set a monthly calendar reminder to review and improve 2 prompts',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A marketer says: "I tried AI for a few months but I keep forgetting to use it." What is the most likely root cause?',
+            options: [
+              'The marketer\'s role is not suitable for AI assistance',
+              'AI tools are too difficult to learn and require more training',
+              'AI use is reactive rather than systematic — there are no defined trigger points in the workflow where AI is always the starting step',
+              'The marketer is using the wrong AI tool for their industry',
+            ],
+            correct: 2,
+            explanation: 'Forgetting to use AI is almost always a systems problem, not a motivation problem. When AI is an option you remember when stuck, it gets used inconsistently. When AI is the defined first step for specific task categories — "before any writing task, generate 3 angles with AI" — it becomes habitual. The fix is to identify 3-5 specific workflow moments where AI is always the starting point, and to build that into your task management system or daily routine until it is automatic.',
+          },
+          outputComparison: {
+            label: 'Generic re-used prompt vs. prompt library entry with context',
+            vague: {
+              prompt: 'Write me a LinkedIn post about our new product feature.',
+              output: 'Excited to announce our latest feature update! We\'ve been working hard behind the scenes to bring you something special. Our new [feature] helps you [vague benefit]. Check it out and let us know what you think! #ProductUpdate #Innovation #SaaS',
+              },
+            improved: {
+              prompt: '**Prompt library entry: LinkedIn product announcement**\n\nContext to fill in: [Feature name], [the specific customer problem it solves], [one concrete before/after or metric], [target audience role], [CTA].\n\nPrompt: "Write a LinkedIn post announcing [feature name] for an audience of [role]. Do NOT open with \'Excited to announce\'. Open with the customer problem: one sentence that makes [role] nod immediately. Then: what changed and why it matters, expressed as a before/after. Include this specific result: [metric or outcome]. End with a direct CTA: [CTA]. Tone: direct and confident, no corporate superlatives. Under 200 words."',
+              output: '**Example output using filled-in template:**\n\nRunning a month-end close with 12 people in the same spreadsheet is not a workflow. It\'s a stress test.\n\nWe just shipped version control for collaborative financial models. Here\'s what that means: no more \'final_v3_ACTUAL_final.xlsx\'. Every change is tracked, attributed, and reversible.\n\nEarly users report cutting their close process from 4 days to 1.5. Not because they\'re faster — because they\'re not spending Tuesday morning undoing Monday\'s overwrites.\n\nFree for all existing plans. Set up takes 10 minutes.\n\n[Link to setup guide]',
+            },
+            insight: 'A prompt library entry is not a saved prompt — it is a template with documented context variables and specific output instructions. The difference between "write a LinkedIn post" and a full prompt library entry is the difference between asking a new hire to "write something" and giving them a style guide, an audience profile, and specific success criteria. The template codifies everything you\'ve learned about what good output looks like for your brand and audience — so you never start from zero again.',
+          },
+          applyThisWeek: {
+            action: 'Identify the single most time-consuming recurring writing task in your role. Build one prompt library entry for it: document the context variables, write the full prompt with specific output instructions, generate 3 test outputs, and refine the prompt until the output is genuinely good. Store it where you will access it next time the task comes up.',
+            promptTemplate: 'I am a [role] at a [company type]. My most time-consuming recurring writing task is [task description]. I typically spend [time] on it. The output needs to: [list 3-4 specific quality criteria]. The audience for this output is [audience]. Help me build a reusable prompt template for this task that: (1) specifies all context I need to provide each time, (2) includes specific instructions for tone, format, and length, (3) includes one instruction that ensures the output doesn\'t sound like generic AI-generated content.',
+            tool: 'Claude',
+          },
+          reflection: 'If your AI workflow is working well in 12 months, what does a typical Tuesday look like for you? How much of your time is spent on creative and strategic decisions vs. production work? What would you be able to do that you currently cannot, because there wasn\'t enough time?',
+          quiz: [
+            {
+              question: 'A marketer wants to add a new AI tool they saw at a conference to their existing stack of 4 tools. What is the right question to ask before adding it?',
+              options: [
+                '"Is this tool cheaper than my current tools?"',
+                '"Did the conference speaker recommend it?"',
+                '"What specific task in my current workflow does this tool handle better than what I already have — and is that task important enough to justify the onboarding cost?"',
+                '"Is this tool the most popular AI tool in marketing right now?"',
+              ],
+              correct: 2,
+              explanation: 'Tool proliferation is one of the most common ways AI productivity gains are lost. Each new tool requires learning time, context-switching, and maintenance. The right filter is not popularity or price — it is whether the tool addresses a specific workflow gap that your current stack cannot serve, and whether that gap is large enough to justify the investment. If you cannot name the specific task and the specific improvement, you are adding complexity without value. Most marketers can handle 80% of their AI needs with 3-4 well-chosen tools used deeply.',
+            },
+            {
+              question: 'Which of the following best describes an "AI-native" approach to a writing task?',
+              options: [
+                'Having AI write the entire piece without human editing',
+                'Using AI only when you have writer\'s block',
+                'Generating 3 angles or outlines with AI before writing a single word, selecting the strongest direction, then writing with AI as a continuous thinking partner',
+                'Asking AI to check the grammar and spelling of your finished draft',
+              ],
+              correct: 2,
+              explanation: 'AI-native work means AI is integrated into every stage of the creative process — ideation, structuring, drafting, and review — not just inserted as a finishing step or emergency fallback. Generating angles before writing prevents the blank-page problem and surfaces directions you wouldn\'t have considered alone. Using AI as a continuous thinking partner means the final output reflects the best of human judgment and AI capability, rather than the unassisted first draft that most people produce when they only use AI occasionally. The quality difference compounds over a full year of work.',
+            },
+            {
+              question: 'You have been using AI for 3 months and want to measure whether it is actually improving your productivity. Which measurement approach is most useful?',
+              options: [
+                'Count the total number of prompts you\'ve run across all AI tools',
+                'Track: hours saved per week (self-reported), content output volume vs your 30-day pre-AI baseline, and quality rating of your own output — reviewed monthly to identify where AI is creating real value',
+                'Compare your salary to AI tool subscription costs to calculate ROI',
+                'Ask your manager if they\'ve noticed an improvement in your output',
+              ],
+              correct: 1,
+              explanation: 'Measurement of AI productivity impact needs to be specific, personal, and longitudinal. Counting prompts measures activity, not value. A multi-metric approach — time saved, volume produced, and quality assessed — triangulates the real impact. Comparing against your own 30-day pre-AI baseline is more accurate than industry benchmarks because it controls for your role, workload, and context. Reviewing monthly means you can identify which specific AI use cases are generating real productivity gains and invest more in those areas, while deprioritising AI uses that are not moving the needle.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

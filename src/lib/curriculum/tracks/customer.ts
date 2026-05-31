@@ -2141,5 +2141,601 @@ CS leaders who build AI-powered functions are increasingly valuable to their org
         },
       ],
     },
+    {
+      id: 'customer-m6',
+      title: 'AI Agents & the Future of Customer Success',
+      description:
+        'Deploy AI agents for scaled customer interactions, build proactive success systems that reach every account, drive CS-led growth with AI intelligence, and lead the AI-native CS organisation.',
+      lessons: [
+        {
+          id: 'customer-m6-l1',
+          title: 'Deploying AI Agents for Customer Success',
+          duration: 17,
+          description:
+            'Design AI agent workflows that take real CS actions — scheduling calls, updating health scores, triggering playbooks — while knowing exactly when and how to hand off to a human CSM.',
+          content: `## Beyond Chatbots: What AI Agents Actually Do
+
+AI agents are not chatbots. A chatbot responds when asked. An agent monitors, decides, and acts — without a human initiating every step. In customer success, this distinction matters enormously. An AI agent can watch 500 accounts simultaneously, detect that Account A just hit three risk signals in 48 hours, draft an outreach email, schedule a check-in call, update the health score in your CRM, and flag the account for the CSM — all before you arrive at your desk on Monday morning.
+
+## The Spectrum of Agent Autonomy
+
+Not all agent deployments are equal. Understanding the spectrum helps you choose the right model for each use case:
+
+**Fully automated:** The agent takes action without human review. Best for low-stakes, high-volume tasks like renewal reminder sequences, onboarding milestone nudges, and usage tip emails.
+
+**Human-in-the-loop:** The agent prepares the action and queues it for human approval before execution. Best for outreach to at-risk accounts, escalation decisions, and any communication where tone or relationship context matters.
+
+**AI-assisted:** The agent surfaces the recommendation; the CSM decides and acts. Best for complex account decisions, expansion conversations, and any situation where relationship history is the critical variable.
+
+## Where CS Agents Work Well
+
+> "You are an AI customer success agent. Account: [name]. Health score: 58 (down from 71 in 30 days). Triggers: login frequency dropped 40%, feature X adoption fell to 0, one open P2 support ticket > 14 days. Draft a CSM-ready summary of the risk, a suggested outreach message to the customer, and a recommended internal action. Format as: Risk Summary / Customer Message Draft / Recommended CSM Action."
+
+This prompt works for **tier-1 support deflection** (standard how-to questions that don\'t need a CSM), **onboarding guidance** (step-by-step activation sequences triggered by milestone gaps), and **renewal reminder sequences** (automated touchpoints that escalate to human if no response).
+
+## Where CS Agents Fail
+
+Agents fail when the signal requires relationship context the agent cannot access. A usage drop means different things for an account that just had key-user turnover vs. one in a budget freeze vs. one that just deployed your competitor. Complex escalations — where the customer is frustrated, the relationship is fragile, or the issue is politically sensitive — require human judgment that no agent can replicate today.
+
+## Designing the Human Handoff
+
+The handoff from agent to CSM is the most important UX decision in agent design. A poor handoff feels abrupt and erodes customer trust. A good handoff is invisible — the customer feels like a human was watching all along.
+
+> "Design the handoff script for an AI-to-CSM transition for an at-risk account. The AI has already sent two check-in emails with no response. The CSM is now taking over. Give me: (a) the CSM\'s opening message that acknowledges the prior outreach without making it feel robotic, (b) the internal briefing the agent prepares for the CSM before they make contact, (c) the customer experience of the transition."
+
+## Measuring Agent Performance
+
+Track these four metrics to evaluate whether your CS agents are delivering value:
+- **Resolution rate:** % of agent interactions that resolve without CSM escalation
+- **Escalation quality:** Are escalations arriving with full context, or is the CSM starting from scratch?
+- **CSAT by interaction type:** Agent-handled vs. CSM-handled — where is satisfaction higher?
+- **Time-to-intervention:** How much faster does the agent detect and act on risk signals vs. the previous manual process?`,
+          keyTakeaways: [
+            'AI agents monitor, decide, and act autonomously — they are fundamentally different from chatbots that only respond when prompted',
+            'Match the autonomy level to the stakes: fully automated for low-risk volume tasks, human-in-the-loop for at-risk outreach, AI-assisted for complex account decisions',
+            'Agents work best for tier-1 support deflection, onboarding guidance, and renewal sequences — they fail on complex escalations requiring relationship context',
+            'The human handoff is the most critical UX decision in agent design — it must feel continuous and informed, not abrupt',
+            'Measure agent performance on resolution rate, escalation quality, CSAT by interaction type, and time-to-intervention',
+          ],
+          exercise: {
+            title: 'CS Agent Workflow Design',
+            description:
+              'Design a complete AI agent workflow for one CS process — onboarding, health check-in, or renewal — including triggers, actions, escalation rules, and success metrics.',
+            steps: [
+              'Choose one CS process: new customer onboarding (Day 0–30), health check-in (triggered by score drop), or renewal (90 days out)',
+              'Define the trigger: what signal or event causes the agent to activate? (e.g., no login in 7 days during onboarding, health score drops 10+ points)',
+              'Map the agent\'s action sequence: what does it do first, what does it check, what does it produce? (e.g., draft summary → generate outreach → update CRM → queue for CSM review)',
+              'Define escalation rules: what conditions cause immediate human takeover without waiting for agent resolution?',
+              'Set success metrics: what does a successful agent interaction look like, and how will you measure it over the first 30 days of deployment?',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A CSM team is considering deploying an AI agent to handle all initial responses to customer support tickets. Which scenario should make them pause before automating fully?',
+            options: [
+              'The support tickets are mostly standard how-to questions with known answers',
+              'The team handles 200+ tickets per week and response times are averaging 18 hours',
+              'Several of the top accounts have open tickets that reflect underlying frustration with a recent product change',
+              'The company has an existing knowledge base the agent could draw on',
+            ],
+            correct: 2,
+            explanation: 'When frustration is the underlying driver of a ticket — particularly from top accounts — the appropriate response requires relationship judgment and often internal escalation, not an automated reply. An AI agent optimising for resolution rate may close a ticket that should trigger a CSM call. High volume, standard questions, and available knowledge bases are all signals that automation is appropriate. Relationship-sensitive situations from key accounts are signals that human judgment must stay in the loop.',
+          },
+          outputComparison: {
+            label: 'Vague agent brief vs. structured agent workflow prompt',
+            vague: {
+              prompt: 'Help me set up an AI agent for customer success',
+              output: 'An AI agent for customer success can help automate many tasks. You could use it to send emails, monitor customer health, and respond to support tickets. Start by identifying the tasks you want to automate and then configure the agent to handle them. Make sure to test it before deploying.',
+            },
+            improved: {
+              prompt: 'I manage 120 SaaS accounts. I want to design an AI agent for the renewal process starting 90 days before contract end. The agent should: (1) detect accounts within 90 days of renewal, (2) assess health score and flag risk level, (3) draft a personalised outreach email for the CSM to review and send, (4) schedule a follow-up if no response in 7 days, (5) escalate to the CSM immediately if health score is below 60. Give me the full workflow with triggers, actions, escalation logic, and the template email for a medium-risk account (score 61–74).',
+              output: `**90-Day Renewal Agent Workflow**
+
+**Trigger:** Contract end date = 90 days from today → activate renewal workflow
+
+**Step 1 — Risk Assessment**
+- Health score ≥ 75 → Low risk → Standard outreach sequence
+- Health score 61–74 → Medium risk → Personalised CSM-reviewed outreach
+- Health score ≤ 60 → High risk → Immediate CSM escalation, no automated outreach
+
+**Step 2 — Medium-Risk Outreach Template (CSM reviews before sending)**
+
+Subject: Planning ahead for your [Product] renewal — quick check-in
+
+Hi [Name],
+
+We\'re coming up on your renewal in about three months, and I wanted to connect before then to make sure you\'re getting full value from [Product].
+
+Looking at your account, [one specific recent usage observation — e.g., "I noticed your team has been using the reporting module heavily this quarter"]. I\'d love to hear what\'s working and what could be better.
+
+Can we find 20 minutes in the next two weeks for a quick check-in? [Calendar link]
+
+[CSM Name]
+
+**Step 3 — No-response follow-up (Day 7):** Agent queues a second, shorter message for CSM review.
+
+**Step 4 — Escalation rule:** If health score drops below 60 at any point during the workflow → immediate CSM alert with full account brief.
+
+**Success metrics to track:** Renewal meeting booked rate, time from workflow trigger to first CSM touch, renewal rate by risk tier.`,
+            },
+            insight: 'The vague prompt produces generic advice that could apply to any software product in any context. The structured prompt specifies account count, process scope, specific trigger criteria, action sequence, escalation thresholds, and even the output format needed (including a draft email). The result is a deployment-ready workflow and a template the CSM can use immediately — not a list of suggestions to figure out later.',
+          },
+          applyThisWeek: {
+            action: 'Map one CS process you handle manually more than three times a week and design the first version of an AI agent workflow for it, including the trigger, actions, and escalation rule.',
+            promptTemplate: 'I am a [CSM/CS leader] at a [SaaS company type] with [X] accounts. I want to design an AI agent for [specific CS process]. The agent should activate when [trigger condition]. Walk me through: the action sequence, what context the agent needs to act well, the escalation rule for human takeover, and the success metric for the first 30 days.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time a customer was surprised by something that had been building for weeks — a risk signal you didn\'t catch in time. What would it have meant for that customer relationship if an agent had caught it 14 days earlier and queued a CSM action?',
+          quiz: [
+            {
+              question: 'A CSM team is designing their first AI agent deployment. Which of the following is the strongest signal that a process is well-suited for full agent automation?',
+              options: [
+                'It involves communication with executive-level stakeholders at top accounts',
+                'It requires interpreting customer sentiment signals that don\'t appear in structured data',
+                'It is high-volume, rule-based, and the consequence of an agent error is low and recoverable',
+                'It is the most strategically important process in the CS workflow',
+              ],
+              correct: 2,
+              explanation: 'Full automation works best when the process is high-volume (making manual work unsustainable), rule-based (the agent can follow clear decision logic), and error-recoverable (a mistake can be corrected without damaging the customer relationship). Executive communication, sentiment interpretation, and strategic importance all argue for human judgment staying in the loop — not full automation.',
+            },
+            {
+              question: 'An AI agent handles initial health check-in outreach for 300 accounts. The resolution rate is 78%, but CSAT for agent-handled interactions is 12 points lower than for CSM-handled interactions. What should the CS leader do?',
+              options: [
+                'Increase the volume of agent interactions to improve the resolution rate further',
+                'Turn off the agent entirely — the CSAT gap proves it is damaging customer relationships',
+                'Audit the lowest-CSAT agent interactions to identify the pattern causing dissatisfaction, then refine the escalation rules to catch those cases earlier',
+                'Accept the CSAT gap as an inevitable trade-off of scale',
+              ],
+              correct: 2,
+              explanation: 'A 12-point CSAT gap is a signal, not a verdict. The right response is to diagnose what type of interactions are driving the gap — complex issues being under-escalated, tone mismatch for certain account types, or knowledge base gaps — and then tighten the escalation rules to route those cases to human CSMs before the customer experience suffers. Abandoning the agent or accepting the gap both waste the diagnostic information the data provides.',
+            },
+            {
+              question: 'What is the most important design principle for the transition from an AI agent to a human CSM?',
+              options: [
+                'The customer should always be informed that they were previously speaking with an AI',
+                'The CSM should receive a full account brief from the agent before making contact, so the transition feels continuous and informed',
+                'The handoff should happen as quickly as possible to minimise customer wait time',
+                'The agent should apologise for any limitations before transferring to the CSM',
+              ],
+              correct: 1,
+              explanation: 'The most damaging handoff is one where the customer has to repeat context, or where the CSM clearly doesn\'t know what has already happened. The agent\'s job is to prepare the CSM fully — what happened, what the customer said, what was already tried, what the risk level is — so that when the human makes contact, it feels like they were watching all along. Speed matters, but a fast handoff with no context brief is worse than a slightly slower one where the CSM arrives prepared.',
+            },
+          ],
+        },
+        {
+          id: 'customer-m6-l2',
+          title: 'Proactive Success at Machine Scale',
+          duration: 18,
+          description:
+            'Build AI-triggered intervention playbooks and automated account intelligence systems that let one CSM proactively manage 200+ accounts without sacrificing the quality of each customer relationship.',
+          content: `## The Reactive CS Problem
+
+Traditional CS is reactive by default: a customer submits a support ticket, a CSM responds. A customer goes quiet, a CSM notices eventually. A renewal comes up, a CSM scrambles to prepare. The reactive model has a structural ceiling — a CSM can only catch so many signals while managing their book of business. Above a certain account load, reactive CS means some customers don\'t hear from you until it\'s too late.
+
+AI breaks that ceiling by enabling genuine proactivity at scale.
+
+## From Reactive to Proactive: What Changes
+
+Proactive CS means reaching the customer before they reach you — before the frustration builds, before the usage drops enough to show up in the health score, before the champion leaves and no one at the account knows your product.
+
+The shift requires three things: a signal-monitoring layer that watches everything, a playbook layer that defines how to respond to each signal, and an AI layer that connects signals to playbooks and executes them automatically.
+
+> "You are helping me build a proactive CS intervention system. My signals are: (1) login frequency drops 30% week-over-week, (2) a key feature goes unused for 14 consecutive days, (3) a support ticket older than 10 days with no resolution. For each signal, give me: the risk it represents, the ideal CSM action (message, call, or internal escalation), a draft outreach message, and the escalation trigger if no customer response in 5 days."
+
+## AI-Generated Success Plans at Scale
+
+The best CS organisations build success plans for every account. In practice, most only do it for enterprise accounts because it takes 45–90 minutes per account. AI changes the equation.
+
+> "Create a 90-day success plan for this account. Company: [name]. Industry: [sector]. Size: [employees]. Product: [your product]. Use case: [primary use case]. Current health score: 72. Key risk: low adoption of [feature X]. Key opportunity: 3 additional teams eligible for expansion. Give me: the 90-day objective, 3 milestones, the activation action for feature X, and the expansion conversation trigger."
+
+With AI generating the first draft in two minutes, a CSM reviews, adds relationship context, and publishes — turning a 90-minute task into a 15-minute one. Now every account gets a plan.
+
+## AI-Powered QBR Preparation
+
+QBR preparation — the two hours of research before every quarterly review — is one of the highest-value, highest-time-cost activities in CS. AI can compress it.
+
+> "Prepare my QBR brief for [account name]. Include: (1) usage trends over the last 90 days with interpretation, (2) support ticket summary and open issues, (3) ROI evidence I can quantify, (4) expansion opportunities based on usage patterns, (5) risks I should address proactively, (6) three suggested agenda items with talking points for each."
+
+The CSM walks in with a complete brief in 10 minutes instead of 2 hours — and uses the remaining time for the conversation that no AI can prepare for.
+
+## Measuring Proactive CS Effectiveness
+
+**Leading indicators:** Intervention rate (how many accounts were touched proactively before a risk became visible), time-to-first-contact on new risk signals, percentage of accounts with active success plans.
+
+**Lagging indicators:** Churn rate at 6 and 12 months, expansion rate, QBR-to-expansion conversion.
+
+The shift to proactive CS should show up in leading indicators within 60 days and in lagging indicators within 6–12 months.`,
+          keyTakeaways: [
+            'Reactive CS has a structural ceiling — AI breaks it by enabling proactive monitoring and intervention at a scale no human team can match alone',
+            'AI-triggered playbooks connect health signals to predefined interventions automatically — the CSM designs them once, AI executes at scale',
+            'AI-generated success plans make it possible to give every account a plan, not just enterprise accounts, in 15 minutes instead of 90',
+            'AI-powered QBR preparation compresses 2 hours of research into 10 minutes, leaving the CSM more time for the relationship intelligence AI cannot supply',
+            'Measure proactive CS effectiveness with leading indicators (intervention rate, time-to-contact) before expecting movement in lagging indicators (churn, expansion)',
+          ],
+          exercise: {
+            title: 'Proactive Intervention Design',
+            description:
+              'Build a complete AI-powered proactive intervention for one customer health signal — defining the trigger, the AI-generated outreach, and the escalation path.',
+            steps: [
+              'Choose one health signal that currently triggers too slowly in your CS process (e.g., login drop, feature abandonment, support spike)',
+              'Define the precise trigger threshold: at what point does this signal warrant proactive intervention? (e.g., "login frequency drops 35% week-over-week for 2 consecutive weeks")',
+              'Use Claude to draft the outreach message the CSM will send — give it the signal context, the account type, and the tone you want',
+              'Define the escalation path: if the customer doesn\'t respond in 5 days, what happens next? If the health score continues to drop, at what point does it become a CSM-priority call?',
+              'Set the measurement criteria: how will you know this intervention is working after 30 days of deployment?',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A CS team implements an AI-triggered intervention playbook for accounts with declining health scores. After 60 days, the intervention rate is high but the churn rate has not moved. What is the most likely explanation?',
+            options: [
+              'The AI playbook is triggering interventions on the wrong accounts — the signals are not predictive of actual churn',
+              'Sixty days is not long enough to see churn rate improvement — lagging indicators take 6–12 months to move',
+              'The AI-generated messages are not personalised enough to change customer behaviour',
+              'The CSM team is not reviewing the AI-generated interventions carefully enough',
+            ],
+            correct: 1,
+            explanation: 'Churn rate is a lagging indicator — a customer who was saved from churning in month one will not show up in the churn rate until their renewal date, which may be 6–12 months away. A high intervention rate after 60 days is a leading indicator that the playbook is working. Expecting churn rate movement in 60 days is a measurement error, not a playbook failure. The right response is to track leading indicators (intervention rate, customer response rate, health score recovery post-intervention) while waiting for the lagging signal.',
+          },
+          outputComparison: {
+            label: 'Generic account summary vs. AI-powered QBR brief',
+            vague: {
+              prompt: 'Summarise this account for my QBR',
+              output: 'The account has been a customer for 2 years. They use the platform for their sales team. Health score is currently 68. There have been some support tickets this quarter. You should discuss their goals and how the product is helping them achieve those goals.',
+            },
+            improved: {
+              prompt: 'Prepare my QBR brief for Meridian Logistics (12-month customer, 45 seats, health score 68, down from 79 last quarter). Their primary use case is sales pipeline management. Key signals this quarter: support tickets up 40% (mostly around the reporting module), login frequency down 15%, 12 unused seats in the Operations team. Expansion opportunity: their CFO mentioned interest in the forecasting module in our last call. Give me: (1) a 3-bullet usage trend interpretation, (2) the core risk I need to address, (3) the expansion conversation setup, and (4) three QBR agenda items with talking points.',
+              output: `**Meridian Logistics QBR Brief**
+
+**Usage Trend Interpretation (last 90 days)**
+- **Engagement decline:** Login frequency is down 15% and 12 of 45 seats are inactive — likely concentrated in the Operations team, suggesting adoption has stalled outside the core sales group
+- **Support friction:** A 40% spike in support tickets, concentrated on reporting, suggests the current users are hitting a capability gap — they want more from reporting than they\'re getting
+- **Risk signal:** Health score drop from 79 to 68 over one quarter, combined with both engagement and support trends, points to a product-fit concern that needs to be addressed before renewal
+
+**Core Risk to Address**
+The reporting module friction is both the churn risk and the expansion blocker. If the Operations team finds reporting too difficult, they\'ll abandon the platform — and the CFO\'s interest in forecasting will stall. QBR agenda should surface this directly and offer a solution (training session, roadmap preview, or workaround).
+
+**Expansion Conversation Setup**
+The CFO\'s forecasting interest is the expansion entry point. Tie the forecasting module demo to solving the reporting gap — better reporting foundations make forecasting more valuable. Frame it as: "Before we talk forecasting, I want to make sure your team is getting full value from reporting first."
+
+**QBR Agenda**
+1. Usage review + "what\'s working" — start positive, then surface the reporting friction with data
+2. Reporting resolution — offer a dedicated training session for the Operations team this quarter
+3. Forecasting preview — conditional on reporting momentum, introduce the CFO\'s stated interest`,
+            },
+            insight: 'The vague prompt produces a summary that adds no value beyond what a CSM could pull from a CRM in 30 seconds. The structured prompt gives Claude account-specific signals (health score trend, ticket category, unused seats, CFO interest) and asks for specific outputs (risk interpretation, expansion setup, agenda with talking points). The result is a QBR brief that a CSM could walk in with immediately — not a list of things to think about.',
+          },
+          applyThisWeek: {
+            action: 'Choose two upcoming QBRs and use Claude to build the full brief for each — then compare the time spent vs. your usual preparation process and assess what context you had to add that AI couldn\'t supply.',
+            promptTemplate: 'I am a CSM preparing for a QBR with [account name]. They have been a customer for [X months], with [X seats] and a health score of [X], [up/down] from [Y] last quarter. Key signals: [usage trend], [support ticket trend], [any expansion signal]. Give me: a 3-bullet usage interpretation, the core risk or opportunity I should address, and 3 QBR agenda items with talking points for each.',
+            tool: 'Claude',
+          },
+          reflection: 'If every account in your book of business had a 90-day success plan and an AI-monitored intervention playbook, which three accounts would you most want to spend your freed-up human time with, and what would you do differently in those relationships?',
+          quiz: [
+            {
+              question: 'A CSM uses AI to generate personalised success plans for all 180 accounts in their book of business. After the first month, 40 CSMs report that they don\'t have time to review and personalise every plan before publishing. What is the best response?',
+              options: [
+                'Publish the AI-generated plans without CSM review to maintain scale',
+                'Return to manually writing plans for only the top 20 accounts',
+                'Tier the review process: full personalisation for top-tier accounts, lighter review for mid-tier, and a brief spot-check for low-tier — accepting that imperfect plans are better than no plans',
+                'Stop the programme until a more efficient review process can be designed',
+              ],
+              correct: 2,
+              explanation: 'Scale requires accepting that not every plan will receive the same level of personalisation. The right approach is a tiered review model that allocates CSM review time by account value and risk level — not a binary choice between full personalisation for all or reverting to manual plans for a few. An imperfect AI-generated plan with a brief CSM review is meaningfully better than no plan for the 160 accounts that previously received nothing.',
+            },
+            {
+              question: 'Which metric is the best leading indicator that an AI-powered proactive CS system is working within the first 60 days?',
+              options: [
+                'Net Revenue Retention (NRR) improvement',
+                'Churn rate reduction',
+                'The percentage of at-risk accounts that received a proactive CSM touch before the customer escalated',
+                'Average contract value increase',
+              ],
+              correct: 2,
+              explanation: 'NRR, churn rate, and ACV are all lagging indicators — they reflect decisions customers made weeks or months earlier and won\'t move within 60 days. The most reliable early signal is whether the proactive system is actually reaching at-risk accounts before the customer escalates. That metric tells you the system is monitoring correctly, the playbooks are triggering, and CSMs are acting on the signals — the causal chain that eventually produces churn reduction.',
+            },
+            {
+              question: 'A CS leader argues that AI-generated QBR briefs will make CSMs lazy — they\'ll stop truly understanding their accounts. What is the most compelling counter-argument?',
+              options: [
+                'CSMs who don\'t like using AI will be replaced by those who do',
+                'AI-generated briefs free CSMs from data-gathering so they can invest more time in the relationship intelligence and strategic conversation that actually determines QBR outcomes',
+                'The briefs can be disabled for senior CSMs who prefer the manual approach',
+                'The quality of AI-generated briefs is now high enough that deep CSM knowledge of accounts is no longer necessary',
+              ],
+              correct: 1,
+              explanation: 'The concern about AI-generated briefs causing lazy account knowledge is valid if the brief replaces CSM thinking — but the correct use case is the opposite. A CSM who spent 2 hours gathering data is often too tired and time-pressured to think deeply about strategy. A CSM who gets the brief in 10 minutes has 1h50m to think about what the data means, what the customer actually needs, and how to run a QBR that advances the relationship. The brief should be the starting point for thinking, not the end of it.',
+            },
+          ],
+        },
+        {
+          id: 'customer-m6-l3',
+          title: 'CS-Led Growth with AI Intelligence',
+          duration: 16,
+          description:
+            'Turn your CS team into a revenue engine by using AI to detect expansion signals, identify your best advocates, and build the intelligence layer that makes CS-to-sales handoffs land.',
+          content: `## CS as a Revenue Function
+
+Customer success was originally designed to prevent churn. In the modern SaaS model, that mandate has expanded: CS is now responsible for net revenue retention (NRR), which means retention plus expansion. A CS team that retains 100% but never drives expansion is leaving significant revenue on the table — and losing the board conversation about CS investment.
+
+AI makes the revenue mandate achievable without turning CSMs into salespeople. It does so by surfacing expansion signals automatically, so CSMs know exactly when and how to have the conversation.
+
+## Detecting Expansion Signals with AI
+
+Expansion signals live in usage data — but most CS teams don\'t have the monitoring infrastructure to catch them in real time. AI changes that.
+
+Common expansion signals worth monitoring:
+- **Usage ceiling:** A team hits the top of their plan limits consistently — seats, API calls, storage
+- **New use case adoption:** A feature gets used in a way that wasn\'t its primary purpose — indicating a new team or workflow has found value
+- **New team members onboarding:** A spike in new user invitations suggests the product is spreading inside the organisation
+- **Champion promotion:** The primary point of contact gets promoted — often a trigger for expanded budget and ambition
+
+> "Analyse this account\'s usage data and identify the top three expansion signals. Account: [name]. Usage data: [seats used/available, feature usage trends, new user additions in last 30 days, API usage vs. plan limit]. For each signal, tell me: the signal, what it likely means, the ideal CSM conversation to open the expansion discussion, and the timing — when should I have this conversation for maximum receptiveness?"
+
+## AI-Powered Advocacy Programmes
+
+Your most enthusiastic customers are your best salespeople — if you activate them. AI can identify who they are and when to ask.
+
+> "I want to build an advocacy identification system for my CS accounts. Define the signals that indicate a customer is a strong advocacy candidate: (1) high NPS score (9–10), (2) voluntary reference in sales calls, (3) published a case study or review, (4) active in community/user groups, (5) champion engagement in QBRs. For accounts meeting 3+ of these signals, draft an advocacy ask email that: references something specific about their success, makes the ask feel personal not transactional, and offers a clear benefit for their participation."
+
+## Building the CS Revenue Dashboard
+
+The CS revenue dashboard gives leadership visibility into CS-driven revenue impact. AI generates the weekly narrative layer that turns data into insight.
+
+> "I\'m building a weekly CS revenue intelligence report for my VP. The data I have: expansion MRR this week, expansion pipeline by account, referral leads from CS accounts, renewal rate this period, churn by reason code. Generate the executive narrative for this week\'s report: 3 key signals from the data, 1 risk and 1 opportunity, and the recommended CS leader action for next week."
+
+## The CS-to-Sales Handoff
+
+Expansion conversations started by CS and handed to sales succeed more often when the handoff includes the relationship context AI can help codify.
+
+> "I\'m handing off [account name] to sales for an expansion opportunity. The expansion signal: [what triggered it]. My relationship context: [champion name, their priority, how they talk about value]. What the sales team needs to know: [what not to do]. Draft the handoff brief the AE receives before their first call with this account."`,
+          keyTakeaways: [
+            'CS drives NRR — not just retention — and AI makes the expansion mandate achievable without turning CSMs into salespeople',
+            'Expansion signals live in usage data; AI monitors them continuously and surfaces the moment and conversation approach for each signal',
+            'AI-powered advocacy identification finds your promoter accounts and drafts personalised, non-transactional asks for referrals and reviews',
+            'The CS revenue dashboard with AI-generated narrative gives leadership weekly visibility into CS-driven revenue impact',
+            'CS-to-sales handoff quality improves when the AE receives relationship intelligence, not just account data — AI helps codify what the CSM knows',
+          ],
+          exercise: {
+            title: 'Expansion Signal Detection Framework',
+            description:
+              'Build an expansion signal detection framework for your product — defining the signals, monitoring logic, and CSM action triggered for each.',
+            steps: [
+              'List five usage behaviours in your product that historically correlate with expansion readiness (e.g., hitting 90% of seat limit, feature X adoption by a second team, new user invitations above baseline)',
+              'For each signal, define: the threshold that triggers a CSM action, the time window to confirm it\'s a real signal vs. noise (e.g., "90% seat utilisation for 2 consecutive weeks"), and the risk of acting too early vs. too late',
+              'Use Claude to draft the CSM conversation opener for your two most reliable expansion signals — give it the signal context, the account type, and the relationship stage',
+              'Define the handoff criteria: at what point does the expansion conversation move from CSM-led to sales-supported?',
+              'Set the measurement metric: how will you track whether this framework is improving expansion MRR over the next quarter?',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A CSM identifies an account that scores 10 on NPS, has participated in two sales references, and whose champion just got promoted to VP. The CSM wants to make an advocacy ask. What is the most important element of the ask?',
+            options: [
+              'Offering a significant discount on the next renewal in exchange for the referral',
+              'Making the ask generic so it can be sent to multiple advocates at once and save time',
+              'Referencing something specific about the customer\'s success that makes the ask feel personal, and offering a benefit that matters to them — not just to your company',
+              'Timing the ask for the first week of a new quarter when budgets are reset',
+            ],
+            correct: 2,
+            explanation: 'Advocacy asks fail when they feel transactional — the customer senses they\'re being used. The most effective asks reference the customer\'s specific success story (so they feel seen, not just categorised), and offer a benefit they actually want (executive exposure, peer community access, early product input) rather than a generic discount. A promoted champion is receptive because they\'re building their own brand — the advocacy ask should connect to that ambition.',
+          },
+          outputComparison: {
+            label: 'Generic expansion email vs. signal-driven expansion conversation opener',
+            vague: {
+              prompt: 'Write an email to a customer about expanding their contract',
+              output: 'Hi [Name], I hope you\'re doing well. I wanted to reach out to discuss how you\'re getting on with [Product] and explore whether there are additional ways we could support your team. We have some great options for expanding your current plan that I think could be beneficial. Would you be open to a quick call to discuss? Best, [CSM Name]',
+            },
+            improved: {
+              prompt: 'Account: Harrington Financial. Champion: Sarah Chen, now VP of Operations (promoted 3 weeks ago). Signal: The analytics team (not the original sales team who bought the product) has been using the data export feature daily for the last 3 weeks — a use case we didn\'t sell them on. They\'re on a 15-seat plan; 13 are used. Write a CSM email that: acknowledges Sarah\'s promotion, references the analytics team\'s organic adoption without being surveillance-y, and opens the expansion conversation naturally — not as a sales pitch.',
+              output: `Subject: Congrats on the VP role — and something interesting happening on your account
+
+Hi Sarah,
+
+Congratulations on the VP of Operations move — well deserved. I\'d love to catch up when you have a moment to settle in.
+
+Something interesting has been happening on your account that I wanted to flag. Over the last few weeks, your analytics team has been using the data export feature daily — which isn\'t something we explicitly sold you on. It tells me they\'ve found a workflow that works for them, which is great to see.
+
+I mention it because it opens a natural question: if the analytics team is getting value from the platform alongside the sales team, it might be worth a quick conversation about whether the current 15-seat setup still fits how you\'re actually using it.
+
+No urgency — but given you\'re now overseeing operations more broadly, I thought you\'d want to know what your team has built on their own.
+
+Would 20 minutes work this month for a check-in? Happy to keep it light — just a chance to reconnect and see how the platform fits into your new remit.
+
+[CSM Name]`,
+            },
+            insight: 'The vague prompt produces a formulaic expansion email that any customer recognises as a sales ask in disguise. The structured prompt gives Claude three specific signals — the promotion, the organic feature adoption, and the seat utilisation — and instructs it on tone (not surveillance-y, not a sales pitch). The result is a message that leads with the customer\'s context, references something genuinely interesting, and opens the expansion conversation as a natural next step rather than a product push.',
+          },
+          applyThisWeek: {
+            action: 'Identify two accounts in your book that show expansion signals this week and use Claude to draft a personalised expansion conversation opener for each — then send them and track the response rate.',
+            promptTemplate: 'I am a CSM at a [SaaS company type]. Account: [name]. Expansion signal: [specific signal — usage data, new team adoption, champion change]. Current contract: [X seats/plan]. Champion: [name and role]. Write a CSM email that references the specific signal, opens an expansion conversation naturally, and does not feel like a sales pitch.',
+            tool: 'Claude',
+          },
+          reflection: 'If you had a real-time dashboard showing every expansion signal across your entire book of business, which account would you contact first — and what has been stopping you from having that conversation already?',
+          quiz: [
+            {
+              question: 'A CS team implements an AI expansion signal monitoring system. After one quarter, expansion MRR from CS-identified opportunities is up 35%, but the CS-to-sales handoff conversion rate is only 28%. What is the most likely cause?',
+              options: [
+                'The AI is identifying false positives — accounts that appear ready for expansion but are not',
+                'The CSMs are handing off too many accounts to sales before the relationship is ready for a commercial conversation',
+                'The handoff briefs are missing the relationship context and conversation history that make AE outreach land — the AE arrives cold to a warm account',
+                'Sales teams fundamentally cannot close expansions originated by CS',
+              ],
+              correct: 2,
+              explanation: 'A 28% conversion rate on CS-originated expansions suggests the signal identification is working (the accounts are genuinely interested) but something breaks at the handoff. The most common cause is an AE receiving only account data — deal size, contract terms, usage metrics — without the relationship intelligence: what the champion cares about, what conversation has already happened, what not to say. An AE who arrives cold to an account where the CSM has already established context will often reset the conversation rather than advance it.',
+            },
+            {
+              question: 'A B2B SaaS company wants to build an AI-powered advocacy programme. Which combination of signals most reliably identifies a customer who will be a high-quality advocate?',
+              options: [
+                'High contract value and long tenure as a customer',
+                'Recent NPS score of 10 AND voluntary participation in at least one sales reference in the last 6 months',
+                'High product usage and few support tickets',
+                'Champion who responds quickly to CSM emails',
+              ],
+              correct: 1,
+              explanation: 'High NPS alone indicates satisfaction but not advocacy behaviour. Voluntary participation in a sales reference is demonstrated advocacy — the customer has already chosen to invest their credibility in recommending your product. When combined, a 10 NPS and at least one voluntary reference indicates both sentiment and behavioural willingness that predicts strong future advocacy. Contract value, tenure, usage metrics, and email responsiveness are useful contextual signals but weaker predictors of advocacy quality.',
+            },
+            {
+              question: 'A CS leader wants to demonstrate CS revenue contribution to the board. Which metric most directly reflects the revenue impact of proactive CS work?',
+              options: [
+                'Gross retention rate (GRR)',
+                'Customer Satisfaction Score (CSAT)',
+                'Net Revenue Retention (NRR), broken down by CS-influenced expansion MRR and referral pipeline originated from CS accounts',
+                'Average response time to customer requests',
+              ],
+              correct: 2,
+              explanation: 'GRR only captures retention — it misses the expansion contribution that CS drives. CSAT and response time are operational metrics, not revenue metrics. NRR (retention + expansion) captures the full revenue impact of CS work, and decomposing it into expansion MRR influenced by CS and referral pipeline sourced from CS accounts makes the CS team\'s revenue contribution visible in terms the board understands. That decomposition is what turns the CS investment conversation from a cost discussion to a revenue discussion.',
+            },
+          ],
+        },
+        {
+          id: 'customer-m6-l4',
+          title: 'The CS Leader\'s AI Agenda',
+          duration: 19,
+          description:
+            'Build the AI-native CS team, evolve your metrics for an AI-augmented world, make the board case for AI investment, and execute a 12-month CS AI transformation that actually lands.',
+          content: `## Building the AI-Native CS Team
+
+The AI-native CS team is not a team that has AI tools. It is a team that has redesigned its workflows, its hiring criteria, its performance metrics, and its management rhythms around AI capabilities. The difference is the gap between a CSM who uses Claude occasionally and a CS organisation where AI is embedded in every major workflow by default.
+
+Building that organisation requires decisions at three levels: what you hire for, how you onboard new CSMs, and how you measure performance.
+
+**Hiring in an AI era.** The skills that AI handles well (data synthesis, document drafting, pattern recognition across structured data) matter less in hiring than the skills that AI handles poorly: relationship depth, emotional intelligence in difficult conversations, complex problem-solving with incomplete information, and the judgment to know when AI output is wrong. Hire for those.
+
+**Onboarding new CSMs.** The first 30 days should include explicit AI workflow training — not just tool introductions, but prompt quality practice, output review skills, and the professional judgment to add the relationship context AI cannot supply. A new CSM who hasn\'t been trained on AI workflows will develop bad habits that are harder to fix later.
+
+**Performance management.** When AI handles preparation and monitoring, the CSM\'s output is the quality of their customer relationships and the commercial outcomes they drive — not the volume of tasks they complete. Metrics should evolve accordingly.
+
+## What AI Automates vs. What It Amplifies
+
+The CS skills that get automated: data gathering, report generation, first-draft outreach, health score calculation, standard QBR preparation, renewal reminder sequences.
+
+The CS skills that become more valuable:
+- **Relationship depth:** When AI handles prep, the CSM who builds deeper relationships wins. The gap between relationship-first and task-first CSMs becomes more visible.
+- **Judgment under uncertainty:** AI surfaces signals; deciding what they mean in the context of this customer, this market, this moment requires human judgment.
+- **Complex problem-solving:** When a customer has a legitimate problem that requires internal escalation, advocacy, and creative solution design, the CSM\'s value is irreplaceable.
+
+## The Metrics Evolution
+
+> "I\'m redesigning my CS team\'s performance metrics for an AI-augmented workflow. Currently I measure: number of activities (calls, emails, QBRs), response time, and NPS. Help me evolve these metrics: (1) which current metrics become less meaningful when AI handles volume tasks, (2) what new metrics better reflect CSM impact in an AI-assisted environment, and (3) how do I measure the quality of AI-assisted work vs. purely human work?"
+
+## The Board Narrative for AI Investment
+
+The CS AI investment conversation with the board requires three numbers: the efficiency gain (what it costs now vs. with AI), the NRR impact (how AI-assisted proactive CS improves retention and expansion), and the scalability factor (how many additional accounts each CSM can manage with AI support).
+
+> "Help me build the board narrative for a CS AI transformation investment. My current state: [X CSMs, Y accounts, Z% NRR, A hours per week per CSM on preparation tasks]. My target state after 12 months: [specific improvements]. Give me: the ROI calculation, the risk of not investing, and the 3-slide board narrative structure."
+
+## The 12-Month CS AI Transformation Roadmap
+
+Month 1–3 (Foundation): Audit current workflows, identify top 5 AI candidate processes, deploy the first two (typically QBR prep automation and health signal monitoring), train the full team on prompt quality.
+
+Month 4–6 (Scale): Deploy AI-triggered intervention playbooks, launch success plan automation for all accounts, build the CS revenue dashboard.
+
+Month 7–9 (Optimise): Review agent performance data, refine escalation rules, launch advocacy programme, build the CS-to-sales AI handoff brief.
+
+Month 10–12 (Transform): Redesign performance metrics, revise hiring criteria, present NRR impact to board, publish the team\'s AI playbook for institutional knowledge.`,
+          keyTakeaways: [
+            'The AI-native CS team redesigns hiring, onboarding, and performance management — not just tool adoption — around AI capabilities',
+            'Skills AI automates (data gathering, drafting, monitoring) matter less in hiring; skills AI cannot replicate (relationship depth, judgment, complex problem-solving) matter more',
+            'Performance metrics must evolve: volume metrics become less meaningful when AI handles tasks; relationship quality and commercial outcomes become the true signal',
+            'The board narrative for CS AI investment requires three numbers: efficiency gain, NRR impact, and scalability factor',
+            'A 12-month transformation roadmap gives the CS leader a structured path from tool adoption to genuine organisational transformation',
+          ],
+          exercise: {
+            title: '90-Day CS AI Transformation Plan',
+            description:
+              'Write a 90-day CS AI transformation plan: the 3 use cases you\'ll pilot, the metrics you\'ll move, and how you\'ll communicate the investment to leadership.',
+            steps: [
+              'Identify the 3 CS AI use cases you will pilot in the first 90 days — choose based on: highest time cost currently, clearest ROI measurement, and lowest relationship risk',
+              'For each use case, define: the current process, the AI-assisted process, the time saving per CSM per week, and how you\'ll measure quality is maintained',
+              'Define the 2–3 metrics that will demonstrate the 90-day plan is working — mix one efficiency metric (time saved), one quality metric (NPS or customer response rate), and one commercial metric (expansion pipeline or renewal rate)',
+              'Draft the leadership communication: a 5-sentence summary of what you\'re doing, why, what you expect by day 90, and what you need from leadership (budget, tooling, permission)',
+              'Use Claude to stress-test your plan: ask it to identify the 3 most likely reasons the 90-day plan fails and how you\'d mitigate each',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A CS leader is redesigning performance metrics for an AI-augmented team. A senior CSM argues that measuring "number of customer touchpoints per week" should remain a core metric because it reflects effort. What is the strongest counter-argument?',
+            options: [
+              'Effort is irrelevant — only outcomes matter in CS',
+              'When AI handles routine outreach and monitoring, touchpoint volume no longer reflects CSM effort or relationship quality — it reflects how well the AI automation is configured',
+              'Touchpoint metrics are too difficult to track accurately',
+              'Senior CSMs should be exempt from volume metrics regardless of AI adoption',
+            ],
+            correct: 1,
+            explanation: 'In a pre-AI CS environment, touchpoint volume was a reasonable proxy for CSM engagement effort. When AI sends renewal reminders, health check-ins, and onboarding nudges automatically, touchpoint volume reflects system configuration, not CSM relationship investment. A CSM with 50 AI-generated touchpoints per week may be doing less actual relationship work than one with 20 human-initiated touches. The metric that matters is the quality and commercial impact of the CSM\'s human interactions, not the total volume of all touchpoints — human and AI combined.',
+          },
+          outputComparison: {
+            label: 'Generic board slide narrative vs. structured CS AI ROI argument',
+            vague: {
+              prompt: 'Help me explain to the board why we should invest in AI for customer success',
+              output: 'AI can help our customer success team work more efficiently. By automating routine tasks, CSMs will have more time to focus on strategic relationships. This should improve our customer retention and potentially drive more expansion revenue. The investment will pay off over time as our team becomes more productive.',
+            },
+            improved: {
+              prompt: 'I\'m building the board case for a CS AI transformation investment. Current state: 8 CSMs, 640 accounts (80:1 ratio), 87% GRR, 104% NRR. CSMs spend an average of 8 hours per week on preparation tasks (QBR prep, account summaries, outreach drafting). AI investment: $24,000/year for tooling and 40 hours training time. Projected AI impact: preparation time drops from 8 to 2 hours per week per CSM, enabling each CSM to absorb 25 more accounts. Give me: the ROI calculation, the NRR impact argument, the risk of not investing, and the 3-slide narrative structure.',
+              output: `**Board Narrative: CS AI Transformation Investment**
+
+**The ROI Calculation**
+- Current: 8 CSMs × $85,000 avg fully-loaded cost = $680,000/year to manage 640 accounts
+- AI saves each CSM 6 hours/week on preparation = 48 hours/week across the team = 2,496 hours/year recovered
+- At current capacity, adding 200 accounts (25 per CSM) would require 2.5 additional hires = ~$212,500/year
+- AI enables the same capacity increase for $24,000/year in tooling — a $188,500 annual saving on a comparable headcount basis
+- ROI: 785% in Year 1 on headcount cost avoidance alone
+
+**The NRR Impact Argument**
+- CSMs currently managing 80 accounts proactively can reach at-risk accounts 3–5 days faster with AI monitoring
+- Our data shows that interventions within 14 days of a health score drop resolve churn risk at 2× the rate of late interventions
+- Moving from reactive to proactive CS has historically correlated with a 3–5 NRR point improvement in comparable SaaS organisations
+- At our current ARR, a 3-point NRR improvement = $[X] additional retained/expanded revenue annually
+
+**Slide Structure**
+1. **The problem:** 8 CSMs, 640 accounts, 8 hours/week of preparation that doesn\'t build relationships — the capacity constraint is real and growing
+2. **The investment:** $24,000/year, 40 training hours, 90-day deployment plan — with 3 measurable outcomes by Q3
+3. **The risk of not investing:** Our accounts per CSM ratio grows 15% per year; without AI, we either hire 2 CSMs/year or accept NRR decline as proactive coverage thins`,
+            },
+            insight: 'The vague prompt produces language that every board has heard before — "more efficient," "strategic relationships," "pay off over time" — without a single number to anchor the argument. The structured prompt gives Claude the actual data: headcount, account ratio, hours spent, tooling cost, and projected impact. The result is a board case with a specific ROI calculation, a three-point NRR argument, and a slide structure the CS leader can build immediately. Boards fund numbers, not narratives.',
+          },
+          applyThisWeek: {
+            action: 'Draft your 90-day CS AI transformation plan using Claude — including the 3 use cases, the metrics you\'ll track, and the 5-sentence leadership communication — then share it with one peer for feedback before presenting it.',
+            promptTemplate: 'I am a CS leader at a [SaaS company] with [X CSMs] managing [Y accounts]. I want to build a 90-day AI transformation plan. My team currently spends the most time on: [top 3 time-consuming tasks]. My target outcomes: [efficiency, quality, commercial]. Help me design: the 3 pilot use cases, the metrics I\'ll track, the risks I need to mitigate, and the 5-sentence leadership communication.',
+            tool: 'Claude',
+          },
+          reflection: 'If you imagine your CS team 18 months from now — with AI fully embedded in the workflow — what is the one thing about how your team operates today that you would most want to have changed by then, and what is stopping you from starting that change in the next 30 days?',
+          quiz: [
+            {
+              question: 'A CS leader is making the board case for AI investment. The CFO asks: "How do we know the NRR improvement is caused by AI and not just a better market or CSM quality?" What is the strongest response?',
+              options: [
+                'Acknowledge that causation cannot be proven and focus on the cost savings argument instead',
+                'Design a pilot where one cohort of accounts gets AI-assisted CS and a matched cohort gets the current approach — measure NRR difference over two quarters',
+                'Reference industry benchmarks that show AI-using CS teams outperform non-AI teams',
+                'Ask the CFO to trust the CS leader\'s professional judgment about what is driving performance',
+              ],
+              correct: 1,
+              explanation: 'The CFO\'s question is about causation, and the correct answer is controlled measurement. A cohort-based pilot — where comparable accounts are assigned to AI-assisted and non-AI-assisted CS workflows — isolates the AI variable from CSM quality and market conditions. Industry benchmarks are relevant context but not causal evidence for your specific context. Acknowledging uncertainty and retreating to cost savings concedes the NRR argument entirely. Running a controlled pilot is both the intellectually honest and strategically strongest response to a causal question.',
+            },
+            {
+              question: 'A new CSM joins an AI-native CS team. What should their first 30 days prioritise above all else?',
+              options: [
+                'Learning the company\'s CRM system and data architecture',
+                'Building relationships with their assigned accounts as quickly as possible',
+                'Developing prompt quality skills and learning to review AI outputs with professional judgment before anything is sent to a customer',
+                'Studying the company\'s product roadmap and pricing structure',
+              ],
+              correct: 2,
+              explanation: 'In an AI-native CS team, a new CSM who has not developed prompt quality skills and output review judgment will make errors that damage customer relationships — because they\'ll send AI-generated content without the professional judgment to catch what\'s wrong with it. CRM knowledge, product knowledge, and customer relationships all matter — but a CSM who can\'t evaluate AI output reliably is a liability in a team where AI is embedded in every major workflow. Prompt quality and output review are the foundational skill in an AI-native environment.',
+            },
+            {
+              question: 'A CS leader presents the following framing to their team: "AI is here to replace the parts of your job that don\'t require you — so you can do more of the parts that do." A CSM responds that this still feels threatening because the line between "requires you" and "doesn\'t require you" keeps moving. What is the most effective CS leader response?',
+              options: [
+                'Explaining that AI tools are not advanced enough to replace CS expertise',
+                'Demonstrating concretely that AI prepares and scales, while humans build relationships — and that the best relationship builders are those who invest AI-saved time back into customers',
+                'Assuring the team that headcount will not be reduced regardless of AI adoption',
+                'Avoiding the topic until CSMs raise it themselves',
+              ],
+              correct: 1,
+              explanation: 'Abstract reassurances about AI not replacing jobs are less convincing than concrete demonstrations of how AI changes the nature of the work. When a CSM sees that AI-assisted QBR prep takes 25 minutes instead of two hours, and that those 90 minutes are now available for an additional customer conversation they wouldn\'t have had, the framing shifts from "AI replacing my value" to "AI giving me more time to do what I\'m actually good at." The demonstration makes the case that words alone cannot.',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }
