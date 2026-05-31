@@ -9,6 +9,9 @@ async function submitForm(formData: FormData) {
   const name = (formData.get('name') as string)?.trim()
   const email = (formData.get('email') as string)?.trim()
   const company = (formData.get('company') as string)?.trim()
+  const title = (formData.get('title') as string)?.trim()
+  const website = (formData.get('website') as string)?.trim()
+  const industry = (formData.get('industry') as string)?.trim()
   const size = (formData.get('size') as string)?.trim()
   const message = (formData.get('message') as string)?.trim()
 
@@ -23,6 +26,9 @@ async function submitForm(formData: FormData) {
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Company:</strong> ${company}</p>
+        ${title ? `<p><strong>Job title:</strong> ${title}</p>` : ''}
+        ${website ? `<p><strong>Website:</strong> ${website}</p>` : ''}
+        ${industry ? `<p><strong>Industry:</strong> ${industry}</p>` : ''}
         <p><strong>Team size:</strong> ${size}</p>
         ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
       `,
@@ -98,12 +104,31 @@ async function SubmittedOrForm({
           { name: 'name', label: 'Your name', placeholder: 'Sophie Armand', type: 'text' },
           { name: 'email', label: 'Work email', placeholder: 'sophie@company.com', type: 'email' },
           { name: 'company', label: 'Company', placeholder: 'Acme Corp', type: 'text' },
+          { name: 'title', label: 'Job title', placeholder: 'Head of Learning & Development', type: 'text' },
+          { name: 'website', label: 'Company website', placeholder: 'acme.com', type: 'text' },
         ].map(field => (
           <div key={field.name}>
             <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>{field.label}</label>
             <input name={field.name} type={field.type} required placeholder={field.placeholder} style={inputStyle} />
           </div>
         ))}
+
+        <div>
+          <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Industry</label>
+          <select name="industry" required style={inputStyle}>
+            <option value="">Select industry</option>
+            <option value="Financial Services">Financial Services</option>
+            <option value="Professional Services">Professional Services</option>
+            <option value="Technology">Technology</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Retail & E-commerce">Retail & E-commerce</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Media & Communications">Media & Communications</option>
+            <option value="Education">Education</option>
+            <option value="Government & Public Sector">Government & Public Sector</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
 
         <div>
           <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Team size</label>
