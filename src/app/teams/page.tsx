@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useRef, useEffect, useActionState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useInView } from 'framer-motion'
 import {
   Zap, Users, BarChart3, Award, CheckCircle2, ArrowRight,
@@ -11,7 +11,6 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { getAdminTeam, type Team } from '@/lib/supabase/teams'
-import { sendDemoRequest, type DemoRequestState } from './actions'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -116,10 +115,6 @@ const TESTIMONIALS = [
 
 export default function TeamsPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [demoState, demoAction, demoPending] = useActionState<DemoRequestState, FormData>(
-    sendDemoRequest,
-    { status: 'idle' },
-  )
   const { openSignUp, user } = useAuth()
 
   const [adminTeam, setAdminTeam] = useState<Team | null>(null)
@@ -521,106 +516,19 @@ export default function TeamsPage() {
         </div>
       </div>
 
-      {/* Contact / Demo form */}
+      {/* Contact / Demo CTA */}
       <div id="contact" className="py-20" style={{ background: '#FFFFFF' }}>
-        <div className="max-w-lg mx-auto px-6">
-          <div className="text-center mb-10">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Get in touch</p>
-            <h2 className="text-3xl font-black mb-3" style={{ color: '#0F172A' }}>Book a 30-minute demo</h2>
-            <p className="text-base" style={{ color: '#64748B' }}>
-              We'll walk you through the team dashboard, track assignment, and reporting — and answer any questions about fit for your organisation.
-            </p>
-          </div>
-
-          {demoState.status === 'success' ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="rounded-2xl p-10 text-center"
-              style={{ background: '#F0FDF4', border: '1px solid #BBF7D0' }}>
-              <CheckCircle2 size={40} className="mx-auto mb-4" style={{ color: '#10B981' }} />
-              <h3 className="text-xl font-black mb-2" style={{ color: '#0F172A' }}>Request received</h3>
-              <p className="text-sm" style={{ color: '#64748B' }}>
-                Someone from our team will reach out within one business day to schedule your demo.
-              </p>
-              {demoState.emailId && <p className="text-xs mt-3" style={{ color: '#94A3B8' }}>Ref: {demoState.emailId}</p>}
-            </motion.div>
-          ) : (
-            <form action={demoAction} className="space-y-4">
-              {[
-                { name: 'name', label: 'Your name', placeholder: 'Sophie Armand', type: 'text' },
-                { name: 'email', label: 'Work email', placeholder: 'sophie@company.com', type: 'email' },
-                { name: 'company', label: 'Company', placeholder: 'Acme Corp', type: 'text' },
-              ].map(field => (
-                <div key={field.name}>
-                  <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>{field.label}</label>
-                  <input
-                    type={field.type}
-                    name={field.name}
-                    required
-                    placeholder={field.placeholder}
-                    className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                    style={{
-                      border: '1.5px solid #E2E8F0',
-                      color: '#0F172A',
-                      fontFamily: 'var(--font-sans)',
-                      background: '#FFFFFF',
-                    }}
-                    onFocus={e => (e.target.style.borderColor = '#2563EB')}
-                    onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
-                  />
-                </div>
-              ))}
-              <div>
-                <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Team size</label>
-                <select
-                  name="size"
-                  required
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
-                  style={{
-                    border: '1.5px solid #E2E8F0',
-                    color: '#0F172A',
-                    fontFamily: 'var(--font-sans)',
-                    background: '#FFFFFF',
-                  }}>
-                  <option value="">Select team size</option>
-                  <option value="5-15">5–15 people</option>
-                  <option value="16-50">16–50 people</option>
-                  <option value="51-200">51–200 people</option>
-                  <option value="200+">200+ people</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>
-                  Anything specific you want to cover? <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
-                </label>
-                <textarea
-                  name="message"
-                  rows={3}
-                  placeholder="e.g. We have 40 people across marketing, sales, and ops — we're particularly interested in the team dashboard and custom track assignment."
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
-                  style={{
-                    border: '1.5px solid #E2E8F0',
-                    color: '#0F172A',
-                    fontFamily: 'var(--font-sans)',
-                    background: '#FFFFFF',
-                  }}
-                  onFocus={e => (e.target.style.borderColor = '#2563EB')}
-                  onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
-                />
-              </div>
-              {demoState.status === 'error' && (
-                <p className="text-sm text-center" style={{ color: '#EF4444' }}>{demoState.error}</p>
-              )}
-              <button
-                type="submit"
-                disabled={demoPending}
-                className="w-full py-4 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60"
-                style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
-                {demoPending ? 'Sending…' : <span>Request demo <ArrowRight size={14} className="inline ml-1" /></span>}
-              </button>
-            </form>
-          )}
+        <div className="max-w-lg mx-auto px-6 text-center">
+          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Get in touch</p>
+          <h2 className="text-3xl font-black mb-3" style={{ color: '#0F172A' }}>Book a 30-minute demo</h2>
+          <p className="text-base mb-8" style={{ color: '#64748B' }}>
+            We'll walk you through the team dashboard, track assignment, and reporting — and answer any questions about fit for your organisation.
+          </p>
+          <Link href="/teams/demo"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-base text-white transition-all hover:opacity-90"
+            style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.28)' }}>
+            Request a demo <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
 
