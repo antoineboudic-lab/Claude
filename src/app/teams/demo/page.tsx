@@ -16,7 +16,7 @@ async function submitForm(formData: FormData) {
     const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
       from: 'OpusLearn <hello@opuslearn.ai>',
-      to: 'antoine.boudic@gmail.com',
+      to: 'antoine@opuslearn.ai',
       replyTo: email,
       subject: `Demo request — ${company} (${size})`,
       html: `

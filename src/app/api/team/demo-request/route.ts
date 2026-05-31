@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await resend.emails.send({
     from: 'OpusLearn <hello@opuslearn.ai>',
-    to: 'antoine.boudic@gmail.com',
+    to: 'antoine@opuslearn.ai',
     replyTo: email,
     subject: `Demo request — ${company} (${size})`,
     html: `
