@@ -2,13 +2,6 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  const host = request.headers.get('host') ?? ''
-  if (host === 'opuslearn.ai') {
-    const url = request.nextUrl.clone()
-    url.host = 'www.opuslearn.ai'
-    return NextResponse.redirect(url, { status: 308 })
-  }
-
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -40,6 +33,8 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/admin/:path*',
+    '/dashboard/:path*',
+    '/tracks/:path*',
   ],
 }
