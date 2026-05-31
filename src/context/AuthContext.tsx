@@ -14,8 +14,9 @@ interface AuthContextValue {
   loading: boolean
   modalView: ModalView
   prefillEmail: string
+  prefillFirstName: string
   openSignIn: () => void
-  openSignUp: (email?: string) => void
+  openSignUp: (email?: string, firstName?: string) => void
   closeModal: () => void
   signOut: () => Promise<void>
 }
@@ -28,6 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
   const [modalView, setModalView] = useState<ModalView>('closed')
   const [prefillEmail, setPrefillEmail] = useState('')
+  const [prefillFirstName, setPrefillFirstName] = useState('')
   const supabase = useRef(createClient())
   const router = useRouter()
 
@@ -74,10 +76,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{
-      user, session, loading, modalView, prefillEmail,
+      user, session, loading, modalView, prefillEmail, prefillFirstName,
       openSignIn: () => setModalView('signin'),
-      openSignUp: (email?: string) => { setPrefillEmail(email ?? ''); setModalView('signup') },
-      closeModal: () => { setModalView('closed'); setPrefillEmail('') },
+      openSignUp: (email?: string, firstName?: string) => { setPrefillEmail(email ?? ''); setPrefillFirstName(firstName ?? ''); setModalView('signup') },
+      closeModal: () => { setModalView('closed'); setPrefillEmail(''); setPrefillFirstName('') },
       signOut,
     }}>
       {children}

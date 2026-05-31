@@ -11,7 +11,8 @@ export function SignupParamHandler() {
   useEffect(() => {
     if (params.get('signup') === '1') {
       const email = params.get('email') ?? ''
-      openSignUp(email)
+      const firstName = params.get('name') ?? ''
+      openSignUp(email, firstName)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

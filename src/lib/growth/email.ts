@@ -203,7 +203,7 @@ function welcomeHtml(name: string, trackLabel: string): string {
 // ─── 3. Lead welcome email (pre-signup, after email capture on results page) ──
 
 function leadWelcomeHtml(name: string, email: string): string {
-  const signupUrl = `${BASE_URL}/?signup=1&email=${encodeURIComponent(email)}`
+  const signupUrl = `${BASE_URL}/?signup=1&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`
   return baseHtml(`
     ${spacer(8)}
     ${row(`

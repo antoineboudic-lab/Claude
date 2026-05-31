@@ -203,6 +203,7 @@ export default function AssessmentResultsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
+          name: result?.answers.name ?? undefined,
           source: 'assessment',
           role: result?.primaryTrackId ?? null,
           metadata: { answers: result?.answers ?? {} },

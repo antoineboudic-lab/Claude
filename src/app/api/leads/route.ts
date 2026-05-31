@@ -3,7 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { sendLeadWelcomeEmail } from '@/lib/growth/email'
 
 export async function POST(req: NextRequest) {
-  let body: { email?: string; role?: string; source?: string; metadata?: Record<string, unknown> }
+  let body: { email?: string; name?: string; role?: string; source?: string; metadata?: Record<string, unknown> }
   try { body = await req.json() } catch { return NextResponse.json({ error: 'Invalid body' }, { status: 400 }) }
 
   const email = body.email?.trim().toLowerCase()
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
   })
 
   // Send lead welcome email (if RESEND_API_KEY set)
-  const name = email.split('@')[0]
+  const name = body.name?.trim() || email.split('@')[0]
   sendLeadWelcomeEmail(email, name).catch(() => {})
 
   return NextResponse.json({ ok: true, id: lead.id })

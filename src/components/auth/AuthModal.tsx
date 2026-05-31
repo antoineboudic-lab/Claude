@@ -15,7 +15,7 @@ type AuthStep = 'form' | 'verify' | 'forgot' | 'reset-sent'
 
 export function AuthModal() {
   const t = useTranslations('auth')
-  const { modalView, closeModal, openSignIn, openSignUp, prefillEmail } = useAuth()
+  const { modalView, closeModal, openSignIn, openSignUp, prefillEmail, prefillFirstName } = useAuth()
   const router = useRouter()
   const [step, setStep] = useState<AuthStep>('form')
   const [firstName, setFirstName] = useState('')
@@ -37,12 +37,12 @@ export function AuthModal() {
       setStep('form')
       setError('')
       setPassword('')
-      setFirstName('')
+      setFirstName(prefillFirstName)
       setLastName('')
       if (prefillEmail) setEmail(prefillEmail)
       setTimeout(() => emailRef.current?.focus(), 100)
     }
-  }, [isOpen, modalView, prefillEmail])
+  }, [isOpen, modalView, prefillEmail, prefillFirstName])
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') closeModal() }
