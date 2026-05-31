@@ -117,6 +117,8 @@ export default function TeamsPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [formData, setFormData] = useState({ name: '', email: '', company: '', size: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
   const { openSignUp, user } = useAuth()
 
   const [adminTeam, setAdminTeam] = useState<Team | null>(null)
@@ -164,12 +166,25 @@ export default function TeamsPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    await fetch('/api/team/demo-request', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    }).catch(() => {})
-    setSubmitted(true)
+    setSubmitting(true)
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/team/demo-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        setSubmitError((body as { error?: string }).error ?? 'Something went wrong — please try again.')
+        return
+      }
+      setSubmitted(true)
+    } catch {
+      setSubmitError('Network error — please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -617,11 +632,15 @@ export default function TeamsPage() {
                   onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
                 />
               </div>
+              {submitError && (
+                <p className="text-sm text-center" style={{ color: '#EF4444' }}>{submitError}</p>
+              )}
               <button
                 type="submit"
-                className="w-full py-4 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
+                disabled={submitting}
+                className="w-full py-4 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60"
                 style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
-                Request demo <ArrowRight size={14} className="inline ml-1" />
+                {submitting ? 'Sending…' : <span>Request demo <ArrowRight size={14} className="inline ml-1" /></span>}
               </button>
             </form>
           )}
