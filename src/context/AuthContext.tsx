@@ -54,6 +54,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         wasSignedIn.current = true
         const isNewUser = session?.user?.created_at === session?.user?.last_sign_in_at
         posthog.capture(isNewUser ? 'sign_up' : 'sign_in', { email: session?.user?.email })
+        if (isNewUser && typeof window !== 'undefined') {
+          window.location.href = '/dashboard'
+        }
       }
 
       if (event === 'SIGNED_OUT') {
