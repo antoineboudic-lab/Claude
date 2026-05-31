@@ -76,12 +76,18 @@ export function AuthModal() {
     setLoading(true)
     try {
       if (isSignUp) {
-        const { error } = await supabase.current.auth.signUp({
+        const { data: signUpData, error } = await supabase.current.auth.signUp({
           email, password,
           options: { data: { full_name: [firstName, lastName].filter(Boolean).join(' ') } },
         })
         if (error) throw error
-        setStep('verify')
+        // Auto-confirm: session is returned immediately — skip verify and go straight to dashboard
+        if (signUpData.session) {
+          closeModal()
+          router.push('/dashboard')
+        } else {
+          setStep('verify')
+        }
       } else {
         const { error } = await supabase.current.auth.signInWithPassword({ email, password })
         if (error) throw error
