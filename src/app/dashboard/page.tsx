@@ -1025,9 +1025,6 @@ export default function DashboardPage() {
     if (!loading && !user) router.replace('/?next=/dashboard')
   }, [loading, user, router])
 
-  useEffect(() => {
-    if (assessmentChecked && teamChecked && !assessment && !hasTeamMembership) router.replace('/assessment')
-  }, [assessmentChecked, teamChecked, assessment, hasTeamMembership, router])
 
   if (!mounted || loading) {
     return (
