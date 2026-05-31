@@ -938,6 +938,8 @@ export default function DashboardPage() {
   const [assignedTracks, setAssignedTracks] = useState<string[]>([])
   const [teamLeaderboard, setTeamLeaderboard] = useState<TeamMember[]>([])
   const [myTeamRank, setMyTeamRank] = useState<number | null>(null)
+  const [teamChecked, setTeamChecked] = useState(false)
+  const [hasTeamMembership, setHasTeamMembership] = useState(false)
   const [referralCode, setReferralCode] = useState<string | null>(null)
   const [referralStats, setReferralStats] = useState<{ clicks: number; signups: number; conversions: number; reward_xp: number } | null>(null)
   const [copied, setCopied] = useState(false)
@@ -965,8 +967,9 @@ export default function DashboardPage() {
     Promise.all([getAdminTeam(user.id), getMemberTeam(user.id)]).then(([admin, member]) => {
       if (admin) {
         setTeamHref('/dashboard/team')
+        setHasTeamMembership(true)
       } else if (member) {
-        setTeamHref('/dashboard/team')
+        setHasTeamMembership(true)
         if (member.member.role !== 'admin') {
           setMemberTeamName(member.team.name)
           setAssignedTracks(member.member.assigned_tracks ?? [])
@@ -978,6 +981,7 @@ export default function DashboardPage() {
           }).catch(() => {})
         }
       }
+      setTeamChecked(true)
     })
   }, [user])
 
@@ -1022,8 +1026,8 @@ export default function DashboardPage() {
   }, [loading, user, router])
 
   useEffect(() => {
-    if (assessmentChecked && !assessment) router.replace('/assessment')
-  }, [assessmentChecked, assessment, router])
+    if (assessmentChecked && teamChecked && !assessment && !hasTeamMembership) router.replace('/assessment')
+  }, [assessmentChecked, teamChecked, assessment, hasTeamMembership, router])
 
   if (!mounted || loading) {
     return (
