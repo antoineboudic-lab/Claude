@@ -976,8 +976,6 @@ export default function DashboardPage() {
             setMyTeamRank(rank >= 0 ? rank + 1 : null)
           }).catch(() => {})
         }
-      } else {
-        setTeamHref('/dashboard/team/create')
       }
     })
   }, [user])
