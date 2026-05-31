@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useActionState } from 'react'
 import { useInView } from 'framer-motion'
 import {
   Zap, Users, BarChart3, Award, CheckCircle2, ArrowRight,
@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { getAdminTeam, type Team } from '@/lib/supabase/teams'
-import { submitDemoRequest } from './actions'
+import { sendDemoRequest, type DemoRequestState } from './actions'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -116,11 +116,10 @@ const TESTIMONIALS = [
 
 export default function TeamsPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [formData, setFormData] = useState({ name: '', email: '', company: '', size: '', message: '' })
-  const [submitted, setSubmitted] = useState(false)
-  const [emailId, setEmailId] = useState<string | undefined>(undefined)
-  const [submitError, setSubmitError] = useState<string | null>(null)
-  const [submitting, setSubmitting] = useState(false)
+  const [demoState, demoAction, demoPending] = useActionState<DemoRequestState, FormData>(
+    sendDemoRequest,
+    { status: 'idle' },
+  )
   const { openSignUp, user } = useAuth()
 
   const [adminTeam, setAdminTeam] = useState<Team | null>(null)
@@ -166,24 +165,6 @@ export default function TeamsPage() {
     setInviteLoading(false)
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitting(true)
-    setSubmitError(null)
-    try {
-      const result = await submitDemoRequest(formData)
-      if (!result.ok) {
-        setSubmitError(result.error ?? result.debug ?? 'Something went wrong — please try again.')
-        return
-      }
-      setEmailId(result.emailId)
-      setSubmitted(true)
-    } catch {
-      setSubmitError('Something went wrong — please try again.')
-    } finally {
-      setSubmitting(false)
-    }
-  }
 
   return (
     <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
@@ -551,7 +532,7 @@ export default function TeamsPage() {
             </p>
           </div>
 
-          {submitted ? (
+          {demoState.status === 'success' ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -562,23 +543,22 @@ export default function TeamsPage() {
               <p className="text-sm" style={{ color: '#64748B' }}>
                 Someone from our team will reach out within one business day to schedule your demo.
               </p>
-              {emailId && <p className="text-xs mt-3" style={{ color: '#94A3B8' }}>Ref: {emailId}</p>}
+              {demoState.emailId && <p className="text-xs mt-3" style={{ color: '#94A3B8' }}>Ref: {demoState.emailId}</p>}
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form action={demoAction} className="space-y-4">
               {[
-                { key: 'name', label: 'Your name', placeholder: 'Sophie Armand', type: 'text' },
-                { key: 'email', label: 'Work email', placeholder: 'sophie@company.com', type: 'email' },
-                { key: 'company', label: 'Company', placeholder: 'Acme Corp', type: 'text' },
+                { name: 'name', label: 'Your name', placeholder: 'Sophie Armand', type: 'text' },
+                { name: 'email', label: 'Work email', placeholder: 'sophie@company.com', type: 'email' },
+                { name: 'company', label: 'Company', placeholder: 'Acme Corp', type: 'text' },
               ].map(field => (
-                <div key={field.key}>
+                <div key={field.name}>
                   <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>{field.label}</label>
                   <input
                     type={field.type}
+                    name={field.name}
                     required
                     placeholder={field.placeholder}
-                    value={(formData as Record<string, string>)[field.key]}
-                    onChange={e => setFormData(prev => ({ ...prev, [field.key]: e.target.value }))}
                     className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
                     style={{
                       border: '1.5px solid #E2E8F0',
@@ -594,17 +574,16 @@ export default function TeamsPage() {
               <div>
                 <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Team size</label>
                 <select
+                  name="size"
                   required
-                  value={formData.size}
-                  onChange={e => setFormData(prev => ({ ...prev, size: e.target.value }))}
                   className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
                   style={{
                     border: '1.5px solid #E2E8F0',
-                    color: formData.size ? '#0F172A' : '#94A3B8',
+                    color: '#0F172A',
                     fontFamily: 'var(--font-sans)',
                     background: '#FFFFFF',
                   }}>
-                  <option value="" disabled>Select team size</option>
+                  <option value="">Select team size</option>
                   <option value="5-15">5–15 people</option>
                   <option value="16-50">16–50 people</option>
                   <option value="51-200">51–200 people</option>
@@ -616,10 +595,9 @@ export default function TeamsPage() {
                   Anything specific you want to cover? <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
                 </label>
                 <textarea
+                  name="message"
                   rows={3}
                   placeholder="e.g. We have 40 people across marketing, sales, and ops — we're particularly interested in the team dashboard and custom track assignment."
-                  value={formData.message}
-                  onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))}
                   className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
                   style={{
                     border: '1.5px solid #E2E8F0',
@@ -631,15 +609,15 @@ export default function TeamsPage() {
                   onBlur={e => (e.target.style.borderColor = '#E2E8F0')}
                 />
               </div>
-              {submitError && (
-                <p className="text-sm text-center" style={{ color: '#EF4444' }}>{submitError}</p>
+              {demoState.status === 'error' && (
+                <p className="text-sm text-center" style={{ color: '#EF4444' }}>{demoState.error}</p>
               )}
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={demoPending}
                 className="w-full py-4 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60"
                 style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
-                {submitting ? 'Sending…' : <span>Request demo <ArrowRight size={14} className="inline ml-1" /></span>}
+                {demoPending ? 'Sending…' : <span>Request demo <ArrowRight size={14} className="inline ml-1" /></span>}
               </button>
             </form>
           )}

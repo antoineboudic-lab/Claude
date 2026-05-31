@@ -2,26 +2,32 @@
 
 import { Resend } from 'resend'
 
-export async function submitDemoRequest(formData: {
-  name: string
-  email: string
-  company: string
-  size: string
-  message: string
-}): Promise<{ ok: boolean; error?: string; emailId?: string; debug?: string }> {
-  const { name, email, company, size, message } = formData
+export type DemoRequestState = {
+  status: 'idle' | 'success' | 'error'
+  emailId?: string
+  error?: string
+}
+
+export async function sendDemoRequest(
+  _prev: DemoRequestState,
+  formData: FormData,
+): Promise<DemoRequestState> {
+  const name = (formData.get('name') as string)?.trim()
+  const email = (formData.get('email') as string)?.trim()
+  const company = (formData.get('company') as string)?.trim()
+  const size = (formData.get('size') as string)?.trim()
+  const message = (formData.get('message') as string)?.trim()
 
   if (!name || !email || !company || !size) {
-    return { ok: false, error: 'Missing required fields' }
+    return { status: 'error', error: 'Please fill in all required fields.' }
   }
 
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) {
-    return { ok: false, error: 'Email service not configured', debug: 'RESEND_API_KEY missing' }
+    return { status: 'error', error: 'Email service not configured (missing API key).' }
   }
 
   const resend = new Resend(apiKey)
-
   const { data, error } = await resend.emails.send({
     from: 'OpusLearn <hello@opuslearn.ai>',
     to: 'antoine.boudic@gmail.com',
@@ -37,10 +43,10 @@ export async function submitDemoRequest(formData: {
   })
 
   if (error) {
-    console.error('Demo request email failed:', error)
-    return { ok: false, error: error.message }
+    console.error('Demo request failed:', JSON.stringify(error))
+    return { status: 'error', error: error.message }
   }
 
-  console.log('Demo request email sent:', data?.id)
-  return { ok: true, emailId: data?.id }
+  console.log('Demo request sent, emailId:', data?.id)
+  return { status: 'success', emailId: data?.id }
 }
