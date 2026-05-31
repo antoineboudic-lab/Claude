@@ -32,5 +32,5 @@ export async function POST(req: NextRequest) {
   }
 
   console.log('Demo request email sent:', data?.id)
-  return NextResponse.json({ ok: true })
+  return NextResponse.json({ ok: true, emailId: data?.id })
 }
