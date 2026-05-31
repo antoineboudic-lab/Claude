@@ -11,7 +11,7 @@ import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
 import { useTranslations } from 'next-intl'
 
-type AuthStep = 'form' | 'verify' | 'forgot' | 'reset-sent'
+type AuthStep = 'form' | 'payment' | 'verify' | 'forgot' | 'reset-sent'
 
 export function AuthModal() {
   const t = useTranslations('auth')
@@ -26,6 +26,7 @@ export function AuthModal() {
   const [rememberMe, setRememberMe] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [paymentLoading, setPaymentLoading] = useState<'monthly' | 'annual' | null>(null)
   const emailRef = useRef<HTMLInputElement>(null)
   const supabase = useRef(createClient())
 
@@ -84,9 +85,7 @@ export function AuthModal() {
           },
         })
         if (error) throw error
-        // onAuthStateChange in AuthContext handles the redirect to /dashboard for new users.
-        // Show verify step in case email confirmation is required.
-        setStep('verify')
+        setStep('payment')
       } else {
         const { error } = await supabase.current.auth.signInWithPassword({ email, password })
         if (error) throw error
@@ -113,6 +112,33 @@ export function AuthModal() {
       else setError(msg)
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleCheckout(plan: 'monthly' | 'annual' | 'free') {
+    if (plan === 'free') {
+      closeModal()
+      window.location.href = '/dashboard'
+      return
+    }
+    setPaymentLoading(plan)
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan }),
+      })
+      const json = await res.json() as { url?: string; error?: string }
+      if (!res.ok || !json.url) {
+        // Not authenticated yet (email confirm required) — fall back to verify step
+        setPaymentLoading(null)
+        setStep('verify')
+        return
+      }
+      window.location.href = json.url
+    } catch {
+      setPaymentLoading(null)
+      setStep('verify')
     }
   }
 
@@ -161,7 +187,53 @@ export function AuthModal() {
                 </div>
 
                 <AnimatePresence mode="wait">
-                  {step === 'verify' ? (
+                  {step === 'payment' ? (
+                    <motion.div key="payment" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="py-2">
+                      <h2 className="text-xl font-black mb-1" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                        Start your 7-day free trial
+                      </h2>
+                      <p className="text-sm mb-5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        No charge until your trial ends. Cancel anytime.
+                      </p>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                        {/* Monthly */}
+                        <button onClick={() => handleCheckout('monthly')} disabled={!!paymentLoading}
+                          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderRadius: 12, border: '2px solid #2563EB', background: '#EFF6FF', cursor: 'pointer', opacity: paymentLoading && paymentLoading !== 'monthly' ? 0.5 : 1 }}>
+                          <div style={{ textAlign: 'left' }}>
+                            <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Pro — Monthly</p>
+                            <p style={{ margin: '2px 0 0', fontSize: 12, color: '#64748B', fontFamily: 'var(--font-sans)' }}>All tracks, all lessons, AI tutor</p>
+                          </div>
+                          <div style={{ textAlign: 'right' }}>
+                            {paymentLoading === 'monthly'
+                              ? <Loader2 size={16} style={{ color: '#2563EB', animation: 'spin 1s linear infinite' }} />
+                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#2563EB', fontFamily: 'var(--font-sans)' }}>$12.99</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
+                            }
+                          </div>
+                        </button>
+                        {/* Annual */}
+                        <button onClick={() => handleCheckout('annual')} disabled={!!paymentLoading}
+                          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderRadius: 12, border: '2px solid #10B981', background: '#F0FDF4', cursor: 'pointer', opacity: paymentLoading && paymentLoading !== 'annual' ? 0.5 : 1, position: 'relative' }}>
+                          <div style={{ position: 'absolute', top: -10, right: 12, background: '#10B981', color: '#fff', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, fontFamily: 'var(--font-sans)' }}>SAVE 23%</div>
+                          <div style={{ textAlign: 'left' }}>
+                            <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Pro — Annual</p>
+                            <p style={{ margin: '2px 0 0', fontSize: 12, color: '#64748B', fontFamily: 'var(--font-sans)' }}>$119.88/yr · best value</p>
+                          </div>
+                          <div style={{ textAlign: 'right' }}>
+                            {paymentLoading === 'annual'
+                              ? <Loader2 size={16} style={{ color: '#10B981', animation: 'spin 1s linear infinite' }} />
+                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#10B981', fontFamily: 'var(--font-sans)' }}>$9.99</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
+                            }
+                          </div>
+                        </button>
+                        {/* Free */}
+                        <button onClick={() => handleCheckout('free')} disabled={!!paymentLoading}
+                          className="w-full py-2.5 text-sm font-medium transition-all hover:text-slate-700"
+                          style={{ color: '#94A3B8', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)' }}>
+                          Continue for free →
+                        </button>
+                      </div>
+                    </motion.div>
+                  ) : step === 'verify' ? (
                     <motion.div
                       key="verify"
                       initial={{ opacity: 0, y: 8 }}
