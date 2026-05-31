@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { getAdminTeam, type Team } from '@/lib/supabase/teams'
+import { submitDemoRequest } from './actions'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -169,19 +170,14 @@ export default function TeamsPage() {
     setSubmitting(true)
     setSubmitError(null)
     try {
-      const res = await fetch('https://www.opuslearn.ai/api/team/demo-request', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        setSubmitError((body as { error?: string }).error ?? 'Something went wrong — please try again.')
+      const result = await submitDemoRequest(formData)
+      if (!result.ok) {
+        setSubmitError(result.error ?? 'Something went wrong — please try again.')
         return
       }
       setSubmitted(true)
     } catch {
-      setSubmitError('Network error — please try again.')
+      setSubmitError('Something went wrong — please try again.')
     } finally {
       setSubmitting(false)
     }
