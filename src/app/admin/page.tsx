@@ -1,6 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { AdminNavEmail } from './AdminNavEmail'
 import { AdminUsersTable } from './AdminUsersTable'
+import { CreateEnterpriseTeamForm } from './CreateEnterpriseTeamForm'
 import Link from 'next/link'
 import {
   Users, Zap, BookOpen, Target, TrendingUp, Bell,
@@ -714,6 +715,7 @@ export default async function AdminPage({
         {/* ═══════════════════ TEAMS ═══════════════════ */}
         {tab === 'teams' && (
           <>
+            <CreateEnterpriseTeamForm />
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
               <StatCard icon={Building2} label="Total teams" value={teams.length} color="#2563EB" />
               <StatCard icon={Users} label="Active members" value={teamMembers.filter(m => m.status === 'active').length} color="#10B981" />
