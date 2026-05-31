@@ -1421,7 +1421,7 @@ const FAQS = [
   },
   {
     q: 'Is there a plan for teams or companies?',
-    a: 'Yes. The Team plan starts at $39/seat/month and includes a team dashboard, manager progress view, and group challenges. For larger rollouts or enterprise pricing, reach out via the contact page.',
+    a: 'Yes. Team pricing is custom based on team size and needs. It includes a team dashboard, manager progress view, and group challenges. Book a demo and we\'ll walk you through the options.',
   },
 ]
 
@@ -1515,8 +1515,8 @@ const plans = [
     cta: 'Start 7-Day Free Trial', highlight: true,
   },
   {
-    name: 'Team', monthlyPrice: '39', annualPrice: '31',
-    desc: 'Per seat — built for teams learning together',
+    name: 'Team', monthlyPrice: '', annualPrice: '',
+    desc: 'Custom pricing for your team size and needs',
     features: ['Everything in Professional', 'Team dashboard', 'Manager progress view', 'Group challenges', 'Custom onboarding', 'Dedicated CSM'],
     cta: 'Talk to Sales', highlight: false,
   },
@@ -1576,14 +1576,30 @@ function Pricing() {
                     style={{ color: plan.highlight ? 'rgba(255,255,255,0.5)' : '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
                     {plan.name}
                   </p>
-                  <div className="flex items-end gap-1.5 mb-1">
-                    <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: plan.highlight ? '4rem' : '3.5rem', lineHeight: 1, color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>
-                      ${annual ? plan.annualPrice : plan.monthlyPrice}
-                    </span>
-                    {plan.monthlyPrice !== '0' && (
-                      <span className="text-sm mb-2" style={{ color: plan.highlight ? 'rgba(255,255,255,0.45)' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>{tHomePricing('perSeatMo')}</span>
-                    )}
-                  </div>
+                  {(() => {
+                    const raw = annual ? plan.annualPrice : plan.monthlyPrice
+                    if (!raw) {
+                      return (
+                        <div className="flex items-end gap-1.5 mb-1">
+                          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '2.25rem', lineHeight: 1, color: '#0F172A' }}>Custom</span>
+                        </div>
+                      )
+                    }
+                    const [intPart, decPart] = raw.includes('.') ? raw.split('.') : [raw, null]
+                    return (
+                      <div className="flex items-start gap-0.5 mb-1">
+                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>$</span>
+                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: plan.highlight ? '3.25rem' : '3rem', lineHeight: 1, color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>{intPart}</span>
+                        {decPart && (
+                          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: plan.highlight ? 'rgba(255,255,255,0.7)' : '#64748B' }}>.{decPart}</span>
+                        )}
+                        <span className="text-sm" style={{ color: plan.highlight ? 'rgba(255,255,255,0.45)' : '#94A3B8', fontFamily: 'var(--font-sans)', alignSelf: 'flex-end', marginBottom: '0.2rem', marginLeft: '2px' }}>{tHomePricing('perSeatMo')}</span>
+                      </div>
+                    )
+                  })()}
+                  {plan.highlight && annual && (
+                    <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>$119.88 billed annually</p>
+                  )}
                   <p className="text-sm mb-7" style={{ color: plan.highlight ? 'rgba(255,255,255,0.55)' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                     {plan.desc}
                   </p>
@@ -1597,7 +1613,7 @@ function Pricing() {
                     ))}
                   </ul>
                   {plan.name === 'Team' ? (
-                    <Link href="/contact"
+                    <Link href="/teams/demo"
                       className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
                       style={{ background: '#0F172A', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
                       {plan.cta}

@@ -88,10 +88,10 @@
       "heading": "Simple, transparent pricing",
       "monthly": "Monthly",
       "annual": "Annual",
-      "annualDiscount": "−20%",
+      "annualDiscount": "−23%",
       "mostPopular": "✦ MOST POPULAR ✦",
-      "perSeatMo": "/seat/mo",
-      "freeTrialNote": "Free for 7 days · $19/mo after · Cancel anytime"
+      "perSeatMo": "/mo",
+      "freeTrialNote": "Free for 7 days · $12.99/mo after · Cancel anytime"
     },
     "faq": {
       "sectionLabel": "FAQ",
