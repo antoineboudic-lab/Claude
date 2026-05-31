@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { sendActivationEmail } from '@/lib/growth/email'
+import { sendLeadWelcomeEmail } from '@/lib/growth/email'
 
 export async function POST(req: NextRequest) {
   let body: { email?: string; role?: string; source?: string; metadata?: Record<string, unknown> }
@@ -13,23 +13,32 @@ export async function POST(req: NextRequest) {
 
   const supabase = createAdminClient()
 
-  // Upsert lead — update role/metadata if already exists
-  const { data: lead, error } = await supabase
+  // Check for existing lead (unique index is on lower(email), not column — can't use upsert onConflict)
+  const { data: existing } = await supabase
     .from('leads')
-    .upsert(
-      {
-        email,
-        source: body.source ?? 'assessment',
-        role: body.role ?? null,
-        metadata: body.metadata ?? {},
-      },
-      { onConflict: 'email', ignoreDuplicates: false },
-    )
-    .select()
-    .single()
+    .select('id')
+    .eq('email', email)
+    .maybeSingle()
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+  let lead: { id: string }
+
+  if (existing) {
+    const { data: updated, error: updateError } = await supabase
+      .from('leads')
+      .update({ source: body.source ?? 'assessment', role: body.role ?? null, metadata: body.metadata ?? {} })
+      .eq('id', existing.id)
+      .select('id')
+      .single()
+    if (updateError) return NextResponse.json({ error: updateError.message }, { status: 500 })
+    lead = updated!
+  } else {
+    const { data: inserted, error: insertError } = await supabase
+      .from('leads')
+      .insert({ email, source: body.source ?? 'assessment', role: body.role ?? null, metadata: body.metadata ?? {} })
+      .select('id')
+      .single()
+    if (insertError) return NextResponse.json({ error: insertError.message }, { status: 500 })
+    lead = inserted!
   }
 
   // Log to email_log and schedule activation email (fires in 24h via cron)
@@ -41,9 +50,9 @@ export async function POST(req: NextRequest) {
     status: 'scheduled',
   })
 
-  // Send immediate activation teaser (if RESEND_API_KEY set)
+  // Send lead welcome email (if RESEND_API_KEY set)
   const name = email.split('@')[0]
-  sendActivationEmail(email, name).catch(() => {})
+  sendLeadWelcomeEmail(email, name).catch(() => {})
 
   return NextResponse.json({ ok: true, id: lead.id })
 }

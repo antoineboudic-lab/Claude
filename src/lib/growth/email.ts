@@ -114,23 +114,50 @@ function signupHtml(name: string): string {
   return baseHtml(`
     ${spacer(8)}
     ${row(`
-      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">You're in, ${name}! 🎉</h1>
-      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">Your OpusLearn account is ready. Take a quick 2-minute assessment to get your personalised AI learning path — tailored to your role, your level, your goals.</p>
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">You're in, ${name} — let's go!</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">Your OpusLearn account is confirmed. Your personalised AI learning path is ready on your dashboard — start your first lesson in under 15 minutes.</p>
     `, 20)}
-    ${row(infoBox(`
-      <strong style="display:block;margin-bottom:6px;font-size:13px;color:#1E40AF;text-transform:uppercase;letter-spacing:0.5px;">What happens next</strong>
-      <table role="presentation" cellpadding="0" cellspacing="0">
-        ${['Answer 5 quick questions about your role', 'Get a personalised learning path', 'Start your first lesson in under 15 minutes'].map((s, i) => `
-          <tr>
-            <td style="padding:4px 12px 4px 0;font-size:14px;color:#1D4ED8;font-weight:700;vertical-align:top;">${i + 1}.</td>
-            <td style="padding:4px 0;font-size:14px;color:#1E3A8A;">${s}</td>
-          </tr>`).join('')}
+    ${row(btn('Go to my dashboard →', `${BASE_URL}/dashboard`))}
+    ${spacer(24)}
+    ${row(`
+      <p style="margin:0 0 12px;font-size:13px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.5px;">Free vs Pro</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;">
+        <tr>
+          <td style="padding:16px 20px;border-bottom:1px solid #F1F5F9;vertical-align:top;width:50%;border-right:1px solid #E2E8F0;">
+            <p style="margin:0 0 6px;font-size:14px;font-weight:800;color:#0F172A;">Free</p>
+            <p style="margin:0 0 10px;font-size:12px;color:#64748B;">Always free</p>
+            <table role="presentation" cellpadding="0" cellspacing="0">
+              ${['First lesson per track', 'Your personalised path', 'Progress tracking', 'XP &amp; streaks'].map(f => `
+                <tr>
+                  <td style="padding:3px 8px 3px 0;font-size:13px;color:#22C55E;vertical-align:top;">✓</td>
+                  <td style="padding:3px 0;font-size:13px;color:#475569;">${f}</td>
+                </tr>`).join('')}
+            </table>
+          </td>
+          <td style="padding:16px 20px;border-bottom:1px solid #F1F5F9;vertical-align:top;background:#EFF6FF;width:50%;">
+            <p style="margin:0 0 2px;font-size:14px;font-weight:800;color:#0F172A;">Pro</p>
+            <p style="margin:0 0 10px;font-size:12px;color:#64748B;">$12.99<span style="color:#94A3B8;">/mo</span> &nbsp;·&nbsp; 7-day free trial</p>
+            <table role="presentation" cellpadding="0" cellspacing="0">
+              ${['All lessons unlocked', 'AI-powered tutor', 'Completion certificates', 'Advanced case studies'].map(f => `
+                <tr>
+                  <td style="padding:3px 8px 3px 0;font-size:13px;color:#2563EB;vertical-align:top;font-weight:700;">✓</td>
+                  <td style="padding:3px 0;font-size:13px;color:#1E40AF;font-weight:500;">${f}</td>
+                </tr>`).join('')}
+            </table>
+          </td>
+        </tr>
       </table>
-    `))}
-    ${spacer(20)}
-    ${row(btn('Take the assessment →', `${BASE_URL}/assessment`))}
-    ${spacer(12)}
-    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Takes 2 minutes. No technical background needed.</p>`, 28)}
+    `, 20)}
+    ${row(`
+      <table role="presentation" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="border-radius:10px;border:2px solid #2563EB;">
+            <a href="${BASE_URL}/pricing" style="display:inline-block;padding:13px 28px;font-size:14px;font-weight:700;color:#2563EB;text-decoration:none;letter-spacing:0.1px;">Start 7-day free Pro trial →</a>
+          </td>
+        </tr>
+      </table>
+    `, 8)}
+    ${row(`<p style="margin:0;font-size:12px;color:#94A3B8;">No credit card required to start. Cancel anytime.</p>`, 28)}
   `)
 }
 
@@ -173,7 +200,34 @@ function welcomeHtml(name: string, trackLabel: string): string {
   `)
 }
 
-// ─── 3. Activation email (day 1–3, no lesson started) ────────────────────────
+// ─── 3. Lead welcome email (pre-signup, after email capture on results page) ──
+
+function leadWelcomeHtml(name: string, email: string): string {
+  const signupUrl = `${BASE_URL}/?signup=1&email=${encodeURIComponent(email)}`
+  return baseHtml(`
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">Your AI learning path is ready, ${name}</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">You completed the assessment and we've built your personalised curriculum. Create your free account to access it — takes 30 seconds, no credit card needed.</p>
+    `, 20)}
+    ${row(infoBox(`
+      <strong style="display:block;margin-bottom:6px;font-size:13px;color:#1E40AF;text-transform:uppercase;letter-spacing:0.5px;">What's waiting for you</strong>
+      <table role="presentation" cellpadding="0" cellspacing="0">
+        ${['Your role-specific lesson plan', 'Priority modules based on your goals', 'First lesson ready to start immediately'].map(s => `
+          <tr>
+            <td style="padding:4px 10px 4px 0;font-size:14px;color:#1D4ED8;vertical-align:top;">✓</td>
+            <td style="padding:4px 0;font-size:14px;color:#1E3A8A;">${s}</td>
+          </tr>`).join('')}
+      </table>
+    `))}
+    ${spacer(20)}
+    ${row(btn('Create my free account →', signupUrl))}
+    ${spacer(12)}
+    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Free forever · No credit card required · Takes 30 seconds</p>`, 28)}
+  `)
+}
+
+// ─── 4. Activation email (day 1–3, no lesson started) ────────────────────────
 
 function activationHtml(name: string): string {
   return baseHtml(`
@@ -252,8 +306,8 @@ function upgradeHtml(name: string, completedTrack: string): string {
       <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;">
         <tr>
           <td style="padding:16px 20px;">
-            <p style="margin:0 0 2px;font-size:22px;font-weight:900;color:#0F172A;">$19<span style="font-size:14px;font-weight:500;color:#64748B;">/month</span> &nbsp; <span style="font-size:14px;font-weight:500;color:#64748B;">or</span> &nbsp; $190<span style="font-size:14px;font-weight:500;color:#64748B;">/year</span></p>
-            <p style="margin:0;font-size:13px;color:#64748B;">Cancel anytime &nbsp;·&nbsp; 30-day money-back guarantee</p>
+            <p style="margin:0 0 2px;font-size:22px;font-weight:900;color:#0F172A;">$12.99<span style="font-size:14px;font-weight:500;color:#64748B;">/month</span> &nbsp; <span style="font-size:14px;font-weight:500;color:#64748B;">or</span> &nbsp; $119.88<span style="font-size:14px;font-weight:500;color:#64748B;">/year</span></p>
+            <p style="margin:0;font-size:13px;color:#64748B;">Cancel anytime &nbsp;·&nbsp; 7-day free trial included</p>
           </td>
         </tr>
       </table>
@@ -389,6 +443,10 @@ export function sendSignupEmail(to: string, name: string): Promise<boolean> {
 
 export function sendWelcomeEmail(to: string, name: string, trackLabel: string): Promise<boolean> {
   return send(to, `Your ${trackLabel} learning path is ready, ${name} ⚡`, welcomeHtml(name, trackLabel))
+}
+
+export function sendLeadWelcomeEmail(to: string, name: string): Promise<boolean> {
+  return send(to, `Your personalised AI learning path is ready, ${name}`, leadWelcomeHtml(name, to))
 }
 
 export function sendActivationEmail(to: string, name: string): Promise<boolean> {

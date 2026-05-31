@@ -15,6 +15,8 @@ import { PostHogProvider } from "@/components/PostHogProvider";
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import { rtlLocales } from '@/i18n/config';
+import { Suspense } from 'react';
+import { SignupParamHandler } from '@/components/SignupParamHandler';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -206,6 +208,7 @@ export default async function RootLayout({
               <XPToast />
               <BadgeUnlock />
               <AuthModal />
+              <Suspense fallback={null}><SignupParamHandler /></Suspense>
               <FloatingAssistant />
               <FeedbackButton />
               <TrackCompletion />

@@ -11,7 +11,8 @@ type Step = 'loading' | 'form' | 'success' | 'invalid'
 
 export default function TeamSetupPage() {
   const [step, setStep] = useState<Step>('loading')
-  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -25,7 +26,11 @@ export default function TeamSetupPage() {
     const refreshToken = params.get('refresh_token')
 
     const nameParam = new URLSearchParams(window.location.search).get('name')
-    if (nameParam) setName(nameParam)
+    if (nameParam) {
+      const parts = nameParam.trim().split(' ')
+      setFirstName(parts[0] ?? '')
+      setLastName(parts.slice(1).join(' '))
+    }
 
     if (!accessToken || !refreshToken) {
       setStep('invalid')
@@ -46,9 +51,10 @@ export default function TeamSetupPage() {
     setError('')
 
     const supabase = createClient()
+    const fullName = [firstName.trim(), lastName.trim()].filter(Boolean).join(' ')
     const { error: updateError } = await supabase.auth.updateUser({
       password,
-      data: { full_name: name.trim() || undefined },
+      data: { full_name: fullName || undefined },
     })
 
     if (updateError) {
@@ -112,10 +118,17 @@ export default function TeamSetupPage() {
                     <p style={{ margin: '0 0 24px', fontSize: 14, color: '#64748B' }}>Set your name and a password to access your team dashboard.</p>
 
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                      <div>
-                        <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 6 }}>Your name</label>
-                        <input value={name} onChange={e => setName(e.target.value)}
-                          placeholder="Sophie Martin" style={inputStyle} />
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                        <div>
+                          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 6 }}>First name</label>
+                          <input value={firstName} onChange={e => setFirstName(e.target.value)}
+                            placeholder="Sophie" style={inputStyle} />
+                        </div>
+                        <div>
+                          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 6 }}>Last name</label>
+                          <input value={lastName} onChange={e => setLastName(e.target.value)}
+                            placeholder="Martin" style={inputStyle} />
+                        </div>
                       </div>
                       <div>
                         <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#334155', marginBottom: 6 }}>Password</label>

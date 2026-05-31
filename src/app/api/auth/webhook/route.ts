@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     old_record: Record<string, unknown> | null
   }
 
-  if (body.type !== 'INSERT' || body.schema !== 'auth' || body.table !== 'users') {
+  if (body.schema !== 'auth' || body.table !== 'users') {
     return NextResponse.json({ received: true })
   }
 
@@ -27,14 +27,25 @@ export async function POST(req: NextRequest) {
   const meta = body.record.raw_user_meta_data as Record<string, unknown> | null
   const name = (meta?.full_name as string | undefined)
     ?? (email ? email.split('@')[0] : 'there')
+  const emailConfirmedAt = body.record.email_confirmed_at as string | null
+  const oldEmailConfirmedAt = body.old_record?.email_confirmed_at as string | null
+
+  // Send welcome email only once the account is confirmed, so the dashboard link works:
+  // - INSERT with email_confirmed_at set: Supabase auto-confirm is ON, user is immediately active
+  // - UPDATE where email_confirmed_at changes null → value: user just clicked confirmation link
+  const shouldSendWelcome =
+    (body.type === 'INSERT' && !!emailConfirmedAt) ||
+    (body.type === 'UPDATE' && !oldEmailConfirmedAt && !!emailConfirmedAt)
+
+  if (!shouldSendWelcome || !email) {
+    return NextResponse.json({ received: true })
+  }
 
   const admin = createAdminClient()
 
-  if (email) {
-    await sendSignupEmail(email, name)
-  }
+  await sendSignupEmail(email, name)
 
-  if (id && email) {
+  if (id) {
     await admin.from('email_log').insert({
       user_id: id,
       email,

@@ -210,7 +210,6 @@ export default function AssessmentResultsPage() {
       })
       if (!res.ok) throw new Error('Failed')
       setEmailUnlocked(true)
-      openSignUp(email)
     } catch {
       setCaptureError('Something went wrong — try again.')
     } finally {
@@ -443,42 +442,24 @@ export default function AssessmentResultsPage() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="rounded-2xl overflow-hidden"
-                style={{ background: '#FFFFFF', border: '2px solid #2563EB', boxShadow: '0 0 0 4px rgba(37,99,235,0.08)' }}
+                style={{ background: '#FFFFFF', border: '2px solid #10B981', boxShadow: '0 0 0 4px rgba(16,185,129,0.08)' }}
               >
-                <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }} />
-                <div className="px-6 py-7">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: '#DBEAFE' }}>
-                      <Zap size={14} style={{ color: '#2563EB' }} />
-                    </div>
-                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                      One last step
-                    </p>
+                <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, #10B981, #22D3EE)' }} />
+                <div className="px-6 py-7 text-center">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: '#F0FDF4' }}>
+                    <Check size={22} color="#10B981" />
                   </div>
                   <h3 className="text-xl font-black mb-2" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                    Create your free account to start learning
+                    Check your inbox
                   </h3>
-                  <p className="text-sm mb-6 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                    Your personalised path is saved. Create an account to track your progress, earn XP, and get lesson reminders — free forever.
+                  <p className="text-sm leading-relaxed mb-4" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                    We sent an email to <strong style={{ color: '#0F172A' }}>{captureEmail}</strong>.<br />
+                    Click the link inside to create your account and access your personalised learning path.
                   </p>
-                  <button
-                    onClick={() => openSignUp(captureEmail)}
-                    className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-                    style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', boxShadow: '0 4px 20px rgba(37,99,235,0.35)', fontFamily: 'var(--font-sans)' }}
-                  >
-                    <Zap size={14} /> Create free account — it takes 30 seconds
-                  </button>
-                  <div className="flex items-center justify-center gap-5 mt-4">
-                    {['Free forever', 'No credit card', 'Keep your results'].map(t => (
-                      <div key={t} className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                        <Check size={10} color="#10B981" /> {t}
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-xs mt-4 text-center" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                    Already have an account?{' '}
+                  <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    Can&apos;t find it? Check your spam folder.{' '}
                     <button onClick={openSignIn} className="underline hover:text-slate-600 transition-colors" style={{ color: '#64748B' }}>
-                      Sign in
+                      Already have an account?
                     </button>
                   </p>
                 </div>

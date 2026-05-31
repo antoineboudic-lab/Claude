@@ -18,7 +18,8 @@ export function AuthModal() {
   const { modalView, closeModal, openSignIn, openSignUp, prefillEmail } = useAuth()
   const router = useRouter()
   const [step, setStep] = useState<AuthStep>('form')
-  const [name, setName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPw, setShowPw] = useState(false)
@@ -36,6 +37,8 @@ export function AuthModal() {
       setStep('form')
       setError('')
       setPassword('')
+      setFirstName('')
+      setLastName('')
       if (prefillEmail) setEmail(prefillEmail)
       setTimeout(() => emailRef.current?.focus(), 100)
     }
@@ -75,7 +78,7 @@ export function AuthModal() {
       if (isSignUp) {
         const { error } = await supabase.current.auth.signUp({
           email, password,
-          options: { data: { full_name: name } },
+          options: { data: { full_name: [firstName, lastName].filter(Boolean).join(' ') } },
         })
         if (error) throw error
         setStep('verify')
@@ -171,11 +174,18 @@ export function AuthModal() {
                         {t('confirmSent', { email })}
                       </p>
                       <button
-                        onClick={closeModal}
+                        onClick={() => { closeModal(); router.push('/pricing') }}
                         className="w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
                         style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)', fontFamily: 'var(--font-sans)' }}
                       >
-                        {t('gotIt')}
+                        See plans &amp; start for free →
+                      </button>
+                      <button
+                        onClick={closeModal}
+                        className="mt-3 w-full py-2.5 rounded-xl text-sm font-medium transition-all hover:text-slate-700"
+                        style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                      >
+                        Continue without upgrading
                       </button>
                     </motion.div>
                   ) : step === 'forgot' ? (
@@ -280,8 +290,12 @@ export function AuthModal() {
                               exit={{ opacity: 0, height: 0 }}
                               transition={{ duration: 0.18 }}
                             >
-                              <Field icon={User} type="text" placeholder={t('namePlaceholder')}
-                                value={name} onChange={setName} required={isSignUp} />
+                              <div className="flex gap-2">
+                                <Field icon={User} type="text" placeholder="First name"
+                                  value={firstName} onChange={setFirstName} required={isSignUp} />
+                                <Field icon={User} type="text" placeholder="Last name"
+                                  value={lastName} onChange={setLastName} required={isSignUp} />
+                              </div>
                             </motion.div>
                           )}
                         </AnimatePresence>

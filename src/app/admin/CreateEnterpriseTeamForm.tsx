@@ -6,7 +6,8 @@ import { Building2, CheckCircle2, Loader2 } from 'lucide-react'
 export function CreateEnterpriseTeamForm() {
   const [companyName, setCompanyName] = useState('')
   const [adminEmail, setAdminEmail] = useState('')
-  const [adminName, setAdminName] = useState('')
+  const [adminFirstName, setAdminFirstName] = useState('')
+  const [adminLastName, setAdminLastName] = useState('')
   const [seatLimit, setSeatLimit] = useState('999')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [error, setError] = useState('')
@@ -22,7 +23,7 @@ export function CreateEnterpriseTeamForm() {
       body: JSON.stringify({
         companyName: companyName.trim(),
         adminEmail: adminEmail.trim(),
-        adminName: adminName.trim(),
+        adminName: [adminFirstName.trim(), adminLastName.trim()].filter(Boolean).join(' '),
         seatLimit: parseInt(seatLimit) || 999,
       }),
     })
@@ -37,7 +38,8 @@ export function CreateEnterpriseTeamForm() {
     setStatus('success')
     setCompanyName('')
     setAdminEmail('')
-    setAdminName('')
+    setAdminFirstName('')
+    setAdminLastName('')
     setSeatLimit('999')
   }
 
@@ -73,7 +75,7 @@ export function CreateEnterpriseTeamForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} style={{ padding: '20px 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 100px auto', gap: 12, alignItems: 'flex-end' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.2fr 1fr 1fr 80px auto', gap: 12, alignItems: 'flex-end' }}>
             <div>
               <label style={labelStyle}>Company name</label>
               <input value={companyName} onChange={e => setCompanyName(e.target.value)}
@@ -85,9 +87,14 @@ export function CreateEnterpriseTeamForm() {
                 placeholder="admin@acme.com" required style={inputStyle} />
             </div>
             <div>
-              <label style={labelStyle}>Admin name</label>
-              <input value={adminName} onChange={e => setAdminName(e.target.value)}
-                placeholder="Sophie Martin" style={inputStyle} />
+              <label style={labelStyle}>First name</label>
+              <input value={adminFirstName} onChange={e => setAdminFirstName(e.target.value)}
+                placeholder="Sophie" style={inputStyle} />
+            </div>
+            <div>
+              <label style={labelStyle}>Last name</label>
+              <input value={adminLastName} onChange={e => setAdminLastName(e.target.value)}
+                placeholder="Martin" style={inputStyle} />
             </div>
             <div>
               <label style={labelStyle}>Seats</label>
