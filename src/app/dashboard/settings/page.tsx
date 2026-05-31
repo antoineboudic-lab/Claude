@@ -739,6 +739,16 @@ function TeamTab({ userId }: { userId: string }) {
 export default function SettingsPage() {
   const { user } = useAuth()
   const [tab, setTab] = useState<Tab>('profile')
+  const [isInTeam, setIsInTeam] = useState(false)
+
+  useEffect(() => {
+    if (!user) return
+    Promise.all([getAdminTeam(user.id), getMemberTeam(user.id)]).then(([admin, member]) => {
+      const inTeam = !!(admin || member)
+      setIsInTeam(inTeam)
+      if (!inTeam && tab === 'team') setTab('profile')
+    })
+  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) {
     return (
@@ -779,7 +789,7 @@ export default function SettingsPage() {
 
         {/* Tabs */}
         <div className="flex gap-1 p-1 rounded-xl mb-8" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0', width: 'fit-content' }}>
-          {TABS.map(t => {
+          {TABS.filter(t => t.id !== 'team' || isInTeam).map(t => {
             const Icon = t.icon
             const active = tab === t.id
             return (
