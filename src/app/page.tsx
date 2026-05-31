@@ -1509,7 +1509,7 @@ const plans = [
     cta: 'Start Free', highlight: false,
   },
   {
-    name: 'Professional', monthlyPrice: '19', annualPrice: '15',
+    name: 'Professional', monthlyPrice: '12.99', annualPrice: '9.99',
     desc: '7-day free trial · Full access to your personalised path',
     features: ['All lessons in your track', 'AI-personalised curriculum', 'All 10 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
     cta: 'Start 7-Day Free Trial', highlight: true,
