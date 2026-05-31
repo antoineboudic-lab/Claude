@@ -18,7 +18,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https: blob:",
       "font-src 'self' data:",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://api.resend.com",
+      "connect-src 'self' https://www.opuslearn.ai https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://api.resend.com",
       "frame-src https://js.stripe.com https://hooks.stripe.com",
       "form-action 'self' https://checkout.stripe.com",
       "base-uri 'self'",
