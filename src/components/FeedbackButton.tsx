@@ -20,6 +20,7 @@ export default function FeedbackButton() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
+  const [sendError, setSendError] = useState(false)
   const [page, setPage] = useState('')
   const { user } = useAuth()
 
@@ -35,12 +36,14 @@ export default function FeedbackButton() {
     e.preventDefault()
     if (!description.trim()) return
     setLoading(true)
+    setSendError(false)
     try {
-      await fetch('/api/feedback', {
+      const res = await fetch('/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type, page, description, email }),
       })
+      if (!res.ok) { setSendError(true); return }
       setSent(true)
       setTimeout(() => {
         setOpen(false)
@@ -48,6 +51,8 @@ export default function FeedbackButton() {
         setDescription('')
         setType('bug')
       }, 2200)
+    } catch {
+      setSendError(true)
     } finally {
       setLoading(false)
     }
@@ -154,7 +159,10 @@ export default function FeedbackButton() {
                 </button>
 
                 <p className="text-[10px] text-center" style={{ color: '#CBD5E1' }}>
-                  Sent to the OpusLearn team · Page: {page}
+                  {sendError
+                    ? <span style={{ color: '#EF4444' }}>Something went wrong — please try again.</span>
+                    : <>Sent to the OpusLearn team · Page: {page}</>
+                  }
                 </p>
               </form>
             )}

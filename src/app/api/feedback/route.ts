@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
 
     const typeLabel = type === 'bug' ? '🐛 Bug report' : type === 'suggestion' ? '💡 Suggestion' : '💬 Other feedback'
 
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'OpusLearn Feedback <hello@opuslearn.ai>',
-      to: 'hello@opuslearn.ai',
+      to: 'antoine@opuslearn.ai',
       replyTo: email || undefined,
       subject: `${typeLabel} — ${page || 'unknown page'}`,
       html: `
@@ -38,6 +38,11 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     })
+
+    if (error) {
+      console.error('Resend error:', error)
+      return NextResponse.json({ error: 'Failed to send' }, { status: 500 })
+    }
 
     return NextResponse.json({ ok: true })
   } catch (err) {
