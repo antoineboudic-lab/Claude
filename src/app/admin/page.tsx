@@ -2,6 +2,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { AdminNavEmail } from './AdminNavEmail'
 import { AdminUsersTable } from './AdminUsersTable'
 import { CreateEnterpriseTeamForm } from './CreateEnterpriseTeamForm'
+import { AdminTeamsTable } from './AdminTeamsTable'
 import Link from 'next/link'
 import {
   Users, Zap, BookOpen, Target, TrendingUp, Bell,
@@ -721,39 +722,7 @@ export default async function AdminPage({
               <StatCard icon={Users} label="Active members" value={teamMembers.filter(m => m.status === 'active').length} color="#10B981" />
               <StatCard icon={UserPlus} label="Pending invites" value={teamMembers.filter(m => m.status !== 'active').length} color="#F59E0B" />
             </div>
-            <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              <div style={{ padding: '16px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Building2 size={14} style={{ color: '#2563EB' }} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>All Teams</span>
-              </div>
-              <div style={{ overflowX: 'auto' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                  <TableHead cols={['Team', 'Plan', 'Admin', 'Active members', 'Pending', 'Seats', 'Created']} />
-                  <tbody>
-                    {teams.length === 0 ? <EmptyRow cols={7} message="No teams yet" /> : teams.map((t, i) => {
-                      const adminUser = users.find(u => u.id === t.created_by)
-                      const members = membersByTeam[t.id] ?? { active: 0, pending: 0 }
-                      const planColor = PLAN_COLORS[t.plan] ?? '#94A3B8'
-                      return (
-                        <tr key={t.id} style={{ borderBottom: i < teams.length - 1 ? '1px solid #EFF6FF' : 'none' }}>
-                          <td style={{ padding: '12px 16px', fontWeight: 600, color: '#0F172A' }}>{t.name}</td>
-                          <td style={{ padding: '12px 16px' }}>
-                            <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600, background: `${planColor}15`, color: planColor, textTransform: 'capitalize' }}>{t.plan}</span>
-                          </td>
-                          <td style={{ padding: '12px 16px', color: '#475569' }}>
-                            {adminUser?.user_metadata?.full_name ?? adminUser?.email ?? '—'}
-                          </td>
-                          <td style={{ padding: '12px 16px', fontWeight: 600, color: members.active > 0 ? '#10B981' : '#E2E8F0' }}>{members.active || '—'}</td>
-                          <td style={{ padding: '12px 16px', fontWeight: 600, color: members.pending > 0 ? '#F59E0B' : '#E2E8F0' }}>{members.pending || '—'}</td>
-                          <td style={{ padding: '12px 16px', color: '#94A3B8' }}>{t.seat_limit}</td>
-                          <td style={{ padding: '12px 16px', color: '#CBD5E1', whiteSpace: 'nowrap' }}>{fmt(t.created_at)}</td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            <AdminTeamsTable teams={teams} membersByTeam={membersByTeam} users={users} />
           </>
         )}
 
