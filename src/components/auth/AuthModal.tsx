@@ -224,7 +224,7 @@ export function AuthModal() {
                           <div style={{ textAlign: 'right' }}>
                             {paymentLoading === 'monthly'
                               ? <Loader2 size={16} style={{ color: '#2563EB', animation: 'spin 1s linear infinite' }} />
-                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 45.9' : '$12.99'}</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
+                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 45.99' : '$12.99'}</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
                             }
                           </div>
                         </button>

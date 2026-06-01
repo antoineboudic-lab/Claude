@@ -1510,7 +1510,7 @@ const plans = [
     cta: 'Start Free', highlight: false,
   },
   {
-    name: 'Professional', monthlyPrice: '12.99', annualPrice: '9.99', monthlyPriceAED: '45.9', annualPriceAED: '36.58',
+    name: 'Professional', monthlyPrice: '12.99', annualPrice: '9.99', monthlyPriceAED: '45.99', annualPriceAED: '36.58',
     desc: '7-day free trial · Full access to your personalised path',
     features: ['All lessons in your track', 'AI-personalised curriculum', 'All 10 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
     cta: 'Start 7-Day Free Trial', highlight: true,
@@ -1636,7 +1636,7 @@ function Pricing() {
                   )}
                   {plan.highlight && (
                     <p className="text-center text-xs mt-2.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-sans)' }}>
-                      {isUAE ? 'Free for 7 days · AED 45.9/mo after · Cancel anytime' : tHomePricing('freeTrialNote')}
+                      {isUAE ? 'Free for 7 days · AED 45.99/mo after · Cancel anytime' : tHomePricing('freeTrialNote')}
                     </p>
                   )}
                 </div>

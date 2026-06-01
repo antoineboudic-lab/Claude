@@ -245,7 +245,7 @@ export default function PricingPage() {
               </div>
               {billing === 'monthly'
                 ? <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>
-                    {isUAE ? 'AED 45.9' : '$12.99'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span>
+                    {isUAE ? 'AED 45.99' : '$12.99'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span>
                   </p>
                 : (
                   <div style={{ margin: '0 0 4px' }}>
