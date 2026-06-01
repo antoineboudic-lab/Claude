@@ -7,9 +7,6 @@ CREATE INDEX IF NOT EXISTS idx_user_progress_user_id
 CREATE INDEX IF NOT EXISTS idx_user_progress_last_active_date
   ON user_progress(last_active_date);
 
-CREATE INDEX IF NOT EXISTS idx_user_progress_digest_opt_out
-  ON user_progress(digest_opt_out)
-  WHERE digest_opt_out = false;
 
 CREATE INDEX IF NOT EXISTS idx_user_assessments_user_id_created
   ON user_assessments(user_id, created_at DESC);
