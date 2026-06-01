@@ -10,12 +10,14 @@ import type { LucideIcon } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
 import { useTranslations } from 'next-intl'
+import { useGeo } from '@/hooks/useGeo'
 
 type AuthStep = 'form' | 'payment' | 'verify' | 'forgot' | 'reset-sent'
 
 export function AuthModal() {
   const t = useTranslations('auth')
   const { modalView, closeModal, openSignIn, openSignUp, prefillEmail, prefillFirstName } = useAuth()
+  const { isUAE } = useGeo()
   const router = useRouter()
   const [step, setStep] = useState<AuthStep>('form')
   const [firstName, setFirstName] = useState('')
@@ -222,22 +224,22 @@ export function AuthModal() {
                           <div style={{ textAlign: 'right' }}>
                             {paymentLoading === 'monthly'
                               ? <Loader2 size={16} style={{ color: '#2563EB', animation: 'spin 1s linear infinite' }} />
-                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#2563EB', fontFamily: 'var(--font-sans)' }}>$12.99</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
+                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 45.9' : '$12.99'}</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
                             }
                           </div>
                         </button>
                         {/* Annual */}
                         <button onClick={() => handleCheckout('annual')} disabled={!!paymentLoading}
                           style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderRadius: 12, border: '2px solid #10B981', background: '#F0FDF4', cursor: 'pointer', opacity: paymentLoading && paymentLoading !== 'annual' ? 0.5 : 1, position: 'relative' }}>
-                          <div style={{ position: 'absolute', top: -10, right: 12, background: '#10B981', color: '#fff', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, fontFamily: 'var(--font-sans)' }}>SAVE 23%</div>
+                          <div style={{ position: 'absolute', top: -10, right: 12, background: '#10B981', color: '#fff', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 20, fontFamily: 'var(--font-sans)' }}>{isUAE ? 'SAVE 20%' : 'SAVE 23%'}</div>
                           <div style={{ textAlign: 'left' }}>
                             <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Pro — Annual</p>
-                            <p style={{ margin: '2px 0 0', fontSize: 12, color: '#64748B', fontFamily: 'var(--font-sans)' }}>$119.88/yr · best value</p>
+                            <p style={{ margin: '2px 0 0', fontSize: 12, color: '#64748B', fontFamily: 'var(--font-sans)' }}>{isUAE ? '439 AED/yr · best value' : '$119.88/yr · best value'}</p>
                           </div>
                           <div style={{ textAlign: 'right' }}>
                             {paymentLoading === 'annual'
                               ? <Loader2 size={16} style={{ color: '#10B981', animation: 'spin 1s linear infinite' }} />
-                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#10B981', fontFamily: 'var(--font-sans)' }}>$9.99</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
+                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#10B981', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 36.58' : '$9.99'}</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
                             }
                           </div>
                         </button>

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Zap, Check, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useTranslations } from 'next-intl'
+import { useGeo } from '@/hooks/useGeo'
 
 const plans = {
   free: {
@@ -95,6 +96,7 @@ export default function PricingPage() {
   const t = useTranslations('pricing')
   const tHomePricing = useTranslations('home.pricing')
   const { user, loading: authLoading, openSignUp, openSignIn } = useAuth()
+  const { isUAE } = useGeo()
   const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly')
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -242,11 +244,17 @@ export default function PricingPage() {
                 <span style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', background: '#DBEAFE', padding: '3px 10px', borderRadius: 999 }}>{t('mostPopular')}</span>
               </div>
               {billing === 'monthly'
-                ? <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>$12.99<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span></p>
+                ? <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>
+                    {isUAE ? 'AED 45.9' : '$12.99'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span>
+                  </p>
                 : (
                   <div style={{ margin: '0 0 4px' }}>
-                    <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: 0, letterSpacing: '-0.03em' }}>$119.88<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/yr</span></p>
-                    <p style={{ fontSize: 12, color: '#64748B', margin: '2px 0 0' }}>$9.99/mo, billed annually — save 23%</p>
+                    <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: 0, letterSpacing: '-0.03em' }}>
+                      {isUAE ? 'AED 439' : '$119.88'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/yr</span>
+                    </p>
+                    <p style={{ fontSize: 12, color: '#64748B', margin: '2px 0 0' }}>
+                      {isUAE ? 'AED 36.58/mo, billed annually — save 20%' : '$9.99/mo, billed annually — save 23%'}
+                    </p>
                   </div>
                 )}
               <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 24px', lineHeight: 1.5 }}>{plans.pro.description}</p>

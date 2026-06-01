@@ -18,6 +18,7 @@ import { useGame } from '@/context/GameContext'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import Logo from '@/components/Logo'
 import GlobalSearch from '@/components/GlobalSearch'
+import { useGeo } from '@/hooks/useGeo'
 
 // ─── Animation ────────────────────────────────────────────────────────────────
 
@@ -1503,19 +1504,19 @@ function FAQ() {
 
 const plans = [
   {
-    name: 'Free', monthlyPrice: '0', annualPrice: '0',
+    name: 'Free', monthlyPrice: '0', annualPrice: '0', monthlyPriceAED: '0', annualPriceAED: '0',
     desc: 'Start with your full first module — no card needed',
     features: ['Full Module 1 of your track (4 lessons)', 'Role assessment & personalised path', 'Lesson exercises & quiz', 'XP & progress tracking'],
     cta: 'Start Free', highlight: false,
   },
   {
-    name: 'Professional', monthlyPrice: '12.99', annualPrice: '9.99',
+    name: 'Professional', monthlyPrice: '12.99', annualPrice: '9.99', monthlyPriceAED: '45.9', annualPriceAED: '36.58',
     desc: '7-day free trial · Full access to your personalised path',
     features: ['All lessons in your track', 'AI-personalised curriculum', 'All 10 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
     cta: 'Start 7-Day Free Trial', highlight: true,
   },
   {
-    name: 'Team', monthlyPrice: '', annualPrice: '',
+    name: 'Team', monthlyPrice: '', annualPrice: '', monthlyPriceAED: '', annualPriceAED: '',
     desc: 'Custom pricing for your team size and needs',
     features: ['Everything in Professional', 'Team dashboard', 'Manager progress view', 'Group challenges', 'Custom onboarding', 'Dedicated CSM'],
     cta: 'Talk to Sales', highlight: false,
@@ -1526,6 +1527,7 @@ function Pricing() {
   const [annual, setAnnual] = useState(false)
   const { ref, isInView } = useReveal()
   const { openSignUp } = useAuth()
+  const { isUAE } = useGeo()
   const tHomePricing = useTranslations('home.pricing')
 
   return (
@@ -1577,7 +1579,9 @@ function Pricing() {
                     {plan.name}
                   </p>
                   {(() => {
-                    const raw = annual ? plan.annualPrice : plan.monthlyPrice
+                    const raw = annual
+                      ? (isUAE ? plan.annualPriceAED : plan.annualPrice)
+                      : (isUAE ? plan.monthlyPriceAED : plan.monthlyPrice)
                     if (!raw) {
                       return (
                         <div className="flex items-end gap-1.5 mb-1">
@@ -1588,7 +1592,7 @@ function Pricing() {
                     const [intPart, decPart] = raw.includes('.') ? raw.split('.') : [raw, null]
                     return (
                       <div className="flex items-start gap-0.5 mb-1">
-                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>$</span>
+                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: isUAE ? '0.9rem' : '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>{isUAE ? 'AED' : '$'}</span>
                         <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: plan.highlight ? '3.25rem' : '3rem', lineHeight: 1, color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>{intPart}</span>
                         {decPart && (
                           <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: plan.highlight ? 'rgba(255,255,255,0.7)' : '#64748B' }}>.{decPart}</span>
@@ -1598,7 +1602,9 @@ function Pricing() {
                     )
                   })()}
                   {plan.highlight && annual && (
-                    <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>$119.88 billed annually</p>
+                    <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>
+                      {isUAE ? '439 AED billed annually' : '$119.88 billed annually'}
+                    </p>
                   )}
                   <p className="text-sm mb-7" style={{ color: plan.highlight ? 'rgba(255,255,255,0.55)' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                     {plan.desc}
@@ -1630,7 +1636,7 @@ function Pricing() {
                   )}
                   {plan.highlight && (
                     <p className="text-center text-xs mt-2.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-sans)' }}>
-                      {tHomePricing('freeTrialNote')}
+                      {isUAE ? 'Free for 7 days · AED 45.9/mo after · Cancel anytime' : tHomePricing('freeTrialNote')}
                     </p>
                   )}
                 </div>
