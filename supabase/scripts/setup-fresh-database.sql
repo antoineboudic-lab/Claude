@@ -128,16 +128,7 @@ CREATE POLICY "teams_admin_all" ON teams
   FOR ALL USING (auth.uid() = created_by)
   WITH CHECK (auth.uid() = created_by);
 
--- Team members can read team info
-CREATE POLICY "teams_member_read" ON teams
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM team_members
-      WHERE team_id = teams.id
-        AND user_id = auth.uid()
-        AND status  = 'active'
-    )
-  );
+-- NOTE: teams_member_read policy is added AFTER team_members is created (below)
 
 -- ── Team members ───────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS team_members (
@@ -196,6 +187,17 @@ CREATE POLICY "team_members_member_read" ON team_members
 CREATE POLICY "team_members_self_update" ON team_members
   FOR UPDATE USING (user_id = auth.uid())
   WITH CHECK  (user_id = auth.uid());
+
+-- Team members can read team info (added here, after team_members exists)
+CREATE POLICY "teams_member_read" ON teams
+  FOR SELECT USING (
+    EXISTS (
+      SELECT 1 FROM team_members
+      WHERE team_id = teams.id
+        AND user_id = auth.uid()
+        AND status  = 'active'
+    )
+  );
 
 -- ── Team invites ───────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS team_invites (
