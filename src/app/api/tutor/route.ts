@@ -1,22 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
+import { createRateLimiter } from '@/lib/ratelimit'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-
-// In-memory rate limiter: 30 requests / IP / 60s
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
-
-function checkRateLimit(ip: string): boolean {
-  const now = Date.now()
-  const entry = rateLimitMap.get(ip)
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + 60_000 })
-    return true
-  }
-  if (entry.count >= 30) return false
-  entry.count++
-  return true
-}
+const rateLimiter = createRateLimiter(30, 60, 'tutor')
 
 const ALLOWED_ORIGINS = [
   'https://opuslearn.ai',
@@ -85,7 +72,7 @@ export async function POST(req: NextRequest) {
   }
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
-  if (!checkRateLimit(ip)) {
+  if (!await rateLimiter.check(ip)) {
     return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
   }
 

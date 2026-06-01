@@ -9,7 +9,9 @@ import {
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-// ── Runs daily at 9 AM UTC.
+const BATCH_SIZE = 500
+
+// Runs daily at 9 AM UTC.
 // Handles three lifecycle stages per user (each fires at most once):
 //   welcome     – day 0: new users who took the assessment
 //   activation  – day 1-3: signed up but no lesson completed yet
@@ -24,12 +26,10 @@ export async function GET(req: Request) {
   const admin = createAdminClient()
   const now = new Date()
   const oneDayAgo = new Date(now.getTime() - 1 * 86400000).toISOString()
-  const threeDaysAgo = new Date(now.getTime() - 3 * 86400000).toISOString()
   const today = now.toISOString().split('T')[0]
 
   const stats = { welcome: 0, activation: 0, upgrade: 0, skipped: 0 }
 
-  // ── Helper: has a user already received a given sequence? ──────────────────
   async function alreadySent(userId: string, sequence: string): Promise<boolean> {
     const { count } = await admin
       .from('email_log')
@@ -41,20 +41,14 @@ export async function GET(req: Request) {
 
   async function log(userId: string, email: string, sequence: string) {
     await admin.from('email_log').insert({
-      user_id: userId,
-      email,
-      sequence,
-      step: 1,
-      status: 'sent',
+      user_id: userId, email, sequence, step: 1, status: 'sent',
       sent_at: new Date().toISOString(),
     })
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // 1. WELCOME — users who completed the assessment today and haven't been
-  //    welcomed yet. We use the assessment table as the trigger because an
-  //    assessment means they know their track, so the email can name it.
-  // ─────────────────────────────────────────────────────────────────────────
+  // ── 1. WELCOME ─────────────────────────────────────────────────────────────
+  // Users who completed the assessment in the last 24h, not yet welcomed.
+  // Naturally bounded to ~24h of signups — no pagination needed.
   {
     const { data: recentAssessments } = await admin
       .from('user_assessments')
@@ -62,7 +56,6 @@ export async function GET(req: Request) {
       .gte('created_at', oneDayAgo)
       .order('created_at', { ascending: false })
 
-    // Deduplicate: one welcome per user (use their latest track)
     const seen = new Set<string>()
     const toWelcome = (recentAssessments ?? []).filter(a => {
       if (seen.has(a.user_id)) return false
@@ -73,117 +66,109 @@ export async function GET(req: Request) {
     for (const assessment of toWelcome) {
       try {
         if (await alreadySent(assessment.user_id, 'welcome')) { stats.skipped++; continue }
-
         const { data: { user } } = await admin.auth.admin.getUserById(assessment.user_id)
         if (!user?.email) { stats.skipped++; continue }
-
         const name = (user.user_metadata as { full_name?: string })?.full_name?.split(' ')[0]
           ?? user.email.split('@')[0]
         const trackLabel = assessment.primary_track_id.charAt(0).toUpperCase()
           + assessment.primary_track_id.slice(1)
-
         const ok = await sendWelcomeEmail(user.email, name, trackLabel)
-        if (ok) {
-          await log(assessment.user_id, user.email, 'welcome')
-          stats.welcome++
-        } else {
-          stats.skipped++
-        }
-      } catch {
-        stats.skipped++
-      }
+        if (ok) { await log(assessment.user_id, user.email, 'welcome'); stats.welcome++ }
+        else stats.skipped++
+      } catch { stats.skipped++ }
     }
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // 2. ACTIVATION — signed up 1-3 days ago, no lessons completed, no
-  //    activation email yet. Nudge them to start their first lesson.
-  // ─────────────────────────────────────────────────────────────────────────
+  // ── 2. ACTIVATION ──────────────────────────────────────────────────────────
+  // Signed up 1-3 days ago, no lessons completed, no activation email yet.
+  // Paginate listUsers to handle 100k+ accounts.
   {
-    // Users with no completed lessons
-    const { data: inactiveProgress } = await admin
-      .from('user_progress')
-      .select('user_id, completed_lessons')
-      .or('completed_lessons.is.null,completed_lessons.eq.{}')
-
-    const inactiveUserIds = new Set((inactiveProgress ?? []).map(p => p.user_id))
-
-    const { data: listData } = await admin.auth.admin.listUsers({ perPage: 1000 })
-    const candidates = (listData?.users ?? []).filter(u => {
-      if (!u.created_at) return false
-      const age = now.getTime() - new Date(u.created_at).getTime()
-      const days = age / 86400000
-      return days >= 1 && days < 4 && inactiveUserIds.has(u.id)
-    })
-
-    for (const user of candidates) {
-      try {
-        if (await alreadySent(user.id, 'activation')) { stats.skipped++; continue }
-
-        const name = (user.user_metadata as { full_name?: string })?.full_name?.split(' ')[0]
-          ?? user.email?.split('@')[0] ?? 'there'
-
-        if (!user.email) { stats.skipped++; continue }
-
-        const ok = await sendActivationEmail(user.email, name)
-        if (ok) {
-          await log(user.id, user.email, 'activation')
-          stats.activation++
-        } else {
-          stats.skipped++
-        }
-      } catch {
-        stats.skipped++
-      }
-    }
-  }
-
-  // ─────────────────────────────────────────────────────────────────────────
-  // 3. UPGRADE — completed ≥1 track, no active/trialing subscription, no
-  //    upgrade email yet. Prompt them to go Pro.
-  // ─────────────────────────────────────────────────────────────────────────
-  {
-    // Users who completed at least one track
-    const { data: progressWithTrack } = await admin
-      .from('user_progress')
-      .select('user_id, completed_tracks')
-      .not('completed_tracks', 'is', null)
-      .not('completed_tracks', 'eq', '{}')
-
-    if (progressWithTrack && progressWithTrack.length > 0) {
-      // Exclude users with an active or trialing subscription
-      const { data: activeSubs } = await admin
-        .from('subscriptions')
+    // Fetch all users with no completed lessons (batched)
+    const inactiveUserIds = new Set<string>()
+    let offset = 0
+    while (true) {
+      const { data } = await admin
+        .from('user_progress')
         .select('user_id')
-        .in('status', ['active', 'trialing'])
+        .or('completed_lessons.is.null,completed_lessons.eq.{}')
+        .range(offset, offset + BATCH_SIZE - 1)
+      if (!data?.length) break
+      data.forEach(p => inactiveUserIds.add(p.user_id))
+      if (data.length < BATCH_SIZE) break
+      offset += BATCH_SIZE
+    }
 
-      const subscribedIds = new Set((activeSubs ?? []).map(s => s.user_id))
+    // Paginate auth users list
+    let page = 1
+    while (true) {
+      const { data: listData } = await admin.auth.admin.listUsers({ perPage: 1000, page })
+      const users = listData?.users ?? []
+      if (!users.length) break
 
-      const candidates = progressWithTrack.filter(p => !subscribedIds.has(p.user_id))
+      const candidates = users.filter(u => {
+        if (!u.created_at) return false
+        const ageDays = (now.getTime() - new Date(u.created_at).getTime()) / 86400000
+        return ageDays >= 1 && ageDays < 4 && inactiveUserIds.has(u.id)
+      })
+
+      for (const user of candidates) {
+        try {
+          if (await alreadySent(user.id, 'activation')) { stats.skipped++; continue }
+          const name = (user.user_metadata as { full_name?: string })?.full_name?.split(' ')[0]
+            ?? user.email?.split('@')[0] ?? 'there'
+          if (!user.email) { stats.skipped++; continue }
+          const ok = await sendActivationEmail(user.email, name)
+          if (ok) { await log(user.id, user.email, 'activation'); stats.activation++ }
+          else stats.skipped++
+        } catch { stats.skipped++ }
+      }
+
+      const nextPage = 'nextPage' in (listData ?? {}) ? (listData as { nextPage?: number }).nextPage : undefined
+      if (!nextPage) break
+      page++
+    }
+  }
+
+  // ── 3. UPGRADE ─────────────────────────────────────────────────────────────
+  // Completed ≥1 track, no active/trialing subscription, no upgrade email yet.
+  // Fetch active subscriptions once, then paginate user_progress.
+  {
+    const { data: activeSubs } = await admin
+      .from('subscriptions')
+      .select('user_id')
+      .in('status', ['active', 'trialing'])
+    const subscribedIds = new Set((activeSubs ?? []).map(s => s.user_id))
+
+    let offset = 0
+    while (true) {
+      const { data } = await admin
+        .from('user_progress')
+        .select('user_id, completed_tracks')
+        .not('completed_tracks', 'is', null)
+        .not('completed_tracks', 'eq', '{}')
+        .range(offset, offset + BATCH_SIZE - 1)
+
+      if (!data?.length) break
+
+      const candidates = data.filter(p => !subscribedIds.has(p.user_id))
 
       for (const row of candidates) {
         try {
           if (await alreadySent(row.user_id, 'upgrade')) { stats.skipped++; continue }
-
           const { data: { user } } = await admin.auth.admin.getUserById(row.user_id)
           if (!user?.email) { stats.skipped++; continue }
-
           const name = (user.user_metadata as { full_name?: string })?.full_name?.split(' ')[0]
             ?? user.email.split('@')[0]
           const completedTrack = (row.completed_tracks as string[])[0] ?? 'your first track'
           const trackLabel = completedTrack.charAt(0).toUpperCase() + completedTrack.slice(1)
-
           const ok = await sendUpgradeEmail(user.email, name, trackLabel)
-          if (ok) {
-            await log(row.user_id, user.email, 'upgrade')
-            stats.upgrade++
-          } else {
-            stats.skipped++
-          }
-        } catch {
-          stats.skipped++
-        }
+          if (ok) { await log(row.user_id, user.email, 'upgrade'); stats.upgrade++ }
+          else stats.skipped++
+        } catch { stats.skipped++ }
       }
+
+      if (data.length < BATCH_SIZE) break
+      offset += BATCH_SIZE
     }
   }
 
