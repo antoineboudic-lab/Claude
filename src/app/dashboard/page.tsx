@@ -28,7 +28,6 @@ import {
 import type { AssessmentResult } from '@/lib/assessment/types'
 import { getTrack, getAllTracks } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
-import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -1078,7 +1077,6 @@ export default function DashboardPage() {
               </Link>
             )}
             <div className="flex items-center gap-2.5">
-              <LanguageSwitcher compact />
               <Link href="/dashboard/settings"
                 className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100"
                 style={{ color: '#94A3B8' }}

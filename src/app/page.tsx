@@ -15,7 +15,6 @@ import {
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
-import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import Logo from '@/components/Logo'
 import GlobalSearch from '@/components/GlobalSearch'
 import { useGeo } from '@/hooks/useGeo'
@@ -182,11 +181,6 @@ function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Language switcher */}
-          <div className="hidden md:block">
-            <LanguageSwitcher compact />
-          </div>
-
           {/* Search */}
           <button
             onClick={() => setSearchOpen(true)}
