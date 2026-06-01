@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
 }
 
 export default withSentryConfig(withNextIntl(nextConfig), {
-  org: 'opuslearn',
+  org: 'opus-learn-ai',
   project: 'opuslearn',
   silent: true,
   disableLogger: true,
