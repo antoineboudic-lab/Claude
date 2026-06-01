@@ -24,7 +24,7 @@ const SECTIONS = [
   },
   {
     title: '4. Subscriptions and payment',
-    body: `The Service is offered under free and paid subscription tiers. Paid subscriptions are billed in advance on a monthly or annual basis. Prices are displayed in Euros and exclude applicable taxes. We use Stripe for payment processing. Your payment information is stored securely by Stripe and is not held on our servers. You authorise us to charge your payment method for all fees incurred under your subscription.`,
+    body: `The Service is offered under free and paid subscription tiers. Paid subscriptions are billed in advance on a monthly or annual basis. Prices are displayed in USD (or AED for users in the United Arab Emirates) and exclude applicable taxes. We use Stripe for payment processing. Your payment information is stored securely by Stripe and is not held on our servers. You authorise us to charge your payment method for all fees incurred under your subscription.`,
   },
   {
     title: '5. Free trial',
@@ -32,7 +32,7 @@ const SECTIONS = [
   },
   {
     title: '6. Cancellation and refunds',
-    body: `You may cancel your subscription at any time from your account settings. Upon cancellation, you will retain access to paid features until the end of your current billing period. We do not offer refunds for partial subscription periods except where required by applicable law. Refund requests may be considered on a case-by-case basis — contact hello@opuslearn.ai.`,
+    body: `You may cancel your subscription at any time from your account settings. Upon cancellation, you will retain access to paid features until the end of your current billing period. We offer refunds within 14 days of purchase if you have not completed more than one module. Refund requests outside this window may be considered on a case-by-case basis — contact hello@opuslearn.ai.`,
   },
   {
     title: '7. Intellectual property',

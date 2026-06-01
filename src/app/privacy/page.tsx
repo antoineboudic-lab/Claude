@@ -32,7 +32,7 @@ const SECTIONS = [
   },
   {
     title: '6. Data sharing',
-    body: `We share your data with: (a) Service providers — Supabase (database), Vercel (hosting), and Stripe (payments). These providers act as data processors under GDPR and are bound by data processing agreements. (b) Legal authorities — if required by law or to protect our rights. We do not share your data with advertisers or data brokers.`,
+    body: `We share your data with: (a) Service providers — Supabase (database and authentication), Vercel (hosting), Stripe (payments), Resend (transactional email), PostHog (product analytics), Anthropic (AI features), and Upstash (rate limiting). These providers act as data processors under GDPR and are bound by data processing agreements. (b) Legal authorities — if required by law or to protect our rights. We do not share your data with advertisers or data brokers.`,
   },
   {
     title: '7. International transfers',

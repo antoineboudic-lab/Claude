@@ -1,5 +1,6 @@
 import type { NextConfig } from "next"
 import createNextIntlPlugin from 'next-intl/plugin'
+import { withSentryConfig } from '@sentry/nextjs'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
@@ -18,7 +19,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https: blob:",
       "font-src 'self' data:",
-      "connect-src 'self' https://www.opuslearn.ai https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://api.resend.com",
+      "connect-src 'self' https://www.opuslearn.ai https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://api.resend.com https://*.sentry.io https://us.i.posthog.com",
       "frame-src https://js.stripe.com https://hooks.stripe.com",
       "form-action 'self' https://checkout.stripe.com",
       "base-uri 'self'",
@@ -47,4 +48,9 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default withNextIntl(nextConfig)
+export default withSentryConfig(withNextIntl(nextConfig), {
+  org: 'opuslearn',
+  project: 'opuslearn',
+  silent: true,
+  disableLogger: true,
+})
