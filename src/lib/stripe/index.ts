@@ -9,4 +9,11 @@ export const STRIPE_PRICES = {
   annual:  process.env.STRIPE_ANNUAL_PRICE_ID  ?? '',
 } as const
 
+export const STRIPE_PRICES_AED = {
+  monthly: process.env.STRIPE_MONTHLY_PRICE_ID_AED ?? '',
+  annual:  process.env.STRIPE_ANNUAL_PRICE_ID_AED  ?? '',
+} as const
+
 export type StripePlan = keyof typeof STRIPE_PRICES
+
+export const UAE_COUNTRY_CODE = 'AE'

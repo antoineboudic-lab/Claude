@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseServerClient as createClient } from '@/lib/supabase/server'
-import { stripe, STRIPE_PRICES, type StripePlan } from '@/lib/stripe'
+import { stripe, STRIPE_PRICES, STRIPE_PRICES_AED, UAE_COUNTRY_CODE, type StripePlan } from '@/lib/stripe'
 import { getSubscriptionByUserId, upsertSubscription } from '@/lib/supabase/subscriptions'
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
@@ -19,7 +19,11 @@ export async function POST(req: Request) {
     if (body.plan === 'annual') plan = 'annual'
   } catch {}
 
-  const priceId = STRIPE_PRICES[plan]
+  // Detect UAE users via Vercel's geo header — serve AED prices
+  const country = req.headers.get('x-vercel-ip-country') ?? ''
+  const priceTable = country === UAE_COUNTRY_CODE ? STRIPE_PRICES_AED : STRIPE_PRICES
+  const priceId = priceTable[plan]
+
   if (!priceId) {
     return NextResponse.json({ error: 'Stripe price not configured' }, { status: 500 })
   }
