@@ -17,6 +17,7 @@ import { useSubscription } from '@/hooks/useSubscription'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
 import { ShareCard } from '@/components/ShareCard'
+import { ShareAndEarn } from '@/components/ShareAndEarn'
 import GlobalSearch from '@/components/GlobalSearch'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import PushNotificationPrompt from '@/components/PushNotificationPrompt'
@@ -1566,6 +1567,17 @@ export default function DashboardPage() {
                     </div>
                   )}
                 </div>
+              </motion.div>
+            )}
+
+            {/* Share & Earn */}
+            {user && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.55, ease: easing }}
+              >
+                <ShareAndEarn userId={user.id} />
               </motion.div>
             )}
           </div>

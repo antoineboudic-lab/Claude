@@ -3,12 +3,13 @@ import { AdminNavEmail } from './AdminNavEmail'
 import { AdminUsersTable } from './AdminUsersTable'
 import { CreateEnterpriseTeamForm } from './CreateEnterpriseTeamForm'
 import { AdminTeamsTable } from './AdminTeamsTable'
+import { SocialShareActions } from './SocialShareActions'
 import Link from 'next/link'
 import {
   Users, Zap, BookOpen, Target, TrendingUp, Bell,
   Flame, Award, Mail, Building2, Share2, UserPlus,
   BarChart3, CheckCircle2, XCircle, RefreshCw,
-  Download, DollarSign, Megaphone, ExternalLink, Calendar,
+  Download, DollarSign, Megaphone, ExternalLink, Calendar, Gift, Clock,
 } from 'lucide-react'
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -107,6 +108,16 @@ interface SubscriptionRow {
   created_at: string
 }
 
+interface SocialShareRow {
+  id: string
+  user_id: string
+  platform: string
+  post_url: string
+  status: string
+  reviewed_at: string | null
+  created_at: string
+}
+
 type AdminUser = AuthUser
 
 
@@ -166,8 +177,8 @@ function StatCard({ icon: Icon, label, value, sub, color }: {
   )
 }
 
-function TabNav({ active, userCount, leadsCount, teamsCount }: {
-  active: string; userCount: number; leadsCount: number; teamsCount: number
+function TabNav({ active, userCount, leadsCount, teamsCount, socialSharesCount }: {
+  active: string; userCount: number; leadsCount: number; teamsCount: number; socialSharesCount: number
 }) {
   const tabs = [
     { id: 'overview', label: 'Overview', icon: BarChart3 },
@@ -176,6 +187,7 @@ function TabNav({ active, userCount, leadsCount, teamsCount }: {
     { id: 'teams', label: `Teams (${teamsCount})`, icon: Building2 },
     { id: 'leads', label: `Leads (${leadsCount})`, icon: UserPlus },
     { id: 'referrals', label: 'Referrals', icon: Share2 },
+    { id: 'social-shares', label: socialSharesCount > 0 ? `Social Shares (${socialSharesCount})` : 'Social Shares', icon: Gift },
     { id: 'revenue', label: 'Revenue', icon: DollarSign },
     { id: 'broadcast', label: 'Broadcast', icon: Megaphone },
   ]
@@ -242,6 +254,7 @@ export default async function AdminPage({
     { count: pushCount },
     { count: leadsTotal },
     { count: teamsTotal },
+    { count: pendingSocialShares },
   ] = await Promise.all([
     admin.auth.admin.listUsers({ perPage: 1000 }),
     admin.from('user_progress').select('*').order('xp', { ascending: false }),
@@ -249,6 +262,7 @@ export default async function AdminPage({
     admin.from('push_subscriptions').select('*', { count: 'exact', head: true }),
     admin.from('leads').select('*', { count: 'exact', head: true }),
     admin.from('teams').select('*', { count: 'exact', head: true }),
+    admin.from('social_shares').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
   ])
 
   const users: AuthUser[] = (listUsersResult.data?.users ?? []) as unknown as AuthUser[]
@@ -314,6 +328,7 @@ export default async function AdminPage({
   let leads: LeadRow[] = []
   let referrals: ReferralRow[] = []
   let subscriptions: SubscriptionRow[] = []
+  let socialShares: SocialShareRow[] = []
 
   if (tab === 'emails') {
     const { data } = await admin.from('email_log').select('id, email, sequence, step, status, sent_at').order('sent_at', { ascending: false }).limit(100)
@@ -340,6 +355,10 @@ export default async function AdminPage({
   if (tab === 'revenue') {
     const { data } = await admin.from('subscriptions').select('*').order('created_at', { ascending: false })
     subscriptions = data ?? []
+  }
+  if (tab === 'social-shares') {
+    const { data } = await admin.from('social_shares').select('*').order('created_at', { ascending: false }).limit(200)
+    socialShares = data ?? []
   }
 
   // ── Email tab derived
@@ -405,7 +424,7 @@ export default async function AdminPage({
   const tabTitle: Record<string, string> = {
     overview: 'Overview', users: 'Users', emails: 'Emails',
     teams: 'Teams', leads: 'Leads', referrals: 'Referrals',
-    revenue: 'Revenue', broadcast: 'Broadcast',
+    'social-shares': 'Social Shares', revenue: 'Revenue', broadcast: 'Broadcast',
   }
 
   return (
@@ -445,7 +464,7 @@ export default async function AdminPage({
           </p>
         </div>
 
-        <TabNav active={tab} userCount={totalUsers} leadsCount={leadsTotal ?? 0} teamsCount={teamsTotal ?? 0} />
+        <TabNav active={tab} userCount={totalUsers} leadsCount={leadsTotal ?? 0} teamsCount={teamsTotal ?? 0} socialSharesCount={pendingSocialShares ?? 0} />
 
         {/* ═══════════════════ OVERVIEW ═══════════════════ */}
         {tab === 'overview' && (
@@ -870,6 +889,63 @@ export default async function AdminPage({
                             {r.reward_xp > 0 ? `+${r.reward_xp.toLocaleString()}` : '—'}
                           </td>
                           <td style={{ padding: '10px 16px', color: '#CBD5E1', whiteSpace: 'nowrap' }}>{fmt(r.created_at)}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ═══════════════════ SOCIAL SHARES ═══════════════════ */}
+        {tab === 'social-shares' && (
+          <>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16, marginBottom: 24 }}>
+              <StatCard icon={Clock} label="Pending review" value={socialShares.filter(s => s.status === 'pending').length} color="#F59E0B" />
+              <StatCard icon={CheckCircle2} label="Approved" value={socialShares.filter(s => s.status === 'approved').length} color="#10B981" />
+              <StatCard icon={XCircle} label="Rejected" value={socialShares.filter(s => s.status === 'rejected').length} color="#94A3B8" />
+            </div>
+
+            <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <div style={{ padding: '16px 24px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Gift size={14} style={{ color: '#10B981' }} />
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Share submissions</span>
+                <span style={{ fontSize: 12, color: '#94A3B8', marginLeft: 'auto' }}>Approve to add 30 days to subscription</span>
+              </div>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                  <TableHead cols={['User', 'Platform', 'Post URL', 'Submitted', 'Status', 'Action']} />
+                  <tbody>
+                    {socialShares.length === 0 ? <EmptyRow cols={6} message="No submissions yet" /> : socialShares.map((s, i) => {
+                      const isPending = s.status === 'pending'
+                      return (
+                        <tr key={s.id} style={{ borderBottom: '1px solid #F8FAFC', background: i % 2 === 0 ? '#FAFBFF' : '#FFFFFF' }}>
+                          <td style={{ padding: '12px 16px', color: '#334155' }}>{s.user_id.slice(0, 8)}…</td>
+                          <td style={{ padding: '12px 16px' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600, background: s.platform === 'linkedin' ? '#DBEAFE' : '#F3E8FF', color: s.platform === 'linkedin' ? '#2563EB' : '#A855F7' }}>
+                              <Share2 size={10} />
+                              {s.platform === 'linkedin' ? 'LinkedIn' : 'Instagram'}
+                            </span>
+                          </td>
+                          <td style={{ padding: '12px 16px', maxWidth: 280 }}>
+                            <a href={s.post_url} target="_blank" rel="noopener noreferrer" style={{ color: '#2563EB', textDecoration: 'none', fontSize: 12, display: 'flex', alignItems: 'center', gap: 4, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              <ExternalLink size={11} />
+                              {s.post_url.replace('https://', '').slice(0, 50)}{s.post_url.length > 55 ? '…' : ''}
+                            </a>
+                          </td>
+                          <td style={{ padding: '12px 16px', color: '#64748B', whiteSpace: 'nowrap' }}>{fmt(s.created_at)}</td>
+                          <td style={{ padding: '12px 16px' }}>
+                            <span style={{ padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600, background: s.status === 'approved' ? '#DCFCE7' : s.status === 'rejected' ? '#FEE2E2' : '#FEF9C3', color: s.status === 'approved' ? '#166534' : s.status === 'rejected' ? '#991B1B' : '#854D0E' }}>
+                              {s.status}
+                            </span>
+                          </td>
+                          <td style={{ padding: '12px 16px' }}>
+                            {isPending && (
+                              <SocialShareActions shareId={s.id} />
+                            )}
+                          </td>
                         </tr>
                       )
                     })}

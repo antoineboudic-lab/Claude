@@ -481,3 +481,54 @@ function weeklySubject(name: string, thisWeek: number): string {
 export function sendWeeklyDigestEmail(to: string, name: string, stats: WeeklyStats): Promise<boolean> {
   return send(to, weeklySubject(name, stats.thisWeekLessons), weeklyDigestHtml(name, stats))
 }
+
+// ─── Social share emails ──────────────────────────────────────────────────────
+
+export function sendSocialShareAdminAlert(
+  to: string,
+  userName: string,
+  userEmail: string,
+  platform: string,
+  postUrl: string,
+): Promise<boolean> {
+  const platformLabel = platform === 'linkedin' ? 'LinkedIn' : 'Instagram'
+  const html = baseHtml(`
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:22px;font-weight:900;color:#0F172A;line-height:1.2;">New social share to review</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">${userName} (${userEmail}) shared OpusLearn on ${platformLabel} and is requesting 1 free month.</p>
+    `, 20)}
+    ${row(infoBox(`
+      <strong>Platform:</strong> ${platformLabel}<br>
+      <strong>User:</strong> ${userName} &lt;${userEmail}&gt;<br>
+      <strong>Post URL:</strong> <a href="${postUrl}" style="color:#2563EB;">${postUrl}</a>
+    `, 'blue'))}
+    ${spacer(8)}
+    ${row(btn('Review in admin →', `${BASE_URL}/admin?tab=social-shares`))}
+    ${spacer(28)}
+  `)
+  return send(to, `New social share from ${userName} — review required`, html)
+}
+
+export function sendSocialShareApprovedEmail(
+  to: string,
+  name: string,
+  newPeriodEnd: Date,
+): Promise<boolean> {
+  const dateStr = newPeriodEnd.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  const html = baseHtml(`
+    ${spacer(8)}
+    ${row(`
+      <h1 style="margin:0 0 10px;font-size:26px;font-weight:900;color:#0F172A;line-height:1.2;">You've earned 1 free month, ${name}!</h1>
+      <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">Thank you for sharing OpusLearn — we reviewed your post and added 30 days to your subscription.</p>
+    `, 20)}
+    ${row(infoBox(`
+      <strong>Your subscription is now active until ${dateStr}.</strong><br>
+      Keep sharing and learning — we appreciate your support!
+    `, 'green'))}
+    ${spacer(8)}
+    ${row(btn('Go to my dashboard →', `${BASE_URL}/dashboard`))}
+    ${spacer(28)}
+  `)
+  return send(to, `Your free month is active — thank you for sharing, ${name}!`, html)
+}
