@@ -17,7 +17,7 @@ import { useSubscription } from '@/hooks/useSubscription'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
 import { ShareCard } from '@/components/ShareCard'
-import { ShareAndEarn } from '@/components/ShareAndEarn'
+import { ShareAndEarn, ShareAndEarnBanner, ShareAndEarnPopup } from '@/components/ShareAndEarn'
 import GlobalSearch from '@/components/GlobalSearch'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import PushNotificationPrompt from '@/components/PushNotificationPrompt'
@@ -1168,6 +1168,9 @@ export default function DashboardPage() {
           <StatCard icon={Award} label={t('badgesEarned')} value={state.earnedBadges.length} color="#E04D2A" delay={0.2} />
         </div>
 
+        {/* Share & Earn banner */}
+        {user && <ShareAndEarnBanner userId={user.id} />}
+
         {/* Continue card */}
         <div className="mb-6">
           <ContinueCard completedLessons={state.completedLessons} assessment={assessment} />
@@ -1586,6 +1589,7 @@ export default function DashboardPage() {
       <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#2563EB" />
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PushNotificationPrompt />
+      {user && <ShareAndEarnPopup userId={user.id} completedLessons={state.completedLessons.length} />}
     </div>
   )
 }
