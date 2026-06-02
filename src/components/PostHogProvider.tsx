@@ -5,6 +5,7 @@ import { PostHogProvider as PHProvider, usePostHog } from 'posthog-js/react'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, Suspense } from 'react'
 import { useAuth } from '@/context/AuthContext'
+import { getCookieConsent } from '@/components/CookieBanner'
 
 function PageViewTracker() {
   const pathname = usePathname()
@@ -49,7 +50,21 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
       capture_pageview: false,
       capture_pageleave: true,
       person_profiles: 'identified_only',
+      // Opt out by default — only capture if user has accepted
+      opt_out_capturing_by_default: getCookieConsent() !== 'accepted',
     })
+
+    // Listen for consent changes during the session
+    function onConsent(e: Event) {
+      const choice = (e as CustomEvent<string>).detail
+      if (choice === 'accepted') {
+        posthog.opt_in_capturing()
+      } else {
+        posthog.opt_out_capturing()
+      }
+    }
+    window.addEventListener('cookie-consent', onConsent)
+    return () => window.removeEventListener('cookie-consent', onConsent)
   }, [])
 
   return (
