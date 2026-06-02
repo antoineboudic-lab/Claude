@@ -49,26 +49,13 @@ export default function OGImage() {
 
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div style={{
-              width: 48, height: 48, borderRadius: 13,
-              background: 'linear-gradient(135deg, #2563EB, #22D3EE)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <div style={{
-                width: 26, height: 26, borderRadius: '50%',
-                border: '2.5px solid white', display: 'flex',
-                alignItems: 'center', justifyContent: 'center',
-              }}>
-                <div style={{
-                  width: 0, height: 0,
-                  borderLeft: '8px solid white',
-                  borderTop: '5px solid transparent',
-                  borderBottom: '5px solid transparent',
-                  marginLeft: 2, display: 'flex',
-                }} />
-              </div>
-            </div>
-            <span style={{ fontSize: 26, fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.5px' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              width={56} height={56}
+              src={`data:image/svg+xml,${encodeURIComponent('<svg width="56" height="56" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="28" height="28" rx="7" fill="#2563EB"/><circle cx="14" cy="15" r="6.5" stroke="white" stroke-width="2.2" fill="none"/><path d="M10.5 17L14 12L17.5 17" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>')}`}
+              alt="OpusLearn logo"
+            />
+            <span style={{ fontSize: 30, fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.5px' }}>
               OpusLearn
             </span>
           </div>
