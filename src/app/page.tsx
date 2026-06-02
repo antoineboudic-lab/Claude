@@ -1517,10 +1517,12 @@ const plans = [
   },
 ]
 
+const LAUNCH_FREE = process.env.NEXT_PUBLIC_LAUNCH_FREE === 'true'
+
 function Pricing() {
   const [annual, setAnnual] = useState(false)
   const { ref, isInView } = useReveal()
-  const { openSignUp } = useAuth()
+  const { openSignUp, user } = useAuth()
   const { isUAE } = useGeo()
   const tHomePricing = useTranslations('home.pricing')
 
@@ -1563,7 +1565,7 @@ function Pricing() {
                       style={{ border: '1px solid rgba(255,255,255,0.08)' }} />
                     <div className="text-center py-2 text-[10px] font-black tracking-[0.18em]"
                       style={{ background: 'rgba(0,0,0,0.15)', color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-sans)', letterSpacing: '0.2em' }}>
-                      {tHomePricing('mostPopular')}
+                      FREE AT LAUNCH
                     </div>
                   </>
                 )}
@@ -1572,36 +1574,46 @@ function Pricing() {
                     style={{ color: plan.highlight ? 'rgba(255,255,255,0.5)' : '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
                     {plan.name}
                   </p>
-                  {(() => {
-                    const raw = annual
-                      ? (isUAE ? plan.annualPriceAED : plan.annualPrice)
-                      : (isUAE ? plan.monthlyPriceAED : plan.monthlyPrice)
-                    if (!raw) {
-                      return (
-                        <div className="flex items-end gap-1.5 mb-1">
-                          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '2.25rem', lineHeight: 1, color: '#0F172A' }}>Custom</span>
-                        </div>
-                      )
-                    }
-                    const [intPart, decPart] = raw.includes('.') ? raw.split('.') : [raw, null]
-                    return (
-                      <div className="flex items-start gap-0.5 mb-1">
-                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: isUAE ? '0.9rem' : '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>{isUAE ? 'AED' : '$'}</span>
-                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: plan.highlight ? '3.25rem' : '3rem', lineHeight: 1, color: plan.highlight ? '#FFFFFF' : '#0F172A' }}>{intPart}</span>
-                        {decPart && (
-                          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: plan.highlight ? 'rgba(255,255,255,0.7)' : '#64748B' }}>.{decPart}</span>
-                        )}
-                        <span className="text-sm" style={{ color: plan.highlight ? 'rgba(255,255,255,0.45)' : '#94A3B8', fontFamily: 'var(--font-sans)', alignSelf: 'flex-end', marginBottom: '0.2rem', marginLeft: '2px' }}>{tHomePricing('perSeatMo')}</span>
+                  {plan.highlight ? (
+                    <div className="mb-1">
+                      <div className="flex items-start gap-0.5">
+                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: isUAE ? '0.9rem' : '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: '#FFFFFF' }}>{isUAE ? 'AED' : '$'}</span>
+                        <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '3.25rem', lineHeight: 1, color: '#FFFFFF' }}>0</span>
+                        <span className="text-sm" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)', alignSelf: 'flex-end', marginBottom: '0.2rem', marginLeft: '2px' }}>{tHomePricing('perSeatMo')}</span>
                       </div>
-                    )
-                  })()}
-                  {plan.highlight && annual && (
-                    <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-sans)' }}>
-                      {isUAE ? '439 AED billed annually' : '$119.88 billed annually'}
-                    </p>
+                      <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-sans)' }}>
+                        <span style={{ textDecoration: 'line-through' }}>{isUAE ? 'AED 45.99/mo' : '$12.99/mo'}</span>{' '}— free during launch
+                      </p>
+                    </div>
+                  ) : (
+                    <>
+                      {(() => {
+                        const raw = annual
+                          ? (isUAE ? plan.annualPriceAED : plan.annualPrice)
+                          : (isUAE ? plan.monthlyPriceAED : plan.monthlyPrice)
+                        if (!raw) {
+                          return (
+                            <div className="flex items-end gap-1.5 mb-1">
+                              <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '2.25rem', lineHeight: 1, color: '#0F172A' }}>Custom</span>
+                            </div>
+                          )
+                        }
+                        const [intPart, decPart] = raw.includes('.') ? raw.split('.') : [raw, null]
+                        return (
+                          <div className="flex items-start gap-0.5 mb-1">
+                            <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: isUAE ? '0.9rem' : '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: '#0F172A' }}>{isUAE ? 'AED' : '$'}</span>
+                            <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '3rem', lineHeight: 1, color: '#0F172A' }}>{intPart}</span>
+                            {decPart && (
+                              <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: '1.25rem', lineHeight: 1, marginTop: '0.5rem', color: '#64748B' }}>.{decPart}</span>
+                            )}
+                            <span className="text-sm" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)', alignSelf: 'flex-end', marginBottom: '0.2rem', marginLeft: '2px' }}>{tHomePricing('perSeatMo')}</span>
+                          </div>
+                        )
+                      })()}
+                    </>
                   )}
                   <p className="text-sm mb-7" style={{ color: plan.highlight ? 'rgba(255,255,255,0.55)' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                    {plan.desc}
+                    {plan.highlight ? 'Free for everyone during launch — no card needed' : plan.desc}
                   </p>
                   <ul className="space-y-3 mb-8">
                     {plan.features.map(feat => (
@@ -1618,6 +1630,21 @@ function Pricing() {
                       style={{ background: '#0F172A', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
                       {plan.cta}
                     </Link>
+                  ) : plan.highlight ? (
+                    user ? (
+                      <Link href="/dashboard"
+                        className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
+                        style={{ background: '#FFFFFF', color: '#2563EB', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}>
+                        Go to Dashboard
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={() => openSignUp()}
+                        className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
+                        style={{ background: '#FFFFFF', color: '#2563EB', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(0,0,0,0.15)', border: 'none', cursor: 'pointer' }}>
+                        Get started free
+                      </button>
+                    )
                   ) : (
                     <Link href="/assessment"
                       className="flex items-center justify-center w-full py-3.5 rounded-xl font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
@@ -1627,11 +1654,6 @@ function Pricing() {
                       }>
                       {plan.cta}
                     </Link>
-                  )}
-                  {plan.highlight && (
-                    <p className="text-center text-xs mt-2.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-sans)' }}>
-                      {isUAE ? 'Free for 7 days · AED 45.99/mo after · Cancel anytime' : tHomePricing('freeTrialNote')}
-                    </p>
                   )}
                 </div>
               </motion.div>
