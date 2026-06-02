@@ -87,7 +87,7 @@ export const metadata: Metadata = {
       "Personalised AI training for business professionals. Choose your role, get your learning path, apply AI immediately — no code required.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "OpusLearn — Personalised AI Training for Business Professionals",
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
     title: "OpusLearn — Master AI Without Writing Code",
     description:
       "Personalised AI training for business professionals. Role-specific paths in Marketing, Finance, HR, Sales, Operations & Leadership.",
-    images: ["/og-image.png"],
+    images: ["/opengraph-image"],
     creator: "@ailiteracy",
   },
   alternates: {
