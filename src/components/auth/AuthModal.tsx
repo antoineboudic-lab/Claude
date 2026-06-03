@@ -87,7 +87,7 @@ export function AuthModal() {
           },
         })
         if (error) throw error
-        setStep('payment')
+        setStep(process.env.NEXT_PUBLIC_LAUNCH_FREE === 'true' ? 'verify' : 'payment')
       } else {
         const { error } = await supabase.current.auth.signInWithPassword({ email, password })
         if (error) throw error
@@ -208,10 +208,10 @@ export function AuthModal() {
                   {step === 'payment' ? (
                     <motion.div key="payment" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="py-2">
                       <h2 className="text-xl font-black mb-1" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                        Start your 7-day free trial
+                        Get full access — free at launch
                       </h2>
                       <p className="text-sm mb-5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        No charge until your trial ends. Cancel anytime.
+                        All plans are free during launch. No card needed.
                       </p>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                         {/* Monthly */}
@@ -224,7 +224,10 @@ export function AuthModal() {
                           <div style={{ textAlign: 'right' }}>
                             {paymentLoading === 'monthly'
                               ? <Loader2 size={16} style={{ color: '#2563EB', animation: 'spin 1s linear infinite' }} />
-                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 45.99' : '$12.99'}</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
+                              : <>
+                                  <p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 0' : '$0'}</p>
+                                  <p style={{ margin: 0, fontSize: 11, color: '#94A3B8', fontFamily: 'var(--font-sans)', textDecoration: 'line-through' }}>{isUAE ? 'AED 45.99' : '$12.99'}/mo</p>
+                                </>
                             }
                           </div>
                         </button>
@@ -239,7 +242,10 @@ export function AuthModal() {
                           <div style={{ textAlign: 'right' }}>
                             {paymentLoading === 'annual'
                               ? <Loader2 size={16} style={{ color: '#10B981', animation: 'spin 1s linear infinite' }} />
-                              : <><p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#10B981', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 36.58' : '$9.99'}</p><p style={{ margin: 0, fontSize: 11, color: '#64748B', fontFamily: 'var(--font-sans)' }}>/month</p></>
+                              : <>
+                                  <p style={{ margin: 0, fontSize: 16, fontWeight: 900, color: '#10B981', fontFamily: 'var(--font-sans)' }}>{isUAE ? 'AED 0' : '$0'}</p>
+                                  <p style={{ margin: 0, fontSize: 11, color: '#94A3B8', fontFamily: 'var(--font-sans)', textDecoration: 'line-through' }}>{isUAE ? 'AED 36.58' : '$9.99'}/mo</p>
+                                </>
                             }
                           </div>
                         </button>
