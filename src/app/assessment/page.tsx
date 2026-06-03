@@ -930,7 +930,7 @@ export default function AssessmentPage() {
             const derived = deriveExperience(answers.currentTools)
             const finalAnswers = { ...answers, experience: derived }
             const result = buildAssessmentResult(finalAnswers)
-            localStorage.setItem('ai-literacy-assessment', JSON.stringify(result))
+            localStorage.setItem('opuslearn-assessment', JSON.stringify(result))
             if (user) await saveAssessment(user.id, result).catch(() => {})
           } catch { /* ignore */ }
           router.push('/assessment/results')

@@ -226,7 +226,7 @@ export default function CertificatePage() {
   // Load user name from assessment
   useEffect(() => {
     if (!user) return
-    const localRaw = typeof window !== 'undefined' ? localStorage.getItem('ai-literacy-assessment') : null
+    const localRaw = typeof window !== 'undefined' ? (localStorage.getItem('opuslearn-assessment') ?? localStorage.getItem('ai-literacy-assessment')) : null
     if (localRaw) {
       try {
         const parsed = JSON.parse(localRaw)

@@ -224,12 +224,12 @@ export default function AssessmentResultsPage() {
         const remote = await loadLatestAssessment(user.id).catch(() => null)
         if (remote) {
           setResult(remote)
-          localStorage.setItem('ai-literacy-assessment', JSON.stringify(remote))
+          localStorage.setItem('opuslearn-assessment', JSON.stringify(remote))
           return
         }
       }
       try {
-        const raw = localStorage.getItem('ai-literacy-assessment')
+        const raw = localStorage.getItem('opuslearn-assessment') ?? localStorage.getItem('ai-literacy-assessment')
         if (raw) setResult(JSON.parse(raw) as AssessmentResult)
       } catch { /* ignore */ }
     }

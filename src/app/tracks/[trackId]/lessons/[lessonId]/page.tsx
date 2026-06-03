@@ -1502,7 +1502,7 @@ export default function LessonPage() {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem('ai-literacy-assessment')
+      const raw = localStorage.getItem('opuslearn-assessment') ?? localStorage.getItem('ai-literacy-assessment')
       if (raw) {
         const result = JSON.parse(raw)
         const inPath = result.customPath?.some((l: { lessonId: string }) => l.lessonId === lessonId)
