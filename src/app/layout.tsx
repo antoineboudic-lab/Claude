@@ -100,7 +100,6 @@ export const metadata: Metadata = {
     description:
       "Personalised AI training for business professionals. Role-specific paths in Marketing, Finance, HR, Sales, Operations & Leadership.",
     images: ["/opengraph-image"],
-    creator: "@ailiteracy",
   },
   alternates: {
     canonical: SITE_URL,
@@ -134,7 +133,6 @@ const jsonLd = {
         "OpusLearn is a personalised AI training platform for business professionals across Marketing, Finance, HR, Sales, Operations, and Leadership.",
       foundingDate: "2024",
       sameAs: [
-        "https://twitter.com/ailiteracy",
         "https://linkedin.com/company/ailiteracy",
       ],
     },
