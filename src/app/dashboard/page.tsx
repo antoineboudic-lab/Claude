@@ -1168,8 +1168,7 @@ export default function DashboardPage() {
           <StatCard icon={Award} label={t('badgesEarned')} value={state.earnedBadges.length} color="#E04D2A" delay={0.2} />
         </div>
 
-        {/* Share & Earn banner */}
-        {user && <ShareAndEarnBanner userId={user.id} />}
+        {/* Share & Earn banner — hidden during free launch */}
 
         {/* Continue card */}
         <div className="mb-6">
@@ -1580,7 +1579,7 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.55, ease: easing }}
               >
-                <ShareAndEarn userId={user.id} />
+                {/* ShareAndEarn — hidden during free launch */}
               </motion.div>
             )}
           </div>
@@ -1589,7 +1588,7 @@ export default function DashboardPage() {
       <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#2563EB" />
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PushNotificationPrompt />
-      {user && <ShareAndEarnPopup userId={user.id} completedLessons={state.completedLessons.length} />}
+      {/* ShareAndEarnPopup — hidden during free launch */}
     </div>
   )
 }
