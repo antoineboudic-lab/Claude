@@ -887,12 +887,23 @@ const DEFAULT_ANSWERS: AssessmentAnswers = {
 export default function AssessmentPage() {
   const t = useTranslations('assessment')
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
   const [stepIdx, setStepIdx] = useState(0)
   const [direction, setDirection] = useState(1)
   const [answers, setAnswers] = useState<AssessmentAnswers>(DEFAULT_ANSWERS)
   const [processingStep, setProcessingStep] = useState(0)
   const [showTips, setShowTips] = useState(false)
+
+  // Pre-fill name from auth metadata and skip welcome step when signed in
+  useEffect(() => {
+    if (!user) return
+    const firstName = user.user_metadata?.full_name?.split(' ')[0]
+      ?? user.user_metadata?.name?.split(' ')[0]
+      ?? user.email?.split('@')[0]
+      ?? ''
+    setAnswers(a => ({ ...a, name: firstName }))
+    setStepIdx(1) // skip welcome step
+  }, [user])
 
   // Dynamic steps based on role (branching)
   const STEPS = useMemo<StepId[]>(() => {
@@ -973,21 +984,34 @@ export default function AssessmentPage() {
           <Logo size="md" />
         </Link>
 
-        {currentStep !== 'processing' && (
-          <div className="flex items-center gap-4">
-            <span className="text-xs hidden sm:block" style={{ color: '#94A3B8' }}>
-              {t('stepOf', { current: stepIdx + 1, total: contentStepCount })}
-            </span>
-            <div className="w-32 h-1.5 rounded-full overflow-hidden" style={{ background: '#E2E8F0' }}>
-              <motion.div
-                className="h-full rounded-full"
-                style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }}
-                animate={{ width: `${progressPct}%` }}
-                transition={{ duration: 0.4 }}
-              />
-            </div>
-          </div>
-        )}
+        <div className="flex items-center gap-4">
+          {currentStep !== 'processing' && (
+            <>
+              <span className="text-xs hidden sm:block" style={{ color: '#94A3B8' }}>
+                {t('stepOf', { current: stepIdx + 1, total: contentStepCount })}
+              </span>
+              <div className="w-32 h-1.5 rounded-full overflow-hidden" style={{ background: '#E2E8F0' }}>
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }}
+                  animate={{ width: `${progressPct}%` }}
+                  transition={{ duration: 0.4 }}
+                />
+              </div>
+            </>
+          )}
+          {user && (
+            <button
+              onClick={() => signOut()}
+              className="text-xs font-medium transition-colors"
+              style={{ color: '#94A3B8' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#64748B' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#94A3B8' }}
+            >
+              Sign out
+            </button>
+          )}
+        </div>
       </header>
 
       {/* Content */}
