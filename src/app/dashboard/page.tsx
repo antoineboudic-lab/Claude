@@ -1028,6 +1028,10 @@ export default function DashboardPage() {
     if (!loading && !user) router.replace('/?next=/dashboard')
   }, [loading, user, router])
 
+  useEffect(() => {
+    if (assessmentChecked && !assessment && user) router.replace('/assessment')
+  }, [assessmentChecked, assessment, user, router])
+
 
   if (!mounted || loading) {
     return (

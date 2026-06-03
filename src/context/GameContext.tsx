@@ -68,6 +68,7 @@ function clearLocalState() {
   try {
     localStorage.removeItem(STORAGE_KEY)
     localStorage.removeItem(LAST_USER_KEY)
+    localStorage.removeItem('opuslearn-assessment')
   } catch {}
 }
 
