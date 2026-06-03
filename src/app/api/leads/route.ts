@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/client'
+import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendLeadWelcomeEmail } from '@/lib/growth/email'
 
@@ -10,7 +10,7 @@ function isAdminEmail(email: string | undefined) {
 
 // PATCH /api/leads — admin: mark converted or send invite
 export async function PATCH(req: NextRequest) {
-  const supabase = createClient()
+  const supabase = await createSupabaseServerClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user || !isAdminEmail(user.email)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
@@ -38,7 +38,7 @@ export async function PATCH(req: NextRequest) {
 
 // DELETE /api/leads — admin: delete a lead
 export async function DELETE(req: NextRequest) {
-  const supabase = createClient()
+  const supabase = await createSupabaseServerClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user || !isAdminEmail(user.email)) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
