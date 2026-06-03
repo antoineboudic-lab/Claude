@@ -498,10 +498,10 @@ function PaywallOverlay({
                   opacity: upgrading ? 0.7 : 1,
                 }}
               >
-                {upgrading ? 'Redirecting to checkout…' : 'Start My 7-Day Free Trial'}
+                {upgrading ? 'Redirecting to checkout…' : 'Upgrade to Pro'}
               </motion.button>
               <p className="text-center text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                Free for 7 days &middot; Cancel anytime
+                Cancel anytime
               </p>
             </>
           ) : (
@@ -517,10 +517,10 @@ function PaywallOverlay({
                   fontFamily: 'var(--font-sans)',
                 }}
               >
-                Create Account &amp; Start Free Trial
+                Create Free Account
               </motion.button>
               <p className="text-center text-xs mb-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                Free for 7 days &middot; Then $19/month &middot; Cancel anytime
+                Free during launch &middot; No card needed
               </p>
               <button
                 onClick={onSignIn}

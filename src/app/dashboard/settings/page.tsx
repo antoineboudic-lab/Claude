@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -737,11 +738,13 @@ function TeamTab({ userId }: { userId: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function SettingsPage() {
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
+  const router = useRouter()
   const [tab, setTab] = useState<Tab>('profile')
   const [isInTeam, setIsInTeam] = useState(false)
 
   useEffect(() => {
+    if (!authLoading && !user) { router.replace('/'); return }
     if (!user) return
     Promise.all([getAdminTeam(user.id), getMemberTeam(user.id)]).then(([admin, member]) => {
       const inTeam = !!(admin || member)

@@ -19,12 +19,12 @@
       "headingAccent": "your role demands.",
       "subheading": "Personalised learning paths for business professionals. Apply AI to your actual work — no technical background required.",
       "cta": "Find my learning path",
-      "ctaSub": "7-day free trial included",
+      "ctaSub": "Free at launch — no card needed",
       "seeHowItWorks": "See how it works",
       "pickYourRole": "Pick your role and start today",
       "rating": "from {count}+ professionals",
-      "trustFree": "7-day free trial",
-      "trustNoCard": "Cancel anytime",
+      "trustFree": "Free at launch",
+      "trustNoCard": "No card needed",
       "trustStart": "Start in 2 minutes"
     },
     "social": {
@@ -42,11 +42,11 @@
       "heading": "From zero to AI fluency in three steps",
       "sub": "No setup. No prerequisites. Start your first lesson in under 5 minutes.",
       "cta": "Start with the free assessment",
-      "ctaSub": "Takes 3 minutes · 7-day free trial included",
+      "ctaSub": "Free — no card needed",
       "step1Tag": "Free",
       "step1Title": "Take the Assessment",
-      "step1Desc": "Answer 5 quick questions about your role, industry, and goals. Takes 3 minutes and shapes everything that follows.",
-      "step1Detail": "3 min · 5 questions · No login required",
+      "step1Desc": "Answer questions about your role, industry, and goals. Takes a few minutes and shapes everything that follows.",
+      "step1Detail": "~10 min · No login required",
       "step2Tag": "Personalised",
       "step2Title": "Get Your Path",
       "step2Desc": "Our AI engine builds your personalised curriculum — the right modules, in the right order, at the right depth for your role.",
@@ -91,7 +91,7 @@
       "annualDiscount": "−23%",
       "mostPopular": "✦ MOST POPULAR ✦",
       "perSeatMo": "/mo",
-      "freeTrialNote": "Free for 7 days · $12.99/mo after · Cancel anytime"
+      "freeTrialNote": "Free during launch · No card needed"
     },
     "faq": {
       "sectionLabel": "FAQ",
@@ -111,7 +111,7 @@
       "sub": "3-minute assessment. Personalised path. First lesson in under 5 minutes.",
       "cta": "Take the free assessment",
       "browseAllTracks": "Browse all tracks",
-      "note": "7-day free trial · Cancel anytime"
+      "note": "Free during launch · No card needed"
     },
     "footer": {
       "rights": "All rights reserved.",
@@ -141,7 +141,7 @@
     },
     "stickyBar": {
       "title": "Join {count}+ professionals mastering AI",
-      "sub": "7-day free trial · Cancel anytime",
+      "sub": "Free during launch · No card needed",
       "buildPlan": "Build my learning plan"
     },
     "loggedIn": {
@@ -326,7 +326,7 @@
     "noPathStep3Title": "Get your curriculum",
     "noPathStep3Desc": "A personalised lesson sequence built only for you, ready to start.",
     "buildPersonalizedPath": "Build my personalized learning path",
-    "freeForever": "7-day free trial · Takes 2 minutes · Cancel anytime",
+    "freeForever": "Free during launch · Takes 2 minutes · No card needed",
     "best": "Best",
     "days": "days",
     "lessonsCompletedMsg": "You've completed {count} lesson{plural} — keep the momentum going.",
@@ -342,7 +342,7 @@
     "pro": "Pro",
     "teams": "Teams",
     "getStarted": "Get started free",
-    "startTrial": "Start 7-day free trial",
+    "startTrial": "Get started free",
     "redirecting": "Redirecting…",
     "contactSales": "Contact sales",
     "contactUs": "Contact us",
@@ -351,7 +351,7 @@
     "billedAnnually": "billed annually",
     "mostPopular": "Most popular",
     "custom": "Custom",
-    "trialNote": "All plans include a 7-day free trial. Cancel anytime.",
+    "trialNote": "All plans are free during launch. No card needed.",
     "faq": "Frequently asked questions",
     "faqSub": "Everything you need to know before signing up.",
     "signIn": "Sign in",

@@ -1412,7 +1412,7 @@ const FAQS = [
   },
   {
     q: 'Can I try it before committing?',
-    a: 'Yes. You can start with a 7-day free trial — no commitment needed. Professional and Team plans give you full access to all tracks and lessons.',
+    a: 'Yes — everything is free during launch. No credit card, no trial period. Create an account and get full access to all tracks and lessons at no cost.',
   },
   {
     q: 'Is there a plan for teams or companies?',
@@ -1505,9 +1505,9 @@ const plans = [
   },
   {
     name: 'Professional', monthlyPrice: '12.99', annualPrice: '9.99', monthlyPriceAED: '45.99', annualPriceAED: '36.58',
-    desc: '7-day free trial · Full access to your personalised path',
+    desc: 'Free at launch · Full access to your personalised path',
     features: ['All lessons in your track', 'AI-personalised curriculum', 'All 10 role tracks', 'Progress analytics & streaks', 'Verified certificate', 'Priority support'],
-    cta: 'Start 7-Day Free Trial', highlight: true,
+    cta: 'Get started free', highlight: true,
   },
   {
     name: 'Team', monthlyPrice: '', annualPrice: '', monthlyPriceAED: '', annualPriceAED: '',

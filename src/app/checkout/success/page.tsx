@@ -54,13 +54,13 @@ export default function CheckoutSuccessPage() {
           transition={{ delay: 0.3 }}
         >
           <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#2563EB', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
-            Welcome to Pro
+            Welcome to OpusLearn
           </p>
           <h1 style={{ fontSize: '2rem', fontWeight: 900, color: '#0F172A', marginBottom: 10, letterSpacing: '-0.02em', lineHeight: 1.15 }}>
-            Your trial has started! 🎉
+            You&apos;re all set! 🎉
           </h1>
           <p style={{ fontSize: '0.9375rem', color: '#64748B', lineHeight: 1.65, marginBottom: 32 }}>
-            You have 7 days free to explore everything. You won&apos;t be charged until your trial ends.
+            Your account is ready. Everything is free during launch — no card needed.
           </p>
 
           {/* Perks */}

@@ -1426,17 +1426,19 @@ export default function DashboardPage() {
                       {isTrialing ? t('trialEnds') : t('renews')} {new Date(subscription.currentPeriodEnd).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </p>
                   )}
-                  <button
-                    onClick={async () => {
-                      const res = await fetch('/api/billing/portal', { method: 'POST' })
-                      const { url } = await res.json()
-                      if (url) window.location.href = url
-                    }}
-                    className="flex items-center gap-2 text-xs font-semibold transition-colors hover:opacity-80"
-                    style={{ color: '#2563EB', fontFamily: 'var(--font-sans)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-                  >
-                    <CreditCard size={12} /> {t('manageSub')}
-                  </button>
+                  {subscription && (
+                    <button
+                      onClick={async () => {
+                        const res = await fetch('/api/billing/portal', { method: 'POST' })
+                        const { url } = await res.json()
+                        if (url) window.location.href = url
+                      }}
+                      className="flex items-center gap-2 text-xs font-semibold transition-colors hover:opacity-80"
+                      style={{ color: '#2563EB', fontFamily: 'var(--font-sans)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    >
+                      <CreditCard size={12} /> {t('manageSub')}
+                    </button>
+                  )}
                 </div>
               </motion.div>
             ) : (

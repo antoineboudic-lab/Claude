@@ -21,9 +21,9 @@ const FAQS: { category: string; color: string; items: { q: string; a: string }[]
     category: 'Pricing & billing',
     color: '#10B981',
     items: [
-      { q: 'What\'s included in the free trial?', a: 'Your 7-day free trial gives you full access to all tracks and lessons. You can explore everything at your own pace, and you won\'t be charged until your trial ends.' },
-      { q: 'How does the 7-day free trial work?', a: 'When you upgrade to the Professional plan, you get 7 days of full access at no charge. You won\'t be billed until the 8th day. You can cancel at any time during the trial and you\'ll never be charged.' },
-      { q: 'Can I cancel anytime?', a: 'Yes, you can cancel your subscription at any time from your account settings. There\'s no cancellation fee. If you cancel, you\'ll retain access until the end of your current billing period.' },
+      { q: 'Is it really free?', a: 'Yes — everything is free during our launch period. No credit card required, no trial expiry, no hidden fees. Create an account and get full access to all tracks and lessons immediately.' },
+      { q: 'Will it stay free?', a: 'OpusLearn is free during the launch period. Pricing will be introduced later, and existing users will get advance notice well before any changes take effect.' },
+      { q: 'Can I cancel anytime?', a: 'There\'s nothing to cancel during the free launch period — just use OpusLearn for free. When paid plans are introduced, cancellation will always be available from your account settings.' },
       { q: 'Do you offer team or enterprise pricing?', a: 'Yes. Our Team plan is €39/seat/month (billed annually) for groups of 5 or more. For larger organisations or custom requirements, contact us at hello@opuslearn.ai and we\'ll build a plan around your needs.' },
     ],
   },

@@ -422,7 +422,7 @@ export default function AssessmentResultsPage() {
                     )}
                   </form>
                   <div className="flex items-center gap-4 mt-4">
-                    {['7-day free trial', '3,200+ professionals'].map(t => (
+                    {['Free at launch', '3,200+ professionals'].map(t => (
                       <div key={t} className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                         <Check size={10} color="#10B981" /> {t}
                       </div>

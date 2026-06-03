@@ -183,7 +183,7 @@ export default function PricingPage() {
 
           <div style={{ flex: '1 1 260px', maxWidth: 300, background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: 16, padding: '28px 24px', display: 'flex', flexDirection: 'column' }}>
             <p style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: '0 0 6px' }}>{plans.free.title}</p>
-            <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>$0<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span></p>
+            <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>{isUAE ? 'AED 0' : '$0'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span></p>
             <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 24px', lineHeight: 1.5 }}>{plans.free.description}</p>
             <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
               {plans.free.features.map(f => (

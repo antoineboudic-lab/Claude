@@ -456,7 +456,7 @@ export default function TracksPage() {
                   <Sparkles size={14} /> Get my personalised track
                 </Link>
                 <p className="mt-3 text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
-                  Takes 3 minutes · 7-day free trial included
+                  Free during launch · No card needed
                 </p>
               </motion.div>
             </div>
