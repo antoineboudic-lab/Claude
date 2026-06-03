@@ -1554,6 +1554,13 @@ function SkillCheckStep({
 
   const q = questions[qIdx]
   const isLast = qIdx === questions.length - 1
+
+  // Shuffle options once per question so the correct answer isn't always in the same position
+  const shuffledOptions = useMemo(
+    () => [...q.options].sort(() => Math.random() - 0.5),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [qIdx]
+  )
   const wasCorrect = revealed && (q.options.find(o => o.id === selected)?.correct ?? false)
 
   function handleSelect(optId: string) {
@@ -1596,7 +1603,7 @@ function SkillCheckStep({
       </div>
 
       <div className="space-y-3 mb-5">
-        {q.options.map(opt => {
+        {shuffledOptions.map(opt => {
           const isSelected = selected === opt.id
           const isCorrect = opt.correct
           let bg = '#FFFFFF'
