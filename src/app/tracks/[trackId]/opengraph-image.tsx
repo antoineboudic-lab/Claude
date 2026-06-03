@@ -17,6 +17,7 @@ const TRACK_META: Record<string, { color: string; label: string; tagline: string
   product:    { color: '#14B8A6', label: 'Product',          tagline: 'Discover, prioritise, and ship better products with AI.' },
   customer:   { color: '#DC2626', label: 'Customer Success', tagline: 'Retain, expand, and delight customers with AI.' },
   consulting: { color: '#0EA5E9', label: 'Consulting',       tagline: 'Research, analyse, and deliver with AI as your edge.' },
+  it:         { color: '#6366F1', label: 'IT & Technology',  tagline: 'Supercharge your IT work with AI — from scripting to security.' },
 }
 
 export default function OGImage({ params }: { params: { trackId: string } }) {

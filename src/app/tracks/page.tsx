@@ -136,6 +136,17 @@ const tracks = [
     duration: '5 hrs',
     skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'],
   },
+  {
+    id: 'it',
+    title: 'IT & Technology',
+    tagline: 'Supercharge your IT work with AI — from scripting to security',
+    outcome: 'Script writing: hours → minutes with AI assistance',
+    color: '#6366F1',
+    icon: Zap,
+    lessons: 24,
+    duration: '7 hrs',
+    skills: ['AI scripting & automation', 'Cybersecurity with AI', 'IT operations', 'AI governance'],
+  },
 ]
 
 // ─── Track card ───────────────────────────────────────────────────────────────

@@ -37,6 +37,7 @@ const ROLES = [
   { id: 'product' as Role, label: 'Product', icon: Package, color: '#14B8A6', detail: 'PM, PO, product strategy, roadmap' },
   { id: 'customer' as Role, label: 'Customer Success', icon: Headphones, color: '#DC2626', detail: 'CS, account health, renewals, support' },
   { id: 'consulting' as Role, label: 'Consulting', icon: BarChart, color: '#0EA5E9', detail: 'Strategy, advisory, client delivery' },
+  { id: 'it' as Role, label: 'IT & Technology', icon: Zap, color: '#6366F1', detail: 'Infrastructure, security, scripting, ops' },
   { id: 'other' as Role, label: 'Other', icon: User, color: '#94A3B8', detail: 'Something else entirely' },
 ]
 

@@ -86,12 +86,13 @@ const ROI_HOURS: Record<string, Record<string, string>> = {
   product:    { light: '2–4', moderate: '4–7',  intensive: '7–11' },
   customer:   { light: '3–5', moderate: '5–8',  intensive: '8–12' },
   consulting: { light: '4–6', moderate: '6–10', intensive: '10–15' },
+  it:         { light: '3–5', moderate: '5–8',  intensive: '8–12'  },
 }
 
 const PEER_ADOPTION: Record<string, number> = {
   marketing: 78, finance: 64, hr: 71,
   sales: 82, operations: 68, leadership: 59,
-  legal: 52, product: 74, customer: 66, consulting: 71,
+  legal: 52, product: 74, customer: 66, consulting: 71, it: 69,
 }
 
 // ─── Readiness score ──────────────────────────────────────────────────────────

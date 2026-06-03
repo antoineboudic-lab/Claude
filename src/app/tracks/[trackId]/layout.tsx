@@ -61,6 +61,12 @@ const TRACK_META: Record<string, { title: string; description: string; keywords:
       "Apply AI to research, analysis, slide decks, and client delivery. A practical track for consultants who want AI as their competitive edge.",
     keywords: ["AI for consultants", "AI consulting tools", "ChatGPT for consulting", "AI strategy consulting", "consulting AI productivity"],
   },
+  it: {
+    title: "AI for IT & Technology",
+    description:
+      "Use AI to write scripts, automate operations, strengthen security, and manage documentation — a practical AI track for IT professionals.",
+    keywords: ["AI for IT", "AI scripting", "IT automation AI", "AI cybersecurity", "ChatGPT for developers"],
+  },
 };
 
 const SITE_URL = "https://opuslearn.ai";

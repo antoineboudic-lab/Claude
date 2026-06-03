@@ -40,13 +40,13 @@ interface Props {
 const TRACK_COLORS: Record<string, string> = {
   marketing: '#E04D2A', finance: '#F59E0B', hr: '#10B981', sales: '#3B82F6',
   operations: '#22D3EE', leadership: '#F97316', legal: '#0284C7',
-  product: '#14B8A6', customer: '#DC2626', consulting: '#0EA5E9',
+  product: '#14B8A6', customer: '#DC2626', consulting: '#0EA5E9', it: '#6366F1',
 }
 
 const TRACK_LABELS: Record<string, string> = {
   marketing: 'Marketing', finance: 'Finance', hr: 'HR', sales: 'Sales',
   operations: 'Ops', leadership: 'Leadership', legal: 'Legal',
-  product: 'Product', customer: 'Customer', consulting: 'Consulting',
+  product: 'Product', customer: 'Customer', consulting: 'Consulting', it: 'IT',
 }
 
 function fmt(d: string | null) {

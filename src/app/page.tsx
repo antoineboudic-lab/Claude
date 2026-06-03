@@ -589,6 +589,7 @@ const ROLE_PILLS = [
   { label: 'Product', color: '#14B8A6', id: 'product' },
   { label: 'Customer Success', color: '#DC2626', id: 'customer' },
   { label: 'Consulting', color: '#0EA5E9', id: 'consulting' },
+  { label: 'IT & Technology', color: '#6366F1', id: 'it' },
 ]
 
 function Hero() {
@@ -853,6 +854,7 @@ const TRACKS = [
   { id: 'product',    icon: Package,      label: 'Product',          color: '#14B8A6', skills: ['User research', 'Roadmap prioritisation', 'PRD writing', 'AI product strategy'] },
   { id: 'customer',   icon: Headphones,   label: 'Customer Success', color: '#DC2626', skills: ['Health monitoring', 'Churn prevention', 'Personalisation', 'CS operations'] },
   { id: 'consulting', icon: BarChart,     label: 'Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'] },
+  { id: 'it',        icon: Zap,          label: 'IT & Technology',  color: '#6366F1', skills: ['AI scripting & automation', 'Cybersecurity with AI', 'IT operations', 'AI governance'] },
 ]
 
 const TRACK_PREVIEWS: Record<string, { headline: string; modules: { title: string; lessons: string[] }[] }> = {
@@ -866,6 +868,7 @@ const TRACK_PREVIEWS: Record<string, { headline: string; modules: { title: strin
   product:    { headline: 'From user insight to shipped feature — faster', modules: [{ title: 'User Research AI', lessons: ['Synthesising 50 interviews in one afternoon', 'AI-assisted Jobs-to-be-Done analysis'] }, { title: 'Roadmap & PRD', lessons: ['Prioritising your backlog with AI scoring', 'Generating a full PRD from discovery notes'] }, { title: 'AI Product Strategy', lessons: ['Deciding where AI adds value in your product', 'Writing AI feature specs that engineering ships'] }] },
   customer:   { headline: 'Prevent churn before it happens', modules: [{ title: 'Health Monitoring', lessons: ['Building an AI churn prediction model', 'Automated health score alerts'] }, { title: 'Personalisation at Scale', lessons: ['AI-tailored QBR prep for every account', 'Personalising onboarding with AI'] }, { title: 'CS Operations', lessons: ['Automating your renewal pipeline', 'AI-assisted escalation routing'] }] },
   consulting: { headline: 'Deliver deeper insights, faster', modules: [{ title: 'Research & Synthesis', lessons: ['Synthesising 100-page reports in minutes', 'AI-powered competitive landscape analysis'] }, { title: 'Structured Analysis', lessons: ['Building frameworks with AI assistance', 'Issue tree generation from project briefs'] }, { title: 'Client Deliverables', lessons: ['Drafting executive slide narratives with AI', 'AI-assisted proposal writing'] }] },
+  it: { headline: 'Script faster. Secure smarter. Document better.', modules: [{ title: 'AI Scripting & Automation', lessons: ['Generate working Bash and Python scripts from plain English', 'Debug and refine scripts in minutes with AI'] }, { title: 'Cybersecurity with AI', lessons: ['AI-assisted log analysis and threat detection', 'Secure code review and vulnerability scanning'] }, { title: 'IT Operations', lessons: ['Automate helpdesk triage and response drafting', 'AI-powered incident post-mortems in minutes'] }] },
 }
 
 function RoleTracks() {

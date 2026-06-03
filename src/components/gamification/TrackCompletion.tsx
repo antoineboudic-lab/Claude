@@ -17,6 +17,7 @@ const TRACK_SKILLS: Record<string, string[]> = {
   product:    ['AI product design', 'User research AI', 'Roadmap intelligence'],
   customer:   ['AI support tools', 'Customer insights', 'Automation workflows'],
   consulting: ['AI advisory', 'Data analysis', 'Client intelligence'],
+  it:         ['AI scripting & automation', 'Cybersecurity with AI', 'IT governance'],
 }
 
 export function TrackCompletion() {

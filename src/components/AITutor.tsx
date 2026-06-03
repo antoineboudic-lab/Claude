@@ -34,6 +34,7 @@ const TRACK_ROLE: Record<string, string> = {
   sales: 'sales rep', operations: 'ops manager', leadership: 'leader',
   legal: 'lawyer', product: 'product manager', customer: 'CS manager',
   consulting: 'consultant',
+  it: 'IT professional',
 }
 
 function starterQuestions(trackId: string) {

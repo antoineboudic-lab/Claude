@@ -15,6 +15,7 @@ const TRACKS = [
   "product",
   "customer",
   "consulting",
+  "it",
 ];
 
 const BLOG_SLUGS = [

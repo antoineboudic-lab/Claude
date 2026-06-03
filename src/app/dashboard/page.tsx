@@ -48,6 +48,7 @@ const TRACK_COLORS: Record<string, string> = {
   product:    '#14B8A6',
   customer:   '#DC2626',
   consulting: '#0EA5E9',
+  it:         '#6366F1',
 }
 
 const TRACK_ICONS: Record<string, string> = {
@@ -61,6 +62,7 @@ const TRACK_ICONS: Record<string, string> = {
   product:    '📦',
   customer:   '🎧',
   consulting: '📈',
+  it:         '💻',
 }
 
 // ─── Animated counter ─────────────────────────────────────────────────────────

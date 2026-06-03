@@ -42,6 +42,7 @@ const trackOutcomes: Record<string, string> = {
   product:     'Discovery synthesis: 2 weeks → hours',
   customer:    'Churn caught too late → flagged weeks earlier',
   consulting:  'Desk research: 3 days → 4–8 hours',
+  it:          'Script writing: hours → minutes with AI assistance',
 }
 
 const trackColors: Record<string, string> = {
@@ -55,6 +56,7 @@ const trackColors: Record<string, string> = {
   product:    '#14B8A6',
   customer:   '#DC2626',
   consulting: '#0EA5E9',
+  it:         '#6366F1',
 }
 
 type Tab = 'lesson' | 'exercise' | 'quiz' | 'lab'
@@ -161,6 +163,15 @@ const TRACK_SCENARIOS: Record<string, LabScenario> = {
     systemContext: 'You are a senior AI assistant helping a strategy consultant. Generate the requested consulting content exactly as prompted — crisp, insight-led, and recommendation-first. Keep your response under 400 words.',
     expertPrompt: `Act as a McKinsey-trained strategy consultant writing a partner-level executive summary.\n\nSynthesize the following research inputs into a 1-page executive summary for a market entry assessment.\n\nResearch inputs:\n- Total addressable market: €2.1B in Western Europe, growing 14% CAGR\n- Client's current capabilities: strong in B2B distribution, no direct-to-consumer experience\n- Competitive landscape: 3 dominant players (40% combined share), 12 fragmented regional players\n- Primary research finding: procurement decision makers prioritise integration with existing ERP systems above price\n- Regulatory consideration: new EU product liability directive takes effect Q3 next year\n- Recommendation from the team: enter via acquisition of a regional player rather than organic build\n\nExecutive summary format:\n1. Situation (1 sentence — what decision faces the client)\n2. Complication (2 sentences — why this is hard)\n3. Key insight (1 sentence — the non-obvious finding that changes the analysis)\n4. Recommendation (1 sentence — clear and direct)\n5. Rationale (3 bullet points supporting the recommendation)\n6. Immediate next step (1 action, owner, deadline)\n\nTone: confident and direct — no hedging, no "it depends"\nLength: under 250 words`,
     expertExplanation: "The expert prompt uses the Situation-Complication-Resolution structure that top consulting firms use for all senior communications. By providing the actual research inputs and enforcing the format, the AI produces something that reads like it came from the team — not a generic summary template.",
+  },
+  it: {
+    title: 'Automation script generation',
+    context: "You're a sysadmin. Every Monday morning you manually check 40 Linux servers for disk usage above 80%, SSH in to identify the largest directories, and email a summary to your manager. It takes 90 minutes.",
+    task: 'Write a prompt that gets AI to generate a script that automates this entire workflow.',
+    starterPrompt: 'Write a script to check disk usage on my servers',
+    systemContext: 'You are a senior AI assistant helping an IT professional. Generate the requested script or technical content exactly as prompted — functional, well-structured, and production-ready. Keep your response under 400 words.',
+    expertPrompt: `Act as a senior Linux systems engineer with expertise in shell scripting and automation.\n\nWrite a Bash script that automates a weekly server health check. Requirements:\n\nInputs:\n- Server list read from a file called servers.txt (one hostname per line)\n- SSH key authentication (no passwords)\n- Run as a cron job — no interactive input\n\nChecks to perform on each server:\n1. Disk usage: flag any partition above 80% usage\n2. For flagged partitions: find the top 5 largest directories under that mount point\n\nOutput:\n- Generate a plain-text summary report\n- Format: server name → partition → usage % → top 5 dirs with sizes\n- If all servers are healthy: output "All servers healthy — no action required"\n\nError handling:\n- If SSH connection fails: log "UNREACHABLE" and continue to next server\n- If a command times out (>10 seconds): log "TIMEOUT" and continue\n- Add --dry-run flag that prints what the script would check without connecting\n\nEmail the report to $REPORT_EMAIL environment variable using mail command.\n\nAdd comments only where the logic is non-obvious.`,
+    expertExplanation: "The expert prompt specifies the exact inputs (servers.txt, SSH key auth, cron-safe), the precise checks required, the output format, and explicit error handling for connection failures and timeouts. The --dry-run flag is critical for safe testing. Without these details, AI produces a generic disk-check snippet that needs hours of adaptation. With them, the first draft runs in your environment with minimal changes.",
   },
 }
 

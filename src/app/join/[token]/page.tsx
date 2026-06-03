@@ -12,12 +12,12 @@ import { getInviteByToken, acceptInvite, type TeamInvite } from '@/lib/supabase/
 const TRACK_COLORS: Record<string, string> = {
   marketing: '#E04D2A', finance: '#F59E0B', hr: '#10B981',
   sales: '#3B82F6', operations: '#22D3EE', leadership: '#F97316',
-  legal: '#0284C7', product: '#14B8A6', customer: '#DC2626', consulting: '#0EA5E9',
+  legal: '#0284C7', product: '#14B8A6', customer: '#DC2626', consulting: '#0EA5E9', it: '#6366F1',
 }
 const TRACK_LABELS: Record<string, string> = {
   marketing: 'Marketing', finance: 'Finance', hr: 'HR',
   sales: 'Sales', operations: 'Operations', leadership: 'Leadership',
-  legal: 'Legal', product: 'Product', customer: 'Customer Success', consulting: 'Consulting',
+  legal: 'Legal', product: 'Product', customer: 'Customer Success', consulting: 'Consulting', it: 'IT & Technology',
 }
 
 export default function JoinPage() {
