@@ -4,22 +4,20 @@ import type { AssessmentResult } from '@/lib/assessment/types'
 
 // ── Progress ──────────────────────────────────────────────────────────────────
 
-export async function loadUserProgress(userId: string): Promise<GameState | null> {
+export async function loadUserProgress(_userId: string): Promise<GameState | null> {
   const supabase = createClient()
   const { data, error } = await supabase
-    .from('user_progress')
-    .select('xp, streak, longest_streak, last_active_date, activity_dates, completed_lessons, completed_modules, completed_tracks, earned_badges, total_quizzes_perfect')
-    .eq('user_id', userId)
-    .single()
+    .rpc('load_my_progress')
+    .maybeSingle()
 
   if (error || !data) return null
 
   return {
     xp: data.xp ?? 0,
     streak: data.streak ?? 0,
-    longestStreak: data.longest_streak ?? 0,
+    longestStreak: 0,
     lastActiveDate: data.last_active_date ?? null,
-    activityDates: data.activity_dates ?? [],
+    activityDates: [],
     completedLessons: data.completed_lessons ?? [],
     completedModules: data.completed_modules ?? [],
     completedTracks: data.completed_tracks ?? [],
@@ -28,23 +26,18 @@ export async function loadUserProgress(userId: string): Promise<GameState | null
   }
 }
 
-export async function saveUserProgress(userId: string, state: GameState): Promise<void> {
+export async function saveUserProgress(_userId: string, state: GameState): Promise<void> {
   const supabase = createClient()
-  await supabase.from('user_progress').upsert(
-    {
-      user_id: userId,
-      xp: state.xp,
-      streak: state.streak,
-      last_active_date: state.lastActiveDate,
-      completed_lessons: state.completedLessons,
-      completed_modules: state.completedModules,
-      completed_tracks: state.completedTracks,
-      earned_badges: state.earnedBadges,
-      total_quizzes_perfect: state.totalQuizzesPerfect,
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: 'user_id' },
-  )
+  await supabase.rpc('save_my_progress', {
+    p_xp: state.xp,
+    p_streak: state.streak,
+    p_last_active_date: state.lastActiveDate ?? null,
+    p_completed_lessons: state.completedLessons,
+    p_completed_modules: state.completedModules,
+    p_completed_tracks: state.completedTracks,
+    p_earned_badges: state.earnedBadges,
+    p_total_quizzes_perfect: state.totalQuizzesPerfect,
+  })
 }
 
 // ── Assessment ────────────────────────────────────────────────────────────────
