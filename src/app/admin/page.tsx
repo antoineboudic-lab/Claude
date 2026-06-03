@@ -4,6 +4,7 @@ import { AdminUsersTable } from './AdminUsersTable'
 import { CreateEnterpriseTeamForm } from './CreateEnterpriseTeamForm'
 import { AdminTeamsTable } from './AdminTeamsTable'
 import { SocialShareActions } from './SocialShareActions'
+import { LeadActions } from './LeadActions'
 import Link from 'next/link'
 import {
   Users, Zap, BookOpen, Target, TrendingUp, Bell,
@@ -824,9 +825,9 @@ export default async function AdminPage({
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                  <TableHead cols={['Email', 'Source', 'Role', 'Converted', 'Captured']} />
+                  <TableHead cols={['Email', 'Source', 'Role', 'Converted', 'Captured', 'Actions']} />
                   <tbody>
-                    {leads.length === 0 ? <EmptyRow cols={5} message="No leads yet" /> : leads.map((l, i) => (
+                    {leads.length === 0 ? <EmptyRow cols={6} message="No leads yet" /> : leads.map((l, i) => (
                       <tr key={l.id} style={{ borderBottom: i < leads.length - 1 ? '1px solid #EFF6FF' : 'none' }}>
                         <td style={{ padding: '10px 16px', color: '#475569', fontWeight: 500 }}>{l.email}</td>
                         <td style={{ padding: '10px 16px' }}>
@@ -841,6 +842,7 @@ export default async function AdminPage({
                             : <span style={{ color: '#E2E8F0' }}>—</span>}
                         </td>
                         <td style={{ padding: '10px 16px', color: '#CBD5E1', whiteSpace: 'nowrap' }}>{timeAgo(l.created_at)}</td>
+                        <td style={{ padding: '10px 16px' }}><LeadActions id={l.id} converted={!!l.converted_at} /></td>
                       </tr>
                     ))}
                   </tbody>
