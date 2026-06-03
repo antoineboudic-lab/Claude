@@ -8,9 +8,10 @@ import { legalTrack } from './tracks/legal'
 import { productTrack } from './tracks/product'
 import { customerTrack } from './tracks/customer'
 import { consultingTrack } from './tracks/consulting'
+import { itTrack } from './tracks/it'
 import type { Track, TrackId } from './types'
 
-export const TRACK_IDS: TrackId[] = ['marketing', 'finance', 'hr', 'sales', 'operations', 'leadership', 'legal', 'product', 'customer', 'consulting']
+export const TRACK_IDS: TrackId[] = ['marketing', 'finance', 'hr', 'sales', 'operations', 'leadership', 'legal', 'product', 'customer', 'consulting', 'it']
 
 const _allTracks: Track[] = [
   marketingTrack,
@@ -23,6 +24,7 @@ const _allTracks: Track[] = [
   productTrack,
   customerTrack,
   consultingTrack,
+  itTrack,
 ]
 
 export function getAllTracks(): Track[] {

@@ -1,4 +1,4 @@
-export type TrackId = 'marketing' | 'finance' | 'hr' | 'sales' | 'operations' | 'leadership' | 'legal' | 'product' | 'customer' | 'consulting'
+export type TrackId = 'marketing' | 'finance' | 'hr' | 'sales' | 'operations' | 'leadership' | 'legal' | 'product' | 'customer' | 'consulting' | 'it'
 export type Level = 'beginner' | 'intermediate' | 'advanced'
 
 export interface QuizQuestion {

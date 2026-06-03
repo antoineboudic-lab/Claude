@@ -27,6 +27,7 @@ const TRACK_SKILLS: Record<TrackId, string[]> = {
   product:     ['AI user research', 'Roadmap prioritisation', 'PRD writing with AI', 'Feature ideation & validation'],
   customer:    ['Customer health monitoring', 'AI-driven churn prevention', 'CS operations automation', 'AI-powered QBRs'],
   consulting:  ['Research synthesis', 'Structured analysis with AI', 'Proposal & slide writing', 'Client intelligence'],
+  it:          ['AI-assisted scripting & automation', 'Cybersecurity with AI', 'IT operations & incident response', 'AI governance & compliance'],
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────

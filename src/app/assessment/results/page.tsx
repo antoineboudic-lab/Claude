@@ -29,6 +29,7 @@ const TRACK_META: Record<TrackId, { label: string; icon: React.ElementType; colo
   product:     { label: 'Product',          icon: Package,        color: '#14B8A6', tagline: 'Discover, prioritise, and ship better products with AI' },
   customer:    { label: 'Customer Success', icon: Headphones,     color: '#DC2626', tagline: 'Retain, expand, and delight customers with AI' },
   consulting:  { label: 'Consulting',       icon: BarChart,       color: '#0EA5E9', tagline: 'Research, analyse, and deliver with AI as your edge' },
+  it:          { label: 'IT & Technology',  icon: Zap,            color: '#6366F1', tagline: 'Supercharge your IT work with AI — from scripting to security' },
 }
 
 const PRIORITY_CONFIG = {
