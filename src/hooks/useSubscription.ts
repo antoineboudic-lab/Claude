@@ -83,8 +83,9 @@ export function useSubscription() {
     refresh()
   }, [user, refresh])
 
-  const isPro = subscription?.status === 'active' || subscription?.status === 'trialing'
-  const isTrialing = subscription?.status === 'trialing'
+  const launchFree = process.env.NEXT_PUBLIC_LAUNCH_FREE === 'true'
+  const isPro = launchFree ? !!user : (subscription?.status === 'active' || subscription?.status === 'trialing')
+  const isTrialing = !launchFree && subscription?.status === 'trialing'
 
   return { subscription, isPro, isTrialing, loading, refresh }
 }
