@@ -99,6 +99,13 @@ const SUB_ROLES: Partial<Record<Role, { id: string; label: string; detail: strin
     { id: 'specialist', label: 'Specialist / Domain Expert', detail: 'Deep expertise, advisory' },
     { id: 'partner', label: 'Partner / Director', detail: 'Origination, client leadership' },
   ],
+  it: [
+    { id: 'sysadmin', label: 'Systems Administrator', detail: 'Infrastructure, servers, networking' },
+    { id: 'security', label: 'IT Security / SecOps', detail: 'Threat detection, compliance, risk' },
+    { id: 'devops', label: 'DevOps / Cloud Engineer', detail: 'CI/CD, cloud infra, automation' },
+    { id: 'developer', label: 'Developer / Engineer', detail: 'Scripting, APIs, software development' },
+    { id: 'it-leader', label: 'IT Manager / CTO', detail: 'IT strategy, team, vendor management' },
+  ],
 }
 
 // ─── Industry & company ───────────────────────────────────────────────────────
@@ -188,6 +195,11 @@ const ROLE_DESCRIPTION_TIPS: Record<string, string[]> = {
     "I'm a consultant at a strategy firm, owning workstreams and delivering client-facing outputs.",
     "I'm an analyst building financial models and research decks for M&A advisory engagements.",
     "I'm a senior partner responsible for client relationships and practice development.",
+  ],
+  it: [
+    "I manage server infrastructure and network operations for a mid-size enterprise, including patching and availability.",
+    "I'm a SecOps engineer responsible for threat detection, vulnerability management, and compliance across cloud environments.",
+    "I lead a DevOps team, owning CI/CD pipelines, cloud infrastructure on AWS, and deployment automation.",
   ],
   other: [
     'I coordinate cross-functional projects and spend most of my time writing and running meetings.',
@@ -625,6 +637,48 @@ const SKILL_QUESTIONS: Record<string, SkillQuestion[]> = {
       explanation: "Transparency about AI use — paired with clear ownership of the analysis — is the professional standard. Clients need to know what they're relying on, and your team's judgment is the thing they're actually paying for.",
     },
   ],
+  it: [
+    {
+      q: "You ask AI to write a Bash script to automate log rotation. The output looks right but you're not sure it handles edge cases. What's the right next step?",
+      options: [
+        { id: 'a', label: 'Run it in production — if it breaks, roll back', correct: false },
+        { id: 'b', label: 'Test it in a staging environment and review each step against your specific system config', correct: true },
+        { id: 'c', label: 'Ask AI if there are any edge cases you should worry about', correct: false },
+        { id: 'd', label: 'Add error handling and trust that the rest is correct', correct: false },
+      ],
+      explanation: "AI-generated scripts are a strong first draft, not production code. Staging validation against your real environment is the only way to know if it handles your specific constraints correctly.",
+    },
+    {
+      q: "Your team gets hundreds of security alerts daily and struggles to triage them. How can AI help responsibly?",
+      options: [
+        { id: 'a', label: 'Let AI automatically close low-priority alerts to reduce noise', correct: false },
+        { id: 'b', label: 'Use AI to classify and prioritise alerts for human review, keeping human sign-off on all responses', correct: true },
+        { id: 'c', label: 'Feed all alerts to AI and act on whatever it flags as critical', correct: false },
+        { id: 'd', label: 'AI is too risky for security workflows — stick with manual triage', correct: false },
+      ],
+      explanation: "AI is a force multiplier for alert triage, not an autonomous decision-maker. Using it to sort and prioritise while keeping humans in the response loop keeps you fast without losing accountability.",
+    },
+    {
+      q: "You want to use AI to write documentation for an undocumented internal system. What's the most effective approach?",
+      options: [
+        { id: 'a', label: 'Feed the codebase to AI and publish its output directly', correct: false },
+        { id: 'b', label: 'Use AI to structure and draft documentation from your notes and code context, then review for accuracy before publishing', correct: true },
+        { id: 'c', label: 'Ask AI to guess what the system does based on its name and architecture', correct: false },
+        { id: 'd', label: "Avoid AI for docs — the team knows the system better than any model", correct: false },
+      ],
+      explanation: "AI can turn rough notes and code snippets into clear, structured documentation far faster than writing from scratch — but your domain knowledge is what makes it accurate. Always review before publishing.",
+    },
+    {
+      q: "Management wants to adopt an AI-powered IT tool that requires sending system logs to a third-party cloud. What's your first question?",
+      options: [
+        { id: 'a', label: 'How much does it cost compared to our current tooling?', correct: false },
+        { id: 'b', label: "What data is transmitted, how is it stored, and does it comply with our data classification and privacy policies?", correct: true },
+        { id: 'c', label: 'Does it integrate with our existing stack?', correct: false },
+        { id: 'd', label: 'What accuracy rate does the AI model achieve?', correct: false },
+      ],
+      explanation: "Data sovereignty and compliance are the first gate for any AI tool in an IT environment. Feature quality and cost only matter once you know the tool is safe to use with your data.",
+    },
+  ],
   other: [
     {
       q: "What's the single most important factor in getting useful output from an AI tool?",
@@ -732,6 +786,12 @@ const CHALLENGES: Record<string, { id: string; label: string; detail: string }[]
     { id: 'differentiation', label: 'Generic deliverables', detail: 'Hard to make work feel tailored to each client' },
     { id: 'client-comms', label: 'Client communication quality', detail: 'Hard to communicate complex ideas clearly and quickly' },
   ],
+  it: [
+    { id: 'scripting', label: 'Faster scripting & automation', detail: 'Write scripts and automate tasks in less time' },
+    { id: 'security-posture', label: 'Stronger security posture', detail: 'Use AI to detect threats and reduce risk' },
+    { id: 'docs-knowledge', label: 'Better documentation', detail: 'Clear runbooks, SOPs, and knowledge bases' },
+    { id: 'alert-fatigue', label: 'Cut through alert noise', detail: 'Triage and prioritise incidents faster' },
+  ],
   other: [
     { id: 'general', label: 'Saving time', detail: 'Too much time on repetitive, manual work' },
     { id: 'better-decisions', label: 'Making better decisions', detail: 'Need better information to decide well' },
@@ -829,6 +889,14 @@ const ROLE_GOALS: Record<string, GoalOption[]> = {
     { id: 'stay-competitive', label: 'Stay ahead of peers',            detail: 'Build AI skills that differentiate your practice',  icon: Trend  },
     { id: 'lead-ai',          label: 'Lead AI in your firm',           detail: 'Build the AI practice and methodology for your team', icon: Brain },
     { id: 'upskill-team',     label: 'Upskill my consulting team',     detail: 'Bring analysts and consultants up to speed fast',   icon: Users  },
+  ],
+  it: [
+    { id: 'save-time',        label: 'Automate repetitive IT tasks',   detail: 'Scripts, runbooks, and ops tasks off your plate',   icon: Clock  },
+    { id: 'better-decisions', label: 'Faster incident response',       detail: 'AI-assisted triage and root cause analysis',        icon: Target },
+    { id: 'stay-competitive', label: 'Future-proof my IT career',      detail: 'Build AI skills before they become essential',      icon: Trend  },
+    { id: 'client-value',     label: 'Better service to the business', detail: 'Faster resolution and higher quality IT support',   icon: Star   },
+    { id: 'lead-ai',          label: 'Lead AI strategy in IT',         detail: 'Shape how your team adopts AI tools responsibly',   icon: Brain  },
+    { id: 'upskill-team',     label: 'Upskill my IT team',             detail: 'Get engineers and admins comfortable with AI',      icon: Users  },
   ],
   other: [
     { id: 'save-time',        label: 'Save time on routine tasks',     detail: 'Automate the repetitive parts of your work',        icon: Clock  },
