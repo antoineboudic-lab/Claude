@@ -14,6 +14,7 @@ import Logo from '@/components/Logo'
 import { getTrack } from '@/lib/curriculum'
 import { useGame } from '@/context/GameContext'
 import { useAuth } from '@/context/AuthContext'
+import { useSubscription } from '@/hooks/useSubscription'
 import type { TrackId } from '@/lib/curriculum/types'
 import GlobalSearch from '@/components/GlobalSearch'
 
@@ -158,7 +159,7 @@ export default function TrackPage() {
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
   }, [])
-  const isPro = !!user
+  const { isPro } = useSubscription()
 
   const curriculumTrack = getTrack(trackId as TrackId)
   const meta = trackMeta[trackId]

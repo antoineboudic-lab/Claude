@@ -417,7 +417,11 @@ export default function TeamsPage() {
           <div className="text-center mb-14">
             <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Team pricing</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-3" style={{ color: '#0F172A' }}>Simple, transparent pricing</h2>
-            <p className="text-base" style={{ color: '#64748B' }}>All plans billed annually. Individual learner plans also available.</p>
+            <p className="text-base mb-4" style={{ color: '#64748B' }}>All plans billed annually. Individual learner plans also available.</p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold"
+              style={{ background: '#FEF3C7', color: '#92400E', border: '1px solid #FDE68A' }}>
+              Team pricing is being finalised — contact us for early access rates
+            </div>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {PLANS.map(plan => (

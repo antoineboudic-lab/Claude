@@ -121,7 +121,7 @@ export default function LeaderboardPage() {
           <p style={{ fontSize: 15, color: '#64748B', margin: 0 }}>
             Top learners this week by XP
           </p>
-          {myRank && (
+          {myRank && myRank <= 20 && (
             <p style={{ fontSize: 13, color: '#2563EB', marginTop: 6, fontWeight: 600 }}>
               You are in the top 20!
             </p>

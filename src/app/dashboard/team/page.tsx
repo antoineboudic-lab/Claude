@@ -138,7 +138,18 @@ export default function TeamOverviewPage() {
     )
   }
 
-  if (!team) return null
+  if (!team) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 text-center gap-4">
+        <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+          You don&apos;t have admin access to a team.
+        </p>
+        <a href="/dashboard" className="text-sm font-semibold underline" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+          Back to dashboard
+        </a>
+      </div>
+    )
+  }
 
   const stats = getTeamStats(members)
   const activeMembers = members.filter(m => m.status === 'active')

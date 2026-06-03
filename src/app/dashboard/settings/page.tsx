@@ -140,7 +140,8 @@ function PasswordField({
   )
 }
 
-function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<string, string> } }) {
+function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<string, string>; app_metadata?: Record<string, string> } }) {
+  const isOAuth = !!(user.app_metadata?.provider && user.app_metadata.provider !== 'email')
   const [name, setName] = useState(user.user_metadata?.full_name ?? '')
   const [jobTitle, setJobTitle] = useState(user.user_metadata?.job_title ?? '')
   const [company, setCompany] = useState(user.user_metadata?.company ?? '')
@@ -238,6 +239,16 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
       </SectionCard>
 
       <SectionCard title="Password">
+        {isOAuth ? (
+          <div className="flex items-center gap-3 px-4 py-3 rounded-xl"
+            style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+            <Lock size={13} style={{ color: '#CBD5E1', flexShrink: 0 }} />
+            <p className="text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              Password is managed by your sign-in provider ({user.app_metadata?.provider === 'linkedin_oidc' ? 'LinkedIn' : 'Google'}).
+            </p>
+          </div>
+        ) : (
+        <>
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Change password</p>
@@ -317,6 +328,8 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
             </motion.div>
           )}
         </AnimatePresence>
+        </>
+        )}
       </SectionCard>
     </motion.div>
   )
@@ -816,7 +829,7 @@ export default function SettingsPage() {
 
         {/* Tab content */}
         <AnimatePresence mode="wait">
-          {tab === 'profile' && <ProfileTab key="profile" user={user as { email?: string; user_metadata?: Record<string, string> }} />}
+          {tab === 'profile' && <ProfileTab key="profile" user={user as { email?: string; user_metadata?: Record<string, string>; app_metadata?: Record<string, string> }} />}
           {tab === 'preferences' && <PreferencesTab key="preferences" />}
           {tab === 'team' && <TeamTab key="team" userId={user.id} />}
         </AnimatePresence>

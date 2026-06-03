@@ -108,7 +108,7 @@
       "badge": "Free to start",
       "heading": "Start leading with AI today.",
       "headingAccent": "with AI today.",
-      "sub": "3-minute assessment. Personalised path. First lesson in under 5 minutes.",
+      "sub": "Personalised assessment. Custom learning path. First lesson in minutes.",
       "cta": "Take the free assessment",
       "browseAllTracks": "Browse all tracks",
       "note": "Free during launch · No card needed"
@@ -219,7 +219,7 @@
     "stepOf": "Step {current} of {total}",
     "buildMyPath": "Build My Path",
     "buildingPath": "Building your path…",
-    "fiveMinutes": "5-minute personalised assessment",
+    "fiveMinutes": "Personalised assessment",
     "findPerfect": "Find your perfect AI learning path",
     "findPerfectSub": "We'll ask about your role, goals, and AI knowledge — then build a curriculum that's actually built for you.",
     "yourName": "What's your name?",
