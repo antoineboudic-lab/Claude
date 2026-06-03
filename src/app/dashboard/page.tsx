@@ -17,7 +17,6 @@ import { useSubscription } from '@/hooks/useSubscription'
 import { useAuth } from '@/context/AuthContext'
 import { useGame } from '@/context/GameContext'
 import { ShareCard } from '@/components/ShareCard'
-import { ShareAndEarn, ShareAndEarnBanner, ShareAndEarnPopup } from '@/components/ShareAndEarn'
 import GlobalSearch from '@/components/GlobalSearch'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import PushNotificationPrompt from '@/components/PushNotificationPrompt'
@@ -1581,7 +1580,6 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.55, ease: easing }}
               >
-                {/* ShareAndEarn — hidden during free launch */}
               </motion.div>
             )}
           </div>
@@ -1590,7 +1588,6 @@ export default function DashboardPage() {
       <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#2563EB" />
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PushNotificationPrompt />
-      {/* ShareAndEarnPopup — hidden during free launch */}
     </div>
   )
 }

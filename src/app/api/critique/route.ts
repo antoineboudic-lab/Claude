@@ -8,7 +8,6 @@ const rateLimiter = createRateLimiter(10, 60, 'critique')
 const ALLOWED_ORIGINS = [
   'https://opuslearn.ai',
   'https://www.opuslearn.ai',
-  'https://opuslearn.ai',
 ]
 
 const CRITIQUE_SYSTEM = `You are an expert prompt engineering coach. Analyse the user's prompt and respond with ONLY valid JSON in this exact format, no other text:

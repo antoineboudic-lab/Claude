@@ -81,7 +81,7 @@ export function useSubscription() {
     }
 
     refresh()
-  }, [user, refresh])
+  }, [refresh])
 
   const launchFree = process.env.NEXT_PUBLIC_LAUNCH_FREE === 'true'
   const isPro = launchFree ? !!user : (subscription?.status === 'active' || subscription?.status === 'trialing')

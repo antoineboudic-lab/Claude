@@ -148,7 +148,7 @@ function welcomeHtml(name: string, trackLabel: string): string {
     ${row(`
       <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
         ${[
-          ['✅', '7-day free trial included'],
+          ['✅', 'Free during launch'],
           ['⚡', '15 min/day is all it takes'],
           ['🏆', 'Earn XP, badges and certificates'],
         ].map(([icon, text]) => `
@@ -184,7 +184,7 @@ function leadWelcomeHtml(name: string, email: string): string {
     ${spacer(20)}
     ${row(btn('Create my free account →', signupUrl))}
     ${spacer(12)}
-    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">7-day free trial · Cancel anytime · Takes 30 seconds</p>`, 28)}
+    ${row(`<p style="margin:0;font-size:13px;color:#94A3B8;">Free during launch · No card needed</p>`, 28)}
   `)
 }
 
@@ -268,7 +268,7 @@ function upgradeHtml(name: string, completedTrack: string): string {
         <tr>
           <td style="padding:16px 20px;">
             <p style="margin:0 0 2px;font-size:22px;font-weight:900;color:#0F172A;">$12.99<span style="font-size:14px;font-weight:500;color:#64748B;">/month</span> &nbsp; <span style="font-size:14px;font-weight:500;color:#64748B;">or</span> &nbsp; $119.88<span style="font-size:14px;font-weight:500;color:#64748B;">/year</span></p>
-            <p style="margin:0;font-size:13px;color:#64748B;">Cancel anytime &nbsp;·&nbsp; 7-day free trial included</p>
+            <p style="margin:0;font-size:13px;color:#64748B;">Free during launch &nbsp;·&nbsp; No card needed</p>
           </td>
         </tr>
       </table>

@@ -8,7 +8,6 @@ const rateLimiter = createRateLimiter(30, 60, 'tutor')
 const ALLOWED_ORIGINS = [
   'https://opuslearn.ai',
   'https://www.opuslearn.ai',
-  'https://opuslearn.ai',
 ]
 
 function buildSystemPrompt(params: {

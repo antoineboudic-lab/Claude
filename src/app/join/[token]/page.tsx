@@ -262,7 +262,7 @@ export default function JoinPage() {
                   I already have an account — sign in
                 </button>
                 <p className="text-center text-xs" style={{ color: '#94A3B8' }}>
-                  7-day free trial · Cancel anytime
+                  Free during launch · No card needed
                 </p>
               </div>
             )}

@@ -46,8 +46,8 @@ const plans = {
 
 const faqs = [
   {
-    q: 'Can I cancel anytime?',
-    a: 'Yes. Cancel from your dashboard at any time. Your access continues until the end of the billing period.',
+    q: 'Is there anything to cancel?',
+    a: 'No — everything is free during our launch period. There\'s no subscription to manage and no card required.',
   },
   {
     q: "What's included in the free plan?",

@@ -6,6 +6,10 @@ import { getSubscriptionByUserId, upsertSubscription } from '@/lib/supabase/subs
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 export async function POST(req: Request) {
+  if (process.env.NEXT_PUBLIC_LAUNCH_FREE === 'true') {
+    return NextResponse.json({ error: 'Payments are not active during the launch period.' }, { status: 403 })
+  }
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
