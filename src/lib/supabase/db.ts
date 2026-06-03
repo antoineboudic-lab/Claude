@@ -8,7 +8,7 @@ export async function loadUserProgress(userId: string): Promise<GameState | null
   const supabase = createClient()
   const { data, error } = await supabase
     .from('user_progress')
-    .select('*')
+    .select('xp, streak, longest_streak, last_active_date, activity_dates, completed_lessons, completed_modules, completed_tracks, earned_badges, total_quizzes_perfect')
     .eq('user_id', userId)
     .single()
 
@@ -53,7 +53,7 @@ export async function loadLatestAssessment(userId: string): Promise<AssessmentRe
   const supabase = createClient()
   const { data, error } = await supabase
     .from('user_assessments')
-    .select('*')
+    .select('primary_track_id, answers, custom_path, estimated_weeks, total_lessons, essential_count, reasoning')
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
     .limit(1)

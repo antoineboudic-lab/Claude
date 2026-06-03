@@ -41,8 +41,10 @@ export async function POST(req: NextRequest) {
 
   if (!referral) return NextResponse.json({ error: 'not found' }, { status: 404 })
 
-  await supabase.from('referrals').update({ clicks: referral.clicks + 1 }).eq('id', referral.id)
-  await supabase.from('referral_events').insert({ referral_id: referral.id, event_type: 'click' })
+  await Promise.all([
+    supabase.from('referrals').update({ clicks: referral.clicks + 1 }).eq('id', referral.id),
+    supabase.from('referral_events').insert({ referral_id: referral.id, event_type: 'click' }),
+  ])
 
   return NextResponse.json({ ok: true })
 }
@@ -57,12 +59,14 @@ export async function PUT(req: NextRequest) {
 
   if (!referral) return NextResponse.json({ error: 'not found' }, { status: 404 })
 
-  await supabase.from('referrals').update({ signups: referral.signups + 1 }).eq('id', referral.id)
-  await supabase.from('referral_events').insert({
-    referral_id: referral.id,
-    event_type: 'signup',
-    referred_user_id: referredUserId,
-  })
+  await Promise.all([
+    supabase.from('referrals').update({ signups: referral.signups + 1 }).eq('id', referral.id),
+    supabase.from('referral_events').insert({
+      referral_id: referral.id,
+      event_type: 'signup',
+      referred_user_id: referredUserId,
+    }),
+  ])
 
   return NextResponse.json({ ok: true })
 }

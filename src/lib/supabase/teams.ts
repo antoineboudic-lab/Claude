@@ -217,8 +217,8 @@ export async function acceptInvite(token: string, userId: string, displayName: s
     return true
   }
 
-  // Update the pending member record
-  await supabase
+  // Update the pending member record; chained select tells us if any row matched
+  const { data: updatedRows } = await supabase
     .from('team_members')
     .update({
       user_id: userId,
@@ -229,17 +229,13 @@ export async function acceptInvite(token: string, userId: string, displayName: s
     .eq('team_id', invite.team_id)
     .eq('email', email)
     .eq('status', 'pending')
-
-  // If no pending record existed, insert
-  const { data: updated } = await supabase
-    .from('team_members')
     .select('id')
-    .eq('team_id', invite.team_id)
-    .eq('user_id', userId)
-    .single()
 
-  if (!updated) {
-    await supabase.from('team_members').insert({
+  const pendingUpdated = (updatedRows?.length ?? 0) > 0
+
+  // Run insert (if no pending row existed) and invite acceptance in parallel
+  await Promise.all([
+    pendingUpdated ? Promise.resolve() : supabase.from('team_members').insert({
       team_id: invite.team_id,
       user_id: userId,
       email,
@@ -248,10 +244,9 @@ export async function acceptInvite(token: string, userId: string, displayName: s
       status: 'active',
       role: 'member',
       joined_at: new Date().toISOString(),
-    })
-  }
-
-  await supabase.from('team_invites').update({ status: 'accepted' }).eq('token', token)
+    }),
+    supabase.from('team_invites').update({ status: 'accepted' }).eq('token', token),
+  ])
   return true
 }
 
