@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export const dynamic = "force-dynamic";
 
-const SITE_URL = "https://opuslearn.ai";
+const SITE_URL = "https://www.opuslearn.ai";
 
 const TRACKS = [
   "marketing",
