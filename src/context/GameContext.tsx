@@ -34,6 +34,10 @@ const GameContext = createContext<GameContextValue | null>(null)
 
 const STORAGE_KEY = 'opuslearn-game-state'
 
+function toLocalDateStr(d: Date = new Date()): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
 function loadLocalState(): GameState {
   if (typeof window === 'undefined') return DEFAULT_STATE
   try {
@@ -163,14 +167,14 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const updateStreak = useCallback((state: GameState): GameState => {
-    const today = new Date().toISOString().split('T')[0]
+    const today = toLocalDateStr()
     if (state.lastActiveDate === today) return state
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+    const yesterday = toLocalDateStr(new Date(Date.now() - 86400000))
     const newStreak = state.lastActiveDate === yesterday ? state.streak + 1 : 1
     const newLongest = Math.max(state.longestStreak ?? 0, newStreak)
     // Keep activityDates to last 90 days to avoid unbounded growth
     const existing = state.activityDates ?? []
-    const cutoff = new Date(Date.now() - 90 * 86400000).toISOString().split('T')[0]
+    const cutoff = toLocalDateStr(new Date(Date.now() - 90 * 86400000))
     const newDates = Array.from(new Set([...existing, today])).filter(d => d >= cutoff)
     return { ...state, streak: newStreak, longestStreak: newLongest, lastActiveDate: today, activityDates: newDates }
   }, [])
@@ -229,7 +233,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         posthog.capture('module_complete', { module_id: moduleId, track_id: trackId })
       }
 
-      const trackModules = [1, 2, 3, 4, 5].map(i => `${trackId}-m${i}`)
+      const trackModules = [1, 2, 3, 4, 5, 6].map(i => `${trackId}-m${i}`)
       const trackComplete = trackModules.every(m => next.completedModules.includes(m))
       if (trackComplete && !next.completedTracks.includes(trackId)) {
         next = { ...next, completedTracks: [...next.completedTracks, trackId] }

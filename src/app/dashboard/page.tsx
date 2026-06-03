@@ -31,6 +31,10 @@ import type { TrackId } from '@/lib/curriculum/types'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+function toLocalDateStr(d: Date = new Date()): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
 const TRACK_COLORS: Record<string, string> = {
@@ -159,14 +163,14 @@ function StreakCard({
   activityDates: string[]
 }) {
   const t = useTranslations('dashboard')
-  const today = new Date().toISOString().split('T')[0]
+  const today = toLocalDateStr()
   const studiedToday = lastActiveDate === today
   const atRisk = streak > 0 && !studiedToday
 
   // Build last-7-days array (oldest → newest)
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(Date.now() - (6 - i) * 86400000)
-    const iso = d.toISOString().split('T')[0]
+    const iso = toLocalDateStr(d)
     const isToday = iso === today
     const active = activityDates.includes(iso)
     return { iso, label: d.toLocaleDateString('en', { weekday: 'narrow' }), active, isToday }
@@ -387,7 +391,7 @@ function InsightsCard({
   completedLessons: string[]
 }) {
   const today = new Date()
-  const monthStart = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0]
+  const monthStart = toLocalDateStr(new Date(today.getFullYear(), today.getMonth(), 1))
   const daysThisMonth = activityDates.filter(d => d >= monthStart).length
 
   const daysInMonth = today.getDate()
