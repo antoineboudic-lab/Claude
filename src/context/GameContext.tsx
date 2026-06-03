@@ -33,6 +33,7 @@ interface GameContextValue {
 const GameContext = createContext<GameContextValue | null>(null)
 
 const STORAGE_KEY = 'opuslearn-game-state'
+const LAST_USER_KEY = 'opuslearn-last-user-id'
 
 function toLocalDateStr(d: Date = new Date()): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
@@ -51,6 +52,22 @@ function loadLocalState(): GameState {
 function saveLocalState(state: GameState) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+  } catch {}
+}
+
+function getLastUserId(): string | null {
+  if (typeof window === 'undefined') return null
+  try { return localStorage.getItem(LAST_USER_KEY) } catch { return null }
+}
+
+function setLastUserId(userId: string) {
+  try { localStorage.setItem(LAST_USER_KEY, userId) } catch {}
+}
+
+function clearLocalState() {
+  try {
+    localStorage.removeItem(STORAGE_KEY)
+    localStorage.removeItem(LAST_USER_KEY)
   } catch {}
 }
 
@@ -103,18 +120,26 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       setSyncing(true)
       try {
         const remote = await loadUserProgress(user!.id)
-        const local = loadLocalState()
+        // Only treat local state as belonging to this user if no other user
+        // was previously signed in on this device (null = anonymous session).
+        const lastUserId = getLastUserId()
+        const localBelongsToThisUser = !lastUserId || lastUserId === user!.id
+        const local = localBelongsToThisUser ? loadLocalState() : DEFAULT_STATE
+        setLastUserId(user!.id)
+
         if (remote) {
-          const merged = mergeStates(local, remote)
+          const merged = localBelongsToThisUser ? mergeStates(local, remote) : remote
           setState(merged)
           saveLocalState(merged)
-          // Push merged state back if it's ahead of remote
-          if (merged.xp > remote.xp || merged.completedLessons.length > remote.completedLessons.length) {
+          if (localBelongsToThisUser && (merged.xp > remote.xp || merged.completedLessons.length > remote.completedLessons.length)) {
             await saveUserProgress(user!.id, merged)
           }
         } else {
-          // First sign-in: push local progress to Supabase
-          await saveUserProgress(user!.id, local)
+          // First sign-in: push local progress only if it was from an anonymous session
+          const startState = localBelongsToThisUser ? local : DEFAULT_STATE
+          setState(startState)
+          saveLocalState(startState)
+          await saveUserProgress(user!.id, startState)
         }
       } catch {
         // Supabase unavailable — local state is still valid
@@ -126,9 +151,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     syncOnLogin()
   }, [user])
 
-  // Reset sync tracking on logout
+  // Reset on logout: clear local state so the next user starts clean
   useEffect(() => {
-    if (!user) syncedUserId.current = null
+    if (!user) {
+      syncedUserId.current = null
+      setState(DEFAULT_STATE)
+      clearLocalState()
+    }
   }, [user])
 
   // Debounced save to Supabase on every state change (when signed in)
