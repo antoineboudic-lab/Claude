@@ -26,7 +26,7 @@ import {
   getLevelForXP, getProgressToNextLevel, BADGES, LEVELS,
 } from '@/lib/gamification'
 import type { AssessmentResult } from '@/lib/assessment/types'
-import { getTrack, getAllTracks } from '@/lib/curriculum'
+import { getTrack, getAllTracks, getSubRoleModule } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -560,13 +560,22 @@ function DailyChallengeCard() {
 
 // ─── Learning path card ───────────────────────────────────────────────────────
 
-function LearningPathCard({ result }: { result: AssessmentResult }) {
+function LearningPathCard({ result, completedLessons }: { result: AssessmentResult; completedLessons: string[] }) {
   const t = useTranslations('dashboard')
   const track = getTrack(result.primaryTrackId)
   const color = TRACK_COLORS[result.primaryTrackId] ?? '#2563EB'
   const icon = TRACK_ICONS[result.primaryTrackId] ?? '🎓'
   const essential = result.customPath.filter(l => l.priority === 'essential')
   const firstLesson = essential[0]
+
+  const subRoleId = result.answers.subRole
+  const subRoleModule = subRoleId
+    ? getSubRoleModule(result.primaryTrackId, subRoleId)
+    : undefined
+
+  // First uncompleted sub-role lesson, or first lesson if all done
+  const firstSubRoleLesson = subRoleModule?.lessons.find(l => !completedLessons.includes(l.id))
+    ?? subRoleModule?.lessons[0]
 
   return (
     <motion.div
@@ -615,6 +624,83 @@ function LearningPathCard({ result }: { result: AssessmentResult }) {
           </div>
         ))}
       </div>
+
+      {/* Sub-role personalized path */}
+      {subRoleModule && (
+        <div className="px-6 pt-5 pb-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
+          {/* Section header */}
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
+                style={{ background: `${color}18` }}>
+                <Sparkles size={11} style={{ color }} />
+              </div>
+              <p className="text-xs font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                {subRoleModule.title}
+              </p>
+            </div>
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
+              style={{ background: `${color}10`, color, fontFamily: 'var(--font-sans)' }}>
+              For you
+            </span>
+          </div>
+
+          {/* Lesson list */}
+          <div className="space-y-0.5">
+            {subRoleModule.lessons.map((lesson, i) => {
+              const done = completedLessons.includes(lesson.id)
+              return (
+                <Link
+                  key={lesson.id}
+                  href={`/tracks/${result.primaryTrackId}/lessons/${lesson.id}`}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors hover:bg-slate-50 group"
+                >
+                  <div className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center"
+                    style={{
+                      background: done ? `${color}18` : `${color}10`,
+                      border: `1.5px solid ${done ? color : `${color}30`}`,
+                    }}>
+                    {done
+                      ? <CheckCircle2 size={11} style={{ color }} />
+                      : <span style={{ fontSize: '9px', fontWeight: 700, color, fontFamily: 'var(--font-sans)' }}>{i + 1}</span>
+                    }
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate"
+                      style={{ color: done ? '#94A3B8' : '#334155', fontFamily: 'var(--font-sans)', textDecoration: done ? 'line-through' : 'none' }}>
+                      {lesson.title}
+                    </p>
+                  </div>
+                  <span className="text-[10px] flex-shrink-0" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                    {lesson.duration}m
+                  </span>
+                  <ChevronRight size={13} className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color }} />
+                </Link>
+              )
+            })}
+          </div>
+
+          {/* Sub-role CTA */}
+          {firstSubRoleLesson && (
+            <Link
+              href={`/tracks/${result.primaryTrackId}/lessons/${firstSubRoleLesson.id}`}
+              className="mt-3 flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-bold transition-all hover:opacity-90"
+              style={{
+                background: `${color}12`,
+                color,
+                border: `1px solid ${color}25`,
+                fontFamily: 'var(--font-sans)',
+                textDecoration: 'none',
+              }}
+            >
+              <Play size={11} fill={color} />
+              {completedLessons.some(l => subRoleModule.lessons.map(sl => sl.id).includes(l))
+                ? 'Continue your path'
+                : 'Start your path'}
+            </Link>
+          )}
+        </div>
+      )}
 
       {/* Essential lessons preview */}
       <div className="px-6 py-4 space-y-1">
@@ -1347,7 +1433,7 @@ export default function DashboardPage() {
             <NoAssessmentOnboarding name={displayName} />
           ) : (
             <div className="lg:col-span-2 space-y-6">
-              <LearningPathCard result={assessment} />
+              <LearningPathCard result={assessment} completedLessons={state.completedLessons} />
               <RecentActivity
                 completedLessons={state.completedLessons}
                 completedModules={state.completedModules}
