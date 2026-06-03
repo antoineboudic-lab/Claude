@@ -1970,11 +1970,10 @@ export default function LandingPage() {
   const router = useRouter()
   useEffect(() => { setMounted(true) }, [])
 
-  // Redirect signed-in users — new users (no assessment) go to /assessment, returning users to /dashboard
+  // Redirect signed-in users to dashboard; dashboard handles the /assessment redirect if needed
   useEffect(() => {
     if (!mounted || loading || !user) return
-    const hasAssessment = !!localStorage.getItem('opuslearn-assessment')
-    router.replace(hasAssessment ? '/dashboard' : '/assessment')
+    router.replace('/dashboard')
   }, [mounted, loading, user, router])
 
   // Auto-open sign-in modal when redirected here with ?signin=1 (e.g. from /admin gate)
