@@ -1,14 +1,25 @@
 import { createClient } from './client'
-import type { GameState } from '@/lib/gamification'
+import type { BadgeId, GameState } from '@/lib/gamification'
 import type { AssessmentResult } from '@/lib/assessment/types'
 
 // ── Progress ──────────────────────────────────────────────────────────────────
+
+type ProgressRow = {
+  xp: number
+  streak: number
+  last_active_date: string | null
+  completed_lessons: string[]
+  completed_modules: string[]
+  completed_tracks: string[]
+  earned_badges: string[]
+  total_quizzes_perfect: number
+}
 
 export async function loadUserProgress(_userId: string): Promise<GameState | null> {
   const supabase = createClient()
   const { data, error } = await supabase
     .rpc('load_my_progress')
-    .maybeSingle()
+    .maybeSingle() as { data: ProgressRow | null; error: unknown }
 
   if (error || !data) return null
 
@@ -21,7 +32,7 @@ export async function loadUserProgress(_userId: string): Promise<GameState | nul
     completedLessons: data.completed_lessons ?? [],
     completedModules: data.completed_modules ?? [],
     completedTracks: data.completed_tracks ?? [],
-    earnedBadges: data.earned_badges ?? [],
+    earnedBadges: (data.earned_badges ?? []) as BadgeId[],
     totalQuizzesPerfect: data.total_quizzes_perfect ?? 0,
   }
 }
