@@ -1010,10 +1010,14 @@ export default function DashboardPage() {
         if (remote) {
           setAssessment(remote)
           localStorage.setItem('opuslearn-assessment', JSON.stringify(remote))
-          setAssessmentChecked(true)
-          return
+        } else {
+          // Authenticated with no remote assessment — discard any stale local cache
+          localStorage.removeItem('opuslearn-assessment')
         }
+        setAssessmentChecked(true)
+        return
       }
+      // Unauthenticated: use local cache only
       try {
         const raw = localStorage.getItem('opuslearn-assessment')
         if (raw) setAssessment(JSON.parse(raw))
