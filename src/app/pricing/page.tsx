@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Zap, Check, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
+import { Zap, Check, ChevronDown, ChevronUp } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { useTranslations } from 'next-intl'
 import { useGeo } from '@/hooks/useGeo'
@@ -98,31 +98,6 @@ export default function PricingPage() {
   const { user, loading: authLoading, openSignUp, openSignIn } = useAuth()
   const { isUAE } = useGeo()
   const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly')
-  const [loading, setLoading] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  async function handleProCheckout() {
-    if (loading) return
-    setError(null)
-    setLoading('pro')
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: billing }),
-      })
-      const data = await res.json()
-      if (!res.ok || !data.url) {
-        setError(data.error ?? 'Something went wrong. Please try again.')
-        setLoading(null)
-        return
-      }
-      window.location.href = data.url
-    } catch {
-      setError('Something went wrong. Please try again.')
-      setLoading(null)
-    }
-  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#F1F5F9', fontFamily: 'var(--font-sans)' }}>
@@ -241,22 +216,21 @@ export default function PricingPage() {
             <div style={{ padding: '24px 24px 28px', display: 'flex', flexDirection: 'column', flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                 <p style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', margin: 0 }}>{plans.pro.title}</p>
-                <span style={{ fontSize: 11, fontWeight: 700, color: '#2563EB', background: '#DBEAFE', padding: '3px 10px', borderRadius: 999 }}>{t('mostPopular')}</span>
+                <span style={{ fontSize: 11, fontWeight: 700, color: '#059669', background: '#D1FAE5', padding: '3px 10px', borderRadius: 999 }}>
+                  Free at launch
+                </span>
               </div>
-              {billing === 'monthly'
-                ? <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: '0 0 4px', letterSpacing: '-0.03em' }}>
-                    {isUAE ? 'AED 45.99' : '$12.99'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span>
-                  </p>
-                : (
-                  <div style={{ margin: '0 0 4px' }}>
-                    <p style={{ fontSize: 32, fontWeight: 900, color: '#0F172A', margin: 0, letterSpacing: '-0.03em' }}>
-                      {isUAE ? 'AED 439' : '$119.88'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/yr</span>
-                    </p>
-                    <p style={{ fontSize: 12, color: '#64748B', margin: '2px 0 0' }}>
-                      {isUAE ? 'AED 36.58/mo, billed annually — save 20%' : '$9.99/mo, billed annually — save 23%'}
-                    </p>
-                  </div>
-                )}
+              <div style={{ margin: '0 0 4px' }}>
+                <p style={{ fontSize: 32, fontWeight: 900, color: '#059669', margin: 0, letterSpacing: '-0.03em' }}>
+                  {isUAE ? 'AED 0' : '$0'}<span style={{ fontSize: 16, fontWeight: 500, color: '#94A3B8' }}>/mo</span>
+                </p>
+                <p style={{ fontSize: 13, color: '#94A3B8', margin: '2px 0 0' }}>
+                  <span style={{ textDecoration: 'line-through' }}>
+                    {isUAE ? 'AED 45.99/mo' : '$12.99/mo'}
+                  </span>
+                  {' '}— free during launch
+                </p>
+              </div>
               <p style={{ fontSize: 13, color: '#64748B', margin: '0 0 24px', lineHeight: 1.5 }}>{plans.pro.description}</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {plans.pro.features.map(f => (
@@ -267,31 +241,20 @@ export default function PricingPage() {
                 ))}
               </ul>
               <div style={{ marginTop: 'auto' }}>
-                <button
-                  onClick={handleProCheckout}
-                  disabled={!!loading}
-                  style={{
-                    width: '100%',
-                    padding: '12px 0',
-                    borderRadius: 10,
-                    border: 'none',
-                    background: loading ? '#93C5FD' : '#2563EB',
-                    color: '#FFFFFF',
-                    fontSize: 14,
-                    fontWeight: 700,
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    fontFamily: 'var(--font-sans)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                    transition: 'background 0.15s',
-                  }}
-                >
-                  {loading === 'pro' ? <><Loader2 size={15} style={{ animation: 'spin 1s linear infinite' }} /> {t('redirecting')}</> : t('startTrial')}
-                </button>
-                {error && (
-                  <p style={{ fontSize: 12, color: '#DC2626', marginTop: 8, textAlign: 'center' }}>{error}</p>
+                {user ? (
+                  <Link
+                    href="/dashboard"
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '12px 0', borderRadius: 10, border: 'none', background: '#2563EB', color: '#FFFFFF', fontSize: 14, fontWeight: 700, textDecoration: 'none', boxSizing: 'border-box' }}
+                  >
+                    Go to Dashboard
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => openSignUp()}
+                    style={{ width: '100%', padding: '12px 0', borderRadius: 10, border: 'none', background: '#2563EB', color: '#FFFFFF', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
+                  >
+                    Get started free
+                  </button>
                 )}
               </div>
             </div>
