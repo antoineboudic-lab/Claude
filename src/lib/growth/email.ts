@@ -11,7 +11,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 // ─── Logo SVG (inline for email client compatibility) ─────────────────────────
 
-const LOGO_MARK = `<svg width="30" height="30" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><rect width="28" height="28" rx="7" fill="#2563EB"/><circle cx="14" cy="15" r="6.5" stroke="white" stroke-width="2.2" fill="none"/><path d="M10.5 17L14 12L17.5 17" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+const LOGO_MARK = `<table role="presentation" cellpadding="0" cellspacing="0" style="display:inline-table;"><tr><td style="width:30px;height:30px;background:#2563EB;border-radius:7px;text-align:center;vertical-align:middle;font-size:13px;font-weight:900;color:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:30px;">OL</td></tr></table>`
 
 // ─── Layout helpers ───────────────────────────────────────────────────────────
 
@@ -118,46 +118,7 @@ function signupHtml(name: string): string {
       <p style="margin:0;font-size:15px;color:#475569;line-height:1.6;">Your OpusLearn account is confirmed. Your personalised AI learning path is ready on your dashboard — start your first lesson in under 15 minutes.</p>
     `, 20)}
     ${row(btn('Go to my dashboard →', `${BASE_URL}/dashboard`))}
-    ${spacer(24)}
-    ${row(`
-      <p style="margin:0 0 12px;font-size:13px;font-weight:700;color:#334155;text-transform:uppercase;letter-spacing:0.5px;">Free vs Pro</p>
-      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;">
-        <tr>
-          <td style="padding:16px 20px;border-bottom:1px solid #F1F5F9;vertical-align:top;width:50%;border-right:1px solid #E2E8F0;">
-            <p style="margin:0 0 6px;font-size:14px;font-weight:800;color:#0F172A;">Free</p>
-            <p style="margin:0 0 10px;font-size:12px;color:#64748B;">Always free</p>
-            <table role="presentation" cellpadding="0" cellspacing="0">
-              ${['First lesson per track', 'Your personalised path', 'Progress tracking', 'XP &amp; streaks'].map(f => `
-                <tr>
-                  <td style="padding:3px 8px 3px 0;font-size:13px;color:#22C55E;vertical-align:top;">✓</td>
-                  <td style="padding:3px 0;font-size:13px;color:#475569;">${f}</td>
-                </tr>`).join('')}
-            </table>
-          </td>
-          <td style="padding:16px 20px;border-bottom:1px solid #F1F5F9;vertical-align:top;background:#EFF6FF;width:50%;">
-            <p style="margin:0 0 2px;font-size:14px;font-weight:800;color:#0F172A;">Pro</p>
-            <p style="margin:0 0 10px;font-size:12px;color:#64748B;">$12.99<span style="color:#94A3B8;">/mo</span> &nbsp;·&nbsp; 7-day free trial</p>
-            <table role="presentation" cellpadding="0" cellspacing="0">
-              ${['All lessons unlocked', 'AI-powered tutor', 'Completion certificates', 'Advanced case studies'].map(f => `
-                <tr>
-                  <td style="padding:3px 8px 3px 0;font-size:13px;color:#2563EB;vertical-align:top;font-weight:700;">✓</td>
-                  <td style="padding:3px 0;font-size:13px;color:#1E40AF;font-weight:500;">${f}</td>
-                </tr>`).join('')}
-            </table>
-          </td>
-        </tr>
-      </table>
-    `, 20)}
-    ${row(`
-      <table role="presentation" cellpadding="0" cellspacing="0">
-        <tr>
-          <td style="border-radius:10px;border:2px solid #2563EB;">
-            <a href="${BASE_URL}/pricing" style="display:inline-block;padding:13px 28px;font-size:14px;font-weight:700;color:#2563EB;text-decoration:none;letter-spacing:0.1px;">Start 7-day free Pro trial →</a>
-          </td>
-        </tr>
-      </table>
-    `, 8)}
-    ${row(`<p style="margin:0;font-size:12px;color:#94A3B8;">7-day free trial · Cancel anytime.</p>`, 28)}
+    ${spacer(8)}
   `)
 }
 
