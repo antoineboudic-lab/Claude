@@ -83,7 +83,7 @@ export function AuthModal() {
           email, password,
           options: {
             data: { full_name: [firstName, lastName].filter(Boolean).join(' ') },
-            emailRedirectTo: `${window.location.origin}/dashboard`,
+            emailRedirectTo: `${window.location.origin}/assessment`,
           },
         })
         if (error) throw error
