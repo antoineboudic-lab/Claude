@@ -208,6 +208,241 @@ const ROLE_DESCRIPTION_TIPS: Record<string, string[]> = {
   ],
 }
 
+// ─── Sub-role description tips ────────────────────────────────────────────────
+
+const SUB_ROLE_DESCRIPTION_TIPS: Partial<Record<string, Record<string, string[]>>> = {
+  marketing: {
+    'brand-comms': [
+      "I manage brand messaging and press relations for a B2C retail brand, writing and approving copy across all channels.",
+      "I own communications strategy for a tech company, including exec thought leadership, PR, and internal comms.",
+      "I lead brand identity work — guidelines, tone of voice, and creative reviews — for a fast-growing DTC startup.",
+    ],
+    'content-seo': [
+      "I own our editorial calendar and SEO strategy, producing and briefing content that drives organic traffic.",
+      "I write and edit long-form blog content, manage freelancers, and optimise pages for search rankings.",
+      "I run content across our lifecycle — blog, email, social — with a focus on search and top-of-funnel growth.",
+    ],
+    'growth-perf': [
+      "I manage paid acquisition across Google and Meta, optimising for ROAS and pipeline contribution.",
+      "I own growth experiments — A/B tests, landing pages, and funnel optimisation — to improve conversion rates.",
+      "I run performance marketing for a SaaS company, managing budget across paid channels and reporting to the CMO.",
+    ],
+    'campaigns': [
+      "I manage integrated marketing campaigns from brief to launch, working with design, copy, and media teams.",
+      "I produce campaign creative — overseeing design briefs, video production, and multi-channel rollout.",
+      "I plan and execute seasonal campaigns for a retail brand, coordinating agency partners and internal stakeholders.",
+    ],
+    'cmo': [
+      "I lead the marketing function across a 20-person team, setting strategy, managing budget, and reporting to the CEO.",
+      "I'm a CMO responsible for brand, demand generation, and product marketing for a Series B SaaS company.",
+      "I own the full commercial marketing function — setting the strategy, hiring the team, and owning pipeline targets.",
+    ],
+  },
+  finance: {
+    'fpa': [
+      "I own the monthly management accounts and variance commentary, presenting results to the CFO and board.",
+      "I run FP&A for three business units — annual budgeting, quarterly reforecasting, and board deck preparation.",
+      "I build and maintain the financial models that drive scenario planning and investor presentations.",
+    ],
+    'accounting': [
+      "I manage month-end close, reconciliations, and statutory reporting for a multi-entity group.",
+      "I run the accounting function for a mid-size business — AP, AR, payroll, and year-end audit.",
+      "I own financial controls and compliance, ensuring accurate reporting across our UK and EU entities.",
+    ],
+    'treasury': [
+      "I manage cash flow, liquidity forecasting, and FX hedging across our international entities.",
+      "I run treasury for a manufacturing group — overseeing banking relationships, cash pooling, and risk management.",
+      "I own the company's financial risk framework, including interest rate, currency, and credit risk management.",
+    ],
+    'cfo': [
+      "I'm a CFO leading a 15-person finance team, responsible for strategy, investor relations, and financial governance.",
+      "I oversee all financial operations for a £200m revenue business, reporting to the CEO and board.",
+      "I lead finance for a PE-backed business, managing the annual audit, banking covenants, and M&A due diligence.",
+    ],
+  },
+  hr: {
+    'talent': [
+      "I lead talent acquisition for a scale-up, managing a team of 4 recruiters across EMEA.",
+      "I own end-to-end recruiting for tech roles — sourcing, interviews, offers, and onboarding.",
+      "I run campus hiring and early careers programmes for a graduate intake of 80 per year.",
+    ],
+    'ld': [
+      "I design and run L&D programmes for a 500-person organisation, from onboarding to leadership development.",
+      "I own learning strategy and the LMS platform, delivering programmes across three business units.",
+      "I build leadership development curricula and manage external training vendors for our senior management population.",
+    ],
+    'hrbp': [
+      "I act as HRBP for the commercial function, covering employee relations, org design, and talent planning.",
+      "I partner with two business units to provide strategic HR support — restructures, performance, and succession.",
+      "I manage the HR agenda for a 250-person division, from culture and engagement to workforce planning.",
+    ],
+    'chro': [
+      "I lead the People function for a 1,200-person company — culture, talent, L&D, and HR operations.",
+      "I'm a CHRO responsible for people strategy, DEI, and organisational development across five markets.",
+      "I sit on the exec team and own the full people agenda — from talent acquisition to total reward strategy.",
+    ],
+  },
+  sales: {
+    'ae': [
+      "I run full-cycle enterprise deals from prospecting to close, targeting mid-market SaaS buyers.",
+      "I manage a pipeline of 30+ opportunities, running product demos, proposals, and contract negotiations.",
+      "I close complex, multi-stakeholder software deals with 6-month sales cycles and £100k+ ARR.",
+    ],
+    'sdr': [
+      "I do outbound prospecting via cold calls, LinkedIn, and email to build pipeline for our AE team.",
+      "I qualify inbound and outbound leads, booking discovery calls for the account executive team.",
+      "I run sequences targeting enterprise accounts, researching prospects and personalising outreach at scale.",
+    ],
+    'am': [
+      "I manage a portfolio of 40 enterprise accounts, focused on renewals, expansion, and health scores.",
+      "I own the relationship with our top 20 customers, running QBRs and identifying upsell opportunities.",
+      "I handle renewals and growth across a book of mid-market SaaS customers, tracking usage and churn risk.",
+    ],
+    'vp-sales': [
+      "I lead a sales team of 15 AEs and SDRs, owning the revenue target and forecasting for the business.",
+      "I'm a VP of Sales managing our EMEA go-to-market — hiring, pipeline review, and quota attainment.",
+      "I run the sales organisation for a SaaS company, setting the strategy, methodology, and headcount plan.",
+    ],
+  },
+  operations: {
+    'process': [
+      "I own process improvement across the business — mapping workflows, eliminating waste, and driving automation.",
+      "I lead operational efficiency projects using lean and Six Sigma methods across a manufacturing environment.",
+      "I manage cross-functional projects to streamline internal processes, from procurement to customer delivery.",
+    ],
+    'supply-chain': [
+      "I run supply chain planning for a consumer goods company — demand forecasting, procurement, and logistics.",
+      "I manage the end-to-end supply chain for a retail group, overseeing suppliers, inventory, and distribution.",
+      "I own procurement and logistics for a manufacturing business, managing 50+ suppliers across five countries.",
+    ],
+    'quality': [
+      "I manage quality assurance and compliance for a manufacturing site, overseeing audits, SOPs, and inspections.",
+      "I own the ISO certification programme and quality management system for a 200-person production facility.",
+      "I lead a QA team responsible for product testing, regulatory compliance, and non-conformance management.",
+    ],
+    'coo': [
+      "I'm a COO overseeing operations, technology, and customer delivery for a 400-person services business.",
+      "I lead the operational function — supply chain, quality, and facilities — reporting directly to the CEO.",
+      "I run the day-to-day of the business: cross-functional execution, OKR tracking, and operational reporting.",
+    ],
+  },
+  legal: {
+    'in-house': [
+      "I'm in-house counsel at a fintech, handling contracts, regulatory queries, and general legal risk.",
+      "I advise on commercial agreements, employment matters, and data privacy for a 300-person tech company.",
+      "I manage the legal workload for a scale-up — NDAs, SaaS contracts, IP, and compliance queries.",
+    ],
+    'compliance': [
+      "I manage compliance and data privacy for a healthcare company operating across five markets.",
+      "I own the regulatory compliance programme — policies, training, monitoring, and reporting to the board.",
+      "I run AML, KYC, and regulatory affairs for a financial services firm, liaising with the FCA.",
+    ],
+    'litigation': [
+      "I manage contentious matters — disputes, arbitration, and regulatory investigations — for an in-house legal team.",
+      "I run litigation strategy for a mid-size law firm, managing a caseload of commercial disputes.",
+      "I handle pre-litigation negotiation, claims strategy, and external counsel management for a large employer.",
+    ],
+    'clco': [
+      "I'm a General Counsel leading a team of 8 lawyers, covering commercial, employment, and regulatory matters.",
+      "I sit on the exec team and own legal, compliance, and risk governance for a listed business.",
+      "I lead the legal function for a PE-backed group — M&A, contracts, disputes, and board advisory.",
+    ],
+  },
+  product: {
+    'pm': [
+      "I'm a PM for a core enterprise product, owning the roadmap and working closely with engineering.",
+      "I manage a B2B SaaS product — discovery, prioritisation, and delivery — in a team of 25.",
+      "I own the product roadmap for our mobile app, running user interviews and defining feature requirements.",
+    ],
+    'po': [
+      "I run the sprint backlog for our delivery team — writing user stories, acceptance criteria, and managing ceremonies.",
+      "I work in a scaled Agile environment as a product owner, prioritising the backlog and unblocking the team.",
+      "I'm the PO for a core platform team, translating business requirements into sprint-ready tickets.",
+    ],
+    'growth-pm': [
+      "I run growth experiments on activation and retention, owning A/B tests and funnel optimisation.",
+      "I'm a growth PM focused on the onboarding flow and feature adoption for a 50k-user SaaS platform.",
+      "I own the experimentation roadmap — hypothesis, test design, analysis — to improve conversion and retention.",
+    ],
+    'cpo': [
+      "I'm a CPO leading a team of 12 PMs across three product lines, setting strategy and roadmap.",
+      "I own the product vision and portfolio for a Series C SaaS company, reporting to the CEO.",
+      "I lead product and design, driving the long-term platform strategy and aligning with commercial goals.",
+    ],
+  },
+  customer: {
+    'csm': [
+      "I manage a portfolio of 30 mid-market accounts, focused on onboarding, adoption, and renewals.",
+      "I own the customer relationship post-sales — health scoring, QBRs, and driving product adoption.",
+      "I partner with 20 enterprise accounts, running business reviews and identifying expansion opportunities.",
+    ],
+    'cs-ops': [
+      "I run CS operations — our tech stack, health score models, playbooks, and team reporting.",
+      "I own the tooling and processes for a 25-person CS organisation, including Gainsight and Salesforce.",
+      "I manage data and analytics for the customer success team, building dashboards and improving workflows.",
+    ],
+    'support': [
+      "I lead a customer support team of 10 agents, managing tickets, SLAs, and CSAT across all channels.",
+      "I handle technical support queries for a SaaS product, owning escalations and resolution quality.",
+      "I run the first-line support function — chat, email, and phone — for a mid-market software company.",
+    ],
+    'vp-cs': [
+      "I lead the Customer Success function for a SaaS business, responsible for NRR and team development.",
+      "I'm a VP of CS managing a 30-person team across EMEA and US, owning retention and expansion revenue.",
+      "I own the full post-sale customer journey — onboarding, CS, support, and renewal — reporting to the CEO.",
+    ],
+  },
+  consulting: {
+    'analyst': [
+      "I build financial models, conduct market research, and produce client-facing decks for strategy engagements.",
+      "I support workstreams on M&A due diligence — data analysis, benchmarking, and synthesis.",
+      "I'm an analyst at a management consultancy, researching, modelling, and presenting to client project teams.",
+    ],
+    'consultant': [
+      "I own client workstreams on strategy projects — interviewing stakeholders, analysing data, and developing recommendations.",
+      "I lead delivery for a consulting engagement — managing analysts, client relationships, and final outputs.",
+      "I run day-to-day advisory projects for corporate clients, from scoping to final presentation.",
+    ],
+    'specialist': [
+      "I'm a domain expert in supply chain consulting, providing specialist advice on client engagements.",
+      "I lead the digital transformation practice at a mid-size consultancy, advising on technology strategy.",
+      "I advise clients on regulatory and compliance matters as a specialist within a consulting practice.",
+    ],
+    'partner': [
+      "I'm a partner at a strategy consultancy, responsible for business development and client account leadership.",
+      "I lead the financial services practice, managing a team of 15 consultants and a revenue target.",
+      "I originate new mandates, manage partner-level client relationships, and oversee engagement quality.",
+    ],
+  },
+  it: {
+    'sysadmin': [
+      "I manage server infrastructure and network operations for a mid-size enterprise, including patching and availability.",
+      "I run the on-prem and hybrid environment — Windows Server, Active Directory, VMware — for 500 users.",
+      "I own IT operations for a manufacturing site: servers, networking, backups, and helpdesk escalations.",
+    ],
+    'security': [
+      "I'm a SecOps engineer responsible for threat detection, vulnerability management, and compliance across cloud environments.",
+      "I manage our SIEM, run threat hunts, and oversee incident response for a financial services firm.",
+      "I own security operations — monitoring, pen test remediation, and regulatory compliance — for a 1,000-person company.",
+    ],
+    'devops': [
+      "I lead a DevOps team, owning CI/CD pipelines, cloud infrastructure on AWS, and deployment automation.",
+      "I manage Kubernetes clusters, Terraform configurations, and release pipelines for a product engineering team.",
+      "I own our cloud infrastructure on Azure — IaC, monitoring, cost optimisation, and SRE practices.",
+    ],
+    'developer': [
+      "I write backend APIs and automation scripts in Python, supporting internal tools and data pipelines.",
+      "I'm a software engineer building microservices in Go, working across feature delivery and platform reliability.",
+      "I develop and maintain internal tooling — scripts, integrations, and dashboards — for a technical ops team.",
+    ],
+    'it-leader': [
+      "I lead the IT function for a 600-person business, overseeing infrastructure, security, and the service desk.",
+      "I'm a CTO at a scale-up, responsible for engineering, cloud architecture, and technology strategy.",
+      "I run IT operations and strategy — vendor management, budget, and roadmap — reporting to the CEO.",
+    ],
+  },
+}
+
 // ─── Skill check questions ────────────────────────────────────────────────────
 
 interface SkillQuestion {
@@ -1211,10 +1446,15 @@ export default function AssessmentPage() {
 
             {/* ── Role description ── */}
             {currentStep === 'roleDescription' && (() => {
-              const tips = ROLE_DESCRIPTION_TIPS[primaryRole] ?? ROLE_DESCRIPTION_TIPS.other
+              const tips = (answers.subRole && SUB_ROLE_DESCRIPTION_TIPS[primaryRole]?.[answers.subRole])
+                || ROLE_DESCRIPTION_TIPS[primaryRole]
+                || ROLE_DESCRIPTION_TIPS.other
+              const subRoleLabel = answers.subRole
+                ? SUB_ROLES[primaryRole as keyof typeof SUB_ROLES]?.find(sr => sr.id === answers.subRole)?.label
+                : undefined
               const roleLabel = answers.roles.length > 1
                 ? answers.roles.map(r => ROLES.find(x => x.id === r)?.label).filter(Boolean).join(' & ')
-                : (ROLES.find(r => r.id === primaryRole)?.label ?? 'your role')
+                : (subRoleLabel ?? ROLES.find(r => r.id === primaryRole)?.label ?? 'your role')
               return (
                 <motion.div key="roleDescription" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
                   <StepHeader
