@@ -566,7 +566,7 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
   const color = TRACK_COLORS[result.primaryTrackId] ?? '#2563EB'
   const icon = TRACK_ICONS[result.primaryTrackId] ?? '🎓'
   const essential = result.customPath.filter(l => l.priority === 'essential')
-  const firstLesson = essential[0]
+  const firstLesson = essential.find(l => !completedLessons.includes(l.lessonId)) ?? essential[0]
 
   const subRoleId = result.answers.subRole
   const subRoleModule = subRoleId
@@ -956,10 +956,10 @@ function RecentActivity({ completedLessons, completedModules }: { completedLesso
   const t = useTranslations('dashboard')
   const trackProgress = getAllTracks().map(track => {
     const total = track.modules.reduce((acc, m) => acc + m.lessons.length, 0)
-    const done = completedLessons.filter(l => l.startsWith(track.id)).length
+    const done = completedLessons.filter(l => l.startsWith(track.id + '-m')).length
     const moduleDone = completedModules.filter(m => m.startsWith(track.id)).length
-    return { id: track.id, done, total, moduleDone, pct: Math.round((done / total) * 100) }
-  }).filter(t => t.done > 0)
+    return { id: track.id, title: track.title, done, total, moduleDone, pct: Math.min(100, Math.round((done / total) * 100)) }
+  }).filter(tr => tr.done > 0)
 
   if (trackProgress.length === 0) return null
 
@@ -978,26 +978,26 @@ function RecentActivity({ completedLessons, completedModules }: { completedLesso
         </p>
       </div>
       <div className="space-y-4">
-        {trackProgress.map(t => {
-          const color = TRACK_COLORS[t.id] ?? '#2563EB'
-          const icon = TRACK_ICONS[t.id] ?? '🎓'
+        {trackProgress.map(tr => {
+          const color = TRACK_COLORS[tr.id] ?? '#2563EB'
+          const icon = TRACK_ICONS[tr.id] ?? '🎓'
           return (
-            <Link key={t.id} href={`/tracks/${t.id}`} className="block group">
+            <Link key={tr.id} href={`/tracks/${tr.id}`} className="block group">
               <div className="flex items-center justify-between mb-1.5">
                 <div className="flex items-center gap-2">
                   <span className="text-sm">{icon}</span>
-                  <p className="text-sm font-medium capitalize" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
-                    {t.id}
+                  <p className="text-sm font-medium" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                    {tr.title}
                   </p>
                 </div>
                 <p className="text-xs font-semibold" style={{ color, fontFamily: 'var(--font-sans)' }}>
-                  {t.done}/{t.total}
+                  {tr.done}/{tr.total}
                 </p>
               </div>
               <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: `${t.pct}%` }}
+                  animate={{ width: `${tr.pct}%` }}
                   transition={{ delay: 0.5, duration: 1, ease: easing }}
                   className="h-full rounded-full transition-all group-hover:opacity-80"
                   style={{ background: color }}
@@ -1356,7 +1356,7 @@ export default function DashboardPage() {
                         const icon = TRACK_ICONS[trackId] ?? '🎓'
                         const trackData = getAllTracks().find(t => t.id === trackId)
                         const total = trackData?.modules.reduce((s, m) => s + m.lessons.length, 0) ?? 1
-                        const done = state.completedLessons.filter(l => l.startsWith(trackId)).length
+                        const done = state.completedLessons.filter(l => l.startsWith(trackId + '-m')).length
                         const pct = Math.round((done / total) * 100)
                         return (
                           <Link key={trackId} href={`/tracks/${trackId}`} className="block group">
@@ -1673,15 +1673,6 @@ export default function DashboardPage() {
               </motion.div>
             )}
 
-            {/* Share & Earn */}
-            {user && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.55, ease: easing }}
-              >
-              </motion.div>
-            )}
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import {
@@ -1504,6 +1504,16 @@ export default function LessonPage() {
   const result = getLesson(trackId as TrackId, lessonId)
   const lesson: Lesson | undefined = result?.lesson
   const module: Module | undefined = result?.module
+
+  // Shuffle quiz options once per lesson so the correct answer isn't always the same position
+  const shuffledQuiz = useMemo((): import('@/lib/curriculum/types').QuizQuestion[] => {
+    if (!lesson?.quiz) return []
+    return lesson.quiz.map(q => {
+      const indices = Array.from({ length: q.options.length }, (_, i) => i).sort(() => Math.random() - 0.5)
+      return { ...q, options: indices.map(i => q.options[i]), correct: indices.indexOf(q.correct) }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lesson?.id])
   const nextLesson = getNextLesson(trackId as TrackId, lessonId)
   const moduleId = lessonId.split('-l')[0]
 
@@ -1553,8 +1563,8 @@ export default function LessonPage() {
 
   const handleQuizSubmit = () => {
     if (!lesson) return
-    const allCorrect = lesson.quiz.every((q, i) => quizAnswers[i] === q.correct)
-    const wrong = lesson.quiz
+    const allCorrect = shuffledQuiz.every((q, i) => quizAnswers[i] === q.correct)
+    const wrong = shuffledQuiz
       .filter((q, i) => quizAnswers[i] !== q.correct)
       .map(q => q.question.split('?')[0].split(' ').slice(0, 6).join(' '))
     setWrongConcepts(wrong)
@@ -2072,14 +2082,14 @@ export default function LessonPage() {
 
                         <p className="text-base font-bold mb-6 leading-[1.65]"
                           style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                          {lesson.quiz[currentQuizQ].question}
+                          {shuffledQuiz[currentQuizQ].question}
                         </p>
 
                         {/* Options — large, comfortable */}
                         <div className="space-y-3 mb-4">
-                          {lesson.quiz[currentQuizQ].options.map((opt, oi) => {
+                          {shuffledQuiz[currentQuizQ].options.map((opt, oi) => {
                             const selected = quizAnswers[currentQuizQ] === oi
-                            const isCorrect = oi === lesson.quiz[currentQuizQ].correct
+                            const isCorrect = oi === shuffledQuiz[currentQuizQ].correct
                             const isWrong = quizFeedbackShown && selected && !isCorrect
                             const showCorrect = quizFeedbackShown && isCorrect
 
@@ -2148,29 +2158,29 @@ export default function LessonPage() {
                               className="overflow-hidden">
                               <div className="mb-5 p-4 rounded-2xl flex items-start gap-3"
                                 style={{
-                                  background: quizAnswers[currentQuizQ] === lesson.quiz[currentQuizQ].correct
+                                  background: quizAnswers[currentQuizQ] === shuffledQuiz[currentQuizQ].correct
                                     ? '#F0FDF4' : '#FFFBEB',
-                                  border: `1px solid ${quizAnswers[currentQuizQ] === lesson.quiz[currentQuizQ].correct ? '#86EFAC' : '#FDE68A'}`,
+                                  border: `1px solid ${quizAnswers[currentQuizQ] === shuffledQuiz[currentQuizQ].correct ? '#86EFAC' : '#FDE68A'}`,
                                 }}>
                                 <Lightbulb size={14}
-                                  color={quizAnswers[currentQuizQ] === lesson.quiz[currentQuizQ].correct ? '#16A34A' : '#D97706'}
+                                  color={quizAnswers[currentQuizQ] === shuffledQuiz[currentQuizQ].correct ? '#16A34A' : '#D97706'}
                                   className="flex-shrink-0 mt-0.5" />
                                 <div>
                                   <p className="text-xs font-bold mb-1"
                                     style={{
-                                      color: quizAnswers[currentQuizQ] === lesson.quiz[currentQuizQ].correct ? '#15803D' : '#92400E',
+                                      color: quizAnswers[currentQuizQ] === shuffledQuiz[currentQuizQ].correct ? '#15803D' : '#92400E',
                                       fontFamily: 'var(--font-sans)',
                                     }}>
-                                    {quizAnswers[currentQuizQ] === lesson.quiz[currentQuizQ].correct ? 'Correct!' : 'Not quite'}
+                                    {quizAnswers[currentQuizQ] === shuffledQuiz[currentQuizQ].correct ? 'Correct!' : 'Not quite'}
                                   </p>
                                   <p className="text-xs leading-relaxed"
                                     style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                                    {lesson.quiz[currentQuizQ].explanation}
+                                    {shuffledQuiz[currentQuizQ].explanation}
                                   </p>
-                                  {quizAnswers[currentQuizQ] !== lesson.quiz[currentQuizQ].correct && (
+                                  {quizAnswers[currentQuizQ] !== shuffledQuiz[currentQuizQ].correct && (
                                     <button
                                       onClick={() => tutorRef.current?.open(
-                                        `I got this quiz question wrong: "${lesson.quiz[currentQuizQ].question}" — can you explain why the correct answer is "${lesson.quiz[currentQuizQ].options[lesson.quiz[currentQuizQ].correct]}"?`
+                                        `I got this quiz question wrong: "${shuffledQuiz[currentQuizQ].question}" — can you explain why the correct answer is "${shuffledQuiz[currentQuizQ].options[shuffledQuiz[currentQuizQ].correct]}"?`
                                       )}
                                       className="mt-2.5 text-xs font-semibold flex items-center gap-1.5 transition-opacity hover:opacity-75"
                                       style={{ color: '#D97706', fontFamily: 'var(--font-sans)' }}>
