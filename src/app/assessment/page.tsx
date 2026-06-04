@@ -1035,6 +1035,283 @@ const CHALLENGES: Record<string, { id: string; label: string; detail: string }[]
   ],
 }
 
+// ─── Sub-role specific challenges ─────────────────────────────────────────────
+
+const SUB_ROLE_CHALLENGES: Partial<Record<string, Record<string, { id: string; label: string; detail: string }[]>>> = {
+  marketing: {
+    'brand-comms': [
+      { id: 'brand-consistency', label: 'Staying on-brand at scale', detail: 'Copy from freelancers and agencies drifts from brand guidelines' },
+      { id: 'creative-speed', label: 'Slow creative reviews', detail: 'Approvals and revisions eat weeks before launch' },
+      { id: 'pr-cutthrough', label: 'Getting PR cut-through', detail: 'Hard to stand out in a saturated media landscape' },
+      { id: 'exec-comms', label: 'Executive thought leadership', detail: "Writing senior leadership's content takes too much of my time" },
+    ],
+    'content-seo': [
+      { id: 'content-volume', label: 'Not enough content to rank', detail: 'Competitors publish faster and rank higher' },
+      { id: 'content-freshness', label: 'Keeping content up to date', detail: 'Older posts decay without a scalable refresh process' },
+      { id: 'briefing-quality', label: 'Slow writer briefing', detail: 'Getting freelancers to capture the right angle takes too long' },
+      { id: 'seo-roi', label: 'Proving content ROI', detail: "Hard to link organic traffic to pipeline for stakeholders" },
+    ],
+    'growth-perf': [
+      { id: 'roas-pressure', label: 'Rising ad costs, flat ROAS', detail: 'CPCs are up and performance is harder to justify' },
+      { id: 'attribution', label: 'Attribution is broken', detail: "Can't reliably credit campaigns with the pipeline they drive" },
+      { id: 'experiment-speed', label: 'Too few experiments running', detail: 'Test-and-learn cycles are slower than they need to be' },
+      { id: 'data-quality', label: 'Unreliable tracking data', detail: 'Cookie changes and ad blockers distort the numbers' },
+    ],
+    'campaigns': [
+      { id: 'brief-quality', label: 'Poor creative briefs', detail: 'Agencies and designers come back with the wrong direction' },
+      { id: 'asset-delays', label: 'Assets always late', detail: 'Production bottlenecks push launch dates back repeatedly' },
+      { id: 'campaign-scale', label: 'Can\'t personalise at scale', detail: 'One-size campaign messaging underperforms across segments' },
+      { id: 'post-campaign', label: 'Weak post-campaign analysis', detail: 'No time to properly evaluate what worked before the next brief' },
+    ],
+    'cmo': [
+      { id: 'marketing-roi', label: 'Proving marketing\'s business value', detail: "Board wants revenue attribution, not awareness metrics" },
+      { id: 'team-velocity', label: 'Team moves too slowly', detail: 'Keeping a lean team competitive with well-resourced rivals' },
+      { id: 'ai-tool-sprawl', label: 'AI tool sprawl', detail: 'Everyone is trying different tools with no consistent standard' },
+      { id: 'talent-skills', label: 'Skills gaps in the team', detail: 'The team\'s capabilities are not keeping pace with what\'s possible' },
+    ],
+  },
+  finance: {
+    'fpa': [
+      { id: 'reporting-time', label: 'Reporting takes too long', detail: 'Monthly close and commentary eats the first week of every month' },
+      { id: 'forecast-accuracy', label: 'Inaccurate forecasts', detail: 'Projections miss by enough to create credibility problems' },
+      { id: 'narrative-gap', label: 'Numbers without story', detail: "Non-finance leaders don't know what to do with the data" },
+      { id: 'model-maintenance', label: 'Models are fragile', detail: 'Spreadsheets break when assumptions change mid-cycle' },
+    ],
+    'accounting': [
+      { id: 'manual-entries', label: 'Too much manual data entry', detail: 'Reconciliations and postings take hours that should take minutes' },
+      { id: 'close-speed', label: 'Month-end close is too slow', detail: 'The team is always racing deadlines with limited room for error' },
+      { id: 'regulatory-changes', label: 'Regulatory changes pile up', detail: 'Hard to keep reporting current as rules evolve across markets' },
+      { id: 'error-risk', label: 'Error risk at high volume', detail: 'Transaction volume makes manual review impractical' },
+    ],
+    'treasury': [
+      { id: 'cashflow-visibility', label: 'Limited cash visibility', detail: "Real-time cash position across entities is hard to track" },
+      { id: 'fx-risk', label: 'FX volatility', detail: 'Currency moves create exposure that\'s difficult to hedge cost-effectively' },
+      { id: 'bank-reconciliation', label: 'Slow bank reconciliation', detail: 'Matching transactions across banks and currencies is time-consuming' },
+      { id: 'treasury-comms', label: 'Explaining risk to leadership', detail: "Senior stakeholders don't engage with treasury risk until it's a problem" },
+    ],
+    'cfo': [
+      { id: 'strategic-insight', label: 'Too much reporting, not enough insight', detail: 'The team produces data but leadership wants answers' },
+      { id: 'data-latency', label: 'Slow, unreliable data', detail: "Decisions are made on last month's numbers, not today's reality" },
+      { id: 'investor-narrative', label: 'Investor narrative prep', detail: 'Building board and investor materials takes the team too long' },
+      { id: 'finance-transformation', label: 'Future-proofing the function', detail: 'Finance needs to evolve before the business outgrows it' },
+    ],
+  },
+  hr: {
+    'talent': [
+      { id: 'cv-volume', label: 'Drowning in CVs', detail: 'High application volumes make fair, fast screening impossible' },
+      { id: 'jd-quality', label: 'Weak job descriptions', detail: 'Poor JDs attract the wrong candidates and miss strong ones' },
+      { id: 'time-to-hire', label: 'Time-to-hire is too long', detail: 'Slow processes lose candidates to faster-moving competitors' },
+      { id: 'candidate-experience', label: 'Inconsistent candidate experience', detail: 'Quality varies depending on who runs the process' },
+    ],
+    'ld': [
+      { id: 'programme-design', label: 'Designing programmes under pressure', detail: 'Not enough time to build learning that actually sticks' },
+      { id: 'impact-measurement', label: 'Proving learning impact', detail: 'Completion rates don\'t tell the business whether skills improved' },
+      { id: 'personalisation', label: 'One-size learning doesn\'t work', detail: 'Generic programmes don\'t address role-specific skill gaps' },
+      { id: 'skills-currency', label: 'Skills needs change faster than programmes', detail: 'Content is outdated before the cohort finishes' },
+    ],
+    'hrbp': [
+      { id: 'people-data', label: 'Turning people data into action', detail: 'Lots of dashboards, not enough insight for the business' },
+      { id: 'er-volume', label: 'ER caseload is too high', detail: 'Employee relations cases consume time that should go to strategy' },
+      { id: 'manager-support', label: 'Manager capability gaps', detail: 'Managers need more support with conversations and decisions' },
+      { id: 'policy-comms', label: 'Making policy clear to everyone', detail: 'HR language confuses managers and employees alike' },
+    ],
+    'chro': [
+      { id: 'ai-culture', label: 'Building AI readiness across the org', detail: "Most employees don't know where to start with AI" },
+      { id: 'people-strategy', label: 'Linking people strategy to business outcomes', detail: "Hard to show the board that HR investments drive performance" },
+      { id: 'talent-competition', label: 'Competing for talent', detail: 'The best candidates have more options than ever' },
+      { id: 'change-fatigue', label: 'Change fatigue in the workforce', detail: 'People are tired of initiatives — adoption is harder than ever' },
+    ],
+  },
+  sales: {
+    'ae': [
+      { id: 'research-time', label: 'Account research takes too long', detail: 'Personalising for each prospect eats prep time before every call' },
+      { id: 'proposal-speed', label: 'Proposals from scratch every time', detail: 'No repeatable way to produce tailored proposals quickly' },
+      { id: 'deal-momentum', label: 'Deals go quiet mid-cycle', detail: 'Hard to keep buyers engaged through long internal approval processes' },
+      { id: 'objection-handling', label: 'Inconsistent objection handling', detail: 'No shared playbook for the hardest conversations' },
+    ],
+    'sdr': [
+      { id: 'reply-rates', label: 'Outreach gets ignored', detail: 'Generic sequences go to spam or get deleted without a reply' },
+      { id: 'prospect-research', label: 'Finding the right contacts fast', detail: 'Identifying decision-makers and their pain points takes too long' },
+      { id: 'personalisation-scale', label: 'Personalising at volume', detail: "Can't tailor every message manually and still hit activity targets" },
+      { id: 'activity-quality', label: 'Activity vs. quality trade-off', detail: 'Hitting dials and emails often means sacrificing message quality' },
+    ],
+    'am': [
+      { id: 'churn-signals', label: 'Missing early churn signals', detail: 'Customers go quiet before I realise there\'s a problem' },
+      { id: 'qbr-prep', label: 'QBR prep takes too long', detail: 'Pulling data and building the narrative eats half a day per account' },
+      { id: 'portfolio-scale', label: 'Too many accounts to manage well', detail: 'Hard to give every account the attention it deserves' },
+      { id: 'expansion-timing', label: 'Knowing when to push for expansion', detail: "Hard to identify which accounts are ready for an upsell conversation" },
+    ],
+    'vp-sales': [
+      { id: 'forecast-accuracy', label: 'Forecasts are too optimistic', detail: "Reps sandbag or overstate — can't get a clean number" },
+      { id: 'ramp-time', label: 'New reps take too long to ramp', detail: 'Time to first deal is long and inconsistent across hires' },
+      { id: 'process-adoption', label: 'CRM and process discipline', detail: 'Activity data is patchy and the playbook isn\'t followed consistently' },
+      { id: 'playbook-scale', label: 'Scaling what works', detail: "Top rep behaviours don't transfer reliably to the rest of the team" },
+    ],
+  },
+  operations: {
+    'process': [
+      { id: 'knowledge-loss', label: 'Processes live in people\'s heads', detail: "When someone leaves, so does the knowledge" },
+      { id: 'automation-prioritisation', label: 'Not sure what to automate first', detail: "Every process feels important — hard to know where to start" },
+      { id: 'change-adoption', label: 'Teams don\'t follow new processes', detail: 'Rolling out improved workflows and getting them to stick is hard' },
+      { id: 'ops-reporting', label: 'Slow operational reporting', detail: "Leadership wants data faster than the team can produce it" },
+    ],
+    'supply-chain': [
+      { id: 'disruption-visibility', label: 'Supply disruptions hit without warning', detail: "By the time we know, it's too late to mitigate" },
+      { id: 'supplier-management', label: 'Managing supplier performance at scale', detail: 'Too many suppliers to track quality and reliability manually' },
+      { id: 'demand-forecast', label: 'Inaccurate demand forecasting', detail: 'Over- and under-stocking creates cost and service problems' },
+      { id: 'cost-reliability', label: 'Balancing cost and reliability', detail: 'Cheaper suppliers create risk — hard to quantify the trade-off' },
+    ],
+    'quality': [
+      { id: 'late-detection', label: 'Defects caught too late', detail: 'Problems surface at final inspection instead of earlier in the process' },
+      { id: 'sop-maintenance', label: 'SOPs fall out of date', detail: 'Procedures change but documentation doesn\'t keep up' },
+      { id: 'audit-readiness', label: 'Audit preparation is a scramble', detail: 'Getting evidence together takes weeks that should take days' },
+      { id: 'process-compliance', label: 'Teams bypass quality steps', detail: 'Under pressure, people skip the process to meet deadlines' },
+    ],
+    'coo': [
+      { id: 'ops-visibility', label: 'No real-time operational view', detail: "Can't see what's happening across the business without chasing reports" },
+      { id: 'efficiency-gains', label: 'Finding the next efficiency gain', detail: 'Obvious improvements are done — the next ones are harder to find' },
+      { id: 'change-programmes', label: 'Change that doesn\'t stick', detail: 'Initiatives get launched but revert to old behaviour within months' },
+      { id: 'firefighting', label: 'Always in firefighting mode', detail: 'Operational issues pull focus from strategic priorities constantly' },
+    ],
+  },
+  legal: {
+    'in-house': [
+      { id: 'contract-volume', label: 'Contract review backlog', detail: 'More agreements come in than the team can process at pace' },
+      { id: 'plain-language', label: 'Legal advice that lands', detail: "Business partners want clear guidance, not legal caveats" },
+      { id: 'risk-coverage', label: 'Covering risk across a fast-moving business', detail: 'Hard to stay on top of legal exposure when the business moves quickly' },
+      { id: 'regulatory-tracking', label: 'Keeping up with regulatory change', detail: 'New rules across multiple areas compete for limited attention' },
+    ],
+    'compliance': [
+      { id: 'regulatory-complexity', label: 'Regulatory landscape keeps changing', detail: 'Monitoring and responding to new rules across jurisdictions is relentless' },
+      { id: 'training-effectiveness', label: 'Compliance training that doesn\'t stick', detail: 'Annual checkbox training doesn\'t change employee behaviour' },
+      { id: 'audit-evidence', label: 'Keeping documentation audit-ready', detail: 'Evidence and records aren\'t consistently maintained across the business' },
+      { id: 'board-comms', label: 'Communicating risk to the board', detail: 'Translating compliance risk into something leadership will act on is hard' },
+    ],
+    'litigation': [
+      { id: 'document-volume', label: 'Large document sets in disputes', detail: 'Reviewing thousands of documents for relevant evidence is exhausting' },
+      { id: 'case-law', label: 'Keeping up with case law', detail: 'Staying current with relevant precedents across active matters takes time' },
+      { id: 'hearing-prep', label: 'Preparing under deadline pressure', detail: 'Hearing preparation compresses into too short a window' },
+      { id: 'strategy-comms', label: 'Explaining strategy to stakeholders', detail: "Senior stakeholders want certainty that litigation can't provide" },
+    ],
+    'clco': [
+      { id: 'team-scalability', label: 'Legal team can\'t keep up with demand', detail: 'Business growth creates more legal work than headcount can absorb' },
+      { id: 'business-education', label: 'Educating the business on risk', detail: "Teams take on legal risk without understanding the consequences" },
+      { id: 'external-counsel', label: 'Managing external counsel spend', detail: 'Outside counsel bills are high and hard to predict or justify' },
+      { id: 'board-reporting', label: 'Board-level legal reporting', detail: "The board wants concise legal updates — not documents they won't read" },
+    ],
+  },
+  product: {
+    'pm': [
+      { id: 'research-synthesis', label: 'Research piles up faster than insights', detail: 'User interviews and feedback sit unread while the roadmap needs decisions' },
+      { id: 'spec-quality', label: 'Engineering pushes back on specs', detail: 'Requirements are ambiguous and cause rework mid-sprint' },
+      { id: 'stakeholder-alignment', label: 'Roadmap debates that go in circles', detail: "Everyone has an opinion — hard to get to a decision and move on" },
+      { id: 'ruthless-priority', label: 'Everything feels urgent', detail: 'Saying no is hard when every stakeholder has a strong case for their request' },
+    ],
+    'po': [
+      { id: 'backlog-grooming', label: 'Backlog is never ready', detail: 'Sprint planning starts with tickets that aren\'t well defined enough to build' },
+      { id: 'story-quality', label: 'User stories cause rework', detail: 'Engineers ask clarifying questions that block progress mid-sprint' },
+      { id: 'tech-debt', label: 'Tech debt vs. feature balance', detail: 'Hard to justify maintenance work when product wants new features shipped' },
+      { id: 'stakeholder-updates', label: 'Stakeholder communication overhead', detail: 'Keeping everyone updated takes time away from actual delivery work' },
+    ],
+    'growth-pm': [
+      { id: 'experiment-signal', label: 'Experiments don\'t give clear signal', detail: 'Tests run but results are ambiguous or contradictory' },
+      { id: 'eng-bandwidth', label: 'Engineering prioritises features over growth', detail: 'Getting dev time for experiments is a constant negotiation' },
+      { id: 'funnel-diagnosis', label: 'Diagnosing what\'s driving changes', detail: 'Hard to tell what\'s causing activation or retention to move' },
+      { id: 'insight-to-action', label: 'Too slow from data to decision', detail: 'Analysis takes long enough that the window for acting has closed' },
+    ],
+    'cpo': [
+      { id: 'team-alignment', label: 'Multiple teams, diverging direction', detail: 'Keeping product teams aligned on strategy gets harder as headcount grows' },
+      { id: 'long-term-vs-short', label: 'Short-term pressure vs. long-term vision', detail: 'Quarterly targets pull the roadmap away from the strategy' },
+      { id: 'vision-communication', label: 'Product vision that doesn\'t inspire', detail: 'Hard to articulate a direction the whole team gets excited about' },
+      { id: 'customer-proximity', label: 'Losing touch with customers', detail: "As the organisation scales, leadership gets further from user reality" },
+    ],
+  },
+  customer: {
+    'csm': [
+      { id: 'portfolio-breadth', label: 'Too many accounts to serve well', detail: 'Important things slip through the cracks across a large book' },
+      { id: 'at-risk-detection', label: 'At-risk accounts go dark before I notice', detail: 'Churn happens without early warning because signals are buried in data' },
+      { id: 'qbr-efficiency', label: 'QBR prep takes half a day', detail: 'Pulling usage data and building the narrative is slow and manual' },
+      { id: 'outreach-scale', label: 'Personalised outreach across all accounts', detail: "Generic check-ins don't feel personal, but tailoring everything isn't scalable" },
+    ],
+    'cs-ops': [
+      { id: 'health-score-accuracy', label: 'Health scores don\'t reflect reality', detail: 'The model flags the wrong accounts or misses obvious at-risk signals' },
+      { id: 'tool-adoption', label: 'CSMs don\'t use the tech stack properly', detail: "Data quality suffers when the team logs work inconsistently" },
+      { id: 'dashboard-action', label: 'Dashboards that nobody acts on', detail: 'Reports get built and shared but don\'t change what the team does' },
+      { id: 'process-scale', label: 'Processes break as the team grows', detail: 'What worked for 10 CSMs doesn\'t work for 30' },
+    ],
+    'support': [
+      { id: 'resolution-speed', label: 'Resolution time is too slow', detail: 'Tickets sit in queues longer than customers will tolerate' },
+      { id: 'repeat-contacts', label: 'Same issues come back repeatedly', detail: 'Customers contact us again because the first resolution didn\'t stick' },
+      { id: 'agent-consistency', label: 'Inconsistent agent quality', detail: 'Response quality varies too much depending on who picks up the ticket' },
+      { id: 'volume-spikes', label: 'Volume spikes overwhelm the team', detail: 'Product launches and incidents create backlogs that take weeks to clear' },
+    ],
+    'vp-cs': [
+      { id: 'nrr-improvement', label: 'Improving NRR without adding headcount', detail: "Can't keep hiring to cover every account segment at the right depth" },
+      { id: 'team-scale', label: 'Scaling the team without losing quality', detail: 'Growth means onboarding more CSMs while maintaining service standards' },
+      { id: 'churn-signal-timing', label: 'Getting churn signals early enough to act', detail: 'By the time the data shows risk, the customer decision is already made' },
+      { id: 'cs-value', label: 'Proving CS drives commercial outcomes', detail: "Hard to show the board that CS investment translates to revenue" },
+    ],
+  },
+  consulting: {
+    'analyst': [
+      { id: 'deadline-pressure', label: 'Models and decks under brutal deadlines', detail: 'Quality suffers when turnaround time is measured in hours' },
+      { id: 'data-to-story', label: 'Structuring data into a clear narrative', detail: 'Findings are solid but translating them into a compelling argument is hard' },
+      { id: 'polished-output', label: 'Producing polished deliverables fast', detail: 'Formatting, charts, and slide production eat time that should go to thinking' },
+      { id: 'industry-learning', label: 'Getting up to speed on new industries fast', detail: 'Each engagement requires deep domain knowledge you don\'t yet have' },
+    ],
+    'consultant': [
+      { id: 'workstream-delivery', label: 'Delivering workstreams under client pressure', detail: 'Quality, speed, and client satisfaction are all in tension at once' },
+      { id: 'insight-communication', label: 'Making complex analysis actionable', detail: 'Clients understand the output but struggle to know what to do with it' },
+      { id: 'scope-management', label: 'Scope creep erodes margins', detail: 'Clients ask for more and it\'s hard to push back without damaging the relationship' },
+      { id: 'team-development', label: 'Developing junior staff while delivering', detail: 'Coaching analysts takes time when you\'re also managing your own work' },
+    ],
+    'specialist': [
+      { id: 'domain-currency', label: 'Staying at the cutting edge of your field', detail: 'Delivering client work leaves little time to develop your own expertise' },
+      { id: 'accessibility', label: 'Making specialist knowledge land', detail: 'Expert insight loses impact when clients can\'t follow the reasoning' },
+      { id: 'differentiation', label: 'Differentiating from generalist firms', detail: 'Clients sometimes choose a bigger brand over deeper expertise' },
+      { id: 'client-development', label: 'Building a client base that values depth', detail: 'Positioning as a specialist can feel limiting to some buyers' },
+    ],
+    'partner': [
+      { id: 'mandate-origination', label: 'Originating new work in a competitive market', detail: 'Winning mandates requires more relationship investment than ever' },
+      { id: 'relationship-depth', label: 'Managing client relationships at the right level', detail: 'Staying close to senior clients while running multiple engagements is hard' },
+      { id: 'talent-development', label: 'Developing the next generation of talent', detail: 'Building practice capability while hitting personal revenue targets is a real tension' },
+      { id: 'practice-roi', label: 'Demonstrating practice value to firm leadership', detail: "Internal buy-in for investment requires making the business case clearly" },
+    ],
+  },
+  it: {
+    'sysadmin': [
+      { id: 'runbook-gaps', label: 'Undocumented systems everywhere', detail: 'Critical processes exist only in people\'s heads — a departure would be catastrophic' },
+      { id: 'toil-reduction', label: 'Repetitive tasks eat the whole day', detail: 'Patching, access provisioning, and backups leave no time for strategic work' },
+      { id: 'incident-speed', label: 'Incident resolution takes too long', detail: 'Diagnosing and fixing issues is slower than it should be' },
+      { id: 'management-comms', label: 'Explaining IT risk to non-technical management', detail: "Leadership doesn't understand the consequences until something breaks" },
+    ],
+    'security': [
+      { id: 'alert-fatigue', label: 'Alert volume is unmanageable', detail: 'Thousands of alerts a day — finding real threats in the noise is exhausting' },
+      { id: 'threat-pace', label: 'Threat landscape moves faster than defences', detail: 'New attack vectors emerge before existing ones are fully mitigated' },
+      { id: 'compliance-burden', label: 'Compliance and audit preparation', detail: 'Meeting regulatory requirements takes significant team time every cycle' },
+      { id: 'security-culture', label: 'Getting the business to take security seriously', detail: 'Policy violations happen because people prioritise convenience over compliance' },
+    ],
+    'devops': [
+      { id: 'deployment-risk', label: 'Deployments are too risky', detail: 'Releases cause incidents more often than they should' },
+      { id: 'cloud-costs', label: 'Cloud costs keep climbing', detail: 'Infrastructure spend grows with usage but optimisation is always deprioritised' },
+      { id: 'developer-adoption', label: 'Developers don\'t follow CI/CD practices', detail: 'Pipeline bypasses and manual steps undermine the reliability of releases' },
+      { id: 'infra-docs', label: 'Infrastructure docs fall behind', detail: 'Fast-moving changes mean documentation is always out of date' },
+    ],
+    'developer': [
+      { id: 'boilerplate', label: 'Repetitive code slows delivery', detail: 'Too much time on scaffolding and boilerplate instead of solving the real problem' },
+      { id: 'tech-docs', label: 'Documentation no one writes', detail: 'Internal tools and APIs go undocumented because there\'s always something more urgent' },
+      { id: 'tech-currency', label: 'Keeping up with evolving tools and frameworks', detail: 'The ecosystem moves fast and staying current takes deliberate effort' },
+      { id: 'debugging-speed', label: 'Debugging complex issues under pressure', detail: 'Production incidents require fast root cause analysis with incomplete information' },
+    ],
+    'it-leader': [
+      { id: 'budget-justification', label: 'Getting IT investment approved', detail: "Non-technical stakeholders don't see IT as a strategic priority until something fails" },
+      { id: 'skills-gap', label: 'Team skills falling behind', detail: 'Technology changes faster than the team\'s capability to keep up' },
+      { id: 'vendor-management', label: 'Vendor complexity and cost', detail: 'Too many contracts, renewal dates, and performance issues to manage effectively' },
+      { id: 'it-strategy', label: 'Building a strategy that supports growth', detail: 'Current infrastructure creates constraints that slow the business down' },
+    ],
+  },
+}
+
 // ─── Goals ────────────────────────────────────────────────────────────────────
 
 interface GoalOption {
@@ -1272,8 +1549,11 @@ export default function AssessmentPage() {
   }
 
   const primaryRole = answers.roles[0] ?? 'other'
-  const allChallengeOptions = answers.roles.flatMap(r => CHALLENGES[r] ?? CHALLENGES.other)
-  const challenges = allChallengeOptions.filter((c, i, arr) => arr.findIndex(x => x.id === c.id) === i)
+  const challenges = (answers.subRole && answers.roles.length === 1
+    ? SUB_ROLE_CHALLENGES[primaryRole]?.[answers.subRole]
+    : undefined)
+    ?? answers.roles.flatMap(r => CHALLENGES[r] ?? CHALLENGES.other)
+      .filter((c, i, arr) => arr.findIndex(x => x.id === c.id) === i)
   const skillQs = SKILL_QUESTIONS[primaryRole] ?? SKILL_QUESTIONS.other
   const allGoalOptions = answers.roles.flatMap(r => ROLE_GOALS[r] ?? ROLE_GOALS.other)
   const goals = allGoalOptions.filter((g, i, arr) => arr.findIndex(x => x.id === g.id) === i)
