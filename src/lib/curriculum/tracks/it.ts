@@ -722,6 +722,141 @@ AI will not catch everything — it has no knowledge of your specific environmen
             },
           ],
         },
+        {
+          id: 'it-m2-l5',
+          title: 'Cloud Cost Optimisation and FinOps with AI',
+          duration: 17,
+          description:
+            'Use AI to analyse cloud cost reports, identify savings opportunities, build cost allocation documentation, and communicate cloud spend clearly to non-technical stakeholders.',
+          content: `## The Cloud Cost Problem
+
+Cloud costs are opaque, fast-growing, and poorly understood outside the engineering team. FinOps — the practice of bringing financial accountability to cloud spending — requires translating complex billing data into actionable decisions. AI accelerates every stage of this workflow.
+
+**Important limitation up front:** AI cannot access your live cloud billing APIs, query your Cost Explorer directly, or run real-time cost analysis without an integration. What AI can do is help you analyse exported cost data, structure your cost governance framework, draft documentation, and communicate findings to stakeholders. The data you feed it determines the quality of the output.
+
+## Analysing Cloud Cost Reports with AI
+
+Most cloud providers export billing data as CSVs or can be queried into reports. These reports are large, multi-dimensional, and require significant manual work to interpret. AI can process structured cost summaries and identify patterns.
+
+Prompt approach: "Here is a summary of our AWS cost report for [month]: [paste key cost categories, services, and totals]. Identify: (1) the five largest cost categories; (2) any services showing over 20% month-over-month growth; (3) potential anomalies — services with unexpectedly high or low spend compared to expected usage; (4) the three highest-priority areas to investigate for savings."
+
+For larger data sets, summarise by service category before pasting — AI works best on structured summaries rather than raw line-item exports.
+
+## Right-Sizing Recommendation Frameworks
+
+**Right-sizing** is identifying resources that are over-provisioned relative to actual usage. An EC2 instance running at 8% average CPU utilisation is a right-sizing candidate. A database instance provisioned for peak load that runs at 12% average is costing money for capacity you never use.
+
+AI can help you build the right-sizing analysis framework:
+
+"Build a right-sizing analysis template for [EC2 instances / RDS instances / Kubernetes node pools]. Include: the utilisation metrics to review (CPU, memory, network, storage I/O), the thresholds that indicate over-provisioning, the recommended instance size reduction logic, and how to calculate potential monthly savings from right-sizing each resource."
+
+Apply the framework to your utilisation data — AI can help you interpret the results and draft the recommendations.
+
+## Tagging Strategy and Cost Allocation Documentation
+
+Without consistent tagging, you cannot answer the question "what is this service costing our engineering team versus our data team?" Tag governance is a prerequisite for meaningful cost allocation.
+
+AI can help you design and document a tagging strategy:
+
+"Design a cloud resource tagging strategy for a [company type: e.g., 200-person SaaS company] with [number] engineering teams. The business needs to allocate costs by: team, product, environment (prod/staging/dev), and cost centre. Define: the required tags, their values and formats, the enforcement mechanism, and the exception process. Format as a policy document IT teams can implement."
+
+AI can also audit your current tagging: "Here are the most common tags applied to our cloud resources [describe]. Identify gaps in coverage, inconsistent naming conventions, and resources that have no cost allocation tag."
+
+## Building Cost Anomaly Alert Playbooks
+
+A cost anomaly alert fires when cloud spend deviates unexpectedly. Without a playbook, on-call engineers either investigate too slowly or dismiss alerts they don't understand. AI can draft the playbook.
+
+"Write a cost anomaly alert playbook for the following scenario: AWS Cost Anomaly Detection triggers an alert for $[X] above expected spend in [service: e.g., EC2 / S3 / RDS]. The playbook should cover: immediate investigation steps, how to identify the root cause (instance type breakdown, resource tags, time of spike), when to escalate, and how to document the resolution and prevention action."
+
+A library of service-specific anomaly playbooks significantly reduces investigation time and ensures consistent responses across your team.
+
+## Communicating Cloud Spend to Non-Technical Stakeholders
+
+Finance and operations leaders need to understand cloud cost trends, but cost reports full of instance types and region codes are unreadable to non-engineers. AI can translate.
+
+Prompt: "Here is our cloud cost summary for Q2: [describe key categories, trends, and anomalies]. Write an executive summary for our CFO that: explains total cloud spend and the quarter-over-quarter trend in plain language, identifies the top cost drivers without technical jargon, describes the savings initiatives in progress, and shows the projected cost trajectory for Q3 based on current trends. Under 300 words."
+
+## Key FinOps Metrics to Track
+
+AI can help you design dashboards and reporting for these core FinOps metrics:
+
+- **Cloud cost as a percentage of revenue** — the most important efficiency ratio
+- **Unit cost** — cost per customer, cost per transaction, cost per API call — ties infrastructure spend to business output
+- **Commitment utilisation** — what percentage of your reserved instances or savings plans are being used
+- **Waste rate** — idle resources, unused reservations, and orphaned snapshots as a percentage of total spend`,
+          keyTakeaways: [
+            'AI can analyse exported cloud cost reports to identify top cost categories, anomalies, and right-sizing opportunities — but cannot access live cloud APIs without an integration',
+            'Right-sizing analysis frameworks built with AI help identify over-provisioned resources systematically; AI can help calculate potential savings from specific recommendations',
+            'A well-designed tagging strategy is a prerequisite for meaningful cost allocation — AI can draft the policy, naming conventions, and enforcement approach',
+            'Cost anomaly alert playbooks drafted with AI reduce investigation time and ensure consistent on-call responses across engineering teams',
+            'Translating cloud cost reports into executive-readable summaries is a high-value use of AI — finance leaders need cost trends, not instance types',
+          ],
+          exercise: {
+            title: 'Cloud Cost Report Analysis and Stakeholder Summary',
+            description:
+              'Use AI to analyse a real cloud cost report, identify savings opportunities, and produce an executive communication on cloud spend.',
+            steps: [
+              'Export a monthly cost summary from your cloud provider (AWS Cost Explorer, GCP Billing, or Azure Cost Management) — summarise by service category and note any month-over-month changes',
+              'Ask Claude to identify the top five cost drivers, flag any anomalies, and suggest the three highest-priority areas for investigation',
+              'Choose one high-spend service and build a right-sizing analysis: describe your average utilisation metrics and ask Claude to build the analysis framework and calculate potential savings',
+              'Identify one tag governance gap in your current environment and ask Claude to draft the tagging policy section needed to close it',
+              'Produce a one-page executive cost summary for your CTO or CFO using the analysis — plain language, no instance types, clear cost trend and savings narrative',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'Your AWS Cost Anomaly Detection fires an alert: EC2 spend is $4,200 higher than expected this week. You paste the alert details into Claude and ask it to diagnose the root cause. What should you expect?',
+            options: [
+              'Claude will query your AWS account directly and identify the specific instances causing the spike',
+              'Claude can help you structure the investigation — suggesting what data to pull, what questions to ask, and what patterns to look for — but it cannot access your live AWS environment without an integration',
+              'Claude will refuse to help because cloud cost analysis requires specialised tools',
+              'Claude can identify the root cause from the alert details alone without additional data',
+            ],
+            correct: 1,
+            explanation: 'AI cannot access your live cloud environment — it works on data you provide to it. When you paste alert details, AI can suggest the most likely investigation paths (which instance families to check, what tagging to verify, what time-of-day patterns to look for) and help you structure a systematic diagnosis. You then need to pull that data from your cloud console or CLI and bring it back to AI for interpretation. Understanding this limit prevents frustration and helps you use AI effectively as a diagnostic thinking partner rather than a live tool.',
+          },
+          applyThisWeek: {
+            action: 'Pull your cloud cost report for the last 30 days. Summarise costs by the top 10 service categories and note the month-over-month change for each. Paste this summary to Claude and ask for: the three most actionable savings opportunities, a right-sizing framework for your highest-cost compute service, and a draft of a one-paragraph cost trend summary for your next stakeholder update.',
+            promptTemplate: 'Here is our cloud cost summary for [month]: [paste or describe service categories, totals, and month-over-month changes]. Identify: (1) the top five cost categories and their share of total spend; (2) any services with over 20% month-over-month growth; (3) the three most actionable savings opportunities with estimated impact; (4) what additional data I should pull from [AWS/GCP/Azure] to validate these opportunities. Then draft a one-paragraph executive summary of our cloud cost position and the savings actions in progress.',
+            tool: 'Claude',
+          },
+          reflection: 'How well does your organisation currently understand what it\'s spending on cloud infrastructure — and who\'s responsible for controlling it? Is cloud cost owned by engineering, finance, or a FinOps function? What would need to change in how your team works for AI-assisted cost analysis to become a routine part of your operating rhythm rather than a one-off exercise?',
+          quiz: [
+            {
+              question: 'What is the most important prerequisite for meaningful cloud cost allocation across teams?',
+              options: [
+                'Using a single cloud provider to simplify billing',
+                'Consistent resource tagging that links spend to teams, products, and cost centres',
+                'Exporting billing data to a spreadsheet every month',
+                'Provisioning all resources through a single shared account',
+              ],
+              correct: 1,
+              explanation: 'Without consistent tagging, cloud costs are visible in aggregate but invisible by team, product, or project. You can see that you spent $120k on EC2 this month, but you cannot tell which team ran those instances or which product they supported. Tag governance — clear naming conventions, required tags, and enforcement mechanisms — is the foundation that makes cost allocation, chargeback, and unit economics possible.',
+            },
+            {
+              question: 'An EC2 fleet shows average CPU utilisation of 9% over 30 days. What is the appropriate AI-assisted next step?',
+              options: [
+                'Immediately downsize all instances to the next smaller type',
+                'Use AI to build a right-sizing analysis framework — examining CPU, memory, and network utilisation together — and calculate the savings from reducing to a smaller instance type before making any changes',
+                'Ignore it — low CPU utilisation is normal for production workloads',
+                'Ask AI to terminate the underutilised instances',
+              ],
+              correct: 1,
+              explanation: 'Right-sizing requires examining multiple utilisation dimensions — CPU alone is not sufficient. An instance with 9% average CPU might have 85% average memory utilisation, making it appropriately sized. AI can help you build a multi-dimensional framework that looks at CPU, memory, network I/O, and storage together, then calculate the savings and risk profile of each sizing option. The change decision requires human validation — AI provides the analytical framework and savings estimate.',
+            },
+            {
+              question: 'How should cloud cost trends be communicated to a CFO?',
+              options: [
+                'Share the raw Cost Explorer report with full instance-type detail',
+                'Present cloud cost as a percentage of revenue, explain cost drivers in plain language, and show the savings initiatives in progress — without technical jargon',
+                'Only report cloud costs that have exceeded budget',
+                'Avoid sharing cloud cost details with finance unless directly asked',
+              ],
+              correct: 1,
+              explanation: 'Finance leaders care about financial ratios and business context, not infrastructure detail. Cloud cost as a percentage of revenue is a meaningful efficiency metric. Plain-language explanations of cost drivers ("our compute costs grew 18% because we launched two new services in Q2") are actionable. Savings initiatives with projected impact show good stewardship. Raw billing data with instance types and region codes communicates nothing to a CFO and signals that engineering doesn\'t think about cost in business terms.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -1065,6 +1200,153 @@ AI-generated outputs entered into your systems need attribution: what was genera
               ],
               correct: 1,
               explanation: 'An AI with the ability to take real-world actions — send emails, modify data, run code — must be governed like any privileged system: least-privilege access, audit logging of all actions, human approval for high-risk actions, and reversibility where possible.',
+            },
+          ],
+        },
+        {
+          id: 'it-m3-l5',
+          title: 'Network Management and Troubleshooting with AI',
+          duration: 19,
+          description:
+            'Use AI to document network topology, accelerate structured troubleshooting, draft change request documentation, and build network incident runbooks — while understanding where AI\'s limits require human tools.',
+          content: `## AI in Network Management: What It Can and Cannot Do
+
+Network management is one of the IT domains where the gap between AI's usefulness and its limitations is most important to understand clearly.
+
+**AI can help you with:**
+- Documenting and explaining network topology and configuration
+- Structuring diagnostic methodology for troubleshooting
+- Drafting change request documentation and approval narratives
+- Analysing firewall rules for potential misconfigurations
+- Building runbooks and incident response procedures
+- Explaining complex networking concepts and protocols
+
+**AI cannot:**
+- Run live packet captures or analyse real-time traffic
+- Query your actual network devices (routers, switches, firewalls) without an integration
+- Access your network management platform (SolarWinds, PRTG, Nagios) directly
+- Replace tools like Wireshark, traceroute, or netstat for live diagnosis
+
+Understanding this boundary prevents frustration and allows you to use AI exactly where it adds value: preparing, documenting, and structuring — rather than replacing live diagnostic tools.
+
+## AI-Assisted Network Topology Documentation
+
+Network documentation is notoriously neglected — it's time-intensive to create and quickly goes out of date. AI significantly reduces the time cost of keeping it current.
+
+Given a description of your network (or an export from your IPAM or network management tool), AI can:
+- Generate structured network topology documentation from bullet-point notes
+- Explain the purpose and configuration of each network segment
+- Identify documentation gaps ("you haven't documented the connection between VLAN 20 and the DMZ — can you clarify?")
+- Produce network diagrams in text notation that can be converted to Visio or draw.io
+
+Prompt: "Here is a description of our core network segments: [describe VLANs, subnets, key devices, interconnections]. Produce structured network documentation covering: each segment's purpose, address range, key devices, and connections to other segments. Flag any architectural gaps or documentation questions."
+
+## Troubleshooting Methodology with AI
+
+Structured troubleshooting is faster than intuitive troubleshooting — and AI is good at building and navigating diagnostic trees.
+
+**Structured diagnostic prompt:**
+"I am troubleshooting [symptom: e.g., intermittent connectivity loss for users on VLAN 30 to the internal file server at 10.20.5.15]. The environment is [describe: switch type, routing configuration, firewall]. Walk me through a structured diagnostic methodology — starting from Layer 1 and working up — listing the specific commands or checks I should run at each step and what findings would point me toward different root causes."
+
+This produces a methodical checklist the engineer follows in sequence. AI provides the structure; the engineer runs the actual commands and feeds results back for interpretation.
+
+**Iterative diagnosis:** Feed findings back at each step: "I ran the check you suggested. The result was [paste output]. What does this tell us and what should I check next?"
+
+## Drafting Network Change Request Documentation
+
+Change requests for network modifications need to be clear, complete, and risk-assessed. Rushed or incomplete change requests get rejected or cause outages when approved with incorrect information. AI can draft the full change request package from an engineer's technical notes.
+
+Prompt: "Draft a network change request document for the following change: [describe in plain technical terms — what you're doing, why, which devices are affected]. The document should include: change description, business justification, technical implementation steps, rollback procedure, risk assessment (impact if change fails and likelihood), testing steps to validate success, and required approval chain. Format for [your organisation's change management process]."
+
+## AI for Analysing Firewall Rules and Identifying Misconfigurations
+
+Firewall rule sets accumulate over years into complex, often contradictory policies. AI can review exported firewall rule sets and identify:
+- Overly permissive rules (any-to-any, broad CIDR ranges where specific IPs were intended)
+- Shadowed rules (rules that will never be reached because an earlier rule already matches the traffic)
+- Missing rules (gaps in the rule set that leave expected traffic unfiltered)
+- Duplicate rules (redundant entries that add management complexity without security value)
+
+Prompt: "Here is an export of our firewall rule set [paste or describe key rules]. Identify: (1) any rules that appear overly permissive or likely misconfigured; (2) any rules that shadow earlier rules; (3) gaps in the rule set for [specific traffic flows you expect to be controlled]. Note: I will verify all findings in the actual firewall console before making any changes."
+
+Important: AI analysis of firewall rules is a first-pass review only. Every finding must be validated against your actual security requirements and environment before any changes are made.
+
+## Building Network Incident Runbooks
+
+Runbooks reduce the cognitive load during an incident — instead of improvising under pressure, the on-call engineer follows a structured procedure. AI can draft runbooks for common network incident types.
+
+Prompt: "Write a network incident runbook for [scenario: e.g., total loss of internet connectivity / inter-VLAN routing failure / high CPU on core switch]. The runbook should cover: immediate actions in the first 5 minutes, diagnostic steps to identify root cause, escalation criteria and contacts, resolution steps for the most common root causes, and post-incident documentation requirements."
+
+A library of runbooks for your most common incident types dramatically reduces Mean Time to Resolution (MTTR) and improves consistency across on-call engineers.`,
+          keyTakeaways: [
+            'AI can document, structure, and analyse network configurations — but cannot run live diagnostics, access real network devices, or replace tools like Wireshark or traceroute',
+            'Structured troubleshooting methodology built with AI (Layer 1 through 7 diagnostic trees) is faster than intuitive troubleshooting and improves consistency across team members',
+            'AI can draft comprehensive change request documentation from engineering notes — reducing the time cost of change management compliance',
+            'Firewall rule analysis with AI surfaces potential misconfigurations, shadowed rules, and overly permissive policies — but every finding must be validated before changes are made',
+            'Network incident runbooks drafted with AI reduce MTTR by replacing improvised incident response with structured procedures for common failure scenarios',
+          ],
+          exercise: {
+            title: 'Incident Runbook and Troubleshooting Guide',
+            description:
+              'Use AI to build a structured troubleshooting guide and incident runbook for a common network problem in your environment.',
+            steps: [
+              'Choose a common network issue in your environment (e.g., connectivity loss, slow performance for a specific VLAN, DNS resolution failures)',
+              'Ask Claude to build a structured diagnostic methodology for this issue — Layer 1 upward, with specific commands or checks at each step and what findings point to which root causes',
+              'Use the diagnostic guide on a recent past incident (or simulate with known symptoms) — note where the structure helped and where it needed adjustment',
+              'Ask Claude to draft a full incident runbook for this scenario: immediate actions, diagnostics, escalation criteria, resolution steps for the top three root causes, and post-incident documentation',
+              'Identify one firewall rule set section you can describe to Claude for a preliminary misconfiguration review — note any findings you want to validate in your actual console',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A user reports slow performance accessing a server on a different VLAN. You paste the symptom description into Claude and ask it to run a traceroute to identify where the latency is occurring. What will happen?',
+            options: [
+              'Claude will execute the traceroute and return the hop-by-hop results',
+              'Claude cannot run traceroute — it will instead suggest the commands you should run yourself and help you interpret the results once you share them',
+              'Claude will connect to the nearest network device and analyse the routing table',
+              'Claude will recommend a specific tool to install before it can help',
+            ],
+            correct: 1,
+            explanation: 'AI cannot execute commands on your network or access your infrastructure directly — it has no connection to your environment. What it can do is tell you exactly which commands to run (traceroute, ping, mtr, show ip route, etc.), explain what each output means, and help you interpret the results when you paste them back. Understanding this working pattern — engineer runs commands, AI helps interpret and suggest next steps — makes AI far more useful as a diagnostic partner.',
+          },
+          applyThisWeek: {
+            action: 'Choose one common network incident type your team handles (connectivity loss, slow performance, DNS issues). Ask Claude to build a structured runbook for it. Review the output with a senior network engineer, adjust for your specific environment, and add it to your team\'s runbook library. Track whether the runbook reduces the next incident\'s resolution time.',
+            promptTemplate: 'Write a network incident runbook for [incident type: e.g., complete loss of internet connectivity at a branch site / inter-VLAN routing failure / high CPU utilisation on core switch]. Our environment: [describe relevant network components — router type, firewall vendor, switch model, monitoring tools]. The runbook should cover: (1) immediate response actions in the first 5 minutes; (2) structured diagnostic steps to identify root cause; (3) resolution steps for the [3-4] most common root causes; (4) escalation criteria and contacts; (5) post-incident documentation requirements. Format as a step-by-step procedure an on-call engineer can follow under pressure.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last major network incident your team responded to. How long did it take from symptom report to root cause identification? What slowed the diagnosis — missing documentation, unclear escalation paths, or time spent improvising steps that could have been in a runbook? Which of those barriers could AI assistance address, and what would need to change in your team\'s processes to make that happen?',
+          quiz: [
+            {
+              question: 'What is the correct working model for using AI in network troubleshooting?',
+              options: [
+                'AI connects to network devices and runs diagnostics automatically',
+                'AI replaces the need for live diagnostic tools like traceroute and Wireshark',
+                'The engineer runs diagnostic commands and shares results with AI, which helps structure the methodology and interpret findings',
+                'AI monitors the network in real time and alerts engineers to issues',
+              ],
+              correct: 2,
+              explanation: 'AI has no access to your live network environment without a custom integration. The effective working model is human-AI collaboration: AI helps you build the diagnostic structure (which commands to run, in which order, what findings point to which root causes), the engineer executes those commands in the real environment, and the output is fed back to AI for interpretation and next-step suggestion. This is faster than improvising and more systematic than relying on memory.',
+            },
+            {
+              question: 'AI identifies several potentially misconfigured firewall rules in a rule set you shared. What is the correct next step?',
+              options: [
+                'Remove the flagged rules immediately to reduce attack surface',
+                'Validate every AI finding against your actual security requirements and environment before making any changes',
+                'Accept all AI recommendations — AI has reviewed more firewall rule sets than any individual engineer',
+                'Share the AI findings directly with the security auditor as the deliverable',
+              ],
+              correct: 1,
+              explanation: 'AI firewall rule analysis is a first-pass review that identifies candidates for investigation — it is not a validated security audit. A rule that looks overly permissive may have a legitimate business reason. A "shadowed" rule may be intentional. Every AI finding must be validated against your security policy, your actual traffic requirements, and your change management process before any rule is modified or removed. The AI review reduces the time to find candidates; human judgment and validation determine what actually changes.',
+            },
+            {
+              question: 'Why do network incident runbooks reduce Mean Time to Resolution (MTTR)?',
+              options: [
+                'They prevent incidents from occurring in the first place',
+                'They allow AI to automatically resolve incidents without engineer involvement',
+                'They replace the need for escalation to senior engineers',
+                'They eliminate the cognitive load of improvising a diagnostic approach under pressure, allowing engineers to follow a tested procedure rather than reconstruct it during a live incident',
+              ],
+              correct: 3,
+              explanation: 'During a live incident, engineers are under time pressure, often sleep-deprived, and managing stakeholder communication simultaneously. Improvising a diagnostic approach in this state is slower and less thorough than following a tested procedure. Runbooks encode the expertise of your best network engineers into a repeatable process that any on-call engineer can follow — reducing the skill dependency in your on-call rotation and the investigation time in every incident.',
             },
           ],
         },

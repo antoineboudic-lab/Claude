@@ -1561,6 +1561,124 @@ The goal of A/B testing isn't just to improve this specific element — it's to 
             },
           ],
         },
+        {
+          id: 'marketing-m3-l5',
+          title: 'SEO and Organic Search with AI',
+          duration: 18,
+          description:
+            'Use AI to accelerate keyword research, identify content gaps, and produce on-page optimisation briefs — without relying on AI for the live ranking data it cannot access.',
+          content: `## What AI Can and Cannot Do for SEO
+
+AI is a powerful thinking partner for SEO strategy, but it operates within a hard limitation: it has no access to live search data. It does not know your current rankings, current search volumes, or how your competitors are performing today. Treating AI output as a substitute for keyword tools like Ahrefs, Semrush, or Google Search Console will lead you astray.
+
+What AI does exceptionally well: structuring your keyword research process, drafting content briefs from the data you provide, generating meta descriptions and title tags at scale, mapping search intent across a topic cluster, and identifying content gaps when you feed it competitor URLs or topic lists.
+
+The workflow is always: use keyword tools to get data, use AI to make sense of it and turn it into action.
+
+## Keyword Research with AI Prompts
+
+Once you have a list of keywords from your tool of choice, AI helps you organise and prioritise them:
+
+> "Here is a list of 40 keywords related to [topic]. Cluster them into logical topic groups. For each cluster, identify: (1) the primary keyword that should anchor a piece of content, (2) the likely search intent (informational, navigational, commercial, transactional), and (3) the type of content best suited to rank for it (blog post, landing page, comparison page, tool page). Flag any keywords that appear to have conflicting intent."
+
+This clustering step — which can take an hour manually — takes five minutes with AI and produces a topic map you can build a content calendar from.
+
+## Content Gap Analysis
+
+Feed AI the topics your competitors rank for (exported from a keyword tool) and your own content inventory:
+
+> "Here are the topics [Competitor A] ranks for in the top 10 for [category]: [list]. Here is our current content inventory: [list]. Identify: (1) topics they rank for that we have no content on — these are gaps; (2) topics we both cover — flag where our content may need updating to compete; (3) topics in the list that appear to have high commercial intent and where we have a credible product story to tell."
+
+## On-Page Optimisation Briefs
+
+AI can produce complete on-page briefs when given keyword data:
+
+> "Write an on-page SEO brief for a blog post targeting the keyword '[keyword]'. Include: recommended title tag (under 60 characters), meta description (under 155 characters), suggested H1 and H2 structure, three related semantic keywords to use naturally in the body, and one internal linking recommendation. The target audience is [persona]. Our product is [description]."
+
+This brief gives a writer everything they need to produce content that is both useful to the reader and structured for search.
+
+## Meta Descriptions and Title Tags at Scale
+
+For teams managing large content libraries, AI can produce optimised meta descriptions and title tags in bulk:
+
+> "Here are 15 existing blog posts with their current titles and URLs: [list]. Write a new title tag (under 60 characters, include the primary keyword) and meta description (under 155 characters, include a benefit and a soft CTA) for each. The site is [brand description]."
+
+This task — tedious and time-consuming manually — takes minutes with AI and produces consistent, optimised output across the entire library.
+
+## Search Intent Mapping
+
+Mismatched search intent is one of the most common reasons content fails to rank. AI helps you audit intent before writing:
+
+> "For each of these keywords, identify the most likely search intent: [list keywords]. For each, describe: what the searcher is trying to accomplish, what type of result Google typically surfaces (listicle, guide, product page, video), and what our content needs to deliver to be competitive for this intent."
+
+## What AI Cannot Do
+
+To be direct: AI cannot tell you actual search volumes, current ranking positions, real domain authority comparisons, or how a specific piece of content will perform. These require live tools. Use AI to structure the strategy; use keyword research platforms for the data that drives it.`,
+          keyTakeaways: [
+            'AI has no access to live search data — use keyword tools for volumes and rankings, AI to structure and act on the data',
+            'Keyword clustering with AI turns a raw list into a topic map with intent and content-type recommendations in minutes',
+            'Content gap analysis requires feeding AI your competitor topic list and your own inventory — it cannot pull this data itself',
+            'On-page briefs (title tag, meta description, heading structure, semantic keywords) can be produced by AI from keyword data at scale',
+            'Search intent mapping before writing prevents the most common SEO failure: good content optimised for the wrong intent',
+          ],
+          exercise: {
+            title: 'Build an SEO Content Brief from Keyword Data',
+            description:
+              'Use AI to cluster a real keyword list, identify a content gap, and produce a full on-page brief for one target keyword.',
+            steps: [
+              'Export 20-30 keywords related to your product or service category from your keyword tool of choice (Ahrefs, Semrush, Google Keyword Planner)',
+              'Paste the list into Claude with the clustering prompt: ask for topic clusters, primary keyword per cluster, search intent, and best content type',
+              'Identify one gap cluster — a topic group your competitors likely cover but you do not have content for',
+              'Choose the primary keyword from that cluster and run the on-page brief prompt: title tag, meta description, H1/H2 structure, semantic keywords, and internal linking recommendation',
+              'Review the brief against your existing content — does the recommended H2 structure match what a searcher with this intent actually needs?',
+            ],
+            tool: 'Claude',
+          },
+          applyThisWeek: {
+            action: 'Run a content gap analysis for one competitor. Export the topics they rank for (top 20 by traffic), compare against your content inventory, and use AI to identify the three highest-value gaps. For each gap, produce a one-paragraph content brief.',
+            promptTemplate: 'Here are the topics [Competitor] ranks for in [category]: [list]. Here is our current content: [list]. Identify: (1) topics they cover that we don\'t — ranked by likely commercial intent, (2) topics we both cover where we may need to update to compete, (3) the three gaps most worth prioritising given our product story. For each of the top three gaps, write a one-paragraph content brief describing the angle, target reader, and key questions to answer.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last piece of content your team produced for organic search. Was it designed around a specific search intent, or was it written for other reasons and optimised afterward? What would your content planning process look like if every piece started with intent mapping?',
+          quiz: [
+            {
+              question: 'What is the most important limitation to understand when using AI for SEO work?',
+              options: [
+                'AI cannot write content longer than 1,000 words',
+                'AI has no access to live search data — it cannot provide current rankings, search volumes, or competitor positions',
+                'AI-generated meta descriptions are penalised by Google\'s algorithm',
+                'AI can only process keywords in English',
+              ],
+              correct: 1,
+              explanation:
+                'AI has no connection to live search data. It cannot tell you what a keyword\'s current search volume is, where you currently rank, or how a competitor is performing today. These require dedicated keyword tools. AI\'s value in SEO is in structuring, clustering, and acting on the data you provide — not generating the data itself.',
+            },
+            {
+              question: 'You have a list of 50 keywords and want to build a content calendar. What is the most effective way to use AI in this process?',
+              options: [
+                'Ask AI to predict which keywords will drive the most traffic',
+                'Ask AI to cluster the keywords by topic, identify primary keywords, map search intent, and recommend content types for each cluster',
+                'Ask AI to rank the keywords by difficulty so you can target the easiest ones first',
+                'Ask AI to write all 50 pieces of content before reviewing keyword data',
+              ],
+              correct: 1,
+              explanation:
+                'Keyword clustering with intent and content-type mapping turns a raw list into a strategic topic map. AI cannot provide accurate search volumes or difficulty scores (those require live tools), but it can organise a keyword list into clusters with clear intent, identify the right content format for each, and flag conflicting intent — all of which directly inform a content calendar.',
+            },
+            {
+              question: 'A content team writes a comprehensive 2,000-word guide targeting a keyword where searchers typically want a quick comparison table. Why is this likely to underperform?',
+              options: [
+                'Long-form content always underperforms short-form content in search',
+                'The content is well-written and comprehensive, so there is no reason it would underperform',
+                'The content does not match the search intent — Google surfaces the format that best serves what searchers are trying to do, and a guide mismatches what they need',
+                'Google penalises AI-assisted content regardless of quality',
+              ],
+              correct: 2,
+              explanation:
+                'Search intent mismatch is one of the most common SEO failures. If searchers looking for a keyword consistently want a comparison table, Google will rank pages that deliver that format. A 2,000-word guide — however well-written — does not serve the intent and will struggle to rank regardless of its quality. Mapping intent before writing is the most important step in content planning.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -2063,6 +2181,124 @@ Ask AI to help interpret underperforming metrics: "My Email 3 open rate dropped 
               correct: 1,
               explanation:
                 'A diagnostic prompt that describes the specific symptom and asks for causes produces useful analysis. Common causes of sequence open rate drops include: subject line fatigue (similar angle to previous emails), send timing (Email 3 arrives on a weekend), list fatigue (too many emails too fast), or content mismatch (Email 3 topic doesn\'t follow logically from Email 2). A well-framed diagnostic question gets you testable hypotheses rather than a rewrite.',
+            },
+          ],
+        },
+        {
+          id: 'marketing-m4-l5',
+          title: 'Paid Media Optimisation with AI',
+          duration: 17,
+          description:
+            'Use AI to generate ad copy variations at scale, develop audience targeting hypotheses, and build structured optimisation recommendations — while understanding what AI cannot do with live campaign data.',
+          content: `## The Paid Media Challenge AI Actually Solves
+
+The most time-consuming parts of paid media management are creative: generating dozens of copy variations, writing landing page briefs for every campaign, hypothesising which audience segments might respond to which messages. These are tasks where AI delivers genuine, immediate leverage.
+
+What AI cannot do: access your live campaign data in Google Ads, Meta Ads Manager, or any platform. It does not know your current CPCs, CTRs, ROAS, or audience performance. Any "optimisation" AI offers without this data is generic advice, not analysis. The correct workflow is always: export your data, bring it to AI, then act on the analysis.
+
+## Ad Copy Variation at Scale
+
+The most immediate application is generating copy variations for testing. Instead of writing one ad and running it for weeks, AI lets you test five or ten variations from the start:
+
+> "Write 8 ad copy variations for a Google Search campaign targeting the keyword '[keyword]'. Our product is [X]. Target audience: [persona]. USP: [value proposition]. For each variation, write: headline 1 (30 chars max), headline 2 (30 chars max), description 1 (90 chars max). Vary the angle across: urgency, social proof, feature-benefit, problem-agitate-solve, and question hooks. Flag which angle each uses."
+
+Generating 8 variations takes two minutes with AI. Testing those variations over 30 days gives you data on which messaging angle resonates with your audience — intelligence that informs every future campaign.
+
+## Audience Targeting Hypothesis Generation
+
+Audience testing is where most paid media teams leave money on the table. AI helps you generate a structured list of audience hypotheses before you spend a pound:
+
+> "We sell [product] to [primary buyer persona]. Generate 10 audience targeting hypotheses for a Meta Ads campaign. For each hypothesis: (1) the specific audience segment or interest targeting, (2) the rationale for why this audience is likely to convert, (3) the ad angle most likely to resonate with this specific audience, and (4) how you'd measure whether this hypothesis is correct. Include both obvious audiences and two non-obvious ones we might be missing."
+
+The non-obvious audience instruction is key. AI will often surface adjacent audiences — job titles, interests, life stages — that your team might not have considered.
+
+## Landing Page Brief Creation
+
+A common paid media failure: strong ad creative driving to a weak landing page. AI can produce a complete landing page brief for any campaign:
+
+> "Write a landing page brief for a paid campaign targeting [audience] with the message [ad headline/angle]. The landing page goal is [conversion action]. Include: headline recommendation (should mirror the ad message), three body copy sections with their purpose (credibility, value, urgency), social proof elements to include, CTA text, and one risk-reduction element (guarantee, trial, no credit card). Keep above-the-fold to 100 words maximum."
+
+This brief gives your designer and copywriter everything they need to build a page that matches the ad's promise — reducing bounce rate and improving conversion.
+
+## Budget Allocation Logic
+
+AI can help you think through budget allocation across campaigns, though always with the caveat that this is strategic reasoning, not optimisation based on your actual performance data:
+
+> "I'm allocating a £10,000 monthly paid search budget across three campaign types: brand terms, competitor terms, and non-brand category keywords. The goal is customer acquisition, not brand awareness. Help me think through: the typical performance dynamics of each campaign type, how I should prioritise budget allocation across the three, and what signals in the data would tell me to shift budget between them."
+
+## AI for Performance Analysis and Recommendations
+
+Once you have campaign data, AI can interpret it and generate optimisation hypotheses:
+
+> "Here is last month's performance data for my Google Ads campaigns [paste data table]. Industry benchmark CPA for this category: [X]. My target CPA: [X]. Analyse this data and give me: (1) the three campaigns that are underperforming most significantly against target, (2) the most likely causes for each, and (3) two specific optimisation actions for each underperforming campaign."
+
+AI analysis generates hypotheses, not proven fixes. Test each recommendation — don't assume it will work.
+
+## What AI Cannot Access
+
+To be clear: AI cannot log into Google Ads, Meta Ads Manager, LinkedIn Campaign Manager, or any advertising platform. It cannot pull your live data, check your Quality Scores, or see your auction insights. The input to every AI analysis session must be data you have exported manually. This is a fundamental constraint, not a bug — it means you remain in control of the data and the decisions.`,
+          keyTakeaways: [
+            'AI generates ad copy variations at scale — 8-10 variations per campaign is achievable in minutes, enabling real creative testing',
+            'Audience targeting hypothesis generation before spending reveals non-obvious segments your team might miss',
+            'Landing page briefs from AI ensure creative and landing page stay message-matched — a common paid media failure point',
+            'AI cannot access live campaign data from any ad platform — always export data first, then bring it to AI for analysis',
+            'AI performance analysis generates optimisation hypotheses to test, not guaranteed fixes — treat every recommendation as a structured experiment',
+          ],
+          exercise: {
+            title: 'Generate an Ad Copy Testing Matrix',
+            description:
+              'Build a full set of ad copy variations and audience hypotheses for a real or upcoming campaign.',
+            steps: [
+              'Choose a live or upcoming paid campaign — identify the primary keyword or audience target, the product or service being advertised, and the single most important USP',
+              'Run the copy variation prompt: ask for 8 variations with varied angles (urgency, social proof, feature-benefit, problem-agitate-solve, question hooks), with character counts respected',
+              'Review the 8 variations — which angles are you currently not testing? Mark two variations as your immediate test candidates',
+              'Run the audience hypothesis prompt: ask for 10 targeting hypotheses with rationale, ad angle, and measurement approach. Flag the two non-obvious ones',
+              'For one of your audience hypotheses, produce a landing page brief ensuring the message matches the ad angle',
+            ],
+            tool: 'Claude',
+          },
+          applyThisWeek: {
+            action: 'Export last month\'s paid campaign performance data. Bring it to Claude with your target CPA and the industry benchmark. Ask for the three underperforming campaigns, likely causes, and two optimisation actions for each. Treat each recommendation as a hypothesis to test, not a guaranteed fix.',
+            promptTemplate: 'Here is last month\'s performance data for my [platform] campaigns: [paste data table]. Target CPA: [X]. Industry benchmark CPA: [X]. Campaign goal: [acquisition/awareness/retargeting]. Analyse this data and provide: (1) the three campaigns underperforming most against target, (2) the most likely cause for each, (3) two specific optimisation actions for each — with the rationale for why each action should improve performance.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about how many ad copy variations your team typically runs in a campaign. Is it one or two, or are you systematically testing angles? What would a genuine creative testing programme look like — and what would you need to change about your current workflow to make it happen?',
+          quiz: [
+            {
+              question: 'What is the most important limitation to understand when using AI for paid media optimisation?',
+              options: [
+                'AI cannot write effective ad copy for B2B campaigns',
+                'AI tools are too expensive to justify for small ad budgets',
+                'AI has no access to live campaign data from ad platforms — it cannot see your current performance, CPCs, or ROAS',
+                'AI-generated ad copy is flagged by Google\'s editorial review process',
+              ],
+              correct: 2,
+              explanation:
+                'AI has no connection to live advertising platforms. It cannot see your current campaign performance, quality scores, or auction data. This means any AI-generated optimisation must be based on data you export and provide. The workflow is always: pull data from the platform, bring it to AI, act on the analysis. AI that gives generic optimisation advice without your data is not analysing your campaigns.',
+            },
+            {
+              question: 'You ask AI to generate 8 ad copy variations and it produces them with different "angles" labelled. What is the primary strategic value of this?',
+              options: [
+                'It saves time over writing one ad manually',
+                'It creates a testing matrix — each angle is a hypothesis about what messaging resonates with your audience, and running them generates audience intelligence',
+                'Google rewards advertisers who run more than five ad variations',
+                'It ensures compliance with platform character limits',
+              ],
+              correct: 1,
+              explanation:
+                'Each copy angle (urgency, social proof, problem-agitate-solve, etc.) is a hypothesis about what motivates your specific audience. Running multiple angles simultaneously creates a structured test. The results — which angle gets higher CTR, lower CPC, better conversion — tell you something about your audience\'s decision-making that informs every future campaign. The copy variations are the instrument; audience intelligence is the output.',
+            },
+            {
+              question: 'Why does asking AI to generate "non-obvious" audience hypotheses produce strategic value?',
+              options: [
+                'Non-obvious audiences always outperform obvious ones in paid campaigns',
+                'It forces AI to use more sophisticated targeting logic than simple demographic data',
+                'Teams tend to target the same obvious audiences repeatedly — non-obvious hypotheses surface adjacent segments that may convert well but are never tested',
+                'Advertising platforms charge less for non-obvious audience segments',
+              ],
+              correct: 2,
+              explanation:
+                'Most paid media teams default to the same audience segments because they\'re obvious and comfortable. Adjacent audiences — people in related job roles, industries, or life stages — are often overlooked but can convert well. Explicitly asking AI to generate two non-obvious hypotheses forces the exploration of segments outside the default targeting playbook, which is where incremental growth often lives.',
             },
           ],
         },

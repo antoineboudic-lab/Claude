@@ -1512,6 +1512,155 @@ When supplier issues escalate — delivery failure, quality crisis, contract dis
             },
           ],
         },
+        {
+          id: 'operations-m3-l5',
+          title: 'Logistics and Fulfilment Optimisation with AI',
+          duration: 18,
+          description:
+            'Use AI to analyse route efficiency, diagnose fulfilment bottlenecks, and build logistics SOPs that scale.',
+          content: `## Logistics and Fulfilment Optimisation with AI
+
+Logistics is where operations plans meet physical reality. Route inefficiency, warehouse bottlenecks, and last-mile failures are often chronic problems that teams accept as background noise. AI cannot drive a truck or move a pallet — but it can help you think more clearly about why your logistics are underperforming and what to do about it.
+
+## What AI can and cannot do in logistics
+
+Before diving into applications, be clear on AI's role. General AI tools like Claude are analysis and documentation partners — not logistics management systems. They cannot access real-time traffic data, GPS feeds, or live carrier tracking. For dynamic, real-time route optimisation you need specialist software (route optimisation platforms, WMS systems, TMS solutions). What general AI does well is help you think through problems, build frameworks, document processes, and prepare for decisions — all of which are genuinely valuable before and alongside specialist tools.
+
+## Route efficiency analysis
+
+Even without real-time data, AI can help you analyse route performance by working through the problem with you. Describe your current route structure — number of stops, geographic spread, delivery windows, vehicle capacity — and ask Claude to identify the categories of inefficiency that typically arise in that configuration.
+
+**What to feed AI for route analysis:**
+- Current route map or stop sequence
+- Typical volume per stop and delivery window constraints
+- Vehicle type and capacity utilisation
+- Fuel cost per km and driver cost per hour
+- Known pain points (late deliveries, excessive mileage, customer complaints)
+
+AI will help you identify whether your inefficiency is structural (route design), operational (scheduling and window management), or behavioural (driver variability). Each has a different solution path.
+
+## Warehouse layout and pick-path analysis
+
+Pick path efficiency is one of the highest-leverage improvements available in warehouse operations. The principle is simple: high-velocity SKUs should be closest to the pack station; pick sequences should minimise backtracking. AI helps you think through the analysis framework.
+
+Describe your warehouse layout, SKU velocity distribution, and current pick sequence to Claude. Ask it to identify the design principles that should govern your slotting strategy, the data you need to quantify the improvement opportunity, and the questions to ask before investing in a full slotting analysis.
+
+**Key slotting principles AI will help you apply:**
+- ABC velocity analysis (A-items near dispatch, C-items in deep storage)
+- Zone pick vs. batch pick vs. wave pick trade-offs for your volume profile
+- Seasonal velocity shifts and how to manage slotting through them
+- The pick-path walk-distance calculation for validating improvement
+
+## Carrier selection frameworks
+
+Choosing carriers involves trade-offs across cost, reliability, transit time, service coverage, and relationship. AI can help you build a structured evaluation framework tailored to your specific shipment profile.
+
+Describe your typical shipment characteristics — volume, weight, destinations, service level requirements, current carrier performance — and ask Claude to design a carrier scorecard. A well-built scorecard makes carrier reviews data-driven and removes the inertia that keeps underperforming carriers in place.
+
+## Last-mile delivery problem diagnosis
+
+Last-mile is expensive, customer-visible, and often poorly understood at the root-cause level. When delivery performance is below target, the real cause is rarely obvious. AI helps you systematically work through potential causes.
+
+**Last-mile problem diagnosis framework (use with AI):**
+- Failed delivery rate by reason code (customer absent, access issues, address errors, capacity overflow)
+- Re-delivery cost per attempt
+- Customer contact rate at dispatch and day-of-delivery
+- Driver briefing and exception-handling clarity
+- Peak vs. standard day performance differential
+
+Feed this data to Claude and ask: "What are the most likely root causes of our failed delivery rate, and what interventions typically address each?" This structures your investigation before you spend on solutions.
+
+## AI for logistics SOPs and handoff documentation
+
+The highest-leverage documentation opportunity in logistics is the handoff moment — where responsibility moves from one person or team to another. These are where information is lost, errors are introduced, and accountability becomes unclear.
+
+Use AI to build SOPs for:
+- Vehicle loading and dispatch checks
+- Driver briefing and exception escalation
+- Carrier booking and documentation requirements
+- Proof-of-delivery handling and exception logging
+- End-of-day reconciliation and returns processing
+
+**How to build a logistics SOP with AI:** Describe the current process in plain language, including every step the team actually follows (not the theoretical version). Ask Claude to structure it into a clear, step-numbered SOP with decision points, exception paths, and responsible roles. Then review it with the people who do the work — they will identify what you missed.`,
+          keyTakeaways: [
+            'General AI analyses logistics problems and builds frameworks — real-time routing requires specialist software',
+            'Route inefficiency is usually structural, operational, or behavioural — each has a different fix',
+            'Pick-path and slotting analysis using AI-guided frameworks can significantly reduce warehouse walk time',
+            'Last-mile diagnosis starts with reason codes and root-cause analysis, not solution selection',
+            'Logistics SOPs built with AI reduce handoff errors and create clear accountability at transition points',
+          ],
+          exercise: {
+            title: 'Diagnose Your Biggest Logistics Bottleneck',
+            description:
+              'Use AI to conduct a structured root-cause analysis of your most persistent logistics problem.',
+            steps: [
+              'Identify your most costly or frequent logistics problem — failed deliveries, route overruns, pick errors, carrier delays',
+              'Collect the data you have: volumes, rates, costs, timings, and the reason codes or patterns you observe',
+              'Describe the problem and your data to Claude and ask for a structured root-cause framework',
+              'Work through the framework with AI to identify the two or three most likely causes',
+              'For each likely cause, ask Claude: "What intervention typically addresses this, and what evidence would confirm it is the right one?"',
+            ],
+            tool: 'Claude (claude.ai)',
+          },
+          inlineCheck: {
+            question: 'Your last-mile delivery failed-delivery rate has increased from 4% to 9% over three months. What is the right first step?',
+            options: [
+              'Switch to a new carrier — the problem is clearly carrier performance',
+              'Invest in a route optimisation platform to improve scheduling',
+              'Break down failed deliveries by reason code to identify the actual pattern before selecting a solution',
+              'Add an extra delivery attempt for all failed deliveries to recover the service level',
+            ],
+            correct: 2,
+            explanation: 'Failed deliveries fail for different reasons — customer absence, access issues, capacity overflow, address errors, driver error. Each has a different solution. Switching carriers or buying software without understanding the root cause is expensive and may not address the actual problem. Reason-code analysis is the prerequisite step: it tells you what you are actually solving before you commit to a solution path.',
+          },
+          applyThisWeek: {
+            action: 'Pick one logistics process that is underperforming — a route, a warehouse zone, a carrier, or a handoff step. Describe it to Claude with as much data as you have and ask for a structured root-cause framework. Then draft a one-page SOP for the handoff point that causes the most friction.',
+            promptTemplate: 'I need to analyse a logistics problem. Process: [name the process — e.g. last-mile delivery, warehouse pick path, carrier selection]. Current performance: [key metrics and what they show]. Known issues: [describe the symptoms]. Data I have: [list what you can share]. Please: (1) give me a structured root-cause framework for this type of problem, (2) identify the three most likely causes based on the symptoms I described, and (3) for each cause, what evidence would confirm it and what intervention typically addresses it?',
+            tool: 'Claude',
+          },
+          reflection: 'In your logistics operation, where does the most expensive friction occur — and is that friction caused by a process design problem, a documentation problem, or a people/behaviour problem? The answer determines the right type of intervention.',
+          quiz: [
+            {
+              question:
+                'What is the key limitation of general AI tools for logistics route optimisation?',
+              options: [
+                'AI cannot process geographic data or map information',
+                'AI lacks real-time traffic and GPS data access, making dynamic routing a job for specialist software',
+                'AI route recommendations are too complex for logistics teams to implement',
+                'General AI tools are not permitted to process logistics data under data protection law',
+              ],
+              correct: 1,
+              explanation:
+                'General AI tools like Claude are text-based reasoning tools — they have no live data feeds, no GPS integration, and no real-time traffic awareness. For dynamic route optimisation you need specialist route planning software. Where general AI adds value is in analysing your route structure, identifying categories of inefficiency, and helping you think through the framework — not in generating live optimal routes.',
+            },
+            {
+              question:
+                'Which SKUs should be positioned closest to the pack station in an ABC-slotted warehouse?',
+              options: [
+                'C-items (slow movers) — they are the hardest to find and should be accessible',
+                'B-items — they represent the most balanced trade-off between velocity and volume',
+                'A-items (high-velocity SKUs) — they are picked most frequently and proximity reduces total walk time',
+                'The largest SKUs — reducing movement of heavy items saves the most labour cost',
+              ],
+              correct: 2,
+              explanation:
+                'ABC slotting places the highest-velocity SKUs (A-items) closest to the pack or dispatch area because they are picked most frequently. Every metre of reduced walk distance for an A-item is multiplied by hundreds of picks per day. C-items are picked infrequently, so their position in deep storage has minimal daily impact. Slotting by weight is a separate consideration (ergonomics) that operates alongside velocity-based slotting.',
+            },
+            {
+              question:
+                'What is the primary purpose of building logistics SOPs with AI assistance?',
+              options: [
+                'To comply with ISO certification requirements for documented procedures',
+                'To reduce handoff errors and ensure clear accountability at transition points between teams or shifts',
+                'To enable AI to automate logistics tasks once the process is documented',
+                'To replace the need for experienced logistics supervisors',
+              ],
+              correct: 1,
+              explanation:
+                'The highest value of logistics SOPs is at handoff moments — where responsibility, information, and physical goods move from one person or team to another. These transitions are where information gets lost, errors are introduced, and accountability becomes unclear. Well-structured SOPs reduce this friction. AI helps you build them faster by structuring the process you describe into clear, step-numbered documents with decision points and exception paths.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -2000,6 +2149,166 @@ Use AI itself to help you communicate: describe the results to Claude and ask it
               correct: 0,
               explanation:
                 '3 hours × 8 people = 24 hours per week. 24 × 52 weeks = 1,248 hours per year. 1,248 × £45 = £56,160. The correct answer is £56,160, which corresponds to option C. (Recalculating: the correct mathematical answer is £56,160.)',
+            },
+          ],
+        },
+        {
+          id: 'operations-m4-l5',
+          title: 'Predictive Maintenance and Asset Management with AI',
+          duration: 20,
+          description:
+            'Use AI to build maintenance frameworks, document failure modes, model asset lifecycle costs, and create the knowledge base that keeps operations running.',
+          content: `## Predictive Maintenance and Asset Management with AI
+
+Unplanned downtime is one of the most expensive events in operations. A production line stopping for two hours costs far more than the maintenance that could have prevented it. AI does not replace condition monitoring sensors or specialist ML platforms — but it helps you build the frameworks, documentation, and analytical discipline that make your maintenance operation more proactive.
+
+## What AI can and cannot do in maintenance
+
+Be clear on the boundary. **Specialist ML tools** analyse sensor data streams in real time, detect anomalies in vibration, temperature, or pressure readings, and generate predictive alerts. This is machine learning applied to time-series data — not what general AI tools do.
+
+What **general AI tools like Claude** do well in maintenance contexts:
+- Help you build structured frameworks for maintenance scheduling
+- Document failure modes and their consequences
+- Model asset lifecycle costs analytically
+- Draft maintenance SOPs, checklists, and escalation procedures
+- Help you interpret historical patterns and structure your thinking
+- Build the knowledge base that preserves institutional expertise
+
+The distinction matters: if a vendor is selling you a "general AI" tool for real-time sensor-based predictive maintenance, ask hard questions about what is actually under the hood.
+
+## AI-assisted maintenance scheduling frameworks
+
+Maintenance scheduling sits on a spectrum from purely reactive (fix it when it breaks) to condition-based (maintain when sensors say so). Most operations sit somewhere in the middle — scheduled preventive maintenance at fixed intervals. AI helps you build a more intelligent version of this.
+
+**Building a maintenance frequency framework:**
+Describe your asset class, its operating environment, failure history, and criticality to Claude. Ask it to help you design a maintenance frequency matrix that accounts for:
+- Asset criticality (what is the cost of failure?)
+- Operating intensity (are assets running 24/7 or intermittently?)
+- Historical MTBF (mean time between failures) for your asset type
+- Regulatory inspection requirements
+- Lead time for spare parts if the asset fails
+
+The output is a risk-adjusted maintenance schedule — not a generic OEM recommendation, but one calibrated to your actual operating conditions.
+
+## Failure mode analysis and documentation
+
+FMEA (Failure Mode and Effects Analysis) is a systematic method for identifying how assets can fail and what the consequences are. It is a powerful tool — but it is time-consuming to build from scratch and often sits as a theoretical document that does not get used.
+
+AI accelerates FMEA creation significantly. Describe your asset and its operating function to Claude, then work through failure mode identification systematically:
+
+**FMEA prompt structure:**
+"For [asset name/type], list the main functional components, the most likely failure mode for each component, the typical cause of that failure, the effect on operations if it occurs, and the current controls in place. Then score each failure mode on severity, occurrence likelihood, and detection difficulty to identify the highest-priority items for preventive action."
+
+The result is a structured FMEA document in minutes rather than days. Your maintenance team reviews and refines it — but AI does the structural heavy lifting.
+
+## Asset lifecycle cost modelling
+
+Capital asset decisions — when to repair versus replace, how to sequence equipment upgrades, how to budget for asset replacement — require lifecycle cost analysis. AI is a capable tool for structuring this analysis.
+
+**Key lifecycle cost components to model with AI:**
+- Acquisition cost (purchase price, installation, commissioning)
+- Operating cost (energy, consumables, operator time)
+- Maintenance cost (preventive and reactive, including parts and labour)
+- Downtime cost (production loss per hour of downtime × historical failure rate)
+- Residual value at end of useful life
+
+Paste your asset data into Claude and ask it to help you structure the total cost of ownership model, compare repair-versus-replace scenarios, and identify the decision trigger point — the year at which ongoing maintenance costs exceed the annualised cost of replacement.
+
+## Maintenance SOPs and checklists
+
+The most consistent maintenance teams are not the most skilled — they are the most disciplined. Good SOPs and checklists create consistency regardless of who is doing the work. AI builds them fast.
+
+**How to build a maintenance SOP with AI:**
+Describe the maintenance task in plain language — what the asset is, what the procedure involves, what the safety considerations are, what tools and parts are required. Ask Claude to structure this into a numbered SOP with pre-task safety checks, step-by-step procedure, quality verification steps, and sign-off requirements.
+
+Then validate it with your most experienced technician. They will identify the nuances AI missed — and the process of validation often surfaces undocumented knowledge that belongs in the SOP.
+
+## Building a maintenance knowledge base
+
+Institutional knowledge in maintenance teams is fragile. When an experienced technician leaves, they take with them the memory of every unusual failure, every quirk of specific assets, every workaround that was never written down. AI helps you capture this knowledge before it walks out the door.
+
+**Knowledge capture prompts:**
+- "Interview me about this asset type. Ask me questions to capture everything an experienced technician should know about maintaining it."
+- "I am going to describe an unusual failure we experienced. Help me document it in a format that would be useful for future diagnosis."
+- "What categories of knowledge should be captured in a maintenance knowledge base for a [asset type] asset?"
+
+The knowledge base you build is not just a reference — it is a training resource for new technicians and a diagnostic tool for complex failures.`,
+          keyTakeaways: [
+            'Real-time sensor-based predictive maintenance requires specialist ML tools — general AI builds the frameworks around them',
+            'AI-accelerated FMEA reduces documentation time from days to hours while producing a genuinely usable output',
+            'Asset lifecycle cost modelling with AI identifies the repair-versus-replace decision trigger point analytically',
+            'Maintenance SOPs built with AI create team consistency regardless of individual skill levels',
+            'Knowledge capture with AI preserves institutional expertise before experienced technicians leave',
+          ],
+          exercise: {
+            title: 'Build an FMEA for Your Most Critical Asset',
+            description:
+              'Use AI to create a failure mode analysis for the asset whose failure would most impact your operations.',
+            steps: [
+              'Identify the single most operationally critical asset in your operation — the one whose failure would cause the most damage',
+              'List its main functional components and what each one does',
+              'Describe the asset, its components, and its operating environment to Claude',
+              'Ask Claude to generate an FMEA table: component, failure mode, cause, operational effect, current controls, and a severity/occurrence/detection score',
+              'Review the output with your maintenance manager — correct any errors, add missing failure modes, and identify the top three priority items for preventive action',
+            ],
+            tool: 'Claude (claude.ai)',
+          },
+          inlineCheck: {
+            question: 'A vendor is offering you an "AI-powered predictive maintenance" tool that uses general large language model AI. What should you ask before purchasing?',
+            options: [
+              'Whether the tool is compatible with your existing CMMS software',
+              'Whether it actually connects to your sensor data and what ML model interprets that data — or whether it is a general AI tool with a maintenance-focused interface',
+              'Whether the tool can generate maintenance SOPs automatically',
+              'Whether the AI was trained on maintenance data from your industry',
+            ],
+            correct: 1,
+            explanation: 'True predictive maintenance requires real-time sensor data integration and specialist anomaly-detection models — not general AI. A "general AI tool with a maintenance interface" can help with documentation, scheduling frameworks, and analysis — but it cannot predict failures from live sensor data. The distinction is critical: one requires sensor infrastructure and ML; the other requires a Claude subscription. Both have value, but for different things. Know which you are buying.',
+          },
+          applyThisWeek: {
+            action: 'Choose your most critical asset and use AI to draft its maintenance SOP and a basic failure mode list. Then identify the one piece of institutional knowledge that only your most experienced technician holds — and schedule a session to capture it using AI-guided questions.',
+            promptTemplate: 'Help me build a maintenance SOP for the following asset: [asset name and type]. Operating environment: [describe — e.g. 24/7 production, outdoor, food-grade environment]. Key maintenance tasks: [list the main tasks — e.g. lubrication, filter replacement, alignment check]. Safety considerations: [relevant hazards — electrical isolation, working at height, etc.]. Tools and parts required: [list]. Structure the SOP as: pre-task safety check, numbered step-by-step procedure, quality verification steps, and sign-off. Then list the five most likely failure modes for this asset type and the preventive action that addresses each.',
+            tool: 'Claude',
+          },
+          reflection: 'When your most experienced maintenance technician eventually leaves, what knowledge will leave with them that is nowhere in your documentation? What is the cost of that knowledge gap — and how long would it take a new technician to rebuild it from scratch?',
+          quiz: [
+            {
+              question:
+                'What does MTBF stand for and why is it important for maintenance scheduling?',
+              options: [
+                'Mean Total Breakdown Frequency — the number of breakdowns per year across the asset fleet',
+                'Minimum Time Before Failure — the earliest a component is expected to fail under normal conditions',
+                'Mean Time Between Failures — the average operating time between successive failures, used to calibrate maintenance frequency',
+                'Maximum Tolerance Before Fault — the failure threshold used to trigger maintenance alerts',
+              ],
+              correct: 2,
+              explanation:
+                'MTBF (Mean Time Between Failures) is the average operating time an asset runs between failures under normal conditions. It is the core input for setting maintenance intervals: if an asset has an MTBF of 2,000 hours, scheduling preventive maintenance every 1,800 hours allows you to intervene before the statistically likely failure point. AI helps you model maintenance schedules using MTBF data alongside criticality and operating intensity.',
+            },
+            {
+              question:
+                'In a lifecycle cost model, what is the "repair versus replace decision trigger point"?',
+              options: [
+                'The age at which an asset exceeds its original purchase price in total repair costs',
+                'The year at which ongoing maintenance and downtime costs exceed the annualised cost of replacement',
+                'The point at which an asset fails more than three times in a single year',
+                'The moment when OEM spare parts become unavailable for an asset',
+              ],
+              correct: 1,
+              explanation:
+                'The decision trigger point is an analytical threshold: when the annual cost of keeping the asset running (maintenance + downtime cost) exceeds what it would cost to replace it and spread the capital cost over the replacement asset\'s useful life, replacement becomes economically rational. AI helps you build the model to find this point — because the calculation involves multiple cost components and assumptions that need to be made explicit.',
+            },
+            {
+              question:
+                'What is the primary purpose of using AI to conduct knowledge-capture interviews with experienced maintenance technicians?',
+              options: [
+                'To train an AI model on your specific asset maintenance data',
+                'To generate performance reviews for the maintenance team',
+                'To preserve institutional knowledge — failure patterns, asset quirks, undocumented workarounds — before it leaves with the person',
+                'To automate maintenance tasks using the captured knowledge',
+              ],
+              correct: 2,
+              explanation:
+                'Experienced technicians carry knowledge that exists nowhere in your documentation: how a specific machine sounds before it fails, the workaround for a recurring fault, the sequence that prevents a known issue. When they leave, this knowledge leaves with them. AI-guided knowledge capture — asking structured questions and turning the answers into documented procedures — is how you convert tacit expertise into institutional memory before the departure that would otherwise delete it.',
             },
           ],
         },

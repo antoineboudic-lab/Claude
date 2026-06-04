@@ -860,6 +860,159 @@ Before doing research, ask AI: "If I am researching [topic] with these questions
             },
           ],
         },
+        {
+          id: 'product-m2-l5',
+          title: 'Data Strategy for AI-Powered Products',
+          duration: 20,
+          description:
+            'Understand what data your AI features need and where it comes from, how to assess data quality, design feedback loops, and work effectively with data and ML teams to define requirements.',
+          content: `## Why Data Strategy Is a PM Responsibility
+
+Most PMs think of data strategy as an engineering or data science concern. It isn't. The PM defines what the AI feature needs to do, who it serves, and what success looks like — and those decisions determine the data requirements. Understanding how data shapes your AI product's capabilities and limitations is not optional for PMs building in this space.
+
+## What Data Your AI Features Will Need
+
+Start from the user outcome, not the technical stack. Ask: "What does the model need to know to produce this output for this user?"
+
+**Types of data your AI feature may require:**
+- **Historical behavioural data:** past actions users took, patterns over time, usage sequences
+- **Explicit user input:** preferences set by the user, ratings, labels, feedback
+- **Contextual data:** current session state, user role, account type, time of day
+- **External data:** third-party signals, market data, integration feeds
+- **Ground truth labels:** human-verified correct outputs used for training and evaluation
+
+Map your feature's data needs before committing to a build approach. If the data doesn't exist or is too sparse, the feature will underperform regardless of model quality.
+
+## Data Quality Assessment Framework
+
+Data quantity is rarely the real constraint. Data quality is. Use this framework when assessing the data available for an AI feature:
+
+**Relevance:** Does this data reflect the task we want the model to perform? Historical data from a different user segment, product version, or time period may not transfer.
+
+**Coverage:** Does the data cover the full range of cases the model will encounter in production, including edge cases and minority segments?
+
+**Freshness:** Is the data current? Models trained on stale data degrade as user behaviour and context evolve.
+
+**Accuracy:** How often is the ground truth label or outcome correct? Noisy labels produce noisy models.
+
+**Bias:** Does the data reflect the population the product will serve — or does it over-represent certain users, regions, or behaviours? Bias in training data produces bias in model outputs.
+
+Document your data quality assessment before building. It will surface risks early and frame the expectations you set with engineering and ML teams.
+
+## Privacy-by-Design for AI Products
+
+AI features that rely on user data require privacy thinking from the start — not as a legal checkbox at launch, but as a design principle that shapes what you build.
+
+**Minimum necessary data.** Collect and use only the data the feature actually requires. The strongest privacy posture is to not have data you don't need.
+
+**Purpose limitation.** Be specific about what user data is used for. Data collected for personalisation should not be repurposed for model training without explicit disclosure and consent.
+
+**User transparency and control.** Users should understand what data is used to drive AI features and have meaningful controls — including the ability to opt out of personalisation or request data deletion.
+
+**Data residency and cross-border transfers.** If your product serves users across multiple jurisdictions, understand where their data is processed and stored. AI inference pipelines often have different residency implications than standard product data.
+
+Work with your privacy and legal team to build a data flow diagram for AI features before launch — this should be a standard part of the PM's definition of done.
+
+## Labelling and Feedback Loop Design
+
+Supervised AI features improve over time only if they have a feedback mechanism. The PM owns the feedback loop design.
+
+**Direct feedback signals.** Thumbs up/down, explicit ratings, correction workflows — these are clean signals but have low response rates. Design them to be frictionless to maximise volume.
+
+**Implicit feedback signals.** Did the user accept the AI suggestion? Did they edit it, or delete it? Did they complete the task the feature was designed to support? Implicit signals are lower-cost and higher-volume — but require careful interpretation.
+
+**Labelling pipelines.** For features that require high-quality ground truth, you need a labelling strategy: who labels (internal team, contractors, crowdsourced), how labels are quality-controlled, and how labels feed back into model improvement cycles.
+
+Define the feedback loop before launch. "We'll figure out the feedback mechanism later" is the most common reason AI features don't improve after launch.
+
+## Data Moats as Competitive Advantage
+
+In AI products, data is often the primary competitive moat. When your product generates proprietary data — user behaviour, domain-specific interactions, outcome labels — that data cannot be replicated by a competitor who builds the same model architecture. Over time, more data produces a better model, which attracts more users, which generates more data. This flywheel is the most durable competitive advantage in AI products.
+
+PMs building AI features should ask: "What proprietary data does this feature generate — and how do we protect and compound it?" The answer shapes long-term product strategy.
+
+## Training Data vs. Inference Data: What PMs Need to Understand
+
+Two concepts that PMs building AI products must understand clearly:
+
+**Training data** is the data used to build or fine-tune the model. It determines the model's capabilities and limitations. It is typically historical, large-volume, and processed in batches. Changes to training data require a model update cycle.
+
+**Inference data** is the data the model receives at prediction time — the actual user input or context that the model processes to produce an output. It is real-time. The model uses its training to interpret inference data.
+
+The distinction matters for PMs because: (1) inference-time context you provide can significantly affect output quality even without retraining (this is the basis of prompt engineering and RAG architectures), and (2) training data issues require an ML cycle to fix — inference issues can often be addressed faster. Understanding which layer a problem lives in helps you scope fixes accurately with your ML team.`,
+          keyTakeaways: [
+            'Data strategy is a PM responsibility — the feature\'s requirements determine what data is needed, and the PM must map those needs before committing to a build approach',
+            'Data quality (relevance, coverage, freshness, accuracy, bias) is usually a greater constraint than data quantity — assess it systematically before building',
+            'Privacy-by-design for AI features means minimum necessary data, purpose limitation, user transparency, and data residency planning — not a legal checkbox at launch',
+            'The feedback loop design is the PM\'s responsibility and must be defined before launch — without it, AI features don\'t improve after deployment',
+            'Understanding the difference between training data and inference data helps PMs scope problems accurately and work more effectively with ML teams',
+          ],
+          exercise: {
+            title: 'Data Strategy Brief for an AI Feature',
+            description:
+              'Produce a data strategy brief for an AI feature you are planning or have recently built, covering data requirements, quality, privacy, and feedback loop design.',
+            steps: [
+              'Choose an AI feature you are planning or have recently worked on (or a hypothetical one: an AI writing assistant for a B2B SaaS product).',
+              'Ask Claude to help you produce a data requirements map: "What data would this AI feature need to function? List by data type, source, and whether it is training data or inference-time context."',
+              'Apply the data quality framework to the data sources identified: which have relevance, coverage, freshness, accuracy, or bias risks?',
+              'Design the feedback loop: what signals will you capture to measure whether the feature is working, and how will you feed them back into model improvement?',
+              'Identify one privacy risk in the feature\'s data usage and write one sentence describing how you would address it through design (not policy).',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A PM launches an AI recommendation feature. It performs well in the first month, but performance degrades significantly after six months. The model has not changed. What is the most likely root cause?',
+            options: [
+              'The AI model was not trained on enough data at launch',
+              'Data freshness: the model was trained on historical data that no longer reflects current user behaviour or context — without a feedback loop or retraining cycle, the model falls out of date',
+              'The feature was built on the wrong model architecture',
+              'User adoption exceeded the model\'s capacity',
+            ],
+            correct: 1,
+            explanation: 'AI models trained on historical data degrade as user behaviour, product context, and external conditions change over time. A recommendation feature trained on data from 12 months ago may perform well initially — but as user preferences, product inventory, or market context evolve, the model\'s predictions become less aligned with current reality. The fix requires either a feedback loop that continuously updates the model with fresh data, or a planned retraining cycle. This is a fundamental AI product lifecycle issue that PMs must anticipate at design time.',
+          },
+          applyThisWeek: {
+            action: 'For the AI feature you are currently planning or maintaining, produce a one-page data brief covering: (1) what data the feature requires and where it comes from, (2) one data quality risk and how you will assess it, (3) how the feedback loop is designed, and (4) one privacy consideration and how you are addressing it through design. Share it with your ML or data team as a checkpoint.',
+            promptTemplate: 'I\'m building an AI feature that [describe what the feature does and for whom]. Help me produce a data strategy brief covering: (1) what data the feature needs at inference time vs. training time, (2) likely data quality risks using the relevance / coverage / freshness / accuracy / bias framework, (3) options for feedback loop design — what signals could I capture to measure and improve performance over time, (4) the primary privacy consideration and a design-level approach to addressing it.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about an AI feature in a product you use. What data do you think it relies on? What feedback signals is it likely capturing from your behaviour? If that data were unavailable — or you opted out — how would the feature change? This reverse-engineering exercise builds intuition for your own product\'s data dependencies.',
+          quiz: [
+            {
+              question: 'What is the most common data-related reason AI features fail to improve after launch?',
+              options: [
+                'The model was not large enough to learn from additional data',
+                'No feedback loop was designed before launch — without a mechanism to capture how users respond to AI outputs, there is no signal to improve from',
+                'Users provide too much feedback, which overwhelms the model',
+                'The training data was too large to process efficiently',
+              ],
+              correct: 1,
+              explanation: 'AI features that lack a feedback loop have no mechanism to learn from production usage. Whether it\'s explicit signals (thumbs up/down, corrections) or implicit signals (acceptance rate, task completion, edits), the feedback loop must be designed before launch. Without it, the model is static while user behaviour and context evolve — and performance degrades. This is one of the most consistent PM failures in AI product launches.',
+            },
+            {
+              question: 'What is the key difference between training data and inference data — and why does it matter for PMs?',
+              options: [
+                'Training data is larger; inference data is smaller — both require the same approach to improve model performance',
+                'Training data shapes the model\'s capabilities and requires an ML cycle to update; inference data is the real-time input the model receives — improving it (via better context, RAG, or prompt design) can often be done without retraining',
+                'Training data is owned by the PM; inference data is owned by the ML team',
+                'The distinction is technical and not relevant to PM decision-making',
+              ],
+              correct: 1,
+              explanation: 'Understanding the training/inference distinction helps PMs scope problems accurately. If the model lacks capability (e.g., it doesn\'t understand domain-specific terminology), that\'s likely a training data issue — fix requires an ML cycle. If the model has the capability but doesn\'t use it correctly in context, that may be addressable at inference time through better prompt design, retrieval-augmented generation, or context enrichment. PMs who understand this distinction work more effectively with ML teams and set more accurate timelines for fixes.',
+            },
+            {
+              question: 'Which privacy principle is most important when designing AI features that use personal user data?',
+              options: [
+                'Collecting as much data as possible to ensure the model has sufficient training material',
+                'Minimum necessary data — collect and use only what the feature actually requires, and be specific about purpose so data collected for one use is not repurposed without disclosure',
+                'Encrypting all data at rest so that privacy regulations are satisfied',
+                'Disclosing AI usage in the product\'s terms of service, which satisfies all privacy obligations',
+              ],
+              correct: 1,
+              explanation: 'Privacy-by-design for AI features starts with data minimisation: the strongest privacy posture is to not have data you don\'t need. Purpose limitation follows — data collected to power personalisation should not be repurposed for model training without disclosure. These principles reduce both legal risk and the surface area for data incidents. Encryption and ToS disclosure are necessary but insufficient; they don\'t address the fundamental question of whether you should have the data in the first place.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -2123,6 +2276,156 @@ The risk is not that AI replaces PMs. The risk is that PMs who don't engage with
               correct: 1,
               explanation:
                 '"Faster work" means using AI to produce the same PRDs, research summaries, and analyses you already produce, but in less time. "Better work" means using the time AI saves to do things you previously couldn\'t afford: testing ten growth hypotheses instead of two, synthesising 30 user interviews instead of five, pressure-testing a recommendation from six stakeholder perspectives instead of one. The PMs who build the most career capital are those who use AI to expand the scope of their thinking, not just the speed of their drafting.',
+            },
+          ],
+        },
+        {
+          id: 'product-m5-l5',
+          title: 'Pricing and Monetising AI Features',
+          duration: 18,
+          description:
+            'Design pricing models for AI features, communicate their value to customers, manage AI cost margins, and avoid the most common pricing mistakes that undermine AI monetisation.',
+          content: `## Why AI Feature Pricing Is Different
+
+Pricing AI features is harder than pricing traditional software features for three reasons: the cost structure is different (AI inference has variable marginal cost), the value is often hard to quantify (AI saves time and reduces errors, but how much?), and customer willingness to pay is evolving rapidly. The PMs who get this right have thought carefully about all three dimensions — not just the feature itself.
+
+## Pricing Models for AI Features
+
+There is no single correct pricing model for AI features. The right model depends on your product category, customer segment, and the nature of the value the AI delivers.
+
+**Usage-based pricing.** Customers pay per unit of AI consumption — per query, per document processed, per generation. This model aligns cost with value for high-volume use cases and reduces the risk for customers who are uncertain about adoption. The risk: it creates friction for casual users and can produce unpredictable revenue.
+
+**Outcome-based pricing.** Customers pay based on results the AI delivers — revenue generated, time saved, errors prevented. The most compelling pricing model for AI, and the hardest to implement. Requires clear outcome measurement and typically suits high-value use cases where the AI impact is unambiguous.
+
+**Tiered (feature) pricing.** AI capabilities are included in a premium tier. Customers on the base tier get the product without AI; premium tier customers get AI features as a differentiated bundle. This is the most common enterprise SaaS model and is easy to communicate — but risks undervaluing AI if the tiers are not well-constructed.
+
+**Flat rate with AI included.** AI is a default capability at no additional charge. This model accelerates adoption and can be the right choice when AI is a cost of competition (i.e., all major competitors offer it), or when AI drives retention more than monetisation.
+
+## Communicating Value to Customers
+
+Most customers don't buy AI features because they want AI. They buy them because they want an outcome — faster reports, fewer errors, less time on a repetitive task, better decisions. Lead with the outcome, not the technology.
+
+**Avoid:** "Our new AI-powered assistant uses advanced machine learning to optimise your workflow."
+
+**Prefer:** "Cut the time your team spends on [specific task] by 60%. The AI handles [specific subtask] automatically — so your team focuses on [the higher-value work]."
+
+Quantify the value wherever possible. If your AI feature saves a user 30 minutes per week, that's 26 hours per year — calculate it in salary costs for your target customer's typical role. Then compare it to your pricing. The ratio is your value case.
+
+## Willingness-to-Pay Research for AI Capabilities
+
+Before pricing an AI feature, you need to understand what customers will pay. Standard willingness-to-pay research methods apply — but with AI features, there are additional factors to test.
+
+**AI scepticism:** many enterprise buyers have been burned by AI features that underdelivered. This depresses initial WTP even for genuinely valuable features. Test whether a demo or proof-of-value period changes their stated price ceiling.
+
+**Outcome uncertainty:** customers don't know how much the feature will save them until they've used it. Usage-based or outcome-based pricing reduces this uncertainty barrier.
+
+**Reference anchors:** customers benchmark your AI feature price against the tools or hours it replaces. Understand your customer's current spend on the problem your AI solves — that is often your true competitive price ceiling.
+
+Research methods: Van Westendorp price sensitivity meter, conjoint analysis for feature bundles, and direct interviews asking "what would you pay versus hiring someone to do this task manually?"
+
+## Managing AI Cost Margins in Pricing Decisions
+
+Unlike traditional software features, AI inference has meaningful marginal cost — particularly for large language model features that process significant amounts of text or produce long outputs. PMs working on AI feature pricing must understand the cost structure.
+
+**Cost per use.** Work with your ML and infrastructure teams to understand the cost per inference call for your feature. This varies by model, input/output token count, and whether you are using a hosted API or self-hosted model.
+
+**Cost at scale.** A feature that costs $0.05 per use looks fine in a pilot. At 1 million uses per month, that's $50,000/month in inference costs — which needs to be in your pricing model.
+
+**Gross margin targets.** Know your company's gross margin target and ensure your AI feature pricing delivers against it. If you are pricing a usage-based feature, model the unit economics at different usage volumes and set a floor price that preserves margin at high volume.
+
+**Model substitution.** A common PM lever: route low-complexity requests to a cheaper model and high-complexity requests to a more capable (and more expensive) one. This can significantly improve unit economics without degrading the user experience for most use cases.
+
+## Packaging AI as Premium vs. Default
+
+The decision to make AI a premium tier or the default product shapes your entire go-to-market strategy.
+
+**AI as premium tier** is appropriate when: AI capabilities are genuinely differentiated from what competitors offer at lower price points, your customer segment has budget for a premium purchase, and AI delivers measurable value that justifies a price premium.
+
+**AI as default** is appropriate when: AI is now table stakes in your category (not having it is a competitive disadvantage), AI drives retention and expansion more than it drives upgrade revenue, and your competitive strategy is to commoditise AI and compete on other dimensions (data, integrations, UX).
+
+Most products in 2024 and 2025 are at an inflection point on this decision — AI was a differentiator two years ago in many categories and is now becoming expected. Audit your competitors' pricing and packaging regularly.
+
+## Common Pricing Mistakes for AI Features
+
+**Pricing the technology, not the outcome.** Customers don't pay for AI — they pay for results. Price the result.
+
+**Ignoring marginal costs.** Flat-rate unlimited AI pricing works until usage scales. Model your cost structure at 10x current volume before committing.
+
+**Underpricing to drive adoption.** A low introductory price sets a reference anchor that is hard to move. If you price AI features low to drive adoption, raising prices later is a significant sales and retention risk.
+
+**Overcomplicating usage tiers.** Customers don't want to think about per-token pricing. Abstract the complexity where possible — price at a higher level of use (per document, per report, per user per month) rather than at the infrastructure level.
+
+**Not measuring value delivered.** You can't defend pricing in renewal conversations if you can't show what the AI feature delivered. Build value measurement into the product from day one.`,
+          keyTakeaways: [
+            'Choose your AI pricing model based on your cost structure, customer segment, and value type — usage-based, outcome-based, tiered, and flat-rate each suit different situations',
+            'Lead with outcomes, not AI technology, in customer-facing pricing communication — customers buy results, not machine learning',
+            'AI inference has real marginal cost — model your unit economics at 10x current volume before committing to a pricing structure',
+            'The decision to package AI as premium or default depends on whether AI is still a differentiator in your category or has become table stakes',
+            'Build value measurement into the product from day one — you cannot defend or increase AI feature pricing in renewals without evidence of value delivered',
+          ],
+          exercise: {
+            title: 'AI Feature Pricing Model Design',
+            description:
+              'Design a pricing model for an AI feature — including the pricing structure, value communication, and unit economics — and test the logic against common failure modes.',
+            steps: [
+              'Choose an AI feature you are planning or have recently shipped (or a hypothetical one: an AI email-drafting assistant in a CRM product).',
+              'Ask Claude to: (1) suggest three pricing model options for this feature with the trade-offs of each, (2) draft value communication for each model that leads with outcome, not technology, (3) identify the key marginal cost risks in each model.',
+              'Define the unit economics: estimate a cost per inference, and model the gross margin at three usage volumes (current, 5x, 20x).',
+              'Identify which pricing model you would recommend and write a two-paragraph rationale covering: why this model fits your customer segment, how you manage cost margin risk, and how you would communicate the value.',
+              'Test against the five common pricing mistakes listed in the lesson. Which risks are present in your proposed model, and how would you mitigate them?',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A PM launches an AI summarisation feature with unlimited usage included in a flat monthly subscription of $50/user. Three months after launch, power users are each generating 500 AI summaries per month. The inference cost is $0.08 per summary. What is the problem?',
+            options: [
+              'The AI model is too expensive to run at this price point — the company should switch to a cheaper model',
+              'At $0.08 per summary, each power user costs $40/month in inference alone — nearly the entire subscription fee — leaving no margin for other product costs; the pricing model did not account for high-volume usage scenarios',
+              'The feature should be removed because users are over-relying on AI',
+              'Unlimited usage is always the correct pricing model for AI features to maximise adoption',
+            ],
+            correct: 3,
+            explanation: 'At $0.08 per summary x 500 summaries = $40 in inference costs per power user per month, against a $50 subscription fee. After infrastructure, support, and other product costs, this segment is unprofitable or barely breakeven. The root cause is a pricing model that did not model unit economics at high-volume usage scenarios before launch. The fix — introducing usage tiers, a fair-use policy, or moving to usage-based pricing for the AI feature — is painful to implement after customers have adopted the feature with unlimited expectations.',
+          },
+          applyThisWeek: {
+            action: 'For an AI feature in your product (or one you\'re planning), model the unit economics: estimate cost per inference, multiply by your highest-volume user\'s usage, and compare to what that user pays. If the ratio is unsustainable at 5x current volume, you have a pricing risk to address before scale. Bring the analysis to your next pricing conversation with your team.',
+            promptTemplate: 'I\'m pricing an AI feature that [describe what it does]. The target customer is [describe: segment, company size, role]. The feature [replaces / accelerates / enables] [describe the task or outcome]. Help me: (1) identify the most appropriate pricing model from usage-based, outcome-based, tiered, and flat-rate — with trade-offs for each, (2) draft value communication that leads with outcome for this customer, (3) identify the key marginal cost risks and how to manage them in the pricing structure, (4) flag which of the five common AI pricing mistakes I should watch for with this model.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about an AI feature you pay for (or your company pays for) as a customer. What pricing model does it use? Does the pricing reflect the value you get from it — or does it feel disconnected from the outcomes it delivers? What would a better pricing model look like from the customer side?',
+          quiz: [
+            {
+              question: 'Why is outcome-based pricing considered the most compelling model for AI features — and what makes it hard to implement?',
+              options: [
+                'Outcome-based pricing is compelling because it is simple to explain, and hard to implement because customers resist it',
+                'Outcome-based pricing aligns cost directly with value delivered — customers pay for results, not usage — but requires clear, measurable outcome tracking and works best when the AI impact is unambiguous and attributable',
+                'Outcome-based pricing is only suitable for enterprise customers with large contracts',
+                'Outcome-based pricing is compelling because it maximises revenue, and hard to implement because it requires custom contracts for each customer',
+              ],
+              correct: 1,
+              explanation: 'Outcome-based pricing is the most direct expression of "you pay for value, not technology" — it removes the adoption risk for customers who are uncertain about the AI\'s impact. The implementation challenge is that outcomes must be measurable, attributable to the AI feature (not other factors), and agreed on before the contract is signed. For features where the AI outcome is clear and trackable — cost per lead generated, errors prevented, hours saved — it can be a powerful commercial model. For features with diffuse or hard-to-measure value, it requires more creative instrumentation.',
+            },
+            {
+              question: 'What is the key unit economics risk PMs must model before launching a flat-rate unlimited AI feature?',
+              options: [
+                'Whether the AI model will be deprecated by the provider within the pricing period',
+                'That high-volume users will generate inference costs that exceed the subscription fee, destroying margin at scale — the model must be tested at 10x current usage volume before launch',
+                'That flat-rate pricing will attract the wrong customer segment',
+                'That unlimited usage will reduce perceived value of the AI feature',
+              ],
+              correct: 1,
+              explanation: 'AI inference has real marginal cost that traditional software pricing does not. A feature that costs $0.05 per use is economical at 100 uses/month per user — but at 1,000 uses/month, it costs $50 per user in inference alone. Flat-rate unlimited pricing commits you to absorbing all usage costs regardless of volume. The discipline is to model the unit economics at high-volume scenarios before committing to the pricing structure, and to build in either usage tiers or a fair-use policy that protects margin at scale.',
+            },
+            {
+              question: 'When should a PM consider making an AI feature the default (included for all users) rather than a premium tier?',
+              options: [
+                'When the AI feature is technically impressive and the team wants to showcase it',
+                'When AI has become table stakes in the category — not having it is a competitive disadvantage — and AI drives retention more than it drives upgrade revenue',
+                'Always — AI features should always be included by default to maximise adoption',
+                'When the AI feature is too complex to explain in a pricing tier description',
+              ],
+              correct: 1,
+              explanation: 'The premium vs. default decision should be driven by competitive dynamics and monetisation strategy, not feature excitement. If competitors are offering equivalent AI capabilities at the same price point, a premium AI tier loses its justification and may create churn risk. When AI is primarily a retention driver (users who adopt AI features churn less, expand more), the value is captured through the base product rather than a price premium. The decision requires an honest assessment of whether AI is still differentiated in your category — and that assessment needs to be revisited regularly as the market evolves.',
             },
           ],
         },

@@ -1003,6 +1003,123 @@ For high-volume roles, you can\'t personalise every communication individually. 
             },
           ],
         },
+        {
+          id: 'hr-m2-l5',
+          title: 'Compensation Benchmarking and Pay Equity with AI',
+          duration: 16,
+          description:
+            'Use AI to structure compensation benchmarking analysis, build salary band documentation, conduct pay equity audit frameworks, and communicate compensation decisions to employees — while understanding the legal risks and data limitations.',
+          content: `## Why Compensation Work Is Hard Without Structure
+
+Compensation decisions — what to pay a new hire, how to set salary bands, how to respond to a retention counter-offer — are made constantly in organisations, often inconsistently and without documented rationale. This inconsistency creates pay equity risk and erodes employee trust. AI cannot source market data for you, but it can help you structure the analysis, build the frameworks, and communicate decisions in a way that is defensible and fair.
+
+**LEGAL NOTE:** Compensation decisions involve protected characteristics, equal pay law, and in many jurisdictions, pay transparency regulations. AI assistance in compensation work must be used within a legally reviewed framework. Always involve HR legal counsel when designing pay equity audits or salary band structures.
+
+## Structuring a Compensation Benchmarking Analysis
+
+Compensation benchmarking requires live market data from sources like Radford, Mercer, Korn Ferry, or levels.fyi — AI cannot access these. But AI can structure how you use that data once you have it:
+
+> "I am conducting a compensation benchmarking exercise for [role] at a [company size] [industry] company in [location]. I have market data at P25, P50, P75, and P90 for base salary and total cash. Help me structure the benchmarking analysis: (1) what is our positioning philosophy (market median vs premium)? (2) how do I account for variations in scope, experience, and location within the role? (3) how do I present findings to business leaders in a format that supports defensible decisions? (4) what are the limitations I should disclose when presenting this data?"
+
+> "Design a salary band structure for a [role family] with four levels (IC1 through IC4) at a [company type]. The market median base for a mid-level IC2 is [figure]. The band should: account for geographic differentials, provide room for merit progression within each band, overlap adjacent bands by approximately 20%, and be explainable to employees."
+
+## Building a Pay Equity Audit Framework
+
+A pay equity audit examines whether employees in comparable roles receive comparable pay after controlling for legitimate factors (experience, performance, scope). AI can help structure the methodology:
+
+> "Design a pay equity audit framework for a [company size] organisation. The audit should: (1) define the comparison groups (roles, levels, and functions), (2) identify the legitimate factors we will control for (tenure, performance rating, geographic location, scope), (3) describe the analytical method for identifying unexplained pay gaps, (4) set a threshold for what constitutes a material gap requiring investigation, and (5) describe the remediation process for employees identified as underpaid. The framework will be reviewed by our employment legal team before implementation."
+
+## Salary Band Documentation
+
+Clear salary band documentation serves employees, managers, and recruiters. AI helps produce it efficiently:
+
+> "Write salary band documentation for [role] with three levels: Associate, Mid-level, and Senior. For each level: salary range (I will provide the figures), a description of what distinguishes this level from the one above and below, typical experience profile, and what progression to the next level requires. Tone: clear and jargon-free — this will be shared with employees."
+
+## Preparing Compensation Communications for Employees
+
+How compensation decisions are communicated is as important as the decisions themselves:
+
+> "Draft a manager talking-points document for compensation review conversations with direct reports. The company has given [percentage] salary increases this cycle, with a range of [X%–Y%] based on performance. Include: how to open the conversation, how to explain the decision if the employee asks why their increase is a specific amount, how to respond if the employee says they\'ve been offered more elsewhere, and what to say if the employee is disappointed. Tone: direct and human, not corporate."
+
+## What AI Cannot Do in Compensation
+
+- **Access live market data.** Radford, Mercer, Korn Ferry, and levels.fyi require paid subscriptions. AI cannot access these databases, and salary figures it generates from training data are unreliable and should not be used.
+- **Guarantee legal compliance.** Pay equity law varies by jurisdiction and is actively developing. AI-generated frameworks require legal review before implementation.
+- **Make individual pay decisions.** Using AI to recommend pay for a specific individual creates discrimination risk — AI models can reflect historical biases embedded in training data. Individual decisions require human judgement within a structured framework.
+- **Run statistical regression analysis.** A proper pay equity audit involves regression analysis on your own employee data. This requires people analytics capability or specialist support, not AI drafting.`,
+          keyTakeaways: [
+            'AI structures compensation benchmarking analysis and salary band design — but cannot access live market data from Radford, Mercer, or levels.fyi, which requires paid subscriptions',
+            'A pay equity audit framework built with AI must be reviewed by employment legal counsel before implementation — pay equity law varies by jurisdiction and is actively developing',
+            'Salary band documentation designed with AI should describe what distinguishes each level and what progression requires — making compensation visible and defensible to employees',
+            'Manager talking points for compensation conversations should be drafted for the hardest scenarios, not just the easy ones — how to respond to disappointment and counter-offers',
+            'Using AI to recommend pay for specific individuals creates discrimination risk — individual decisions require human judgement within a legally reviewed framework',
+          ],
+          exercise: {
+            title: 'Design a Salary Band Framework for One Role Family',
+            description:
+              'Use AI to build a structured salary band framework and the employee-facing documentation for a role family in your organisation.',
+            steps: [
+              'Choose a role family in your organisation (e.g., Software Engineering, Sales, Customer Success) with at least three levels',
+              'Run the salary band structure prompt: describe your company type, the role family, and ask for a band structure with overlap design and geographic differential logic',
+              'Using market data you have access to (or publicly available data for the exercise), populate the salary figures and run the employee-facing band documentation prompt',
+              'Draft the manager talking points for compensation review conversations — specifically: how to explain an increase that is below the employee\'s expectation, and how to respond to a counter-offer',
+              'Identify one legal review question you would want to ask employment legal counsel before implementing this framework',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'An HR team uses AI to generate salary recommendations for 200 employees based on their tenure, performance ratings, and role. What is the primary risk with this approach?',
+            options: [
+              'The AI may not have access to the company\'s HRIS system',
+              'AI models can reflect historical pay biases from training data, creating discrimination risk — individual pay recommendations generated by AI require human review within a structured framework before being applied',
+              'The salary figures generated by AI may be slightly below market',
+              'Employees may find out that AI was used in setting their pay',
+            ],
+            correct: 1,
+            explanation: 'AI models trained on historical compensation data can perpetuate historical pay inequities — if women or certain demographic groups have historically been underpaid in a role, an AI trained on that data will recommend continuing the pattern. Using AI to generate individual pay recommendations without human review and a legally tested framework creates both pay equity risk and potential discrimination liability. AI should structure the framework and the decision criteria; humans apply judgement within that framework for individual decisions.',
+          },
+          applyThisWeek: {
+            action: 'Choose one role in your organisation and draft a salary band description using AI — including what distinguishes each level and what progression to the next level requires. Share the draft with the hiring manager for that role and ask if it accurately reflects what they\'re actually looking for.',
+            promptTemplate: 'Write salary band documentation for [role] with [number] levels. For each level: (1) level name and salary range ([I will specify the figures]), (2) a plain-English description of the scope and complexity at this level, (3) what distinguishes this level from the level above and below (skills, autonomy, impact), (4) typical experience profile at entry to this level, (5) what would typically trigger progression to the next level. Tone: clear and direct — this will be shared with employees and candidates. Avoid: vague descriptors like "highly experienced" that could mean anything.',
+            tool: 'Claude',
+          },
+          reflection: 'In your organisation, how transparent are compensation decisions to the people affected by them? If an employee asked "why did I receive this increase rather than a higher one?", could a manager give a specific, honest, non-defensive answer? What would need to change in your frameworks and documentation to make that conversation easier?',
+          quiz: [
+            {
+              question: 'Why can\'t AI generate reliable salary benchmarks for a specific role?',
+              options: [
+                'AI does not understand job descriptions',
+                'Live, current salary market data requires paid subscriptions to specialist databases (Radford, Mercer, levels.fyi) that AI cannot access — any salary figures AI generates from training data are based on historical patterns and should not be used for compensation decisions',
+                'AI can only benchmark roles in the technology sector',
+                'Salary data is legally protected and cannot be used by AI',
+              ],
+              correct: 1,
+              explanation: 'Reliable compensation benchmarking requires current, role-specific, geography-specific market data from survey providers who collect it directly from employers. AI has no access to these live databases, and salary figures it generates from training data may be out of date, inaccurate, or inappropriate for your specific context. The correct use of AI in compensation benchmarking is to structure how you analyse and communicate data from authoritative sources — not to replace those sources.',
+            },
+            {
+              question: 'What is the purpose of designing a salary band with 20% overlap between adjacent levels?',
+              options: [
+                'To ensure all employees in the lower level earn less than all employees in the higher level',
+                'To allow an experienced, high-performing employee in a lower level to earn more than a new entry into the level above — recognising that demonstrated performance in role can exceed the starting value of a higher title',
+                'To create ambiguity that gives managers flexibility in setting pay',
+                'To comply with equal pay legislation',
+              ],
+              correct: 1,
+              explanation: 'Band overlap reflects the reality that a highly experienced, high-performing IC3 may legitimately be worth more than a newly promoted IC4 who is still developing into their scope. Without overlap, organisations face a perverse incentive: the only way to give a high performer a meaningful pay increase is to promote them, even when they are not yet ready. Band overlap separates pay decisions from promotion decisions, allowing both to be made on their own merits.',
+            },
+            {
+              question: 'A pay equity audit finds that women in a specific role earn 12% less than men on average. What is the correct immediate next step?',
+              options: [
+                'Announce a 12% increase for all women in the role immediately',
+                'Investigate whether legitimate factors (tenure, performance, geographic location, scope variation) explain the gap — and if the unexplained gap persists after controlling for these factors, involve employment legal counsel and design a remediation process',
+                'Commission a second pay equity audit to verify the finding before acting',
+                'Communicate the finding to all employees immediately for transparency',
+              ],
+              correct: 1,
+              explanation: 'A raw pay gap finding is the beginning of analysis, not the conclusion. The correct process is: (1) control for legitimate factors — if women in this role have lower average tenure, that may explain part of the gap; (2) identify the residual unexplained gap after controlling; (3) if a material unexplained gap persists, involve employment legal counsel and design a structured remediation process. Acting on a raw gap without investigation can introduce new inequities; failing to act on an unexplained gap creates legal and reputational risk.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -1482,6 +1599,130 @@ Exit interviews produce data too late and too biased (people say what they think
               correct: 1,
               explanation:
                 'Employees who discover they\'ve been identified, categorised, and targeted through an algorithmic risk process typically feel surveilled rather than cared for. This is the central paradox of retention analytics: the intervention that identifies at-risk employees can itself damage the trust relationship that\'s often central to retention. Effective retention interventions feel like normal management (meaningful conversations, genuine recognition, career development support) rather than surveillance-triggered responses.',
+            },
+          ],
+        },
+        {
+          id: 'hr-m3-l5',
+          title: 'DEI Analytics and Inclusion Measurement with AI',
+          duration: 17,
+          description:
+            'Use AI to synthesise DEI survey data, build inclusion metrics frameworks, identify systemic patterns in people data, and draft DEI action plans — while understanding the bias risks specific to AI in this domain.',
+          content: `## Why DEI Work Needs Better Data Practice
+
+DEI commitments without measurement are aspirational at best and misleading at worst. Most organisations collect some DEI data — engagement surveys, representation figures, promotion rates by demographic — but struggle to synthesise it into the systemic patterns that drive action. AI can help analyse, structure, and communicate this data more effectively. But AI in DEI work carries specific bias risks that HR professionals must understand and manage.
+
+**IMPORTANT:** All DEI analytics involving employee demographic data must comply with applicable data protection law (GDPR in the UK/EU, equivalent in other jurisdictions). Demographic data is special category data. Involve your DPO or legal team before designing any DEI analytics process.
+
+## Synthesising DEI Survey Data
+
+Engagement and inclusion surveys generate large volumes of qualitative and quantitative data. AI can help identify patterns:
+
+> "Here are the aggregated results from our inclusion survey across five dimensions: belonging, fairness, voice, growth, and psychological safety. Results are broken down by department, tenure band, and gender (where sample sizes allow anonymous reporting). Analyse these results and identify: (1) the dimensions where our scores are weakest overall, (2) the demographic or departmental segments with the most significant gaps from the overall average, (3) three patterns that appear consistently across dimensions (suggesting systemic issues rather than isolated problems), and (4) the three priority areas most likely to drive inclusion improvement if addressed."
+
+The constraint on sample sizes for demographic breakdowns is important — reporting disaggregated results for small groups risks identifying individuals, which is both a GDPR risk and likely to chill honest survey participation.
+
+## Building an Inclusion Metrics Framework
+
+A strong DEI metrics framework covers more than representation numbers:
+
+> "Design an inclusion metrics framework for a [company size] [industry] company. The framework should cover four dimensions: (1) representation (who is here), (2) experience (how it feels to work here — by demographic group), (3) progression (who advances and at what rate), and (4) systems (are our people processes fair?). For each dimension: identify 3-5 measurable metrics, the data source for each, and the reporting frequency. Flag any metrics where data collection requires demographic disclosure from employees and note the consent and anonymity safeguards required."
+
+## Identifying Systemic Patterns in People Data
+
+> "I have the following people data for the last two years [describe available data: promotion rates by gender/ethnicity, pay grade distribution, performance ratings, attrition]. Identify any patterns that suggest systemic barriers to progression for specific groups. For each pattern identified: describe what the data shows, what alternative explanations exist, and what additional data I would need to confirm whether the pattern reflects a systemic issue."
+
+This prompt acknowledges that patterns in people data require investigation and alternative explanations — not immediate conclusions. That intellectual honesty is essential in DEI analytics.
+
+## Drafting DEI Action Plans and Progress Narratives
+
+> "Based on this DEI data analysis [paste key findings], draft a 12-month DEI action plan. Format: (1) a brief context section on what the data shows (honest about both progress and gaps), (2) three priority focus areas for the year with specific actions, owners, and success metrics for each, (3) a summary of what we will stop doing (initiatives that haven\'t moved the needle), and (4) how we will measure and report progress. Tone: specific and accountable, not aspirational."
+
+The "what we will stop doing" instruction produces more honest, credible plans — most DEI plans only add initiatives.
+
+## Communicating DEI Data to Leadership
+
+> "I\'m presenting our annual DEI data update to the executive team. Key findings: [summarise]. Design a presentation structure that: leads with what the data means for our business strategy (not just the moral case), presents progress and gaps with equal emphasis, connects DEI metrics to business outcomes our executives already track (retention, performance, innovation), and ends with three specific decisions we need leadership to make. The audience is commercially focused and has limited patience for aspiration without accountability."
+
+## Bias Risks When Using AI in DEI Work
+
+Using AI in DEI work introduces specific risks that professionals must manage actively:
+
+- **Training data bias.** AI models trained on historical text may encode assumptions about which demographic characteristics predict leadership potential, performance, or culture fit. Never use AI to assess individual employees' advancement readiness or fit.
+- **Pattern reinforcement.** If you ask AI to identify "high performers" from historical data and that data has demographic skew, AI will reproduce and potentially amplify that skew.
+- **Language bias in job descriptions and policies.** AI can help audit language — but may itself embed subtle biases. Human review of AI-generated inclusive language is essential.
+- **False precision.** AI can produce statistically sophisticated-looking analysis from people data. This creates an illusion of objectivity. The methodology must still be reviewed by a qualified analyst.
+- **Aggregation masking.** Presenting only aggregate data can hide significant disparities for smaller demographic groups. AI may not flag this — your methodology must specify minimum sample sizes for disaggregated reporting.`,
+          keyTakeaways: [
+            'AI can synthesise DEI survey data to identify cross-dimensional patterns and priority areas — but demographic data analysis must comply with data protection law and involve your DPO',
+            'A strong inclusion metrics framework covers four dimensions: representation, experience, progression, and systems — AI helps design the framework and identify the right metrics for each',
+            'DEI action plans drafted with AI should include what the organisation will stop doing, not just what it will start — this produces more honest and credible plans',
+            'AI models can encode demographic bias from training data — never use AI to assess individual employees\' performance, advancement readiness, or cultural fit',
+            'Communicating DEI data to commercially focused leadership requires connecting inclusion metrics to business outcomes they already track — retention, performance ratings, and talent pipeline health',
+          ],
+          exercise: {
+            title: 'Design a DEI Metrics Framework for Your Organisation',
+            description:
+              'Build a practical inclusion metrics framework covering the four dimensions and identify your data gaps.',
+            steps: [
+              'Run the inclusion metrics framework prompt for your organisation: four dimensions (representation, experience, progression, systems), 3-5 metrics per dimension, data sources, and reporting frequency',
+              'Map each metric against what data you currently collect: which metrics do you have data for, which require new data collection, and which require demographic disclosure from employees?',
+              'For one dimension where your data is weakest, draft a data collection plan — including consent language and the anonymity thresholds you will apply to disaggregated reporting',
+              'Using your most recent inclusion survey or engagement data (or publicly available benchmark data for the exercise), run the synthesis prompt: top findings, demographic gaps, systemic patterns, priority areas',
+              'Draft a one-page executive summary of the findings using the leadership communication prompt — structured around business outcomes, not just inclusion aspiration',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'An HR team uses AI to analyse three years of performance ratings and promotion decisions, then asks AI to identify the characteristics most associated with high performance at their company. They plan to use these characteristics to prioritise future promotion decisions. What is the primary risk?',
+            options: [
+              'The analysis may be too complex for the HR team to explain to managers',
+              'If historical performance and promotion data has demographic skew — e.g., women or minority employees were systematically rated lower — AI will identify those demographic patterns as predictive of performance, encoding past bias into future decisions',
+              'The three-year time period is too short for meaningful analysis',
+              'Managers may disagree with the characteristics AI identifies',
+            ],
+            correct: 1,
+            explanation: 'This is one of the most significant risks in people analytics: AI trained on historically biased data reproduces and can amplify that bias. If past performance ratings were influenced by proximity bias (in-office workers rated higher), affinity bias (managers rated people like themselves higher), or structural disadvantage (caregivers had less access to high-visibility projects), AI will identify those patterns as "characteristics associated with high performance." Using that output to drive future promotion decisions systematically disadvantages the same groups, now with the false authority of data-driven objectivity.',
+          },
+          applyThisWeek: {
+            action: 'Identify one DEI metric your organisation currently tracks and one that is absent from your current measurement framework. For the missing metric, draft a data collection approach using AI — specifying the data source, consent requirements, anonymity thresholds, and how the metric connects to a business outcome leadership already cares about.',
+            promptTemplate: 'I want to add [metric name] to our DEI measurement framework. Our organisation is a [size] [industry] company. Help me design the data collection approach: (1) data source and collection method, (2) consent language for employees if demographic data is required, (3) minimum sample size for disaggregated reporting (to protect anonymity), (4) how this metric connects to a business outcome leadership tracks, (5) how we will communicate the metric and its trends in leadership reporting. Note any data protection considerations for UK/[other jurisdiction] organisations.',
+            tool: 'Claude',
+          },
+          reflection: 'In your organisation, how do DEI commitments currently connect to measurable outcomes? If your CEO asked "how do we know our DEI investment is working?", what data would you present — and what would you have to say you don\'t yet measure? What would change if you built a four-dimension inclusion framework and reported against it at the same cadence as other people KPIs?',
+          quiz: [
+            {
+              question: 'An inclusion survey at a 500-person company shows that employees from one demographic group score 15 points lower on psychological safety. The group has 28 respondents. What is the correct approach to this finding?',
+              options: [
+                'Ignore the finding until the sample is larger',
+                'Report the finding in the organisation-wide DEI dashboard with full demographic attribution',
+                'Investigate the finding qualitatively (focus groups, manager conversations) while being careful not to identify individuals — the pattern is meaningful but the sample requires care in how it is reported and acted on',
+                'Ask employees from this group to retake the survey to confirm the finding',
+              ],
+              correct: 2,
+              explanation: 'A 28-person sample in a 500-person organisation is large enough to be analytically meaningful and small enough to risk identifying individuals if reported with too much demographic specificity. The correct approach is to treat the finding as a signal requiring qualitative investigation — understanding what is driving the pattern through conversations and focus groups — while being careful not to report in ways that identify individuals or create surveillance risk. The finding is real; the reporting methodology must protect the people it concerns.',
+            },
+            {
+              question: 'Why should a DEI action plan include a section on what the organisation will stop doing?',
+              options: [
+                'To reduce the workload on the DEI team',
+                'Because initiatives that haven\'t moved the needle consume resources and credibility — acknowledging this produces more honest, accountable plans and signals that the organisation evaluates DEI investment with the same rigour as other business initiatives',
+                'To comply with DEI reporting requirements',
+                'Because stopping initiatives signals that DEI targets have been achieved',
+              ],
+              correct: 1,
+              explanation: 'Most DEI plans only add: new training programmes, new targets, new reporting. They rarely retire initiatives that haven\'t worked. This produces DEI strategy that grows in complexity without improving in impact, and leadership teams learn to treat DEI plans as aspirational documents rather than operational ones. A section on what you\'re stopping signals that the organisation evaluates DEI investment seriously — and frees resource for initiatives that evidence suggests are more effective.',
+            },
+            {
+              question: 'What is the safest way to use AI when designing inclusive job descriptions?',
+              options: [
+                'Ask AI to write the job description from scratch — AI is trained to write inclusive language',
+                'Use AI to audit your draft for potentially excluding language, then have a human reviewer check the AI suggestions before finalising — AI can surface patterns but may itself embed subtle biases',
+                'Only use AI-generated language for roles where DEI representation is already strong',
+                'Have AI remove all references to specific skills to avoid excluding under-represented candidates',
+              ],
+              correct: 1,
+              explanation: 'AI is a useful first-pass auditor for job description language — it can identify terms associated with excluding certain groups (e.g., language that skews masculine, unnecessary experience requirements, jargon that assumes insider knowledge). But AI models are not free from bias themselves and may suggest replacements that carry their own assumptions. The appropriate process is AI audit followed by human review — using AI to surface issues at scale while maintaining human judgement on what to change and why.',
             },
           ],
         },

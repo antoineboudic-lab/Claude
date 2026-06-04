@@ -1538,6 +1538,126 @@ Executives ask different questions than operational buyers. They focus on: risk,
             },
           ],
         },
+        {
+          id: 'sales-m3-l5',
+          title: 'Pricing Strategy and Negotiation Preparation with AI',
+          duration: 19,
+          description:
+            'Use AI to build value-based pricing arguments, prepare negotiation playbooks, construct ROI calculators, and develop concession strategies — so you enter every pricing conversation with a plan, not a hope.',
+          content: `## Why Most Reps Lose on Price Before the Negotiation Begins
+
+Price negotiation is usually lost not in the negotiation itself but in the weeks before it. By the time a buyer pushes back on price, the foundation has either been built or it hasn't: the value has either been established clearly enough to justify the number, or it hasn't. AI doesn't fix a poor discovery process, but it does help you build the strongest possible case from the information you have.
+
+The two failure modes in pricing conversations are: (1) defending the price from a cost or feature basis rather than a value basis, and (2) having no plan — conceding reactively rather than strategically.
+
+## Value-Based Pricing Analysis with AI
+
+Before any pricing conversation, use AI to stress-test your value argument:
+
+> "Our product is [X]. The prospect is [company, industry, size]. From discovery, their key challenges are: [list]. Our solution addresses these by: [list]. Help me build a value-based pricing argument that: (1) quantifies the cost of their current problem where possible, (2) estimates the financial value of solving it, and (3) positions our price as a fraction of the value delivered. Flag any assumptions I should verify with the buyer."
+
+The "flag assumptions" instruction is critical. AI will often identify gaps in your value argument that you need to fill with real data before the conversation.
+
+## Building a Negotiation Playbook
+
+A negotiation playbook covers four scenarios: they push back on price, they ask for a discount, they compare you to a competitor's price, and they go silent. Prepare for all four before the conversation:
+
+> "I am entering a pricing negotiation for [deal description]. The total contract value is [X]. The prospect has indicated price sensitivity. Build a negotiation playbook that covers: (1) how to respond to 'your price is too high' without immediately discounting, (2) how to respond to 'can you do [X]% off', (3) how to respond to 'Competitor Y is 20% cheaper', and (4) how to interpret and respond to a prospect who goes quiet after receiving the proposal. For each scenario, give me the first sentence to say and the underlying principle."
+
+The "first sentence to say" structure forces actionable preparation, not just strategic advice you can't use in the moment.
+
+## Anticipating Price Objections
+
+Not all price objections are about price. Many are about risk ("I'm not sure this will deliver"), timeline ("I need to see results faster"), or authority ("I need to get approval"). AI helps you categorise and prepare for the real objection:
+
+> "Here are the five most common price objections I hear: [list]. For each, help me identify: (1) is this actually a price objection or a disguised concern about something else? (2) what question should I ask to surface the real concern? (3) what would a strong response look like once the real concern is identified?"
+
+## Constructing ROI Calculators
+
+An ROI calculator turns a price conversation into a return conversation. AI can build the logic:
+
+> "Build an ROI calculator framework for our [product/service]. The main value drivers are: [list, e.g. time saved, cost reduced, revenue increased]. For each driver: (1) what is the input variable the buyer needs to provide, (2) what is the calculation logic, and (3) what is a conservative multiplier we can use when we don't have exact data. The calculator should produce a 12-month ROI figure and a payback period."
+
+Once built, this calculator becomes a reusable tool you bring to every pricing conversation. It shifts the discussion from "what does it cost" to "what does it return."
+
+## Discount Justification Frameworks
+
+When you need to offer a discount — and sometimes you will — it should be for a reason, not as capitulation. AI helps you build legitimate discount structures:
+
+> "Generate five discount justification frameworks I can use when concessions are necessary. For each: (1) the condition that justifies the discount (e.g., multi-year commitment, early signature, expanded scope), (2) the language to use when offering it, and (3) what I should ask for in return. The goal is to make every discount conditional — they get something if they give something."
+
+## Concession Strategy Preparation
+
+The order and framing of concessions matters as much as their size. Prepare your concession sequence before you walk in:
+
+> "I am negotiating a deal worth [X]. I am willing to concede on: [list items — price, payment terms, implementation support, contract length]. Help me think through: (1) the order in which I should offer these concessions, starting with the lowest-cost highest-perceived-value items, (2) what to ask for in return for each concession, and (3) how to signal that each concession is significant without revealing my full flexibility."
+
+The most common negotiation mistake is conceding too quickly and too completely. A structured concession sequence prevents this by making you deliberate, not reactive.`,
+          keyTakeaways: [
+            'Price negotiation is usually won or lost before it begins — the value foundation must be built during discovery, not improvised at the table',
+            'AI can stress-test your value argument and flag assumptions to verify before the pricing conversation',
+            'A negotiation playbook prepares you for four specific scenarios: price too high, discount request, competitor comparison, and prospect silence',
+            'An ROI calculator shifts the conversation from "what does it cost" to "what does it return" — AI can build the logic framework',
+            'Every concession should be conditional — use AI to build a structured concession sequence with reciprocal asks for each concession offered',
+          ],
+          exercise: {
+            title: 'Build a Negotiation Playbook for a Live Deal',
+            description:
+              'Prepare a complete negotiation playbook for an active deal heading toward a pricing conversation.',
+            steps: [
+              'Choose a deal currently in your pipeline that will involve a pricing conversation in the next 30 days',
+              'Run the value-based pricing analysis prompt: describe the prospect, their challenges from discovery, and how your solution addresses them. Ask AI to build the value argument and flag assumptions',
+              'For each flagged assumption, note whether you have the data or need to get it before the conversation',
+              'Run the negotiation playbook prompt: prepare responses for the four scenarios (price too high, discount request, competitor comparison, silence)',
+              'Build your concession sequence: list what you\'re willing to concede, in the order you\'d offer them, with a reciprocal ask for each',
+            ],
+            tool: 'Claude',
+          },
+          applyThisWeek: {
+            action: 'For your next pricing conversation, build the ROI calculator framework before the meeting. Use AI to identify your main value drivers, the input variables, and the calculation logic. Bring it to the conversation as a shared tool — fill it in together with the buyer rather than presenting a pre-calculated number.',
+            promptTemplate: 'Build an ROI calculator framework for [product/service]. Main value drivers: [list]. For each driver: (1) the input variable the buyer provides, (2) the calculation logic to turn that input into financial value, (3) a conservative multiplier for when exact data isn\'t available. The output should be a 12-month ROI figure and a payback period. Assume a price of [X] for the calculation.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time you discounted a deal. Did you discount because the value wasn\'t established well enough to hold the price — or because the buyer genuinely needed a commercial accommodation? What would have needed to be different in the earlier stages of the conversation to make the price defensible?',
+          quiz: [
+            {
+              question: 'A prospect says "your price is too high." What is the most effective first response?',
+              options: [
+                'Immediately offer a 10% discount to signal flexibility and keep the deal moving',
+                'Ask the prospect what budget they had in mind and work backward from there',
+                'Ask a clarifying question to determine whether "too high" means too expensive in absolute terms, higher than budget, or higher than a competitor — then address the specific concern',
+                'Defend the price by listing additional product features they may have missed',
+              ],
+              correct: 2,
+              explanation:
+                '"Your price is too high" is rarely a complete objection — it is the start of one. The real concern might be budget constraint, a competitor comparison, an ROI question, or an authority issue (they need to justify it to someone else). Asking which specific aspect of price is the issue gets you to the real objection. Discounting before understanding the objection is the most common and costly negotiation mistake.',
+            },
+            {
+              question: 'What is the purpose of making every discount "conditional" in a negotiation?',
+              options: [
+                'It is a legal requirement to document the reason for any pricing change',
+                'It ensures the buyer feels they worked hard enough for the discount to value it',
+                'It prevents discounting from becoming pure capitulation — every concession you give should secure something in return, preserving deal economics and preventing unlimited concession requests',
+                'Conditional discounts are more difficult for competitors to match',
+              ],
+              correct: 2,
+              explanation:
+                'A discount given without a condition — multi-year commitment, faster signature, expanded scope — signals that your initial price had no real floor. The buyer learns that asking for more will produce more concessions. Conditional discounts reframe concessions as trades, not gifts. They preserve deal economics, create reciprocal commitment, and prevent the negotiation from becoming a race to zero.',
+            },
+            {
+              question: 'Why should you build an ROI calculator before a pricing conversation rather than defending price by listing features?',
+              options: [
+                'Buyers trust spreadsheets more than salespeople',
+                'Feature lists are too complex for executive buyers to evaluate quickly',
+                'ROI calculators shift the frame from cost to return — the question becomes "how long until I recover this investment" rather than "is this too expensive"',
+                'ROI calculators are required by procurement teams in enterprise sales',
+              ],
+              correct: 2,
+              explanation:
+                'Price objections are fundamentally about perceived value relative to cost. When you defend price with features, you are arguing on the cost side of the equation. An ROI calculator argues on the value side: it makes the return concrete and measurable, turning the question from "can I afford this" to "when will I see the return." A buyer who can see a 6-month payback period will negotiate differently than one who only knows the invoice amount.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -2543,6 +2663,128 @@ You do not need to transform the entire culture at once. Start with one team nor
               correct: 2,
               explanation:
                 'A brief, consistent learning moment in an existing meeting introduces the cultural norm of learning from data with minimal additional time or infrastructure. It signals that learning is valued, creates space for honest discussion, and compounds into genuine cultural change over time — without triggering resistance from new systems or requirements.',
+            },
+          ],
+        },
+        {
+          id: 'sales-m5-l5',
+          title: 'Sales Enablement Content with AI',
+          duration: 18,
+          description:
+            'Use AI to build battlecards, case studies, objection-handling libraries, and vertical-specific enablement content — so your team has the right material for every conversation, not just the conversations someone thought to prepare for.',
+          content: `## The Sales Enablement Gap
+
+Most sales teams have some enablement content. Few have enough, and fewer still have it in the right format for the moment it is needed. A battlecard that takes two weeks to produce becomes outdated before it is used. A case study written by marketing misses the details a sales rep actually needs. An objection-handling guide that covers only the objections someone remembered to write down leaves reps unprepared for the ones they face every day.
+
+AI does not replace the strategic thinking behind enablement. But it dramatically accelerates the production of first-draft content, allowing your team to build — and update — material at the pace the market moves.
+
+## Battlecards and Competitive One-Pagers
+
+A battlecard gives a rep everything they need to handle a competitive conversation in two minutes. The format matters: it should be scannable, not comprehensive.
+
+> "Create a competitive battlecard for [Our Product] vs. [Competitor]. Structure it as: (1) our top three strengths relative to this competitor — with specific, quotable differentiators; (2) their top three genuine strengths — be honest, not dismissive; (3) the three questions to ask a prospect who mentions this competitor to surface the limitations of their approach; (4) how to handle 'but [Competitor] is cheaper'; (5) one sentence to say when a prospect says they are going with [Competitor]. Format as a single-page scannable document."
+
+The "be honest about their strengths" instruction produces a more credible document than one that dismisses every competitor weakness. Reps trust content that reflects reality.
+
+## Case Study Drafting from Win Notes
+
+Case studies take weeks when written from scratch. AI can produce a strong first draft from a rep's win notes in minutes:
+
+> "Here are the notes from a deal we just won: [paste win notes — company, challenge, solution, outcome, timeline]. Draft a one-page case study in the following format: (1) customer situation (2 sentences), (2) the challenge (3 bullet points), (3) why they chose us over alternatives (2-3 sentences), (4) the implementation (1 paragraph), (5) the outcome with specific metrics, (6) a quote attributed to [title] at [company]. If I haven't given you enough information for the metrics or quote, flag what you need."
+
+The flagging instruction ensures you know what to go back and verify before publishing, rather than discovering missing information after the document is shared.
+
+## Objection-Handling Libraries
+
+A comprehensive objection-handling library is one of the highest-value enablement assets a team can build — and one of the hardest to maintain. AI can build and update it continuously:
+
+> "Build an objection-handling library for [product/service]. Cover these ten objections: [list your most common objections]. For each: (1) the underlying concern behind the objection — what the prospect is really worried about; (2) the acknowledge-and-reframe response (2-3 sentences); (3) a follow-up question that advances the conversation; (4) a supporting data point or proof element. Flag any objections where I need stronger proof to respond credibly."
+
+The "underlying concern" section is the key element. Most objections are proxy concerns — "we don't have budget" often means "I don't see enough value to justify this internally." A response that addresses the real concern is more effective than one that answers the stated objection literally.
+
+## Email Templates for Different Buying Stages
+
+Reps write the same emails repeatedly. AI can build a library of stage-specific templates that reps personalise rather than write from scratch:
+
+> "Write email templates for each of these five buying stages: (1) first outreach after a cold contact, (2) follow-up after an initial discovery call, (3) sending a proposal, (4) chasing a prospect who has gone quiet after receiving the proposal, (5) a win-back email for a deal lost 6 months ago. For each template: subject line, opening hook, body (3-4 sentences), and CTA. Include [PERSONALISE: X] markers where the rep should add specific context. The product is [X], target persona is [Y]."
+
+Templates with clear personalisation markers produce better output than fully generic ones — they remind reps what to customise, not just what to send.
+
+## Personalising Enablement Content by Vertical
+
+Generic enablement content works moderately well for every vertical and excellently for none. The most effective teams produce vertical-specific versions of their core content:
+
+> "Take this standard case study/battlecard/objection handler [paste content]. Rewrite it for the [vertical — e.g. financial services, healthcare, manufacturing] sector. Specifically: (1) replace generic language with industry-specific terminology, (2) update the challenges described to reflect this sector's priorities and constraints, (3) replace the generic proof points with references to outcomes that this sector values, (4) adjust the tone and language for a buyer in this industry. Flag any sections where you've made assumptions I should verify."
+
+Running this prompt against your core content for three to five key verticals turns one piece of enablement into five, each resonating with the specific buyer it is designed for.
+
+## Keeping Enablement Current
+
+The most common failure in sales enablement is outdated content. AI makes updates fast enough that there is no excuse for stale material:
+
+> "Here is our existing battlecard for [Competitor] [paste]. [Competitor] has just announced [new feature/pricing change/rebranding]. Update the battlecard to reflect this change. Specifically: does any of our positioning need to change? Do any of the 'questions to ask' need updating? Is the section on their genuine strengths now different? Produce a revised version highlighting what changed."`,
+          keyTakeaways: [
+            'Battlecards should be honest about competitor strengths — reps trust content that reflects reality and ignore content that dismisses every competitor',
+            'Case studies can be drafted from win notes in minutes — use the "flag what you need" instruction so AI surfaces data gaps before publishing',
+            'Objection-handling libraries are most useful when they address the underlying concern behind each objection, not just the stated one',
+            'Email templates with explicit personalisation markers produce better rep output than fully generic ones — they guide what to customise',
+            'Vertical-specific enablement content significantly outperforms generic material — run your core content through a vertical rewrite prompt for your top three industries',
+          ],
+          exercise: {
+            title: 'Build a Competitive Battlecard and Objection-Handling Entry',
+            description:
+              'Create a complete battlecard for your most frequently mentioned competitor and add three entries to your team\'s objection-handling library.',
+            steps: [
+              'Identify the competitor most frequently mentioned by prospects in the last 90 days',
+              'Run the battlecard prompt: three of your strengths with quotable differentiators, three of their genuine strengths, three questions to ask when they\'re mentioned, how to handle price comparison, and what to say if the prospect chooses them',
+              'Review the output with an experienced rep — where does it match reality? Where does it miss something important? Revise accordingly',
+              'Now list the three price objections your team encounters most often. Run the objection-handling library prompt for these three, asking for the underlying concern, acknowledge-and-reframe response, follow-up question, and proof point',
+              'Add both outputs to a shared team document — this is the start of your living enablement library',
+            ],
+            tool: 'Claude',
+          },
+          applyThisWeek: {
+            action: 'Draft a case study from your most recent significant win. Pull your notes from the deal, paste them into Claude with the case study prompt, and produce a first draft. Identify the gaps (missing metrics, quote to get from the customer) and create a two-question follow-up for the customer to fill them.',
+            promptTemplate: 'Here are my notes from a recently won deal: [paste win notes]. Draft a one-page case study with: (1) customer situation (2 sentences), (2) their challenge (3 bullets), (3) why they chose us (2-3 sentences), (4) implementation summary (1 paragraph), (5) outcome with specific metrics, (6) a draft quote attributed to [title] at [company]. Flag every section where you\'ve had to assume or estimate — I\'ll verify these before publishing.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the last time a rep on your team was in a competitive deal and didn\'t have the right material to handle it well. Was that a people problem, a training problem, or a content problem? If you had a complete, current battlecard and objection-handling library available in three clicks, what would that change about how your team prepares for competitive conversations?',
+          quiz: [
+            {
+              question: 'A battlecard describes a competitor\'s weaknesses as "their product is unreliable and has terrible support." Why is this approach likely to backfire?',
+              options: [
+                'Prospects can\'t read negative information about competitors during a sales process',
+                'Dismissive competitor descriptions damage credibility — reps who have actually used or evaluated the competitor will distrust the whole document, and prospects who have seen the competitor\'s product will challenge the claim',
+                'Negative competitor content violates advertising standards',
+                'It makes the comparison seem one-sided and will cause the prospect to favour the competitor',
+              ],
+              correct: 1,
+              explanation:
+                'Sales enablement content that dismisses competitors entirely fails the credibility test. Reps know their competitors have real strengths — if the battlecard pretends otherwise, they stop trusting it. Prospects who have evaluated the competitor will challenge any overblown weakness claim. Battlecards that honestly acknowledge competitor strengths while articulating clear differentiators are both more credible and more useful in real competitive conversations.',
+            },
+            {
+              question: 'A prospect objects: "We don\'t have budget for this right now." What does the objection-handling framework\'s "underlying concern" step tell you to do first?',
+              options: [
+                'Immediately offer a payment plan or discount to remove the financial barrier',
+                'Accept the objection and ask to reconnect next quarter when budget is available',
+                'Identify what the objection is really about — "no budget" may mean "I can\'t justify the value internally" — and ask a question to surface the real concern before responding',
+                'Escalate to the economic buyer who controls the budget directly',
+              ],
+              correct: 2,
+              explanation:
+                '"We don\'t have budget" is frequently a proxy objection. It may mean: the value isn\'t established clearly enough to justify a budget conversation, the champion doesn\'t have authority to approve it, or there is a competing priority consuming available budget. Responding with a discount or payment plan addresses the stated concern but not the real one. A question like "Is budget the only thing holding this back, or is there something else about the fit or value I should understand better?" surfaces what is actually happening.',
+            },
+            {
+              question: 'Why do email templates with explicit "[PERSONALISE: X]" markers produce better rep output than fully generic templates?',
+              options: [
+                'They are easier for AI to generate than fully written templates',
+                'CRM systems require personalisation fields to track email performance accurately',
+                'They make it clear what must be customised — preventing reps from sending generic emails while believing they\'re being personal, and guiding the specific contextual information that makes an email relevant',
+                'Personalisation markers improve email deliverability rates by avoiding spam filters',
+              ],
+              correct: 2,
+              explanation:
+                'A fully generic template is often sent as-is, with only the name changed. A template with explicit personalisation markers — "[PERSONALISE: reference their specific pain point from discovery]" — forces the rep to add real context. It also guides what to personalise, which is particularly valuable for newer reps who know they should personalise but aren\'t sure what specifically to add. The marker transforms the template from a shortcut into a scaffold.',
             },
           ],
         },

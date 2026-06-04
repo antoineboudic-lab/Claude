@@ -817,6 +817,149 @@ AI synthesis of primary research requires careful review: it will sometimes over
             },
           ],
         },
+        {
+          id: 'consulting-m2-l5',
+          title: 'Market Sizing and TAM/SAM/SOM Analysis with AI',
+          duration: 20,
+          description:
+            'Use AI to build credible market sizing analyses faster — from structuring TAM/SAM/SOM with multiple data sources to stress-testing assumptions and presenting uncertainty to clients honestly.',
+          content: `## Why Market Sizing Is Both Essential and Contested
+
+Market sizing is one of the most commonly requested — and most commonly criticised — consulting outputs. Clients need a number to make investment decisions. Sceptical executives attack the assumptions. The analyst who built the model often knows it rests on shakier ground than the final slide implies.
+
+AI can accelerate every stage of the sizing process: structuring the approach, triangulating across data sources, stress-testing assumptions, and formatting the narrative. What it cannot do is source real proprietary data or replace the consultant's judgment about which approach fits the specific question.
+
+## Top-Down vs. Bottom-Up Market Sizing
+
+**Top-down sizing** starts from a large known market figure and narrows it down:
+Total market × relevant segment percentage × addressable portion = TAM/SAM
+
+**Bottom-up sizing** builds from units:
+Number of potential customers × average spend per customer = market size
+
+Both have weaknesses. Top-down is fast but depends on the reliability of the macro figure and the defensibility of the narrowing percentages. Bottom-up is more credible with clients but requires reliable unit economics and customer count data.
+
+AI prompt for structuring the approach: "I need to size the market for [product/service category] in [geography]. The client's use case is [describe]. Walk me through both a top-down and a bottom-up approach, identify the key assumptions each requires, and suggest which approach is more defensible for this specific question and why."
+
+## Using AI to Stress-Test Sizing Assumptions
+
+Every market sizing rests on assumptions. AI can challenge yours before the client does.
+
+Prompt: "Here is our market sizing for [market]: [summarise method and assumptions]. Identify the three most vulnerable assumptions in this analysis. For each: explain why it could be wrong, what the range of plausible values is, and how the total size changes if the assumption is revised up and down by 20%."
+
+This produces a sensitivity analysis framing that you can use both to strengthen the model and to have an informed conversation with clients about uncertainty.
+
+## Structuring the TAM/SAM/SOM Narrative for Slides
+
+The TAM/SAM/SOM framework is a client expectation, not just an analytical tool. AI can help structure it for maximum persuasiveness.
+
+**TAM (Total Addressable Market):** The full market opportunity if you captured 100% share. This is typically the largest, least defensible number — state it with the broadest methodology.
+
+**SAM (Serviceable Addressable Market):** The portion of TAM your client's product or business model can realistically address. This requires knowing the client's go-to-market, geographic scope, and product capabilities.
+
+**SOM (Serviceable Obtainable Market):** The realistic near-term capture, given competitive dynamics, distribution capability, and time horizon.
+
+Prompt: "I have a market sizing for [client/context]: TAM is [X], estimated by [method]. Help me write slide narrative text for each of TAM, SAM, and SOM that: explains how each was derived in two sentences, states the key assumptions behind the number, and includes a honest caveat about the range of uncertainty. The audience is the client's CFO."
+
+## Triangulating from Multiple Data Sources
+
+A single-source market size is a weak market size. Triangulation — arriving at the same number (approximately) from multiple independent approaches — is the standard of credibility.
+
+AI can help design the triangulation plan: "I need to size [market] credibly. Suggest three independent triangulation approaches I could use — using different starting points and data sources — so that if they converge on a similar range, I can defend the number under pressure. For each approach, list the data sources I would need."
+
+Common triangulation sources: industry analyst reports (Gartner, IDC, Forrester), public company filings, government statistics (census, trade data), channel partner revenue estimates, and survey-based spending data.
+
+## Building Sensitivity Analysis Around Sizing
+
+Sensitivity analysis communicates intellectual honesty and preempts executive objections. It also demonstrates that the consultant has stress-tested their own work.
+
+Structure a sensitivity table with the two or three most impactful variables:
+- Variable 1: penetration rate (range: 5% to 20%)
+- Variable 2: average revenue per unit (range: $8k to $14k)
+- Variable 3: addressable segment size (range: 40k to 65k companies)
+
+AI can build the framework: "Build a sensitivity table structure for a market sizing of [X]. The three key variables are [list]. Show the market size range from pessimistic to base case to optimistic for each variable combination."
+
+## Presenting Uncertainty to Clients Honestly
+
+The consultant who presents a single confident number without caveat looks decisive — until the client's CFO asks about the methodology. The consultant who presents a range with clear assumptions looks credible.
+
+Best practice: present a base case with a defensible range ("our base case is $4.2B, with a plausible range of $2.8B to $6.1B depending on [key assumption]"). Explain what would need to be true for the high and low ends to materialise.
+
+AI can help craft this framing: "Write executive-appropriate language for presenting a market sizing that has meaningful uncertainty. The base case is [X]. The key variables that drive uncertainty are [list]. The client needs a number to make an investment decision — frame the range honestly while still giving them a clear base case to work from."`,
+          keyTakeaways: [
+            'Top-down and bottom-up sizing approaches have complementary strengths — triangulating both is more credible than either alone',
+            'AI can stress-test your own assumptions before the client does, identifying the most vulnerable inputs and calculating the size impact of each',
+            'TAM/SAM/SOM is a narrative framework as much as an analytical one — AI helps structure the slide language for each level clearly and defensibly',
+            'Sensitivity tables demonstrate intellectual honesty and preempt CFO-level objections by showing the range of plausible outcomes',
+            'Presenting uncertainty honestly — with a base case and a defended range — builds more credibility than a single number without caveats',
+          ],
+          exercise: {
+            title: 'Market Sizing Triangulation and Stress-Test',
+            description:
+              'Build a defensible market sizing for a real engagement using AI to structure the approach, identify assumptions, and stress-test key variables.',
+            steps: [
+              'Choose a market sizing question from a current or recent engagement (or a hypothetical you could credibly scope)',
+              'Ask Claude to suggest both a top-down and bottom-up approach for your specific market, listing the key assumptions each requires',
+              'Build your best-estimate sizing using the more defensible approach — then ask Claude to identify the three most vulnerable assumptions and calculate the size impact of 20% variation in each',
+              'Construct a simple sensitivity table showing the market size range under pessimistic, base case, and optimistic assumptions for the two highest-impact variables',
+              'Draft the TAM/SAM/SOM slide narrative text using Claude, including an honest range caveat for the executive audience',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'Your market sizing for a client produces a TAM of $12B. A competitor\'s recently published report puts the same market at $4B. How should you respond?',
+            options: [
+              'Present your $12B figure — the client hired you, not the competitor',
+              'Default to the $4B competitor figure since it has external validation',
+              'Investigate the methodological difference: does your TAM use a broader market definition, different geography, or a different product category scope? If the difference is explained, acknowledge both in your narrative with the reason for your approach',
+              'Average the two figures and present $8B as the consensus estimate',
+            ],
+            correct: 2,
+            explanation: 'A major discrepancy between your sizing and an external source is an intellectual honesty problem you must resolve before the presentation. The most common causes are different market definitions (your TAM may be broader), different geographic scope, or different time horizons. If you can explain why your number differs from the external source and defend your methodology, that is a sign of a robust analysis. If you can\'t explain the difference, you need to investigate further. Averaging two methodologically inconsistent numbers is not defensible.',
+          },
+          applyThisWeek: {
+            action: 'Take a market sizing from a current or past engagement. Use Claude to identify the three most important assumptions underlying your number, calculate the sensitivity range, and draft the slide narrative text presenting the range honestly to an executive audience. Compare the output to what you originally presented.',
+            promptTemplate: 'I need to size the market for [product/service] in [geography/segment]. Method so far: [describe approach — top-down or bottom-up, data sources used]. Key assumptions: [list]. Identify the three most vulnerable assumptions, estimate the range of plausible values for each, calculate the market size at the high and low end of each variable, and suggest how I should frame the range to a CFO audience who needs a number to make an investment decision.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a market sizing you\'ve presented that received significant scepticism. What assumption did the client challenge? Looking back, could you have anticipated that challenge with a more rigorous stress-test? How would your preparation have differed if you had systematically identified your most vulnerable assumptions before walking into the room?',
+          quiz: [
+            {
+              question: 'Why is triangulating a market size from multiple independent approaches more credible than a single method?',
+              options: [
+                'Because averaging multiple methods always produces a more accurate number',
+                'Because if independent approaches using different data sources converge on a similar range, it reduces the risk that the number is an artefact of one flawed assumption',
+                'Because clients always ask for at least three data points',
+                'Because regulatory bodies require multiple sources for any market sizing submission',
+              ],
+              correct: 1,
+              explanation: 'Triangulation works because independent approaches have different failure modes. A top-down approach might be vulnerable to a flawed macro market figure; a bottom-up approach might be vulnerable to unreliable unit economics. If both produce similar results despite starting from different data sources and methodologies, the convergence is evidence — not proof, but meaningful evidence — that the range is approximately right. Divergence signals that one approach has a problem worth investigating.',
+            },
+            {
+              question: 'A client CFO asks: "How confident are you in this $3.8B market size?" What is the strongest response?',
+              options: [
+                '"Very confident — we used the latest industry data."',
+                '"Not very confident — market sizing always has uncertainty."',
+                '"Our base case is $3.8B based on [method]. The key variables that could move it are [X and Y] — if both go against us, the downside is $2.4B; if the market grows faster than assumed, the upside is $5.2B. The base case reflects our best read of current trends."',
+                '"We can provide a more detailed analysis if you need higher confidence."',
+              ],
+              correct: 2,
+              explanation: 'The strongest response to a CFO is one that demonstrates you\'ve stress-tested your own work. Stating the base case, identifying the key variables driving uncertainty, and quantifying the range shows rigorous thinking — and gives the CFO the information they need to make a calibrated investment decision. Generic confidence ("very confident") is unconvincing to experienced finance leaders; specific ranges with explained assumptions are far more credible.',
+            },
+            {
+              question: 'What is the primary limitation of AI assistance in market sizing analysis?',
+              options: [
+                'AI cannot perform numerical calculations',
+                'AI cannot structure a TAM/SAM/SOM framework',
+                'AI cannot access proprietary or real-time data sources and cannot substitute the consultant\'s judgment about which market definition and methodology fits the specific client question',
+                'AI can only work with top-down sizing approaches',
+              ],
+              correct: 2,
+              explanation: 'AI excels at structuring approaches, stress-testing assumptions, and drafting narrative — but it has no access to proprietary data, real-time market intelligence, or the contextual knowledge of a specific client\'s competitive position. The consultant must supply the data and the judgment about what market definition makes sense for this specific question. AI is a powerful accelerator for the analytical and communication work; it is not a substitute for the domain knowledge and client context that make a sizing credible.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -1217,6 +1360,140 @@ The consultant is professionally responsible for every recommendation. AI can he
               correct: 1,
               explanation:
                 'Pressure-testing surfaces objections that will come up during the client presentation, but gives you time to address them before the meeting rather than on the spot. If a pressure-test objection reveals a genuine weakness in the recommendation, you have time to strengthen it. If the objection is addressable, you prepare your response. Either outcome makes the presentation more successful.',
+            },
+          ],
+        },
+        {
+          id: 'consulting-m3-l5',
+          title: 'Workshop Facilitation and Client Co-Creation with AI',
+          duration: 18,
+          description:
+            'Use AI to design sharper workshop agendas, generate stimulus materials, capture and synthesise workshop output in real time, and produce polished post-workshop documentation faster.',
+          content: `## Why Workshops Are High-Stakes Consulting Moments
+
+A workshop is one of the most powerful tools in a consultant's kit. Done well, it creates alignment, surfaces perspectives that don't emerge in interviews, builds client ownership of the output, and accelerates decision-making. Done poorly, it wastes a room of expensive people and damages the engagement's momentum.
+
+The preparation burden for workshops is significant: designing the agenda, creating stimulus materials, anticipating group dynamics, building facilitation guides, and planning synthesis. AI compresses this preparation time dramatically without reducing quality.
+
+## Designing Workshop Agendas with AI
+
+A workshop agenda is more than a schedule — it is a design for group cognition. The sequence of activities, the transition moments, and the energy management across the day all affect the quality of the output.
+
+Prompt: "I am running a [full-day / half-day / 2-hour] workshop for [client description: e.g., the leadership team of a 500-person financial services firm] on the topic of [subject: e.g., digital transformation prioritisation]. The desired output is [describe: e.g., a prioritised list of three strategic initiatives with ownership and 90-day milestones]. Participants include [describe seniority and functions]. Design a workshop agenda that: creates psychological safety early, uses diverge-then-converge structure, includes specific timing for each activity, and builds toward a decision or output the group produces together."
+
+## Generating Stimulus Materials for Ideation
+
+Blank walls and empty whiteboards produce shallow thinking. Good stimulus materials — industry benchmarks, competitor examples, provocative questions, emerging trends — give participants something to react to, which generates richer discussion than starting from zero.
+
+AI can generate stimulus materials rapidly:
+- **Sector benchmarks:** "List 10 data points about digital transformation in financial services that would challenge or provoke the assumptions of a traditional bank's leadership team."
+- **Competitor examples:** "Summarise three approaches different competitors have taken to [problem], including one counter-intuitive example that challenges conventional wisdom in the sector."
+- **Provocative questions:** "Generate 10 challenging questions for a strategy workshop that would disrupt comfortable consensus thinking without feeling adversarial."
+- **Trend cards:** "Create five one-paragraph trend descriptions for an ideation workshop — each describes an emerging technology or market shift relevant to [sector], written to spark discussion rather than deliver conclusions."
+
+## Live Synthesis of Workshop Output
+
+Facilitating a group while simultaneously synthesising what emerges is cognitively difficult. AI changes what's possible in real-time capture.
+
+During the workshop, your role is to facilitate and observe. After each activity (a 15-20 minute break is enough), paste raw notes into Claude for synthesis:
+
+"Here are raw notes from a 45-minute ideation session on [topic]: [paste notes]. Synthesise into: (1) the three strongest ideas with supporting rationale from the group; (2) the most significant tensions or disagreements that emerged; (3) themes that were raised but not fully explored that are worth returning to."
+
+This gives you a synthesis to review with the group in the next activity — which both validates that you've captured correctly and often generates additional discussion.
+
+## Post-Workshop Documentation and Action Plan Drafting
+
+Post-workshop documentation has a short shelf life: if it's not in participants' hands within 48 hours, momentum dissipates. AI can reduce this turnaround from days to hours.
+
+Prompt: "Here are my notes from a [type] workshop with [client]: [paste structured notes]. Produce: (1) a workshop summary for participants (1 page maximum) covering: the decisions made, the key themes that emerged, and the outstanding questions; (2) an action plan table with columns for: action item, owner, due date, dependencies; (3) a suggested agenda for the follow-up session that picks up where this one ended."
+
+## Designing Better Client Surveys and Pre-Read Materials
+
+The quality of a workshop often depends on preparation participants did beforehand. AI can improve both.
+
+**Pre-read materials:** "Write a one-page pre-read for senior executives attending a workshop on [topic]. It should: frame why this question matters to the business, provide three relevant data points to anchor discussion, and pose two questions each participant should come prepared to answer. Executive reading level — under 400 words."
+
+**Pre-workshop survey:** "Design a six-question pre-workshop survey for [audience] on [topic]. The survey should: establish baseline views, surface areas of existing alignment and disagreement, identify individual priorities, and take under 5 minutes to complete. Include both multiple-choice and open-ended questions."
+
+Pre-read completion rates and survey responses also give the facilitator early intelligence on the room — where consensus exists, where conflict is likely, which participants have strong pre-existing views.
+
+## Capturing and Organising Flip-Chart and Whiteboard Content
+
+Physical workshop outputs — flip chart sheets, sticky notes, whiteboard diagrams — are notoriously difficult to preserve and translate into usable documents. AI can help process photos of handwritten content.
+
+Describe what's on the board: "Here is a description of three flip-chart sheets from our workshop: [describe content of each]. Organise into a coherent summary that: groups related ideas across the three sheets, identifies the strongest themes, and flags any contradictions between different groups."
+
+For typed or transcribed notes, AI synthesises faster — but the facilitation skill of knowing which ideas to amplify and which to archive remains human judgment.`,
+          keyTakeaways: [
+            'Workshop design is engineering group cognition — AI can help structure agendas for diverge-then-converge flows, energy management, and decision-ready outputs',
+            'Stimulus materials (benchmarks, competitor examples, provocative questions) dramatically improve ideation quality — AI generates them rapidly',
+            'Live synthesis between activities accelerates the workshop itself: capturing raw notes and synthesising them during breaks produces usable output without slowing the pace',
+            'Post-workshop documentation should be in participants\' hands within 48 hours — AI compresses this from days to hours without sacrificing quality',
+            'Pre-read materials and pre-workshop surveys prepared with AI give facilitators early intelligence on the room and ensure participants arrive with framing, not just context',
+          ],
+          exercise: {
+            title: 'Workshop Design Sprint',
+            description:
+              'Use AI to design a complete workshop package for a real or upcoming client engagement — agenda, stimulus materials, and post-workshop documentation template.',
+            steps: [
+              'Identify a workshop you need to run (current engagement or hypothetical) — define the topic, desired output, participant composition, and time available',
+              'Ask Claude to design a workshop agenda with timing, activity descriptions, and facilitation notes for the key moments',
+              'Generate three stimulus materials for the workshop\'s main ideation session: one sector benchmark, one competitor example, and five provocative questions',
+              'Draft a one-page pre-read for senior participants that frames the question, provides anchoring data, and poses two preparation questions',
+              'Build a post-workshop documentation template with sections for summary, decisions, action plan, and follow-up agenda — then test it by filling it in with notes from a past workshop',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'You are facilitating a workshop and a flip-chart activity produces 60 sticky notes in 20 minutes. The next activity starts in 15 minutes. How can AI help you use this material effectively?',
+            options: [
+              'Skip synthesis — there isn\'t time, and the raw notes can be processed after the workshop',
+              'Take a photo, transcribe the key notes quickly, and paste them to Claude during the break for a rapid synthesis — then use the AI output to validate themes with the group in the next activity',
+              'Ask participants to organise their own sticky notes into groups before the break',
+              'Summarise from memory without referring to the sticky notes',
+            ],
+            correct: 1,
+            explanation: 'A 15-minute break is enough to transcribe the highest-signal sticky notes and get a rapid AI synthesis. Using that synthesis to open the next activity ("here\'s what I heard — does this capture the main themes?") serves two purposes: it validates your synthesis with the room and often surfaces additional points that the group wants to add. This is faster and more accurate than trying to synthesise 60 items from memory, and more participatory than skipping synthesis entirely.',
+          },
+          applyThisWeek: {
+            action: 'Take a workshop you are planning (or have recently facilitated). Use Claude to redesign or improve the agenda — specifically the sequencing, the stimulus materials, and the mechanism for producing a group output by the end. Compare the AI-assisted design to your original and identify the two or three improvements that would have the biggest impact on output quality.',
+            promptTemplate: 'I am running a [duration] workshop for [audience description] on [topic]. Desired output: [describe]. Participants: [seniority and functions]. Known group dynamics: [any known tensions, strong opinions, or engagement challenges]. Design an agenda that: creates psychological safety early, uses diverge-then-converge structure, manages energy across the session, and ends with a concrete group output. Include timing, activity description, facilitation notes, and materials needed for each segment.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about the most effective workshop you\'ve ever facilitated or attended. What made it work — was it the agenda design, the stimulus materials, the facilitation style, or the group composition? Which of those factors is most amenable to AI assistance, and which is irreducibly human?',
+          quiz: [
+            {
+              question: 'What is the purpose of using stimulus materials in an ideation workshop?',
+              options: [
+                'To give the facilitator something to present during slow periods',
+                'To provide participants with pre-formed conclusions they can validate',
+                'To give participants something concrete to react to, which generates richer discussion than starting from a blank slate',
+                'To demonstrate the consultant\'s research depth to the client',
+              ],
+              correct: 2,
+              explanation: 'Stimulus materials work because reaction is cognitively easier than generation. When participants are asked "what should we do?", they tend toward safe, consensus answers. When they are shown a competitor example or an unexpected benchmark and asked "what does this mean for us?", they engage with more energy and produce more original thinking. AI makes it fast to generate high-quality stimulus materials — benchmarks, competitor examples, provocative questions — tailored to the specific workshop topic.',
+            },
+            {
+              question: 'Why is post-workshop documentation time-sensitive?',
+              options: [
+                'Clients always request documentation within 24 hours as a contractual requirement',
+                'Workshop momentum and decision clarity decay quickly — documentation within 48 hours captures intent and maintains action accountability before the energy dissipates',
+                'AI tools are only available for a limited time after a workshop',
+                'Senior executives forget the workshop content after two days',
+              ],
+              correct: 1,
+              explanation: 'Workshop outputs have a short window of maximum value. In the 48 hours after a workshop, participants remember the energy of the session, the decisions feel fresh, and action owners feel accountable. After a week, the workshop becomes a memory rather than a mandate. Documentation within 48 hours captures decisions while they are vivid and distributes action items while ownership is clear. AI makes this timeline achievable even for complex, multi-workstream workshops.',
+            },
+            {
+              question: 'What is the main advantage of synthesising workshop notes with AI during activity breaks rather than only at the end of the day?',
+              options: [
+                'It reduces the total number of sticky notes the group produces',
+                'It allows the facilitator to validate synthesis with the group in real time, catching gaps or misinterpretations before the session ends',
+                'It enables the facilitator to share notes with absent stakeholders immediately',
+                'It produces a legal record of decisions that can be referenced later',
+              ],
+              correct: 1,
+              explanation: 'Real-time synthesis has a unique benefit: it closes the feedback loop with the group. When a facilitator presents a synthesis ("here is what I heard from the last activity") and invites correction, the group validates the output and often adds nuance they didn\'t articulate initially. This is qualitatively different from post-workshop documentation, which participants receive passively. The validation moment is also a facilitation tool — it creates a shared understanding that becomes the foundation for the next activity.',
             },
           ],
         },

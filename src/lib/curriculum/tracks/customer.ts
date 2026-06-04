@@ -1246,6 +1246,142 @@ An expansion conversation at the wrong time (mid-onboarding, immediately after a
             },
           ],
         },
+        {
+          id: 'customer-m3-l5',
+          title: 'Customer Education and Product Adoption with AI',
+          duration: 18,
+          description:
+            'Use AI to create personalised onboarding content, identify adoption gaps from usage signals, and build training materials that accelerate product adoption at scale.',
+          content: `## Why Adoption Is the Foundation of Retention
+
+A customer who doesn't adopt your product doesn't get value. A customer who doesn't get value doesn't renew. Adoption isn't a one-time onboarding task — it's an ongoing investment in helping customers use your product in a way that delivers measurable outcomes for their business.
+
+The challenge for CS teams is personalisation at scale: an enterprise account needs different guidance than a startup, a marketing team needs different tutorials than a finance team, and a power user needs different content than someone in their first week. AI makes it possible to create this tailored content without a team of technical writers.
+
+## Role-Specific Product Guides and Tutorials
+
+Generic documentation explains what the product does. Role-specific guides explain what **this role** should do with the product to achieve **their specific outcomes**.
+
+Prompt: "Write a role-specific product guide for [role: e.g., marketing manager] at a [customer type: e.g., mid-market B2B SaaS company] using [product]. Focus on: the top three tasks they need to complete in their first 30 days, the features most relevant to their goals, and two common mistakes to avoid. Format as a short actionable guide they can follow in under 10 minutes."
+
+This approach allows you to create differentiated onboarding content for each major user persona in your customer base — in a fraction of the time manual creation would require.
+
+## Personalising Onboarding Checklists by Segment
+
+Not all onboarding checklists should look the same. A single-user startup has different priorities than a 200-person enterprise deploying across departments.
+
+Use AI to adapt a master onboarding checklist to each customer segment:
+
+"Here is our standard onboarding checklist [paste]. Customise it for a [segment description: e.g., 50-person professional services firm, likely to have limited IT support, primary users are project managers, key outcome is tracking deliverables across client engagements]. Remove steps not relevant to their setup, prioritise the three most impactful early actions for their use case, and add any segment-specific steps."
+
+## Identifying Adoption Gaps from Usage Signals
+
+Usage data tells a story — if you know how to read it. AI can help you translate raw signals into prioritised adoption interventions.
+
+**Signal examples:**
+- User has logged in fewer than three times in the past 30 days
+- Feature X has been activated but never used beyond initial setup
+- Customer has completed onboarding but hasn't connected their core integration
+- Team of 10 has only 3 active users six weeks post-launch
+
+Prompt: "Based on these usage signals for [account name] [paste or describe], identify the most likely adoption barrier and suggest: (1) the specific feature or workflow they're missing, (2) a targeted intervention — email, call, or resource — that addresses the gap, and (3) the outcome we should expect to see within 30 days if the intervention is successful."
+
+## Drafting In-App Help and Tooltip Content
+
+In-app guidance (tooltips, empty state messages, feature callouts) is where adoption happens in real time. Most CS teams don't write this content — but they should contribute to it, because they understand the exact moments where users get confused or disengaged.
+
+AI can produce first drafts rapidly: "Write tooltip copy for the [feature name] feature in [product]. The user has just accessed it for the first time. The tooltip should: explain what it does in one sentence, suggest one immediate action to try, and tell them where to get help. Under 40 words."
+
+## Building Training Materials Quickly
+
+CS teams often need to build product training for new user cohorts, new features, or refresher programmes. AI accelerates every stage:
+
+- **Agenda drafting:** "Create a 45-minute training agenda for new users of [product] in [role], covering the core workflows they need to complete in their first month."
+- **Exercise design:** "Design three hands-on exercises for a product training session on [feature], suitable for users with no prior experience."
+- **FAQ generation:** "Based on common questions from our onboarding calls [describe], draft a FAQ document covering the 10 most frequent questions with clear, jargon-free answers."
+
+## Measuring Content Effectiveness
+
+Content without measurement is guesswork. Track:
+
+- **Adoption rate by content type:** Do accounts that receive role-specific guides activate faster than accounts that receive generic documentation?
+- **Support ticket deflection:** Did in-app tooltip additions reduce ticket volume for that specific feature?
+- **Training-to-adoption correlation:** Do accounts who complete training sessions achieve higher activation in the 30 days following the session?
+
+AI can help you set up the analysis framework: "Design a simple measurement plan to evaluate whether our new onboarding content improvements are driving faster product adoption. Include the metrics to track, the data sources required, and the comparison we should make (control vs. treatment, or before vs. after)."`,
+          keyTakeaways: [
+            'Role-specific product guides outperform generic documentation by connecting product features directly to each persona\'s goals and tasks',
+            'AI can adapt a master onboarding checklist to any customer segment in minutes, enabling personalisation that was previously too time-intensive to scale',
+            'Usage signals — infrequent logins, unused features, low team activation — can be translated into targeted adoption interventions with AI assistance',
+            'In-app tooltip and help content is a high-leverage adoption lever that CS teams can contribute to using AI-drafted copy',
+            'Adoption content effectiveness should be measured: track activation rates, support deflection, and training-to-adoption correlation to improve continuously',
+          ],
+          exercise: {
+            title: 'Role-Specific Adoption Content Sprint',
+            description:
+              'Build personalised onboarding content for a real customer segment using AI, and identify one adoption gap to address.',
+            steps: [
+              'Choose a customer segment you support (e.g., marketing teams at mid-market companies) and list the top three product workflows most relevant to their role',
+              'Ask Claude: "Write a role-specific quick-start guide for [role] at [customer type] using [product]. Cover their top three workflows, the features most critical for their goals, and two mistakes to avoid. Under 400 words, action-oriented."',
+              'Choose one account with a visible adoption gap (low logins, unused feature, low team activation). Describe the signals to Claude and ask for a targeted intervention recommendation',
+              'Draft one piece of in-app help content (tooltip, empty state message, or feature callout) for the feature where you see the most adoption drop-off',
+              'Identify one metric you could track over the next 30 days to assess whether this content improves adoption in the target segment',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A customer has completed onboarding and logged in daily for 3 weeks — but only ever uses one feature out of the eight included in their subscription. What is the most effective AI-assisted response?',
+            options: [
+              'Do nothing — they are active and engaged, and additional outreach may feel pushy',
+              'Use AI to identify the specific workflows linked to unused features that are most relevant to their use case, then send personalised guidance targeting those features based on their segment and stated goals',
+              'Send them the generic product documentation for all eight features',
+              'Schedule a full re-onboarding call covering every feature in the product',
+            ],
+            correct: 1,
+            explanation: 'Single-feature usage is a classic adoption gap — the customer has established a habit with one workflow but hasn\'t discovered how the broader product serves their goals. Generic documentation rarely changes behaviour. The most effective intervention is targeted: understand their segment and goals, identify the two or three unused features most relevant to their work, and send personalised guidance connecting those features to outcomes they care about. AI makes this targeted approach scalable across a full portfolio.',
+          },
+          applyThisWeek: {
+            action: 'Pick one customer segment and one product workflow that you know drives outcomes for that segment. Use Claude to create a role-specific one-page guide covering that workflow. Send it to three accounts in that segment and note how many engage with it or take the described action within two weeks.',
+            promptTemplate: 'Write a role-specific product guide for [role: e.g., HR manager, project manager, finance analyst] at a [customer type: e.g., 50-person professional services firm]. They are using [product]. Focus on: (1) the three tasks most important for their role in the first 30 days, (2) the specific features that serve their goals (not all features — just theirs), (3) two common mistakes users in this role make. Format as a short guide they can act on immediately. Under [X] words.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a customer you\'ve worked with who achieved strong adoption. What did they do differently from accounts that struggled? Was it the content they received, the support they got from their team, or something about how they were onboarded initially? What would it take to replicate those conditions systematically — and where could AI help?',
+          quiz: [
+            {
+              question: 'A customer has five user roles on their team, each with different workflows. What is the most scalable way to create onboarding content for all five roles?',
+              options: [
+                'Write one comprehensive guide covering every feature and let each role find what\'s relevant',
+                'Use AI to adapt a master onboarding framework to each role\'s specific goals, tasks, and most-used features — producing five tailored guides in a fraction of the manual time',
+                'Schedule individual onboarding calls with each of the five roles',
+                'Ask the customer\'s admin to create their own internal documentation',
+              ],
+              correct: 1,
+              explanation: 'Role-specific guides dramatically outperform generic documentation because they remove the cognitive work of "figuring out what applies to me." AI makes it feasible to produce five tailored guides instead of one generic guide by adapting a core framework to each role\'s context, goals, and tasks — a task that would take days manually can be done in hours with AI assistance.',
+            },
+            {
+              question: 'Which usage signal most clearly indicates an adoption gap that needs intervention?',
+              options: [
+                'A user submits a support ticket asking how to do something',
+                'A team of 15 users has only 4 active in week 6 post-launch, despite a successful onboarding call',
+                'A user logs in and uses the product every day',
+                'A customer requests a new feature via product feedback',
+              ],
+              correct: 1,
+              explanation: 'Low team activation weeks after a successful onboarding is a clear signal that the initial training did not translate to habit formation across the full team. The onboarding call may have covered the product, but most of the team hasn\'t integrated it into their workflow. This warrants targeted intervention: understand the barrier (time constraints, unclear value for their specific tasks, manager not driving adoption) and address it directly.',
+            },
+            {
+              question: 'How should you measure whether a new role-specific onboarding guide improves product adoption?',
+              options: [
+                'Ask customers if they liked it in the next check-in call',
+                'Compare activation rates and feature usage depth for accounts that received the role-specific guide versus those that received the standard onboarding materials',
+                'Track the number of support tickets submitted after the guide is sent',
+                'Measure whether customers mention the guide unprompted',
+              ],
+              correct: 1,
+              explanation: 'The goal of onboarding content is adoption — specifically faster activation and broader feature usage. Comparing accounts that received the new content against those that received standard materials (a control/treatment design) is the rigorous way to measure whether the content change is actually driving the adoption outcomes you care about, rather than just being well-received.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -1659,6 +1795,166 @@ This programme is your foundation. From here:
               correct: 1,
               explanation:
                 'AI excels at scale tasks: monitoring signals across hundreds of accounts, drafting routine communications, summarising data. These tasks take time but don\'t require deep relationship expertise. When AI handles them, CSMs can invest their time in the activities that require human trust and judgment: executive relationships, complex churn interventions, strategic advisory conversations, internal advocacy. These are the highest-value CS activities — and they become more prominent, not less, in an AI-enabled CS organisation.',
+            },
+          ],
+        },
+        {
+          id: 'customer-m4-l5',
+          title: 'Digital CS and Tech-Touch Strategy with AI',
+          duration: 17,
+          description:
+            'Design a scalable digital CS motion using AI-triggered workflows and automated communications — and learn how to personalise at scale without feeling impersonal.',
+          content: `## When Tech-Touch Beats Human Touch
+
+Not every customer interaction needs a human. A customer who logs in to complete a task doesn't need a CSM check-in. A new user in their second week needs a timely nudge, not a scheduled call. Matching the touch type to the moment is the core design challenge of digital CS.
+
+**Human touch is right when:**
+- The customer has a complex problem requiring contextual judgment
+- The relationship is at risk (low health score, escalation, churn signal)
+- The interaction is strategic: QBR, executive relationship, expansion conversation
+- The customer is navigating significant change inside their organisation
+
+**Tech-touch is right when:**
+- The interaction is predictable and repeatable (onboarding step completion, milestone congratulation, renewal reminder)
+- The customer is healthy and engaged — they need a nudge, not a conversation
+- The volume of accounts makes human outreach economically impossible
+- The intervention can be personalised by segment without a CSM on every send
+
+## Designing a Digital CS Motion
+
+A digital CS motion is a set of automated workflows that guide customers through the lifecycle — from onboarding through adoption, renewal, and expansion — without a CSM manually triggering every interaction.
+
+The architecture:
+
+1. **Lifecycle stages:** Define the stages every customer moves through (onboarding → activation → adoption → expansion → renewal)
+2. **Triggers:** Define the signals that trigger communications at each stage (completed setup, first key action, 30/60/90 day milestones, usage drop, approaching renewal)
+3. **Content:** Define what goes in each communication and how it personalises by segment
+4. **Escalation rules:** Define when a digital interaction escalates to a human CSM
+
+AI helps you design, draft, and personalise the content for every stage — and can help you build the trigger logic by describing the workflow you need.
+
+## AI-Triggered Intervention Workflows
+
+The most powerful digital CS motion uses usage signals to trigger targeted interventions rather than calendar-based sequences.
+
+**Examples of signal-based triggers:**
+- User hasn't logged in for 14 days → automated re-engagement email with one specific call to action relevant to their role
+- Account reaches 80% of feature activation → automated message acknowledging progress and suggesting the next workflow
+- Usage drops 30% week-over-week → flag to CSM for human outreach, not automated email (usage drops may indicate a problem requiring investigation)
+
+AI helps you draft personalised copy for each trigger scenario. The key is making the automated message feel specific, not generic: "Hi [name], I noticed your team hasn't completed [specific step] yet — here's a 3-minute walkthrough that usually gets teams unstuck" is dramatically more effective than "Hope you're getting on well with [product]!"
+
+## Building Automated Health Check Sequences
+
+A health check sequence is a periodic automated communication that asks customers for a quick signal on how things are going — and routes the response appropriately.
+
+Structure:
+- **High health accounts:** A brief check-in celebrating progress, suggesting next steps, maybe a referral ask
+- **Medium health accounts:** A practical offer — "Would a 20-minute call to review your setup be useful?"
+- **Low health accounts:** Escalate to human CSM with context
+
+AI can write each variant and help you calibrate the criteria for routing accounts into each category.
+
+## Personalising at Scale by Segment and Lifecycle Stage
+
+The risk of automation is genericness — the customer who receives the same email as everyone else stops reading. AI-assisted personalisation allows you to vary:
+
+- The feature or workflow referenced (based on their segment and use case)
+- The outcome language (time saved for operations teams, revenue metrics for sales teams)
+- The tone and format (executives want brevity; power users want detail)
+- The call to action (next step appropriate to their current lifecycle stage)
+
+Prompt template: "Draft a [lifecycle stage: 30-day check-in / renewal reminder / re-engagement email] for a [segment: e.g., operations manager at a 100-person logistics company] who [usage context: e.g., has been active but hasn't connected the key integration yet]. Make it specific to their use case, under 100 words, with one clear call to action."
+
+## Measuring Digital CS Effectiveness
+
+Digital CS programmes need metrics to improve over time:
+
+- **Email open rate and click rate** by communication type (what content gets engagement)
+- **Trigger-to-action conversion** (how many recipients complete the suggested action within 7 days)
+- **Escalation rate** (how many digital interactions require human CSM follow-up)
+- **Health score change** (do accounts receiving the sequence improve, stay flat, or decline)
+- **Digital-attributed retention** (renewal rate for digitally-served accounts vs. human-touch accounts at the same tier)
+
+## Avoiding Automation That Feels Impersonal
+
+The test of a good automated message is whether the customer can tell it's automated. If they can, and it feels like a mass email, you've damaged the relationship.
+
+Design principles:
+- **One CTA per email.** Multiple links = unclear intention.
+- **Reference something specific.** Their company name, their role, their last action — not generic product names.
+- **Short.** Automated messages that run three paragraphs signal that a system is talking, not a person.
+- **Easy to reply to.** Even automated emails should feel like they can generate a conversation if the customer wants one.`,
+          keyTakeaways: [
+            'Digital CS and human CS are complementary: use tech-touch for predictable, repeatable moments and human touch for complex, at-risk, or strategic interactions',
+            'Signal-based triggers (usage events, lifecycle milestones) are more effective than calendar-based sequences because they deliver help at the moment of need',
+            'AI makes personalisation at scale feasible: drafting segment-specific, lifecycle-appropriate communications that don\'t feel generic',
+            'Automated health check sequences that route by health score allow CS teams to serve large account portfolios without every check-in requiring a CSM',
+            'Digital CS effectiveness should be measured: open rates, trigger-to-action conversion, health score change, and digital-attributed retention show what\'s working',
+          ],
+          exercise: {
+            title: 'Design a Digital CS Intervention Sequence',
+            description:
+              'Map a segment of your portfolio to a simple digital CS sequence, and use AI to draft the key communications.',
+            steps: [
+              'Choose one customer segment (e.g., all SMB accounts below $5k ARR with no dedicated CSM) and list the three most common lifecycle moments where they go quiet or disengage',
+              'Define trigger-to-action logic for each moment: what signal fires the communication, what the message should achieve, and when a human should step in instead',
+              'Ask Claude to draft the communication for your highest-priority trigger: "Draft an automated [type: re-engagement / milestone / check-in] email for [segment] who [trigger context]. One CTA, under 100 words, specific to their use case, sounds like it comes from a person."',
+              'Identify the one metric you would watch for 30 days to know whether this automated communication is working',
+              'Flag one scenario where you would route out of the automated sequence to a human CSM — and write the CSM briefing note AI should generate when that escalation triggers',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'Your digital CS sequence sends an automated re-engagement email to any account with no login in 14 days. One of the triggered accounts is your $200k ARR anchor customer who just had a difficult support escalation resolved last week. Should the automated email fire?',
+            options: [
+              'Yes — the trigger logic applies equally to all accounts regardless of ARR or relationship history',
+              'No — high-value accounts with recent escalations should be excluded from automated sequences and routed to their CSM for a personal outreach',
+              'Yes, but add a personalised line acknowledging the recent support issue',
+              'No — pause all digital CS for 30 days after any support escalation',
+            ],
+            correct: 1,
+            explanation: 'Digital CS sequences need exclusion logic for situations where automation would feel inappropriate. A $200k ARR account that just experienced a difficult escalation is in recovery — an automated re-engagement email from a system would likely feel impersonal and could damage the relationship at exactly the wrong moment. High-value or recently-escalated accounts should be routed to their CSM with context, not triggered automatically. Building these exclusion rules is a critical part of designing a digital CS motion that doesn\'t backfire.',
+          },
+          applyThisWeek: {
+            action: 'Identify the single highest-volume, lowest-touch interaction in your CS workflow — likely a routine check-in, milestone acknowledgment, or onboarding nudge. Map the trigger condition, draft an automated version using Claude, and assess whether it could be systematised. Calculate how many CSM hours per month that would reclaim.',
+            promptTemplate: 'Draft an automated [type: re-engagement / 30-day check-in / milestone / renewal reminder] email for [segment: role, company type, company size] who [trigger context: e.g., haven\'t logged in for 14 days / just completed their first key workflow / are 45 days from renewal]. The email should: reference something specific to their use case, include exactly one call to action, sound like it comes from a person (not a system), and be under [X] words.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about a customer you\'ve served entirely through high-touch: regular calls, personalised emails, proactive outreach. Now imagine serving 10x more customers like that one. What would break first? What parts of your high-touch process are actually repeatable and could be systematised — and which parts are genuinely irreplaceable because they require your judgment and relationship?',
+          quiz: [
+            {
+              question: 'What is the key design principle that separates effective digital CS from generic mass emailing?',
+              options: [
+                'Sending emails more frequently to stay top of mind',
+                'Using signal-based triggers and segment-specific content so each automated message feels relevant and timely rather than generic',
+                'Including as much information as possible so customers have everything they need',
+                'Always ending with a call to book a meeting with their CSM',
+              ],
+              correct: 1,
+              explanation: 'Generic mass emails train customers to ignore them. Effective digital CS combines signal-based triggers (the email fires because of something the customer did or didn\'t do, not because it\'s Tuesday) with personalised content (the message references their segment, their role, and their current lifecycle stage). This makes the automated message feel like it was sent by someone paying attention — which dramatically improves engagement and action rates.',
+            },
+            {
+              question: 'A digital CS sequence triggers an automated email to a customer whose usage has dropped 35% in two weeks. What is the most appropriate response design?',
+              options: [
+                'Send an automated re-engagement email with a product tutorial link',
+                'Route the account to a human CSM with a usage drop alert and context — usage drops may signal a problem requiring investigation, not just a nudge',
+                'Wait another two weeks to see if the usage recovers before taking action',
+                'Send an automated survey asking the customer to rate their experience',
+              ],
+              correct: 1,
+              explanation: 'A significant usage drop is an at-risk signal, not a standard engagement moment. The cause could be a technical issue, an internal change at the customer (champion left, budget review, competing priorities), or genuine disengagement. An automated email can\'t diagnose or address these causes — and the wrong automated response at this moment can accelerate churn rather than prevent it. Route to a human CSM with the context to have an informed conversation.',
+            },
+            {
+              question: 'How should a digital CS programme balance scale with personalisation?',
+              options: [
+                'Use the same email template for all customers and rely on merge fields for names',
+                'Maintain separate full template sets for every individual account',
+                'Design segment-level templates with dynamic content blocks that adapt by role, lifecycle stage, and usage context — drafted with AI assistance',
+                'Only personalise communications for accounts above a certain ARR threshold',
+              ],
+              correct: 2,
+              explanation: 'Effective personalisation at scale works at the segment level, not the individual level (which is impractical) or the one-size-fits-all level (which is ineffective). AI allows you to create segment-specific templates with dynamic content blocks that adapt based on role, lifecycle stage, and usage context — giving each customer an experience that feels relevant to them without requiring a unique email for every account.',
             },
           ],
         },

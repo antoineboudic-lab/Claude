@@ -953,6 +953,139 @@ When sharing AI-assisted summaries with clients, consider whether to disclose th
             },
           ],
         },
+        {
+          id: 'legal-m2-l5',
+          title: 'Intellectual Property and Patent Work with AI',
+          duration: 18,
+          description:
+            'Use AI to accelerate prior art searching, patent claim analysis, IP clause review in contracts, and portfolio summarisation — while understanding the firm boundaries that require qualified IP attorney oversight.',
+          content: `## AI in Intellectual Property Practice
+
+Intellectual property work is text-dense, structured, and highly pattern-dependent — which makes it well-suited to AI assistance. Prior art searches, patent claim comparisons, IP clause extraction, and portfolio summarisation are all tasks where AI can deliver significant time savings. But IP also has a hard ceiling: authoritative freedom-to-operate opinions, patentability assessments, and any advice that a client will rely on to make business decisions require qualified IP attorney judgment. AI accelerates the work that leads to those conclusions — it does not replace them.
+
+## Prior Art Searching and Summarising
+
+Patent searches are time-consuming and require reviewing large volumes of documents. AI can help in two ways:
+
+**Framing the search.** Before running a formal patent search, use AI to identify the technical concepts, synonyms, and classification codes relevant to your invention. Prompt: "The invention is [describe in plain English]. What are the key technical concepts I should use as search terms? What IPC classification codes are likely relevant? What are common synonyms for the core mechanism in different technology fields?"
+
+**Summarising search results.** Once you have a set of prior art documents, AI can summarise each one, identify which claims are most relevant to your invention, and flag technical overlaps. Prompt: "Here is a patent document [paste abstract and claims]. Summarise: (1) the core technical contribution, (2) the key independent claims and what they cover, (3) any technical overlap with the following invention description [paste]."
+
+**Critical limitation:** AI cannot conduct an authoritative freedom-to-operate (FTO) analysis. FTO requires legal interpretation of claim scope, prosecution history, and jurisdiction-specific infringement doctrine. AI summaries of prior art are a research input — not a legal conclusion.
+
+## Patent Claim Analysis and Comparison
+
+Comparing patent claims against a product or competitor patent is one of the most valuable applications of AI in IP practice.
+
+**Claim mapping.** Prompt: "Here are the independent claims of patent [X] [paste claims]. Here is a description of the accused product or process [paste]. For each claim element, identify whether the product description includes a corresponding feature. Flag any elements that are potentially present, clearly absent, or unclear from the description provided."
+
+**Claim differentiation.** When analysing a portfolio or advising on design-arounds: "Compare these two patent claims [paste]. What are the key technical differences? Which claim is broader in scope? What elements would a product need to avoid to design around claim 1 while potentially falling within claim 2?"
+
+Always confirm that claim mapping outputs are reviewed by a qualified patent attorney before they inform any legal opinion or client advice.
+
+## IP Ownership Clauses in Contracts
+
+Commercial contracts frequently include IP assignment, licence, and ownership clauses that have significant implications for technology companies. AI can efficiently identify and analyse these provisions:
+
+**IP clause extraction.** Prompt: "Review this agreement and identify all provisions relating to intellectual property ownership, assignment, licensing, and work-for-hire. Summarise each provision and flag any that are unusual or that could affect our client's ownership of IP created under the agreement."
+
+**Key risk flags to prompt for:**
+- Broad assignment clauses that may capture IP developed outside the contract scope
+- Work-for-hire provisions in consultancy or service agreements
+- Background IP protections — what each party retains
+- Licence-back provisions that give the counterparty rights to improvements
+- Change of control provisions that affect IP licences
+
+## Trademark Clearance Research Frameworks
+
+Trademark clearance involves searching existing marks for likelihood of confusion — a factual and legal analysis that AI can help structure, though not conclude.
+
+Use AI to: (1) identify the relevant classes for a proposed mark, (2) draft a search strategy covering registered marks, pending applications, and common law use, and (3) summarise search results and flag potential conflicts by similarity of mark and goods/services.
+
+Prompt: "We are considering the mark [name] for use in connection with [goods/services] in [jurisdiction]. What trademark classes are relevant? What are the key risk factors for likelihood of confusion I should check for? Draft a search summary framework I can use to document the results."
+
+**Limitation:** A trademark clearance opinion on whether a proposed mark can be used — and the associated legal risk — requires a qualified trademark attorney. AI search frameworks are inputs to that analysis.
+
+## AI-Assisted IP Portfolio Summaries
+
+For in-house IP teams and law firms managing large patent or trademark portfolios, AI can dramatically reduce the time required to produce portfolio summaries, renewal schedules, and coverage maps.
+
+Prompt: "Here is a list of [N] patents with titles, filing dates, jurisdictions, and claim summaries [paste]. Organise this portfolio by: (1) technology area, (2) jurisdiction, (3) expiry date (earliest first). Identify any gaps in coverage — technology areas or jurisdictions where the portfolio appears thin relative to the commercial products described."
+
+**Renewal tracking.** AI can also review portfolio data and flag upcoming renewal deadlines, lapsed marks, or patents approaching expiry that require strategic review.`,
+          keyTakeaways: [
+            'AI can accelerate prior art searching, patent claim mapping, IP clause extraction, and portfolio summarisation — but cannot replace qualified IP attorney analysis for FTO opinions or patentability assessments',
+            'Framing patent searches with AI-generated technical concepts, synonyms, and IPC codes produces more comprehensive search strategies before formal searching begins',
+            'Claim mapping prompts that work element-by-element are significantly more useful than general infringement questions',
+            'IP ownership clauses in commercial contracts — assignment, work-for-hire, and licence-back provisions — are high-risk areas AI can efficiently flag for attorney review',
+            'Portfolio summaries, coverage gap analysis, and renewal scheduling are high-volume, low-judgment tasks where AI delivers consistent time savings',
+          ],
+          exercise: {
+            title: 'Patent Claim Analysis and IP Clause Review',
+            description:
+              'Use AI to conduct a structured claim analysis of a published patent and identify IP ownership provisions in a commercial agreement.',
+            steps: [
+              'Find a published patent in your technology area on Google Patents or Espacenet. Copy the independent claims.',
+              'Ask Claude to: (1) summarise the core technical contribution of the patent in plain English, (2) identify the key elements of the broadest independent claim, (3) suggest what a product would need to do to potentially fall within the claim scope',
+              'Find a publicly available software development agreement or consultancy agreement (try standard templates online). Ask Claude to identify all IP ownership, assignment, and licence provisions and summarise the IP risk for a technology company engaging the counterparty as a contractor.',
+              'Review the outputs: What would a qualified patent attorney add or correct? What language in the claim analysis required the most judgment?',
+              'Write a two-sentence summary of what AI contributed to this analysis and where qualified attorney review would be essential before advising a client.',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'A technology company asks their legal team whether they can launch a product that uses a process described in a competitor\'s patent. The team uses AI to map the product against the patent claims and the AI output says "no direct correspondence found for claim elements 3 and 5." What should happen next?',
+            options: [
+              'The company can proceed to launch based on the AI claim mapping output',
+              'A qualified patent attorney must review the claim mapping and conduct a proper FTO analysis — AI claim comparison is a research input, not a legal opinion',
+              'The company should file a patent application of their own before launching',
+              'The AI output should be repeated with a different model to confirm the result',
+            ],
+            correct: 1,
+            explanation: 'AI claim mapping can identify potential correspondences and gaps — but it cannot conduct a freedom-to-operate analysis. FTO requires legal interpretation of claim scope under the relevant jurisdiction\'s infringement doctrine, review of prosecution history (which may narrow or expand claim scope), and professional judgment about litigation risk. A "no direct correspondence" output from AI is a starting point for attorney analysis, not a clearance conclusion.',
+          },
+          applyThisWeek: {
+            action: 'Take an IP-intensive document you are currently working on — a patent, a commercial agreement with IP provisions, or a portfolio summary — and use AI to produce a structured first-pass analysis. Identify which parts of the AI output require qualified attorney review before they can be relied on, and which parts are useful research inputs that save you time.',
+            promptTemplate: 'Review the following [patent claims / commercial agreement / IP portfolio data] [paste]. Identify: (1) [key technical contribution or IP ownership provisions], (2) [potential risks or coverage gaps], (3) [any unusual or non-standard provisions that require closer review]. This is a first-pass research summary — not a legal opinion. Flag any areas where the analysis requires qualified [patent / trademark / IP] attorney review.',
+            tool: 'Claude',
+          },
+          reflection: 'Where in your IP practice do you spend the most time on tasks that are pattern-based and text-heavy — prior art summaries, claim comparisons, portfolio data, IP clause extraction? If AI handled 60% of that work in half the time, what higher-judgment IP work could you do more of?',
+          quiz: [
+            {
+              question: 'What is the critical limitation of AI-assisted patent claim mapping for freedom-to-operate analysis?',
+              options: [
+                'AI cannot read patent documents in PDF format',
+                'AI claim mapping is a research input — not a legal opinion — and FTO requires qualified patent attorney analysis of claim scope, prosecution history, and infringement doctrine',
+                'AI can only map claims against products that have already been launched',
+                'Patent claim mapping requires access to a proprietary legal database that AI cannot use',
+              ],
+              correct: 1,
+              explanation: 'Freedom-to-operate analysis requires legal interpretation of how courts in the relevant jurisdiction construe claim language, how the prosecution history may affect scope, and professional judgment about litigation risk. AI can identify whether a product description includes features that correspond to claim elements — but it cannot perform the legal analysis that produces an FTO opinion a client can rely on.',
+            },
+            {
+              question: 'Which type of clause in a commercial agreement poses the highest IP ownership risk for a technology company engaging an external contractor?',
+              options: [
+                'Governing law clauses specifying a foreign jurisdiction',
+                'Broad IP assignment clauses that may capture IP developed outside the contract scope, or work-for-hire provisions that vest ownership in the commissioning party',
+                'Confidentiality obligations that restrict disclosure of technical information',
+                'Payment terms that are tied to IP delivery milestones',
+              ],
+              correct: 1,
+              explanation: 'Broad assignment clauses and work-for-hire provisions can transfer ownership of IP that a contractor creates — including IP that was developed using pre-existing tools, methods, or concepts — to the commissioning party. For technology companies, this can mean losing ownership of code, algorithms, or processes developed under a service agreement. These clauses require careful review and negotiation, particularly for companies whose primary assets are their IP.',
+            },
+            {
+              question: 'When using AI to support trademark clearance research, what is the appropriate role for AI output?',
+              options: [
+                'AI can provide a definitive clearance opinion if given enough search data',
+                'AI can structure the search strategy, summarise search results, and flag potential conflicts — but a qualified trademark attorney must provide the clearance opinion',
+                'AI trademark research replaces the need for a formal clearance search in low-risk jurisdictions',
+                'AI should only be used for trademark work after the attorney has completed their own analysis',
+              ],
+              correct: 1,
+              explanation: 'Trademark clearance involves two distinct steps: the search (identifying potentially conflicting marks) and the opinion (assessing likelihood of confusion and advising on risk). AI can accelerate the search and summarisation step significantly. The clearance opinion — the legal conclusion about whether a mark can be used and the associated risk — requires attorney judgment applying jurisdiction-specific confusion doctrine. These roles should not be conflated.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -1401,6 +1534,138 @@ AI-drafted client communications carry the same professional responsibility as m
               correct: 1,
               explanation:
                 'AI-drafted communications carry the same professional responsibility as manually drafted ones. The lawyer who signs off the letter is professionally responsible for its accuracy and appropriateness. No AI disclaimer changes that obligation — full review and approval by the responsible lawyer is required.',
+            },
+          ],
+        },
+        {
+          id: 'legal-m3-l5',
+          title: 'Employment Law and Workplace Compliance with AI',
+          duration: 17,
+          description:
+            'Use AI to draft employment policies, review agreements for compliance risks, produce disciplinary documentation, and research multi-jurisdiction employment law obligations — while understanding where professional review is always required.',
+          content: `## AI in Employment Law Practice
+
+Employment law is one of the highest-volume areas of legal practice and compliance work. Policies, handbooks, employment agreements, disciplinary letters, grievance responses, redundancy communications, and restructuring documentation are all text-heavy, structurally predictable, and frequently repeated. This makes employment law an area where AI delivers significant drafting efficiency — provided the professional review step is never skipped.
+
+## Drafting Employment Policies and Handbooks
+
+Employment handbooks and standalone policies (disciplinary procedure, grievance procedure, equality and diversity, remote working, data protection) follow well-established structures. AI can produce strong first drafts quickly.
+
+**Effective approach:**
+1. Provide the jurisdiction, sector, and any specific requirements (union recognition, regulated industry obligations, company size).
+2. Ask for a specific policy rather than a full handbook at once — quality is higher for focused outputs.
+3. Specify what the policy must address (e.g., "This disciplinary procedure must comply with [ACAS Code of Practice / UAE Labour Law / relevant framework], cover informal warnings through to dismissal, include an appeals process, and apply to all employees except those in their probationary period").
+
+**Critical step:** All AI-drafted employment policies must be reviewed by a qualified employment lawyer in the relevant jurisdiction before use. Employment law is highly jurisdiction-specific and changes frequently — AI training data may not reflect the most current legislative or case law position.
+
+## Reviewing Employment Agreements for Compliance Risks
+
+Employment contracts contain numerous provisions that carry legal risk — and AI can efficiently identify them for attorney review.
+
+**Key provisions to prompt AI to review:**
+- **Restrictive covenants** (non-compete, non-solicitation, non-dealing): are they proportionate and likely enforceable in the jurisdiction?
+- **Garden leave provisions**: does the contract clearly entitle the employer to require garden leave, and for how long?
+- **Post-termination obligations**: are notice periods and payment in lieu clauses consistent?
+- **Working time provisions**: does the agreement comply with applicable working time regulations?
+- **Data processing acknowledgments**: does the employment contract address the employee's consent to data processing, or is this handled separately?
+
+Prompt: "Review this employment agreement for [jurisdiction]. Identify: (1) any restrictive covenants and comment on their likely enforceability under [jurisdiction] law, (2) any provisions that may not comply with [applicable employment legislation], (3) any gaps — provisions that are absent but typically required or recommended in this jurisdiction."
+
+## Disciplinary and Grievance Documentation
+
+Disciplinary and grievance processes generate significant documentation — investigation summaries, invite letters, outcome letters, appeal letters. AI can draft all of these consistently and quickly.
+
+**Disciplinary invite letter prompt:** "Draft an invitation letter for a disciplinary hearing. The employee is [role]. The allegation is [describe]. The hearing is on [date] at [time]. They have the right to be accompanied by a colleague or trade union representative. Include: the specific allegation, the potential outcome range including dismissal, the right to be accompanied, the right to request documents in advance."
+
+**Grievance response prompt:** "Draft a grievance outcome letter. The employee raised a grievance regarding [describe]. The investigation found [findings]. The outcome is [uphold/not uphold/partial uphold]. Include: acknowledgment of the grievance, summary of the investigation process, findings, decision and rationale, appeal rights and timeframe."
+
+**Important:** Disciplinary and grievance outcome letters carry legal risk if the process was not followed correctly. AI can draft the letter; the responsible HR professional or lawyer must confirm the underlying process was sound before the letter is issued.
+
+## Redundancy and Restructuring Communication Templates
+
+Redundancy processes require a sequence of carefully worded communications: at-risk letters, consultation letters, selection criteria notifications, and redundancy confirmation letters. AI can draft the full sequence from a process brief.
+
+Prompt: "Draft a redundancy at-risk letter for a [jurisdiction] employer. The redundancy is genuine and the selection pool is [describe]. The minimum consultation period is [N] weeks. The letter should: notify the employee they are at risk, explain the proposed selection criteria, invite them to a consultation meeting on [date], and confirm their right to be accompanied."
+
+**Multi-jurisdiction note:** Redundancy rules vary significantly across jurisdictions — notice entitlements, statutory redundancy pay calculations, collective consultation thresholds, and mandatory consultation periods all differ. AI can draft communications but cannot reliably apply the correct statutory figures for a specific jurisdiction without being given those inputs.
+
+## Multi-Jurisdiction Employment Law Research
+
+For organisations operating across multiple jurisdictions, AI is particularly useful for comparative research — identifying how a specific issue (e.g., garden leave enforceability, non-compete validity, whistleblowing protections) varies across countries.
+
+Prompt: "Summarise the legal position on employee non-compete clauses in the following jurisdictions: [list]. For each jurisdiction: (1) whether non-competes are enforceable and on what conditions, (2) maximum duration courts typically enforce, (3) any recent legislative changes or leading cases. Flag any jurisdiction where the position is uncertain or where local counsel should be consulted."
+
+**Critical limitation:** AI-generated comparative law summaries are research inputs only. For any multi-jurisdiction employment decision — restructuring, policy rollout, cross-border hire — local counsel review is required in each material jurisdiction. Employment law changes frequently and AI training data may not be current.`,
+          keyTakeaways: [
+            'AI can draft employment policies, handbooks, disciplinary letters, grievance responses, and redundancy communications efficiently — but all outputs require review by a qualified employment lawyer in the relevant jurisdiction before use',
+            'Employment contract review prompts should specifically target restrictive covenants, garden leave, working time compliance, and data processing provisions',
+            'Disciplinary and grievance letters drafted by AI save significant time on structurally predictable documents — but the responsible professional must confirm the underlying process was correct before letters are issued',
+            'Redundancy communication sequences (at-risk, consultation, confirmation) can be drafted by AI from a process brief, but statutory figures and jurisdiction-specific requirements must be supplied by the professional',
+            'Multi-jurisdiction comparative employment law research is a high-value AI use case — but always requires local counsel confirmation before any cross-border employment decision',
+          ],
+          exercise: {
+            title: 'Employment Policy Draft and Compliance Review',
+            description:
+              'Use AI to draft a workplace policy and review an employment contract provision, then assess the professional review steps required before either could be used.',
+            steps: [
+              'Choose a common employment policy relevant to your organisation or practice: remote working policy, disciplinary procedure, or grievance procedure. Ask Claude to draft it for your jurisdiction, specifying any specific requirements (union recognition, sector, applicable legislation).',
+              'Find a standard employment contract template (many are publicly available). Ask Claude to review the restrictive covenant provisions and comment on their likely enforceability in your jurisdiction.',
+              'Ask Claude to draft a disciplinary invite letter for a hypothetical scenario: an employee accused of repeated unauthorised absence, with a hearing scheduled in five days, right to be accompanied.',
+              'Review all three outputs: What would need to change before any of them could be used with a real employee? What jurisdiction-specific elements did AI handle well or poorly?',
+              'Write a checklist of the professional review steps you would require before using each output in practice.',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'An HR manager uses AI to draft a redundancy at-risk letter for a UK employee and sends it without checking the statutory consultation period requirements. The letter states a 2-week consultation period, but the correct minimum is 45 days because more than 100 employees are being made redundant. What is the consequence?',
+            options: [
+              'The letter is legally effective because it was drafted using AI',
+              'The employer may face a protective award claim for failure to collectively consult — a potentially significant financial liability — because the HR manager did not apply jurisdiction-specific statutory requirements before issuing the letter',
+              'The employee must accept the at-risk notice regardless of the consultation period stated',
+              'The error can be corrected by issuing a revised letter within 24 hours',
+            ],
+            correct: 1,
+            explanation: 'UK collective redundancy law (TULRCA 1992) requires a minimum 45-day consultation period when 100 or more redundancies are proposed within 90 days. Failure to comply can result in a protective award of up to 90 days\' actual pay per affected employee — a significant financial liability. AI cannot reliably apply the correct statutory thresholds without being given those inputs, and the professional issuing the letter is responsible for ensuring compliance. Jurisdiction-specific statutory requirements must always be verified before redundancy communications are issued.',
+          },
+          applyThisWeek: {
+            action: 'Identify one recurring employment document in your practice or organisation — a policy that needs updating, an employment contract clause that you review frequently, or a standard disciplinary letter. Use AI to produce a first draft, then document every change you make and why. The edit list is your professional review checklist for future AI-assisted drafts of the same document type.',
+            promptTemplate: 'Draft a [document type — e.g., disciplinary invite letter / remote working policy / redundancy at-risk letter] for use in [jurisdiction]. The relevant legislative framework is [applicable legislation]. Key requirements: [list specific obligations or elements to include]. Applicable to [employee category / scope]. This is a first draft for review by a qualified employment lawyer — flag any areas where jurisdiction-specific legal advice is particularly important.',
+            tool: 'Claude',
+          },
+          reflection: 'Which employment documents does your team produce most frequently — and which ones take the most time to draft consistently? If AI handled the first draft of each one, what would the professional review checklist look like — and how would you build that into your workflow?',
+          quiz: [
+            {
+              question: 'Why must AI-drafted employment policies always be reviewed by a qualified employment lawyer in the relevant jurisdiction before use?',
+              options: [
+                'Because AI cannot format documents to the required legal standard',
+                'Because employment law is highly jurisdiction-specific and changes frequently — AI training data may not reflect the current legislative or case law position, and errors in policies can create significant legal liability',
+                'Because employment policies must be approved by a government body before use',
+                'Because AI tools are not permitted to draft legally binding employment documents',
+              ],
+              correct: 1,
+              explanation: 'Employment law varies significantly across jurisdictions — notice periods, disciplinary process requirements, redundancy obligations, working time rules, and non-compete enforceability all differ. Legislation and case law change regularly. AI training data may lag behind current law, and the consequences of a non-compliant policy range from unenforceability of specific provisions to employment tribunal claims. Professional review in the specific jurisdiction is always required before an AI-drafted employment document is used.',
+            },
+            {
+              question: 'What is the most important step before issuing an AI-drafted disciplinary outcome letter to an employee?',
+              options: [
+                'Checking that the letter is under the word count specified in the prompt',
+                'Confirming that the underlying disciplinary process was correctly followed — because a well-drafted letter cannot remedy a procedurally defective process',
+                'Having the employee sign an AI disclosure form',
+                'Running the letter through a second AI model for quality checking',
+              ],
+              correct: 1,
+              explanation: 'A disciplinary outcome letter can be perfectly drafted and still expose the employer to an unfair dismissal or wrongful dismissal claim if the underlying process was defective — the employee was not given adequate notice, the allegations were not sufficiently specified, witnesses were not properly considered, or the sanction was disproportionate. AI can draft the letter; it cannot audit the process. The responsible HR professional or lawyer must confirm the process was sound before any outcome letter is issued.',
+            },
+            {
+              question: 'When using AI for multi-jurisdiction employment law research, what is the appropriate use of the output?',
+              options: [
+                'The AI output can be used directly to advise clients on employment law in each jurisdiction covered',
+                'AI comparative law summaries are research inputs that identify issues and starting positions — local counsel review is required in each material jurisdiction before any employment decision is made',
+                'AI employment law research is only appropriate for jurisdictions where the professional has existing expertise',
+                'Multi-jurisdiction research outputs should be used without disclosure to the client that AI was involved',
+              ],
+              correct: 1,
+              explanation: 'Comparative employment law research is one of the most valuable AI use cases in multi-jurisdiction practice because it rapidly maps the landscape across multiple countries. But employment law changes frequently, local practice and judicial interpretation vary, and AI training data may not be current. The research output narrows the issues and informs the questions to put to local counsel — it does not replace their advice. Any cross-border employment decision (restructuring, policy rollout, senior hire) requires local counsel confirmation in each material jurisdiction.',
             },
           ],
         },

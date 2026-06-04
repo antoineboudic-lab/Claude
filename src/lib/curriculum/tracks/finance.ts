@@ -1522,6 +1522,130 @@ Different audiences need different views. AI helps you think through which metri
             },
           ],
         },
+        {
+          id: 'finance-m3-l5',
+          title: 'ESG and Sustainability Reporting with AI',
+          duration: 18,
+          description:
+            'Use AI to aggregate ESG data from multiple sources, structure disclosures against GRI, SASB, and TCFD frameworks, and draft sustainability narrative sections — while understanding where AI cannot replace professional judgement.',
+          content: `## Why ESG Reporting Is a Finance Problem
+
+ESG reporting has landed on finance teams. Sustainability disclosures — whether voluntary or mandatory — require the same rigour as financial reporting: consistent data, auditable sources, disclosed methodology, and narrative that accurately represents what the numbers show. AI accelerates the structuring and drafting stages without replacing the professional judgement required at every verification step.
+
+**IMPORTANT:** ESG disclosures carry reputational and increasingly legal risk. Claims in sustainability reports must be verified against source data before publication. AI drafts; finance and sustainability professionals validate.
+
+## Aggregating ESG Data from Multiple Sources
+
+ESG data typically lives in multiple places: HR systems (headcount, diversity, training hours), facilities (energy, water, waste), procurement (supplier data, Scope 3), and finance (community investment, governance structures). AI can help structure the aggregation:
+
+> "I'm preparing our annual ESG data collection. Our key disclosure frameworks are GRI and SASB [industry: specify]. Generate a data collection template covering the metrics required by these frameworks. For each metric: the framework reference, a plain-English description of what to measure, the unit of measurement, the internal data owner (HR / Facilities / Finance / Procurement), and the typical data source."
+
+This produces a cross-functional data collection map — one of the most time-consuming parts of ESG preparation.
+
+## Structuring Disclosures Against GRI / SASB / TCFD
+
+Each framework has a specific structure. AI can map your data against the required disclosures:
+
+> "Here is our ESG data for the year [paste your data points]. Map this against the GRI Standards disclosure requirements. For each required disclosure: identify whether we have data to cover it, note any gaps where data is missing or incomplete, and draft a one-paragraph disclosure for each metric where we have sufficient data. Flag any disclosures where the data quality may not meet GRI requirements."
+
+For TCFD:
+> "Using our climate-related information [paste], draft the four TCFD disclosure sections: Governance, Strategy, Risk Management, and Metrics and Targets. For each section: structure the content against the recommended disclosures, flag where we have gaps against the TCFD recommendations, and note where we need additional board or management input."
+
+## Drafting Sustainability Narrative Sections
+
+The narrative sections of a sustainability report — CEO statement, materiality discussion, performance commentary — are where most organisations spend disproportionate time:
+
+> "Draft the sustainability performance commentary section of our annual report. Data: [paste your year's ESG metrics with prior year comparisons]. Format: (1) a three-paragraph performance overview that leads with progress against our stated targets, (2) an honest acknowledgement of the metrics where we fell short and why, (3) our priorities for the coming year. Tone: transparent, specific, and professional. Avoid: vague commitments, unexplained jargon, claims not supported by the data provided."
+
+The instruction to be honest about shortfalls is important. ESG reports that only present progress and omit setbacks are both less credible and increasingly scrutinised by investors and regulators.
+
+## Identifying Disclosure Gaps
+
+Before finalising any ESG report:
+
+> "Here is a draft of our ESG report [paste or describe]. Review it against [GRI / SASB / TCFD] requirements and identify: (1) required disclosures we have omitted, (2) disclosures where our data is incomplete or the methodology is not explained, (3) any claims in the narrative that are not supported by specific data in the report, and (4) areas where an external auditor or investor would likely ask questions."
+
+## AI Limitations with Proprietary ESG Data
+
+AI cannot access your internal systems, your proprietary emissions data, or third-party ESG rating methodologies. It works with what you provide. This means:
+
+- **Data input quality is your responsibility.** AI drafts narrative from the data you paste — if the data is wrong, the disclosure will be wrong.
+- **Framework interpretation changes.** GRI, SASB, and TCFD update their standards. AI training data has a cutoff; always verify against current published standards.
+- **Materiality assessment requires human judgement.** Deciding which ESG topics are material to your business involves stakeholder engagement and professional assessment — not AI pattern-matching.
+- **Greenwashing risk is yours, not AI's.** AI will draft whatever narrative the data suggests. The responsibility for accurate, non-misleading disclosure sits with the finance and sustainability professionals who sign off.`,
+          keyTakeaways: [
+            'AI accelerates ESG data aggregation and framework mapping — generating cross-functional data collection templates and gap analyses against GRI, SASB, and TCFD',
+            'Narrative drafting (performance commentary, TCFD sections, CEO statements) is AI\'s highest-value ESG application — producing structured first drafts that finance teams then verify and refine',
+            'A pre-publication gap review prompt identifies omitted disclosures, unsupported claims, and methodology gaps before external scrutiny does',
+            'AI cannot access proprietary emissions data, third-party ratings, or current framework updates — output quality depends entirely on what you provide',
+            'Greenwashing risk sits with the humans who sign off the report — AI drafts, professionals verify every claim against source data before publication',
+          ],
+          exercise: {
+            title: 'Map Your ESG Data Against a Reporting Framework',
+            description:
+              'Use AI to create a data collection template for your most relevant ESG framework and identify the gaps in your current reporting data.',
+            steps: [
+              'Identify the primary ESG framework relevant to your organisation (GRI, SASB for your industry, TCFD, or a mandatory regime like CSRD)',
+              'Run the data collection template prompt: generate a structured list of required metrics, data owners, and typical sources for your framework',
+              'Compare the template against what you currently collect — which required metrics do you have data for, and where are the gaps?',
+              'For three metrics where you have data, run the disclosure drafting prompt: paste your data and generate the disclosure paragraph',
+              'Run the gap review prompt on one existing ESG report section (your own or a public example) and identify the questions an external auditor would ask',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'An AI tool drafts a sustainability report section claiming your company achieved a 22% reduction in Scope 2 emissions. Before publication, what is the single most important step?',
+            options: [
+              'Run the draft through a second AI tool to check for errors',
+              'Have the communications team review the tone and language',
+              'Verify the 22% figure against the source energy data and emissions calculation methodology — AI drafts from what you provided, and the claim must be auditable',
+              'Check whether 22% is above or below your industry benchmark',
+            ],
+            correct: 2,
+            explanation: 'AI generates narrative from the data you provide — it does not independently verify that data. A sustainability claim in a published report must be traceable to auditable source data (energy invoices, metered consumption, calculation methodology). If the underlying data is wrong, inconsistent, or based on a methodology you cannot defend, the claim creates reputational and regulatory risk. Verification against source data is not optional — it is the finance professional\'s core responsibility in ESG reporting.',
+          },
+          applyThisWeek: {
+            action: 'Choose one ESG framework section relevant to your organisation and run the data gap analysis prompt. Identify the three metrics where your data quality is weakest and design a data collection improvement for each.',
+            promptTemplate: 'I\'m preparing ESG disclosures for a [company size] [industry] company against [framework: GRI / SASB / TCFD]. Generate a structured data collection template for the [specific section or topic] disclosures. For each required metric: framework reference, plain-English definition, unit of measurement, internal data owner, typical data source, and one question to ask the data owner to confirm the data quality. Also flag any metrics where data quality is commonly problematic for companies of our type.',
+            tool: 'Claude',
+          },
+          reflection: 'Think about your organisation\'s last sustainability report or ESG disclosure. Were there sections where the narrative made claims your data would struggle to fully support? What would change in your data collection and review process if you treated ESG disclosures with the same audit rigour as financial statements?',
+          quiz: [
+            {
+              question: 'What is AI\'s most valuable contribution to the ESG reporting process?',
+              options: [
+                'Independently verifying sustainability claims against external databases',
+                'Structuring data collection templates against frameworks, drafting disclosure paragraphs, and identifying gaps — accelerating the structuring and drafting stages that are most time-consuming',
+                'Assessing which ESG topics are material to your specific business',
+                'Accessing proprietary emissions data from your internal systems',
+              ],
+              correct: 1,
+              explanation: 'AI cannot access your internal data systems, independently verify sustainability claims, or make materiality judgements. Its value is in structuring: mapping your data against framework requirements, generating draft disclosure language from data you provide, and identifying gaps before external review. These structuring and drafting tasks are where finance and sustainability teams spend disproportionate time, and they are well-suited to AI acceleration — provided professionals verify every output before publication.',
+            },
+            {
+              question: 'A company\'s sustainability report describes strong progress across all ESG metrics with no acknowledgement of areas where targets were missed. Why is this a problem?',
+              options: [
+                'It is not a problem — positive framing is appropriate in sustainability communications',
+                'Reports that present only progress without honest acknowledgement of shortfalls are less credible to investors and analysts, and increasingly attract regulatory scrutiny for potential greenwashing',
+                'ESG reports must by law disclose negative performance',
+                'Only the financial section of an annual report requires balanced disclosure',
+              ],
+              correct: 1,
+              explanation: 'Sophisticated investors, proxy advisors, and ESG rating agencies have learned to treat uniformly positive sustainability reports with scepticism. A report that acknowledges where targets were missed, explains why, and describes the response is more credible than one that presents only successes. Regulators in multiple jurisdictions are also increasing scrutiny of sustainability claims — reports that selectively present positive data while omitting material shortfalls create greenwashing risk. Honest disclosure is both an ethical standard and an increasingly practical one.',
+            },
+            {
+              question: 'Which of the following tasks in ESG reporting CANNOT be reliably delegated to AI?',
+              options: [
+                'Drafting the performance commentary section from provided ESG data',
+                'Generating a data collection template mapped to GRI framework requirements',
+                'Determining which ESG topics are material to your business based on stakeholder engagement',
+                'Identifying gaps between your current disclosures and TCFD recommendations',
+              ],
+              correct: 2,
+              explanation: 'Materiality assessment — determining which ESG topics are significant enough to require disclosure — requires stakeholder engagement (surveys, interviews, peer benchmarking), professional judgement, and often board sign-off. It cannot be determined by AI pattern-matching. Drafting narrative from provided data, generating framework templates, and identifying disclosure gaps against published standards are all well-suited to AI. Materiality is not.',
+            },
+          ],
+        },
       ],
     },
     {
@@ -2007,6 +2131,130 @@ Pre-emptive mitigations — taking action before the scenario materialises — a
               correct: 1,
               explanation:
                 'A well-prepared finance team should have a structured answer to any plausible material stress scenario — not because they predict it will happen, but because thinking through it in advance enables faster, better response if it does. The board expects finance to have a specific answer: the scenario trigger, the financial impact trajectory, the decision window, and the response options. Saying it\'s unlikely or outside your control is an inadequate response to a legitimate governance question.',
+            },
+          ],
+        },
+        {
+          id: 'finance-m4-l5',
+          title: 'Tax Planning and Regulatory Compliance with AI',
+          duration: 17,
+          description:
+            'Use AI to research tax rules, identify planning opportunities, draft compliance memos, and monitor regulatory changes — while maintaining clarity about what AI cannot replace in the compliance process.',
+          content: `## AI's Role in Tax and Compliance Work
+
+Tax and regulatory compliance are high-stakes, jurisdiction-specific disciplines. AI is a powerful research and drafting tool in this domain — but it operates within strict limits. Finance professionals who understand both what AI can accelerate and where it must not be trusted will work faster and smarter. Those who over-rely on it without professional review create legal and financial exposure.
+
+**CRITICAL:** AI cannot give specific tax advice. Nothing AI generates in a tax context replaces review by a qualified tax adviser or appropriate legal counsel. Use AI to research, structure, and draft — then have a professional validate.
+
+## Researching Tax Rules and Implications
+
+AI is strong at explaining how a tax provision works in general terms and surfacing considerations that should be investigated:
+
+> "Explain how the UK R&D tax credit scheme (RDEC and SME scheme) applies to a software development company. What activities qualify? What costs are eligible? What are the documentation requirements? What changed with the recent merger of the two schemes? I want to understand the framework before speaking with our tax adviser."
+
+> "We are considering [describe transaction or structure]. What are the primary UK corporation tax implications I should be aware of before speaking with our tax adviser? What are the questions I should ask them? Do not give me specific advice — I want to understand the landscape."
+
+The framing "help me understand the landscape before speaking with an adviser" produces better output than asking for advice, and is more honest about AI's appropriate role.
+
+## Identifying Planning Opportunities
+
+> "We are a [business type] with [key financial characteristics: revenue, structure, asset base, geographic footprint]. What are the most common legitimate tax planning areas I should ask our tax adviser to review? For each area: a plain-English description of the planning opportunity, the type of business it applies to, and what information our adviser would typically need to assess it."
+
+This produces a planning agenda for your next adviser conversation — one of the highest-value uses of AI in tax work.
+
+## Drafting Compliance Memos and Summaries
+
+Finance teams frequently need to communicate tax positions internally:
+
+> "Draft a one-page internal memo summarising our VAT position on [transaction type]. Background: [describe the transaction and the tax question]. Format: (1) the question being addressed, (2) the general VAT treatment and why it applies, (3) any areas of uncertainty or where professional confirmation is needed, (4) the recommended internal treatment pending adviser sign-off. Tone: professional, clear. This memo will be reviewed and signed off by our tax adviser before we rely on it."
+
+The "reviewed and signed off by our tax adviser" instruction matters — it signals the appropriate process in the document itself.
+
+## Monitoring Regulatory Changes
+
+> "Summarise the key UK tax and regulatory changes effective from April [year] that affect a [business type]. For each change: what it is, who it affects, the financial impact for a business of our size, and what action is required before the effective date."
+
+> "We operate in [jurisdictions]. What significant tax legislation or regulatory proposals are currently in progress in these jurisdictions that a finance director should be monitoring? For each: status, expected timeline, potential impact, and where to find authoritative information."
+
+## What AI Cannot Do in Tax and Compliance
+
+Understanding AI's limits is as important as knowing its applications:
+
+- **Jurisdiction-specific rulings:** HMRC clearances, specific interpretations, and binding rulings require qualified tax professionals — AI does not have access to unpublished rulings or current HMRC practice.
+- **Specific advice:** AI cannot tell you whether your specific transaction qualifies for a specific relief. It can explain how a relief generally works. Your adviser applies it to your facts.
+- **Current law:** AI training data has a cutoff. Tax law changes frequently. Always verify AI research against current legislation and guidance.
+- **Audit defence:** If HMRC enquires about a position, your defence rests on professional advice, not AI-generated analysis. Document professional advice properly.
+- **Transfer pricing and complex structures:** International tax planning involving transfer pricing, permanent establishment analysis, or treaty interpretation requires specialist advice, not AI drafts.`,
+          keyTakeaways: [
+            'AI is a strong research and structuring tool in tax work — explaining frameworks, surfacing planning questions, and drafting internal summaries — but all outputs require professional review before being relied upon',
+            'The highest-value AI application in tax planning is generating an agenda of questions and opportunities to bring to a qualified tax adviser',
+            'Compliance memo drafting with AI is appropriate when the memo explicitly states it is pending professional sign-off — never rely on an AI-drafted tax position without adviser review',
+            'AI training data has a cutoff — tax law changes frequently, and all AI research must be verified against current legislation and published guidance',
+            'Audit defence, jurisdiction-specific rulings, transfer pricing, and specific advice require qualified tax professionals, not AI outputs',
+          ],
+          exercise: {
+            title: 'Build a Tax Planning Agenda for Your Next Adviser Meeting',
+            description:
+              'Use AI to research the planning opportunities most relevant to your business and generate a structured agenda for your next tax adviser conversation.',
+            steps: [
+              'Write a 150-word description of your business: structure, revenue, key assets, geographic footprint, and any recent or planned transactions',
+              'Run the planning opportunity research prompt: what are the most common legitimate tax planning areas for a business of your type?',
+              'For each opportunity identified, research the framework: how does this provision work in general terms, what are the eligibility criteria, and what documentation is typically required?',
+              'Draft a list of five specific questions to ask your tax adviser — structured as hypotheses ("We believe we may qualify for X — can you confirm whether our activities meet the criteria?")',
+              'Run the regulatory monitoring prompt for your relevant jurisdictions: what changes are in progress that your finance team should be tracking?',
+            ],
+            tool: 'Claude',
+          },
+          inlineCheck: {
+            question: 'An AI tool produces a detailed memo explaining that your company\'s software development activities qualify for R&D tax credits under the SME scheme and estimates the claim value at £180,000. What is the correct response?',
+            options: [
+              'File the R&D tax credit claim based on the AI analysis — the memo is detailed and specific',
+              'Treat the memo as a useful first assessment and commission a qualified R&D tax adviser to review whether your specific activities meet the qualifying criteria before filing',
+              'Reduce the AI estimate by 20% as a conservative adjustment and then file the claim',
+              'Forward the AI memo to HMRC as supporting documentation for the claim',
+            ],
+            correct: 1,
+            explanation: 'R&D tax credit claims are subject to HMRC enquiry, and incorrect claims create significant legal and financial risk. AI can explain the general framework and surface questions worth investigating — but whether your specific activities meet the qualifying criteria requires analysis of the actual projects by a qualified tax adviser who can defend the claim if challenged. An AI-generated estimate is a starting hypothesis for professional review, not a filing-ready assessment.',
+          },
+          applyThisWeek: {
+            action: 'Run the tax planning opportunity prompt for your business and identify two planning areas you have not recently discussed with your tax adviser. Prepare two specific, well-framed questions to raise at your next meeting.',
+            promptTemplate: 'I\'m preparing for a meeting with our tax adviser. Our business is a [structure: Ltd / LLP / group] operating in [jurisdictions], [revenue size], [key business activities]. We have [relevant features: R&D activity / significant property / international operations / recent acquisition / employee share schemes]. What are the five most relevant legitimate tax planning areas I should ask our adviser to review? For each: plain-English description, eligibility indicators, and the specific question I should ask to assess whether it applies to us.',
+            tool: 'Claude',
+          },
+          reflection: 'How does your organisation currently stay informed about tax and regulatory changes? Are there planning opportunities you haven\'t investigated in the last two years that AI research could help you surface — even if just to frame better questions for your next adviser conversation?',
+          quiz: [
+            {
+              question: 'What is the most appropriate way to use AI when researching a complex tax question for your business?',
+              options: [
+                'Ask AI for specific advice and file the return based on its output',
+                'Use AI to understand the general framework and surface key questions, then have a qualified tax adviser apply the rules to your specific facts',
+                'Ask AI to review HMRC\'s unpublished guidance on the question',
+                'Use AI to replicate the work a tax adviser would do, as this saves adviser fees',
+              ],
+              correct: 1,
+              explanation: 'AI is a research accelerator in tax work — it can explain how a provision generally works, identify what questions to ask, and structure a planning agenda. It cannot apply tax rules to your specific facts with the rigour required for filing positions or audit defence. The division of labour is clear: AI builds your knowledge and frames your questions; qualified professionals apply the law to your situation and take professional responsibility for the advice.',
+            },
+            {
+              question: 'Why must AI-generated tax research always be verified against current legislation and published guidance?',
+              options: [
+                'AI deliberately generates incorrect tax information',
+                'AI training data has a cutoff date and tax law changes frequently — rates, reliefs, and thresholds are regularly updated, and AI may reflect repealed or amended provisions',
+                'HMRC does not accept digital research sources',
+                'AI tax research is only valid for the jurisdiction it was trained on',
+              ],
+              correct: 1,
+              explanation: 'Tax law is one of the most frequently amended areas of law — annual Finance Acts, statutory instruments, and HMRC guidance updates mean the landscape changes constantly. AI models have a training data cutoff and cannot know about changes made after that date. R&D tax credits, VAT rules, capital allowances, and even corporation tax rates have all changed materially in recent years. AI research is a starting point for investigation, not a substitute for checking current legislation at source.',
+            },
+            {
+              question: 'A finance director uses AI to draft an internal memo on the VAT treatment of a new service and shares it with the business as the company\'s VAT position. No tax adviser reviews it. What is the primary risk?',
+              options: [
+                'The memo may not be formatted correctly for internal use',
+                'HMRC may enquire about the VAT treatment; if it is incorrect, the company faces back-taxes, interest, and penalties — with no professional advice to rely on as a reasonable care defence',
+                'The tax adviser may be annoyed at not being consulted',
+                'There is no significant risk if the AI output is clearly reasoned',
+              ],
+              correct: 1,
+              explanation: 'VAT errors can result in assessments for underpaid tax plus interest and penalties. The "reasonable care" defence — which limits penalties in cases of genuine uncertainty — typically rests on evidence of professional advice. An internal memo based on AI output with no professional review provides no such defence. If HMRC challenges the position, the company bears the full financial consequence without the protection that qualified advice would have provided.',
             },
           ],
         },
