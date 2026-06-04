@@ -13,6 +13,7 @@ export const ROLE_TO_TRACK: Record<string, TrackId> = {
   product: 'product',
   customer: 'customer',
   consulting: 'consulting',
+  it: 'it',
   other: 'leadership',
 }
 
@@ -78,6 +79,11 @@ const CHALLENGE_MODULE_BOOST: Record<string, number[]> = {
   'deck-production': [2, 3],
   'differentiation': [2, 3],
   'client-comms': [3, 4],
+  // IT
+  'scripting': [1, 2],
+  'security-posture': [2, 3],
+  'docs-knowledge': [1, 2],
+  'alert-fatigue': [2, 3],
 }
 
 const TIME_TO_WEEKS: Record<string, number> = {
