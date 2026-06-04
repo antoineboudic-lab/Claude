@@ -14,7 +14,7 @@ import type { AssessmentResult, AssessmentAnswers, PriorityLesson } from '@/lib/
 import type { TrackId } from '@/lib/curriculum/types'
 import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
-import { loadLatestAssessment } from '@/lib/supabase/db'
+import { loadLatestAssessment, saveAssessment } from '@/lib/supabase/db'
 
 // ─── Track meta ───────────────────────────────────────────────────────────────
 
@@ -232,7 +232,12 @@ export default function AssessmentResultsPage() {
       }
       try {
         const raw = localStorage.getItem('opuslearn-assessment') ?? localStorage.getItem('ai-literacy-assessment')
-        if (raw) setResult(JSON.parse(raw) as AssessmentResult)
+        if (raw) {
+          const local = JSON.parse(raw) as AssessmentResult
+          setResult(local)
+          // User signed up after completing assessment — backfill to DB so dashboard doesn't redirect back here
+          if (user) saveAssessment(user.id, local).catch(() => {})
+        }
       } catch { /* ignore */ }
     }
     load()
