@@ -7,7 +7,7 @@ export const runtime = 'nodejs'
 // Always use www — opuslearn.ai redirects to www, which strips the hash fragment and loses auth tokens
 const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.opuslearn.ai')
   .replace('://opuslearn.ai', '://www.opuslearn.ai')
-const LOGO = `<svg width="30" height="30" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;"><rect width="28" height="28" rx="7" fill="#2563EB"/><circle cx="14" cy="15" r="6.5" stroke="white" stroke-width="2.2" fill="none"/><path d="M10.5 17L14 12L17.5 17" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+const LOGO = `<img src="https://www.opuslearn.ai/email-logo.png" width="30" height="30" alt="OpusLearn" style="display:block;border-radius:7px;">`
 
 export async function POST(req: NextRequest) {
   const { email } = await req.json()

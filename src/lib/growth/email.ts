@@ -11,7 +11,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://opuslearn.ai'
 
 // ─── Logo SVG (inline for email client compatibility) ─────────────────────────
 
-const LOGO_MARK = `<table role="presentation" cellpadding="0" cellspacing="0" style="display:inline-table;"><tr><td style="width:30px;height:30px;background:#2563EB;border-radius:7px;text-align:center;vertical-align:middle;font-size:13px;font-weight:900;color:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:30px;">OL</td></tr></table>`
+const LOGO_MARK = `<img src="https://www.opuslearn.ai/email-logo.png" width="30" height="30" alt="OpusLearn" style="display:block;border-radius:7px;">`
 
 // ─── Layout helpers ───────────────────────────────────────────────────────────
 
