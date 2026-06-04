@@ -163,6 +163,7 @@ function Navbar() {
             { label: tNav('tracks'), href: '/tracks' },
             { label: tNav('forTeams'), href: '/teams' },
             { label: tNav('pricing'), href: '#pricing' },
+            { label: 'Blog', href: '/blog' },
           ].map(item => (
             item.href.startsWith('/') ? (
               <Link key={item.label} href={item.href}
@@ -290,6 +291,7 @@ function Navbar() {
                   { label: tNav('tracks'), href: '/tracks' },
                   { label: tNav('forTeams'), href: '/teams' },
                   { label: tNav('pricing'), href: '#pricing' },
+                  { label: 'Blog', href: '/blog' },
                 ].map(item => (
                   <a key={item.label}
                     href={item.href}

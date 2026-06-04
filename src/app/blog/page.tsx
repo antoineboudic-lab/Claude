@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, Clock } from 'lucide-react'
-import Logo from '@/components/Logo'
+import BlogNav from '@/components/BlogNav'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -143,18 +143,7 @@ export default function BlogPage() {
 
   return (
     <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
-      {/* Nav */}
-      <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
-        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
-        <Link href="/" className="flex items-center gap-2">
-          <Logo size="md" />
-        </Link>
-        <Link href="/assessment"
-          className="px-4 py-2 rounded-lg text-sm font-semibold text-white"
-          style={{ background: '#2563EB' }}>
-          Get started
-        </Link>
-      </nav>
+      <BlogNav />
 
       {/* Header */}
       <section className="py-16 sm:py-20" style={{ background: '#FFFFFF' }}>
