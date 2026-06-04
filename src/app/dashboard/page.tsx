@@ -573,6 +573,18 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
     ? getSubRoleModule(result.primaryTrackId, subRoleId)
     : undefined
 
+  const completedInPath = result.customPath.filter(l => completedLessons.includes(l.lessonId)).length
+  const pathPct = result.customPath.length > 0 ? Math.min(100, Math.round((completedInPath / result.customPath.length) * 100)) : 0
+  const moduleBreakdown = Array.from(
+    result.customPath.reduce((map, l) => {
+      if (!map.has(l.moduleId)) map.set(l.moduleId, { title: l.moduleTitle, total: 0, done: 0 })
+      const m = map.get(l.moduleId)!
+      m.total++
+      if (completedLessons.includes(l.lessonId)) m.done++
+      return map
+    }, new Map<string, { title: string; total: number; done: number }>())
+  ).map(([id, m]) => ({ id, ...m }))
+
   // First uncompleted sub-role lesson, or first lesson if all done
   const firstSubRoleLesson = subRoleModule?.lessons.find(l => !completedLessons.includes(l.id))
     ?? subRoleModule?.lessons[0]
@@ -623,6 +635,43 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
             </p>
           </div>
         ))}
+      </div>
+
+      {/* Progress bar */}
+      <div className="px-6 py-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-xs font-semibold" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            Your progress
+          </p>
+          <p className="text-xs font-bold" style={{ color, fontFamily: 'var(--font-sans)' }}>
+            {completedInPath} of {result.customPath.length} lessons · {pathPct}%
+          </p>
+        </div>
+        <div className="h-2.5 rounded-full overflow-hidden mb-3" style={{ background: '#E2E8F0' }}>
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${pathPct}%` }}
+            transition={{ delay: 0.5, duration: 1.2, ease: easing }}
+            className="h-full rounded-full"
+            style={{ background: `linear-gradient(90deg, ${color}, ${color}BB)` }}
+          />
+        </div>
+        {moduleBreakdown.length > 0 && (
+          <div className="flex gap-1.5">
+            {moduleBreakdown.map(m => {
+              const full = m.done === m.total
+              const started = m.done > 0
+              return (
+                <div
+                  key={m.id}
+                  title={`${m.title}: ${m.done}/${m.total}`}
+                  className="flex-1 h-1 rounded-full transition-all"
+                  style={{ background: full ? color : started ? `${color}50` : '#E2E8F0' }}
+                />
+              )
+            })}
+          </div>
+        )}
       </div>
 
       {/* Sub-role personalized path */}
