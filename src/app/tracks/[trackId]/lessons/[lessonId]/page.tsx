@@ -1628,7 +1628,7 @@ export default function LessonPage() {
 
           {/* Track progress — centered absolutely so it doesn't affect layout */}
           {allLessons.length > 0 && (
-            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 pointer-events-none select-none">
+            <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 pointer-events-none select-none max-w-[calc(100%-160px)] overflow-hidden">
               <span className="text-[11px] font-semibold tabular-nums"
                 style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
                 {currentLessonIndex >= 0 ? currentLessonIndex + 1 : '—'}

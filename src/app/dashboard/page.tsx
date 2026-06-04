@@ -8,7 +8,7 @@ import {
   Zap, BookOpen, Award, Flame, TrendingUp, ChevronRight,
   ArrowRight, Target, BarChart3, CheckCircle2,
   Star, LogOut, Sparkles, Play, Users, Share2, Copy, Check as CheckIcon, Search, ExternalLink, RotateCcw,
-  Bookmark, Brain, Calendar, CreditCard, Crown, Trophy, Settings,
+  Bookmark, Brain, Calendar, CreditCard, Crown, Trophy, Settings, Menu, X,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { useTranslations } from 'next-intl'
@@ -1085,6 +1085,7 @@ export default function DashboardPage() {
   const [copied, setCopied] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -1198,56 +1199,89 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px)' }}>
       {/* Navbar */}
-      <nav className="sticky top-0 z-40 px-6 py-4"
-        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(16px)', borderBottom: '1px solid #E2E8F0' }}>
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <Logo size="md" />
-          </Link>
-
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSearchOpen(true)}
-              className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-              style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}
-            >
-              <Search size={13} />
-              <span>{tNav('search')}</span>
-              <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
-            </button>
-            <Link href="/tracks" className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700"
-              style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              <BookOpen size={14} /> {tNav('allTracks')}
+      <div className="sticky top-0 z-40" style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(16px)' }}>
+        <nav className="px-6 py-4" style={{ borderBottom: mobileOpen ? 'none' : '1px solid #E2E8F0' }}>
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+              <Logo size="md" />
             </Link>
-            {teamHref && (
-              <Link href={teamHref} className="flex items-center gap-1.5 text-sm font-semibold transition-colors hover:opacity-80 px-3 py-1.5 rounded-lg"
-                style={{ color: '#2563EB', background: '#DBEAFE', fontFamily: 'var(--font-sans)' }}>
-                <Users size={13} /> Team
-              </Link>
-            )}
-            <div className="flex items-center gap-2.5">
-              <Link href="/dashboard/settings"
-                className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100"
-                style={{ color: '#94A3B8' }}
-                title="Settings"
-              >
-                <Settings size={15} />
-              </Link>
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
-                style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
-                {initials}
-              </div>
+            {/* Desktop right */}
+            <div className="hidden md:flex items-center gap-4">
               <button
-                onClick={signOut}
-                className="flex items-center gap-1.5 text-sm transition-colors hover:text-red-500"
-                style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                onClick={() => setSearchOpen(true)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
+                style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}
               >
-                <LogOut size={13} /> {tNav('signOut')}
+                <Search size={13} />
+                <span>{tNav('search')}</span>
+                <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
               </button>
+              <Link href="/tracks" className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                <BookOpen size={14} /> {tNav('allTracks')}
+              </Link>
+              {teamHref && (
+                <Link href={teamHref} className="flex items-center gap-1.5 text-sm font-semibold transition-colors hover:opacity-80 px-3 py-1.5 rounded-lg" style={{ color: '#2563EB', background: '#DBEAFE', fontFamily: 'var(--font-sans)' }}>
+                  <Users size={13} /> Team
+                </Link>
+              )}
+              <div className="flex items-center gap-2.5">
+                <Link href="/dashboard/settings" className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100" style={{ color: '#94A3B8' }} title="Settings">
+                  <Settings size={15} />
+                </Link>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
+                  {initials}
+                </div>
+                <button onClick={signOut} className="flex items-center gap-1.5 text-sm transition-colors hover:text-red-500" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                  <LogOut size={13} /> {tNav('signOut')}
+                </button>
+              </div>
             </div>
+            {/* Mobile hamburger */}
+            <button
+              className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-slate-100"
+              onClick={() => setMobileOpen(v => !v)}
+              aria-label="Toggle menu"
+              style={{ color: '#475569' }}
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
-        </div>
-      </nav>
+        </nav>
+        {/* Mobile dropdown */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              key="dashboard-mobile-nav"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="md:hidden overflow-hidden"
+              style={{ borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}
+            >
+              <div className="px-6 pb-5 pt-2 space-y-0.5">
+                <button onClick={() => { setSearchOpen(true); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                  <Search size={15} /> {tNav('search')}
+                </button>
+                <Link href="/tracks" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                  <BookOpen size={15} /> {tNav('allTracks')}
+                </Link>
+                {teamHref && (
+                  <Link href={teamHref} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                    <Users size={15} /> Team
+                  </Link>
+                )}
+                <Link href="/dashboard/settings" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                  <Settings size={15} /> Settings
+                </Link>
+                <button onClick={() => { signOut(); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium transition-colors hover:text-red-500" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                  <LogOut size={15} /> {tNav('signOut')}
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* Main content */}
       <div className="max-w-6xl mx-auto px-6 py-10">

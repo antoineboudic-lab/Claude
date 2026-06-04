@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
@@ -8,7 +8,7 @@ import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen,
   Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap, LogOut,
-  Scale, Package, Headphones, BarChart, ArrowRight, Users, Sparkles, Search,
+  Scale, Package, Headphones, BarChart, ArrowRight, Users, Sparkles, Search, Menu, X,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { getTrack } from '@/lib/curriculum'
@@ -154,6 +154,7 @@ export default function TrackPage() {
   const { state } = useGame()
   const { user, openSignUp, signOut } = useAuth()
   const [searchOpen, setSearchOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -199,48 +200,83 @@ export default function TrackPage() {
   return (
     <main style={{ background: '#EFF6FF', minHeight: '100vh' }}>
       {/* Nav */}
-      <nav className="sticky top-0 z-40 px-6 py-4 flex items-center justify-between"
-        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
-        <Link href="/" className="flex items-center gap-2">
-          <Logo size="md" />
-        </Link>
-        <div className="flex items-center gap-3">
-          <Link href="/tracks"
-            className="text-sm font-medium transition-colors hover:text-slate-900"
-            style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-            All tracks
+      <div className="sticky top-0 z-40" style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)' }}>
+        <nav className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: mobileOpen ? 'none' : '1px solid #E2E8F0' }}>
+          <Link href="/" className="flex items-center gap-2">
+            <Logo size="md" />
           </Link>
-          <button
-            onClick={() => setSearchOpen(true)}
-            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}
-          >
-            <Search size={13} />
-            <span>Search</span>
-            <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
-          </button>
-          {user ? (
-            <>
-              <Link href="/dashboard"
-                className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80"
-                style={{ color: '#2563EB', background: '#DBEAFE', fontFamily: 'var(--font-sans)' }}>
-                <Zap size={12} /> Dashboard
-              </Link>
-              <button onClick={signOut}
-                className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100"
-                style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                <LogOut size={13} /> Sign out
-              </button>
-            </>
-          ) : (
-            <button onClick={() => openSignUp()}
-              className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90"
-              style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-              Get started free
+          {/* Desktop right */}
+          <div className="hidden md:flex items-center gap-3">
+            <Link href="/tracks" className="text-sm font-medium transition-colors hover:text-slate-900" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              All tracks
+            </Link>
+            <button onClick={() => setSearchOpen(true)} className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100" style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}>
+              <Search size={13} /><span>Search</span>
+              <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
             </button>
+            {user ? (
+              <>
+                <Link href="/dashboard" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80" style={{ color: '#2563EB', background: '#DBEAFE', fontFamily: 'var(--font-sans)' }}>
+                  <Zap size={12} /> Dashboard
+                </Link>
+                <button onClick={signOut} className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                  <LogOut size={13} /> Sign out
+                </button>
+              </>
+            ) : (
+              <button onClick={() => openSignUp()} className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90" style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                Get started free
+              </button>
+            )}
+          </div>
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-slate-100"
+            onClick={() => setMobileOpen(v => !v)}
+            aria-label="Toggle menu"
+            style={{ color: '#475569' }}
+          >
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </nav>
+        {/* Mobile dropdown */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              key="track-mobile-nav"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="md:hidden overflow-hidden"
+              style={{ borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}
+            >
+              <div className="px-6 pb-5 pt-2 space-y-0.5">
+                <Link href="/tracks" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                  <BookOpen size={15} /> All tracks
+                </Link>
+                <button onClick={() => { setSearchOpen(true); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                  <Search size={15} /> Search lessons
+                </button>
+                {user ? (
+                  <>
+                    <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                      <Zap size={15} /> Dashboard
+                    </Link>
+                    <button onClick={() => { signOut(); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium transition-colors hover:text-red-500" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      <LogOut size={15} /> Sign out
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={() => { openSignUp(); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-semibold transition-colors" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                    Get started free →
+                  </button>
+                )}
+              </div>
+            </motion.div>
           )}
-        </div>
-      </nav>
+        </AnimatePresence>
+      </div>
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
 
       {/* Hero */}
