@@ -95,6 +95,12 @@ const trackMeta: Record<string, {
     whoFor: ['You work in strategy, management consulting, or professional services with high analytical demands', 'You spend significant time on desk research, client readouts, or slide production', 'You want to deliver more original analysis and spend less time on the production work that precedes it'],
     beforeAfter: [{ before: '3 days of desk research before you can frame the problem', after: 'First-pass landscape in 4–8 hours' }, { before: 'Slide production consuming most of a sprint', after: 'Structured first draft in hours' }, { before: 'Benchmarking done manually across multiple sources', after: 'Aggregated and formatted in minutes' }],
   },
+  it: {
+    title: 'IT & Technology', tagline: 'Automate, secure, and scale your IT environment with AI', color: '#6366F1', icon: Zap,
+    description: 'Apply AI to the work that defines modern IT — from scripting and incident response to security operations and documentation — without sacrificing rigour or control.',
+    whoFor: ['You manage infrastructure, systems, or security and want to reduce toil without introducing new risk', 'You write scripts, review code, or respond to incidents and want AI to compress the time it takes', "You're being asked about AI governance and want to set policy based on real understanding, not vendor claims"],
+    beforeAfter: [{ before: 'Writing a runbook from scratch after each incident', after: 'AI draft in minutes, you refine and publish' }, { before: 'Hours debugging a script with no clear error', after: 'Root cause identified and patch drafted in 20 min' }, { before: 'Alert triage taking most of a shift', after: 'AI-enriched context, you focus on real threats' }],
+  },
 }
 
 const moduleOutlines: Record<string, { title: string; lessons: string[] }[]> = {
