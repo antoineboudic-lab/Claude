@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Zap } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 
-const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS ?? 'antoine.boudic@gmail.com')
+const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS ?? '')
   .split(',').map(e => e.trim().toLowerCase()).filter(Boolean)
 
 export function AdminGate({ children }: { children: ReactNode }) {

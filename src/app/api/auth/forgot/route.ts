@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { Resend } from 'resend'
+import { createRateLimiter } from '@/lib/ratelimit'
 
 export const runtime = 'nodejs'
+
+const rateLimiter = createRateLimiter(5, 300, 'forgot') // 5 requests per 5 minutes per IP
 
 // Always use www — opuslearn.ai redirects to www, which strips the hash fragment and loses auth tokens
 const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.opuslearn.ai')
@@ -10,6 +13,10 @@ const BASE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.opuslearn.ai'
 const LOGO = `<img src="https://www.opuslearn.ai/email-logo.png" width="30" height="30" alt="OpusLearn" style="display:block;border-radius:7px;">`
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+  const allowed = await rateLimiter.check(ip)
+  if (!allowed) return NextResponse.json({ ok: true }) // silent to avoid email enumeration
+
   const { email } = await req.json()
   if (!email) return NextResponse.json({ error: 'Email required' }, { status: 400 })
 

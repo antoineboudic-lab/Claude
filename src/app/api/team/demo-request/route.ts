@@ -9,6 +9,14 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export async function OPTIONS() {
   return new NextResponse(null, { status: 204, headers: CORS_HEADERS })
 }
@@ -28,11 +36,11 @@ export async function POST(req: NextRequest) {
     replyTo: email,
     subject: `Demo request — ${company} (${size})`,
     html: `
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Company:</strong> ${company}</p>
-      <p><strong>Team size:</strong> ${size}</p>
-      ${message ? `<p><strong>Message:</strong> ${message}</p>` : ''}
+      <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Company:</strong> ${escapeHtml(company)}</p>
+      <p><strong>Team size:</strong> ${escapeHtml(size)}</p>
+      ${message ? `<p><strong>Message:</strong> ${escapeHtml(message)}</p>` : ''}
     `,
   })
 

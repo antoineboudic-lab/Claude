@@ -3,6 +3,14 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { type, page, description, email } = await req.json()
@@ -24,15 +32,15 @@ export async function POST(req: NextRequest) {
           <table style="width:100%;border-collapse:collapse;font-size:14px;">
             <tr>
               <td style="padding:8px 12px;background:#EFF6FF;font-weight:600;color:#64748B;width:120px;border-radius:6px 0 0 0;">Page</td>
-              <td style="padding:8px 12px;background:#ffffff;border:1px solid #E2E8F0;">${page || '—'}</td>
+              <td style="padding:8px 12px;background:#ffffff;border:1px solid #E2E8F0;">${escapeHtml(page || '—')}</td>
             </tr>
             <tr>
               <td style="padding:8px 12px;background:#EFF6FF;font-weight:600;color:#64748B;">From</td>
-              <td style="padding:8px 12px;background:#ffffff;border:1px solid #E2E8F0;">${email || 'anonymous'}</td>
+              <td style="padding:8px 12px;background:#ffffff;border:1px solid #E2E8F0;">${escapeHtml(email || 'anonymous')}</td>
             </tr>
             <tr>
               <td style="padding:8px 12px;background:#EFF6FF;font-weight:600;color:#64748B;border-radius:0 0 0 6px;">Feedback</td>
-              <td style="padding:8px 12px;background:#ffffff;border:1px solid #E2E8F0;white-space:pre-wrap;">${description}</td>
+              <td style="padding:8px 12px;background:#ffffff;border:1px solid #E2E8F0;white-space:pre-wrap;">${escapeHtml(description)}</td>
             </tr>
           </table>
         </div>

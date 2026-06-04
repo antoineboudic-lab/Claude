@@ -12,7 +12,7 @@ const RESEND_FREE_MONTHLY = 3000
 const RESEND_ALERT_COUNT = 2400      // alert at 80%
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const ADMIN_EMAIL = process.env.ADMIN_EMAILS?.split(',')[0]?.trim() ?? 'antoine@opuslearn.ai'
+const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',')[0]?.trim() ?? ''
 
 export async function GET(req: Request) {
   const auth = req.headers.get('authorization')

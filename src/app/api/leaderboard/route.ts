@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
-export const revalidate = 300
 
 interface ProgressRow {
   user_id: string
@@ -26,6 +26,12 @@ export interface LeaderboardEntry {
 }
 
 export async function GET() {
+  const supabase = await createSupabaseServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   const admin = createAdminClient()
 
   const { data, error } = await admin
@@ -43,10 +49,10 @@ export async function GET() {
   const userResults = await Promise.all(rows.map(row => admin.auth.admin.getUserById(row.user_id)))
 
   const entries: LeaderboardEntry[] = rows.map((row, i) => {
-    const user = userResults[i].data?.user
+    const u = userResults[i].data?.user
     const fullName =
-      (user?.user_metadata as { full_name?: string } | undefined)?.full_name ??
-      user?.email?.split('@')[0] ??
+      (u?.user_metadata as { full_name?: string } | undefined)?.full_name ??
+      u?.email?.split('@')[0] ??
       'Learner'
     return {
       rank: i + 1,

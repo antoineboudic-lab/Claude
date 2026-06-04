@@ -5,7 +5,7 @@ import { Resend } from 'resend'
 
 export const runtime = 'nodejs'
 
-const ADMIN_EMAILS = (process.env.ADMIN_EMAILS ?? 'antoine.boudic@gmail.com')
+const ADMIN_EMAILS = (process.env.NEXT_PUBLIC_ADMIN_EMAILS ?? '')
   .split(',').map(e => e.trim().toLowerCase()).filter(Boolean)
 
 // ── Auth helper ───────────────────────────────────────────────────────────────
@@ -102,8 +102,8 @@ export async function POST(req: NextRequest) {
     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 32px;">
       <span style="font-size: 16px; font-weight: 800; color: #0F172A;">OpusLearn</span>
     </div>
-    <h1 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 0 0 20px; letter-spacing: -0.02em;">${subject}</h1>
-    <div style="font-size: 15px; line-height: 1.7; color: #475569; white-space: pre-wrap;">${messageBody.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
+    <h1 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 0 0 20px; letter-spacing: -0.02em;">${subject.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')}</h1>
+    <div style="font-size: 15px; line-height: 1.7; color: #475569; white-space: pre-wrap;">${messageBody.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</div>
     <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #F1F5F9; font-size: 12px; color: #CBD5E1;">
       You received this because you have an account on OpusLearn.
     </div>
