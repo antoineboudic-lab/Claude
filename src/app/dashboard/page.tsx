@@ -1140,7 +1140,7 @@ export default function DashboardPage() {
   }, [user])
 
   useEffect(() => {
-    if (!mounted) return
+    if (!mounted || loading) return
 
     async function load() {
       if (user) {
@@ -1164,7 +1164,7 @@ export default function DashboardPage() {
     }
 
     load()
-  }, [user, mounted])
+  }, [user, mounted, loading])
 
   useEffect(() => {
     if (!loading && !user) router.replace('/?next=/dashboard')
