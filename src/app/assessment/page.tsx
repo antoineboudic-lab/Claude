@@ -1611,7 +1611,7 @@ export default function AssessmentPage() {
                     <Zap size={11} /> {t('fiveMinutes')}
                   </div>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4" style={{ color: '#0F172A' }}>
-                    {t('findPerfect')}<br />
+                    Find your perfect<br />
                     <span style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                       AI learning path
                     </span>
