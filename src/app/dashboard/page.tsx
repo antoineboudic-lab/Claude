@@ -1265,9 +1265,6 @@ export default function DashboardPage() {
     identityData?.avatar_url ??
     identityData?.picture ??
     null
-  if (process.env.NODE_ENV === 'development') {
-    console.log('[avatar debug]', { user_metadata: user.user_metadata, identityData, avatarUrl })
-  }
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px)' }}>

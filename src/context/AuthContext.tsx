@@ -37,10 +37,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const client = supabase.current
-    client.auth.getSession().then(({ data }) => {
+    client.auth.getSession().then(async ({ data }) => {
       setSession(data.session)
-      setUser(data.session?.user ?? null)
-      wasSignedIn.current = !!data.session?.user
+      if (data.session) {
+        const { data: { user } } = await client.auth.getUser()
+        setUser(user)
+        wasSignedIn.current = !!user
+      } else {
+        setUser(null)
+        wasSignedIn.current = false
+      }
       setLoading(false)
     })
 
