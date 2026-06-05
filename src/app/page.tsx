@@ -745,7 +745,7 @@ function HowItWorks() {
       tag: tHIW('step2Tag'),
     },
     {
-      number: '03', icon: GraduationCap, title: tHIW('step3Title'), color: '#10B981', bg: '#D1FAE5',
+      number: '03', icon: GraduationCap, title: tHIW('step3Title'), color: '#2563EB', bg: '#DBEAFE',
       desc: tHIW('step3Desc'),
       detail: tHIW('step3Detail'),
       tag: tHIW('step3Tag'),
@@ -846,17 +846,17 @@ function HowItWorks() {
 // ─── Role Tracks ──────────────────────────────────────────────────────────────
 
 const TRACKS = [
-  { id: 'marketing',  icon: Megaphone,    label: 'Marketing',        color: '#E04D2A', skills: ['AI copywriting', 'Campaign automation', 'Content strategy', 'Data analysis'] },
-  { id: 'finance',    icon: LineChart,    label: 'Finance',          color: '#F59E0B', skills: ['Financial modelling', 'Report generation', 'Risk analysis', 'Forecasting'] },
-  { id: 'hr',         icon: HeartHandshake, label: 'HR & People',   color: '#10B981', skills: ['Talent acquisition', 'L&D automation', 'HR analytics', 'Engagement'] },
+  { id: 'marketing',  icon: Megaphone,    label: 'Marketing',        color: '#2563EB', skills: ['AI copywriting', 'Campaign automation', 'Content strategy', 'Data analysis'] },
+  { id: 'finance',    icon: LineChart,    label: 'Finance',          color: '#2563EB', skills: ['Financial modelling', 'Report generation', 'Risk analysis', 'Forecasting'] },
+  { id: 'hr',         icon: HeartHandshake, label: 'HR & People',   color: '#2563EB', skills: ['Talent acquisition', 'L&D automation', 'HR analytics', 'Engagement'] },
   { id: 'sales',      icon: TrendingUp,   label: 'Sales',            color: '#2563EB', skills: ['Prospect research', 'Proposal writing', 'CRM automation', 'Pipeline AI'] },
-  { id: 'operations', icon: Settings,     label: 'Operations',       color: '#06B6D4', skills: ['Process automation', 'Decision support', 'Supply chain AI', 'Quality ops'] },
-  { id: 'leadership', icon: Briefcase,    label: 'Leadership',       color: '#F97316', skills: ['AI strategy', 'Change management', 'Team enablement', 'Executive decisions'] },
-  { id: 'legal',      icon: Scale,        label: 'Legal',            color: '#0284C7', skills: ['Contract analysis', 'Legal research', 'Risk assessment', 'AI governance'] },
-  { id: 'product',    icon: Package,      label: 'Product',          color: '#14B8A6', skills: ['User research', 'Roadmap prioritisation', 'PRD writing', 'AI product strategy'] },
-  { id: 'customer',   icon: Headphones,   label: 'Customer Success', color: '#DC2626', skills: ['Health monitoring', 'Churn prevention', 'Personalisation', 'CS operations'] },
-  { id: 'consulting', icon: BarChart,     label: 'Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'] },
-  { id: 'it',        icon: Zap,          label: 'IT & Technology',  color: '#6366F1', skills: ['AI scripting & automation', 'Cybersecurity with AI', 'IT operations', 'AI governance'] },
+  { id: 'operations', icon: Settings,     label: 'Operations',       color: '#2563EB', skills: ['Process automation', 'Decision support', 'Supply chain AI', 'Quality ops'] },
+  { id: 'leadership', icon: Briefcase,    label: 'Leadership',       color: '#2563EB', skills: ['AI strategy', 'Change management', 'Team enablement', 'Executive decisions'] },
+  { id: 'legal',      icon: Scale,        label: 'Legal',            color: '#2563EB', skills: ['Contract analysis', 'Legal research', 'Risk assessment', 'AI governance'] },
+  { id: 'product',    icon: Package,      label: 'Product',          color: '#2563EB', skills: ['User research', 'Roadmap prioritisation', 'PRD writing', 'AI product strategy'] },
+  { id: 'customer',   icon: Headphones,   label: 'Customer Success', color: '#2563EB', skills: ['Health monitoring', 'Churn prevention', 'Personalisation', 'CS operations'] },
+  { id: 'consulting', icon: BarChart,     label: 'Consulting',       color: '#2563EB', skills: ['Research synthesis', 'Structured analysis', 'Slide writing', 'Client communication'] },
+  { id: 'it',        icon: Zap,          label: 'IT & Technology',  color: '#2563EB', skills: ['AI scripting & automation', 'Cybersecurity with AI', 'IT operations', 'AI governance'] },
 ]
 
 const TRACK_PREVIEWS: Record<string, { headline: string; modules: { title: string; lessons: string[] }[] }> = {
@@ -1025,11 +1025,11 @@ function RoleTracks() {
 
 const FEATURES = [
   { icon: Brain, title: 'Adaptive AI personalisation', desc: 'Your path updates as you learn. The more you do, the more accurately it maps to where you are.', color: '#2563EB' },
-  { icon: Target, title: 'Role-specific content', desc: 'Every lesson, exercise, and example is tailored to your job function — not recycled from a generic course.', color: '#3B82F6' },
-  { icon: Layers, title: 'Practical exercises', desc: 'Apply what you learn immediately. Every module ends with a real task using tools you already have access to.', color: '#10B981' },
-  { icon: BarChart3, title: 'Progress tracking', desc: "See exactly where you are, what you've mastered, and what comes next — with XP, streaks, and milestones.", color: '#F59E0B' },
-  { icon: Award, title: 'Verified certificates', desc: 'Earn credentials that signal AI literacy to your employer — tied to your specific role and track.', color: '#E04D2A' },
-  { icon: Users, title: 'Peer community', desc: 'Learn alongside professionals from your industry. Share wins, ask questions, and stay accountable together.', color: '#06B6D4' },
+  { icon: Target, title: 'Role-specific content', desc: 'Every lesson, exercise, and example is tailored to your job function — not recycled from a generic course.', color: '#2563EB' },
+  { icon: Layers, title: 'Practical exercises', desc: 'Apply what you learn immediately. Every module ends with a real task using tools you already have access to.', color: '#2563EB' },
+  { icon: BarChart3, title: 'Progress tracking', desc: "See exactly where you are, what you've mastered, and what comes next — with XP, streaks, and milestones.", color: '#2563EB' },
+  { icon: Award, title: 'Verified certificates', desc: 'Earn credentials that signal AI literacy to your employer — tied to your specific role and track.', color: '#2563EB' },
+  { icon: Users, title: 'Peer community', desc: 'Learn alongside professionals from your industry. Share wins, ask questions, and stay accountable together.', color: '#2563EB' },
 ]
 
 function Features() {
@@ -1283,12 +1283,12 @@ function TeamsSection() {
 // ─── Testimonials ─────────────────────────────────────────────────────────────
 
 const TESTIMONIALS = [
-  { name: 'Sophie Armand', role: 'Head of Marketing', company: "L'Oréal Paris", avatar: 'SA', color: '#E04D2A', track: 'Marketing', quote: 'I went from intimidated by AI to running three AI-assisted campaigns in two months. The Marketing track understood exactly where I needed to start.' },
-  { name: 'James Whitfield', role: 'VP Finance', company: 'Goldman Sachs', avatar: 'JW', color: '#F59E0B', track: 'Finance', quote: 'The Finance track cut straight to what matters. No filler, no hype — just practical tools I use every week now in FP&A and reporting.' },
-  { name: 'Priya Nair', role: 'CHRO', company: 'Accenture', avatar: 'PN', color: '#10B981', track: 'HR & People', quote: "The assessment nailed my needs better than I could have myself. Three weeks in and I've already built an AI-assisted onboarding process for our team." },
-  { name: 'Marcus Reid', role: 'Account Executive', company: 'Salesforce', avatar: 'MR', color: '#3B82F6', track: 'Sales', quote: "I was spending 3 hours a week on prospect research. After the Sales track, that's down to 40 minutes — and the quality of my outreach has gone up significantly." },
-  { name: 'Clara Dubois', role: 'Senior Legal Counsel', company: 'BNP Paribas', avatar: 'CD', color: '#0284C7', track: 'Legal', quote: "I was sceptical AI could work in legal. The Legal track changed my mind completely. I reviewed a 60-page contract in 20 minutes last week — with better notes than usual." },
-  { name: 'Tom Nakamura', role: 'Product Manager', company: 'Notion', avatar: 'TN', color: '#14B8A6', track: 'Product', quote: "The Product track is genuinely the best thing I've done for my career this year. I now go from user interview to draft PRD in one afternoon instead of three days." },
+  { name: 'Sophie Armand', role: 'Head of Marketing', company: "L'Oréal Paris", avatar: 'SA', color: '#2563EB', track: 'Marketing', quote: 'I went from intimidated by AI to running three AI-assisted campaigns in two months. The Marketing track understood exactly where I needed to start.' },
+  { name: 'James Whitfield', role: 'VP Finance', company: 'Goldman Sachs', avatar: 'JW', color: '#2563EB', track: 'Finance', quote: 'The Finance track cut straight to what matters. No filler, no hype — just practical tools I use every week now in FP&A and reporting.' },
+  { name: 'Priya Nair', role: 'CHRO', company: 'Accenture', avatar: 'PN', color: '#2563EB', track: 'HR & People', quote: "The assessment nailed my needs better than I could have myself. Three weeks in and I've already built an AI-assisted onboarding process for our team." },
+  { name: 'Marcus Reid', role: 'Account Executive', company: 'Salesforce', avatar: 'MR', color: '#2563EB', track: 'Sales', quote: "I was spending 3 hours a week on prospect research. After the Sales track, that's down to 40 minutes — and the quality of my outreach has gone up significantly." },
+  { name: 'Clara Dubois', role: 'Senior Legal Counsel', company: 'BNP Paribas', avatar: 'CD', color: '#2563EB', track: 'Legal', quote: "I was sceptical AI could work in legal. The Legal track changed my mind completely. I reviewed a 60-page contract in 20 minutes last week — with better notes than usual." },
+  { name: 'Tom Nakamura', role: 'Product Manager', company: 'Notion', avatar: 'TN', color: '#2563EB', track: 'Product', quote: "The Product track is genuinely the best thing I've done for my career this year. I now go from user interview to draft PRD in one afternoon instead of three days." },
 ]
 
 function Testimonials() {
@@ -1697,7 +1697,7 @@ function About() {
       name: 'Aisha Okonkwo',
       role: 'Head of Learning Design',
       initials: 'AO',
-      color: '#10B981',
+      color: '#2563EB',
       prev: 'Deloitte',
       bio: 'Former L&D Director at Deloitte with a background in cognitive science. Redesigned every module around behaviour change rather than information transfer — the reason our completion rate sits at 94%.',
     },
@@ -1717,12 +1717,12 @@ function About() {
       desc: 'Generic AI training fails because it ignores context. We build every lesson around a specific role, with examples and exercises drawn directly from that world.',
     },
     {
-      num: '02', bg: '#ECFDF5', color: '#10B981',
+      num: '02', bg: '#DBEAFE', color: '#2563EB',
       title: 'Practical over theoretical',
       desc: 'Every module ends with something you can apply today — not a quiz about definitions, but a real output you produce using tools you already have.',
     },
     {
-      num: '03', bg: '#EFF6FF', color: '#3B82F6',
+      num: '03', bg: '#DBEAFE', color: '#2563EB',
       title: 'No code, no compromise',
       desc: 'We prove that the highest-leverage AI skills for business professionals have nothing to do with Python. Fluency starts with understanding, not syntax.',
     },
