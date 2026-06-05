@@ -889,6 +889,7 @@ function NoAssessmentOnboarding({ name }: { name: string }) {
 function BadgesSection({ earned }: { earned: string[] }) {
   const t = useTranslations('dashboard')
   const all = Object.values(BADGES)
+  const [hovered, setHovered] = useState<string | null>(null)
 
   return (
     <motion.div
@@ -913,15 +914,17 @@ function BadgesSection({ earned }: { earned: string[] }) {
       <div className="grid grid-cols-3 gap-3">
         {all.map((badge) => {
           const isEarned = earned.includes(badge.id)
+          const isHovered = hovered === badge.id
           return (
             <div
               key={badge.id}
-              className="flex flex-col items-center gap-1.5 p-3 rounded-xl text-center"
+              className="relative flex flex-col items-center gap-1.5 p-3 rounded-xl text-center cursor-default"
               style={{
                 background: isEarned ? '#FEF3C7' : '#EFF6FF',
                 border: isEarned ? '1px solid #FDE68A' : '1px solid #F1F5F9',
               }}
-              title={badge.description}
+              onMouseEnter={() => setHovered(badge.id)}
+              onMouseLeave={() => setHovered(null)}
             >
               <span className="text-2xl" style={{ filter: isEarned ? 'none' : 'grayscale(1) opacity(0.3)' }}>
                 {badge.icon}
@@ -930,6 +933,52 @@ function BadgesSection({ earned }: { earned: string[] }) {
                 style={{ color: isEarned ? '#D97706' : '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
                 {badge.name}
               </p>
+
+              <AnimatePresence>
+                {isHovered && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 4, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 4, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute bottom-full left-1/2 z-50 mb-2 w-44 rounded-xl p-3 text-left shadow-lg pointer-events-none"
+                    style={{
+                      transform: 'translateX(-50%)',
+                      background: '#1E293B',
+                      border: '1px solid #334155',
+                    }}
+                  >
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="text-base">{badge.icon}</span>
+                      <p className="text-xs font-bold" style={{ color: '#F1F5F9', fontFamily: 'var(--font-sans)' }}>
+                        {badge.name}
+                      </p>
+                      {isEarned && (
+                        <span className="ml-auto text-[10px] font-semibold px-1.5 py-0.5 rounded-full"
+                          style={{ background: '#F59E0B', color: '#fff', fontFamily: 'var(--font-sans)' }}>
+                          Earned
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] leading-relaxed mb-2" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                      {badge.description}
+                    </p>
+                    {!isEarned && (
+                      <div className="pt-2" style={{ borderTop: '1px solid #334155' }}>
+                        <p className="text-[10px] font-semibold mb-0.5 uppercase tracking-wide" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                          How to earn
+                        </p>
+                        <p className="text-[11px] leading-relaxed" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                          {badge.howTo}
+                        </p>
+                      </div>
+                    )}
+                    {/* Arrow */}
+                    <div className="absolute left-1/2 bottom-0 translate-x-[-50%] translate-y-full w-0 h-0"
+                      style={{ borderLeft: '6px solid transparent', borderRight: '6px solid transparent', borderTop: '6px solid #1E293B' }} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )
         })}

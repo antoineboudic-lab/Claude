@@ -15,6 +15,7 @@ export interface Badge {
   id: BadgeId
   name: string
   description: string
+  howTo: string
   icon: string
   xp: number
 }
@@ -47,6 +48,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'first_lesson',
     name: 'First Step',
     description: 'Completed your first lesson',
+    howTo: 'Complete any lesson to earn this badge.',
     icon: '🎯',
     xp: 0,
   },
@@ -54,6 +56,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'perfect_score',
     name: 'Sharp Mind',
     description: 'Scored 100% on a quiz',
+    howTo: 'Answer every question correctly in a lesson quiz.',
     icon: '💡',
     xp: 0,
   },
@@ -61,6 +64,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'streak_3',
     name: 'On a Roll',
     description: 'Learned 3 days in a row',
+    howTo: 'Complete at least one lesson on 3 consecutive days.',
     icon: '🔥',
     xp: 0,
   },
@@ -68,6 +72,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'streak_7',
     name: '7-Day Streak',
     description: 'Learned 7 days in a row',
+    howTo: 'Complete at least one lesson every day for 7 days in a row.',
     icon: '🔥',
     xp: 0,
   },
@@ -75,6 +80,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'streak_14',
     name: 'Two Weeks Strong',
     description: 'Learned 14 days in a row',
+    howTo: 'Keep your streak going for 14 consecutive days.',
     icon: '⚡',
     xp: 0,
   },
@@ -82,6 +88,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'streak_30',
     name: 'Committed',
     description: 'Learned 30 days in a row',
+    howTo: 'Maintain your daily learning streak for a full 30 days.',
     icon: '💎',
     xp: 0,
   },
@@ -89,6 +96,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'module_complete',
     name: 'Module Master',
     description: 'Completed a full module',
+    howTo: 'Finish every lesson in any module within your learning path.',
     icon: '📚',
     xp: 0,
   },
@@ -96,6 +104,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'track_complete',
     name: 'Track Champion',
     description: 'Completed a full track',
+    howTo: 'Complete all modules in any one track (e.g. Marketing, Finance…).',
     icon: '🏆',
     xp: 0,
   },
@@ -103,6 +112,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'three_tracks',
     name: 'Polymath',
     description: 'Completed 3 tracks',
+    howTo: 'Earn Track Champion in 3 different tracks.',
     icon: '🌟',
     xp: 0,
   },
@@ -110,6 +120,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'early_bird',
     name: 'Early Bird',
     description: 'Completed a lesson before 8am',
+    howTo: 'Finish a lesson before 8:00 AM in your local timezone.',
     icon: '🌅',
     xp: 0,
   },
@@ -117,6 +128,7 @@ export const BADGES: Record<BadgeId, Badge> = {
     id: 'dedicated',
     name: 'Dedicated',
     description: 'Completed 10 lessons',
+    howTo: 'Complete 10 lessons in total across any tracks.',
     icon: '🎓',
     xp: 0,
   },
