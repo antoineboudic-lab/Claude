@@ -8,7 +8,7 @@ import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, User, ArrowLeft, ArrowRight,
   Check, Zap, Clock, Target, Users, TrendingUp as Trend,
-  Star, Brain, X, CheckCircle2,
+  Star, Brain, CheckCircle2,
   Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
@@ -22,7 +22,7 @@ const F = 'var(--font-sans)'
 
 // ─── Step types ───────────────────────────────────────────────────────────────
 
-type StepId = 'welcome' | 'role' | 'subRole' | 'roleDescription' | 'context' | 'tools' | 'skillCheck' | 'challenge' | 'goals' | 'time' | 'processing'
+type StepId = 'welcome' | 'role' | 'subRole' | 'context' | 'tools' | 'challenge' | 'goals' | 'time' | 'processing'
 
 // ─── Role data ────────────────────────────────────────────────────────────────
 
@@ -143,7 +143,7 @@ const AI_TOOLS = [
   { id: 'none', label: "I don't use AI tools yet", color: '#94A3B8' },
 ]
 
-// ─── Role description tips ────────────────────────────────────────────────────
+// ─── Role description tips (kept for future use) ─────────────────────────────
 
 const ROLE_DESCRIPTION_TIPS: Record<string, string[]> = {
   marketing: [
@@ -443,7 +443,7 @@ const SUB_ROLE_DESCRIPTION_TIPS: Partial<Record<string, Record<string, string[]>
   },
 }
 
-// ─── Skill check questions ────────────────────────────────────────────────────
+// ─── Skill check questions (kept for future dashboard use) ───────────────────
 
 interface SkillQuestion {
   q: string
@@ -1469,11 +1469,11 @@ export default function AssessmentPage() {
   const t = useTranslations('assessment')
   const router = useRouter()
   const { user, signOut } = useAuth()
+  const [mounted, setMounted] = useState(false)
   const [stepIdx, setStepIdx] = useState(0)
   const [direction, setDirection] = useState(1)
   const [answers, setAnswers] = useState<AssessmentAnswers>(DEFAULT_ANSWERS)
   const [processingStep, setProcessingStep] = useState(0)
-  const [showTips, setShowTips] = useState(false)
 
   // Pre-fill name from auth metadata and skip welcome step when signed in
   useEffect(() => {
@@ -1486,13 +1486,14 @@ export default function AssessmentPage() {
     setStepIdx(1) // skip welcome step
   }, [user])
 
+  useEffect(() => { setMounted(true) }, [])
+
   // Dynamic steps based on role (branching)
   const STEPS = useMemo<StepId[]>(() => {
     const base: StepId[] = ['welcome', 'role']
     const primary = answers.roles[0]
     if (answers.roles.length === 1 && primary !== 'other' && primary !== 'leadership') base.push('subRole')
-    base.push('roleDescription')
-    return [...base, 'context', 'tools', 'skillCheck', 'challenge', 'goals', 'time', 'processing']
+    return [...base, 'context', 'tools', 'challenge', 'goals', 'time', 'processing']
   }, [answers.roles])
 
   const currentStep = STEPS[stepIdx]
@@ -1520,7 +1521,8 @@ export default function AssessmentPage() {
         setTimeout(async () => {
           try {
             const derived = deriveExperience(answers.currentTools)
-            const finalAnswers = { ...answers, experience: derived }
+            const skillScore = derived === 'regular' ? 2 : derived === 'some' ? 1 : 0
+            const finalAnswers = { ...answers, experience: derived, skillScore }
             const result = buildAssessmentResult(finalAnswers)
             localStorage.setItem('opuslearn-assessment', JSON.stringify(result))
             if (user) await saveAssessment(user.id, result).catch(() => {})
@@ -1537,10 +1539,8 @@ export default function AssessmentPage() {
       case 'welcome': return answers.name.trim().length > 0
       case 'role': return answers.roles.length > 0
       case 'subRole': return true
-      case 'roleDescription': return true
       case 'context': return answers.industry !== undefined && answers.companySize !== undefined
       case 'tools': return answers.currentTools.length > 0
-      case 'skillCheck': return true // managed internally
       case 'challenge': return answers.challenges.length > 0
       case 'goals': return answers.goals.length > 0
       case 'time': return true
@@ -1554,7 +1554,6 @@ export default function AssessmentPage() {
     : undefined)
     ?? answers.roles.flatMap(r => CHALLENGES[r] ?? CHALLENGES.other)
       .filter((c, i, arr) => arr.findIndex(x => x.id === c.id) === i)
-  const skillQs = SKILL_QUESTIONS[primaryRole] ?? SKILL_QUESTIONS.other
   const allGoalOptions = answers.roles.flatMap(r => ROLE_GOALS[r] ?? ROLE_GOALS.other)
   const goals = allGoalOptions.filter((g, i, arr) => arr.findIndex(x => x.id === g.id) === i)
   const progressPct = Math.round((stepIdx / contentStepCount) * 100)
@@ -1569,7 +1568,7 @@ export default function AssessmentPage() {
         </Link>
 
         <div className="flex items-center gap-4">
-          {currentStep !== 'processing' && (
+          {mounted && currentStep !== 'processing' && (
             <>
               <span className="text-xs hidden sm:block" style={{ color: '#94A3B8' }}>
                 {t('stepOf', { current: stepIdx + 1, total: contentStepCount })}
@@ -1724,89 +1723,6 @@ export default function AssessmentPage() {
               </motion.div>
             )}
 
-            {/* ── Role description ── */}
-            {currentStep === 'roleDescription' && (() => {
-              const tips = (answers.subRole && SUB_ROLE_DESCRIPTION_TIPS[primaryRole]?.[answers.subRole])
-                || ROLE_DESCRIPTION_TIPS[primaryRole]
-                || ROLE_DESCRIPTION_TIPS.other
-              const subRoleLabel = answers.subRole
-                ? SUB_ROLES[primaryRole as keyof typeof SUB_ROLES]?.find(sr => sr.id === answers.subRole)?.label
-                : undefined
-              const roleLabel = answers.roles.length > 1
-                ? answers.roles.map(r => ROLES.find(x => x.id === r)?.label).filter(Boolean).join(' & ')
-                : (subRoleLabel ?? ROLES.find(r => r.id === primaryRole)?.label ?? 'your role')
-              return (
-                <motion.div key="roleDescription" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
-                  <StepHeader
-                    question="Describe your day-to-day in one sentence."
-                    sub="Optional — but the more context you give us, the better we can personalise your path."
-                  />
-
-                  <div className="mb-2">
-                    <textarea
-                      placeholder={`e.g. ${tips[0]}`}
-                      value={answers.roleDescription}
-                      onChange={e => setAnswers(a => ({ ...a, roleDescription: e.target.value.slice(0, 200) }))}
-                      rows={3}
-                      className="w-full px-5 py-4 rounded-xl text-base outline-none transition-all resize-none"
-                      style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', color: '#0F172A', lineHeight: 1.6 }}
-                      onFocus={e => { e.currentTarget.style.borderColor = '#2563EB' }}
-                      onBlur={e => { e.currentTarget.style.borderColor = '#CBD5E1' }}
-                    />
-                    <div className="flex items-center justify-between mt-1.5 px-1">
-                      <button
-                        onClick={() => setShowTips(t => !t)}
-                        className="text-xs font-semibold flex items-center gap-1 transition-colors"
-                        style={{ color: '#2563EB' }}
-                      >
-                        <span style={{ fontSize: 10 }}>{showTips ? '▲' : '▼'}</span>
-                        {showTips ? t('hideTips') : t('showTips')}
-                      </button>
-                      <span className="text-xs" style={{ color: answers.roleDescription.length > 180 ? '#F59E0B' : '#CBD5E1' }}>
-                        {answers.roleDescription.length}/200
-                      </span>
-                    </div>
-                  </div>
-
-                  <AnimatePresence>
-                    {showTips && (
-                      <motion.div
-                        key="tips"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden mb-6"
-                      >
-                        <div className="mt-3 p-4 rounded-2xl" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
-                          <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>
-                            {t('examplesFor', { role: roleLabel })}
-                          </p>
-                          <div className="flex flex-col gap-2">
-                            {tips.map((tip, i) => (
-                              <button
-                                key={i}
-                                onClick={() => { setAnswers(a => ({ ...a, roleDescription: tip })); setShowTips(false) }}
-                                className="text-left px-4 py-3 rounded-xl text-sm transition-all hover:scale-[1.01]"
-                                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', color: '#475569' }}
-                              >
-                                {tip}
-                              </button>
-                            ))}
-                          </div>
-                          <p className="text-xs mt-3" style={{ color: '#94A3B8' }}>
-                            {t('tapExample')}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <NavButtons canProceed onNext={() => { setShowTips(false); goNext() }} onBack={() => { setShowTips(false); goBack() }} />
-                </motion.div>
-              )
-            })()}
-
             {/* ── Context ── */}
             {currentStep === 'context' && (
               <motion.div key="context" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
@@ -1889,20 +1805,6 @@ export default function AssessmentPage() {
                 </div>
                 <NavButtons canProceed={canProceed()} onNext={goNext} onBack={goBack} />
               </motion.div>
-            )}
-
-            {/* ── Skill check ── */}
-            {currentStep === 'skillCheck' && (
-              <SkillCheckStep
-                key="skillCheck"
-                direction={direction}
-                questions={skillQs}
-                onComplete={(score) => {
-                  setAnswers(a => ({ ...a, skillScore: score }))
-                  goNext()
-                }}
-                onBack={goBack}
-              />
             )}
 
             {/* ── Challenge ── */}
@@ -2036,158 +1938,6 @@ export default function AssessmentPage() {
         </div>
       </div>
     </div>
-  )
-}
-
-// ─── Skill check step component ───────────────────────────────────────────────
-
-const SKILL_INTROS = [
-  "Let's start with something practical.",
-  "Good. Now a judgment call.",
-  "Nice. Let's think bigger picture.",
-  "Last one — this one's about risk.",
-]
-
-const NEXT_LABELS = [
-  "Next question →",
-  "Keep going →",
-  "One more →",
-  "See my results",
-]
-
-function SkillCheckStep({
-  direction,
-  questions,
-  onComplete,
-  onBack,
-}: {
-  direction: number
-  questions: SkillQuestion[]
-  onComplete: (score: number) => void
-  onBack: () => void
-}) {
-  const t = useTranslations('assessment')
-  const [qIdx, setQIdx] = useState(0)
-  const [selected, setSelected] = useState<string | null>(null)
-  const [revealed, setRevealed] = useState(false)
-  const [score, setScore] = useState(0)
-
-  const q = questions[qIdx]
-  const isLast = qIdx === questions.length - 1
-
-  // Shuffle options once per question so the correct answer isn't always in the same position
-  const shuffledOptions = useMemo(
-    () => [...q.options].sort(() => Math.random() - 0.5),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [qIdx]
-  )
-  const wasCorrect = revealed && (q.options.find(o => o.id === selected)?.correct ?? false)
-
-  function handleSelect(optId: string) {
-    if (revealed) return
-    const correct = q.options.find(o => o.id === optId)?.correct ?? false
-    setSelected(optId)
-    setRevealed(true)
-    if (correct) setScore(s => s + 1)
-  }
-
-  function handleNext() {
-    if (isLast) {
-      onComplete(score)
-    } else {
-      setQIdx(i => i + 1)
-      setSelected(null)
-      setRevealed(false)
-    }
-  }
-
-  const intro = SKILL_INTROS[qIdx] ?? `Question ${qIdx + 1}.`
-  const nextLabel = NEXT_LABELS[Math.min(qIdx, NEXT_LABELS.length - 1)]
-
-  return (
-    <motion.div key="skillCheck" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
-      <div className="mb-6">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: '#DBEAFE', color: '#2563EB' }}>
-            {t('skillCheckOf', { current: qIdx + 1, total: questions.length })}
-          </span>
-          <div className="flex gap-1">
-            {questions.map((_, i) => (
-              <div key={i} className="w-6 h-1 rounded-full" style={{ background: i <= qIdx ? '#2563EB' : '#E2E8F0' }} />
-            ))}
-          </div>
-        </div>
-        <p className="text-sm font-medium mb-2" style={{ color: '#2563EB' }}>{intro}</p>
-        <h2 className="text-xl sm:text-2xl font-black leading-snug mb-2" style={{ color: '#0F172A' }}>{q.q}</h2>
-        {!revealed && <p className="text-sm" style={{ color: '#94A3B8' }}>{t('pickBest')}</p>}
-      </div>
-
-      <div className="space-y-3 mb-5">
-        {shuffledOptions.map(opt => {
-          const isSelected = selected === opt.id
-          const isCorrect = opt.correct
-          let bg = '#FFFFFF'
-          let border = '#E2E8F0'
-          let textColor = '#475569'
-
-          if (revealed) {
-            if (isCorrect) { bg = '#ECFDF5'; border = '#6EE7B7'; textColor = '#065F46' }
-            else if (isSelected && !isCorrect) { bg = '#FEF2F2'; border = '#F87171'; textColor = '#991B1B' }
-          } else if (isSelected) {
-            bg = '#DBEAFE'; border = '#2563EB'
-          }
-
-          return (
-            <button key={opt.id}
-              onClick={() => handleSelect(opt.id)}
-              disabled={revealed}
-              className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all"
-              style={{ background: bg, border: `1.5px solid ${border}` }}>
-              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: revealed && isCorrect ? '#10B981' : revealed && isSelected ? '#DC2626' : '#F1F5F9' }}>
-                {revealed && isCorrect ? <Check size={12} className="text-white" /> :
-                  revealed && isSelected && !isCorrect ? <X size={12} className="text-white" /> : null}
-              </div>
-              <span className="text-sm font-medium" style={{ color: textColor }}>{opt.label}</span>
-            </button>
-          )
-        })}
-      </div>
-
-      <AnimatePresence>
-        {revealed && (
-          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            className="mb-6 p-4 rounded-2xl"
-            style={{ background: wasCorrect ? '#F0FDF4' : '#FFF7ED', border: `1px solid ${wasCorrect ? '#BBF7D0' : '#FED7AA'}` }}>
-            <div className="flex items-start gap-2.5">
-              <CheckCircle2 size={15} style={{ color: wasCorrect ? '#16A34A' : '#EA580C', marginTop: 1, flexShrink: 0 }} />
-              <div>
-                <p className="text-xs font-bold mb-1" style={{ color: wasCorrect ? '#16A34A' : '#EA580C' }}>
-                  {wasCorrect ? t('exactlyRight') : t('notQuite')}
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: wasCorrect ? '#166534' : '#7C2D12' }}>{q.explanation}</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="flex items-center gap-3">
-        {qIdx === 0 && !revealed && (
-          <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100" style={{ color: '#64748B' }}>
-            <ArrowLeft size={15} /> {t('back')}
-          </button>
-        )}
-        {revealed && (
-          <motion.button initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-            onClick={handleNext}
-            className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:scale-[1.02]"
-            style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', boxShadow: '0 4px 14px rgba(37,99,235,0.25)' }}>
-            {isLast ? t('next') : nextLabel} <ArrowRight size={15} />
-          </motion.button>
-        )}
-      </div>
-    </motion.div>
   )
 }
 
