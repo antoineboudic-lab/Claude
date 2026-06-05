@@ -911,7 +911,7 @@ function BadgesSection({ earned }: { earned: string[] }) {
           {earned.length} / {all.length}
         </span>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="flex flex-wrap gap-3 justify-center">
         {all.map((badge) => {
           const isEarned = earned.includes(badge.id)
           const isHovered = hovered === badge.id
@@ -920,6 +920,7 @@ function BadgesSection({ earned }: { earned: string[] }) {
               key={badge.id}
               className="relative flex flex-col items-center gap-1.5 p-3 rounded-xl text-center cursor-default"
               style={{
+                width: 'calc(33.333% - 8px)',
                 background: isEarned ? '#FEF3C7' : '#EFF6FF',
                 border: isEarned ? '1px solid #FDE68A' : '1px solid #F1F5F9',
               }}
