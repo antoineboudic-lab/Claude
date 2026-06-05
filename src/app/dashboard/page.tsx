@@ -20,7 +20,7 @@ import { ShareCard } from '@/components/ShareCard'
 import GlobalSearch from '@/components/GlobalSearch'
 import OnboardingChecklist from '@/components/OnboardingChecklist'
 import PushNotificationPrompt from '@/components/PushNotificationPrompt'
-import { loadLatestAssessment } from '@/lib/supabase/db'
+import { loadLatestAssessment, saveAssessment } from '@/lib/supabase/db'
 import { getAdminTeam, getMemberTeam, getTeamMembersWithProgress, type TeamMember } from '@/lib/supabase/teams'
 import {
   getLevelForXP, getProgressToNextLevel, BADGES, LEVELS,
@@ -1149,8 +1149,17 @@ export default function DashboardPage() {
           setAssessment(remote)
           localStorage.setItem('opuslearn-assessment', JSON.stringify(remote))
         } else {
-          // Authenticated with no remote assessment — discard any stale local cache
-          localStorage.removeItem('opuslearn-assessment')
+          // No remote record — backfill from localStorage if a fresh assessment is there
+          try {
+            const raw = localStorage.getItem('opuslearn-assessment')
+            if (raw) {
+              const local = JSON.parse(raw) as AssessmentResult
+              setAssessment(local)
+              await saveAssessment(user.id, local).catch(() => {})
+            }
+          } catch {
+            localStorage.removeItem('opuslearn-assessment')
+          }
         }
         setAssessmentChecked(true)
         return

@@ -121,9 +121,10 @@ export function AuthModal() {
     setLoading(true)
     setError('')
     try {
+      const next = window.location.pathname === '/assessment/results' ? '/assessment/results' : '/dashboard'
       const { error } = await supabase.current.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: `${window.location.origin}/auth/callback` },
+        options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}` },
       })
       if (error) throw error
     } catch (err: unknown) {
