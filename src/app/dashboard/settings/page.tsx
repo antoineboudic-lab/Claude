@@ -246,7 +246,7 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
         {/* Avatar picker */}
         <div className="flex items-center gap-5 mb-6 pb-6" style={{ borderBottom: '1px solid #F1F5F9' }}>
           <div className="relative flex-shrink-0">
-            <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center"
+            <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center"
               style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)' }}>
               {avatarUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
