@@ -1258,7 +1258,16 @@ export default function DashboardPage() {
   const initials = user.user_metadata?.full_name
     ? user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
     : user.email?.slice(0, 2).toUpperCase() ?? '?'
-  const avatarUrl: string | null = user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? null
+  const identityData = user.identities?.[0]?.identity_data as Record<string, string> | undefined
+  const avatarUrl: string | null =
+    user.user_metadata?.avatar_url ??
+    user.user_metadata?.picture ??
+    identityData?.avatar_url ??
+    identityData?.picture ??
+    null
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[avatar debug]', { user_metadata: user.user_metadata, identityData, avatarUrl })
+  }
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px)' }}>
