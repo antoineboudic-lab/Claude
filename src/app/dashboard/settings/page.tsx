@@ -8,7 +8,7 @@ import {
   User, Settings, Users, ArrowLeft, Save, Check, Loader2,
   Zap, ChevronRight, Mail, Building2, Briefcase, Target,
   Crown, AlertCircle, Copy, ExternalLink, UserPlus, X,
-  Lock, Eye, EyeOff,
+  Lock, Eye, EyeOff, Camera,
 } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { createClient } from '@/lib/supabase/client'
@@ -149,6 +149,14 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
 
+  // Avatar
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(
+    user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? null
+  )
+  const [avatarUploading, setAvatarUploading] = useState(false)
+  const [avatarError, setAvatarError] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   // Password change
   const [pwOpen, setPwOpen] = useState(false)
   const [currentPw, setCurrentPw] = useState('')
@@ -162,6 +170,32 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
   const [pwSaved, setPwSaved] = useState(false)
 
   const supabase = useRef(createClient())
+
+  async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setAvatarError('')
+    setAvatarUploading(true)
+
+    const body = new FormData()
+    body.append('file', file)
+
+    const res = await fetch('/api/user/avatar', { method: 'POST', body })
+    const json = await res.json()
+
+    if (!res.ok) {
+      setAvatarError(json.error ?? 'Upload failed')
+      setAvatarUploading(false)
+      return
+    }
+
+    const url = `${json.url}?t=${Date.now()}`
+    await supabase.current.auth.updateUser({ data: { avatar_url: url } })
+    setAvatarUrl(url)
+    setAvatarUploading(false)
+    // Reset input so the same file can be re-selected
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
 
   async function save(e: React.FormEvent) {
     e.preventDefault()
@@ -209,6 +243,51 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: easing }}
       className="space-y-5">
       <SectionCard title="Personal info">
+        {/* Avatar picker */}
+        <div className="flex items-center gap-5 mb-6 pb-6" style={{ borderBottom: '1px solid #F1F5F9' }}>
+          <div className="relative flex-shrink-0">
+            <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)' }}>
+              {avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatarUrl} alt="Profile" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-lg font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>
+                  {name ? name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : user.email?.slice(0, 2).toUpperCase()}
+                </span>
+              )}
+              {avatarUploading && (
+                <div className="absolute inset-0 flex items-center justify-center rounded-2xl" style={{ background: 'rgba(0,0,0,0.4)' }}>
+                  <Loader2 size={18} className="animate-spin text-white" />
+                </div>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={avatarUploading}
+              className="absolute -bottom-1.5 -right-1.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all hover:opacity-90 disabled:opacity-50"
+              style={{ background: '#2563EB', boxShadow: '0 2px 6px rgba(37,99,235,0.4)' }}
+            >
+              <Camera size={11} className="text-white" />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              className="hidden"
+              onChange={handleAvatarChange}
+            />
+          </div>
+          <div>
+            <p className="text-sm font-semibold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Profile picture</p>
+            <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>JPEG, PNG, WebP or GIF — max 2 MB</p>
+            {avatarError && (
+              <p className="text-xs mt-1.5 font-semibold" style={{ color: '#EF4444', fontFamily: 'var(--font-sans)' }}>{avatarError}</p>
+            )}
+          </div>
+        </div>
+
         <form onSubmit={save} className="space-y-4">
           <Field icon={User} label="Display name" value={name} onChange={setName} placeholder="Your full name" />
           <Field icon={Briefcase} label="Job title" value={jobTitle} onChange={setJobTitle} placeholder="e.g. Marketing Manager" />
