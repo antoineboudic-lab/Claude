@@ -1258,6 +1258,7 @@ export default function DashboardPage() {
   const initials = user.user_metadata?.full_name
     ? user.user_metadata.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
     : user.email?.slice(0, 2).toUpperCase() ?? '?'
+  const avatarUrl: string | null = user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? null
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px)' }}>
@@ -1291,9 +1292,14 @@ export default function DashboardPage() {
                 <Link href="/dashboard/settings" className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100" style={{ color: '#94A3B8' }} title="Settings">
                   <Settings size={15} />
                 </Link>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
-                  {initials}
-                </div>
+                {avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={avatarUrl} alt={displayName} referrerPolicy="no-referrer" className="w-8 h-8 rounded-lg object-cover" />
+                ) : (
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
+                    {initials}
+                  </div>
+                )}
                 <button onClick={signOut} className="flex items-center gap-1.5 text-sm transition-colors hover:text-red-500" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                   <LogOut size={13} /> {tNav('signOut')}
                 </button>
