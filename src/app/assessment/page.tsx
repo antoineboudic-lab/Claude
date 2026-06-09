@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -15,7 +15,7 @@ import Logo from '@/components/Logo'
 import type { AssessmentAnswers, Role, TimeCommitment, Industry, CompanySize } from '@/lib/assessment/types'
 import { buildAssessmentResult, deriveExperience } from '@/lib/assessment/engine'
 import { useAuth } from '@/context/AuthContext'
-import { saveAssessment } from '@/lib/supabase/db'
+import { saveAssessment, loadLatestAssessment } from '@/lib/supabase/db'
 import { useTranslations } from 'next-intl'
 
 const F = 'var(--font-sans)'
@@ -1474,6 +1474,21 @@ export default function AssessmentPage() {
   const [direction, setDirection] = useState(1)
   const [answers, setAnswers] = useState<AssessmentAnswers>(DEFAULT_ANSWERS)
   const [processingStep, setProcessingStep] = useState(0)
+  const redirectChecked = useRef(false)
+
+  // If the user is already logged in and has a completed assessment, send them to results
+  useEffect(() => {
+    if (!user || redirectChecked.current) return
+    redirectChecked.current = true
+    const local = localStorage.getItem('opuslearn-assessment')
+    if (local) { router.replace('/assessment/results'); return }
+    loadLatestAssessment(user.id).then(remote => {
+      if (remote) {
+        localStorage.setItem('opuslearn-assessment', JSON.stringify(remote))
+        router.replace('/assessment/results')
+      }
+    }).catch(() => {})
+  }, [user, router])
 
   // Pre-fill name from auth metadata and skip welcome step when signed in
   useEffect(() => {

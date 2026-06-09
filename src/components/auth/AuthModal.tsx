@@ -83,7 +83,7 @@ export function AuthModal() {
           email, password,
           options: {
             data: { full_name: [firstName, lastName].filter(Boolean).join(' ') },
-            emailRedirectTo: `${window.location.origin}/assessment`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/dashboard')}`,
           },
         })
         if (error) throw error
