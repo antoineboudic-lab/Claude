@@ -34,7 +34,11 @@
         "trained": "已培训的专业人士",
         "completion": "完成率",
         "rating": "平均评分",
-        "saved": "每周节省时间"
+        "saved": "每周节省时间",
+        "tracks": "按职能定制的学习路径",
+        "lessons": "实战课程",
+        "languages": "支持的语言",
+        "steps": "每节课的学习步骤"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "唯一一款围绕您职位真实需求构建的 AI 培训。"
     },
     "stickyBar": {
-      "title": "加入 {count}+ 位正在掌握 AI 的专业人士",
+      "title": "掌握你的岗位所需的 AI 技能",
       "sub": "永久免费 · 无需信用卡",
       "buildPlan": "制定我的学习计划"
     },

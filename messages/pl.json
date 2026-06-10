@@ -34,7 +34,11 @@
         "trained": "Przeszkolonych profesjonalistów",
         "completion": "Wskaźnik ukończenia",
         "rating": "Średnia ocena",
-        "saved": "Oszczędzane tygodniowo"
+        "saved": "Oszczędzane tygodniowo",
+        "tracks": "Ścieżki dopasowane do roli",
+        "lessons": "Praktyczne lekcje",
+        "languages": "Dostępne języki",
+        "steps": "Etapy w każdej lekcji"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "Jedyne szkolenie AI zbudowane wokół tego, czego Twoja rola naprawdę potrzebuje."
     },
     "stickyBar": {
-      "title": "Dołącz do {count}+ profesjonalistów opanowujących AI",
+      "title": "Opanuj umiejętności AI, których wymaga Twoja rola",
       "sub": "Zawsze bezpłatne · Bez karty kredytowej",
       "buildPlan": "Zbuduj mój plan nauki"
     },

@@ -34,7 +34,11 @@
         "trained": "Professionisti formati",
         "completion": "Tasso di completamento",
         "rating": "Valutazione media",
-        "saved": "Risparmiate a settimana"
+        "saved": "Risparmiate a settimana",
+        "tracks": "Percorsi per ruolo",
+        "lessons": "Lezioni pratiche",
+        "languages": "Lingue disponibili",
+        "steps": "Fasi in ogni lezione"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "L'unica formazione AI costruita attorno a ciò che il tuo ruolo ha davvero bisogno."
     },
     "stickyBar": {
-      "title": "Unisciti a {count}+ professionisti che padroneggiamo l'AI",
+      "title": "Padroneggia le competenze IA che il tuo ruolo richiede",
       "sub": "Gratis per sempre · Nessuna carta di credito",
       "buildPlan": "Crea il mio piano di apprendimento"
     },

@@ -34,7 +34,11 @@
         "trained": "Profesional terlatih",
         "completion": "Tingkat penyelesaian",
         "rating": "Rating rata-rata",
-        "saved": "Dihemat per minggu"
+        "saved": "Dihemat per minggu",
+        "tracks": "Jalur sesuai peran",
+        "lessons": "Pelajaran praktis",
+        "languages": "Bahasa yang didukung",
+        "steps": "Langkah di setiap pelajaran"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "Satu-satunya pelatihan AI yang dibangun sesuai kebutuhan nyata peran Anda."
     },
     "stickyBar": {
-      "title": "Bergabung dengan {count}+ profesional yang menguasai AI",
+      "title": "Kuasai keterampilan AI yang dibutuhkan peran Anda",
       "sub": "Gratis selamanya · Tanpa kartu kredit",
       "buildPlan": "Buat rencana belajar saya"
     },

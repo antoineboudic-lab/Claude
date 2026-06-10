@@ -34,7 +34,11 @@
         "trained": "Professionals trained",
         "completion": "Completion rate",
         "rating": "Average rating",
-        "saved": "Saved per week"
+        "saved": "Saved per week",
+        "tracks": "Role-specific tracks",
+        "lessons": "Hands-on lessons",
+        "languages": "Languages supported",
+        "steps": "Steps in every lesson"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "The only AI training built around what your role actually needs."
     },
     "stickyBar": {
-      "title": "Join {count}+ professionals mastering AI",
+      "title": "Master the AI skills your role demands",
       "sub": "Free during launch · No card needed",
       "buildPlan": "Build my learning plan"
     },

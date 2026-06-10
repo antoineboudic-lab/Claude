@@ -21,7 +21,13 @@
       "ctaSub": "Keine Kreditkarte erforderlich"
     },
     "social": {
-      "trustedBy": "Vertraut von Fachleuten aus"
+      "trustedBy": "Vertraut von Fachleuten aus",
+      "stats": {
+        "tracks": "Rollenspezifische Lernpfade",
+        "lessons": "Praxisnahe Lektionen",
+        "languages": "Verfügbare Sprachen",
+        "steps": "Schritte in jeder Lektion"
+      }
     },
     "footer": {
       "rights": "Alle Rechte vorbehalten.",

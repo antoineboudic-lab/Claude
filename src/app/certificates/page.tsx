@@ -69,8 +69,6 @@ const TRACKS = [
   { name: 'AI for Consulting',       color: '#0EA5E9', skills: ['Research synthesis', 'Structured analysis', 'Slide writing'] },
 ]
 
-const LOGOS = ['McKinsey', 'Deloitte', 'Goldman Sachs', 'Accenture', 'L\'Oréal', 'Nestlé']
-
 export default function CertificatesPage() {
   const { state } = useGame()
   const { user } = useAuth()
@@ -211,16 +209,6 @@ export default function CertificatesPage() {
       </section>
 
       {/* Trusted by */}
-      <section className="py-16" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-xs font-semibold tracking-widest uppercase mb-8" style={{ color: '#CBD5E1' }}>Recognised by professionals at</p>
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            {LOGOS.map(l => (
-              <span key={l} className="text-sm font-bold" style={{ color: '#CBD5E1' }}>{l}</span>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-20" style={{ background: '#2563EB' }}>

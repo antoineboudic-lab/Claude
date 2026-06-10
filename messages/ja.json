@@ -34,7 +34,11 @@
         "trained": "トレーニング済みプロ",
         "completion": "修了率",
         "rating": "平均評価",
-        "saved": "週あたりの節約時間"
+        "saved": "週あたりの節約時間",
+        "tracks": "職種別トラック",
+        "lessons": "実践型レッスン",
+        "languages": "対応言語",
+        "steps": "各レッスンのステップ"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "あなたの職種に本当に必要なものに特化した唯一のAIトレーニング。"
     },
     "stickyBar": {
-      "title": "AIをマスターしている{count}人以上のプロに参加",
+      "title": "あなたの職務に必要なAIスキルを身につけよう",
       "sub": "永久無料 · クレジットカード不要",
       "buildPlan": "学習プランを作成"
     },

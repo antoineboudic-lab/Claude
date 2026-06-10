@@ -34,7 +34,11 @@
         "trained": "Professionnels formés",
         "completion": "Taux de complétion",
         "rating": "Note moyenne",
-        "saved": "Économisé par semaine"
+        "saved": "Économisé par semaine",
+        "tracks": "Parcours par métier",
+        "lessons": "Leçons pratiques",
+        "languages": "Langues disponibles",
+        "steps": "Étapes dans chaque leçon"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "La seule formation IA construite autour de ce que votre rôle exige vraiment."
     },
     "stickyBar": {
-      "title": "Rejoignez plus de {count} professionnels qui maîtrisent l'IA",
+      "title": "Maîtrisez les compétences IA que votre métier exige",
       "sub": "Gratuit à vie · Sans carte bancaire",
       "buildPlan": "Créer mon plan d'apprentissage"
     },

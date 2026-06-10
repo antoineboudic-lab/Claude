@@ -34,7 +34,11 @@
         "trained": "Profesionales formados",
         "completion": "Tasa de finalización",
         "rating": "Valoración media",
-        "saved": "Ahorrado por semana"
+        "saved": "Ahorrado por semana",
+        "tracks": "Rutas por rol profesional",
+        "lessons": "Lecciones prácticas",
+        "languages": "Idiomas disponibles",
+        "steps": "Pasos en cada lección"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "La única formación en IA diseñada en torno a lo que tu rol realmente necesita."
     },
     "stickyBar": {
-      "title": "Únete a más de {count} profesionales dominando la IA",
+      "title": "Domina las habilidades de IA que tu puesto exige",
       "sub": "Gratis para siempre · Sin tarjeta de crédito",
       "buildPlan": "Crear mi plan de aprendizaje"
     },

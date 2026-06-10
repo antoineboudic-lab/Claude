@@ -7,7 +7,7 @@ import { useInView } from 'framer-motion'
 import {
   Users, BarChart3, Award, CheckCircle2, ArrowRight,
   ChevronDown, Building2, Shield, Headphones, Globe,
-  BookOpen, TrendingUp, Star, UserPlus, X,
+  BookOpen, TrendingUp, UserPlus, X,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
@@ -81,7 +81,6 @@ const PLANS = [
   },
 ]
 
-const COMPANIES = ['McKinsey', 'Deloitte', 'Goldman Sachs', 'Accenture', 'L\'Oréal', 'Nestlé', 'Airbus', 'Stripe']
 
 const HOW_IT_WORKS = [
   { n: '01', title: 'Enroll your team', desc: 'Add team members by email or connect your directory via SSO. Assign each person to the track that matches their role.' },
@@ -97,22 +96,6 @@ const FAQS = [
   { q: 'Can we get a demo before committing?', a: 'Yes — use the contact form below to request a 30-minute walkthrough with the team. We\'ll show you the dashboard, track assignment, and reporting.' },
 ]
 
-const TESTIMONIALS = [
-  {
-    quote: "We enrolled our entire operations and finance team in a single cohort. Within 8 weeks, we had measurable productivity changes and 100% certificate completion. The dashboard made it easy to manage without creating overhead.",
-    name: 'Camille Durand',
-    role: 'Chief People Officer',
-    company: 'Schneider Electric',
-    color: '#2563EB',
-  },
-  {
-    quote: "The role-specific tracks were the key differentiator. Our legal team needed different content than our sales team. OpusLearn let us deploy the right curriculum to the right people without building anything custom.",
-    name: 'Jonathan Marsh',
-    role: 'Head of L&D',
-    company: 'Linklaters',
-    color: '#0EA5E9',
-  },
-]
 
 export default function TeamsPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
@@ -222,12 +205,6 @@ export default function TeamsPage() {
       {/* Social proof bar */}
       <div className="py-6" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
         <div className="max-w-5xl mx-auto px-6">
-          <div className="flex flex-wrap items-center gap-2 sm:gap-0 sm:divide-x" style={{ borderColor: '#E2E8F0' }}>
-            <p className="text-xs font-semibold sm:pr-6" style={{ color: '#94A3B8' }}>Trusted by teams at</p>
-            {COMPANIES.map(c => (
-              <span key={c} className="text-sm font-bold sm:px-5 sm:py-1" style={{ color: '#CBD5E1' }}>{c}</span>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -235,10 +212,10 @@ export default function TeamsPage() {
       <div style={{ background: '#FFFFFF' }}>
         <div className="max-w-5xl mx-auto px-6 py-12 grid grid-cols-2 sm:grid-cols-4 gap-6">
           {[
-            { n: '3,200+', label: 'Professionals trained' },
-            { n: '94%', label: 'Team completion rate' },
-            { n: '10', label: 'Role-specific tracks' },
-            { n: '4.9/5', label: 'Learner satisfaction' },
+            { n: '11', label: 'Role-specific tracks' },
+            { n: '286', label: 'Hands-on lessons' },
+            { n: '14', label: 'Languages supported' },
+            { n: '4', label: 'Steps in every lesson' },
           ].map(({ n, label }) => (
             <div key={n} className="text-center">
               <p className="text-3xl font-black mb-1" style={{ color: '#0F172A' }}>{n}</p>
@@ -341,31 +318,6 @@ export default function TeamsPage() {
           </div>
         </div>
       )}
-
-      {/* Testimonials */}
-      <div className="py-16" style={{ background: '#EFF6FF', borderTop: '1px solid #E2E8F0' }}>
-        <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-6">
-          {TESTIMONIALS.map(t => (
-            <div key={t.name} className="rounded-2xl p-8"
-              style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#F59E0B" color="#F59E0B" />)}
-              </div>
-              <p className="text-base leading-relaxed mb-6 italic" style={{ color: '#334155' }}>"{t.quote}"</p>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                  style={{ background: t.color }}>
-                  {t.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>{t.name}</p>
-                  <p className="text-xs" style={{ color: '#94A3B8' }}>{t.role}, {t.company}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* How it works */}
       <div className="py-20" style={{ background: '#FFFFFF' }}>

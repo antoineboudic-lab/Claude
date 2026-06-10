@@ -34,7 +34,11 @@
         "trained": "Profissionais formados",
         "completion": "Taxa de conclusão",
         "rating": "Avaliação média",
-        "saved": "Economizadas por semana"
+        "saved": "Economizadas por semana",
+        "tracks": "Trilhas por função",
+        "lessons": "Lições práticas",
+        "languages": "Idiomas disponíveis",
+        "steps": "Etapas em cada lição"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "A única formação em IA construída em torno do que seu cargo realmente precisa."
     },
     "stickyBar": {
-      "title": "Junte-se a {count}+ profissionais dominando a IA",
+      "title": "Domine as habilidades de IA que sua função exige",
       "sub": "Grátis para sempre · Sem cartão de crédito",
       "buildPlan": "Criar meu plano de aprendizagem"
     },

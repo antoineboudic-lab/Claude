@@ -6,7 +6,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion'
 import { useRef, useState, useEffect, useMemo } from 'react'
 import {
   Sparkles, Target, TrendingUp, Briefcase, HeartHandshake,
-  Megaphone, Settings, ArrowRight, Check, Star, Zap, Award,
+  Megaphone, Settings, ArrowRight, Check, Zap, Award,
   LineChart, GraduationCap, ClipboardList, CheckCircle2,
   ChevronRight, ChevronDown, Play, Route, LogOut, BookOpen, X, Users,
   Brain, Layers, BarChart3, Menu, Scale, Package, Headphones, BarChart, Search,
@@ -68,7 +68,7 @@ function StickySignUpBar() {
           <div className="max-w-5xl mx-auto flex items-center justify-between gap-4 flex-wrap">
             <div>
               <p className="text-sm font-bold" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                {tBar('title', { count: '3,200' })}
+                {tBar('title')}
               </p>
               <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                 {tBar('sub')}
@@ -645,16 +645,8 @@ function Hero() {
             </a>
           </motion.div>
 
-          {/* Trust row */}
+          {/* Trust row — verifiable claims only */}
           <motion.div variants={fadeUp} className="flex items-center justify-center flex-wrap gap-6 mb-14">
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#F59E0B" color="#F59E0B" />)}
-              </div>
-              <span style={{ fontWeight: 700, fontSize: '0.875rem', color: '#0F172A', fontFamily: 'var(--font-sans)' }}>4.9/5</span>
-              <span style={{ fontSize: '0.8125rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{tHero('rating', { count: '3,200' })}</span>
-            </div>
-            <div style={{ width: 1, height: 16, background: '#E2E8F0' }} className="hidden sm:block" />
             {[tHero('trustFree'), tHero('trustNoCard'), tHero('trustStart')].map(label => (
               <div key={label} className="flex items-center gap-1.5" style={{ fontSize: '0.8125rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
                 <Check size={11} color="#10B981" /> {label}
@@ -688,40 +680,23 @@ function Hero() {
 
 function SocialProof() {
   const tSocial = useTranslations('home.social')
-  const companies = ['McKinsey', 'Deloitte', 'KPMG', 'Goldman Sachs', "L'Oréal", 'Nestlé', 'Airbus', 'BNP Paribas', 'Accenture', 'BCG']
+  // Verifiable product facts only — no invented social proof
   const stats = [
-    { n: '3,200+', label: tSocial('stats.trained') },
-    { n: '94%', label: tSocial('stats.completion') },
-    { n: '4.9/5', label: tSocial('stats.rating') },
-    { n: '4.2 hrs', label: tSocial('stats.saved') },
+    { n: '11', label: tSocial('stats.tracks') },
+    { n: '286', label: tSocial('stats.lessons') },
+    { n: '14', label: tSocial('stats.languages') },
+    { n: '4', label: tSocial('stats.steps') },
   ]
   return (
     <div style={{ background: '#2563EB' }}>
       {/* Big stats */}
       <div className="max-w-5xl mx-auto px-6 py-14 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10">
         {stats.map(s => (
-          <div key={s.n} className="text-center">
+          <div key={s.label} className="text-center">
             <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3.25rem)', color: '#FFFFFF', lineHeight: 1, marginBottom: '0.375rem' }}>{s.n}</p>
             <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.55)' }}>{s.label}</p>
           </div>
         ))}
-      </div>
-      {/* Company ticker */}
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)' }} className="py-6">
-        <p className="text-center font-bold mb-5 tracking-[0.15em] uppercase" style={{ color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-sans)', fontSize: '0.625rem' }}>
-          {tSocial('professionalsFrom')}
-        </p>
-        <div className="relative overflow-hidden" style={{ maskImage: 'linear-gradient(to right, transparent, white 10%, white 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, white 10%, white 90%, transparent)' }}>
-          <motion.div
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
-            className="flex gap-12 flex-nowrap w-max items-center">
-            {[...companies, ...companies].map((c, i) => (
-              <span key={i} className="whitespace-nowrap text-sm font-bold"
-                style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-sans)', letterSpacing: '0.01em' }}>{c}</span>
-            ))}
-          </motion.div>
-        </div>
       </div>
     </div>
   )
@@ -1280,122 +1255,6 @@ function TeamsSection() {
   )
 }
 
-// ─── Testimonials ─────────────────────────────────────────────────────────────
-
-const TESTIMONIALS = [
-  { name: 'Sophie Armand', role: 'Head of Marketing', company: "L'Oréal Paris", avatar: 'SA', color: '#2563EB', track: 'Marketing', quote: 'I went from intimidated by AI to running three AI-assisted campaigns in two months. The Marketing track understood exactly where I needed to start.' },
-  { name: 'James Whitfield', role: 'VP Finance', company: 'Goldman Sachs', avatar: 'JW', color: '#2563EB', track: 'Finance', quote: 'The Finance track cut straight to what matters. No filler, no hype — just practical tools I use every week now in FP&A and reporting.' },
-  { name: 'Priya Nair', role: 'CHRO', company: 'Accenture', avatar: 'PN', color: '#2563EB', track: 'HR & People', quote: "The assessment nailed my needs better than I could have myself. Three weeks in and I've already built an AI-assisted onboarding process for our team." },
-  { name: 'Marcus Reid', role: 'Account Executive', company: 'Salesforce', avatar: 'MR', color: '#2563EB', track: 'Sales', quote: "I was spending 3 hours a week on prospect research. After the Sales track, that's down to 40 minutes — and the quality of my outreach has gone up significantly." },
-  { name: 'Clara Dubois', role: 'Senior Legal Counsel', company: 'BNP Paribas', avatar: 'CD', color: '#2563EB', track: 'Legal', quote: "I was sceptical AI could work in legal. The Legal track changed my mind completely. I reviewed a 60-page contract in 20 minutes last week — with better notes than usual." },
-  { name: 'Tom Nakamura', role: 'Product Manager', company: 'Notion', avatar: 'TN', color: '#2563EB', track: 'Product', quote: "The Product track is genuinely the best thing I've done for my career this year. I now go from user interview to draft PRD in one afternoon instead of three days." },
-]
-
-function Testimonials() {
-  const { ref, isInView } = useReveal()
-  const tTestimonials = useTranslations('home.testimonials')
-  const featured = TESTIMONIALS[3] // Marcus Reid — concrete time-saving stat
-  const rest = TESTIMONIALS.filter((_, i) => i !== 3)
-  return (
-    <section className="py-14 sm:py-20" style={{ background: '#FFFFFF' }}>
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
-          <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tTestimonials('sectionLabel')}</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-              {tTestimonials('heading')}
-            </h2>
-          </motion.div>
-
-          {/* Featured testimonial */}
-          <motion.div variants={fadeUp} className="relative mb-5 p-8 sm:p-10 rounded-2xl overflow-hidden"
-            style={{ background: '#0F172A', boxShadow: '0 20px 48px rgba(15,23,42,0.18)' }}>
-            <div className="absolute inset-0 pointer-events-none"
-              style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(37,99,235,0.18) 0%, transparent 60%)' }} />
-            {/* Big decorative quote mark */}
-            <div className="absolute top-6 right-8 pointer-events-none select-none hidden sm:block"
-              style={{ fontSize: '8rem', lineHeight: 1, color: 'rgba(255,255,255,0.03)', fontFamily: 'Georgia, serif', fontWeight: 700 }}>&ldquo;</div>
-            <div className="relative grid md:grid-cols-[1fr_auto] gap-8 items-center">
-              <div>
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={15} fill="#F59E0B" color="#F59E0B" />)}
-                  </div>
-                  <span className="text-xs font-bold px-2.5 py-1 rounded-full"
-                    style={{ background: `${featured.color}20`, color: featured.color, fontFamily: 'var(--font-sans)' }}>
-                    {featured.track} Track
-                  </span>
-                </div>
-                <blockquote className="text-xl sm:text-2xl lg:text-3xl font-black leading-snug mb-7 text-white"
-                  style={{ fontFamily: 'var(--font-sans)' }}>
-                  &ldquo;{featured.quote}&rdquo;
-                </blockquote>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-black text-white flex-shrink-0"
-                    style={{ background: featured.color }}>
-                    {featured.avatar}
-                  </div>
-                  <div>
-                    <p className="text-base font-bold text-white" style={{ fontFamily: 'var(--font-sans)' }}>{featured.name}</p>
-                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)' }}>
-                      {featured.role} · {featured.company}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="hidden md:flex flex-col items-center justify-center gap-3 text-center px-8 py-6 rounded-2xl"
-                style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)', minWidth: 160 }}>
-                <p className="text-4xl font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>−78%</p>
-                <p className="text-xs leading-snug" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-sans)' }}>
-                  {tTestimonials('timeOnResearch')}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Remaining testimonials — colored left-border cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {rest.map(t => (
-              <motion.div key={t.name} variants={fadeUp} className="p-6 rounded-2xl flex flex-col transition-all hover:shadow-md hover:-translate-y-0.5"
-                style={{
-                  background: '#FFFFFF',
-                  borderTop: '1px solid #E2E8F0',
-                  borderRight: '1px solid #E2E8F0',
-                  borderBottom: '1px solid #E2E8F0',
-                  borderLeft: `3px solid ${t.color}`,
-                  borderRadius: '1rem',
-                }}>
-                <div className="flex items-center justify-between mb-3.5">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={12} fill="#F59E0B" color="#F59E0B" />)}
-                  </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                    style={{ background: `${t.color}12`, color: t.color, fontFamily: 'var(--font-sans)' }}>
-                    {t.track}
-                  </span>
-                </div>
-                <p className="text-sm leading-relaxed flex-1 mb-4" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
-                  &ldquo;{t.quote}&rdquo;
-                </p>
-                <div className="flex items-center gap-3 pt-4" style={{ borderTop: '1px solid #F1F5F9' }}>
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-                    style={{ background: t.color }}>
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{t.name}</p>
-                    <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{t.role} · {t.company}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
 // ─── FAQ ─────────────────────────────────────────────────────────────────────
 
 const FAQS = [
@@ -1676,38 +1535,12 @@ function About() {
   const { ref, isInView } = useReveal()
   const tAbout = useTranslations('home.about')
 
-  const team = [
-    {
-      name: 'Marie Leconte',
-      role: 'CEO & Co-founder',
-      initials: 'ML',
-      color: '#2563EB',
-      prev: 'McKinsey & Company',
-      bio: 'Former McKinsey partner who spent 12 years watching businesses struggle to operationalise new technologies. Built the OpusLearn curriculum after 200+ interviews with leaders across finance, marketing, and operations.',
-    },
-    {
-      name: 'Thomas Reeves',
-      role: 'CTO & Co-founder',
-      initials: 'TR',
-      color: '#3B82F6',
-      prev: 'Salesforce AI',
-      bio: 'Led AI product at Salesforce for 6 years before realising the biggest bottleneck was not the technology, but the professionals tasked with using it. Built the adaptive path engine from the ground up.',
-    },
-    {
-      name: 'Aisha Okonkwo',
-      role: 'Head of Learning Design',
-      initials: 'AO',
-      color: '#2563EB',
-      prev: 'Deloitte',
-      bio: 'Former L&D Director at Deloitte with a background in cognitive science. Redesigned every module around behaviour change rather than information transfer — the reason our completion rate sits at 94%.',
-    },
-  ]
 
   const stats = [
-    { value: '3,200+', label: 'Professionals trained' },
-    { value: '10', label: 'Role-specific tracks' },
-    { value: '94%', label: 'Completion rate' },
-    { value: '4.9/5', label: 'Learner rating' },
+    { value: '11', label: 'Role-specific tracks' },
+    { value: '286', label: 'Hands-on lessons' },
+    { value: '14', label: 'Languages supported' },
+    { value: '100%', label: 'Lessons with hands-on practice' },
   ]
 
   const values = [
@@ -1755,7 +1588,7 @@ function About() {
                   &ldquo;Every professional deserves to harness AI &mdash; not just those with an engineering degree. We built the platform we wished existed when AI changed everything.&rdquo;
                 </blockquote>
                 <p className="text-xs font-semibold" style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-sans)' }}>
-                  Marie Leconte &mdash; CEO &amp; Co-founder, OpusLearn
+                  The OpusLearn team
                 </p>
               </div>
             </motion.div>
@@ -1785,29 +1618,6 @@ function About() {
             ))}
           </motion.div>
 
-          {/* Team */}
-          <motion.div variants={fadeUp}>
-            <p className="text-xs font-bold tracking-widest uppercase mb-8 text-center" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>{tAbout('theTeam')}</p>
-            <div className="grid md:grid-cols-3 gap-6">
-              {team.map(member => (
-                <div key={member.name} className="p-7 rounded-2xl"
-                  style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-black text-white flex-shrink-0"
-                      style={{ background: member.color }}>
-                      {member.initials}
-                    </div>
-                    <div>
-                      <p className="text-sm font-black" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{member.name}</p>
-                      <p className="text-xs font-semibold" style={{ color: member.color, fontFamily: 'var(--font-sans)' }}>{member.role}</p>
-                      <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{tAbout('previously')} {member.prev}</p>
-                    </div>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>{member.bio}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
 
         </motion.div>
       </div>
@@ -2001,7 +1811,6 @@ export default function LandingPage() {
       <RoleTracks />
       <Features />
       <TeamsSection />
-      <Testimonials />
       <Pricing />
       <FAQ />
       <About />

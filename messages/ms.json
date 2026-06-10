@@ -34,7 +34,11 @@
         "trained": "Profesional Terlatih",
         "completion": "Kadar Penyiapan",
         "rating": "Penilaian Purata",
-        "saved": "Dijimatkan setiap minggu"
+        "saved": "Dijimatkan setiap minggu",
+        "tracks": "Laluan mengikut peranan",
+        "lessons": "Pelajaran praktikal",
+        "languages": "Bahasa yang disokong",
+        "steps": "Langkah dalam setiap pelajaran"
       }
     },
     "howItWorks": {
@@ -140,7 +144,7 @@
       "aiTrainingTagline": "Satu-satunya latihan AI yang dibina mengikut keperluan sebenar peranan anda."
     },
     "stickyBar": {
-      "title": "Sertai {count}+ profesional yang menguasai AI",
+      "title": "Kuasai kemahiran AI yang diperlukan peranan anda",
       "sub": "Percuma selama-lamanya · Tiada kad kredit",
       "buildPlan": "Bina rancangan pembelajaran saya"
     },
