@@ -21,6 +21,10 @@ const rateLimiter = createRateLimiter(15, 3600, 'personalize')
 
 const MODEL = 'claude-opus-4-8'
 
+// Bump when the personalisation prompt changes meaningfully — it feeds the
+// cache key, so cached lessons regenerate with the new framing on next open
+const PROMPT_VERSION = 2
+
 // Separates the lesson markdown from the structured-extras JSON in the
 // streamed output. The client renders everything before it live and parses
 // everything after it once the stream ends.
@@ -36,8 +40,8 @@ const SYSTEM = `You are the personalisation engine for OpusLearn, an AI-literacy
 Rules for the lesson markdown:
 - Preserve the lesson's structure exactly: same heading levels in the same order, same markdown features (headings, bold, bullet lists, blockquotes). Do not add or remove sections.
 - Preserve every factual claim and teaching point. You are adapting, not abridging — keep overall length within about 20% of the original.
-- Rewrite generic examples and scenarios into the reader's world: their role, industry, company size, tools, and stated challenges. Be concrete — name the kinds of deliverables, stakeholders, and metrics someone in their position actually deals with.
-- Blockquotes are runnable prompt templates. Keep each one as a blockquote, and tailor its content so the reader could paste it into an AI tool today for their real job.
+- The lesson's track defines the SUBJECT; the reader profile defines the AUDIENCE. If the reader's role matches the track (e.g. a marketer reading the marketing track), immerse fully: rewrite examples and scenarios into their exact role, industry, company size, tools, and stated challenges, naming the deliverables, stakeholders, and metrics they actually deal with. If the reader's role does NOT match the track (e.g. a marketer reading the finance track), keep the lesson's domain as the subject — they chose this track to learn it — and use the reader's world only for bridges: analogies from their job, their industry and company size for context, their tools where relevant. Never relabel the lesson's domain audience as the reader's (a finance lesson must not address "marketing leaders").
+- Blockquotes are runnable prompt templates. Keep each one as a blockquote, and tailor its content so the reader could paste it into an AI tool today — for their real job when roles match, or for a realistic task in the lesson's domain when they don't.
 - Address the reader directly as "you". Use their first name at most once in the whole lesson. Use British English, matching the original.
 
 Output format — exactly two parts:
@@ -50,6 +54,7 @@ Output format — exactly two parts:
 
 function contextHash(answers: AssessmentAnswers, primaryTrackId: string): string {
   const key = JSON.stringify({
+    v: PROMPT_VERSION,
     subRole: answers.subRole,
     roleDescription: answers.roleDescription,
     industry: answers.industry,
