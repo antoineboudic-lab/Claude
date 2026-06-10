@@ -8,8 +8,10 @@ import { getLesson, TRACK_IDS } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
 import type { AssessmentAnswers } from '@/lib/assessment/types'
 
-// Opus generations run for minutes; keep the function alive while streaming
-export const maxDuration = 300
+// Keep the function alive while the generation streams. Observed generations
+// take 18-27s; 60 stays within every Vercel plan's limit — raise if lessons
+// start timing out.
+export const maxDuration = 60
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 // Generation is expensive (Opus): cap fresh generations per user, cache hits
