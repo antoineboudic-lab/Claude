@@ -2000,16 +2000,16 @@ function SkillCheckStep({
   const [selected, setSelected] = useState<string | null>(null)
   const [revealed, setRevealed] = useState(false)
   const [score, setScore] = useState(0)
+  const [shuffled, setShuffled] = useState<SkillQuestion['options']>([])
 
-  const shuffled = useMemo(() => {
+  useEffect(() => {
     const opts = [...questions[qIdx].options]
     for (let i = opts.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [opts[i], opts[j]] = [opts[j], opts[i]]
     }
-    return opts
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [qIdx])
+    setShuffled(opts)
+  }, [qIdx, questions])
 
   const SKILL_INTROS = [
     "Let's start with something practical.",
