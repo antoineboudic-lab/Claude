@@ -295,11 +295,12 @@ export default function AssessmentResultsPage() {
           <Logo size="md" />
         </Link>
         <div className="flex items-center gap-3">
-          <Link href="/assessment"
+          <button
+            onClick={() => { localStorage.removeItem('opuslearn-assessment'); window.location.href = '/assessment' }}
             className="flex items-center gap-1.5 text-xs font-medium"
             style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
             <RefreshCw size={12} /> Retake
-          </Link>
+          </button>
           {user ? (
             <Link href="/dashboard"
               className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors hover:opacity-80"
