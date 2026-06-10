@@ -12,10 +12,17 @@ import type { AssessmentAnswers } from '@/lib/assessment/types'
 export const maxDuration = 300
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-// Generation is expensive (Opus): cap fresh generations per user, cache hits are free
-const rateLimiter = createRateLimiter(10, 3600, 'personalize')
+// Generation is expensive (Opus): cap fresh generations per user, cache hits
+// are free. Budget covers the viewed lesson plus a background prefetch of the
+// next lesson in the path.
+const rateLimiter = createRateLimiter(15, 3600, 'personalize')
 
 const MODEL = 'claude-opus-4-8'
+
+// Separates the lesson markdown from the structured-extras JSON in the
+// streamed output. The client renders everything before it live and parses
+// everything after it once the stream ends.
+const EXTRAS_SENTINEL = '\n<<<OPUSLEARN-EXTRAS-JSON>>>\n'
 
 const ALLOWED_ORIGINS = [
   'https://opuslearn.ai',
@@ -24,13 +31,20 @@ const ALLOWED_ORIGINS = [
 
 const SYSTEM = `You are the personalisation engine for OpusLearn, an AI-literacy learning platform for business professionals. You rewrite a lesson so it reads as if it were written specifically for one reader, based on their assessment profile.
 
-Rules:
+Rules for the lesson markdown:
 - Preserve the lesson's structure exactly: same heading levels in the same order, same markdown features (headings, bold, bullet lists, blockquotes). Do not add or remove sections.
 - Preserve every factual claim and teaching point. You are adapting, not abridging — keep overall length within about 20% of the original.
 - Rewrite generic examples and scenarios into the reader's world: their role, industry, company size, tools, and stated challenges. Be concrete — name the kinds of deliverables, stakeholders, and metrics someone in their position actually deals with.
 - Blockquotes are runnable prompt templates. Keep each one as a blockquote, and tailor its content so the reader could paste it into an AI tool today for their real job.
 - Address the reader directly as "you". Use their first name at most once in the whole lesson. Use British English, matching the original.
-- Output only the rewritten lesson markdown. No preamble, no closing commentary, and do not wrap the output in a code fence.`
+
+Output format — exactly two parts:
+1. The rewritten lesson markdown. No preamble, no closing commentary, no code fence around it.
+2. On a new line, the literal marker <<<OPUSLEARN-EXTRAS-JSON>>> followed by one JSON object personalising the lesson's structured fields, with this shape (omit "applyThisWeek" if the input has no APPLY THIS WEEK section):
+{"exercise": {"title": string, "description": string, "steps": string[], "tool": string}, "applyThisWeek": {"action": string, "promptTemplate": string, "tool": string}}
+- "steps" must have the same number of steps as the original exercise, each rewritten for the reader's real job so completing them produces something they can actually use at work.
+- "promptTemplate" must stay a ready-to-paste prompt, tailored to the reader.
+- Keep each "tool" value identical to the original. Output raw JSON after the marker — no code fence.`
 
 function contextHash(answers: AssessmentAnswers, primaryTrackId: string): string {
   const key = JSON.stringify({
@@ -116,17 +130,21 @@ export async function POST(req: NextRequest) {
   const answers = assessmentRow.answers as AssessmentAnswers
   const hash = contextHash(answers, assessmentRow.primary_track_id)
 
-  // Cache: same user, same lesson, same assessment context → return stored copy
+  // Cache: same user, same lesson, same assessment context → return stored
+  // copy, reassembled into the same wire format as a fresh stream
   if (!force) {
     const { data: cached } = await admin
       .from('personalized_lessons')
-      .select('content, context_hash')
+      .select('content, extras, context_hash')
       .eq('user_id', user.id)
       .eq('lesson_id', lessonId)
       .maybeSingle()
 
     if (cached?.content && cached.context_hash === hash) {
-      return new Response(cached.content, {
+      const payload = cached.extras
+        ? cached.content + EXTRAS_SENTINEL + JSON.stringify(cached.extras)
+        : cached.content
+      return new Response(payload, {
         headers: {
           'Content-Type': 'text/plain; charset=utf-8',
           'Cache-Control': 'no-cache, no-store',
@@ -148,7 +166,19 @@ export async function POST(req: NextRequest) {
     system: SYSTEM,
     messages: [{
       role: 'user',
-      content: `READER PROFILE\n${readerProfile(answers)}\n\nLESSON (track: ${trackId}, title: "${lesson.title}")\n\n${lesson.content}`,
+      content: [
+        `READER PROFILE\n${readerProfile(answers)}`,
+        `LESSON (track: ${trackId}, title: "${lesson.title}")\n\n${lesson.content}`,
+        `EXERCISE\n${JSON.stringify({
+          title: lesson.exercise.title,
+          description: lesson.exercise.description,
+          steps: lesson.exercise.steps,
+          tool: lesson.exercise.tool,
+        })}`,
+        lesson.applyThisWeek
+          ? `APPLY THIS WEEK\n${JSON.stringify(lesson.applyThisWeek)}`
+          : null,
+      ].filter(Boolean).join('\n\n'),
     }],
   })
 
@@ -165,12 +195,23 @@ export async function POST(req: NextRequest) {
         }
         // Persist only complete generations — a partial rewrite cached
         // forever is worse than regenerating next visit
-        if (full.trim().length > 200) {
+        const sentinelIdx = full.indexOf(EXTRAS_SENTINEL.trim())
+        const content = (sentinelIdx >= 0 ? full.slice(0, sentinelIdx) : full).trim()
+        let extras: unknown = null
+        if (sentinelIdx >= 0) {
+          try {
+            extras = JSON.parse(full.slice(sentinelIdx + EXTRAS_SENTINEL.trim().length).trim())
+          } catch {
+            extras = null
+          }
+        }
+        if (content.length > 200) {
           await admin.from('personalized_lessons').upsert({
             user_id: user.id,
             lesson_id: lessonId,
             track_id: trackId,
-            content: full,
+            content,
+            extras,
             context_hash: hash,
             model: MODEL,
             created_at: new Date().toISOString(),

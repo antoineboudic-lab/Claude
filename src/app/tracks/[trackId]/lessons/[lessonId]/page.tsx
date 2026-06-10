@@ -25,7 +25,7 @@ import { useNotes } from '@/hooks/useNotes'
 import { XP } from '@/lib/gamification'
 import { getLesson, getNextLesson, getTrack } from '@/lib/curriculum'
 import { addLessonToQueue } from '@/lib/srs'
-import type { Lesson, Module, InlineCheck, OutputComparison, ApplyThisWeek } from '@/lib/curriculum'
+import type { Lesson, Module, InlineCheck, OutputComparison, ApplyThisWeek, Exercise } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
 import PromptSandbox from '@/components/PromptSandbox'
 
@@ -1504,17 +1504,50 @@ export default function LessonPage() {
   // ── Personalised lesson view ──
   // "For you" streams a Claude rewrite of the lesson adapted to the user's
   // assessment profile (/api/personalize, cached server-side per user+lesson).
+  // The stream is markdown, then a sentinel, then JSON with the personalised
+  // exercise and applyThisWeek.
+  const EXTRAS_SENTINEL = '<<<OPUSLEARN-EXTRAS-JSON>>>'
+  type PersonalExtras = { exercise?: Exercise; applyThisWeek?: ApplyThisWeek }
   const [lessonView, setLessonView] = useState<'standard' | 'personal'>('standard')
   const [personalContent, setPersonalContent] = useState('')
+  const [personalExtras, setPersonalExtras] = useState<PersonalExtras | null>(null)
   const [personalizing, setPersonalizing] = useState(false)
   const [personalError, setPersonalError] = useState('')
+  const [assessSubRole, setAssessSubRole] = useState('')
+  const prefetchedRef = useRef<string | null>(null)
 
   useEffect(() => {
     setLessonView('standard')
     setPersonalContent('')
+    setPersonalExtras(null)
     setPersonalizing(false)
     setPersonalError('')
   }, [lessonId])
+
+  const fetchPersonalized = (id: string, force = false) =>
+    fetch('/api/personalize', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lessonId: id, trackId, force }),
+    })
+
+  const parseExtras = (raw: string): PersonalExtras | null => {
+    try {
+      const extras = JSON.parse(raw)
+      const exercise = extras?.exercise
+      const validExercise = exercise && typeof exercise.title === 'string'
+        && Array.isArray(exercise.steps) && exercise.steps.length > 0
+      const apply = extras?.applyThisWeek
+      const validApply = apply && typeof apply.action === 'string' && typeof apply.promptTemplate === 'string'
+      if (!validExercise && !validApply) return null
+      return {
+        ...(validExercise ? { exercise } : {}),
+        ...(validApply ? { applyThisWeek: apply } : {}),
+      }
+    } catch {
+      return null
+    }
+  }
 
   const personalize = async (force = false) => {
     if (personalizing) return
@@ -1523,12 +1556,9 @@ export default function LessonPage() {
     setPersonalizing(true)
     setPersonalError('')
     setPersonalContent('')
+    setPersonalExtras(null)
     try {
-      const res = await fetch('/api/personalize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lessonId, trackId, force }),
-      })
+      const res = await fetchPersonalized(lessonId, force)
       if (!res.ok) {
         const data = await res.json().catch(() => null)
         throw new Error(data?.error ?? 'Something went wrong')
@@ -1541,7 +1571,18 @@ export default function LessonPage() {
         const { done, value } = await reader.read()
         if (done) break
         acc += decoder.decode(value, { stream: true })
-        setPersonalContent(acc)
+        const idx = acc.indexOf(EXTRAS_SENTINEL)
+        setPersonalContent(idx >= 0 ? acc.slice(0, idx).trimEnd() : acc)
+      }
+      const idx = acc.indexOf(EXTRAS_SENTINEL)
+      if (idx >= 0) {
+        setPersonalExtras(parseExtras(acc.slice(idx + EXTRAS_SENTINEL.length).trim()))
+      }
+      // Warm the next lesson in the background so it opens instantly —
+      // the server caches the result; we discard the response body.
+      if (nextLesson && prefetchedRef.current !== nextLesson.id) {
+        prefetchedRef.current = nextLesson.id
+        fetchPersonalized(nextLesson.id).then(r => r.text()).catch(() => {})
       }
     } catch (e) {
       setPersonalError(e instanceof Error ? e.message : 'Something went wrong')
@@ -1554,6 +1595,13 @@ export default function LessonPage() {
   const result = getLesson(trackId as TrackId, lessonId)
   const lesson: Lesson | undefined = result?.lesson
   const module: Module | undefined = result?.module
+
+  // In the "For you" view, the exercise and applyThisWeek swap to their
+  // personalised versions when the generation included them
+  const displayExercise: Exercise | undefined =
+    (lessonView === 'personal' && personalExtras?.exercise) || lesson?.exercise
+  const displayApplyThisWeek: ApplyThisWeek | undefined =
+    (lessonView === 'personal' && personalExtras?.applyThisWeek) || lesson?.applyThisWeek
 
   // Shuffle quiz options once per lesson so the correct answer isn't always the same position
   const shuffledQuiz = useMemo((): import('@/lib/curriculum/types').QuizQuestion[] => {
@@ -1578,6 +1626,7 @@ export default function LessonPage() {
         const result = JSON.parse(raw)
         const inPath = result.customPath?.some((l: { lessonId: string }) => l.lessonId === lessonId)
         setIsInPath(!!inPath)
+        setAssessSubRole(result.answers?.subRole ?? '')
       }
     } catch {}
   }, [lessonId])
@@ -1891,12 +1940,20 @@ export default function LessonPage() {
                         </button>
                       </div>
                       {lessonView === 'personal' && personalContent && !personalizing && (
-                        <button
-                          onClick={() => personalize(true)}
-                          className="text-xs font-medium hover:underline"
-                          style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                          Regenerate
-                        </button>
+                        <>
+                          <span
+                            className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full"
+                            style={{ background: `${color}10`, color, fontFamily: 'var(--font-sans)' }}>
+                            <Sparkles size={11} />
+                            Personalised for {assessSubRole || 'your role'}
+                          </span>
+                          <button
+                            onClick={() => personalize(true)}
+                            className="text-xs font-medium hover:underline"
+                            style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                            Regenerate
+                          </button>
+                        </>
                       )}
                     </div>
                     {personalError && (
@@ -1963,9 +2020,9 @@ export default function LessonPage() {
                   </ul>
                 </div>
 
-                {lesson.applyThisWeek && (
+                {displayApplyThisWeek && (
                   <div className="mt-6">
-                    <ApplyThisWeekCard data={lesson.applyThisWeek} color={color} />
+                    <ApplyThisWeekCard data={displayApplyThisWeek} color={color} />
                   </div>
                 )}
 
@@ -2046,7 +2103,7 @@ export default function LessonPage() {
         {/* ── Exercise tab ── */}
         {activeTab === 'exercise' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-            {lesson ? (
+            {lesson && displayExercise ? (
               <div className="rounded-2xl overflow-hidden mb-5" style={{ border: '1px solid #E2E8F0' }}>
                 {/* Mission briefing header */}
                 <div className="px-5 py-5"
@@ -2061,26 +2118,26 @@ export default function LessonPage() {
                     </div>
                     <span className="text-xs px-2.5 py-1 rounded-lg font-medium flex-shrink-0"
                       style={{ background: 'rgba(255,255,255,0.8)', color: '#64748B', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}>
-                      {lesson.exercise.tool}
+                      {displayExercise.tool}
                     </span>
                   </div>
                   <h2 className="text-lg font-bold mb-1.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                    {lesson.exercise.title}
+                    {displayExercise.title}
                   </h2>
                   <p className="text-sm leading-[1.6]" style={{ color: '#6B7280', fontFamily: 'var(--font-sans)' }}>
-                    {lesson.exercise.description}
+                    {displayExercise.description}
                   </p>
                   <div className="mt-4">
                     <div className="flex items-center justify-between mb-1.5">
                       <span className="text-xs" style={{ color: '#9CA3AF', fontFamily: 'var(--font-sans)' }}>Your progress</span>
                       <span className="text-xs font-semibold" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                        {completedSteps.size} / {lesson.exercise.steps.length} steps
+                        {completedSteps.size} / {displayExercise.steps.length} steps
                       </span>
                     </div>
                     <div className="h-1.5 rounded-full overflow-hidden" style={{ background: '#DBEAFE' }}>
                       <motion.div
                         className="h-full rounded-full"
-                        animate={{ width: `${(completedSteps.size / lesson.exercise.steps.length) * 100}%` }}
+                        animate={{ width: `${(completedSteps.size / displayExercise.steps.length) * 100}%` }}
                         transition={{ duration: 0.35, ease: 'easeOut' }}
                         style={{ background: '#2563EB' }}
                       />
@@ -2090,7 +2147,7 @@ export default function LessonPage() {
 
                 {/* Interactive checklist */}
                 <div style={{ background: '#FFFFFF' }}>
-                  {lesson.exercise.steps.map((step, i) => {
+                  {displayExercise.steps.map((step, i) => {
                     const done = completedSteps.has(i)
                     return (
                       <div key={i} onClick={() => toggleStep(i)}
@@ -2134,11 +2191,11 @@ export default function LessonPage() {
               </button>
               <motion.button
                 onClick={handleExerciseDone}
-                animate={lesson && completedSteps.size === lesson.exercise.steps.length && !exerciseDone
+                animate={displayExercise && completedSteps.size === displayExercise.steps.length && !exerciseDone
                   ? { scale: [1, 1.04, 1], boxShadow: ['0 0 0 0px #2563EB40', '0 0 0 6px #2563EB25', '0 0 0 0px #2563EB40'] }
                   : {}
                 }
-                transition={{ duration: 1.4, repeat: lesson && completedSteps.size === lesson.exercise.steps.length && !exerciseDone ? Infinity : 0, ease: 'easeInOut' }}
+                transition={{ duration: 1.4, repeat: displayExercise && completedSteps.size === displayExercise.steps.length && !exerciseDone ? Infinity : 0, ease: 'easeInOut' }}
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
                 style={exerciseDone
                   ? { background: '#D1FAE5', color: '#059669', fontFamily: 'var(--font-sans)' }

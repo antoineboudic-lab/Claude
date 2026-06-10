@@ -110,4 +110,4 @@ export function getNextLesson(trackId: TrackId, lessonId: string) {
 
 export type { Track, TrackId }
 export type { SubRoleModule, SubRoleLessons } from './subroles/types'
-export type { Lesson, Module, InlineCheck, OutputComparison, ApplyThisWeek } from './types'
+export type { Lesson, Module, InlineCheck, OutputComparison, ApplyThisWeek, Exercise } from './types'
