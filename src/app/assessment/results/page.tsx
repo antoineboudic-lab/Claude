@@ -296,7 +296,7 @@ export default function AssessmentResultsPage() {
         </Link>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => { localStorage.removeItem('opuslearn-assessment'); window.location.href = '/assessment' }}
+            onClick={() => { localStorage.removeItem('opuslearn-assessment'); window.location.href = '/assessment?retake=1' }}
             className="flex items-center gap-1.5 text-xs font-medium"
             style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
             <RefreshCw size={12} /> Retake

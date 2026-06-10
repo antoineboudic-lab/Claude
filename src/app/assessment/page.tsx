@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -1468,6 +1468,7 @@ const DEFAULT_ANSWERS: AssessmentAnswers = {
 export default function AssessmentPage() {
   const t = useTranslations('assessment')
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { user, signOut } = useAuth()
   const [mounted, setMounted] = useState(false)
   const [stepIdx, setStepIdx] = useState(0)
@@ -1477,8 +1478,10 @@ export default function AssessmentPage() {
   const redirectChecked = useRef(false)
 
   // If the user is already logged in and has a completed assessment, send them to results
+  // Skip redirect when retake=1 is in the URL (user deliberately clicked Retake)
   useEffect(() => {
     if (!user || redirectChecked.current) return
+    if (searchParams.get('retake') === '1') return
     redirectChecked.current = true
     const local = localStorage.getItem('opuslearn-assessment')
     if (local) { router.replace('/assessment/results'); return }
@@ -1488,7 +1491,7 @@ export default function AssessmentPage() {
         router.replace('/assessment/results')
       }
     }).catch(() => {})
-  }, [user, router])
+  }, [user, router, searchParams])
 
   // Pre-fill name from auth metadata and skip welcome step when signed in
   useEffect(() => {
