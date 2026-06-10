@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, User, ArrowLeft, ArrowRight,
-  Check, Zap, Clock, Target, Users, TrendingUp as Trend,
+  Check, X, Zap, Clock, Target, Users, TrendingUp as Trend,
   Star, Brain, CheckCircle2,
   Scale, Package, Headphones, BarChart,
 } from 'lucide-react'
@@ -22,7 +22,7 @@ const F = 'var(--font-sans)'
 
 // ─── Step types ───────────────────────────────────────────────────────────────
 
-type StepId = 'welcome' | 'role' | 'subRole' | 'context' | 'tools' | 'challenge' | 'goals' | 'time' | 'processing'
+type StepId = 'welcome' | 'role' | 'subRole' | 'context' | 'tools' | 'skillCheck' | 'challenge' | 'goals' | 'time' | 'processing'
 
 // ─── Role data ────────────────────────────────────────────────────────────────
 
@@ -1508,7 +1508,7 @@ export default function AssessmentPage() {
     const base: StepId[] = ['welcome', 'role']
     const primary = answers.roles[0]
     if (answers.roles.length === 1 && primary !== 'other' && primary !== 'leadership') base.push('subRole')
-    return [...base, 'context', 'tools', 'challenge', 'goals', 'time', 'processing']
+    return [...base, 'context', 'tools', 'skillCheck', 'challenge', 'goals', 'time', 'processing']
   }, [answers.roles])
 
   const currentStep = STEPS[stepIdx]
@@ -1536,8 +1536,7 @@ export default function AssessmentPage() {
         setTimeout(async () => {
           try {
             const derived = deriveExperience(answers.currentTools)
-            const skillScore = derived === 'regular' ? 2 : derived === 'some' ? 1 : 0
-            const finalAnswers = { ...answers, experience: derived, skillScore }
+            const finalAnswers = { ...answers, experience: derived }
             const result = buildAssessmentResult(finalAnswers)
             localStorage.setItem('opuslearn-assessment', JSON.stringify(result))
             if (user) await saveAssessment(user.id, result).catch(() => {})
@@ -1556,6 +1555,7 @@ export default function AssessmentPage() {
       case 'subRole': return true
       case 'context': return answers.industry !== undefined && answers.companySize !== undefined
       case 'tools': return answers.currentTools.length > 0
+      case 'skillCheck': return true
       case 'challenge': return answers.challenges.length > 0
       case 'goals': return answers.goals.length > 0
       case 'time': return true
@@ -1564,6 +1564,7 @@ export default function AssessmentPage() {
   }
 
   const primaryRole = answers.roles[0] ?? 'other'
+  const skillQs = SKILL_QUESTIONS[primaryRole] ?? SKILL_QUESTIONS.other
   const challenges = (answers.subRole && answers.roles.length === 1
     ? SUB_ROLE_CHALLENGES[primaryRole]?.[answers.subRole]
     : undefined)
@@ -1822,6 +1823,20 @@ export default function AssessmentPage() {
               </motion.div>
             )}
 
+            {/* ── Skill Check ── */}
+            {currentStep === 'skillCheck' && (
+              <SkillCheckStep
+                key="skillCheck"
+                direction={direction}
+                questions={skillQs}
+                onComplete={(score) => {
+                  setAnswers(a => ({ ...a, skillScore: score }))
+                  goNext()
+                }}
+                onBack={goBack}
+              />
+            )}
+
             {/* ── Challenge ── */}
             {currentStep === 'challenge' && (
               <motion.div key="challenge" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
@@ -1964,6 +1979,136 @@ function StepHeader({ question, sub }: { question: string; sub: string }) {
       <h2 className="text-xl sm:text-2xl lg:text-3xl font-black mb-2.5" style={{ color: '#0F172A' }}>{question}</h2>
       <p className="text-base" style={{ color: '#64748B' }}>{sub}</p>
     </div>
+  )
+}
+
+function SkillCheckStep({
+  direction,
+  questions,
+  onComplete,
+  onBack,
+}: {
+  direction: number
+  questions: SkillQuestion[]
+  onComplete: (score: number) => void
+  onBack: () => void
+}) {
+  const [qIdx, setQIdx] = useState(0)
+  const [selected, setSelected] = useState<string | null>(null)
+  const [revealed, setRevealed] = useState(false)
+  const [score, setScore] = useState(0)
+
+  const shuffled = useMemo(() => {
+    const opts = [...questions[qIdx].options]
+    for (let i = opts.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [opts[i], opts[j]] = [opts[j], opts[i]]
+    }
+    return opts
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [qIdx])
+
+  const SKILL_INTROS = [
+    "Let's start with something practical.",
+    'Good. Now a judgment call.',
+    "Nice. Let's think bigger picture.",
+    "Last one — this one's about risk.",
+  ]
+  const NEXT_LABELS = ['Next question →', 'Keep going →', 'One more →', 'See my results']
+
+  const q = questions[qIdx]
+  const isLast = qIdx === questions.length - 1
+
+  function handleSelect(id: string) {
+    if (revealed) return
+    setSelected(id)
+    setRevealed(true)
+    const correct = questions[qIdx].options.find(o => o.id === id)?.correct ?? false
+    const newScore = correct ? score + 1 : score
+    if (isLast) {
+      setTimeout(() => onComplete(newScore), 900)
+    } else {
+      setScore(newScore)
+    }
+  }
+
+  function handleNext() {
+    setSelected(null)
+    setRevealed(false)
+    setQIdx(i => i + 1)
+  }
+
+  return (
+    <motion.div key={`skillCheck-${qIdx}`} custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
+      <div className="mb-5 flex items-center justify-between">
+        <p className="text-sm font-medium" style={{ color: '#64748B' }}>{SKILL_INTROS[qIdx] ?? ''}</p>
+        <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: '#DBEAFE', color: '#2563EB' }}>
+          Q {qIdx + 1} of {questions.length}
+        </span>
+      </div>
+
+      <div className="w-full rounded-full h-1.5 mb-6" style={{ background: '#E2E8F0' }}>
+        <div className="h-1.5 rounded-full transition-all duration-500"
+          style={{ width: `${((qIdx) / questions.length) * 100}%`, background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }} />
+      </div>
+
+      <h2 className="text-xl sm:text-2xl font-black mb-6" style={{ color: '#0F172A' }}>{q.q}</h2>
+
+      <div className="space-y-3 mb-6">
+        {shuffled.map(opt => {
+          const isSelected = selected === opt.id
+          const isCorrect = opt.correct
+          let bg = '#FFFFFF'
+          let border = '#E2E8F0'
+          let textColor = '#0F172A'
+          if (revealed && isSelected && isCorrect) { bg = '#DCFCE7'; border = '#16A34A'; textColor = '#15803D' }
+          else if (revealed && isSelected && !isCorrect) { bg = '#FEE2E2'; border = '#DC2626'; textColor = '#DC2626' }
+          else if (revealed && isCorrect) { bg = '#DCFCE7'; border = '#16A34A'; textColor = '#15803D' }
+          return (
+            <button key={opt.id}
+              onClick={() => handleSelect(opt.id)}
+              disabled={revealed}
+              className="w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all hover:scale-[1.01] disabled:cursor-default"
+              style={{ background: bg, border: `1.5px solid ${border}` }}>
+              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: revealed && isCorrect ? '#16A34A' : revealed && isSelected ? '#DC2626' : '#F1F5F9' }}>
+                {revealed && isCorrect
+                  ? <Check size={12} className="text-white" />
+                  : revealed && isSelected && !isCorrect
+                    ? <X size={12} className="text-white" />
+                    : null}
+              </div>
+              <span className="text-sm font-medium" style={{ color: textColor }}>{opt.label}</span>
+            </button>
+          )
+        })}
+      </div>
+
+      {revealed && (
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+          className="p-4 rounded-2xl mb-6"
+          style={{ background: shuffled.find(o => o.id === selected)?.correct ? '#DCFCE7' : '#FEE2E2' }}>
+          <p className="text-sm" style={{ color: shuffled.find(o => o.id === selected)?.correct ? '#15803D' : '#991B1B' }}>
+            {q.explanation}
+          </p>
+        </motion.div>
+      )}
+
+      <div className="flex items-center gap-3">
+        {qIdx === 0 && (
+          <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100" style={{ color: '#64748B' }}>
+            <ArrowLeft size={15} /> Back
+          </button>
+        )}
+        {revealed && !isLast && (
+          <button onClick={handleNext}
+            className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02]"
+            style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', color: '#FFFFFF', boxShadow: '0 4px 14px rgba(37,99,235,0.25)' }}>
+            {NEXT_LABELS[qIdx] ?? 'Next →'} <ArrowRight size={15} />
+          </button>
+        )}
+      </div>
+    </motion.div>
   )
 }
 
