@@ -72,13 +72,22 @@ function clearLocalState() {
   } catch {}
 }
 
-// Merge two states: union arrays, take max XP/streak
+// Merge two states: union arrays, take max counters. Mirrors the server-side
+// merge in save_my_progress: the streak follows whichever side was active
+// most recently (YYYY-MM-DD strings compare correctly), max on a tie.
 function mergeStates(local: GameState, remote: GameState): GameState {
+  let lastActiveDate = local.lastActiveDate ?? remote.lastActiveDate
+  let streak = Math.max(local.streak, remote.streak)
+  if (local.lastActiveDate && remote.lastActiveDate && local.lastActiveDate !== remote.lastActiveDate) {
+    const newer = local.lastActiveDate > remote.lastActiveDate ? local : remote
+    lastActiveDate = newer.lastActiveDate
+    streak = newer.streak
+  }
   return {
     xp: Math.max(local.xp, remote.xp),
-    streak: Math.max(local.streak, remote.streak),
+    streak,
     longestStreak: Math.max(local.longestStreak ?? 0, remote.longestStreak ?? 0),
-    lastActiveDate: local.lastActiveDate ?? remote.lastActiveDate,
+    lastActiveDate,
     activityDates: Array.from(new Set([...(local.activityDates ?? []), ...(remote.activityDates ?? [])])),
     completedLessons: Array.from(new Set([...local.completedLessons, ...remote.completedLessons])),
     completedModules: Array.from(new Set([...local.completedModules, ...remote.completedModules])),
@@ -128,19 +137,21 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         const local = localBelongsToThisUser ? loadLocalState() : DEFAULT_STATE
         setLastUserId(user!.id)
 
-        if (remote) {
-          const merged = localBelongsToThisUser ? mergeStates(local, remote) : remote
-          setState(merged)
-          saveLocalState(merged)
-          if (localBelongsToThisUser && (merged.xp > remote.xp || merged.completedLessons.length > remote.completedLessons.length)) {
-            await saveUserProgress(user!.id, merged)
-          }
-        } else {
-          // First sign-in: push local progress only if it was from an anonymous session
-          const startState = localBelongsToThisUser ? local : DEFAULT_STATE
-          setState(startState)
-          saveLocalState(startState)
-          await saveUserProgress(user!.id, startState)
+        // The server is authoritative: merge any anonymous local progress in,
+        // write it back (the save itself merges server-side), and adopt
+        // whatever the server returns as the canonical state.
+        const base = remote
+          ? (localBelongsToThisUser ? mergeStates(local, remote) : remote)
+          : (localBelongsToThisUser ? local : DEFAULT_STATE)
+        setState(base)
+        saveLocalState(base)
+        const canonical = await saveUserProgress(user!.id, base)
+        if (canonical) {
+          setState(prev => {
+            const merged = mergeStates(prev, canonical)
+            saveLocalState(merged)
+            return merged
+          })
         }
       } catch {
         // Supabase unavailable — local state is still valid
@@ -161,12 +172,31 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     }
   }, [user])
 
-  // Debounced save to Supabase on every state change (when signed in)
+  // Debounced save to Supabase on every state change (when signed in).
+  // The save merges server-side and returns the canonical state; adopt it
+  // only when it adds something, so concurrent progress from another device
+  // flows in without looping (mergeStates is monotonic in every metric).
   useEffect(() => {
     if (!user) return
     if (saveTimer.current) clearTimeout(saveTimer.current)
     saveTimer.current = setTimeout(() => {
-      saveUserProgress(user.id, state).catch(() => {})
+      saveUserProgress(user.id, state).then(canonical => {
+        if (!canonical) return
+        setState(prev => {
+          const merged = mergeStates(prev, canonical)
+          const gained =
+            merged.xp !== prev.xp ||
+            merged.streak !== prev.streak ||
+            merged.longestStreak !== prev.longestStreak ||
+            merged.totalQuizzesPerfect !== prev.totalQuizzesPerfect ||
+            merged.completedLessons.length !== prev.completedLessons.length ||
+            merged.completedModules.length !== prev.completedModules.length ||
+            merged.completedTracks.length !== prev.completedTracks.length ||
+            merged.earnedBadges.length !== prev.earnedBadges.length ||
+            merged.activityDates.length !== prev.activityDates.length
+          return gained ? merged : prev
+        })
+      }).catch(() => {})
     }, 1500)
     return () => {
       if (saveTimer.current) clearTimeout(saveTimer.current)
