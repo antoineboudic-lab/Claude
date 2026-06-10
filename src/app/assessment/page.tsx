@@ -9,7 +9,7 @@ import {
   Settings, Briefcase, User, ArrowLeft, ArrowRight,
   Check, X, Zap, Clock, Target, Users, TrendingUp as Trend,
   Star, Brain, CheckCircle2,
-  Scale, Package, Headphones, BarChart,
+  Scale, Package, Headphones, BarChart, Sparkles,
 } from 'lucide-react'
 import Logo from '@/components/Logo'
 import type { AssessmentAnswers, Role, TimeCommitment, Industry, CompanySize } from '@/lib/assessment/types'
@@ -1638,6 +1638,11 @@ export default function AssessmentPage() {
                   <p className="text-lg" style={{ color: '#64748B' }}>
                     {t('findPerfectSub')}
                   </p>
+                  <Link href="/assessment/chat"
+                    className="inline-flex items-center gap-1.5 mt-5 px-4 py-2 rounded-full text-sm font-semibold transition-all hover:scale-[1.03]"
+                    style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE' }}>
+                    <Sparkles size={13} /> New: build your path in a conversation →
+                  </Link>
                 </div>
 
                 <div className="mb-8">
