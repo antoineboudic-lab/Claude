@@ -1501,6 +1501,56 @@ export default function LessonPage() {
     if (data.url) window.location.href = data.url
   }
 
+  // ── Personalised lesson view ──
+  // "For you" streams a Claude rewrite of the lesson adapted to the user's
+  // assessment profile (/api/personalize, cached server-side per user+lesson).
+  const [lessonView, setLessonView] = useState<'standard' | 'personal'>('standard')
+  const [personalContent, setPersonalContent] = useState('')
+  const [personalizing, setPersonalizing] = useState(false)
+  const [personalError, setPersonalError] = useState('')
+
+  useEffect(() => {
+    setLessonView('standard')
+    setPersonalContent('')
+    setPersonalizing(false)
+    setPersonalError('')
+  }, [lessonId])
+
+  const personalize = async (force = false) => {
+    if (personalizing) return
+    setLessonView('personal')
+    if (personalContent && !force) return
+    setPersonalizing(true)
+    setPersonalError('')
+    setPersonalContent('')
+    try {
+      const res = await fetch('/api/personalize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lessonId, trackId, force }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error ?? 'Something went wrong')
+      }
+      if (!res.body) throw new Error('Something went wrong')
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let acc = ''
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        acc += decoder.decode(value, { stream: true })
+        setPersonalContent(acc)
+      }
+    } catch (e) {
+      setPersonalError(e instanceof Error ? e.message : 'Something went wrong')
+      setLessonView('standard')
+    } finally {
+      setPersonalizing(false)
+    }
+  }
+
   const result = getLesson(trackId as TrackId, lessonId)
   const lesson: Lesson | undefined = result?.lesson
   const module: Module | undefined = result?.module
@@ -1819,7 +1869,67 @@ export default function LessonPage() {
           <motion.div ref={lessonReadRef} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
             {lesson ? (
               <>
-                <LessonContent content={lesson.content} color={color} />
+                {user && (
+                  <div className="mb-7">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <div className="inline-flex items-center rounded-full p-1" style={{ background: '#F1F5F9' }}>
+                        <button
+                          onClick={() => setLessonView('standard')}
+                          className="px-4 py-1.5 rounded-full text-xs font-semibold transition-all"
+                          style={lessonView === 'standard'
+                            ? { background: '#FFFFFF', color: '#0F172A', boxShadow: '0 1px 4px rgba(15,23,42,0.08)', fontFamily: 'var(--font-sans)' }
+                            : { color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                          Standard
+                        </button>
+                        <button
+                          onClick={() => personalize()}
+                          className="px-4 py-1.5 rounded-full text-xs font-semibold transition-all inline-flex items-center gap-1.5"
+                          style={lessonView === 'personal'
+                            ? { background: color, color: '#FFFFFF', boxShadow: `0 2px 8px ${color}40`, fontFamily: 'var(--font-sans)' }
+                            : { color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                          <Sparkles size={12} /> For you
+                        </button>
+                      </div>
+                      {lessonView === 'personal' && personalContent && !personalizing && (
+                        <button
+                          onClick={() => personalize(true)}
+                          className="text-xs font-medium hover:underline"
+                          style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                          Regenerate
+                        </button>
+                      )}
+                    </div>
+                    {personalError && (
+                      personalError === 'no-assessment' ? (
+                        <p className="mt-2 text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                          <Link href="/assessment" className="font-medium" style={{ color: '#2563EB' }}>Take the assessment</Link>
+                          {' '}so we know who to personalise this lesson for.
+                        </p>
+                      ) : (
+                        <p className="mt-2 text-xs" style={{ color: '#DC2626', fontFamily: 'var(--font-sans)' }}>{personalError}</p>
+                      )
+                    )}
+                  </div>
+                )}
+
+                {lessonView === 'personal' ? (
+                  <>
+                    {personalContent && <LessonContent content={personalContent} color={color} />}
+                    {personalizing && (
+                      <div className="flex items-center gap-2.5 py-6 text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        <motion.span
+                          animate={{ opacity: [0.4, 1, 0.4] }}
+                          transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+                          className="inline-flex">
+                          <Sparkles size={15} style={{ color }} />
+                        </motion.span>
+                        {personalContent ? 'Writing your version…' : 'Adapting this lesson to your role…'}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <LessonContent content={lesson.content} color={color} />
+                )}
 
                 {(lesson.outputComparison || lesson.inlineCheck) && (
                   <div className="mt-10 pt-8" style={{ borderTop: '1px solid #F1F5F9' }}>
