@@ -1,0 +1,47 @@
+name: Supabase keep-alive
+
+# Free-tier Supabase projects auto-pause after ~7 days of inactivity, which
+# takes down auth and all data features on the live site. This pings each
+# project's keep_alive() RPC daily (see supabase/migrations/018_keep_alive.sql)
+# so they stay active with wide margin against the 7-day threshold.
+#
+# The sb_publishable_ keys below are publishable keys — designed to be public
+# and RLS-protected (they already ship in the client bundle), so committing
+# them here is safe. To rotate: regenerate in the Supabase dashboard
+# (Project Settings -> API keys) and update the values below.
+#
+# Note: GitHub disables scheduled workflows after 60 days with no repo
+# activity. Active development keeps it on; otherwise re-enable it in the
+# Actions tab.
+
+on:
+  schedule:
+    - cron: '17 6 * * *'   # daily at 06:17 UTC (off the hour to avoid GH congestion)
+  workflow_dispatch: {}     # allow manual runs from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: production
+            url: https://xqmgonqnqqzhuaivfgsj.supabase.co
+            key: sb_publishable_EgjAwrLR0uc7MJkGdUfYEw_LFwhHL63
+          - name: dev
+            url: https://nqxymjeoidlqtwxuhkhy.supabase.co
+            key: sb_publishable_SB2_DuXKWtCb3pPFq8C4IA_LKrFTbzL
+    steps:
+      - name: Ping ${{ matrix.name }}
+        run: |
+          code=$(curl -s -o /tmp/body -w '%{http_code}' --max-time 30 \
+            -X POST '${{ matrix.url }}/rest/v1/rpc/keep_alive' \
+            -H 'apikey: ${{ matrix.key }}' \
+            -H 'Content-Type: application/json' \
+            -d '{}')
+          echo "${{ matrix.name }} -> HTTP $code, body: $(cat /tmp/body)"
+          if [ "$code" != "200" ]; then
+            echo "::error::keep-alive failed for ${{ matrix.name }} (HTTP $code)"
+            exit 1
+          fi
