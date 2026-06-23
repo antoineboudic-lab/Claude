@@ -366,7 +366,7 @@ export default function ChatAssessmentPage() {
         <Link href="/"><Logo size="md" /></Link>
         <div className="flex items-center gap-5">
           <span className="hidden sm:inline text-xs" style={{ color: '#94A3B8' }}>≈ 3 minutes</span>
-          <Link href="/assessment" className="text-xs font-medium hover:underline" style={{ color: '#2563EB' }}>
+          <Link href="/assessment/form" className="text-xs font-medium hover:underline" style={{ color: '#2563EB' }}>
             Prefer the classic form? →
           </Link>
         </div>
