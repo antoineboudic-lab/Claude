@@ -182,14 +182,14 @@ function Navbar() {
           ].map(item => (
             item.href.startsWith('/') ? (
               <Link key={item.label} href={item.href}
-                className="text-[11px] uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
-                style={{ color: INK_SOFT, fontFamily: MONO, fontWeight: 500 }}>
+                className="text-sm transition-opacity hover:opacity-60"
+                style={{ color: INK_SOFT, fontFamily: SANS, fontWeight: 500 }}>
                 {item.label}
               </Link>
             ) : (
               <a key={item.label} href={item.href}
-                className="text-[11px] uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
-                style={{ color: INK_SOFT, fontFamily: MONO, fontWeight: 500 }}>
+                className="text-sm transition-opacity hover:opacity-60"
+                style={{ color: INK_SOFT, fontFamily: SANS, fontWeight: 500 }}>
                 {item.label}
               </a>
             )
@@ -201,7 +201,7 @@ function Navbar() {
           <button
             onClick={() => setSearchOpen(true)}
             className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs transition-opacity hover:opacity-70"
-            style={{ color: INK_SOFT, fontFamily: MONO, border: `1px solid ${RULE}`, background: 'transparent', borderRadius: 2 }}
+            style={{ color: INK_SOFT, fontFamily: SANS, border: `1px solid ${RULE}`, background: 'transparent', borderRadius: 3 }}
           >
             <Search size={12} />
             <span>{tNav('search')}</span>
@@ -216,7 +216,7 @@ function Navbar() {
                   <button onClick={() => setAvatarOpen(v => !v)}
                     className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-xl transition-colors hover:bg-slate-100">
                     <div className="w-8 h-8 flex items-center justify-center text-xs font-bold text-white"
-                      style={{ background: COBALT, fontFamily: MONO, borderRadius: 2 }}>
+                      style={{ background: COBALT, fontFamily: SANS, borderRadius: 3 }}>
                       {initials}
                     </div>
                     <span className="text-sm font-medium" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
@@ -262,13 +262,13 @@ function Navbar() {
               ) : (
                 <>
                   <button onClick={openSignIn}
-                    className="text-[11px] uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
-                    style={{ color: INK_SOFT, fontFamily: MONO, fontWeight: 500 }}>
+                    className="text-sm transition-opacity hover:opacity-60"
+                    style={{ color: INK_SOFT, fontFamily: SANS, fontWeight: 500 }}>
                     {tNav('signIn')}
                   </button>
                   <Link href="/assessment"
-                    className="px-4 py-2.5 text-[11px] uppercase tracking-[0.16em] font-medium text-white transition-opacity hover:opacity-90"
-                    style={{ background: COBALT, fontFamily: MONO, borderRadius: 2 }}>
+                    className="px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                    style={{ background: COBALT, fontFamily: SANS, borderRadius: 3 }}>
                     {tNav('buildMyPlan')}
                   </Link>
                 </>
@@ -341,8 +341,8 @@ function Navbar() {
                         {tNav('signIn')}
                       </button>
                       <Link href="/assessment" onClick={() => setMobileOpen(false)}
-                        className="flex items-center justify-center gap-2 py-3 text-[11px] uppercase tracking-[0.16em] font-medium text-white"
-                        style={{ background: COBALT, fontFamily: MONO, borderRadius: 2 }}>
+                        className="flex items-center justify-center gap-2 py-3 text-sm font-semibold text-white"
+                        style={{ background: COBALT, fontFamily: SANS, borderRadius: 3 }}>
                         {tNav('buildMyPlan')} <ArrowRight size={13} />
                       </Link>
                     </>
@@ -661,14 +661,14 @@ function Hero() {
             {/* CTAs */}
             <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-x-7 gap-y-4 mb-9">
               <Link href="/assessment"
-                className="group inline-flex items-center gap-3 px-6 py-3.5 text-white transition-opacity hover:opacity-90"
-                style={{ background: COBALT, borderRadius: 2, fontFamily: MONO, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 500 }}>
+                className="group inline-flex items-center gap-2.5 px-6 py-3.5 text-white transition-opacity hover:opacity-90"
+                style={{ background: COBALT, borderRadius: 3, fontFamily: SANS, fontSize: '15.5px', letterSpacing: '-0.01em', fontWeight: 600 }}>
                 {tHero('cta')}
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
               </Link>
               <a href="#program"
                 className="inline-flex items-center gap-2 transition-opacity hover:opacity-60"
-                style={{ color: INK, fontFamily: MONO, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.12em', textDecoration: 'underline', textUnderlineOffset: '5px', textDecorationColor: RULE }}>
+                style={{ color: INK, fontFamily: SANS, fontSize: '15px', fontWeight: 500, textDecoration: 'underline', textUnderlineOffset: '5px', textDecorationColor: RULE }}>
                 <Play size={11} fill={INK} /> {tHero('seeHowItWorks')}
               </a>
             </motion.div>
@@ -766,108 +766,66 @@ function SocialProof() {
 function HowItWorks() {
   const tHIW = useTranslations('home.howItWorks')
   const steps = [
-    {
-      number: '01', icon: ClipboardList, title: tHIW('step1Title'), color: '#2563EB', bg: '#DBEAFE',
-      desc: tHIW('step1Desc'),
-      detail: tHIW('step1Detail'),
-      tag: tHIW('step1Tag'),
-    },
-    {
-      number: '02', icon: Route, title: tHIW('step2Title'), color: '#3B82F6', bg: '#DBEAFE',
-      desc: tHIW('step2Desc'),
-      detail: tHIW('step2Detail'),
-      tag: tHIW('step2Tag'),
-    },
-    {
-      number: '03', icon: GraduationCap, title: tHIW('step3Title'), color: '#2563EB', bg: '#DBEAFE',
-      desc: tHIW('step3Desc'),
-      detail: tHIW('step3Detail'),
-      tag: tHIW('step3Tag'),
-    },
+    { number: '01', title: tHIW('step1Title'), desc: tHIW('step1Desc'), detail: tHIW('step1Detail') },
+    { number: '02', title: tHIW('step2Title'), desc: tHIW('step2Desc'), detail: tHIW('step2Detail') },
+    { number: '03', title: tHIW('step3Title'), desc: tHIW('step3Desc'), detail: tHIW('step3Detail') },
   ]
   const { ref, isInView } = useReveal()
   return (
-    <section id="program" className="py-16 sm:py-24" style={{ background: '#FFFFFF' }}>
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
-          <motion.div variants={fadeUp} className="text-center mb-14">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tHIW('sectionLabel')}</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+    <section id="program" style={{ background: PAPER }}>
+      <div className="max-w-7xl mx-auto px-6 py-20 sm:py-28">
+        <motion.div ref={ref} variants={stagger(0.1)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
+
+          {/* Section dateline */}
+          <motion.div variants={fadeUp} className="flex items-baseline justify-between pb-5" style={{ borderBottom: `1px solid ${RULE}` }}>
+            <span className="text-[10.5px] uppercase tracking-[0.22em]" style={{ fontFamily: MONO, color: COBALT }}>
+              Op.&nbsp;02 — {tHIW('sectionLabel')}
+            </span>
+            <span className="hidden sm:block text-[10.5px] uppercase tracking-[0.22em]" style={{ fontFamily: MONO, color: INK_FAINT }}>
+              Three movements
+            </span>
+          </motion.div>
+
+          {/* Heading */}
+          <motion.div variants={fadeUp} className="pt-10 pb-12 max-w-3xl">
+            <h2 style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2.1rem, 4vw, 3.4rem)', lineHeight: 1.04, letterSpacing: '-0.015em', color: INK, marginBottom: '1.1rem' }}>
               {tHIW('heading')}
             </h2>
-            <p className="text-base max-w-xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            <p style={{ fontFamily: SANS, fontSize: '1.08rem', lineHeight: 1.6, color: INK_SOFT }}>
               {tHIW('sub')}
             </p>
           </motion.div>
 
-          {/* Steps — connected layout */}
-          <div className="relative">
-            {/* Connector line (desktop) */}
-            <div className="hidden md:block absolute top-16 left-0 right-0 h-px pointer-events-none"
-              style={{ background: 'linear-gradient(to right, transparent 8%, #E2E8F0 20%, #E2E8F0 80%, transparent 92%)' }} />
-
-            <div className="grid md:grid-cols-3 gap-6 relative">
-              {steps.map((step, i) => {
-                const Icon = step.icon
-                return (
-                  <motion.div key={step.title} variants={fadeUp} className="group relative">
-                    {/* Arrow between cards (desktop) */}
-                    {i < 2 && (
-                      <div className="hidden md:flex absolute -right-3 top-14 z-10 w-6 h-6 rounded-full items-center justify-center"
-                        style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
-                        <ChevronRight size={12} style={{ color: '#94A3B8' }} />
-                      </div>
-                    )}
-
-                    <div className="relative p-7 rounded-2xl h-full overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5"
-                      style={{ background: '#FFFFFF', border: '2px solid #F1F5F9' }}>
-                      {/* Giant decorative number */}
-                      <span className="absolute -top-3 -right-1 font-black leading-none select-none pointer-events-none"
-                        style={{ fontSize: '7rem', color: '#EFF6FF', fontFamily: 'var(--font-sans)' }}>
-                        {step.number}
-                      </span>
-
-                      {/* Step header */}
-                      <div className="flex items-center gap-3 mb-5 relative">
-                        <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-                          style={{ background: step.color }}>
-                          <Icon size={20} className="text-white" />
-                        </div>
-                        <span className="text-xs font-bold px-2.5 py-1 rounded-full"
-                          style={{ background: step.bg, color: step.color, fontFamily: 'var(--font-sans)' }}>
-                          {step.tag}
-                        </span>
-                      </div>
-
-                      <h3 className="text-lg font-black mb-2.5 relative" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-                        {step.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed mb-5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                        {step.desc}
-                      </p>
-
-                      {/* Meta */}
-                      <div className="flex items-center gap-1.5 pt-4" style={{ borderTop: `2px solid ${step.color}15` }}>
-                        <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: step.color }} />
-                        <span className="text-xs font-semibold" style={{ color: step.color, fontFamily: 'var(--font-sans)' }}>
-                          {step.detail}
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
+          {/* Three movements — hairline-divided, numbered serif */}
+          <div className="grid md:grid-cols-3" style={{ borderTop: `1px solid ${RULE}` }}>
+            {steps.map((step, i) => (
+              <motion.div key={step.number} variants={fadeUp}
+                className="py-9 md:px-9"
+                style={{ borderLeft: i === 0 ? 'none' : `1px solid ${RULE}`, paddingLeft: i === 0 ? 0 : undefined }}>
+                <div style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '2.6rem', lineHeight: 1, color: COBALT, marginBottom: '1.1rem' }}>
+                  {step.number}
+                </div>
+                <h3 style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.4rem', lineHeight: 1.15, color: INK, marginBottom: '0.6rem' }}>
+                  {step.title}
+                </h3>
+                <p style={{ fontFamily: SANS, fontSize: '0.95rem', lineHeight: 1.6, color: INK_SOFT, marginBottom: '1rem' }}>
+                  {step.desc}
+                </p>
+                <p className="text-[10.5px] uppercase tracking-[0.16em]" style={{ fontFamily: MONO, color: INK_FAINT }}>
+                  {step.detail}
+                </p>
+              </motion.div>
+            ))}
           </div>
 
-          {/* CTA below steps */}
-          <motion.div variants={fadeUp} className="text-center mt-12">
+          {/* CTA */}
+          <motion.div variants={fadeUp} className="pt-12 flex items-center gap-6 flex-wrap" style={{ borderTop: `1px solid ${RULE}` }}>
             <Link href="/assessment"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90 hover:scale-[1.02]"
-              style={{ background: '#2563EB', fontFamily: 'var(--font-sans)', boxShadow: '0 4px 16px rgba(37,99,235,0.2)' }}>
-              {tHIW('cta')} <ArrowRight size={14} />
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 text-white transition-opacity hover:opacity-90"
+              style={{ background: COBALT, borderRadius: 3, fontFamily: SANS, fontSize: '15.5px', fontWeight: 600, letterSpacing: '-0.01em' }}>
+              {tHIW('cta')} <ArrowRight size={15} />
             </Link>
-            <p className="mt-3 text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-[10.5px] uppercase tracking-[0.16em]" style={{ fontFamily: MONO, color: INK_FAINT }}>
               {tHIW('ctaSub')}
             </p>
           </motion.div>
@@ -912,50 +870,48 @@ function RoleTracks() {
   const { ref, isInView } = useReveal()
   const track = TRACKS.find(t => t.id === active)!
   const preview = TRACK_PREVIEWS[active]
-  const Icon = track.icon
   const tTracks = useTranslations('home.tracks')
 
   return (
-    <section id="tracks" className="py-14 sm:py-20" style={{ background: '#EFF6FF' }}>
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="tracks" style={{ background: PAPER, borderTop: `1px solid ${RULE}` }}>
+      <div className="max-w-7xl mx-auto px-6 py-20 sm:py-28">
         <motion.div ref={ref} variants={stagger(0.08)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
-          <motion.div variants={fadeUp} className="text-center mb-12">
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{tTracks('sectionLabel')}</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+          <motion.div variants={fadeUp} className="flex items-baseline justify-between pb-5" style={{ borderBottom: `1px solid ${RULE}` }}>
+            <span className="text-[10.5px] uppercase tracking-[0.22em]" style={{ fontFamily: MONO, color: COBALT }}>
+              Op.&nbsp;03 — {tTracks('sectionLabel')}
+            </span>
+            <span className="hidden sm:block text-[10.5px] uppercase tracking-[0.22em]" style={{ fontFamily: MONO, color: INK_FAINT }}>
+              Eleven tracks
+            </span>
+          </motion.div>
+          <motion.div variants={fadeUp} className="pt-10 pb-12 max-w-3xl">
+            <h2 style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2.1rem, 4vw, 3.4rem)', lineHeight: 1.04, letterSpacing: '-0.015em', color: INK, marginBottom: '1.1rem' }}>
               {tTracks('heading')}
             </h2>
-            <p className="text-base max-w-xl mx-auto" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            <p style={{ fontFamily: SANS, fontSize: '1.08rem', lineHeight: 1.6, color: INK_SOFT }}>
               {tTracks('sub')}
             </p>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="grid lg:grid-cols-[280px_1fr] gap-6 items-start">
-            {/* Role selector — left */}
-            <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-              {TRACKS.map(t => {
-                const TIcon = t.icon
+          <motion.div variants={fadeUp} className="grid lg:grid-cols-[250px_1fr] items-start" style={{ borderTop: `1px solid ${RULE}` }}>
+            {/* Role selector — editorial index */}
+            <div className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible lg:border-r" style={{ borderColor: RULE }}>
+              {TRACKS.map((t, i) => {
                 const isActive = t.id === active
                 return (
                   <button
                     key={t.id}
                     onClick={() => setActive(t.id)}
-                    className="flex items-center gap-2.5 px-4 py-3 rounded-xl text-left transition-all flex-shrink-0 lg:w-full"
-                    style={{
-                      background: isActive ? t.color : 'transparent',
-                      border: isActive ? 'none' : '1px solid transparent',
-                      boxShadow: isActive ? `0 4px 14px ${t.color}35` : 'none',
-                      fontFamily: 'var(--font-sans)',
-                    }}
+                    className="group flex items-baseline gap-3 px-4 py-3 text-left transition-colors flex-shrink-0 lg:w-full hover:bg-[#ECEAE1]"
+                    style={{ background: isActive ? 'rgba(36,64,216,0.06)' : 'transparent', borderBottom: `1px solid ${RULE}` }}
                   >
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                      style={{ background: isActive ? 'rgba(255,255,255,0.25)' : '#E2E8F0' }}>
-                      <TIcon size={13} style={{ color: isActive ? '#FFFFFF' : '#94A3B8' }} />
-                    </div>
-                    <span className="text-sm font-semibold whitespace-nowrap"
-                      style={{ color: isActive ? '#FFFFFF' : '#64748B' }}>
+                    <span className="text-[11px] tabular-nums" style={{ fontFamily: MONO, color: isActive ? COBALT : INK_FAINT }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="whitespace-nowrap" style={{ fontFamily: SERIF, fontSize: '1.08rem', color: isActive ? COBALT : INK }}>
                       {t.label}
                     </span>
-                    {isActive && <ChevronRight size={13} className="ml-auto hidden lg:block" style={{ color: 'rgba(255,255,255,0.7)' }} />}
+                    {isActive && <ArrowRight size={13} className="ml-auto hidden lg:block self-center" style={{ color: COBALT }} />}
                   </button>
                 )
               })}
@@ -969,82 +925,58 @@ function RoleTracks() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.22 }}
-                className="rounded-2xl overflow-hidden"
-                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}
+                className="lg:pl-10 py-8"
               >
-                {/* Header */}
-                <div className="px-7 py-6" style={{ background: track.color }}>
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'rgba(255,255,255,0.2)' }}>
-                        <Icon size={18} className="text-white" />
-                      </div>
-                      <div>
-                        <p className="text-xs font-bold uppercase tracking-widest mb-0.5"
-                          style={{ color: 'rgba(255,255,255,0.65)', fontFamily: 'var(--font-sans)' }}>
-                          {track.label} Track
-                        </p>
-                        <h3 className="text-base font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>
-                          {preview.headline}
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full flex-shrink-0"
-                      style={{ background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.25)' }}>
-                      <Sparkles size={11} style={{ color: '#FFFFFF' }} />
-                      <span className="text-xs font-semibold text-white" style={{ fontFamily: 'var(--font-sans)' }}>
-                        {tTracks('personalised')}
-                      </span>
-                    </div>
+                <div className="flex items-start justify-between gap-4 mb-7">
+                  <div>
+                    <p className="text-[10.5px] uppercase tracking-[0.2em] mb-2" style={{ fontFamily: MONO, color: COBALT }}>
+                      {track.label} Track
+                    </p>
+                    <h3 style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(1.6rem, 2.4vw, 2.2rem)', lineHeight: 1.08, color: INK, maxWidth: '32rem' }}>
+                      {preview.headline}
+                    </h3>
                   </div>
+                  <span className="hidden sm:inline-flex items-center gap-1.5 flex-shrink-0 text-[10px] uppercase tracking-[0.16em]" style={{ fontFamily: MONO, color: INK_FAINT }}>
+                    <Sparkles size={11} style={{ color: COBALT }} /> {tTracks('personalised')}
+                  </span>
                 </div>
 
-                {/* Modules */}
-                <div className="p-7">
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    {preview.modules.map((mod, mi) => (
-                      <div key={mod.title} className="p-4 rounded-xl" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
-                        <div className="flex items-center gap-2 mb-3">
-                          <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
-                            style={{ background: track.color }}>
-                            <span className="text-[9px] font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>
-                              {String(mi + 1).padStart(2, '0')}
-                            </span>
-                          </div>
-                          <p className="text-xs font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
-                            {mod.title}
-                          </p>
-                        </div>
-                        <ul className="space-y-2">
-                          {mod.lessons.map(lesson => (
-                            <li key={lesson} className="flex items-start gap-1.5">
-                              <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0" style={{ background: track.color }} />
-                              <span className="text-xs leading-snug" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                                {lesson}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Footer CTA */}
-                  <div className="mt-5 pt-5 flex flex-col sm:flex-row items-center justify-between gap-4"
-                    style={{ borderTop: '1px solid #F1F5F9' }}>
-                    <p className="text-sm" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                      {tTracks('notYourRole')}{' '}
-                      <span style={{ color: '#0F172A', fontWeight: 600 }}>
-                        {tTracks('assessmentTailors')}
+                {/* Modules — hairline columns */}
+                <div className="grid sm:grid-cols-3" style={{ borderTop: `1px solid ${RULE}` }}>
+                  {preview.modules.map((mod, mi) => (
+                    <div key={mod.title} className="py-6 sm:pr-6"
+                      style={{ borderLeft: mi === 0 ? 'none' : `1px solid ${RULE}`, paddingLeft: mi === 0 ? 0 : '1.5rem' }}>
+                      <span className="text-[11px] tabular-nums" style={{ fontFamily: MONO, color: COBALT }}>
+                        {String(mi + 1).padStart(2, '0')}
                       </span>
-                    </p>
-                    <Link href="/assessment"
-                      className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white flex-shrink-0 transition-all hover:opacity-90"
-                      style={{ background: track.color, fontFamily: 'var(--font-sans)' }}>
-                      {tTracks('getPath', { track: track.label })} <ArrowRight size={13} />
-                    </Link>
-                  </div>
+                      <p style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.12rem', color: INK, margin: '0.4rem 0 0.9rem', lineHeight: 1.2 }}>
+                        {mod.title}
+                      </p>
+                      <ul className="space-y-2">
+                        {mod.lessons.map(lesson => (
+                          <li key={lesson} style={{ fontFamily: SANS, fontSize: '0.86rem', lineHeight: 1.5, color: INK_SOFT }}>
+                            {lesson}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Footer CTA */}
+                <div className="mt-7 pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  style={{ borderTop: `1px solid ${RULE}` }}>
+                  <p style={{ fontFamily: SANS, fontSize: '0.92rem', color: INK_SOFT }}>
+                    {tTracks('notYourRole')}{' '}
+                    <span style={{ color: INK, fontWeight: 600 }}>
+                      {tTracks('assessmentTailors')}
+                    </span>
+                  </p>
+                  <Link href="/assessment"
+                    className="inline-flex items-center gap-2.5 px-5 py-3 text-white flex-shrink-0 transition-opacity hover:opacity-90"
+                    style={{ background: COBALT, borderRadius: 3, fontFamily: SANS, fontSize: '14px', fontWeight: 600, letterSpacing: '-0.005em' }}>
+                    {tTracks('getPath', { track: track.label })} <ArrowRight size={14} />
+                  </Link>
                 </div>
               </motion.div>
             </AnimatePresence>
