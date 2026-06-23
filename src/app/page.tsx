@@ -19,6 +19,21 @@ import Logo from '@/components/Logo'
 import GlobalSearch from '@/components/GlobalSearch'
 import { useGeo } from '@/hooks/useGeo'
 
+// ─── Editorial design system ────────────────────────────────────────────────
+// "OpusLearn as a numbered composition": ink on paper, a distinctive serif for
+// display, monospace for metadata, and a signature cobalt as the brand blue.
+const PAPER = '#F3F2EC'        // warm paper stock
+const PAPER_2 = '#ECEAE1'      // slightly deeper paper (insets)
+const INK = '#15171C'          // near-black text
+const INK_SOFT = '#5A5C61'     // secondary text
+const INK_FAINT = '#9A988E'    // tertiary / captions
+const COBALT = '#2440D8'       // signature blue (ownable, not default SaaS blue)
+const COBALT_DEEP = '#1B2FA6'
+const RULE = '#D8D5C9'         // hairline on paper
+const SERIF = 'var(--font-serif)'
+const MONO = 'var(--font-mono)'
+const SANS = 'var(--font-sans)'
+
 // ─── Animation ────────────────────────────────────────────────────────────────
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
@@ -147,9 +162,9 @@ function Navbar() {
       transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 right-0 z-40 transition-all duration-200"
       style={{
-        background: solidBg ? 'rgba(255,255,255,0.98)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: solidBg ? '1px solid #E2E8F0' : '1px solid transparent',
+        background: solidBg ? 'rgba(243,242,236,0.96)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(10px) saturate(1.1)' : 'none',
+        borderBottom: solidBg ? `1px solid ${RULE}` : '1px solid transparent',
       }}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -167,14 +182,14 @@ function Navbar() {
           ].map(item => (
             item.href.startsWith('/') ? (
               <Link key={item.label} href={item.href}
-                className="text-sm font-medium transition-colors hover:text-slate-900"
-                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                className="text-[11px] uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
+                style={{ color: INK_SOFT, fontFamily: MONO, fontWeight: 500 }}>
                 {item.label}
               </Link>
             ) : (
               <a key={item.label} href={item.href}
-                className="text-sm font-medium transition-colors hover:text-slate-900"
-                style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                className="text-[11px] uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
+                style={{ color: INK_SOFT, fontFamily: MONO, fontWeight: 500 }}>
                 {item.label}
               </a>
             )
@@ -185,12 +200,12 @@ function Navbar() {
           {/* Search */}
           <button
             onClick={() => setSearchOpen(true)}
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-            style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs transition-opacity hover:opacity-70"
+            style={{ color: INK_SOFT, fontFamily: MONO, border: `1px solid ${RULE}`, background: 'transparent', borderRadius: 2 }}
           >
-            <Search size={13} />
+            <Search size={12} />
             <span>{tNav('search')}</span>
-            <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
+            <kbd style={{ fontSize: '10px', color: INK_FAINT, border: `1px solid ${RULE}`, borderRadius: 2, padding: '0px 4px' }}>⌘K</kbd>
           </button>
 
           {/* Desktop auth */}
@@ -200,8 +215,8 @@ function Navbar() {
                 <div className="relative" ref={dropdownRef}>
                   <button onClick={() => setAvatarOpen(v => !v)}
                     className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-xl transition-colors hover:bg-slate-100">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white"
-                      style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                    <div className="w-8 h-8 flex items-center justify-center text-xs font-bold text-white"
+                      style={{ background: COBALT, fontFamily: MONO, borderRadius: 2 }}>
                       {initials}
                     </div>
                     <span className="text-sm font-medium" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
@@ -246,13 +261,14 @@ function Navbar() {
                 </div>
               ) : (
                 <>
-                  <button onClick={openSignIn} className="text-sm font-medium transition-colors hover:text-slate-900"
-                    style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                  <button onClick={openSignIn}
+                    className="text-[11px] uppercase tracking-[0.16em] transition-opacity hover:opacity-60"
+                    style={{ color: INK_SOFT, fontFamily: MONO, fontWeight: 500 }}>
                     {tNav('signIn')}
                   </button>
                   <Link href="/assessment"
-                    className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90"
-                    style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                    className="px-4 py-2.5 text-[11px] uppercase tracking-[0.16em] font-medium text-white transition-opacity hover:opacity-90"
+                    style={{ background: COBALT, fontFamily: MONO, borderRadius: 2 }}>
                     {tNav('buildMyPlan')}
                   </Link>
                 </>
@@ -282,7 +298,7 @@ function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
             className="md:hidden overflow-hidden"
-            style={{ background: '#FFFFFF', borderTop: '1px solid #F1F5F9' }}
+            style={{ background: PAPER, borderTop: `1px solid ${RULE}` }}
           >
             <div className="px-6 pb-6 pt-2">
               <div className="mb-2">
@@ -325,8 +341,8 @@ function Navbar() {
                         {tNav('signIn')}
                       </button>
                       <Link href="/assessment" onClick={() => setMobileOpen(false)}
-                        className="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white"
-                        style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                        className="flex items-center justify-center gap-2 py-3 text-[11px] uppercase tracking-[0.16em] font-medium text-white"
+                        style={{ background: COBALT, fontFamily: MONO, borderRadius: 2 }}>
                         {tNav('buildMyPlan')} <ArrowRight size={13} />
                       </Link>
                     </>
@@ -596,81 +612,119 @@ const ROLE_PILLS = [
 
 function Hero() {
   const tHero = useTranslations('home.hero')
+  const indexRoles = ROLE_PILLS.slice(0, 6)
+  const grain = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E\")"
+
   return (
-    <section className="relative overflow-hidden" style={{ background: '#FFFFFF', paddingTop: '7rem', paddingBottom: '5rem' }}>
-      {/* Decorative background blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div style={{ position: 'absolute', top: -180, right: -120, width: 560, height: 560, borderRadius: '50%', background: 'radial-gradient(circle, rgba(37,99,235,0.09) 0%, transparent 70%)' }} />
-        <div style={{ position: 'absolute', bottom: -100, left: -100, width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%)' }} />
-      </div>
+    <section className="relative overflow-hidden" style={{ background: PAPER, paddingTop: '6.5rem' }}>
+      {/* Paper grain */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ backgroundImage: grain, opacity: 0.04, mixBlendMode: 'multiply' }} />
 
-      <div className="max-w-5xl mx-auto px-6">
-        <motion.div variants={stagger(0.1)} initial="hidden" animate="visible" className="text-center">
+      <div className="relative max-w-7xl mx-auto px-6">
 
-          {/* Label */}
-          <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full font-bold mb-8"
-            style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #DBEAFE', fontSize: '0.6875rem', letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-sans)' }}>
-            <Zap size={10} /> {tHero('badge')}
-          </motion.div>
-
-          {/* Headline — oversized */}
-          <motion.h1 variants={fadeUp}
-            style={{
-              fontFamily: 'var(--font-sans)', fontWeight: 800,
-              fontSize: 'clamp(2.75rem, 8vw, 5.25rem)',
-              lineHeight: 1.06, letterSpacing: '-0.03em',
-              color: '#0F172A', marginBottom: '1.5rem',
-            }}>
-            The AI skills<br />
-            <span style={{ color: '#2563EB' }}>{tHero('headingAccent')}</span>
-          </motion.h1>
-
-          {/* Subheading */}
-          <motion.p variants={fadeUp}
-            style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1rem, 2vw, 1.2rem)', lineHeight: 1.7, color: '#64748B', maxWidth: '36rem', margin: '0 auto 2.5rem' }}>
-            {tHero('subheading')}
-          </motion.p>
-
-          {/* CTA buttons */}
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-            <Link href="/assessment"
-              className="inline-flex items-center justify-center gap-2.5 rounded-xl font-bold text-white transition-all hover:opacity-92 hover:scale-[1.02] active:scale-[0.99]"
-              style={{ background: '#2563EB', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem', boxShadow: '0 8px 28px rgba(37,99,235,0.32)' }}>
-              {tHero('cta')} <ArrowRight size={16} />
-            </Link>
-            <a href="#program"
-              className="inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all hover:bg-slate-50"
-              style={{ border: '2px solid #E2E8F0', color: '#475569', fontSize: '1rem', fontFamily: 'var(--font-sans)', padding: '1rem 2rem' }}>
-              <Play size={14} /> {tHero('seeHowItWorks')}
-            </a>
-          </motion.div>
-
-          {/* Trust row — verifiable claims only */}
-          <motion.div variants={fadeUp} className="flex items-center justify-center flex-wrap gap-6 mb-14">
-            {[tHero('trustFree'), tHero('trustNoCard'), tHero('trustStart')].map(label => (
-              <div key={label} className="flex items-center gap-1.5" style={{ fontSize: '0.8125rem', color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                <Check size={11} color="#10B981" /> {label}
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Role pills */}
-          <motion.div variants={fadeUp}>
-            <p style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#CBD5E1', marginBottom: '0.875rem', fontFamily: 'var(--font-sans)' }}>
-              {tHero('pickYourRole')}
-            </p>
-            <div className="flex flex-wrap justify-center gap-2.5">
-              {ROLE_PILLS.map(r => (
-                <Link key={r.id} href={`/tracks/${r.id}`}
-                  className="inline-flex items-center gap-1.5 rounded-full text-sm font-semibold transition-all hover:scale-105"
-                  style={{ background: `${r.color}12`, color: r.color, border: `1.5px solid ${r.color}35`, padding: '0.4rem 1rem', fontFamily: 'var(--font-sans)' }}>
-                  {r.label}
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-
+        {/* Dateline — masthead meta */}
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}
+          className="flex items-center justify-between pb-4"
+          style={{ borderBottom: `1px solid ${RULE}`, fontFamily: MONO }}>
+          <span className="text-[10.5px] uppercase tracking-[0.22em]" style={{ color: COBALT }}>
+            Op.&nbsp;01 — Role-specific AI literacy
+          </span>
+          <span className="hidden sm:block text-[10.5px] uppercase tracking-[0.22em]" style={{ color: INK_FAINT }}>
+            Est. 2024 · No.&nbsp;001
+          </span>
         </motion.div>
+
+        <div className="grid lg:grid-cols-[1.12fr_0.88fr] gap-y-12 lg:gap-x-16 pt-12 lg:pt-16 pb-16 lg:pb-24 items-start">
+
+          {/* ── Left: editorial headline ── */}
+          <motion.div variants={stagger(0.09)} initial="hidden" animate="visible">
+
+            <motion.h1 variants={fadeUp}
+              style={{
+                fontFamily: SERIF, fontWeight: 500,
+                fontSize: 'clamp(2.9rem, 6.4vw, 5.6rem)',
+                lineHeight: 0.98, letterSpacing: '-0.015em',
+                color: INK, marginBottom: '1.75rem',
+              }}>
+              The AI skills<br />
+              your role{' '}
+              <em style={{ fontStyle: 'italic', fontWeight: 500, color: COBALT }}>actually</em><br />
+              demands.
+            </motion.h1>
+
+            <motion.p variants={fadeUp}
+              style={{ fontFamily: SANS, fontSize: 'clamp(1.02rem, 1.4vw, 1.18rem)', lineHeight: 1.65, color: INK_SOFT, maxWidth: '30rem', marginBottom: '2.25rem' }}>
+              {tHero('subheading')}
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-x-7 gap-y-4 mb-9">
+              <Link href="/assessment"
+                className="group inline-flex items-center gap-3 px-6 py-3.5 text-white transition-opacity hover:opacity-90"
+                style={{ background: COBALT, borderRadius: 2, fontFamily: MONO, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: 500 }}>
+                {tHero('cta')}
+                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+              <a href="#program"
+                className="inline-flex items-center gap-2 transition-opacity hover:opacity-60"
+                style={{ color: INK, fontFamily: MONO, fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.12em', textDecoration: 'underline', textUnderlineOffset: '5px', textDecorationColor: RULE }}>
+                <Play size={11} fill={INK} /> {tHero('seeHowItWorks')}
+              </a>
+            </motion.div>
+
+            {/* Trust — colophon style */}
+            <motion.p variants={fadeUp}
+              className="text-[10.5px] uppercase tracking-[0.18em]"
+              style={{ color: INK_FAINT, fontFamily: MONO }}>
+              {tHero('trustFree')} &nbsp;·&nbsp; {tHero('trustNoCard')} &nbsp;·&nbsp; {tHero('trustStart')}
+            </motion.p>
+          </motion.div>
+
+          {/* ── Right: the Contents / track index ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.25, ease: easing }}
+            className="lg:mt-2">
+            <div style={{ border: `1px solid ${RULE}`, background: 'rgba(255,255,255,0.35)' }}>
+              {/* Index header */}
+              <div className="flex items-baseline justify-between px-5 pt-4 pb-3" style={{ borderBottom: `1px solid ${RULE}` }}>
+                <span className="text-[10.5px] uppercase tracking-[0.2em]" style={{ fontFamily: MONO, color: INK }}>Contents</span>
+                <span className="text-[10.5px] uppercase tracking-[0.2em]" style={{ fontFamily: MONO, color: INK_FAINT }}>11 tracks</span>
+              </div>
+
+              {/* Index rows */}
+              <div className="px-2 py-1.5">
+                {indexRoles.map((r, i) => (
+                  <Link key={r.id} href={`/tracks/${r.id}`}
+                    className="group flex items-baseline gap-3 px-3 py-2.5 transition-colors hover:bg-[#ECEAE1]">
+                    <span className="text-[12px] tabular-nums" style={{ fontFamily: MONO, color: COBALT }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span style={{ fontFamily: SERIF, fontSize: '1.15rem', color: INK, lineHeight: 1 }}>{r.label}</span>
+                    <span className="flex-1 self-center mx-1" style={{ borderBottom: `1px dotted ${RULE}` }} />
+                    <ArrowRight size={13} className="opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" style={{ color: COBALT }} />
+                  </Link>
+                ))}
+              </div>
+
+              {/* Index footer */}
+              <Link href="/tracks"
+                className="flex items-center justify-between px-5 py-3.5 transition-colors hover:bg-[#ECEAE1]"
+                style={{ borderTop: `1px solid ${RULE}` }}>
+                <span className="text-[10.5px] uppercase tracking-[0.18em]" style={{ fontFamily: MONO, color: INK_SOFT }}>
+                  + 5 more tracks · 286 lessons
+                </span>
+                <ArrowRight size={13} style={{ color: INK_SOFT }} />
+              </Link>
+            </div>
+
+            {/* Caption under the index — ties to the chat assessment + the "opus" idea */}
+            <p className="mt-4 px-1" style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '0.96rem', lineHeight: 1.5, color: INK_SOFT }}>
+              A three-minute conversation composes a path around the work you actually do.
+            </p>
+          </motion.div>
+        </div>
       </div>
     </section>
   )
@@ -688,15 +742,20 @@ function SocialProof() {
     { n: '4', label: tSocial('stats.steps') },
   ]
   return (
-    <div style={{ background: '#2563EB' }}>
-      {/* Big stats */}
-      <div className="max-w-5xl mx-auto px-6 py-14 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10">
-        {stats.map(s => (
-          <div key={s.label} className="text-center">
-            <p style={{ fontFamily: 'var(--font-sans)', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3.25rem)', color: '#FFFFFF', lineHeight: 1, marginBottom: '0.375rem' }}>{s.n}</p>
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.55)' }}>{s.label}</p>
-          </div>
-        ))}
+    <div style={{ background: INK }}>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4">
+          {stats.map((s, i) => (
+            <div key={s.label}
+              className="px-5 sm:px-8 py-12"
+              style={{
+                borderLeft: i === 0 ? 'none' : `1px solid rgba(255,255,255,0.12)`,
+              }}>
+              <p style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2.4rem, 5vw, 3.6rem)', color: PAPER, lineHeight: 1, marginBottom: '0.6rem' }}>{s.n}</p>
+              <p className="text-[10.5px] uppercase tracking-[0.18em]" style={{ fontFamily: MONO, color: 'rgba(243,242,236,0.5)' }}>{s.label}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
