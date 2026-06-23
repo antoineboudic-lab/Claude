@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Newsreader, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { GameProvider } from "@/context/GameContext";
 import { AuthProvider } from "@/context/AuthContext";
@@ -18,27 +18,40 @@ import { rtlLocales } from '@/i18n/config';
 import { Suspense } from 'react';
 import { SignupParamHandler } from '@/components/SignupParamHandler';
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+// Self-hosted fonts (next/font/local) — no build-time Google fetch, so builds
+// are immune to network flakiness. Files in ./fonts.
+const plusJakartaSans = localFont({
   variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  src: [
+    { path: "./fonts/jakarta-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/jakarta-500.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/jakarta-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/jakarta-700.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/jakarta-800.woff2", weight: "800", style: "normal" },
+  ],
 });
 
 // Editorial display serif + metadata monospace for the redesigned landing page.
-// Scoped via CSS variables — pages that don't reference them are unaffected.
-const newsreader = Newsreader({
+const newsreader = localFont({
   variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
   display: "swap",
+  src: [
+    { path: "./fonts/newsreader-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/newsreader-500.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/newsreader-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/newsreader-italic-400.woff2", weight: "400", style: "italic" },
+    { path: "./fonts/newsreader-italic-500.woff2", weight: "500", style: "italic" },
+  ],
 });
 
-const plexMono = IBM_Plex_Mono({
+const plexMono = localFont({
   variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
+  src: [
+    { path: "./fonts/plexmono-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/plexmono-500.woff2", weight: "500", style: "normal" },
+  ],
 });
 
 const SITE_URL = "https://opuslearn.ai";
