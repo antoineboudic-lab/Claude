@@ -254,7 +254,7 @@ function AssessmentDemo() {
       }, per)
     }
 
-    const apply = (s: Record<string, unknown> & { kind: string }) => {
+    const apply = (s: Record<string, unknown> & { kind: string; ms: number }) => {
       switch (s.kind) {
         case 'reset':
           setMsgs([]); setTyping(false); setInput(''); setSending(false)
@@ -263,7 +263,7 @@ function AssessmentDemo() {
         case 'guideMsg':
           setTyping(false)
           setMsgs(m => [...m, { role: 'assistant', content: s.text as string }]); break
-        case 'userType': animateInput(s.text as string, (s as { ms: number }).ms); break
+        case 'userType': animateInput(s.text as string, s.ms); break
         case 'userSend':
           setSending(false); setInput('')
           setMsgs(m => [...m, { role: 'user', content: s.text as string }]); break
