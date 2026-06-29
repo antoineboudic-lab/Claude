@@ -3,6 +3,11 @@ import { Resend } from 'resend'
 import Link from 'next/link'
 import { CheckCircle2, ArrowLeft } from 'lucide-react'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { GrainOverlay } from '@/components/editorial/Atmosphere'
+import {
+  PAPER, PAPER_2, INK, INK_SOFT, INK_FAINT,
+  COBALT, COBALT_TX, RULE, SERIF, MONO, SANS,
+} from '@/components/editorial/theme'
 
 async function submitForm(formData: FormData) {
   'use server'
@@ -54,10 +59,11 @@ export default function DemoPage({
   searchParams: Promise<{ submitted?: string }>
 }) {
   return (
-    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 16px' }}>
-      <div style={{ width: '100%', maxWidth: 480 }}>
+    <main style={{ background: PAPER, minHeight: '100vh', fontFamily: SANS, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 16px' }}>
+      <GrainOverlay />
+      <div style={{ position: 'relative', width: '100%', maxWidth: 480 }}>
         <Link href="/teams" className="inline-flex items-center gap-2 text-sm font-medium mb-8"
-          style={{ color: '#64748B' }}>
+          style={{ color: INK_SOFT, fontFamily: SANS }}>
           <ArrowLeft size={14} /> Back to Teams
         </Link>
 
@@ -78,11 +84,11 @@ async function SubmittedOrForm({
   const params = await searchParams
   if (params.submitted) {
     return (
-      <div className="rounded-2xl p-10 text-center"
-        style={{ background: '#F0FDF4', border: '1px solid #BBF7D0' }}>
+      <div className="p-10 text-center"
+        style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 10, boxShadow: '0 1px 3px rgba(26,27,31,0.04)' }}>
         <CheckCircle2 size={40} className="mx-auto mb-4" style={{ color: '#10B981' }} />
-        <h3 className="text-xl font-black mb-2" style={{ color: '#0F172A' }}>Request received</h3>
-        <p className="text-sm" style={{ color: '#64748B' }}>
+        <h3 className="text-xl mb-2" style={{ color: INK, fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.01em' }}>Request received</h3>
+        <p className="text-sm" style={{ color: INK_SOFT, fontFamily: SANS }}>
           Someone from our team will reach out within one business day to schedule your demo.
         </p>
       </div>
@@ -92,21 +98,22 @@ async function SubmittedOrForm({
   const inputStyle = {
     width: '100%',
     padding: '12px 16px',
-    borderRadius: 12,
-    border: '1.5px solid #E2E8F0',
+    borderRadius: 6,
+    border: `1.5px solid ${RULE}`,
     fontSize: 14,
-    color: '#0F172A',
-    fontFamily: 'var(--font-sans)',
-    background: '#FFFFFF',
+    color: INK,
+    fontFamily: SANS,
+    background: PAPER_2,
     outline: 'none',
     display: 'block',
   }
 
   return (
-    <div className="rounded-2xl p-8" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
-      <h1 className="text-2xl font-black mb-2" style={{ color: '#0F172A' }}>Book a 30-minute demo</h1>
-      <p className="text-sm mb-8" style={{ color: '#64748B' }}>
-        We'll walk you through the team dashboard, track assignment, and reporting.
+    <div className="p-8" style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 10, boxShadow: '0 1px 3px rgba(26,27,31,0.04)' }}>
+      <p className="text-[11px] uppercase tracking-[0.16em] mb-3" style={{ color: COBALT_TX, fontFamily: MONO }}>Get in touch</p>
+      <h1 className="text-2xl mb-2" style={{ color: INK, fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.02em' }}>Book a 30-minute demo</h1>
+      <p className="text-sm mb-8" style={{ color: INK_SOFT, fontFamily: SANS }}>
+        We&apos;ll walk you through the team dashboard, track assignment, and reporting.
       </p>
 
       <form action={submitForm} className="space-y-4">
@@ -118,13 +125,13 @@ async function SubmittedOrForm({
           { name: 'website', label: 'Company website', placeholder: 'acme.com', type: 'text' },
         ].map(field => (
           <div key={field.name}>
-            <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>{field.label}</label>
+            <label className="block text-xs font-semibold mb-1.5" style={{ color: INK_SOFT, fontFamily: SANS }}>{field.label}</label>
             <input name={field.name} type={field.type} required placeholder={field.placeholder} style={inputStyle} />
           </div>
         ))}
 
         <div>
-          <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Industry</label>
+          <label className="block text-xs font-semibold mb-1.5" style={{ color: INK_SOFT, fontFamily: SANS }}>Industry</label>
           <select name="industry" required style={inputStyle}>
             <option value="">Select industry</option>
             <option value="Financial Services">Financial Services</option>
@@ -141,7 +148,7 @@ async function SubmittedOrForm({
         </div>
 
         <div>
-          <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Team size</label>
+          <label className="block text-xs font-semibold mb-1.5" style={{ color: INK_SOFT, fontFamily: SANS }}>Team size</label>
           <select name="size" required style={inputStyle}>
             <option value="">Select team size</option>
             <option value="5-15">5–15 people</option>
@@ -152,16 +159,16 @@ async function SubmittedOrForm({
         </div>
 
         <div>
-          <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>
-            Anything specific? <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
+          <label className="block text-xs font-semibold mb-1.5" style={{ color: INK_SOFT, fontFamily: SANS }}>
+            Anything specific? <span style={{ color: INK_FAINT, fontWeight: 400 }}>(optional)</span>
           </label>
           <textarea name="message" rows={3} style={{ ...inputStyle, resize: 'none' }}
             placeholder="e.g. 40 people across marketing and ops — interested in custom track assignment." />
         </div>
 
         <button type="submit"
-          className="w-full py-4 rounded-xl font-semibold text-sm text-white"
-          style={{ background: '#2563EB', boxShadow: '0 4px 16px rgba(37,99,235,0.25)' }}>
+          className="w-full py-4 font-semibold text-sm text-white transition-opacity hover:opacity-90"
+          style={{ background: COBALT, borderRadius: 3, fontFamily: SANS }}>
           Request demo →
         </button>
       </form>

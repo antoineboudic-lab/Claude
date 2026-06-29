@@ -1,34 +1,26 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import {
   Megaphone, LineChart, HeartHandshake, TrendingUp,
   Settings, Briefcase, ChevronRight, Clock, BookOpen,
-  Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap, LogOut,
-  Scale, Package, Headphones, BarChart, ArrowRight, Users, Sparkles, Search, Menu, X,
+  Trophy, Lock, CheckCircle2, PlayCircle, ArrowLeft, Zap,
+  Scale, Package, Headphones, BarChart, ArrowRight, Users, Sparkles,
 } from 'lucide-react'
-import Logo from '@/components/Logo'
 import { getTrack } from '@/lib/curriculum'
 import { useGame } from '@/context/GameContext'
 import { useAuth } from '@/context/AuthContext'
 import { useSubscription } from '@/hooks/useSubscription'
 import type { TrackId } from '@/lib/curriculum/types'
-import GlobalSearch from '@/components/GlobalSearch'
-
-const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easing } },
-}
-
-const stagger = (delay = 0.08) => ({
-  hidden: {},
-  visible: { transition: { staggerChildren: delay } },
-})
+import EditorialNav from '@/components/editorial/Nav'
+import EditorialFooter from '@/components/editorial/Footer'
+import { GrainOverlay, AuroraGlow } from '@/components/editorial/Atmosphere'
+import {
+  PAPER, PAPER_2, PANEL, INK, INK_SOFT, INK_FAINT,
+  COBALT, COBALT_TX, RULE, SERIF, MONO, SANS, fadeUp, stagger,
+} from '@/components/editorial/theme'
 
 const trackMeta: Record<string, {
   title: string; tagline: string; color: string;
@@ -152,20 +144,7 @@ export default function TrackPage() {
   const params = useParams()
   const trackId = params.trackId as string
   const { state } = useGame()
-  const { user, openSignUp, signOut } = useAuth()
-  const [searchOpen, setSearchOpen] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setSearchOpen(v => !v)
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [])
+  const { openSignUp } = useAuth()
   const { isPro } = useSubscription()
 
   const curriculumTrack = getTrack(trackId as TrackId)
@@ -189,8 +168,25 @@ export default function TrackPage() {
 
   if (!meta) {
     return (
-      <main style={{ background: '#EFF6FF', minHeight: '100vh' }} className="flex items-center justify-center">
-        <p style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>Track not found.</p>
+      <main style={{ background: PAPER, minHeight: '100vh' }}>
+        <GrainOverlay />
+        <EditorialNav active="tracks" />
+        <section className="flex items-center justify-center px-6" style={{ minHeight: '70vh' }}>
+          <div className="text-center pt-36">
+            <p className="text-[11px] uppercase tracking-[0.2em] mb-4" style={{ color: INK_FAINT, fontFamily: MONO }}>
+              Error 404
+            </p>
+            <h1 className="mb-5" style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2rem, 4vw, 2.8rem)', letterSpacing: '-0.025em', color: INK }}>
+              Track <span style={{ fontStyle: 'italic', color: COBALT_TX }}>not found</span>
+            </h1>
+            <Link href="/tracks"
+              className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              style={{ background: COBALT, borderRadius: 3, fontFamily: SANS }}>
+              <ArrowLeft size={14} /> Browse all tracks
+            </Link>
+          </div>
+        </section>
+        <EditorialFooter />
       </main>
     )
   }
@@ -198,154 +194,79 @@ export default function TrackPage() {
   const Icon = meta.icon
 
   return (
-    <main style={{ background: '#EFF6FF', minHeight: '100vh' }}>
-      {/* Nav */}
-      <div className="sticky top-0 z-40" style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)' }}>
-        <nav className="px-6 py-4 flex items-center justify-between" style={{ borderBottom: mobileOpen ? 'none' : '1px solid #E2E8F0' }}>
-          <Link href="/" className="flex items-center gap-2">
-            <Logo size="md" />
-          </Link>
-          {/* Desktop right */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link href="/tracks" className="text-sm font-medium transition-colors hover:text-slate-900" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-              All tracks
-            </Link>
-            <button onClick={() => setSearchOpen(true)} className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100" style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}>
-              <Search size={13} /><span>Search</span>
-              <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
-            </button>
-            {user ? (
-              <>
-                <Link href="/dashboard" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80" style={{ color: '#2563EB', background: '#DBEAFE', fontFamily: 'var(--font-sans)' }}>
-                  <Zap size={12} /> Dashboard
-                </Link>
-                <button onClick={signOut} className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg transition-colors hover:bg-slate-100" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                  <LogOut size={13} /> Sign out
-                </button>
-              </>
-            ) : (
-              <button onClick={() => openSignUp()} className="text-xs font-semibold px-4 py-2 rounded-lg text-white transition-all hover:opacity-90" style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                Get started free
-              </button>
-            )}
-          </div>
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-slate-100"
-            onClick={() => setMobileOpen(v => !v)}
-            aria-label="Toggle menu"
-            style={{ color: '#475569' }}
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </nav>
-        {/* Mobile dropdown */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              key="track-mobile-nav"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="md:hidden overflow-hidden"
-              style={{ borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}
-            >
-              <div className="px-6 pb-5 pt-2 space-y-0.5">
-                <Link href="/tracks" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
-                  <BookOpen size={15} /> All tracks
-                </Link>
-                <button onClick={() => { setSearchOpen(true); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
-                  <Search size={15} /> Search lessons
-                </button>
-                {user ? (
-                  <>
-                    <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
-                      <Zap size={15} /> Dashboard
-                    </Link>
-                    <button onClick={() => { signOut(); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium transition-colors hover:text-red-500" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
-                      <LogOut size={15} /> Sign out
-                    </button>
-                  </>
-                ) : (
-                  <button onClick={() => { openSignUp(); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-semibold transition-colors" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
-                    Get started free →
-                  </button>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
+    <main style={{ background: PAPER, minHeight: '100vh' }}>
+      <GrainOverlay />
+      <EditorialNav active="tracks" />
 
       {/* Hero */}
-      <div className="relative overflow-hidden" style={{ borderBottom: '1px solid #E2E8F0', background: '#FFFFFF' }}>
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: `radial-gradient(ellipse at 20% 50%, ${meta.color}08 0%, transparent 60%)` }} />
-        <div className="max-w-5xl mx-auto px-6 pt-12 pb-12">
+      <section className="relative overflow-hidden" style={{ borderBottom: `1px solid ${RULE}` }}>
+        <AuroraGlow style={{ width: 640, height: 640, top: -260, left: '12%', opacity: 0.4 }} />
+        <div className="relative max-w-5xl mx-auto px-6 pt-36 pb-14">
           <Link href="/tracks"
-            className="inline-flex items-center gap-1.5 text-sm mb-8 transition-colors hover:text-slate-700"
-            style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-            <ArrowLeft size={14} /> All tracks
+            className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.16em] mb-9 transition-opacity hover:opacity-60"
+            style={{ color: INK_FAINT, fontFamily: MONO }}>
+            <ArrowLeft size={13} /> All tracks
           </Link>
 
+          {/* Accent rule bar */}
+          <div className="h-[3px] w-16 mb-7" style={{ background: meta.color }} />
+
           <motion.div variants={stagger(0.1)} initial="hidden" animate="visible">
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-5">
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                style={{ background: `${meta.color}10`, border: `1px solid ${meta.color}25` }}>
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 flex items-center justify-center flex-shrink-0"
+                style={{ background: `${meta.color}12`, border: `1px solid ${meta.color}30`, borderRadius: 8 }}>
                 <Icon size={26} color={meta.color} />
               </div>
               <div>
-                <div className="flex items-center gap-2 mb-0.5">
-                  <p className="text-xs font-semibold" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+                <div className="flex items-center gap-2.5 mb-1.5">
+                  <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
                     Role Track
-                  </p>
-                  <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full"
-                    style={{ background: '#FEF3C7', color: '#92400E', border: '1px solid #FDE68A', fontFamily: 'var(--font-sans)' }}>
-                    Sample preview
+                  </span>
+                  <span className="flex items-center gap-1 text-[9.5px] uppercase tracking-wider px-2 py-0.5 font-semibold"
+                    style={{ background: 'rgba(36,64,216,0.08)', color: COBALT_TX, border: `1px solid rgba(36,64,216,0.20)`, borderRadius: 4, fontFamily: MONO }}>
+                    <Sparkles size={9} /> Sample preview
                   </span>
                 </div>
-                <h1 className="text-3xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+                <h1 style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)', lineHeight: 1.04, letterSpacing: '-0.025em', color: INK }}>
                   {meta.title}
                 </h1>
               </div>
             </motion.div>
 
-            <motion.p variants={fadeUp} className="text-base max-w-2xl mb-5 leading-relaxed"
-              style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+            <motion.p variants={fadeUp} className="text-base max-w-2xl mb-6 leading-relaxed"
+              style={{ color: INK_SOFT, fontFamily: SANS }}>
               {meta.description}
             </motion.p>
 
             {/* Personalisation callout */}
-            <motion.div variants={fadeUp} className="max-w-2xl mb-7 p-4 rounded-xl flex items-start gap-3"
-              style={{ background: '#EFF6FF', border: '1px solid #DBEAFE' }}>
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: '#2563EB' }}>
-                <Sparkles size={13} className="text-white" />
+            <motion.div variants={fadeUp} className="max-w-2xl mb-8 p-5 flex items-start gap-3.5"
+              style={{ background: 'rgba(36,64,216,0.06)', border: `1px solid rgba(36,64,216,0.20)`, borderRadius: 10 }}>
+              <div className="w-8 h-8 flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: COBALT, borderRadius: 6 }}>
+                <Sparkles size={14} className="text-white" />
               </div>
               <div>
-                <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                <p className="text-sm font-bold mb-1" style={{ color: INK, fontFamily: SANS }}>
                   This is a sample — your version gets personalised
                 </p>
-                <p className="text-sm leading-relaxed" style={{ color: '#1D4ED8', fontFamily: 'var(--font-sans)' }}>
+                <p className="text-sm leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
                   After the 3-minute assessment, the module order, examples, and exercises inside this track adapt to your specific role, seniority, and goals. A Marketing Director and a Growth Manager get different versions of the same track.
                 </p>
                 <Link href="/assessment"
-                  className="inline-flex items-center gap-1.5 mt-2.5 text-xs font-semibold"
-                  style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                  className="inline-flex items-center gap-1.5 mt-3 text-xs font-semibold transition-opacity hover:opacity-70"
+                  style={{ color: COBALT_TX, fontFamily: SANS }}>
                   Get my personalised version <ArrowRight size={11} />
                 </Link>
               </div>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="flex items-center gap-6 mb-7">
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8">
               {[
                 { icon: BookOpen, label: `${totalLessons} lessons` },
                 { icon: Clock, label: `~${Math.round(totalLessons * 17 / 60)} hrs` },
                 { icon: Trophy, label: 'Certificate included' },
               ].map(({ icon: I, label }) => (
-                <div key={label} className="flex items-center gap-1.5 text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                  <I size={14} /> {label}
+                <div key={label} className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.12em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
+                  <I size={13} /> {label}
                 </div>
               ))}
             </motion.div>
@@ -353,33 +274,33 @@ export default function TrackPage() {
             <motion.div variants={fadeUp} className="flex flex-wrap gap-3">
               <Link
                 href={`/tracks/${trackId}/lessons/${trackId}-m1-l1`}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all hover:opacity-90"
-                style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)', fontFamily: 'var(--font-sans)' }}
+                className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-sm text-white transition-opacity hover:opacity-90"
+                style={{ background: COBALT, borderRadius: 3, fontFamily: SANS }}
               >
-                <PlayCircle size={16} /> Start Track
+                <PlayCircle size={16} /> Start track
               </Link>
               <Link
                 href="/teams"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:bg-slate-100"
-                style={{ background: '#EFF6FF', color: '#475569', border: '1px solid #E2E8F0', fontFamily: 'var(--font-sans)' }}
+                className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-sm transition-colors hover:bg-black/[0.03]"
+                style={{ border: `1px solid ${RULE}`, color: INK, borderRadius: 3, fontFamily: SANS }}
               >
                 <Users size={15} /> Enroll a team
               </Link>
             </motion.div>
           </motion.div>
         </div>
-      </div>
+      </section>
 
       {/* Who this is for + Before/After */}
-      <div className="max-w-5xl mx-auto px-6 pt-10 pb-2 grid md:grid-cols-2 gap-6">
+      <div className="max-w-5xl mx-auto px-6 pt-12 pb-2 grid md:grid-cols-2 gap-6">
         {/* Who this is for */}
-        <div className="rounded-2xl p-6" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-          <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+        <div className="p-6" style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 8, boxShadow: '0 1px 3px rgba(26,27,31,0.04)' }}>
+          <p className="text-[10px] tracking-[0.2em] uppercase mb-5" style={{ color: INK_FAINT, fontFamily: MONO }}>
             Who this is for
           </p>
-          <ul className="space-y-3">
+          <ul className="space-y-3.5">
             {meta.whoFor.map((item, i) => (
-              <li key={i} className="flex items-start gap-3 text-sm" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
                 <CheckCircle2 size={14} color={meta.color} className="mt-0.5 flex-shrink-0" />
                 {item}
               </li>
@@ -388,30 +309,30 @@ export default function TrackPage() {
         </div>
 
         {/* Before / After */}
-        <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-          <div className="px-6 pt-5 pb-3">
-            <p className="text-xs font-bold tracking-widest uppercase" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+        <div className="overflow-hidden" style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 8, boxShadow: '0 1px 3px rgba(26,27,31,0.04)' }}>
+          <div className="px-6 pt-6 pb-3">
+            <p className="text-[10px] tracking-[0.2em] uppercase" style={{ color: INK_FAINT, fontFamily: MONO }}>
               What changes
             </p>
           </div>
           <div className="px-4 pb-5 space-y-2.5">
             {meta.beforeAfter.map(({ before, after }, i) => (
-              <div key={i} className="rounded-xl overflow-hidden" style={{ border: '1px solid #F1F5F9' }}>
-                <div className="flex items-start gap-2.5 px-4 py-2.5" style={{ background: '#FFF8F8' }}>
-                  <span className="text-[9px] font-black uppercase tracking-widest mt-0.5 flex-shrink-0"
-                    style={{ color: '#F87171', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+              <div key={i} className="overflow-hidden" style={{ border: `1px solid ${RULE}`, borderRadius: 6 }}>
+                <div className="flex items-start gap-3 px-4 py-2.5" style={{ background: PANEL }}>
+                  <span className="text-[9px] uppercase tracking-[0.14em] mt-0.5 flex-shrink-0"
+                    style={{ color: INK_FAINT, fontFamily: MONO }}>
                     Before
                   </span>
-                  <span className="text-xs leading-snug" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                  <span className="text-xs leading-snug" style={{ color: INK_FAINT, fontFamily: SANS }}>
                     {before}
                   </span>
                 </div>
-                <div className="flex items-start gap-2.5 px-4 py-2.5" style={{ background: '#F0FDF4', borderTop: `1px solid ${meta.color}15` }}>
-                  <span className="text-[9px] font-black uppercase tracking-widest mt-0.5 flex-shrink-0"
-                    style={{ color: meta.color, fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+                <div className="flex items-start gap-3 px-4 py-2.5" style={{ background: `${meta.color}0A`, borderTop: `1px solid ${meta.color}22` }}>
+                  <span className="text-[9px] uppercase tracking-[0.14em] mt-0.5 flex-shrink-0"
+                    style={{ color: meta.color, fontFamily: MONO }}>
                     After
                   </span>
-                  <span className="text-xs leading-snug font-semibold" style={{ color: '#15803D', fontFamily: 'var(--font-sans)' }}>
+                  <span className="text-xs leading-snug font-medium" style={{ color: INK, fontFamily: SANS }}>
                     {after}
                   </span>
                 </div>
@@ -423,14 +344,14 @@ export default function TrackPage() {
 
       {/* Modules */}
       <div className="max-w-5xl mx-auto px-6 py-12 space-y-4">
-        <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-          <h2 className="text-lg font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
-            Sample Curriculum
+        <div className="flex items-center justify-between mb-7 flex-wrap gap-3">
+          <h2 style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.5rem', letterSpacing: '-0.02em', color: INK }}>
+            Sample <span style={{ fontStyle: 'italic', color: COBALT_TX }}>curriculum</span>
           </h2>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
-            style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
-            <Sparkles size={12} style={{ color: '#2563EB' }} />
-            <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+          <div className="flex items-center gap-2 px-3 py-1.5"
+            style={{ background: 'rgba(36,64,216,0.06)', border: `1px solid rgba(36,64,216,0.20)`, borderRadius: 4 }}>
+            <Sparkles size={11} style={{ color: COBALT_TX }} />
+            <span className="text-[11px]" style={{ color: INK_SOFT, fontFamily: SANS }}>
               Module order &amp; content adapt after your assessment
             </span>
           </div>
@@ -446,27 +367,29 @@ export default function TrackPage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: mi * 0.07, duration: 0.45 }}
-              className="rounded-2xl overflow-hidden"
-              style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+              className="overflow-hidden"
+              style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 8, boxShadow: '0 1px 3px rgba(26,27,31,0.04)' }}
             >
               {/* Module header */}
               <div className="px-6 py-4 flex items-center justify-between"
-                style={{ borderBottom: '1px solid #F1F5F9', background: '#EFF6FF' }}>
+                style={{ borderBottom: `1px solid ${RULE}`, background: PANEL }}>
                 <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black"
+                  <div className="w-8 h-8 flex items-center justify-center text-[11px]"
                     style={{
-                      background: !isModuleAccessible ? '#F1F5F9' : moduleComplete ? `${meta.color}20` : `${meta.color}10`,
-                      color: !isModuleAccessible ? '#CBD5E1' : meta.color,
-                      fontFamily: 'var(--font-sans)',
+                      background: !isModuleAccessible ? 'rgba(26,27,31,0.05)' : moduleComplete ? `${meta.color}20` : `${meta.color}10`,
+                      color: !isModuleAccessible ? INK_FAINT : meta.color,
+                      border: `1px solid ${!isModuleAccessible ? RULE : `${meta.color}30`}`,
+                      fontFamily: MONO,
+                      borderRadius: 6,
                     }}>
-                    {!isModuleAccessible ? <Lock size={12} /> : moduleComplete ? '✓' : mi + 1}
+                    {!isModuleAccessible ? <Lock size={12} /> : moduleComplete ? '✓' : String(mi + 1).padStart(2, '0')}
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm" style={{ fontFamily: 'var(--font-sans)', color: isModuleAccessible ? '#0F172A' : '#94A3B8' }}>
+                    <h3 className="text-sm" style={{ fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.01em', color: isModuleAccessible ? INK : INK_FAINT }}>
                       {mod.title}
                     </h3>
                     {isModuleFree && (
-                      <span className="text-xs font-semibold" style={{ color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+                      <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: '#10B981', fontFamily: MONO }}>
                         Free
                       </span>
                     )}
@@ -474,19 +397,19 @@ export default function TrackPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   {isModuleAccessible && completedInModule > 0 && (
-                    <span className="text-xs font-medium" style={{ color: meta.color, fontFamily: 'var(--font-sans)' }}>
+                    <span className="text-[11px]" style={{ color: meta.color, fontFamily: MONO }}>
                       {completedInModule}/{mod.lessons.length}
                     </span>
                   )}
                   {!isModuleAccessible ? (
                     <button
                       onClick={() => openSignUp()}
-                      className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all hover:opacity-90"
-                      style={{ background: '#2563EB', color: '#FFFFFF', fontFamily: 'var(--font-sans)' }}>
+                      className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 text-white transition-opacity hover:opacity-90"
+                      style={{ background: COBALT, borderRadius: 3, fontFamily: SANS }}>
                       <Lock size={10} /> Unlock free trial
                     </button>
                   ) : (
-                    <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    <span className="text-[11px] uppercase tracking-[0.1em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
                       {mod.lessons.length} lessons
                     </span>
                   )}
@@ -494,7 +417,7 @@ export default function TrackPage() {
               </div>
 
               {/* Lessons */}
-              <div className="divide-y" style={{ borderColor: '#F1F5F9' }}>
+              <div>
                 {mod.lessons.map((lesson, li) => {
                   const lessonId = mod.lessonIds[li]
                   const isDone = state.completedLessons.includes(lessonId)
@@ -503,35 +426,38 @@ export default function TrackPage() {
 
                   return (
                     <div key={lessonId}
-                      className="px-6 py-3.5 flex items-center justify-between group transition-colors"
-                      style={{ cursor: !canAccess ? 'pointer' : 'default' }}
+                      className="px-6 py-3.5 flex items-center justify-between group transition-colors hover:bg-black/[0.015]"
+                      style={{ cursor: !canAccess ? 'pointer' : 'default', borderTop: li === 0 ? 'none' : `1px solid ${RULE}` }}
                       onClick={!canAccess ? () => openSignUp() : undefined}>
-                      <div className="flex items-center gap-3 hover:bg-slate-50 rounded-lg -mx-1 px-1 w-full py-0.5 transition-colors">
+                      <div className="flex items-center gap-3 w-full">
+                        <span className="text-[11px] flex-shrink-0 w-6" style={{ color: INK_FAINT, fontFamily: MONO }}>
+                          {String(li + 1).padStart(2, '0')}
+                        </span>
                         <div className="w-5 h-5 flex-shrink-0">
                           {isDone
                             ? <CheckCircle2 size={16} color={meta.color} />
                             : canAccess
                             ? <PlayCircle size={16} color={meta.color} />
-                            : <Lock size={14} color="#CBD5E1" />
+                            : <Lock size={14} color={INK_FAINT} />
                           }
                         </div>
                         <span className="text-sm flex-1" style={{
-                          color: isDone ? meta.color : canAccess ? '#334155' : '#CBD5E1',
-                          fontFamily: 'var(--font-sans)',
+                          color: isDone ? meta.color : canAccess ? INK : INK_FAINT,
+                          fontFamily: SANS,
                           textDecoration: isDone ? 'line-through' : 'none',
                           opacity: isDone ? 0.7 : 1,
                         }}>
                           {lesson}
                         </span>
                         <div className="flex items-center gap-3 flex-shrink-0">
-                          <span className="text-xs" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                          <span className="text-[10px] uppercase tracking-[0.1em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
                             ~17 min
                           </span>
                           {canAccess && !isDone && (
                             <Link
                               href={`/tracks/${trackId}/lessons/${lessonId}`}
                               className="text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1"
-                              style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}
+                              style={{ color: COBALT_TX, fontFamily: SANS }}
                               onClick={e => e.stopPropagation()}
                             >
                               Start <ChevronRight size={12} />
@@ -540,8 +466,8 @@ export default function TrackPage() {
                           {isDone && (
                             <Link
                               href={`/tracks/${trackId}/lessons/${lessonId}`}
-                              className="text-xs opacity-0 group-hover:opacity-60 transition-opacity"
-                              style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                              className="text-xs opacity-0 group-hover:opacity-70 transition-opacity"
+                              style={{ color: INK_FAINT, fontFamily: SANS }}
                               onClick={e => e.stopPropagation()}
                             >
                               Review
@@ -557,6 +483,8 @@ export default function TrackPage() {
           )
         })}
       </div>
+
+      <EditorialFooter />
     </main>
   )
 }

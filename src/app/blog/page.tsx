@@ -3,16 +3,13 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, Clock } from 'lucide-react'
-import BlogNav from '@/components/BlogNav'
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-}
-
-function stagger(delay = 0.1) {
-  return { hidden: {}, visible: { transition: { staggerChildren: delay } } }
-}
+import EditorialNav from '@/components/editorial/Nav'
+import EditorialFooter from '@/components/editorial/Footer'
+import { GrainOverlay, AuroraGlow } from '@/components/editorial/Atmosphere'
+import {
+  PAPER, PAPER_2, INK, INK_SOFT, INK_FAINT,
+  COBALT, COBALT_TX, RULE, SERIF, MONO, SANS, fadeUp, stagger,
+} from '@/components/editorial/theme'
 
 const POSTS = [
   {
@@ -142,18 +139,22 @@ export default function BlogPage() {
   const rest = POSTS.slice(1)
 
   return (
-    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
-      <BlogNav />
+    <main style={{ background: PAPER, minHeight: '100vh' }}>
+      <GrainOverlay />
+      <EditorialNav active="blog" />
 
       {/* Header */}
-      <section className="py-16 sm:py-20" style={{ background: '#FFFFFF' }}>
-        <div className="max-w-5xl mx-auto px-6">
+      <section className="relative overflow-hidden" style={{ borderBottom: `1px solid ${RULE}` }}>
+        <AuroraGlow style={{ width: 640, height: 640, top: -240, left: '50%', transform: 'translateX(-50%)', opacity: 0.4 }} />
+        <div className="relative max-w-5xl mx-auto px-6 pt-40 pb-16">
           <motion.div variants={stagger(0.1)} initial="hidden" animate="visible">
-            <motion.p variants={fadeUp} className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#2563EB' }}>Blog</motion.p>
-            <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl font-black tracking-tight mb-4" style={{ color: '#0F172A' }}>
-              Practical AI for<br />business professionals
+            <motion.p variants={fadeUp} className="text-[11px] uppercase tracking-[0.18em] mb-4" style={{ color: COBALT_TX, fontFamily: MONO }}>
+              The OpusLearn Journal
+            </motion.p>
+            <motion.h1 variants={fadeUp} className="mb-5" style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2.6rem, 5.5vw, 4rem)', lineHeight: 1.03, letterSpacing: '-0.03em', color: INK }}>
+              Practical AI for<br /><span style={{ fontStyle: 'italic', color: COBALT_TX }}>business professionals</span>
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg max-w-xl" style={{ color: '#64748B' }}>
+            <motion.p variants={fadeUp} className="text-lg max-w-xl leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
               Real stories, frameworks, and tactics from professionals who are making AI work in their day-to-day roles.
             </motion.p>
           </motion.div>
@@ -161,37 +162,41 @@ export default function BlogPage() {
       </section>
 
       {/* Featured post */}
-      <section className="pb-8" style={{ background: '#FFFFFF' }}>
+      <section className="pt-14">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <Link href={`/blog/${featured.slug}`} className="block rounded-2xl p-8 sm:p-10 cursor-pointer transition-all hover:shadow-md"
-              style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
+            <Link href={`/blog/${featured.slug}`}
+              className="block p-8 sm:p-10 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md"
+              style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 10, boxShadow: '0 1px 3px rgba(26,27,31,0.04)' }}>
               <div className="flex items-center gap-3 mb-5">
-                <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white"
-                  style={{ background: featured.categoryColor }}>{featured.category}</span>
-                <span className="text-xs font-medium" style={{ color: '#94A3B8' }}>Featured</span>
+                <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.16em] px-2.5 py-1"
+                  style={{ border: `1px solid ${RULE}`, color: INK_SOFT, borderRadius: 4, fontFamily: MONO }}>
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: featured.categoryColor }} />
+                  {featured.category}
+                </span>
+                <span className="text-[10px] uppercase tracking-[0.16em]" style={{ color: COBALT_TX, fontFamily: MONO }}>Featured</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black tracking-tight mb-4 max-w-2xl" style={{ color: '#0F172A' }}>
+              <h2 className="mb-4 max-w-2xl" style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(1.6rem, 3vw, 2.2rem)', lineHeight: 1.12, letterSpacing: '-0.02em', color: INK }}>
                 {featured.title}
               </h2>
-              <p className="text-base leading-relaxed mb-6 max-w-2xl" style={{ color: '#64748B' }}>{featured.excerpt}</p>
-              <div className="flex items-center justify-between flex-wrap gap-4">
+              <p className="text-base leading-relaxed mb-6 max-w-2xl" style={{ color: INK_SOFT, fontFamily: SANS }}>{featured.excerpt}</p>
+              <div className="flex items-center justify-between flex-wrap gap-4 pt-5" style={{ borderTop: `1px solid ${RULE}` }}>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                    style={{ background: featured.categoryColor }}>
+                    style={{ background: COBALT }}>
                     {featured.author.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>{featured.author}</p>
-                    <p className="text-xs" style={{ color: '#94A3B8' }}>{featured.authorRole}</p>
+                    <p className="text-sm font-semibold" style={{ color: INK, fontFamily: SANS }}>{featured.author}</p>
+                    <p className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>{featured.authorRole}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="text-xs" style={{ color: '#94A3B8' }}>{featured.date}</span>
-                  <span className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8' }}>
+                  <span className="text-[11px] uppercase tracking-[0.12em]" style={{ color: INK_FAINT, fontFamily: MONO }}>{featured.date}</span>
+                  <span className="flex items-center gap-1 text-[11px] uppercase tracking-[0.12em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
                     <Clock size={11} /> {featured.readTime}
                   </span>
-                  <span className="flex items-center gap-1 text-sm font-semibold" style={{ color: '#2563EB' }}>
+                  <span className="flex items-center gap-1 text-sm font-semibold" style={{ color: COBALT_TX, fontFamily: SANS }}>
                     Read more <ArrowRight size={13} />
                   </span>
                 </div>
@@ -202,29 +207,38 @@ export default function BlogPage() {
       </section>
 
       {/* Post grid */}
-      <section className="py-12 pb-24" style={{ background: '#FFFFFF' }}>
+      <section className="py-12 pb-24">
         <div className="max-w-5xl mx-auto px-6">
+          <div className="flex items-center gap-4 mb-7">
+            <h2 className="text-[11px] uppercase tracking-[0.2em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
+              Latest articles
+            </h2>
+            <div className="flex-1 h-px" style={{ background: RULE }} />
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {rest.map((post, i) => (
               <motion.div key={post.slug}
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 * i + 0.4 }}>
+                transition={{ delay: 0.08 * i + 0.4 }}>
                 <Link href={`/blog/${post.slug}`}
-                  className="block rounded-2xl p-6 transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col h-full"
-                  style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
-                  <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white self-start mb-4"
-                    style={{ background: post.categoryColor }}>{post.category}</span>
-                  <h3 className="text-base font-black mb-3 flex-1" style={{ color: '#0F172A', lineHeight: 1.4 }}>{post.title}</h3>
-                  <p className="text-sm leading-relaxed mb-5" style={{ color: '#64748B' }}>{post.excerpt}</p>
-                  <div className="pt-4 flex items-center justify-between" style={{ borderTop: '1px solid #E2E8F0' }}>
+                  className="p-6 transition-all hover:-translate-y-0.5 hover:shadow-md flex flex-col h-full"
+                  style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 8, boxShadow: '0 1px 3px rgba(26,27,31,0.04)' }}>
+                  <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.16em] px-2.5 py-1 self-start mb-4"
+                    style={{ border: `1px solid ${RULE}`, color: INK_SOFT, borderRadius: 4, fontFamily: MONO }}>
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: post.categoryColor }} />
+                    {post.category}
+                  </span>
+                  <h3 className="mb-3 flex-1" style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.15rem', lineHeight: 1.25, letterSpacing: '-0.01em', color: INK }}>{post.title}</h3>
+                  <p className="text-sm leading-relaxed mb-5" style={{ color: INK_SOFT, fontFamily: SANS }}>{post.excerpt}</p>
+                  <div className="pt-4 flex items-center justify-between" style={{ borderTop: `1px solid ${RULE}` }}>
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
-                        style={{ background: post.categoryColor }}>
+                        style={{ background: COBALT }}>
                         {post.author.split(' ').map(n => n[0]).join('')}
                       </div>
-                      <p className="text-xs font-medium" style={{ color: '#475569' }}>{post.author.split(' ')[0]}</p>
+                      <p className="text-xs font-medium" style={{ color: INK_SOFT, fontFamily: SANS }}>{post.author.split(' ')[0]}</p>
                     </div>
-                    <span className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8' }}>
+                    <span className="flex items-center gap-1 text-[11px] uppercase tracking-[0.12em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
                       <Clock size={10} /> {post.readTime}
                     </span>
                   </div>
@@ -234,6 +248,8 @@ export default function BlogPage() {
           </div>
         </div>
       </section>
+
+      <EditorialFooter />
     </main>
   )
 }

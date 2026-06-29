@@ -2,7 +2,13 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { ArrowLeft, Clock, ArrowRight } from 'lucide-react'
-import BlogNav from '@/components/BlogNav'
+import EditorialNav from '@/components/editorial/Nav'
+import EditorialFooter from '@/components/editorial/Footer'
+import { GrainOverlay } from '@/components/editorial/Atmosphere'
+import {
+  PAPER, INK, INK_SOFT, INK_FAINT,
+  COBALT, COBALT_TX, RULE, SERIF, MONO, SANS,
+} from '@/components/editorial/theme'
 
 type Block =
   | { type: 'p'; text: string }
@@ -336,41 +342,45 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound()
 
   return (
-    <main style={{ background: '#EFF6FF', minHeight: '100vh', fontFamily: 'var(--font-sans)' }}>
-      <BlogNav backToPost />
+    <main style={{ background: PAPER, minHeight: '100vh' }}>
+      <GrainOverlay />
+      <EditorialNav active="blog" />
 
       {/* Article */}
-      <div className="max-w-2xl mx-auto px-6 py-12">
+      <div className="max-w-2xl mx-auto px-6 pt-36 pb-12">
         {/* Back */}
         <Link href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm mb-10 transition-colors hover:text-slate-800"
-          style={{ color: '#64748B' }}>
-          <ArrowLeft size={14} /> Back to blog
+          className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] mb-10 transition-opacity hover:opacity-60"
+          style={{ color: INK_FAINT, fontFamily: MONO }}>
+          <ArrowLeft size={13} /> Back to blog
         </Link>
 
         {/* Header */}
         <header className="mb-10">
           <div className="flex items-center gap-3 mb-5">
-            <span className="text-xs px-2.5 py-1 rounded-full font-semibold text-white"
-              style={{ background: post.categoryColor }}>{post.category}</span>
+            <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.16em] px-2.5 py-1"
+              style={{ border: `1px solid ${RULE}`, color: INK_SOFT, borderRadius: 4, fontFamily: MONO }}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: post.categoryColor }} />
+              {post.category}
+            </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-[1.15] mb-6"
-            style={{ color: '#0F172A' }}>
+          <h1 className="mb-6"
+            style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2rem, 4.5vw, 3rem)', lineHeight: 1.1, letterSpacing: '-0.025em', color: INK }}>
             {post.title}
           </h1>
-          <p className="text-lg leading-relaxed mb-8" style={{ color: '#64748B' }}>
+          <p className="text-lg leading-relaxed mb-8" style={{ color: INK_SOFT, fontFamily: SANS }}>
             {post.excerpt}
           </p>
-          <div className="flex items-center gap-4 pb-8" style={{ borderBottom: '1px solid #E2E8F0' }}>
+          <div className="flex items-center gap-4 pb-8" style={{ borderBottom: `1px solid ${RULE}` }}>
             <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white"
-              style={{ background: post.categoryColor }}>
+              style={{ background: COBALT }}>
               {post.author.split(' ').map(n => n[0]).join('')}
             </div>
             <div className="flex-1">
-              <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>{post.author}</p>
-              <p className="text-xs" style={{ color: '#94A3B8' }}>{post.authorRole}</p>
+              <p className="text-sm font-semibold" style={{ color: INK, fontFamily: SANS }}>{post.author}</p>
+              <p className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>{post.authorRole}</p>
             </div>
-            <div className="flex items-center gap-4 text-xs" style={{ color: '#94A3B8' }}>
+            <div className="flex items-center gap-4 text-[11px] uppercase tracking-[0.12em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
               <span>{post.date}</span>
               <span className="flex items-center gap-1"><Clock size={11} /> {post.readTime}</span>
             </div>
@@ -382,14 +392,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {post.blocks.map((block, i) => {
             if (block.type === 'h2') {
               return (
-                <h2 key={i} className="text-xl font-black pt-4" style={{ color: '#0F172A' }}>
+                <h2 key={i} className="pt-4"
+                  style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.5rem', letterSpacing: '-0.015em', color: INK }}>
                   {block.text}
                 </h2>
               )
             }
             if (block.type === 'p') {
               return (
-                <p key={i} className="text-base leading-relaxed" style={{ color: '#334155', lineHeight: 1.75 }}>
+                <p key={i} className="text-[1.05rem]" style={{ color: INK_SOFT, fontFamily: SANS, lineHeight: 1.8 }}>
                   {block.text}
                 </p>
               )
@@ -398,8 +409,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               return (
                 <ul key={i} className="space-y-3 pl-2">
                   {block.items.map((item, j) => (
-                    <li key={j} className="flex items-start gap-3 text-base leading-relaxed" style={{ color: '#334155' }}>
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: post.categoryColor }} />
+                    <li key={j} className="flex items-start gap-3 text-[1.05rem] leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
+                      <span className="mt-2.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: post.categoryColor }} />
                       {item}
                     </li>
                   ))}
@@ -408,9 +419,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             }
             if (block.type === 'callout') {
               return (
-                <div key={i} className="rounded-xl px-6 py-5 my-8"
-                  style={{ background: `${post.categoryColor}0D`, borderLeft: `3px solid ${post.categoryColor}` }}>
-                  <p className="text-base font-medium italic leading-relaxed" style={{ color: '#334155' }}>
+                <div key={i} className="px-6 py-5 my-8"
+                  style={{ background: 'rgba(36,64,216,0.06)', borderLeft: `3px solid ${COBALT}`, borderRadius: 6 }}>
+                  <p className="text-lg italic leading-relaxed" style={{ color: INK, fontFamily: SERIF }}>
                     {block.text}
                   </p>
                 </div>
@@ -421,23 +432,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </article>
 
         {/* CTA */}
-        <div className="mt-16 rounded-2xl p-8 text-center"
-          style={{ background: '#2563EB', boxShadow: '0 8px 32px rgba(37,99,235,0.2)' }}>
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'rgba(255,255,255,0.6)' }}>
+        <div className="mt-16 p-8 text-center"
+          style={{ background: COBALT, borderRadius: 10, boxShadow: '0 20px 48px rgba(36,64,216,0.18)' }}>
+          <p className="text-[11px] uppercase tracking-[0.18em] mb-3" style={{ color: 'rgba(255,255,255,0.6)', fontFamily: MONO }}>
             Ready to apply this?
           </p>
-          <h3 className="text-2xl font-black text-white mb-3">{post.trackName} Track</h3>
-          <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.7)' }}>
+          <h3 className="text-2xl text-white mb-3" style={{ fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.02em' }}>{post.trackName} Track</h3>
+          <p className="text-sm mb-6 max-w-md mx-auto leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)', fontFamily: SANS }}>
             Go from reading about AI to using it in your daily work — with role-specific lessons built around your actual job.
           </p>
           <Link
             href={`/tracks/${post.trackSlug}`}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:scale-[1.02]"
-            style={{ background: '#FFFFFF', color: '#2563EB' }}>
+            className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-sm transition-opacity hover:opacity-90"
+            style={{ background: '#FFFFFF', color: COBALT_TX, borderRadius: 3, fontFamily: SANS }}>
             View track <ArrowRight size={14} />
           </Link>
         </div>
       </div>
+
+      <EditorialFooter />
     </main>
   )
 }
