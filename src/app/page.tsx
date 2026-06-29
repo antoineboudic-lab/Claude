@@ -9,6 +9,7 @@ import {
   Megaphone, Settings, ArrowRight, Check, Zap, Award,
   LineChart, Play, LogOut, BookOpen, X, Users,
   Brain, Layers, BarChart3, Menu, Scale, Package, Headphones, BarChart, Search, Globe,
+  Building2, Wrench, Flag, Clock, ArrowUp,
 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useAuth } from '@/context/AuthContext'
@@ -20,19 +21,20 @@ import { useGeo } from '@/hooks/useGeo'
 // ─── Editorial design system ────────────────────────────────────────────────
 // "OpusLearn as a numbered composition": ink on paper, a distinctive serif for
 // display, monospace for metadata, and a signature cobalt as the brand blue.
-// Warm editorial DARK theme. Token names kept for continuity, values inverted:
-// PAPER is now the dark page surface; INK is now the light primary text.
-const PAPER = '#141518'        // page surface — warm near-black
-const PAPER_2 = '#1C1E24'      // raised inset / card surface
-const PANEL = '#0F1013'        // deeper contrast band (former ink sections)
-const INK = '#F2F1EA'          // primary text — warm paper white
-const INK_SOFT = 'rgba(242,241,234,0.62)'  // secondary text
-const INK_FAINT = 'rgba(242,241,234,0.40)' // tertiary / captions
+// Warm editorial LIGHT theme. Token names kept for continuity; the palette is
+// ink-on-paper: warm off-white surfaces, near-black warm ink text, signature
+// cobalt accent. (A prior dark variant lives in git history at 194ff75.)
+const PAPER = '#FBFAF6'        // page surface — warm off-white paper
+const PAPER_2 = '#FFFFFF'      // raised inset / card surface — clean white
+const PANEL = '#F2F0E8'        // deeper contrast band (former ink sections)
+const INK = '#1A1B1F'          // primary text — warm near-black ink
+const INK_SOFT = 'rgba(26,27,31,0.66)'   // secondary text
+const INK_FAINT = 'rgba(26,27,31,0.44)'  // tertiary / captions
 const COBALT = '#2440D8'       // signature blue — button fills (white text)
-const COBALT_TX = '#8A9DFF'    // lifted cobalt — accent text / numerals on dark
-const COBALT_GLOW = '#2E4BE0'  // aurora glow source
-const LIGHT = '#F2F1EA'        // explicit light surface (inverted CTAs)
-const RULE = 'rgba(255,255,255,0.12)'      // hairline on dark
+const COBALT_TX = '#2440D8'    // cobalt accent text / numerals on paper
+const COBALT_GLOW = '#AEBCFF'  // aurora glow source — soft light bloom
+const LIGHT = '#1A1B1F'        // explicit contrast surface (inverted/ink CTAs)
+const RULE = 'rgba(0,0,0,0.10)'            // hairline on paper
 const SERIF = 'var(--font-serif)'
 const MONO = 'var(--font-mono)'
 const SANS = 'var(--font-sans)'
@@ -84,18 +86,311 @@ function AuroraGlow({ style }: { style?: React.CSSProperties }) {
 
 // Framed product screenshot — a browser-style window so real (light) product
 // shots read as a focal visual on the dark page.
-function ScreenFrame({ src, alt, label, priority }: { src: string; alt: string; label?: string; priority?: boolean }) {
+function ScreenFrame({ src, alt, label, priority, children }: { src?: string; alt?: string; label?: string; priority?: boolean; children?: React.ReactNode }) {
   return (
     <div className="overflow-hidden"
-      style={{ border: `1px solid ${RULE}`, borderRadius: 10, background: PAPER_2, boxShadow: '0 40px 90px -45px rgba(0,0,0,0.85)' }}>
-      <div className="flex items-center gap-2 px-4 py-2.5" style={{ borderBottom: `1px solid ${RULE}`, background: 'rgba(255,255,255,0.03)' }}>
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.16)' }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.16)' }} />
-        <span className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.16)' }} />
+      style={{ border: `1px solid ${RULE}`, borderRadius: 10, background: PAPER_2, boxShadow: '0 30px 70px -40px rgba(26,27,31,0.30)' }}>
+      <div className="flex items-center gap-2 px-4 py-2.5" style={{ borderBottom: `1px solid ${RULE}`, background: 'rgba(0,0,0,0.02)' }}>
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(0,0,0,0.16)' }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(0,0,0,0.16)' }} />
+        <span className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(0,0,0,0.16)' }} />
         {label && <span className="ml-3 truncate text-[11px]" style={{ fontFamily: MONO, color: INK_FAINT }}>{label}</span>}
       </div>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={src} alt={alt} className="block w-full" loading={priority ? 'eager' : 'lazy'} />
+      {children ? children : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={src} alt={alt ?? ''} className="block w-full" loading={priority ? 'eager' : 'lazy'} />
+      )}
+    </div>
+  )
+}
+
+// ─── Animated assessment demo ─────────────────────────────────────────────────
+// A self-playing replay of the real /assessment chat: the guide asks, the learner
+// answers (typed live into the input), and the "Your learning path" panel fills
+// row-by-row with a climbing progress ring — then resolves to a ready path and
+// loops. Faithful to the product's two-panel UX; recoloured to the light theme.
+// Honours reduced-motion by rendering the completed end-state without animation.
+
+type DemoMsg = { role: 'assistant' | 'user'; content: string }
+
+const DEMO_FACTS = [
+  { key: 'role',  icon: Briefcase,  label: 'Role' },
+  { key: 'world', icon: Building2,  label: 'World' },
+  { key: 'ai',    icon: Wrench,     label: 'AI today' },
+  { key: 'fix',   icon: Target,     label: 'Fix first' },
+  { key: 'aim',   icon: Flag,       label: 'Aiming for' },
+  { key: 'time',  icon: Clock,      label: 'Time' },
+] as const
+
+const DEMO_END_FACTS: Record<string, string> = {
+  role: 'Marketing lead', world: 'B2B SaaS · 50–200', ai: 'ChatGPT',
+  fix: 'Content velocity', aim: 'Ship campaigns faster', time: '2–3 hrs / week',
+}
+
+// Linear timeline. `ms` is the dwell after a step before the next one fires.
+const DEMO_STEPS: Array<Record<string, unknown> & { kind: string; ms: number }> = [
+  { kind: 'reset', ms: 500 },
+  { kind: 'guideMsg', text: "Hey — I'm your OpusLearn guide. What should I call you?", ms: 1100 },
+  { kind: 'userType', text: 'Sarah', ms: 650 },
+  { kind: 'userSend', text: 'Sarah', ms: 450 },
+  { kind: 'guideTyping', ms: 850 },
+  { kind: 'guideMsg', text: "Nice to meet you, Sarah. What's your role?", ms: 950 },
+  { kind: 'userType', text: 'Marketing lead', ms: 900 },
+  { kind: 'userSend', text: 'Marketing lead', ms: 300 },
+  { kind: 'fact', fkey: 'role', value: 'Marketing lead', pct: 1 / 6, ms: 750 },
+  { kind: 'guideTyping', ms: 800 },
+  { kind: 'guideMsg', text: 'Got it. What kind of company is that?', ms: 900 },
+  { kind: 'userType', text: 'B2B SaaS, ~80 people', ms: 1050 },
+  { kind: 'userSend', text: 'B2B SaaS, ~80 people', ms: 300 },
+  { kind: 'fact', fkey: 'world', value: 'B2B SaaS · 50–200', pct: 2 / 6, ms: 750 },
+  { kind: 'guideTyping', ms: 800 },
+  { kind: 'guideMsg', text: 'Are you using any AI tools today?', ms: 900 },
+  { kind: 'userType', text: 'Mostly ChatGPT', ms: 850 },
+  { kind: 'userSend', text: 'Mostly ChatGPT', ms: 300 },
+  { kind: 'fact', fkey: 'ai', value: 'ChatGPT', pct: 3 / 6, ms: 750 },
+  { kind: 'guideTyping', ms: 800 },
+  { kind: 'guideMsg', text: 'If you could fix one thing first, what would it be?', ms: 950 },
+  { kind: 'userType', text: 'Content takes forever', ms: 1000 },
+  { kind: 'userSend', text: 'Content takes forever', ms: 300 },
+  { kind: 'fact', fkey: 'fix', value: 'Content velocity', pct: 4 / 6, ms: 750 },
+  { kind: 'guideTyping', ms: 750 },
+  { kind: 'guideMsg', text: 'And what are you aiming for?', ms: 850 },
+  { kind: 'userType', text: 'Ship campaigns faster', ms: 1000 },
+  { kind: 'userSend', text: 'Ship campaigns faster', ms: 300 },
+  { kind: 'fact', fkey: 'aim', value: 'Ship campaigns faster', pct: 5 / 6, ms: 750 },
+  { kind: 'guideTyping', ms: 750 },
+  { kind: 'guideMsg', text: 'Last one — how much time per week?', ms: 850 },
+  { kind: 'userType', text: 'A few hours', ms: 700 },
+  { kind: 'userSend', text: 'A few hours', ms: 300 },
+  { kind: 'fact', fkey: 'time', value: '2–3 hrs / week', pct: 1, ms: 650 },
+  { kind: 'done', ms: 3600 },
+]
+
+function DemoRing({ pct, done }: { pct: number; done: boolean }) {
+  const size = 40, r = (size - 5) / 2, c = 2 * Math.PI * r
+  return (
+    <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(0,0,0,0.10)" strokeWidth={3.5} />
+        <motion.circle cx={size / 2} cy={size / 2} r={r} fill="none"
+          stroke={COBALT} strokeWidth={3.5} strokeLinecap="round" strokeDasharray={c}
+          animate={{ strokeDashoffset: c * (1 - (done ? 1 : pct)) }}
+          transition={{ duration: 0.7, ease: 'easeOut' }} />
+      </svg>
+      <span className="absolute inset-0 flex items-center justify-center text-[9px] font-black tabular-nums"
+        style={{ color: COBALT_TX, fontFamily: SANS }}>
+        {Math.round((done ? 1 : pct) * 100)}%
+      </span>
+    </div>
+  )
+}
+
+function DemoFactRow({ icon: Icon, label, value }: { icon: typeof Briefcase; label: string; value?: string }) {
+  const known = !!value
+  return (
+    <div className="flex items-center gap-2.5 py-1.5" style={{ opacity: known ? 1 : 0.5, transition: 'opacity 0.4s' }}>
+      <div className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0"
+        style={{ background: known ? 'rgba(36,64,216,0.10)' : 'rgba(0,0,0,0.04)', transition: 'background 0.4s' }}>
+        <Icon size={12} style={{ color: known ? COBALT : INK_FAINT }} />
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-[8.5px] font-bold uppercase tracking-wider leading-tight" style={{ color: INK_FAINT, fontFamily: SANS }}>{label}</p>
+        <AnimatePresence mode="wait">
+          <motion.p key={value ?? 'empty'} initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }}
+            className="text-[11px] font-semibold truncate leading-tight"
+            style={{ color: known ? INK : 'rgba(26,27,31,0.30)', fontFamily: SANS }}>
+            {value ?? '···'}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+      <AnimatePresence>
+        {known && (
+          <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 22 }}>
+            <Check size={12} color="#10B981" strokeWidth={3} />
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function AssessmentDemo() {
+  const reduced = useReducedMotion()
+  const [msgs, setMsgs] = useState<DemoMsg[]>([])
+  const [typing, setTyping] = useState(false)
+  const [input, setInput] = useState('')
+  const [sending, setSending] = useState(false)   // caret on while typing into the box
+  const [facts, setFacts] = useState<Record<string, string>>({})
+  const [pct, setPct] = useState(0)
+  const [done, setDone] = useState(false)
+  const typeIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  // Reduced-motion: render the finished state, no animation loop.
+  useEffect(() => {
+    if (!reduced) return
+    setMsgs([
+      { role: 'assistant', content: 'Last one — how much time per week?' },
+      { role: 'user', content: 'A few hours' },
+    ])
+    setFacts(DEMO_END_FACTS); setPct(1); setDone(true)
+  }, [reduced])
+
+  // The play loop.
+  useEffect(() => {
+    if (reduced) return
+    let alive = true
+    let i = 0
+    let timer: ReturnType<typeof setTimeout>
+
+    const animateInput = (text: string, ms: number) => {
+      if (typeIntervalRef.current) clearInterval(typeIntervalRef.current)
+      setSending(true); setInput('')
+      const per = Math.max(30, ms / (text.length + 1))
+      let n = 0
+      typeIntervalRef.current = setInterval(() => {
+        n++; setInput(text.slice(0, n))
+        if (n >= text.length && typeIntervalRef.current) clearInterval(typeIntervalRef.current)
+      }, per)
+    }
+
+    const apply = (s: Record<string, unknown> & { kind: string }) => {
+      switch (s.kind) {
+        case 'reset':
+          setMsgs([]); setTyping(false); setInput(''); setSending(false)
+          setFacts({}); setPct(0); setDone(false); break
+        case 'guideTyping': setTyping(true); break
+        case 'guideMsg':
+          setTyping(false)
+          setMsgs(m => [...m, { role: 'assistant', content: s.text as string }]); break
+        case 'userType': animateInput(s.text as string, (s as { ms: number }).ms); break
+        case 'userSend':
+          setSending(false); setInput('')
+          setMsgs(m => [...m, { role: 'user', content: s.text as string }]); break
+        case 'fact':
+          setFacts(f => ({ ...f, [s.fkey as string]: s.value as string }))
+          setPct(s.pct as number); break
+        case 'done': setDone(true); setPct(1); break
+      }
+    }
+
+    const tick = () => {
+      if (!alive) return
+      const step = DEMO_STEPS[i]
+      apply(step)
+      timer = setTimeout(() => { i = (i + 1) % DEMO_STEPS.length; tick() }, step.ms)
+    }
+    tick()
+
+    return () => {
+      alive = false
+      clearTimeout(timer)
+      if (typeIntervalRef.current) clearInterval(typeIntervalRef.current)
+    }
+  }, [reduced])
+
+  return (
+    <div className="flex gap-2.5 p-2.5 sm:p-3.5" style={{ background: PAPER_2, height: 392 }}>
+      {/* ── Chat column ── */}
+      <div className="flex-1 min-w-0 flex flex-col">
+        <div className="flex-1 flex flex-col justify-end gap-2 overflow-hidden pb-2.5">
+          <AnimatePresence initial={false}>
+            {msgs.map((m, idx) => (
+              <motion.div key={`${idx}-${m.content.slice(0, 8)}`}
+                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.35, ease: easing }}
+                className={`flex items-end gap-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                {m.role === 'assistant' && (
+                  <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 mb-0.5"
+                    style={{ background: COBALT }}>
+                    <Sparkles size={11} color="#fff" />
+                  </div>
+                )}
+                <div className="max-w-[82%] px-3 py-2 text-[11.5px] leading-snug"
+                  style={{
+                    fontFamily: SANS,
+                    borderRadius: m.role === 'user' ? '13px 13px 4px 13px' : '13px 13px 13px 4px',
+                    background: m.role === 'user' ? COBALT : PANEL,
+                    color: m.role === 'user' ? '#fff' : INK,
+                  }}>
+                  {m.content}
+                </div>
+              </motion.div>
+            ))}
+            {typing && (
+              <motion.div key="typing" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                className="flex items-end gap-2 justify-start">
+                <div className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0"
+                  style={{ background: COBALT }}>
+                  <Sparkles size={11} color="#fff" />
+                </div>
+                <div className="px-3 py-2.5 flex items-center gap-1" style={{ background: PANEL, borderRadius: '13px 13px 13px 4px' }}>
+                  {[0, 1, 2].map(d => (
+                    <motion.span key={d} className="w-1.5 h-1.5 rounded-full" style={{ background: COBALT }}
+                      animate={{ y: [0, -4, 0], opacity: [0.35, 1, 0.35] }}
+                      transition={{ duration: 0.9, repeat: Infinity, delay: d * 0.15, ease: 'easeInOut' }} />
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Input bar */}
+        <div className="flex items-center gap-2 px-3 py-2 rounded-full flex-shrink-0"
+          style={{ border: `1px solid ${RULE}`, background: PAPER_2 }}>
+          <span className="flex-1 min-w-0 truncate text-[11.5px]" style={{ fontFamily: SANS, color: input ? INK : INK_FAINT }}>
+            {input || 'Type your answer…'}
+            {sending && (
+              <motion.span className="inline-block w-px h-[12px] align-middle ml-px" style={{ background: INK }}
+                animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.8, repeat: Infinity }} />
+            )}
+          </span>
+          <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: COBALT }}>
+            <ArrowUp size={13} color="#fff" />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Path panel ── */}
+      <div className="w-[42%] max-w-[260px] flex-shrink-0 rounded-xl flex flex-col overflow-hidden"
+        style={{
+          background: PAPER_2,
+          border: done ? `1.5px solid ${COBALT}` : `1px solid ${RULE}`,
+          boxShadow: done ? '0 16px 40px rgba(36,64,216,0.16)' : '0 8px 24px rgba(26,27,31,0.05)',
+          transition: 'border 0.5s, box-shadow 0.5s',
+        }}>
+        <div className="flex items-center gap-2.5 px-3.5 pt-3.5 pb-2.5">
+          <DemoRing pct={pct} done={done} />
+          <div className="min-w-0">
+            <p className="text-[12px] font-black leading-tight" style={{ color: INK, fontFamily: SANS }}>
+              {done ? 'Your path is ready' : 'Your learning path'}
+            </p>
+            <p className="text-[9.5px] leading-tight" style={{ color: INK_FAINT, fontFamily: SANS }}>
+              {done ? 'Built from what you told me' : 'Building live as you talk'}
+            </p>
+          </div>
+        </div>
+
+        <div className="px-3.5 flex-1">
+          {DEMO_FACTS.map(f => (
+            <DemoFactRow key={f.key} icon={f.icon} label={f.label} value={facts[f.key]} />
+          ))}
+        </div>
+
+        <AnimatePresence>
+          {done && (
+            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              className="mx-3 mb-3 mt-1 px-3 py-2 rounded-lg flex items-center gap-2"
+              style={{ background: 'rgba(36,64,216,0.08)', border: `1px solid rgba(36,64,216,0.20)` }}>
+              <Sparkles size={13} style={{ color: COBALT_TX }} className="flex-shrink-0" />
+              <span className="text-[10.5px] font-bold truncate" style={{ color: COBALT_TX, fontFamily: SANS }}>
+                Marketing &amp; Growth · 12 lessons
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
@@ -127,10 +422,11 @@ function EditorialPhoto({ src, alt, eyebrow, caption, aspect = '4 / 3', classNam
       {(eyebrow || caption) && (
         <figcaption className="absolute left-5 bottom-4 right-5">
           {eyebrow && (
-            <p className="text-[10px] uppercase tracking-[0.2em] mb-1.5" style={{ fontFamily: MONO, color: COBALT_TX }}>{eyebrow}</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] mb-1.5" style={{ fontFamily: MONO, color: '#B9C6FF' }}>{eyebrow}</p>
           )}
           {caption && (
-            <p style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.08rem', lineHeight: 1.25, color: INK, maxWidth: '26rem' }}>{caption}</p>
+            // light text — sits over the dark duotone plate regardless of page theme
+            <p style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.08rem', lineHeight: 1.25, color: '#F4F3EE', maxWidth: '26rem' }}>{caption}</p>
           )}
         </figcaption>
       )}
@@ -324,14 +620,14 @@ function Navbar() {
       transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 right-0 z-40 transition-all duration-200"
       style={{
-        background: solidBg ? 'rgba(18,19,22,0.86)' : 'transparent',
+        background: solidBg ? 'rgba(251,250,246,0.86)' : 'transparent',
         backdropFilter: scrolled ? 'blur(10px) saturate(1.1)' : 'none',
         borderBottom: solidBg ? `1px solid ${RULE}` : '1px solid transparent',
       }}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center">
-          <Logo size="md" color="light" />
+          <Logo size="md" color="dark" />
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
@@ -393,9 +689,9 @@ function Navbar() {
                         exit={{ opacity: 0, scale: 0.96, y: -4 }}
                         transition={{ duration: 0.12 }}
                         className="absolute right-0 mt-2 w-52 rounded-xl overflow-hidden"
-                        style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 16px 40px rgba(0,0,0,0.55)' }}
+                        style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 16px 40px rgba(26,27,31,0.16)' }}
                       >
-                        <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                        <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(0,0,0,0.10)' }}>
                           <p className="text-xs font-medium truncate" style={{ color: INK_FAINT, fontFamily: 'var(--font-sans)' }}>
                             {user.email}
                           </p>
@@ -475,13 +771,13 @@ function Navbar() {
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center py-3.5 text-sm font-medium border-b transition-colors hover:text-blue-600"
-                    style={{ color: INK_SOFT, fontFamily: 'var(--font-sans)', borderColor: 'rgba(255,255,255,0.1)' }}>
+                    style={{ color: INK_SOFT, fontFamily: 'var(--font-sans)', borderColor: 'rgba(0,0,0,0.10)' }}>
                     {item.label}
                   </a>
                 ))}
               </div>
               {!loading && (
-                <div className="pt-4 space-y-2" style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}>
+                <div className="pt-4 space-y-2" style={{ borderTop: '1px solid rgba(0,0,0,0.12)' }}>
                   {user ? (
                     <>
                       <Link href="/dashboard" onClick={() => setMobileOpen(false)}
@@ -499,7 +795,7 @@ function Navbar() {
                     <>
                       <button onClick={() => { openSignIn(); setMobileOpen(false) }}
                         className="w-full py-3 text-sm font-medium rounded-xl transition-colors hover:bg-white/5"
-                        style={{ color: INK_SOFT, fontFamily: 'var(--font-sans)', border: '1px solid rgba(255,255,255,0.12)' }}>
+                        style={{ color: INK_SOFT, fontFamily: 'var(--font-sans)', border: '1px solid rgba(0,0,0,0.12)' }}>
                         {tNav('signIn')}
                       </button>
                       <Link href="/assessment" onClick={() => setMobileOpen(false)}
@@ -600,9 +896,9 @@ function Hero() {
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: easing }}
             className="lg:mt-1">
-            <ScreenFrame src="/landing/assessment.png" priority
-              alt="The OpusLearn assessment building a personalised learning path in real time"
-              label="opuslearn.ai/assessment" />
+            <ScreenFrame label="opuslearn.ai/assessment">
+              <AssessmentDemo />
+            </ScreenFrame>
             <p className="mt-4 flex items-center gap-2 px-1" style={{ fontFamily: SANS, fontSize: '0.92rem', color: INK_FAINT }}>
               <Sparkles size={13} style={{ color: COBALT_TX }} />
               Your path builds live as you answer — no two learners get the same one.
@@ -660,20 +956,20 @@ function SocialProof() {
             const Icon = s.icon
             return (
               <motion.div key={s.label} variants={fadeUp}
-                className="group relative px-5 sm:px-8 py-10 sm:py-12 border-[rgba(255,255,255,0.12)] [&:nth-child(2n)]:border-l [&:nth-child(n+3)]:border-t sm:[&:nth-child(n+2)]:border-l sm:[&:nth-child(n+3)]:border-t-0">
+                className="group relative px-5 sm:px-8 py-10 sm:py-12 border-[rgba(0,0,0,0.12)] [&:nth-child(2n)]:border-l [&:nth-child(n+3)]:border-t sm:[&:nth-child(n+2)]:border-l sm:[&:nth-child(n+3)]:border-t-0">
                 {/* cobalt rule wipes in on hover */}
                 <span aria-hidden className="absolute left-0 top-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full" style={{ background: COBALT }} />
                 <div className="flex items-center justify-between mb-5">
                   <Icon size={17} strokeWidth={1.6} style={{ color: COBALT_TX }} />
-                  <span className="text-[11px] tabular-nums" style={{ fontFamily: MONO, color: 'rgba(243,242,236,0.32)' }}>
+                  <span className="text-[11px] tabular-nums" style={{ fontFamily: MONO, color: 'rgba(26,27,31,0.32)' }}>
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
                 <p style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2.6rem, 5vw, 3.8rem)', color: INK, lineHeight: 1, marginBottom: '0.7rem' }}>
                   <CountUp to={s.to} />
                 </p>
-                <p className="text-[10.5px] uppercase tracking-[0.18em] mb-2.5" style={{ fontFamily: MONO, color: 'rgba(243,242,236,0.6)' }}>{s.label}</p>
-                <p style={{ fontFamily: SANS, fontSize: '0.85rem', lineHeight: 1.5, color: 'rgba(243,242,236,0.42)' }}>{s.note}</p>
+                <p className="text-[10.5px] uppercase tracking-[0.18em] mb-2.5" style={{ fontFamily: MONO, color: 'rgba(26,27,31,0.6)' }}>{s.label}</p>
+                <p style={{ fontFamily: SANS, fontSize: '0.85rem', lineHeight: 1.5, color: 'rgba(26,27,31,0.42)' }}>{s.note}</p>
               </motion.div>
             )
           })}
@@ -903,7 +1199,7 @@ const FEATURES = [
 function Features() {
   const { ref, isInView } = useReveal()
   const tFeatures = useTranslations('home.features')
-  const accent = '#6E86F7'              // lighter cobalt for legibility on ink
+  const accent = COBALT_TX              // lighter cobalt for legibility on ink
   return (
     <section data-folio="04" className="relative overflow-hidden" style={{ background: PANEL }}>
       <AuroraGlow style={{ width: 700, height: 700, top: -260, left: '38%', opacity: 0.34 }} />
@@ -918,10 +1214,10 @@ function Features() {
           <div className="grid md:grid-cols-3">
             {FEATURES.map((f, i) => (
               <motion.div key={f.title} variants={fadeUp}
-                className="py-8 md:px-7 lg:px-8 border-[rgba(255,255,255,0.13)] border-t md:border-l md:[&:nth-child(3n+1)]:border-l-0">
+                className="py-8 md:px-7 lg:px-8 border-[rgba(0,0,0,0.12)] border-t md:border-l md:[&:nth-child(3n+1)]:border-l-0">
                 <span className="text-[12px] tabular-nums" style={{ fontFamily: MONO, color: accent }}>{String(i + 1).padStart(2, '0')}</span>
                 <h3 style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.32rem', lineHeight: 1.18, color: INK, margin: '0.5rem 0 0.6rem' }}>{f.title}</h3>
-                <p style={{ fontFamily: SANS, fontSize: '0.92rem', lineHeight: 1.6, color: 'rgba(243,242,236,0.55)' }}>{f.desc}</p>
+                <p style={{ fontFamily: SANS, fontSize: '0.92rem', lineHeight: 1.6, color: 'rgba(26,27,31,0.55)' }}>{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -998,9 +1294,9 @@ function TeamsSection() {
                 style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 6, boxShadow: '0 1px 0 rgba(0,0,0,0.02), 0 18px 50px -28px rgba(21,23,28,0.4)' }}>
                 {/* Window chrome */}
                 <div className="px-5 py-3.5 flex items-center gap-2" style={{ borderBottom: `1px solid ${RULE}`, background: PAPER }}>
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)' }} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(0,0,0,0.18)' }} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(0,0,0,0.18)' }} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(0,0,0,0.18)' }} />
                   <div className="mx-3 flex-1 h-6 rounded flex items-center px-3 text-[11px]" style={{ background: PAPER_2, color: INK_FAINT, fontFamily: MONO }}>
                     opuslearn.ai/dashboard/team
                   </div>
@@ -1079,10 +1375,10 @@ function TeamsSection() {
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 className="absolute -bottom-4 -left-6 hidden sm:flex items-center gap-2.5 px-4 py-2.5"
                 style={{ background: PANEL, borderRadius: 5, boxShadow: '0 14px 40px -18px rgba(21,23,28,0.6)' }}>
-                <span className="text-[10px] uppercase tracking-[0.16em]" style={{ color: '#6E86F7', fontFamily: MONO }}>Live</span>
+                <span className="text-[10px] uppercase tracking-[0.16em]" style={{ color: COBALT_TX, fontFamily: MONO }}>Live</span>
                 <div>
                   <p className="text-xs" style={{ color: INK, fontFamily: SANS, fontWeight: 600 }}>HR track complete</p>
-                  <p className="text-[10px]" style={{ color: 'rgba(243,242,236,0.5)', fontFamily: SANS }}>Priya N. just finished</p>
+                  <p className="text-[10px]" style={{ color: 'rgba(26,27,31,0.5)', fontFamily: SANS }}>Priya N. just finished</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -1134,24 +1430,24 @@ function FAQ() {
             style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2rem, 4vw, 3.2rem)', lineHeight: 1.05, letterSpacing: '-0.015em', color: INK }}>
             {tFAQ('heading')}
           </motion.h2>
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.13)' }}>
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.12)' }}>
             {FAQS.map((faq, i) => {
               const isOpen = open === i
               return (
-                <motion.div key={i} variants={fadeUp} style={{ borderBottom: '1px solid rgba(255,255,255,0.13)' }}>
+                <motion.div key={i} variants={fadeUp} style={{ borderBottom: '1px solid rgba(0,0,0,0.12)' }}>
                   <button onClick={() => setOpen(isOpen ? null : i)} className="w-full flex items-start justify-between gap-5 py-6 text-left">
                     <div className="flex items-start gap-5 min-w-0">
                       <span className="text-[12px] tabular-nums pt-1.5 flex-shrink-0"
-                        style={{ fontFamily: MONO, color: isOpen ? '#6E86F7' : 'rgba(243,242,236,0.32)' }}>
+                        style={{ fontFamily: MONO, color: isOpen ? COBALT_TX : 'rgba(26,27,31,0.32)' }}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.3rem', lineHeight: 1.25, color: isOpen ? PAPER : 'rgba(243,242,236,0.78)' }}>
+                      <span style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.3rem', lineHeight: 1.25, color: isOpen ? PAPER : 'rgba(26,27,31,0.78)' }}>
                         {faq.q}
                       </span>
                     </div>
                     <motion.span animate={{ rotate: isOpen ? 45 : 0 }} transition={{ duration: 0.18 }}
                       className="flex-shrink-0 pt-1 leading-none"
-                      style={{ fontSize: '1.5rem', color: isOpen ? '#6E86F7' : 'rgba(243,242,236,0.4)', fontWeight: 300, fontFamily: SANS }}>+</motion.span>
+                      style={{ fontSize: '1.5rem', color: isOpen ? COBALT_TX : 'rgba(26,27,31,0.4)', fontWeight: 300, fontFamily: SANS }}>+</motion.span>
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
@@ -1163,7 +1459,7 @@ function FAQ() {
                         transition={{ duration: 0.22, ease: 'easeInOut' }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-7" style={{ color: 'rgba(243,242,236,0.55)', fontFamily: SANS, fontSize: '0.98rem', lineHeight: 1.65, paddingLeft: '2.6rem', maxWidth: '38rem' }}>
+                        <p className="pb-7" style={{ color: 'rgba(26,27,31,0.55)', fontFamily: SANS, fontSize: '0.98rem', lineHeight: 1.65, paddingLeft: '2.6rem', maxWidth: '38rem' }}>
                           {faq.a}
                         </p>
                       </motion.div>
@@ -1223,7 +1519,7 @@ function Pricing() {
               <span className="text-sm" style={{ color: annual ? INK_FAINT : INK, fontFamily: SANS, fontWeight: 500 }}>{tHomePricing('monthly')}</span>
               <button onClick={() => setAnnual(!annual)}
                 className="w-11 h-6 rounded-full relative transition-colors"
-                style={{ background: annual ? COBALT : 'rgba(255,255,255,0.16)' }}>
+                style={{ background: annual ? COBALT : 'rgba(0,0,0,0.16)' }}>
                 <motion.div animate={{ x: annual ? 23 : 2 }} transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                   className="w-5 h-5 rounded-full absolute top-0.5" style={{ background: LIGHT }} />
               </button>
@@ -1244,9 +1540,9 @@ function Pricing() {
                   <>
                     {/* Decorative rings */}
                     <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full pointer-events-none"
-                      style={{ border: '1px solid rgba(255,255,255,0.12)' }} />
+                      style={{ border: '1px solid rgba(255,255,255,0.18)' }} />
                     <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full pointer-events-none"
-                      style={{ border: '1px solid rgba(255,255,255,0.1)' }} />
+                      style={{ border: '1px solid rgba(255,255,255,0.14)' }} />
                   </>
                 )}
                 <div className="p-8">
@@ -1403,11 +1699,11 @@ function About() {
           <div className="grid lg:grid-cols-2 gap-8 mb-16 items-stretch">
             <motion.div variants={fadeUp} className="relative overflow-hidden p-10 flex flex-col justify-center"
               style={{ background: PANEL, borderRadius: 6 }}>
-              <span style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '3.5rem', lineHeight: 0.6, color: '#6E86F7', display: 'block', marginBottom: '1rem' }}>&ldquo;</span>
+              <span style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '3.5rem', lineHeight: 0.6, color: COBALT_TX, display: 'block', marginBottom: '1rem' }}>&ldquo;</span>
               <blockquote style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(1.4rem, 2.4vw, 1.9rem)', lineHeight: 1.32, color: INK, marginBottom: '1.75rem', letterSpacing: '-0.01em' }}>
                 Every professional deserves to harness AI &mdash; not just those with an engineering degree. We built the platform we wished existed when AI changed everything.
               </blockquote>
-              <p className="text-[11px] uppercase tracking-[0.18em]" style={{ color: 'rgba(243,242,236,0.45)', fontFamily: MONO }}>
+              <p className="text-[11px] uppercase tracking-[0.18em]" style={{ color: 'rgba(26,27,31,0.45)', fontFamily: MONO }}>
                 The OpusLearn team
               </p>
             </motion.div>
@@ -1455,7 +1751,7 @@ function FinalCTA() {
 
       {/* Decorative giant serif text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none">
-        <span style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 500, fontSize: 'clamp(9rem, 28vw, 26rem)', color: 'rgba(255,255,255,0.028)', lineHeight: 1, whiteSpace: 'nowrap' }}>
+        <span style={{ fontFamily: SERIF, fontStyle: 'italic', fontWeight: 500, fontSize: 'clamp(9rem, 28vw, 26rem)', color: 'rgba(26,27,31,0.03)', lineHeight: 1, whiteSpace: 'nowrap' }}>
           Opus
         </span>
       </div>
@@ -1464,10 +1760,10 @@ function FinalCTA() {
         <motion.div ref={ref} variants={stagger(0.12)} initial="hidden" animate={isInView ? 'visible' : 'hidden'}>
           <motion.h2 variants={fadeUp}
             style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(2.6rem, 7vw, 4.6rem)', lineHeight: 1.04, letterSpacing: '-0.02em', color: INK, marginBottom: '1.5rem' }}>
-            Start leading <em style={{ fontStyle: 'italic', color: '#6E86F7' }}>{tFinalCTA('headingAccent')}</em>
+            Start leading <em style={{ fontStyle: 'italic', color: COBALT_TX }}>{tFinalCTA('headingAccent')}</em>
           </motion.h2>
           <motion.p variants={fadeUp}
-            style={{ fontFamily: SANS, fontSize: '1.125rem', color: 'rgba(243,242,236,0.55)', marginBottom: '2.5rem', lineHeight: 1.7, maxWidth: '34rem', marginInline: 'auto' }}>
+            style={{ fontFamily: SANS, fontSize: '1.125rem', color: 'rgba(26,27,31,0.55)', marginBottom: '2.5rem', lineHeight: 1.7, maxWidth: '34rem', marginInline: 'auto' }}>
             {tFinalCTA('sub')}
           </motion.p>
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -1478,7 +1774,7 @@ function FinalCTA() {
             </Link>
             <Link href="/tracks"
               className="inline-flex items-center justify-center gap-2 transition-colors"
-              style={{ border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(243,242,236,0.7)', fontSize: '15.5px', fontFamily: SANS, fontWeight: 600, letterSpacing: '-0.01em', padding: '1rem 2rem', borderRadius: 3 }}>
+              style={{ border: '1px solid rgba(0,0,0,0.18)', color: 'rgba(26,27,31,0.7)', fontSize: '15.5px', fontFamily: SANS, fontWeight: 600, letterSpacing: '-0.01em', padding: '1rem 2rem', borderRadius: 3 }}>
               {tFinalCTA('browseAllTracks')}
             </Link>
           </motion.div>
@@ -1495,11 +1791,11 @@ function Footer() {
   return (
     <footer style={{ background: PANEL }}>
       {/* Brand statement band */}
-      <div style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ borderBottom: '1px solid rgba(0,0,0,0.10)' }}>
         <div className="max-w-7xl mx-auto px-6 py-14 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-8">
           <div>
             <span className="block mb-4" style={{ fontFamily: SERIF, fontWeight: 500, fontSize: '1.7rem', letterSpacing: '-0.01em', color: INK }}>OpusLearn</span>
-            <p style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', color: 'rgba(243,242,236,0.85)', maxWidth: '30rem', lineHeight: 1.22, letterSpacing: '-0.01em' }}>
+            <p style={{ fontFamily: SERIF, fontWeight: 500, fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', color: 'rgba(26,27,31,0.85)', maxWidth: '30rem', lineHeight: 1.22, letterSpacing: '-0.01em' }}>
               {tFooter('aiTrainingTagline')}
             </p>
           </div>
@@ -1514,8 +1810,8 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-14">
         <div className="grid md:grid-cols-4 gap-10 mb-12">
           <div>
-            <p className="text-[10.5px] uppercase tracking-[0.2em] mb-4" style={{ color: '#6E86F7', fontFamily: MONO }}>{tFooter('thePlatform')}</p>
-            <p className="text-sm leading-relaxed" style={{ color: 'rgba(243,242,236,0.5)', fontFamily: SANS }}>
+            <p className="text-[10.5px] uppercase tracking-[0.2em] mb-4" style={{ color: COBALT_TX, fontFamily: MONO }}>{tFooter('thePlatform')}</p>
+            <p className="text-sm leading-relaxed" style={{ color: 'rgba(26,27,31,0.5)', fontFamily: SANS }}>
               {tFooter('platformDesc')}
             </p>
           </div>
@@ -1549,12 +1845,12 @@ function Footer() {
             },
           ].map(col => (
             <div key={col.title}>
-              <p className="text-[10.5px] uppercase tracking-[0.2em] mb-4" style={{ color: 'rgba(243,242,236,0.4)', fontFamily: MONO }}>{col.title}</p>
+              <p className="text-[10.5px] uppercase tracking-[0.2em] mb-4" style={{ color: 'rgba(26,27,31,0.4)', fontFamily: MONO }}>{col.title}</p>
               <ul className="space-y-2.5">
                 {col.links.map(link => (
                   <li key={link.label}>
                     <Link href={link.href} className="text-sm transition-colors"
-                      style={{ color: 'rgba(243,242,236,0.6)', fontFamily: SANS }}>
+                      style={{ color: 'rgba(26,27,31,0.6)', fontFamily: SANS }}>
                       {link.label}
                     </Link>
                   </li>
@@ -1564,10 +1860,10 @@ function Footer() {
           ))}
         </div>
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <p className="text-[11px] uppercase tracking-[0.14em]" style={{ color: 'rgba(243,242,236,0.35)', fontFamily: MONO }}>© 2026 OpusLearn · {tFooter('rights')}</p>
+          style={{ borderTop: '1px solid rgba(0,0,0,0.10)' }}>
+          <p className="text-[11px] uppercase tracking-[0.14em]" style={{ color: 'rgba(26,27,31,0.35)', fontFamily: MONO }}>© 2026 OpusLearn · {tFooter('rights')}</p>
           <div className="w-1.5 h-1.5 rounded-full" style={{ background: COBALT }} />
-          <p className="text-[11px] uppercase tracking-[0.14em]" style={{ color: 'rgba(243,242,236,0.35)', fontFamily: MONO }}>{tFooter('tagline2')}</p>
+          <p className="text-[11px] uppercase tracking-[0.14em]" style={{ color: 'rgba(26,27,31,0.35)', fontFamily: MONO }}>{tFooter('tagline2')}</p>
         </div>
       </div>
     </footer>
