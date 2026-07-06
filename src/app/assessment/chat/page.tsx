@@ -19,8 +19,11 @@ import {
 import type { AssessmentAnswers, AssessmentResult } from '@/lib/assessment/types'
 import { getTrack } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
-
-const SANS = 'var(--font-sans)'
+import { GrainOverlay } from '@/components/editorial/Atmosphere'
+import {
+  PAPER, PAPER_2, PANEL, INK, INK_SOFT, INK_FAINT,
+  COBALT, COBALT_TX, RULE, SERIF, MONO, SANS,
+} from '@/components/editorial/theme'
 
 const OPENING_MESSAGE =
   "Hey — I'm your OpusLearn guide. Give me about three minutes and a few honest answers, and I'll build you an AI learning path shaped around your actual job. You'll see it take form on the right as we talk.\n\nFirst things first: what should I call you?"
@@ -46,7 +49,7 @@ function TypingDots() {
           animate={{ y: [0, -4, 0], opacity: [0.35, 1, 0.35] }}
           transition={{ duration: 0.9, repeat: Infinity, delay: i * 0.15, ease: 'easeInOut' }}
           className="w-1.5 h-1.5 rounded-full"
-          style={{ background: '#2563EB' }}
+          style={{ background: COBALT }}
         />
       ))}
     </div>
@@ -61,17 +64,17 @@ function ProgressRing({ pct, size = 44 }: { pct: number; size?: number }) {
   return (
     <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#E2E8F0" strokeWidth={4} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={RULE} strokeWidth={4} />
         <motion.circle
           cx={size / 2} cy={size / 2} r={r} fill="none"
-          stroke="#2563EB" strokeWidth={4} strokeLinecap="round"
+          stroke={COBALT} strokeWidth={4} strokeLinecap="round"
           strokeDasharray={c}
           animate={{ strokeDashoffset: c * (1 - pct) }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         />
       </svg>
       <span className="absolute inset-0 flex items-center justify-center text-[10px] font-black tabular-nums"
-        style={{ color: '#2563EB', fontFamily: SANS }}>
+        style={{ color: COBALT_TX, fontFamily: MONO }}>
         {Math.round(pct * 100)}%
       </span>
     </div>
@@ -85,16 +88,16 @@ function FactRow({ icon: Icon, label, value }: { icon: typeof User; label: strin
   return (
     <div className="flex items-center gap-3 py-2" style={{ opacity: known ? 1 : 0.45 }}>
       <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors"
-        style={{ background: known ? '#DBEAFE' : '#F1F5F9' }}>
-        <Icon size={13} style={{ color: known ? '#2563EB' : '#94A3B8' }} />
+        style={{ background: known ? 'rgba(36,64,216,0.12)' : PANEL }}>
+        <Icon size={13} style={{ color: known ? COBALT : INK_FAINT }} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#94A3B8', fontFamily: SANS }}>{label}</p>
+        <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: INK_FAINT, fontFamily: MONO }}>{label}</p>
         <AnimatePresence mode="wait">
           <motion.p key={value ?? 'empty'}
             initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
             className="text-[13px] font-semibold truncate"
-            style={{ color: known ? '#0F172A' : '#CBD5E1', fontFamily: SANS }}>
+            style={{ color: known ? INK : INK_FAINT, fontFamily: SANS }}>
             {value ?? '···'}
           </motion.p>
         </AnimatePresence>
@@ -130,11 +133,11 @@ function PathPanel({ profile, result, done, building, onStart }: {
   return (
     <motion.div layout className="rounded-3xl overflow-hidden flex flex-col"
       style={{
-        background: '#FFFFFF',
-        border: done ? '1.5px solid #2563EB' : '1px solid #E2E8F0',
+        background: PAPER_2,
+        border: done ? `1.5px solid ${COBALT}` : `1px solid ${RULE}`,
         boxShadow: done
-          ? '0 24px 64px rgba(37,99,235,0.18)'
-          : '0 12px 40px rgba(15,23,42,0.06)',
+          ? '0 24px 64px rgba(36,64,216,0.18)'
+          : '0 12px 40px rgba(26,27,31,0.06)',
         transition: 'border 0.5s, box-shadow 0.5s',
       }}>
 
@@ -142,10 +145,10 @@ function PathPanel({ profile, result, done, building, onStart }: {
       <div className="flex items-center gap-3.5 px-6 pt-6 pb-4">
         <ProgressRing pct={done ? 1 : pct} />
         <div>
-          <p className="text-sm font-black" style={{ color: '#0F172A', fontFamily: SANS }}>
+          <p className="text-[15px]" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
             {done ? 'Your path is ready' : 'Your learning path'}
           </p>
-          <p className="text-xs" style={{ color: '#94A3B8', fontFamily: SANS }}>
+          <p className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>
             {done ? 'Built from everything you just told me' : 'Building live as you talk'}
           </p>
         </div>
@@ -184,12 +187,12 @@ function PathPanel({ profile, result, done, building, onStart }: {
                   </p>
                   <span className="w-2 h-2 rounded-full" style={{ background: track.color }} />
                 </div>
-                <p className="text-xs tabular-nums" style={{ color: '#64748B', fontFamily: SANS }}>
+                <p className="text-xs tabular-nums" style={{ color: INK_SOFT, fontFamily: MONO }}>
                   {result.totalLessons} lessons · {result.essentialCount} essential · ~{result.estimatedWeeks} weeks
                 </p>
               </div>
 
-              <p className="text-[10px] font-bold uppercase tracking-wider mb-2" style={{ color: '#CBD5E1', fontFamily: SANS }}>
+              <p className="text-[10px] font-bold uppercase tracking-wider mb-2" style={{ color: INK_FAINT, fontFamily: MONO }}>
                 Starting with
               </p>
               <div className="space-y-1.5">
@@ -202,12 +205,12 @@ function PathPanel({ profile, result, done, building, onStart }: {
                       exit={{ opacity: 0, x: -16 }}
                       transition={{ delay: i * 0.07, type: 'spring', stiffness: 300, damping: 26 }}
                       className="flex items-center gap-2.5 px-3 py-2 rounded-xl"
-                      style={{ background: '#F8FAFC', border: '1px solid #F1F5F9' }}>
+                      style={{ background: PANEL, border: `1px solid ${RULE}` }}>
                       <span className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black flex-shrink-0"
-                        style={{ background: `${track.color}15`, color: track.color, fontFamily: SANS }}>
+                        style={{ background: `${track.color}15`, color: track.color, fontFamily: MONO }}>
                         {i + 1}
                       </span>
-                      <p className="text-xs font-medium truncate" style={{ color: '#334155', fontFamily: SANS }}>
+                      <p className="text-xs font-medium truncate" style={{ color: INK_SOFT, fontFamily: SANS }}>
                         {l.lessonTitle}
                       </p>
                     </motion.div>
@@ -222,10 +225,10 @@ function PathPanel({ profile, result, done, building, onStart }: {
                   animate={{ opacity: [0.5, 0.9, 0.5] }}
                   transition={{ duration: 1.8, repeat: Infinity, delay: i * 0.18 }}
                   className="h-8 rounded-xl"
-                  style={{ background: '#F1F5F9', width: `${w}%` }}
+                  style={{ background: PANEL, width: `${w}%` }}
                 />
               ))}
-              <p className="text-xs pt-3" style={{ color: '#CBD5E1', fontFamily: SANS }}>
+              <p className="text-xs pt-3" style={{ color: INK_FAINT, fontFamily: SANS }}>
                 Lessons appear here once I know your role…
               </p>
             </motion.div>
@@ -242,10 +245,10 @@ function PathPanel({ profile, result, done, building, onStart }: {
               onClick={onStart}
               disabled={building}
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-              animate={building ? {} : { boxShadow: ['0 8px 28px rgba(37,99,235,0.25)', '0 8px 36px rgba(37,99,235,0.45)', '0 8px 28px rgba(37,99,235,0.25)'] }}
+              animate={building ? {} : { boxShadow: ['0 8px 28px rgba(36,64,216,0.25)', '0 8px 36px rgba(36,64,216,0.45)', '0 8px 28px rgba(36,64,216,0.25)'] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
               className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl text-sm font-bold text-white"
-              style={{ background: '#2563EB', fontFamily: SANS }}>
+              style={{ background: COBALT, fontFamily: SANS }}>
               {building ? 'Building your path…' : <>Start my path <ArrowRight size={15} /></>}
             </motion.button>
           </motion.div>
@@ -359,24 +362,29 @@ export default function ChatAssessmentPage() {
   }, [result, building, user, router])
 
   return (
-    <main className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(180deg, #F8FAFF 0%, #EFF6FF 100%)', fontFamily: SANS }}>
+    <main className="relative min-h-screen flex flex-col" style={{ background: PAPER, fontFamily: SANS }}>
+      <GrainOverlay />
 
       {/* Header */}
-      <header className="flex items-center justify-between px-5 sm:px-8 py-4">
+      <header className="relative flex items-center justify-between px-5 sm:px-8 py-4">
         <Link href="/"><Logo size="md" /></Link>
         <div className="flex items-center gap-5">
-          <span className="hidden sm:inline text-xs" style={{ color: '#94A3B8' }}>≈ 3 minutes</span>
-          <Link href="/assessment/form" className="text-xs font-medium hover:underline" style={{ color: '#2563EB' }}>
+          <span className="hidden sm:inline text-[11px] uppercase tracking-[0.18em]" style={{ color: INK_FAINT, fontFamily: MONO }}>≈ 3 minutes</span>
+          <Link href="/assessment/form" className="text-xs font-medium hover:underline" style={{ color: COBALT_TX }}>
             Prefer the classic form? →
           </Link>
         </div>
       </header>
 
-      <div className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-8 pb-6 grid lg:grid-cols-[1fr_380px] gap-6 items-start">
+      <div className="relative flex-1 w-full max-w-6xl mx-auto px-4 sm:px-8 pb-6 grid lg:grid-cols-[1fr_380px] gap-6 items-start">
 
-        {/* ── Chat column ── */}
-        <div className="flex flex-col rounded-3xl overflow-hidden"
-          style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 12px 40px rgba(15,23,42,0.06)', height: 'calc(100vh - 110px)', minHeight: 480 }}>
+        {/* ── Chat column ──
+            Mobile: cap to the *visible* viewport (dvh) minus the header and the
+            cookie banner that overlays the bottom ~120px, so the question is up
+            top and the input bar is reachable above the banner on first paint.
+            Desktop (lg): unchanged two-column height. */}
+        <div className="flex flex-col rounded-3xl overflow-hidden h-[calc(100dvh-220px)] min-h-[400px] lg:h-[calc(100vh-110px)] lg:min-h-[480px]"
+          style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 12px 40px rgba(26,27,31,0.06)' }}>
 
           {/* Messages */}
           <div className="flex-1 overflow-y-auto px-5 sm:px-8 py-8 space-y-6">
@@ -388,18 +396,19 @@ export default function ChatAssessmentPage() {
                     animate={streaming && i === messages.length - 1 ? { scale: [1, 1.12, 1] } : {}}
                     transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
                     className="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
-                    style={{ background: '#2563EB' }}>
+                    style={{ background: COBALT }}>
                     <Sparkles size={13} color="#fff" />
                   </motion.div>
-                  <div className="text-[15px] leading-[1.75] whitespace-pre-wrap pt-0.5" style={{ color: '#1E293B' }}>
+                  <div className="text-[15px] leading-[1.7] whitespace-pre-wrap px-4 py-2.5"
+                    style={{ color: INK, background: PANEL, borderRadius: '16px 16px 16px 4px', fontFamily: SANS }}>
                     {m.content || (streaming && i === messages.length - 1 ? <TypingDots /> : null)}
                   </div>
                 </motion.div>
               ) : (
                 <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                   className="flex justify-end">
-                  <div className="max-w-[85%] px-4 py-2.5 rounded-2xl rounded-br-md text-[15px] leading-relaxed text-white"
-                    style={{ background: '#2563EB' }}>
+                  <div className="max-w-[85%] px-4 py-2.5 text-[15px] leading-relaxed text-white"
+                    style={{ background: COBALT, borderRadius: '16px 16px 4px 16px', fontFamily: SANS }}>
                     {m.content}
                   </div>
                 </motion.div>
@@ -424,7 +433,7 @@ export default function ChatAssessmentPage() {
                     whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
                     onClick={() => send(s)}
                     className="px-3.5 py-2 rounded-full text-[13px] font-semibold transition-colors"
-                    style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE' }}>
+                    style={{ background: 'rgba(36,64,216,0.06)', color: COBALT_TX, border: '1px solid rgba(36,64,216,0.20)', fontFamily: SANS }}>
                     {s}
                   </motion.button>
                 ))}
@@ -436,7 +445,7 @@ export default function ChatAssessmentPage() {
           <form
             onSubmit={e => { e.preventDefault(); send(input) }}
             className="flex items-center gap-2.5 px-5 sm:px-8 py-4"
-            style={{ borderTop: '1px solid #F1F5F9' }}>
+            style={{ borderTop: `1px solid ${RULE}` }}>
             <input
               ref={inputRef}
               value={input}
@@ -444,14 +453,14 @@ export default function ChatAssessmentPage() {
               disabled={streaming || done}
               placeholder={done ? 'All set — your path is ready →' : 'Type your answer…'}
               className="flex-1 px-4 py-3 rounded-2xl text-[15px] outline-none transition-shadow focus:ring-2"
-              style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', color: '#0F172A' }}
+              style={{ background: PAPER, border: `1px solid ${RULE}`, color: INK, fontFamily: SANS }}
             />
             <motion.button
               type="submit"
               disabled={!input.trim() || streaming || done}
               whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }}
               className="w-11 h-11 rounded-2xl flex items-center justify-center flex-shrink-0 transition-opacity disabled:opacity-30"
-              style={{ background: '#2563EB' }}>
+              style={{ background: COBALT }}>
               <ArrowUp size={17} color="#fff" strokeWidth={2.5} />
             </motion.button>
           </form>
@@ -460,7 +469,7 @@ export default function ChatAssessmentPage() {
         {/* ── Path panel ── */}
         <div className="lg:sticky lg:top-5">
           <PathPanel profile={profile} result={result} done={done} building={building} onStart={startPath} />
-          <p className="flex items-center justify-center gap-1.5 text-[11px] mt-3" style={{ color: '#CBD5E1' }}>
+          <p className="flex items-center justify-center gap-1.5 text-[11px] mt-3" style={{ color: INK_FAINT, fontFamily: SANS }}>
             <BookOpen size={11} /> You can change everything later
           </p>
         </div>

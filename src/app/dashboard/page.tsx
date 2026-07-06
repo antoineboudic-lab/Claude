@@ -28,6 +28,10 @@ import {
 import type { AssessmentResult } from '@/lib/assessment/types'
 import { getTrack, getAllTracks, getSubRoleModule } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
+import {
+  PAPER, PAPER_2, PANEL, INK, INK_SOFT, INK_FAINT,
+  COBALT, COBALT_TX, RULE, SERIF, MONO, SANS,
+} from '@/components/editorial/theme'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -104,7 +108,7 @@ function XPRing({ xp, size = 96 }: { xp: number; size?: number }) {
   return (
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
       <svg width={size} height={size} className="absolute -rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="#E2E8F0" strokeWidth={6} />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={RULE} strokeWidth={6} />
         <motion.circle
           cx={size / 2} cy={size / 2} r={radius} fill="none"
           stroke={level.color} strokeWidth={6} strokeLinecap="round"
@@ -115,10 +119,10 @@ function XPRing({ xp, size = 96 }: { xp: number; size?: number }) {
         />
       </svg>
       <div className="text-center z-10">
-        <p className="text-lg font-black leading-none" style={{ color: level.color, fontFamily: 'var(--font-sans)' }}>
+        <p className="text-lg font-black leading-none" style={{ color: level.color, fontFamily: SANS }}>
           {level.level}
         </p>
-        <p className="text-[9px] uppercase tracking-wide" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+        <p className="text-[9px] uppercase tracking-wide" style={{ color: INK_FAINT, fontFamily: SANS }}>
           lvl
         </p>
       </div>
@@ -144,10 +148,10 @@ function StatCard({
           <Icon size={15} style={{ color }} />
         </div>
       </div>
-      <p className="text-3xl font-black mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+      <p className="text-3xl font-black mb-1" style={{ color: INK, fontFamily: SANS }}>
         {typeof value === 'number' ? <AnimatedNumber value={value} /> : value}
       </p>
-      <p className="text-xs font-semibold" style={{ color, fontFamily: 'var(--font-sans)' }}>
+      <p className="text-[10px] uppercase tracking-[0.14em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
         {label}
       </p>
     </motion.div>
@@ -184,7 +188,7 @@ function StreakCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.22, duration: 0.55, ease: easing }}
       className="rounded-2xl overflow-hidden"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       {/* Header */}
       <div className="px-5 pt-5 pb-4">
@@ -198,16 +202,16 @@ function StreakCard({
               🔥
             </motion.span>
             <div>
-              <p className="text-2xl font-black leading-none" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+              <p className="text-2xl font-black leading-none" style={{ color: INK, fontFamily: SANS }}>
                 {streak}
-                <span className="text-sm font-semibold ml-1" style={{ color: '#94A3B8' }}>{t('days')}</span>
+                <span className="text-sm font-semibold ml-1" style={{ color: INK_FAINT }}>{t('days')}</span>
               </p>
             </div>
           </div>
           {longestStreak > 0 && (
             <div className="text-right">
-              <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{t('best')}</p>
-              <p className="text-sm font-bold" style={{ color: '#F59E0B', fontFamily: 'var(--font-sans)' }}>
+              <p className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>{t('best')}</p>
+              <p className="text-sm font-bold" style={{ color: '#F59E0B', fontFamily: SANS }}>
                 {longestStreak}d
               </p>
             </div>
@@ -218,7 +222,7 @@ function StreakCard({
         <div className="flex gap-1.5 mb-3">
           {days.map(d => (
             <div key={d.iso} className="flex-1 flex flex-col items-center gap-1">
-              <span style={{ fontSize: '0.625rem', color: '#CBD5E1', fontFamily: 'var(--font-sans)', fontWeight: 500 }}>
+              <span style={{ fontSize: '0.625rem', color: INK_FAINT, fontFamily: SANS, fontWeight: 500 }}>
                 {d.label}
               </span>
               <div
@@ -226,7 +230,7 @@ function StreakCard({
                   width: '100%',
                   aspectRatio: '1',
                   borderRadius: '6px',
-                  background: d.active ? '#F59E0B' : d.isToday ? '#FEF3C7' : '#F1F5F9',
+                  background: d.active ? '#F59E0B' : d.isToday ? '#FEF3C7' : PANEL,
                   border: d.isToday ? '1.5px solid #FCD34D' : 'none',
                   transition: 'background 0.2s',
                 }}
@@ -237,13 +241,13 @@ function StreakCard({
 
         {/* Status message */}
         {streak === 0 ? (
-          <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>
             {t('completeLesson')}
           </p>
         ) : studiedToday ? (
           <div className="flex items-center gap-1.5">
             <CheckCircle2 size={12} style={{ color: '#10B981', flexShrink: 0 }} />
-            <p className="text-xs font-medium" style={{ color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-xs font-medium" style={{ color: '#10B981', fontFamily: SANS }}>
               {t('studiedToday')}
             </p>
           </div>
@@ -253,7 +257,7 @@ function StreakCard({
             style={{ background: '#FEF3C7', border: '1px solid #FDE68A' }}
           >
             <Flame size={12} style={{ color: '#F59E0B', flexShrink: 0 }} />
-            <p className="text-xs font-medium" style={{ color: '#92400E', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-xs font-medium" style={{ color: '#92400E', fontFamily: SANS }}>
               {t('protectStreak', { streak })}
             </p>
           </div>
@@ -276,17 +280,17 @@ function BookmarksCard() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.28, duration: 0.55, ease: easing }}
       className="rounded-2xl p-5"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
           <Bookmark size={15} style={{ color: '#0284C7' }} />
-          <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
             {t('bookmarks')}
           </p>
         </div>
         <span className="text-xs font-semibold px-2 py-0.5 rounded-lg"
-          style={{ background: '#EFF6FF', color: '#1D4ED8', fontFamily: 'var(--font-sans)' }}>
+          style={{ background: 'rgba(36,64,216,0.12)', color: COBALT_TX, fontFamily: SANS }}>
           {bookmarks.length}
         </span>
       </div>
@@ -298,16 +302,16 @@ function BookmarksCard() {
             className="flex items-center gap-3 p-2.5 rounded-xl transition-colors hover:bg-slate-50 group"
           >
             <div className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-              style={{ background: TRACK_COLORS[b.trackId] ?? '#94A3B8' }} />
-            <span className="text-sm flex-1 truncate" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+              style={{ background: TRACK_COLORS[b.trackId] ?? INK_FAINT }} />
+            <span className="text-sm flex-1 truncate" style={{ color: INK_SOFT, fontFamily: SANS }}>
               {b.title}
             </span>
             <ChevronRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0"
-              style={{ color: '#CBD5E1' }} />
+              style={{ color: INK_FAINT }} />
           </Link>
         ))}
         {bookmarks.length > 4 && (
-          <p className="text-xs text-center pt-1" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-xs text-center pt-1" style={{ color: INK_FAINT, fontFamily: SANS }}>
             +{bookmarks.length - 4} more
           </p>
         )}
@@ -351,7 +355,7 @@ function ContinueCard({ completedLessons, assessment }: { completedLessons: stri
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.06, duration: 0.5, ease: easing }}
       className="rounded-2xl overflow-hidden"
-      style={{ background: '#FFFFFF', border: `1px solid ${target.trackColor}30`, boxShadow: `0 4px 20px ${target.trackColor}12` }}
+      style={{ background: PAPER_2, border: `1px solid ${target.trackColor}30`, boxShadow: `0 4px 20px ${target.trackColor}12` }}
     >
       <div style={{ height: 3, background: target.trackColor }} />
       <div className="px-6 py-5 flex items-center gap-5 flex-wrap">
@@ -360,18 +364,18 @@ function ContinueCard({ completedLessons, assessment }: { completedLessons: stri
           {TRACK_ICONS[target.trackId] ?? '🎓'}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-bold uppercase tracking-widest mb-0.5"
-            style={{ color: target.trackColor, fontFamily: 'var(--font-sans)', letterSpacing: '0.06em' }}>
+          <p className="text-[10px] uppercase tracking-[0.16em] mb-0.5"
+            style={{ color: target.trackColor, fontFamily: MONO }}>
             {target.isResume ? t('resumeLesson') : t('startLesson')} · {target.trackTitle} · {target.moduleTitle}
           </p>
-          <p className="text-lg font-black truncate" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)', letterSpacing: '-0.01em' }}>
+          <p className="text-lg font-black truncate" style={{ color: INK, fontFamily: SANS, letterSpacing: '-0.01em' }}>
             {target.lessonTitle}
           </p>
         </div>
         <Link
           href={`/tracks/${target.trackId}/lessons/${target.lessonId}`}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white flex-shrink-0 transition-opacity hover:opacity-90"
-          style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.3)', fontFamily: 'var(--font-sans)', textDecoration: 'none' }}
+          style={{ background: COBALT, boxShadow: '0 4px 14px rgba(36,64,216,0.3)', fontFamily: SANS, textDecoration: 'none' }}
         >
           <Play size={13} fill="#FFFFFF" />
           {target.isResume ? t('continueLearning') : t('startLesson')}
@@ -421,11 +425,11 @@ function InsightsCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.55, ease: easing }}
       className="rounded-2xl p-5"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       <div className="flex items-center gap-2 mb-4">
         <Brain size={15} style={{ color: '#10B981' }} />
-        <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+        <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
           {t('insights')}
         </p>
       </div>
@@ -434,16 +438,16 @@ function InsightsCard({
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-1.5">
-              <Calendar size={11} style={{ color: '#94A3B8' }} />
-              <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              <Calendar size={11} style={{ color: INK_FAINT }} />
+              <span className="text-xs" style={{ color: INK_SOFT, fontFamily: SANS }}>
                 {t('studyDaysMonth')}
               </span>
             </div>
-            <span className="text-xs font-bold" style={{ color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+            <span className="text-xs font-bold" style={{ color: '#10B981', fontFamily: SANS }}>
               {daysThisMonth}d / {daysInMonth}d
             </span>
           </div>
-          <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+          <div className="h-1.5 rounded-full" style={{ background: RULE }}>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${studyRate}%` }}
@@ -458,16 +462,16 @@ function InsightsCard({
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-1.5">
-              <CheckCircle2 size={11} style={{ color: '#94A3B8' }} />
-              <span className="text-xs" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              <CheckCircle2 size={11} style={{ color: INK_FAINT }} />
+              <span className="text-xs" style={{ color: INK_SOFT, fontFamily: SANS }}>
                 {t('perfectQuizRate')}
               </span>
             </div>
-            <span className="text-xs font-bold" style={{ color: '#0284C7', fontFamily: 'var(--font-sans)' }}>
+            <span className="text-xs font-bold" style={{ color: '#0284C7', fontFamily: SANS }}>
               {quizAccuracy}%
             </span>
           </div>
-          <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+          <div className="h-1.5 rounded-full" style={{ background: RULE }}>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${quizAccuracy}%` }}
@@ -482,13 +486,13 @@ function InsightsCard({
         {weakCount > 0 && (
           <div className="flex items-center justify-between px-3 py-2 rounded-xl"
             style={{ background: '#FFF7ED', border: '1px solid #FED7AA' }}>
-            <span className="text-xs" style={{ color: '#92400E', fontFamily: 'var(--font-sans)' }}>
+            <span className="text-xs" style={{ color: '#92400E', fontFamily: SANS }}>
               {t('needPractice', { count: weakCount, plural: weakCount !== 1 ? 's' : '' })}
             </span>
             <Link
               href="/review"
               className="text-xs font-semibold"
-              style={{ color: '#EA580C', fontFamily: 'var(--font-sans)', textDecoration: 'none' }}
+              style={{ color: '#EA580C', fontFamily: SANS, textDecoration: 'none' }}
             >
               {t('reviewLink')}
             </Link>
@@ -521,17 +525,17 @@ function DailyChallengeCard() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.32, duration: 0.55, ease: easing }}
       className="rounded-2xl p-5"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Trophy size={14} style={{ color: '#F59E0B' }} />
-          <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>{t('dailyChallenge')}</p>
+          <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>{t('dailyChallenge')}</p>
         </div>
         {streak > 0 && (
           <div className="flex items-center gap-1">
             <Flame size={12} style={{ color: '#F97316' }} />
-            <span className="text-xs font-bold" style={{ color: '#F97316', fontFamily: 'var(--font-sans)' }}>{streak}</span>
+            <span className="text-xs font-bold" style={{ color: '#F97316', fontFamily: SANS }}>{streak}</span>
           </div>
         )}
       </div>
@@ -539,10 +543,10 @@ function DailyChallengeCard() {
       {done ? (
         <div className="flex items-center gap-2 mb-3">
           <CheckCircle2 size={14} style={{ color: '#10B981' }} />
-          <p className="text-xs" style={{ color: '#10B981', fontFamily: 'var(--font-sans)', fontWeight: 600 }}>{t('completedToday')}</p>
+          <p className="text-xs" style={{ color: '#10B981', fontFamily: SANS, fontWeight: 600 }}>{t('completedToday')}</p>
         </div>
       ) : (
-        <p className="text-xs mb-3" style={{ color: '#64748B', fontFamily: 'var(--font-sans)', lineHeight: 1.5 }}>
+        <p className="text-xs mb-3" style={{ color: INK_SOFT, fontFamily: SANS, lineHeight: 1.5 }}>
           {t('oneQuestion')}
         </p>
       )}
@@ -550,7 +554,7 @@ function DailyChallengeCard() {
       <Link
         href="/challenge"
         className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
-        style={{ background: done ? '#EFF6FF' : 'linear-gradient(135deg, #2563EB, #22D3EE)', color: done ? '#64748B' : '#FFFFFF', textDecoration: 'none', border: done ? '1px solid #E2E8F0' : 'none', fontFamily: 'var(--font-sans)' }}
+        style={{ background: done ? 'rgba(36,64,216,0.06)' : COBALT, color: done ? INK_SOFT : '#FFFFFF', textDecoration: 'none', border: done ? `1px solid ${RULE}` : 'none', fontFamily: SANS }}
       >
         {done ? t('viewResult') : t('takeChallenge')} <ArrowRight size={13} />
       </Link>
@@ -563,7 +567,7 @@ function DailyChallengeCard() {
 function LearningPathCard({ result, completedLessons }: { result: AssessmentResult; completedLessons: string[] }) {
   const t = useTranslations('dashboard')
   const track = getTrack(result.primaryTrackId)
-  const color = TRACK_COLORS[result.primaryTrackId] ?? '#2563EB'
+  const color = TRACK_COLORS[result.primaryTrackId] ?? COBALT
   const icon = TRACK_ICONS[result.primaryTrackId] ?? '🎓'
   const essential = result.customPath.filter(l => l.priority === 'essential')
   const firstLesson = essential.find(l => !completedLessons.includes(l.lessonId)) ?? essential[0]
@@ -595,42 +599,42 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1, duration: 0.55, ease: easing }}
       className="rounded-2xl overflow-hidden"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       {/* Track header */}
-      <div className="px-6 py-5 flex items-center justify-between" style={{ borderBottom: '1px solid #F1F5F9', background: '#EFF6FF' }}>
+      <div className="px-6 py-5 flex items-center justify-between" style={{ borderBottom: `1px solid ${RULE}`, background: 'rgba(36,64,216,0.06)' }}>
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
             style={{ background: `${color}10`, border: `1px solid ${color}20` }}>
             {icon}
           </div>
           <div>
-            <p className="text-xs font-medium mb-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-xs font-medium mb-0.5" style={{ color: INK_FAINT, fontFamily: SANS }}>
               {t('yourPersonalisedTrack')}
             </p>
-            <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
               {track?.title ?? result.primaryTrackId} Track
             </p>
           </div>
         </div>
         <span className="px-2.5 py-1 rounded-lg text-xs font-semibold"
-          style={{ background: `${color}10`, color, fontFamily: 'var(--font-sans)' }}>
+          style={{ background: `${color}10`, color, fontFamily: SANS }}>
           {t('aiCurated')}
         </span>
       </div>
 
       {/* Stats row */}
-      <div className="grid grid-cols-3 px-6 py-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
+      <div className="grid grid-cols-3 px-6 py-4" style={{ borderBottom: `1px solid ${RULE}` }}>
         {[
-          { label: t('essential'), value: result.essentialCount, color: '#2563EB' },
+          { label: t('essential'), value: result.essentialCount, color: COBALT },
           { label: t('totalLessons'), value: result.totalLessons, color },
           { label: t('estWeeks'), value: result.estimatedWeeks, color: '#22D3EE' },
         ].map(s => (
           <div key={s.label} className="text-center">
-            <p className="text-lg font-black" style={{ color: s.color, fontFamily: 'var(--font-sans)' }}>
+            <p className="text-lg font-black" style={{ color: s.color, fontFamily: SANS }}>
               {s.value}
             </p>
-            <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>
               {s.label}
             </p>
           </div>
@@ -638,16 +642,16 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
       </div>
 
       {/* Progress bar */}
-      <div className="px-6 py-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
+      <div className="px-6 py-4" style={{ borderBottom: `1px solid ${RULE}` }}>
         <div className="flex items-center justify-between mb-2">
-          <p className="text-xs font-semibold" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-xs font-semibold" style={{ color: INK_FAINT, fontFamily: SANS }}>
             Your progress
           </p>
-          <p className="text-xs font-bold" style={{ color, fontFamily: 'var(--font-sans)' }}>
+          <p className="text-xs font-bold" style={{ color, fontFamily: SANS }}>
             {completedInPath} of {result.customPath.length} lessons · {pathPct}%
           </p>
         </div>
-        <div className="h-2.5 rounded-full overflow-hidden mb-3" style={{ background: '#E2E8F0' }}>
+        <div className="h-2.5 rounded-full overflow-hidden mb-3" style={{ background: RULE }}>
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${pathPct}%` }}
@@ -666,7 +670,7 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
                   key={m.id}
                   title={`${m.title}: ${m.done}/${m.total}`}
                   className="flex-1 h-1 rounded-full transition-all"
-                  style={{ background: full ? color : started ? `${color}50` : '#E2E8F0' }}
+                  style={{ background: full ? color : started ? `${color}50` : RULE }}
                 />
               )
             })}
@@ -676,7 +680,7 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
 
       {/* Sub-role personalized path */}
       {subRoleModule && (
-        <div className="px-6 pt-5 pb-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
+        <div className="px-6 pt-5 pb-4" style={{ borderBottom: `1px solid ${RULE}` }}>
           {/* Section header */}
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -684,12 +688,12 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
                 style={{ background: `${color}18` }}>
                 <Sparkles size={11} style={{ color }} />
               </div>
-              <p className="text-xs font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+              <p className="text-xs font-bold" style={{ color: INK, fontFamily: SANS }}>
                 {subRoleModule.title}
               </p>
             </div>
             <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full"
-              style={{ background: `${color}10`, color, fontFamily: 'var(--font-sans)' }}>
+              style={{ background: `${color}10`, color, fontFamily: SANS }}>
               For you
             </span>
           </div>
@@ -711,16 +715,16 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
                     }}>
                     {done
                       ? <CheckCircle2 size={11} style={{ color }} />
-                      : <span style={{ fontSize: '9px', fontWeight: 700, color, fontFamily: 'var(--font-sans)' }}>{i + 1}</span>
+                      : <span style={{ fontSize: '9px', fontWeight: 700, color, fontFamily: SANS }}>{i + 1}</span>
                     }
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate"
-                      style={{ color: done ? '#94A3B8' : '#334155', fontFamily: 'var(--font-sans)', textDecoration: done ? 'line-through' : 'none' }}>
+                      style={{ color: done ? INK_FAINT : INK_SOFT, fontFamily: SANS, textDecoration: done ? 'line-through' : 'none' }}>
                       {lesson.title}
                     </p>
                   </div>
-                  <span className="text-[10px] flex-shrink-0" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                  <span className="text-[10px] flex-shrink-0" style={{ color: INK_FAINT, fontFamily: SANS }}>
                     {lesson.duration}m
                   </span>
                   <ChevronRight size={13} className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color }} />
@@ -738,7 +742,7 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
                 background: `${color}12`,
                 color,
                 border: `1px solid ${color}25`,
-                fontFamily: 'var(--font-sans)',
+                fontFamily: SANS,
                 textDecoration: 'none',
               }}
             >
@@ -753,7 +757,7 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
 
       {/* Essential lessons preview */}
       <div className="px-6 py-4 space-y-1">
-        <p className="text-xs font-semibold mb-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+        <p className="text-xs font-semibold mb-3" style={{ color: INK_FAINT, fontFamily: SANS }}>
           {t('essentialLessons')}
         </p>
         {essential.slice(0, 3).map((lesson, i) => (
@@ -763,14 +767,14 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
             className="flex items-center gap-3 p-3 rounded-xl transition-colors hover:bg-slate-50 group"
           >
             <div className="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold"
-              style={{ background: `${color}12`, color, fontFamily: 'var(--font-sans)' }}>
+              style={{ background: `${color}12`, color, fontFamily: SANS }}>
               {i + 1}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+              <p className="text-sm font-medium truncate" style={{ color: INK_SOFT, fontFamily: SANS }}>
                 {lesson.lessonTitle}
               </p>
-              <p className="text-xs truncate" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+              <p className="text-xs truncate" style={{ color: INK_FAINT, fontFamily: SANS }}>
                 {lesson.moduleTitle}
               </p>
             </div>
@@ -786,8 +790,8 @@ function LearningPathCard({ result, completedLessons }: { result: AssessmentResu
             href={`/tracks/${firstLesson.trackId}/lessons/${firstLesson.lessonId}`}
             className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
             style={{
-              background: 'linear-gradient(135deg, #2563EB, #1D4ED8)',
-              fontFamily: 'var(--font-sans)',
+              background: COBALT,
+              fontFamily: SANS,
             }}
           >
             <Play size={14} /> {t('continueLearning')}
@@ -815,45 +819,45 @@ function NoAssessmentOnboarding({ name }: { name: string }) {
       className="lg:col-span-2"
     >
       <div className="rounded-3xl overflow-hidden"
-        style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+        style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
         {/* Header */}
         <div className="px-8 pt-8 pb-6 relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #2563EB08, #22D3EE04)', borderBottom: '1px solid #F1F5F9' }}>
+          style={{ background: 'rgba(36,64,216,0.05)', borderBottom: `1px solid ${RULE}` }}>
           <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full blur-3xl"
-            style={{ background: 'rgba(37,99,235,0.06)' }} />
+            style={{ background: 'rgba(36,64,216,0.06)' }} />
           <div className="relative">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)' }}>
+                style={{ background: COBALT }}>
                 <Sparkles size={14} className="text-white" />
               </div>
-              <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+              <span className="text-[11px] uppercase tracking-[0.16em]" style={{ color: COBALT_TX, fontFamily: MONO }}>
                 {t('step1of1')}
               </span>
             </div>
-            <h2 className="text-2xl font-black mb-2" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+            <h2 className="text-2xl mb-2" style={{ fontFamily: SERIF, fontWeight: 600, letterSpacing: '-0.02em', color: INK }}>
               {name ? t('noPathTitle', { name }) : t('noPathTitleAnon')}
             </h2>
-            <p className="text-base" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-base" style={{ color: INK_SOFT, fontFamily: SANS }}>
               {t('noPathDesc')}
             </p>
           </div>
         </div>
 
         {/* Steps */}
-        <div className="px-8 py-6" style={{ borderBottom: '1px solid #F1F5F9' }}>
+        <div className="px-8 py-6" style={{ borderBottom: `1px solid ${RULE}` }}>
           <div className="space-y-5">
             {steps.map(step => (
               <div key={step.n} className="flex items-start gap-4">
                 <div className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center text-xs font-black"
-                  style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: 'rgba(36,64,216,0.12)', color: COBALT, fontFamily: SANS }}>
                   {step.n}
                 </div>
                 <div>
-                  <p className="text-sm font-bold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-sm font-bold mb-0.5" style={{ color: INK, fontFamily: SANS }}>
                     {step.title}
                   </p>
-                  <p className="text-sm" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-sm" style={{ color: INK_FAINT, fontFamily: SANS }}>
                     {step.desc}
                   </p>
                 </div>
@@ -868,14 +872,14 @@ function NoAssessmentOnboarding({ name }: { name: string }) {
             href="/assessment"
             className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-base font-semibold text-white transition-all hover:opacity-90"
             style={{
-              background: 'linear-gradient(135deg, #2563EB, #22D3EE)',
-              boxShadow: '0 4px 14px rgba(37,99,235,0.25)',
-              fontFamily: 'var(--font-sans)',
+              background: COBALT,
+              boxShadow: '0 4px 14px rgba(36,64,216,0.25)',
+              fontFamily: SANS,
             }}
           >
             <Zap size={16} /> {t('buildPersonalizedPath')}
           </Link>
-          <p className="text-center text-xs mt-3" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-center text-xs mt-3" style={{ color: INK_FAINT, fontFamily: SANS }}>
             {t('freeForever')}
           </p>
         </div>
@@ -897,17 +901,17 @@ function BadgesSection({ earned }: { earned: string[] }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.25, duration: 0.55, ease: easing }}
       className="rounded-2xl p-6"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
           <Award size={16} style={{ color: '#F59E0B' }} />
-          <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
             {t('badges')}
           </p>
         </div>
         <span className="text-xs font-semibold px-2 py-0.5 rounded-lg"
-          style={{ background: '#FEF3C7', color: '#D97706', fontFamily: 'var(--font-sans)' }}>
+          style={{ background: '#FEF3C7', color: '#D97706', fontFamily: SANS }}>
           {earned.length} / {all.length}
         </span>
       </div>
@@ -927,8 +931,8 @@ function BadgesSection({ earned }: { earned: string[] }) {
                     flex: '0 0 calc(33.333% - 8px)',
                     minHeight: 88,
                     justifyContent: 'center',
-                    background: isEarned ? '#FEF3C7' : '#EFF6FF',
-                    border: isEarned ? '1px solid #FDE68A' : '1px solid #F1F5F9',
+                    background: isEarned ? '#FEF3C7' : 'rgba(36,64,216,0.06)',
+                    border: isEarned ? '1px solid #FDE68A' : `1px solid ${RULE}`,
                   }}
                   onMouseEnter={() => setHovered(badge.id)}
                   onMouseLeave={() => setHovered(null)}
@@ -937,7 +941,7 @@ function BadgesSection({ earned }: { earned: string[] }) {
                     {badge.icon}
                   </span>
                   <p className="text-[10px] font-semibold leading-tight"
-                    style={{ color: isEarned ? '#D97706' : '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                    style={{ color: isEarned ? '#D97706' : INK_FAINT, fontFamily: SANS }}>
                     {badge.name}
                   </p>
 
@@ -950,29 +954,29 @@ function BadgesSection({ earned }: { earned: string[] }) {
                         exit={{ opacity: 0, y: 4, scale: 0.95, x: '-50%' }}
                         transition={{ duration: 0.15 }}
                         className="absolute bottom-full left-1/2 z-50 mb-2 w-48 rounded-2xl p-3.5 text-left pointer-events-none"
-                        style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 8px 24px rgba(0,0,0,0.10)' }}
+                        style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 8px 24px rgba(0,0,0,0.10)' }}
                       >
                         <div className="flex items-center gap-1.5 mb-1.5">
                           <span className="text-base">{badge.icon}</span>
-                          <p className="text-xs font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                          <p className="text-xs font-bold" style={{ color: INK, fontFamily: SANS }}>
                             {badge.name}
                           </p>
                           {isEarned && (
                             <span className="ml-auto text-[10px] font-semibold px-1.5 py-0.5 rounded-full"
-                              style={{ background: '#FEF3C7', color: '#D97706', fontFamily: 'var(--font-sans)' }}>
+                              style={{ background: '#FEF3C7', color: '#D97706', fontFamily: SANS }}>
                               Earned
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] leading-relaxed mb-2" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                        <p className="text-[11px] leading-relaxed mb-2" style={{ color: INK_SOFT, fontFamily: SANS }}>
                           {badge.description}
                         </p>
                         {!isEarned && (
-                          <div className="pt-2" style={{ borderTop: '1px solid #F1F5F9' }}>
-                            <p className="text-[10px] font-semibold mb-0.5 uppercase tracking-wide" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                          <div className="pt-2" style={{ borderTop: `1px solid ${RULE}` }}>
+                            <p className="text-[10px] mb-0.5 uppercase tracking-[0.12em]" style={{ color: INK_FAINT, fontFamily: MONO }}>
                               How to earn
                             </p>
-                            <p className="text-[11px] leading-relaxed" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                            <p className="text-[11px] leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
                               {badge.howTo}
                             </p>
                           </div>
@@ -1006,18 +1010,18 @@ function LevelCard({ xp }: { xp: number }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2, duration: 0.55, ease: easing }}
       className="rounded-2xl p-6"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       <div className="flex items-center gap-4 mb-5">
         <XPRing xp={xp} size={72} />
         <div>
-          <p className="text-xs mb-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-xs mb-0.5" style={{ color: INK_FAINT, fontFamily: SANS }}>
             {t('currentLevel')}
           </p>
-          <p className="text-lg font-black" style={{ color: level.color, fontFamily: 'var(--font-sans)' }}>
+          <p className="text-lg font-black" style={{ color: level.color, fontFamily: SANS }}>
             {level.title}
           </p>
-          <p className="text-sm font-semibold" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-sm font-semibold" style={{ color: INK_SOFT, fontFamily: SANS }}>
             <AnimatedNumber value={xp} /> XP
           </p>
         </div>
@@ -1025,11 +1029,11 @@ function LevelCard({ xp }: { xp: number }) {
 
       {nextLevel && (
         <>
-          <div className="flex items-center justify-between text-xs mb-2" style={{ fontFamily: 'var(--font-sans)' }}>
-            <span style={{ color: '#94A3B8' }}>{t('progressTo', { level: nextLevel.title })}</span>
+          <div className="flex items-center justify-between text-xs mb-2" style={{ fontFamily: SANS }}>
+            <span style={{ color: INK_FAINT }}>{t('progressTo', { level: nextLevel.title })}</span>
             <span style={{ color: level.color }}>{progress}%</span>
           </div>
-          <div className="h-2 rounded-full" style={{ background: '#E2E8F0' }}>
+          <div className="h-2 rounded-full" style={{ background: RULE }}>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
@@ -1038,14 +1042,14 @@ function LevelCard({ xp }: { xp: number }) {
               style={{ background: level.color }}
             />
           </div>
-          <p className="text-xs mt-2" style={{ color: '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+          <p className="text-xs mt-2" style={{ color: INK_FAINT, fontFamily: SANS }}>
             {t('xpToNext', { xp: nextLevel.minXP - xp })}
           </p>
         </>
       )}
 
       {!nextLevel && (
-        <div className="flex items-center gap-1.5 text-xs" style={{ color: '#F59E0B', fontFamily: 'var(--font-sans)' }}>
+        <div className="flex items-center gap-1.5 text-xs" style={{ color: '#F59E0B', fontFamily: SANS }}>
           <Star size={12} fill="#F59E0B" /> {t('maxLevel')}
         </div>
       )}
@@ -1072,32 +1076,32 @@ function RecentActivity({ completedLessons, completedModules }: { completedLesso
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.55, ease: easing }}
       className="rounded-2xl p-6"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
     >
       <div className="flex items-center gap-2 mb-5">
         <BarChart3 size={16} style={{ color: '#22D3EE' }} />
-        <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+        <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
           {t('trackProgress')}
         </p>
       </div>
       <div className="space-y-4">
         {trackProgress.map(tr => {
-          const color = TRACK_COLORS[tr.id] ?? '#2563EB'
+          const color = TRACK_COLORS[tr.id] ?? COBALT
           const icon = TRACK_ICONS[tr.id] ?? '🎓'
           return (
             <Link key={tr.id} href={`/tracks/${tr.id}`} className="block group">
               <div className="flex items-center justify-between mb-1.5">
                 <div className="flex items-center gap-2">
                   <span className="text-sm">{icon}</span>
-                  <p className="text-sm font-medium" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-sm font-medium" style={{ color: INK_SOFT, fontFamily: SANS }}>
                     {tr.title}
                   </p>
                 </div>
-                <p className="text-xs font-semibold" style={{ color, fontFamily: 'var(--font-sans)' }}>
+                <p className="text-xs font-semibold" style={{ color, fontFamily: SANS }}>
                   {tr.done}/{tr.total}
                 </p>
               </div>
-              <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+              <div className="h-1.5 rounded-full" style={{ background: RULE }}>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${tr.pct}%` }}
@@ -1240,12 +1244,12 @@ export default function DashboardPage() {
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#EFF6FF' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: PAPER }}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
           className="w-8 h-8 rounded-full border-2 border-t-transparent"
-          style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }}
+          style={{ borderColor: COBALT, borderTopColor: 'transparent' }}
         />
       </div>
     )
@@ -1267,10 +1271,10 @@ export default function DashboardPage() {
     null
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px)' }}>
+    <div className="min-h-screen" style={{ background: PAPER }}>
       {/* Navbar */}
-      <div className="sticky top-0 z-40" style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(16px)' }}>
-        <nav className="px-6 py-4" style={{ borderBottom: mobileOpen ? 'none' : '1px solid #E2E8F0' }}>
+      <div className="sticky top-0 z-40" style={{ background: 'rgba(251,250,246,0.92)', backdropFilter: 'blur(16px)' }}>
+        <nav className="px-6 py-4" style={{ borderBottom: mobileOpen ? 'none' : `1px solid ${RULE}` }}>
           <div className="max-w-6xl mx-auto flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
               <Logo size="md" />
@@ -1280,33 +1284,33 @@ export default function DashboardPage() {
               <button
                 onClick={() => setSearchOpen(true)}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors hover:bg-slate-100"
-                style={{ color: '#64748B', fontFamily: 'var(--font-sans)', border: '1px solid #E2E8F0', background: '#EFF6FF' }}
+                style={{ color: INK_SOFT, fontFamily: SANS, border: `1px solid ${RULE}`, background: 'rgba(36,64,216,0.06)' }}
               >
                 <Search size={13} />
                 <span>{tNav('search')}</span>
-                <kbd style={{ fontSize: '10px', color: '#94A3B8', background: '#E2E8F0', borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
+                <kbd style={{ fontSize: '10px', color: INK_FAINT, background: RULE, borderRadius: '3px', padding: '1px 5px' }}>⌘K</kbd>
               </button>
-              <Link href="/tracks" className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              <Link href="/tracks" className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700" style={{ color: INK_SOFT, fontFamily: SANS }}>
                 <BookOpen size={14} /> {tNav('allTracks')}
               </Link>
               {teamHref && (
-                <Link href={teamHref} className="flex items-center gap-1.5 text-sm font-semibold transition-colors hover:opacity-80 px-3 py-1.5 rounded-lg" style={{ color: '#2563EB', background: '#DBEAFE', fontFamily: 'var(--font-sans)' }}>
+                <Link href={teamHref} className="flex items-center gap-1.5 text-sm font-semibold transition-colors hover:opacity-80 px-3 py-1.5 rounded-lg" style={{ color: COBALT, background: 'rgba(36,64,216,0.12)', fontFamily: SANS }}>
                   <Users size={13} /> Team
                 </Link>
               )}
               <div className="flex items-center gap-2.5">
-                <Link href="/dashboard/settings" className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100" style={{ color: '#94A3B8' }} title="Settings">
+                <Link href="/dashboard/settings" className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:bg-slate-100" style={{ color: INK_FAINT }} title="Settings">
                   <Settings size={15} />
                 </Link>
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatarUrl} alt={displayName} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full object-cover" />
                 ) : (
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', fontFamily: 'var(--font-sans)' }}>
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ background: COBALT, fontFamily: SANS }}>
                     {initials}
                   </div>
                 )}
-                <button onClick={signOut} className="flex items-center gap-1.5 text-sm transition-colors hover:text-red-500" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                <button onClick={signOut} className="flex items-center gap-1.5 text-sm transition-colors hover:text-red-500" style={{ color: INK_FAINT, fontFamily: SANS }}>
                   <LogOut size={13} /> {tNav('signOut')}
                 </button>
               </div>
@@ -1316,7 +1320,7 @@ export default function DashboardPage() {
               className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors hover:bg-slate-100"
               onClick={() => setMobileOpen(v => !v)}
               aria-label="Toggle menu"
-              style={{ color: '#475569' }}
+              style={{ color: INK_SOFT }}
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -1332,24 +1336,24 @@ export default function DashboardPage() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2, ease: 'easeInOut' }}
               className="md:hidden overflow-hidden"
-              style={{ borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}
+              style={{ borderTop: `1px solid ${RULE}`, borderBottom: `1px solid ${RULE}` }}
             >
               <div className="px-6 pb-5 pt-2 space-y-0.5">
-                <button onClick={() => { setSearchOpen(true); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                <button onClick={() => { setSearchOpen(true); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: INK_SOFT, fontFamily: SANS, borderColor: RULE }}>
                   <Search size={15} /> {tNav('search')}
                 </button>
-                <Link href="/tracks" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                <Link href="/tracks" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: INK_SOFT, fontFamily: SANS, borderColor: RULE }}>
                   <BookOpen size={15} /> {tNav('allTracks')}
                 </Link>
                 {teamHref && (
-                  <Link href={teamHref} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                  <Link href={teamHref} onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: INK_SOFT, fontFamily: SANS, borderColor: RULE }}>
                     <Users size={15} /> Team
                   </Link>
                 )}
-                <Link href="/dashboard/settings" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: '#475569', fontFamily: 'var(--font-sans)', borderColor: '#F1F5F9' }}>
+                <Link href="/dashboard/settings" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 py-3 text-sm font-medium border-b transition-colors hover:text-blue-600" style={{ color: INK_SOFT, fontFamily: SANS, borderColor: RULE }}>
                   <Settings size={15} /> Settings
                 </Link>
-                <button onClick={() => { signOut(); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium transition-colors hover:text-red-500" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                <button onClick={() => { signOut(); setMobileOpen(false) }} className="w-full flex items-center gap-3 py-3 text-sm font-medium transition-colors hover:text-red-500" style={{ color: INK_FAINT, fontFamily: SANS }}>
                   <LogOut size={15} /> {tNav('signOut')}
                 </button>
               </div>
@@ -1369,8 +1373,8 @@ export default function DashboardPage() {
         >
           <div className="flex items-center gap-3 mb-2">
             <div className="flex items-center gap-2">
-              <Sparkles size={14} style={{ color: '#2563EB' }} />
-              <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+              <Sparkles size={14} style={{ color: COBALT }} />
+              <p className="text-[11px] tracking-[0.16em] uppercase" style={{ color: INK_FAINT, fontFamily: MONO }}>
                 {t('yourDashboard')}
               </p>
             </div>
@@ -1381,13 +1385,13 @@ export default function DashboardPage() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   className="flex items-center gap-1.5 text-xs"
-                  style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                  style={{ color: INK_FAINT, fontFamily: SANS }}
                 >
                   <motion.span
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                     className="inline-block w-3 h-3 rounded-full border border-t-transparent"
-                    style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }}
+                    style={{ borderColor: COBALT, borderTopColor: 'transparent' }}
                   />
                   {t('syncing')}
                 </motion.span>
@@ -1396,10 +1400,10 @@ export default function DashboardPage() {
           </div>
           <div className="flex items-end justify-between gap-4 flex-wrap">
             <div>
-              <h1 className="text-3xl lg:text-4xl font-black" style={{ fontFamily: 'var(--font-sans)', color: '#0F172A' }}>
+              <h1 className="text-3xl lg:text-4xl" style={{ fontFamily: SERIF, fontWeight: 600, letterSpacing: '-0.02em', color: INK }}>
                 {t('welcomeBack', { name: displayName })}
               </h1>
-              <p className="mt-1 text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+              <p className="mt-1 text-sm" style={{ color: INK_SOFT, fontFamily: SANS }}>
                 {state.completedLessons.length > 0
                   ? t('lessonsCompletedMsg', { count: state.completedLessons.length, plural: state.completedLessons.length === 1 ? '' : 's' })
                   : t('readyToStart')}
@@ -1409,7 +1413,7 @@ export default function DashboardPage() {
               <button
                 onClick={() => setShareOpen(true)}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
-                style={{ background: '#DBEAFE', color: '#2563EB', border: '1px solid #BFDBFE', fontFamily: 'var(--font-sans)' }}
+                style={{ background: 'rgba(36,64,216,0.12)', color: COBALT, border: `1px solid rgba(36,64,216,0.20)`, fontFamily: SANS }}
               >
                 <Share2 size={14} /> {t('shareProgress')}
               </button>
@@ -1419,7 +1423,7 @@ export default function DashboardPage() {
 
         {/* Stats row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <StatCard icon={Zap} label={t('totalXP')} value={state.xp} color="#2563EB" delay={0.05} />
+          <StatCard icon={Zap} label={t('totalXP')} value={state.xp} color={COBALT} delay={0.05} />
           <StatCard icon={Flame} label={t('dayStreak')} value={state.streak} color="#F59E0B" delay={0.1} />
           <StatCard icon={CheckCircle2} label={t('lessonsDone')} value={state.completedLessons.length} color="#10B981" delay={0.15} />
           <StatCard icon={Award} label={t('badgesEarned')} value={state.earnedBadges.length} color="#E04D2A" delay={0.2} />
@@ -1439,17 +1443,17 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.4 }}
             className="mb-6 rounded-2xl px-5 py-4 flex items-center justify-between gap-4 flex-wrap"
-            style={{ background: '#EFF6FF', border: '1px solid #BFDBFE' }}
+            style={{ background: 'rgba(36,64,216,0.06)', border: `1px solid rgba(36,64,216,0.20)` }}
           >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#0284C7' }}>
                 <RotateCcw size={14} color="#FFFFFF" />
               </div>
               <div>
-                <p className="text-sm font-bold" style={{ color: '#1E40AF', fontFamily: 'var(--font-sans)' }}>
+                <p className="text-sm" style={{ color: COBALT_TX, fontFamily: SERIF, fontWeight: 600 }}>
                   {t('cardsReady', { count: srDueCount, plural: srDueCount !== 1 ? 's' : '' })}
                 </p>
-                <p className="text-xs" style={{ color: '#0284C7', fontFamily: 'var(--font-sans)' }}>
+                <p className="text-xs" style={{ color: '#0284C7', fontFamily: SANS }}>
                   {t('reinforceDesc', { min: Math.ceil(srDueCount * 0.5) })}
                 </p>
               </div>
@@ -1457,7 +1461,7 @@ export default function DashboardPage() {
             <Link
               href="/review"
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:opacity-90 flex-shrink-0"
-              style={{ background: '#0284C7', color: '#FFFFFF', textDecoration: 'none', fontFamily: 'var(--font-sans)' }}
+              style={{ background: '#0284C7', color: '#FFFFFF', textDecoration: 'none', fontFamily: SANS }}
             >
               {t('startReview')} <ArrowRight size={14} />
             </Link>
@@ -1473,20 +1477,20 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5, ease: easing }}
             className="mb-6 rounded-2xl overflow-hidden"
-            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="px-5 py-3.5 flex items-center justify-between"
-              style={{ background: '#EFF6FF', borderBottom: '1px solid #F1F5F9' }}>
+              style={{ background: 'rgba(36,64,216,0.06)', borderBottom: `1px solid ${RULE}` }}>
               <div className="flex items-center gap-2">
                 <div className="w-5 h-5 rounded-md flex items-center justify-center"
-                  style={{ background: '#DBEAFE' }}>
-                  <Users size={11} style={{ color: '#2563EB' }} />
+                  style={{ background: 'rgba(36,64,216,0.12)' }}>
+                  <Users size={11} style={{ color: COBALT }} />
                 </div>
-                <span className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                <span className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
                   {memberTeamName}
                 </span>
                 {myTeamRank && (
                   <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
-                    style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                    style={{ background: 'rgba(36,64,216,0.12)', color: COBALT, fontFamily: SANS }}>
                     {t('onLeaderboard', { rank: myTeamRank })}
                   </span>
                 )}
@@ -1494,7 +1498,7 @@ export default function DashboardPage() {
               {teamHref && (
                 <Link href={teamHref}
                   className="text-xs font-semibold flex items-center gap-1 hover:underline"
-                  style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                  style={{ color: COBALT, fontFamily: SANS }}>
                   {t('viewTeam')} <ChevronRight size={11} />
                 </Link>
               )}
@@ -1504,13 +1508,13 @@ export default function DashboardPage() {
                 {/* Assigned tracks */}
                 {assignedTracks.length > 0 && (
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest mb-3"
-                      style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    <p className="text-[10px] uppercase tracking-[0.16em] mb-3"
+                      style={{ color: INK_FAINT, fontFamily: MONO }}>
                       {t('yourAssignedTracks')}
                     </p>
                     <div className="space-y-2">
                       {assignedTracks.map(trackId => {
-                        const color = TRACK_COLORS[trackId] ?? '#2563EB'
+                        const color = TRACK_COLORS[trackId] ?? COBALT
                         const icon = TRACK_ICONS[trackId] ?? '🎓'
                         const trackData = getAllTracks().find(t => t.id === trackId)
                         const total = trackData?.modules.reduce((s, m) => s + m.lessons.length, 0) ?? 1
@@ -1521,15 +1525,15 @@ export default function DashboardPage() {
                             <div className="flex items-center justify-between mb-1">
                               <div className="flex items-center gap-2">
                                 <span className="text-sm">{icon}</span>
-                                <span className="text-sm font-medium" style={{ color: '#334155', fontFamily: 'var(--font-sans)' }}>
+                                <span className="text-sm font-medium" style={{ color: INK_SOFT, fontFamily: SANS }}>
                                   {trackData?.title ?? trackId}
                                 </span>
                               </div>
-                              <span className="text-xs font-semibold" style={{ color, fontFamily: 'var(--font-sans)' }}>
+                              <span className="text-xs font-semibold" style={{ color, fontFamily: SANS }}>
                                 {done}/{total}
                               </span>
                             </div>
-                            <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+                            <div className="h-1.5 rounded-full" style={{ background: RULE }}>
                               <div className="h-full rounded-full transition-all"
                                 style={{ width: `${pct}%`, background: color }} />
                             </div>
@@ -1542,8 +1546,8 @@ export default function DashboardPage() {
                 {/* Mini leaderboard */}
                 {teamLeaderboard.length > 0 && (
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-widest mb-3"
-                      style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    <p className="text-[10px] uppercase tracking-[0.16em] mb-3"
+                      style={{ color: INK_FAINT, fontFamily: MONO }}>
                       {t('teamLeaderboard')}
                     </p>
                     <div className="space-y-2">
@@ -1554,23 +1558,23 @@ export default function DashboardPage() {
                           <div key={m.id}
                             className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl"
                             style={{
-                              background: isMe ? '#DBEAFE' : 'transparent',
-                              border: isMe ? '1px solid #BFDBFE' : '1px solid transparent',
+                              background: isMe ? 'rgba(36,64,216,0.12)' : 'transparent',
+                              border: isMe ? `1px solid rgba(36,64,216,0.20)` : '1px solid transparent',
                             }}>
                             <span className="text-xs font-bold w-4 text-center"
-                              style={{ color: i < 3 ? ['#F59E0B', '#94A3B8', '#CD7F32'][i] : '#CBD5E1', fontFamily: 'var(--font-sans)' }}>
+                              style={{ color: i < 3 ? ['#F59E0B', INK_FAINT, '#CD7F32'][i] : INK_FAINT, fontFamily: SANS }}>
                               {i + 1}
                             </span>
                             <div className="w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0"
-                              style={{ background: ['#2563EB','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][m.email.charCodeAt(0) % 10] }}>
+                              style={{ background: [COBALT,'#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][m.email.charCodeAt(0) % 10] }}>
                               {initials}
                             </div>
                             <span className="text-xs flex-1 truncate font-medium"
-                              style={{ color: isMe ? '#1E3A8A' : '#475569', fontFamily: 'var(--font-sans)' }}>
+                              style={{ color: isMe ? COBALT_TX : INK_SOFT, fontFamily: SANS }}>
                               {isMe ? t('you') : (m.display_name ?? m.email.split('@')[0])}
                             </span>
                             <span className="text-xs font-bold flex-shrink-0"
-                              style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                              style={{ color: COBALT, fontFamily: SANS }}>
                               {(m.xp ?? 0).toLocaleString()} XP
                             </span>
                           </div>
@@ -1624,11 +1628,11 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.38, duration: 0.55, ease: easing }}
                 className="rounded-2xl p-5"
-                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
                 <div className="flex items-center gap-2 mb-3">
                   <Award size={14} style={{ color: '#F59E0B' }} />
-                  <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
                     {t('yourCertificates')}
                   </p>
                   <span className="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: '#FEF3C7', color: '#92400E' }}>
@@ -1646,10 +1650,10 @@ export default function DashboardPage() {
                         className="flex items-center gap-3 p-2.5 rounded-xl transition-colors hover:bg-slate-50 group"
                       >
                         <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: t.color }} />
-                        <span className="text-sm font-medium flex-1 truncate" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                        <span className="text-sm font-medium flex-1 truncate" style={{ color: INK_SOFT, fontFamily: SANS }}>
                           {t.title}
                         </span>
-                        <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#CBD5E1' }} />
+                        <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: INK_FAINT }} />
                       </Link>
                     )
                   })}
@@ -1664,22 +1668,22 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.55, ease: easing }}
                 className="rounded-2xl overflow-hidden"
-                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
-                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }} />
+                <div className="h-1 w-full" style={{ background: COBALT }} />
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-1">
-                    <Crown size={14} style={{ color: '#2563EB' }} />
-                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    <Crown size={14} style={{ color: COBALT }} />
+                    <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
                       {isTrialing ? t('proTrial') : t('proMember')}
                     </p>
                     <span className="ml-auto px-2 py-0.5 rounded-full text-xs font-bold"
-                      style={{ background: isTrialing ? '#FEF3C7' : '#DBEAFE', color: isTrialing ? '#D97706' : '#2563EB' }}>
+                      style={{ background: isTrialing ? '#FEF3C7' : 'rgba(36,64,216,0.12)', color: isTrialing ? '#D97706' : COBALT }}>
                       {isTrialing ? 'Trial' : 'Active'}
                     </span>
                   </div>
                   {subscription?.currentPeriodEnd && (
-                    <p className="text-xs mb-3" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    <p className="text-xs mb-3" style={{ color: INK_FAINT, fontFamily: SANS }}>
                       {isTrialing ? t('trialEnds') : t('renews')} {new Date(subscription.currentPeriodEnd).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </p>
                   )}
@@ -1691,7 +1695,7 @@ export default function DashboardPage() {
                         if (url) window.location.href = url
                       }}
                       className="flex items-center gap-2 text-xs font-semibold transition-colors hover:opacity-80"
-                      style={{ color: '#2563EB', fontFamily: 'var(--font-sans)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                      style={{ color: COBALT, fontFamily: SANS, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                     >
                       <CreditCard size={12} /> {t('manageSub')}
                     </button>
@@ -1704,17 +1708,17 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.55, ease: easing }}
                 className="rounded-2xl overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, #2563EB08, #22D3EE06)', border: '1px solid #BFDBFE', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                style={{ background: 'rgba(36,64,216,0.05)', border: `1px solid rgba(36,64,216,0.20)`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <Crown size={14} style={{ color: '#2563EB' }} />
-                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    <Crown size={14} style={{ color: COBALT }} />
+                    <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
                       {t('upgradeToPro')}
                     </p>
                   </div>
-                  <p className="text-xs mb-4 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
-                    {t('upgradeDesc')} <strong style={{ color: '#2563EB' }}>{t('upgradeDays')}</strong>
+                  <p className="text-xs mb-4 leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
+                    {t('upgradeDesc')} <strong style={{ color: COBALT }}>{t('upgradeDays')}</strong>
                   </p>
                   <button
                     onClick={async () => {
@@ -1723,7 +1727,7 @@ export default function DashboardPage() {
                       if (url) window.location.href = url
                     }}
                     className="w-full py-2.5 rounded-xl text-xs font-bold text-white transition-all hover:opacity-90"
-                    style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', fontFamily: 'var(--font-sans)', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(37,99,235,0.25)' }}
+                    style={{ background: COBALT, fontFamily: SANS, border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(36,64,216,0.25)' }}
                   >
                     {t('startFreeTrial')}
                   </button>
@@ -1737,15 +1741,15 @@ export default function DashboardPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.55, ease: easing }}
               className="rounded-2xl p-6"
-              style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+              style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
             >
-              <p className="text-sm font-bold mb-4" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+              <p className="text-sm mb-4" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
                 {t('quickActions')}
               </p>
               <div className="space-y-1">
                 {[
                   { label: t('browseAllTracks'), href: '/tracks', icon: BookOpen, color: '#22D3EE' },
-                  { label: t('retakeAssessment'), href: '/assessment', icon: Target, color: '#2563EB' },
+                  { label: t('retakeAssessment'), href: '/assessment', icon: Target, color: COBALT },
                   { label: t('viewYourPath'), href: '/assessment/results', icon: TrendingUp, color: '#10B981' },
                   ...(teamHref ? [{ label: t('teamDashboard'), href: teamHref, icon: Users, color: '#E04D2A' }] : []),
                 ].map(item => (
@@ -1758,10 +1762,10 @@ export default function DashboardPage() {
                       style={{ background: `${item.color}10` }}>
                       <item.icon size={13} style={{ color: item.color }} />
                     </div>
-                    <span className="text-sm font-medium flex-1" style={{ color: '#475569', fontFamily: 'var(--font-sans)' }}>
+                    <span className="text-sm font-medium flex-1" style={{ color: INK_SOFT, fontFamily: SANS }}>
                       {item.label}
                     </span>
-                    <ChevronRight size={13} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#CBD5E1' }} />
+                    <ChevronRight size={13} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: INK_FAINT }} />
                   </Link>
                 ))}
               </div>
@@ -1774,24 +1778,24 @@ export default function DashboardPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45, duration: 0.55, ease: easing }}
                 className="rounded-2xl overflow-hidden"
-                style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
               >
-                <div className="h-1 w-full" style={{ background: 'linear-gradient(90deg, #2563EB, #E04D2A)' }} />
+                <div className="h-1 w-full" style={{ background: COBALT }} />
                 <div className="p-5">
                   <div className="flex items-center gap-2 mb-3">
-                    <Share2 size={14} style={{ color: '#2563EB' }} />
-                    <p className="text-sm font-bold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                    <Share2 size={14} style={{ color: COBALT }} />
+                    <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
                       {t('referEarnXP')}
                     </p>
                   </div>
-                  <p className="text-xs mb-4 leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                  <p className="text-xs mb-4 leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
                     {t('referDesc', { xp: '+100' })}
                   </p>
 
                   {/* Link copy */}
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex-1 px-3 py-2 rounded-lg text-xs truncate"
-                      style={{ background: '#EFF6FF', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'monospace' }}>
+                      style={{ background: 'rgba(36,64,216,0.06)', border: `1px solid ${RULE}`, color: INK_SOFT, fontFamily: 'monospace' }}>
                       opuslearn.ai/join?ref={referralCode}
                     </div>
                     <button
@@ -1802,10 +1806,10 @@ export default function DashboardPage() {
                       }}
                       className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all"
                       style={{
-                        background: copied ? '#ECFDF5' : '#DBEAFE',
-                        color: copied ? '#059669' : '#2563EB',
-                        border: `1px solid ${copied ? '#A7F3D0' : '#BFDBFE'}`,
-                        fontFamily: 'var(--font-sans)',
+                        background: copied ? '#ECFDF5' : 'rgba(36,64,216,0.12)',
+                        color: copied ? '#059669' : COBALT,
+                        border: `1px solid ${copied ? '#A7F3D0' : 'rgba(36,64,216,0.20)'}`,
+                        fontFamily: SANS,
                       }}
                     >
                       {copied ? <><CheckIcon size={11} /> {t('copied')}</> : <><Copy size={11} /> {t('copy')}</>}
@@ -1820,9 +1824,9 @@ export default function DashboardPage() {
                         { label: t('signups'), value: referralStats.signups },
                         { label: t('xpEarned'), value: referralStats.reward_xp },
                       ].map(s => (
-                        <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: '#EFF6FF' }}>
-                          <p className="text-sm font-black" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>{s.value}</p>
-                          <p className="text-[10px]" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>{s.label}</p>
+                        <div key={s.label} className="text-center p-2 rounded-lg" style={{ background: 'rgba(36,64,216,0.06)' }}>
+                          <p className="text-sm font-black" style={{ color: COBALT, fontFamily: SANS }}>{s.value}</p>
+                          <p className="text-[10px]" style={{ color: INK_FAINT, fontFamily: SANS }}>{s.label}</p>
                         </div>
                       ))}
                     </div>
@@ -1834,7 +1838,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-      <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor="#2563EB" />
+      <ShareCard open={shareOpen} onClose={() => setShareOpen(false)} trackColor={COBALT} />
       {searchOpen && <GlobalSearch open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <PushNotificationPrompt />
     </div>

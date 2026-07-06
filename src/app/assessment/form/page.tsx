@@ -17,8 +17,12 @@ import { buildAssessmentResult, deriveExperience } from '@/lib/assessment/engine
 import { useAuth } from '@/context/AuthContext'
 import { saveAssessment, loadLatestAssessment } from '@/lib/supabase/db'
 import { useTranslations } from 'next-intl'
+import {
+  PAPER, PAPER_2, PANEL, INK, INK_SOFT, INK_FAINT,
+  COBALT, COBALT_TX, COBALT_GLOW, RULE, SERIF, MONO, SANS,
+} from '@/components/editorial/theme'
 
-const F = 'var(--font-sans)'
+const F = SANS
 
 // ─── Step types ───────────────────────────────────────────────────────────────
 
@@ -1578,10 +1582,10 @@ export default function AssessmentPage() {
   const progressPct = Math.round((stepIdx / contentStepCount) * 100)
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#EFF6FF', fontFamily: F }}>
+    <div className="min-h-screen flex flex-col" style={{ background: PAPER, fontFamily: F }}>
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-4 flex-shrink-0"
-        style={{ background: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}>
+        style={{ background: PAPER_2, borderBottom: `1px solid ${RULE}` }}>
         <Link href="/" className="flex items-center gap-2">
           <Logo size="md" />
         </Link>
@@ -1589,13 +1593,13 @@ export default function AssessmentPage() {
         <div className="flex items-center gap-4">
           {mounted && currentStep !== 'processing' && (
             <>
-              <span className="text-xs hidden sm:block" style={{ color: '#94A3B8' }}>
+              <span className="text-[11px] uppercase tracking-[0.12em] hidden sm:block" style={{ color: INK_FAINT, fontFamily: MONO }}>
                 {t('stepOf', { current: stepIdx + 1, total: contentStepCount })}
               </span>
-              <div className="w-32 h-1.5 rounded-full overflow-hidden" style={{ background: '#E2E8F0' }}>
+              <div className="w-32 h-1.5 rounded-full overflow-hidden" style={{ background: PANEL }}>
                 <motion.div
                   className="h-full rounded-full"
-                  style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }}
+                  style={{ background: COBALT }}
                   animate={{ width: `${progressPct}%` }}
                   transition={{ duration: 0.4 }}
                 />
@@ -1605,10 +1609,10 @@ export default function AssessmentPage() {
           {user && (
             <button
               onClick={() => signOut()}
-              className="text-xs font-medium transition-colors"
-              style={{ color: '#94A3B8' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#64748B' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#94A3B8' }}
+              className="text-[11px] uppercase tracking-[0.12em] font-medium transition-colors"
+              style={{ color: INK_FAINT, fontFamily: MONO }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = INK_SOFT }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = INK_FAINT }}
             >
               Sign out
             </button>
@@ -1625,28 +1629,28 @@ export default function AssessmentPage() {
             {currentStep === 'welcome' && (
               <motion.div key="welcome" custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
                 <div className="text-center mb-10">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 text-xs font-semibold"
-                    style={{ background: '#DBEAFE', color: '#2563EB' }}>
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-[10px] uppercase tracking-[0.16em]"
+                    style={{ background: 'rgba(36,64,216,0.08)', color: COBALT_TX, border: `1px solid rgba(36,64,216,0.20)`, borderRadius: 4, fontFamily: MONO }}>
                     <Zap size={11} /> {t('fiveMinutes')}
                   </div>
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4" style={{ color: '#0F172A' }}>
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl mb-4" style={{ color: INK, fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.025em', lineHeight: 1.05 }}>
                     Find your perfect<br />
-                    <span style={{ background: 'linear-gradient(90deg, #2563EB, #22D3EE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                    <span style={{ fontStyle: 'italic', color: COBALT_TX }}>
                       AI learning path
                     </span>
                   </h1>
-                  <p className="text-lg" style={{ color: '#64748B' }}>
+                  <p className="text-lg" style={{ color: INK_SOFT, fontFamily: SANS }}>
                     {t('findPerfectSub')}
                   </p>
                   <Link href="/assessment/chat"
-                    className="inline-flex items-center gap-1.5 mt-5 px-4 py-2 rounded-full text-sm font-semibold transition-all hover:scale-[1.03]"
-                    style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE' }}>
+                    className="inline-flex items-center gap-1.5 mt-5 px-4 py-2 text-sm font-semibold transition-opacity hover:opacity-80"
+                    style={{ background: 'rgba(36,64,216,0.06)', color: COBALT_TX, border: `1px solid rgba(36,64,216,0.20)`, borderRadius: 3, fontFamily: SANS }}>
                     <Sparkles size={13} /> Build your path in a conversation instead →
                   </Link>
                 </div>
 
                 <div className="mb-8">
-                  <label className="block text-sm font-semibold mb-2" style={{ color: '#334155' }}>{t('yourName')}</label>
+                  <label className="block text-[11px] uppercase tracking-[0.14em] mb-2" style={{ color: INK_FAINT, fontFamily: MONO }}>{t('yourName')}</label>
                   <input
                     type="text"
                     placeholder={t('yourFirstName')}
@@ -1654,10 +1658,10 @@ export default function AssessmentPage() {
                     onChange={e => setAnswers(a => ({ ...a, name: e.target.value }))}
                     onKeyDown={e => e.key === 'Enter' && canProceed() && goNext()}
                     autoFocus
-                    className="w-full px-5 py-4 rounded-xl text-base outline-none transition-all"
-                    style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', color: '#0F172A' }}
-                    onFocus={e => { e.currentTarget.style.borderColor = '#2563EB' }}
-                    onBlur={e => { e.currentTarget.style.borderColor = '#CBD5E1' }}
+                    className="w-full px-5 py-4 text-base outline-none transition-all"
+                    style={{ background: PAPER_2, border: `1px solid ${RULE}`, borderRadius: 3, color: INK, fontFamily: SANS }}
+                    onFocus={e => { e.currentTarget.style.borderColor = COBALT }}
+                    onBlur={e => { e.currentTarget.style.borderColor = RULE }}
                   />
                 </div>
 
@@ -1674,11 +1678,11 @@ export default function AssessmentPage() {
                 />
                 {answers.roles.length > 0 && (
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: '#DBEAFE', color: '#2563EB' }}>
+                    <span className="text-[10px] uppercase tracking-[0.12em] px-2.5 py-1" style={{ background: 'rgba(36,64,216,0.10)', color: COBALT_TX, borderRadius: 4, fontFamily: MONO }}>
                       {answers.roles.length} selected
                     </span>
                     {answers.roles.length >= 3 && (
-                      <span className="text-xs" style={{ color: '#94A3B8' }}>Maximum reached</span>
+                      <span className="text-[10px] uppercase tracking-[0.12em]" style={{ color: INK_FAINT, fontFamily: MONO }}>Maximum reached</span>
                     )}
                   </div>
                 )}
@@ -1697,17 +1701,18 @@ export default function AssessmentPage() {
                           if (a.roles.length >= 3) return a
                           return { ...a, roles: [...a.roles, role.id], subRole: '', goals: [], challenges: [] }
                         })}
-                        className="p-4 rounded-2xl text-left transition-all hover:scale-[1.02]"
+                        className="p-4 text-left transition-all hover:scale-[1.02]"
                         style={{
-                          background: sel ? `${role.color}08` : '#FFFFFF',
-                          border: `1px solid ${sel ? role.color : '#E2E8F0'}`,
+                          background: sel ? `${role.color}08` : PAPER_2,
+                          border: `1px solid ${sel ? role.color : RULE}`,
+                          borderRadius: 8,
                           opacity: !sel && atMax ? 0.45 : 1,
                         }}>
                         <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: `${role.color}12` }}>
                           <Icon size={17} color={role.color} />
                         </div>
-                        <div className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>{role.label}</div>
-                        <div className="text-xs leading-snug" style={{ color: '#94A3B8' }}>{role.detail}</div>
+                        <div className="text-sm font-semibold mb-1" style={{ color: INK, fontFamily: SANS }}>{role.label}</div>
+                        <div className="text-xs leading-snug" style={{ color: INK_FAINT, fontFamily: SANS }}>{role.detail}</div>
                         {sel && <div className="mt-2 flex justify-end"><div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: role.color }}><Check size={11} className="text-white" /></div></div>}
                       </button>
                     )
@@ -1730,14 +1735,14 @@ export default function AssessmentPage() {
                     return (
                       <button key={sr.id}
                         onClick={() => setAnswers(a => ({ ...a, subRole: sr.id }))}
-                        className="p-4 rounded-2xl text-left transition-all hover:scale-[1.01]"
-                        style={{ background: sel ? '#DBEAFE' : '#FFFFFF', border: `1px solid ${sel ? '#2563EB' : '#E2E8F0'}` }}>
+                        className="p-4 text-left transition-all hover:scale-[1.01]"
+                        style={{ background: sel ? 'rgba(36,64,216,0.08)' : PAPER_2, border: `1px solid ${sel ? COBALT : RULE}`, borderRadius: 8 }}>
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="text-sm font-semibold mb-0.5" style={{ color: '#0F172A' }}>{sr.label}</div>
-                            <div className="text-xs" style={{ color: '#94A3B8' }}>{sr.detail}</div>
+                            <div className="text-sm font-semibold mb-0.5" style={{ color: INK, fontFamily: SANS }}>{sr.label}</div>
+                            <div className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>{sr.detail}</div>
                           </div>
-                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ml-3" style={{ background: '#2563EB' }}><Check size={11} className="text-white" /></div>}
+                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ml-3" style={{ background: COBALT }}><Check size={11} className="text-white" /></div>}
                         </div>
                       </button>
                     )
@@ -1755,15 +1760,15 @@ export default function AssessmentPage() {
                   sub="We use this to tailor examples and use cases to your world."
                 />
                 <div className="mb-6">
-                  <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>{t('industry')}</p>
+                  <p className="text-[11px] font-semibold mb-3 uppercase tracking-[0.14em]" style={{ color: INK_FAINT, fontFamily: MONO }}>{t('industry')}</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {INDUSTRIES.map(ind => {
                       const sel = answers.industry === ind.id
                       return (
                         <button key={ind.id}
                           onClick={() => setAnswers(a => ({ ...a, industry: ind.id }))}
-                          className="px-3 py-2.5 rounded-xl text-sm text-left transition-all"
-                          style={{ background: sel ? '#DBEAFE' : '#FFFFFF', border: `1px solid ${sel ? '#2563EB' : '#E2E8F0'}`, color: sel ? '#2563EB' : '#475569', fontWeight: sel ? 600 : 400 }}>
+                          className="px-3 py-2.5 text-sm text-left transition-all"
+                          style={{ background: sel ? 'rgba(36,64,216,0.08)' : PAPER_2, border: `1px solid ${sel ? COBALT : RULE}`, borderRadius: 6, color: sel ? COBALT_TX : INK_SOFT, fontWeight: sel ? 600 : 400, fontFamily: SANS }}>
                           {ind.label}
                         </button>
                       )
@@ -1771,17 +1776,17 @@ export default function AssessmentPage() {
                   </div>
                 </div>
                 <div className="mb-8">
-                  <p className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: '#94A3B8' }}>{t('companySize')}</p>
+                  <p className="text-[11px] font-semibold mb-3 uppercase tracking-[0.14em]" style={{ color: INK_FAINT, fontFamily: MONO }}>{t('companySize')}</p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {COMPANY_SIZES.map(cs => {
                       const sel = answers.companySize === cs.id
                       return (
                         <button key={cs.id}
                           onClick={() => setAnswers(a => ({ ...a, companySize: cs.id }))}
-                          className="p-3 rounded-xl text-center transition-all"
-                          style={{ background: sel ? '#DBEAFE' : '#FFFFFF', border: `1px solid ${sel ? '#2563EB' : '#E2E8F0'}` }}>
-                          <div className="text-sm font-semibold" style={{ color: sel ? '#2563EB' : '#0F172A' }}>{cs.label}</div>
-                          <div className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>{cs.detail}</div>
+                          className="p-3 text-center transition-all"
+                          style={{ background: sel ? 'rgba(36,64,216,0.08)' : PAPER_2, border: `1px solid ${sel ? COBALT : RULE}`, borderRadius: 6 }}>
+                          <div className="text-sm font-semibold" style={{ color: sel ? COBALT_TX : INK, fontFamily: SANS }}>{cs.label}</div>
+                          <div className="text-xs mt-0.5" style={{ color: INK_FAINT, fontFamily: SANS }}>{cs.detail}</div>
                         </button>
                       )
                     })}
@@ -1814,14 +1819,14 @@ export default function AssessmentPage() {
                             }
                           })
                         }}
-                        className={`p-3 rounded-xl text-left transition-all ${isNone ? 'col-span-2 sm:col-span-3' : ''}`}
-                        style={{ background: sel ? `${tool.color}10` : '#FFFFFF', border: `1.5px solid ${sel ? tool.color : '#E2E8F0'}` }}>
+                        className={`p-3 text-left transition-all ${isNone ? 'col-span-2 sm:col-span-3' : ''}`}
+                        style={{ background: sel ? `${tool.color}10` : PAPER_2, border: `1.5px solid ${sel ? tool.color : RULE}`, borderRadius: 6 }}>
                         <div className="flex items-center gap-2">
                           <div className="w-5 h-5 rounded flex items-center justify-center flex-shrink-0"
-                            style={{ background: sel ? tool.color : '#F1F5F9' }}>
+                            style={{ background: sel ? tool.color : PANEL }}>
                             {sel ? <Check size={11} className="text-white" /> : null}
                           </div>
-                          <span className="text-sm font-medium" style={{ color: sel ? '#0F172A' : '#475569' }}>{tool.label}</span>
+                          <span className="text-sm font-medium" style={{ color: sel ? INK : INK_SOFT, fontFamily: SANS }}>{tool.label}</span>
                         </div>
                       </button>
                     )
@@ -1863,13 +1868,13 @@ export default function AssessmentPage() {
                             ? a.challenges.filter(c => c !== ch.id)
                             : [...a.challenges, ch.id],
                         }))}
-                        className="w-full flex items-center gap-4 p-5 rounded-2xl text-left transition-all hover:scale-[1.01]"
-                        style={{ background: sel ? '#DBEAFE' : '#FFFFFF', border: `1px solid ${sel ? '#2563EB' : '#E2E8F0'}` }}>
+                        className="w-full flex items-center gap-4 p-5 text-left transition-all hover:scale-[1.01]"
+                        style={{ background: sel ? 'rgba(36,64,216,0.08)' : PAPER_2, border: `1px solid ${sel ? COBALT : RULE}`, borderRadius: 8 }}>
                         <div className="flex-1">
-                          <div className="text-base font-semibold" style={{ color: '#0F172A' }}>{ch.label}</div>
-                          <div className="text-sm mt-0.5" style={{ color: '#64748B' }}>{ch.detail}</div>
+                          <div className="text-base font-semibold" style={{ color: INK, fontFamily: SANS }}>{ch.label}</div>
+                          <div className="text-sm mt-0.5" style={{ color: INK_SOFT, fontFamily: SANS }}>{ch.detail}</div>
                         </div>
-                        {sel && <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#2563EB' }}><Check size={13} className="text-white" /></div>}
+                        {sel && <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: COBALT }}><Check size={13} className="text-white" /></div>}
                       </button>
                     )
                   })}
@@ -1897,16 +1902,16 @@ export default function AssessmentPage() {
                           ...a,
                           goals: sel ? a.goals.filter(g => g !== goal.id) : [...a.goals, goal.id],
                         }))}
-                        className="p-4 rounded-2xl text-left transition-all hover:scale-[1.02] disabled:opacity-40"
-                        style={{ background: sel ? '#DBEAFE' : '#FFFFFF', border: `1px solid ${sel ? '#2563EB' : '#E2E8F0'}` }}>
+                        className="p-4 text-left transition-all hover:scale-[1.02] disabled:opacity-40"
+                        style={{ background: sel ? 'rgba(36,64,216,0.08)' : PAPER_2, border: `1px solid ${sel ? COBALT : RULE}`, borderRadius: 8 }}>
                         <div className="flex items-start justify-between mb-3">
-                          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: sel ? '#BFDBFE' : '#EFF6FF' }}>
-                            <Icon size={16} color={sel ? '#2563EB' : '#94A3B8'} />
+                          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: sel ? 'rgba(36,64,216,0.12)' : PANEL }}>
+                            <Icon size={16} color={sel ? COBALT : INK_FAINT} />
                           </div>
-                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: '#2563EB' }}><Check size={11} className="text-white" /></div>}
+                          {sel && <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: COBALT }}><Check size={11} className="text-white" /></div>}
                         </div>
-                        <div className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>{goal.label}</div>
-                        <div className="text-xs" style={{ color: '#64748B' }}>{goal.detail}</div>
+                        <div className="text-sm font-semibold mb-1" style={{ color: INK, fontFamily: SANS }}>{goal.label}</div>
+                        <div className="text-xs" style={{ color: INK_SOFT, fontFamily: SANS }}>{goal.detail}</div>
                       </button>
                     )
                   })}
@@ -1928,16 +1933,16 @@ export default function AssessmentPage() {
                     return (
                       <button key={opt.id}
                         onClick={() => setAnswers(a => ({ ...a, timePerWeek: opt.id }))}
-                        className="w-full flex items-center gap-4 p-5 rounded-2xl text-left transition-all hover:scale-[1.01]"
-                        style={{ background: sel ? '#FFF7ED' : '#FFFFFF', border: `1px solid ${sel ? '#F97316' : '#E2E8F0'}` }}>
+                        className="w-full flex items-center gap-4 p-5 text-left transition-all hover:scale-[1.01]"
+                        style={{ background: sel ? 'rgba(36,64,216,0.08)' : PAPER_2, border: `1px solid ${sel ? COBALT : RULE}`, borderRadius: 8 }}>
                         <div className="flex-1">
-                          <div className="text-base font-semibold" style={{ color: '#0F172A' }}>{opt.label}</div>
-                          <div className="text-sm mt-0.5" style={{ color: '#64748B' }}>{opt.detail}</div>
+                          <div className="text-base font-semibold" style={{ color: INK, fontFamily: SANS }}>{opt.label}</div>
+                          <div className="text-sm mt-0.5" style={{ color: INK_SOFT, fontFamily: SANS }}>{opt.detail}</div>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          <div className="text-xs font-bold" style={{ color: sel ? '#F97316' : '#CBD5E1' }}>{opt.weeks}</div>
+                          <div className="text-[11px] uppercase tracking-[0.1em] font-bold" style={{ color: sel ? COBALT_TX : INK_FAINT, fontFamily: MONO }}>{opt.weeks}</div>
                         </div>
-                        {sel && <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#F97316' }}><Check size={13} className="text-white" /></div>}
+                        {sel && <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: COBALT }}><Check size={13} className="text-white" /></div>}
                       </button>
                     )
                   })}
@@ -1950,21 +1955,21 @@ export default function AssessmentPage() {
             {currentStep === 'processing' && (
               <motion.div key="processing" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
                 <div className="relative w-24 h-24 mx-auto mb-10">
-                  <motion.div className="absolute inset-0 rounded-full" style={{ border: '2px solid transparent', borderTopColor: '#2563EB' }} animate={{ rotate: 360 }} transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }} />
-                  <motion.div className="absolute inset-3 rounded-full" style={{ border: '2px solid transparent', borderTopColor: '#22D3EE' }} animate={{ rotate: -360 }} transition={{ duration: 1.8, repeat: Infinity, ease: 'linear' }} />
-                  <div className="absolute inset-7 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #DBEAFE, #ECFEFF)' }}>
-                    <Zap size={18} color="#2563EB" />
+                  <motion.div className="absolute inset-0 rounded-full" style={{ border: '2px solid transparent', borderTopColor: COBALT }} animate={{ rotate: 360 }} transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }} />
+                  <motion.div className="absolute inset-3 rounded-full" style={{ border: '2px solid transparent', borderTopColor: COBALT_GLOW }} animate={{ rotate: -360 }} transition={{ duration: 1.8, repeat: Infinity, ease: 'linear' }} />
+                  <div className="absolute inset-7 rounded-full flex items-center justify-center" style={{ background: 'rgba(36,64,216,0.10)' }}>
+                    <Zap size={18} color={COBALT} />
                   </div>
                 </div>
-                <h2 className="text-2xl font-black mb-6" style={{ color: '#0F172A' }}>{t('buildingPath')}</h2>
+                <h2 className="text-2xl mb-6" style={{ color: INK, fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.01em' }}>{t('buildingPath')}</h2>
                 <div className="space-y-2.5 max-w-xs mx-auto">
                   {PROCESSING_STEPS.map((step, i) => (
                     <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: processingStep > i ? 1 : 0.3, x: 0 }}
-                      className="flex items-center gap-2.5 text-sm"
-                      style={{ color: processingStep > i ? '#334155' : '#CBD5E1' }}>
+                      className="flex items-center gap-2.5 text-sm text-left"
+                      style={{ color: processingStep > i ? INK_SOFT : INK_FAINT, fontFamily: SANS }}>
                       {processingStep > i
-                        ? <CheckCircle2 size={14} color="#22D3EE" />
-                        : <div className="w-3.5 h-3.5 rounded-full border border-slate-200" />}
+                        ? <CheckCircle2 size={14} color={COBALT} />
+                        : <div className="w-3.5 h-3.5 rounded-full" style={{ border: `1px solid ${RULE}` }} />}
                       {step}
                     </motion.div>
                   ))}
@@ -1984,8 +1989,8 @@ export default function AssessmentPage() {
 function StepHeader({ question, sub }: { question: string; sub: string }) {
   return (
     <div className="mb-7">
-      <h2 className="text-xl sm:text-2xl lg:text-3xl font-black mb-2.5" style={{ color: '#0F172A' }}>{question}</h2>
-      <p className="text-base" style={{ color: '#64748B' }}>{sub}</p>
+      <h2 className="text-xl sm:text-2xl lg:text-3xl mb-2.5" style={{ color: INK, fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.1 }}>{question}</h2>
+      <p className="text-base" style={{ color: INK_SOFT, fontFamily: SANS }}>{sub}</p>
     </div>
   )
 }
@@ -2049,26 +2054,26 @@ function SkillCheckStep({
   return (
     <motion.div key={`skillCheck-${qIdx}`} custom={direction} variants={slideIn} initial="hidden" animate="visible" exit="exit">
       <div className="mb-5 flex items-center justify-between">
-        <p className="text-sm font-medium" style={{ color: '#64748B' }}>{SKILL_INTROS[qIdx] ?? ''}</p>
-        <span className="text-xs font-semibold px-2.5 py-1 rounded-full" style={{ background: '#DBEAFE', color: '#2563EB' }}>
+        <p className="text-sm font-medium" style={{ color: INK_SOFT, fontFamily: SANS }}>{SKILL_INTROS[qIdx] ?? ''}</p>
+        <span className="text-[10px] uppercase tracking-[0.12em] px-2.5 py-1" style={{ background: 'rgba(36,64,216,0.10)', color: COBALT_TX, borderRadius: 4, fontFamily: MONO }}>
           Q {qIdx + 1} of {questions.length}
         </span>
       </div>
 
-      <div className="w-full rounded-full h-1.5 mb-6" style={{ background: '#E2E8F0' }}>
+      <div className="w-full rounded-full h-1.5 mb-6" style={{ background: PANEL }}>
         <div className="h-1.5 rounded-full transition-all duration-500"
-          style={{ width: `${((qIdx) / questions.length) * 100}%`, background: 'linear-gradient(90deg, #2563EB, #22D3EE)' }} />
+          style={{ width: `${((qIdx) / questions.length) * 100}%`, background: COBALT }} />
       </div>
 
-      <h2 className="text-xl sm:text-2xl font-black mb-6" style={{ color: '#0F172A' }}>{q.q}</h2>
+      <h2 className="text-xl sm:text-2xl mb-6" style={{ color: INK, fontFamily: SERIF, fontWeight: 500, letterSpacing: '-0.015em', lineHeight: 1.15 }}>{q.q}</h2>
 
       <div className="space-y-3 mb-6">
         {shuffled.map(opt => {
           const isSelected = selected === opt.id
           const isCorrect = opt.correct
-          let bg = '#FFFFFF'
-          let border = '#E2E8F0'
-          let textColor = '#0F172A'
+          let bg = PAPER_2
+          let border = RULE
+          let textColor = INK
           if (revealed && isSelected && isCorrect) { bg = '#DCFCE7'; border = '#16A34A'; textColor = '#15803D' }
           else if (revealed && isSelected && !isCorrect) { bg = '#FEE2E2'; border = '#DC2626'; textColor = '#DC2626' }
           else if (revealed && isCorrect) { bg = '#DCFCE7'; border = '#16A34A'; textColor = '#15803D' }
@@ -2076,17 +2081,17 @@ function SkillCheckStep({
             <button key={opt.id}
               onClick={() => handleSelect(opt.id)}
               disabled={revealed}
-              className="w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-all hover:scale-[1.01] disabled:cursor-default"
-              style={{ background: bg, border: `1.5px solid ${border}` }}>
+              className="w-full flex items-center gap-4 p-4 text-left transition-all hover:scale-[1.01] disabled:cursor-default"
+              style={{ background: bg, border: `1.5px solid ${border}`, borderRadius: 8 }}>
               <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: revealed && isCorrect ? '#16A34A' : revealed && isSelected ? '#DC2626' : '#F1F5F9' }}>
+                style={{ background: revealed && isCorrect ? '#16A34A' : revealed && isSelected ? '#DC2626' : PANEL }}>
                 {revealed && isCorrect
                   ? <Check size={12} className="text-white" />
                   : revealed && isSelected && !isCorrect
                     ? <X size={12} className="text-white" />
                     : null}
               </div>
-              <span className="text-sm font-medium" style={{ color: textColor }}>{opt.label}</span>
+              <span className="text-sm font-medium" style={{ color: textColor, fontFamily: SANS }}>{opt.label}</span>
             </button>
           )
         })}
@@ -2094,9 +2099,9 @@ function SkillCheckStep({
 
       {revealed && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-          className="p-4 rounded-2xl mb-6"
-          style={{ background: shuffled.find(o => o.id === selected)?.correct ? '#DCFCE7' : '#FEE2E2' }}>
-          <p className="text-sm" style={{ color: shuffled.find(o => o.id === selected)?.correct ? '#15803D' : '#991B1B' }}>
+          className="p-4 mb-6"
+          style={{ background: shuffled.find(o => o.id === selected)?.correct ? '#DCFCE7' : '#FEE2E2', borderRadius: 8 }}>
+          <p className="text-sm" style={{ color: shuffled.find(o => o.id === selected)?.correct ? '#15803D' : '#991B1B', fontFamily: SANS }}>
             {q.explanation}
           </p>
         </motion.div>
@@ -2104,14 +2109,14 @@ function SkillCheckStep({
 
       <div className="flex items-center gap-3">
         {qIdx === 0 && (
-          <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100" style={{ color: '#64748B' }}>
+          <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-colors hover:bg-black/[0.03]" style={{ color: INK_SOFT, borderRadius: 3, fontFamily: SANS }}>
             <ArrowLeft size={15} /> Back
           </button>
         )}
         {revealed && !isLast && (
           <button onClick={handleNext}
-            className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02]"
-            style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)', color: '#FFFFFF', boxShadow: '0 4px 14px rgba(37,99,235,0.25)' }}>
+            className="flex items-center gap-2 px-8 py-3 text-sm font-semibold transition-opacity hover:opacity-90"
+            style={{ background: COBALT, color: '#FFFFFF', borderRadius: 3, fontFamily: SANS }}>
             {NEXT_LABELS[qIdx] ?? 'Next →'} <ArrowRight size={15} />
           </button>
         )}
@@ -2140,16 +2145,17 @@ function NavButtons({
   return (
     <div className="flex items-center gap-3">
       {!isFirst && onBack && (
-        <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-medium transition-all hover:bg-slate-100" style={{ color: '#64748B' }}>
+        <button onClick={onBack} className="flex items-center gap-2 px-5 py-3 text-sm font-medium transition-colors hover:bg-black/[0.03]" style={{ color: INK_SOFT, borderRadius: 3, fontFamily: SANS }}>
           <ArrowLeft size={15} /> {t('back')}
         </button>
       )}
       <button onClick={onNext} disabled={!canProceed}
-        className="flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:scale-[1.02]"
+        className="flex items-center gap-2 px-8 py-3 text-sm font-semibold transition-opacity disabled:cursor-not-allowed hover:opacity-90"
         style={{
-          background: canProceed ? 'linear-gradient(135deg, #2563EB, #22D3EE)' : '#E2E8F0',
-          color: canProceed ? '#FFFFFF' : '#94A3B8',
-          boxShadow: canProceed ? '0 4px 14px rgba(37,99,235,0.25)' : 'none',
+          background: canProceed ? COBALT : PANEL,
+          color: canProceed ? '#FFFFFF' : INK_FAINT,
+          borderRadius: 3,
+          fontFamily: SANS,
         }}>
         {label} <ArrowRight size={15} />
       </button>

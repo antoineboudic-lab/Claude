@@ -13,6 +13,10 @@ import {
   createInvite, removeTeamMember, updateMemberTracks, revokeInvite,
   type Team, type TeamMember, type TeamInvite,
 } from '@/lib/supabase/teams'
+import {
+  PAPER_2, PANEL, INK, INK_SOFT, INK_FAINT,
+  COBALT, RULE, SERIF, MONO, SANS,
+} from "@/components/editorial/theme"
 
 const TRACKS = [
   { id: 'marketing',  label: 'Marketing',        color: '#E04D2A' },
@@ -61,9 +65,9 @@ function TrackPicker({ selected, onChange }: { selected: string[]; onChange: (v:
             onClick={() => onChange(on ? selected.filter(x => x !== t.id) : [...selected, t.id])}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all"
             style={{
-              background: on ? `${t.color}15` : '#EFF6FF',
-              color: on ? t.color : '#94A3B8',
-              border: `1px solid ${on ? t.color + '40' : '#E2E8F0'}`,
+              background: on ? `${t.color}15` : PANEL,
+              color: on ? t.color : INK_FAINT,
+              border: `1px solid ${on ? t.color + '40' : RULE}`,
             }}>
             {on && <Check size={10} />}
             {t.label}
@@ -95,28 +99,28 @@ function EditTracksModal({ member, onSave, onClose }: {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-lg rounded-2xl p-6"
-        style={{ background: '#FFFFFF', boxShadow: '0 24px 64px rgba(0,0,0,0.12)' }}>
+        style={{ background: PAPER_2, boxShadow: '0 24px 64px rgba(0,0,0,0.12)' }}>
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-base font-black" style={{ color: '#0F172A' }}>
+          <h3 className="text-base" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
             Edit tracks — {member.display_name ?? member.email.split('@')[0]}
           </h3>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
             <X size={16} />
           </button>
         </div>
-        <p className="text-xs mb-4" style={{ color: '#64748B' }}>
+        <p className="text-xs mb-4" style={{ color: INK_SOFT }}>
           Select the tracks this member should complete. They can still browse all tracks — this controls which ones appear as their assigned curriculum.
         </p>
         <TrackPicker selected={tracks} onChange={setTracks} />
         <div className="flex gap-3 mt-6">
           <button onClick={onClose}
             className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-colors hover:bg-slate-100"
-            style={{ color: '#64748B', background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
+            style={{ color: INK_SOFT, background: PANEL, border: `1px solid ${RULE}` }}>
             Cancel
           </button>
           <button onClick={save} disabled={saving}
             className="flex-1 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: '#2563EB' }}>
+            style={{ background: COBALT }}>
             {saving ? 'Saving…' : 'Save changes'}
           </button>
         </div>
@@ -171,14 +175,14 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
   return (
     <div className="rounded-2xl p-5 transition-shadow hover:shadow-md"
       style={{
-        background: '#FFFFFF',
-        border: `1px solid ${atRisk ? '#FDE68A' : '#E2E8F0'}`,
+        background: PAPER_2,
+        border: `1px solid ${atRisk ? '#FDE68A' : RULE}`,
       }}>
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex items-center gap-3 min-w-0">
           <div className="relative">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-              style={{ background: isPending ? '#CBD5E1' : ['#2563EB','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][member.email.charCodeAt(0) % 10] }}>
+              style={{ background: isPending ? INK_FAINT : [COBALT,'#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][member.email.charCodeAt(0) % 10] }}>
               {initials}
             </div>
             {atRisk && (
@@ -190,7 +194,7 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <p className="text-sm font-bold truncate" style={{ color: '#0F172A' }}>
+              <p className="text-sm font-bold truncate" style={{ color: INK }}>
                 {member.display_name ?? member.email.split('@')[0]}
               </p>
               {isPending && (
@@ -201,7 +205,7 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
               )}
               {member.role === 'admin' && (
                 <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
-                  style={{ background: '#DBEAFE', color: '#2563EB' }}>Admin</span>
+                  style={{ background: 'rgba(36,64,216,0.12)', color: COBALT }}>Admin</span>
               )}
               {atRisk === 'not-started' && (
                 <span className="flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded-md"
@@ -216,14 +220,14 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
                 </span>
               )}
             </div>
-            <p className="text-xs truncate" style={{ color: '#94A3B8' }}>{member.email}</p>
+            <p className="text-xs truncate" style={{ color: INK_FAINT }}>{member.email}</p>
           </div>
         </div>
         {member.role !== 'admin' && (
           <div className="flex items-center gap-1 flex-shrink-0">
             <button onClick={() => onEdit(member)}
               className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
-              style={{ color: '#64748B' }} title="Edit tracks">
+              style={{ color: INK_SOFT }} title="Edit tracks">
               <Edit2 size={13} />
             </button>
             {confirm ? (
@@ -235,14 +239,14 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
                 </button>
                 <button onClick={() => setConfirm(false)}
                   className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
-                  style={{ color: '#94A3B8' }}>
+                  style={{ color: INK_FAINT }}>
                   <X size={13} />
                 </button>
               </div>
             ) : (
               <button onClick={() => setConfirm(true)}
                 className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"
-                style={{ color: '#CBD5E1' }} title="Remove member">
+                style={{ color: INK_FAINT }} title="Remove member">
                 <Trash2 size={13} />
               </button>
             )}
@@ -254,14 +258,14 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
       {!isPending && (
         <div className="grid grid-cols-3 gap-2 mb-4">
           {[
-            { label: 'XP', value: xp.toLocaleString(), color: '#2563EB' },
+            { label: 'XP', value: xp.toLocaleString(), color: COBALT },
             { label: 'Lessons', value: lessons, color: '#10B981' },
             { label: 'Tracks done', value: done.filter(t => tracks.includes(t)).length, color: '#F59E0B' },
           ].map(s => (
             <div key={s.label} className="rounded-xl p-2.5 text-center"
-              style={{ background: '#EFF6FF', border: '1px solid #F1F5F9' }}>
+              style={{ background: PANEL, border: `1px solid ${RULE}` }}>
               <p className="text-sm font-black" style={{ color: s.color }}>{s.value}</p>
-              <p className="text-[10px]" style={{ color: '#94A3B8' }}>{s.label}</p>
+              <p className="text-[10px]" style={{ color: INK_FAINT }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -270,7 +274,7 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
       {/* Assigned tracks */}
       {tracks.length > 0 && (
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest mb-2" style={{ color: '#94A3B8' }}>Assigned tracks</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] mb-2" style={{ color: INK_FAINT, fontFamily: MONO }}>Assigned tracks</p>
           <div className="flex flex-wrap gap-1.5">
             {tracks.map(t => {
               const track = TRACKS.find(tr => tr.id === t)
@@ -279,9 +283,9 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
                 <span key={t}
                   className="flex items-center gap-1 text-[10px] font-semibold px-2 py-1 rounded-lg"
                   style={{
-                    background: completed ? `${track?.color ?? '#2563EB'}15` : '#EFF6FF',
-                    color: completed ? (track?.color ?? '#2563EB') : '#94A3B8',
-                    border: `1px solid ${completed ? (track?.color ?? '#2563EB') + '30' : '#E2E8F0'}`,
+                    background: completed ? `${track?.color ?? COBALT}15` : PANEL,
+                    color: completed ? (track?.color ?? COBALT) : INK_FAINT,
+                    border: `1px solid ${completed ? (track?.color ?? COBALT) + '30' : RULE}`,
                   }}>
                   {completed && <CheckCircle2 size={9} />}
                   {track?.label ?? t}
@@ -295,7 +299,7 @@ function MemberCard({ member, teamId, teamName, onEdit, onRemove }: {
       {tracks.length === 0 && !isPending && (
         <button onClick={() => onEdit(member)}
           className="flex items-center gap-1.5 text-xs font-semibold transition-colors hover:underline"
-          style={{ color: '#2563EB' }}>
+          style={{ color: COBALT }}>
           <Edit2 size={11} /> Assign tracks
         </button>
       )}
@@ -400,17 +404,18 @@ function InvitePanel({ team, userId, onDone }: {
 
   return (
     <div className="rounded-2xl p-6"
-      style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+      style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
 
       {/* Mode tabs */}
       <div className="flex items-center gap-1 mb-5 p-1 rounded-xl w-fit"
-        style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
+        style={{ background: PANEL, border: `1px solid ${RULE}` }}>
         {(['single', 'bulk'] as const).map(m => (
           <button key={m} type="button" onClick={() => { setMode(m); setBulkResult(null); setNewInvite(null) }}
-            className="px-4 py-1.5 rounded-lg text-xs font-semibold transition-all"
+            className="px-4 py-1.5 rounded-lg text-[11px] font-semibold uppercase tracking-[0.1em] transition-all"
             style={{
-              background: mode === m ? '#FFFFFF' : 'transparent',
-              color: mode === m ? '#0F172A' : '#94A3B8',
+              background: mode === m ? PAPER_2 : 'transparent',
+              color: mode === m ? INK : INK_FAINT,
+              fontFamily: MONO,
               boxShadow: mode === m ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
             }}>
             {m === 'single' ? 'Single invite' : 'Bulk invite'}
@@ -425,51 +430,51 @@ function InvitePanel({ team, userId, onDone }: {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <CheckCircle2 size={18} style={{ color: '#10B981' }} />
-                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Invite created!</p>
+                <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Invite created!</p>
               </div>
-              <p className="text-xs mb-3" style={{ color: '#64748B' }}>
+              <p className="text-xs mb-3" style={{ color: INK_SOFT }}>
                 Share this link with <strong>{newInvite.email}</strong>. It expires in 7 days.
               </p>
               <div className="flex items-center gap-2 p-3 rounded-xl"
-                style={{ background: '#EFF6FF', border: '1px solid #E2E8F0' }}>
-                <LinkIcon size={13} style={{ color: '#94A3B8', flexShrink: 0 }} />
-                <code className="text-xs flex-1 truncate" style={{ color: '#334155' }}>
+                style={{ background: PANEL, border: `1px solid ${RULE}` }}>
+                <LinkIcon size={13} style={{ color: INK_FAINT, flexShrink: 0 }} />
+                <code className="text-xs flex-1 truncate" style={{ color: INK_SOFT }}>
                   {typeof window !== 'undefined' ? `${window.location.origin}/join/${newInvite.token}` : `…/join/${newInvite.token}`}
                 </code>
                 <button onClick={() => copyLink(newInvite.token)}
                   className="flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80"
-                  style={{ background: copied ? '#D1FAE5' : '#DBEAFE', color: copied ? '#10B981' : '#2563EB' }}>
+                  style={{ background: copied ? '#D1FAE5' : 'rgba(36,64,216,0.12)', color: copied ? '#10B981' : COBALT }}>
                   {copied ? <><CheckCheck size={11} /> Copied</> : <><Copy size={11} /> Copy</>}
                 </button>
               </div>
               <button onClick={() => setNewInvite(null)}
                 className="mt-4 text-xs font-semibold hover:underline"
-                style={{ color: '#94A3B8' }}>
+                style={{ color: INK_FAINT }}>
                 Invite another
               </button>
             </div>
           ) : (
             <form onSubmit={handleSingle} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold mb-1.5" style={{ color: '#334155' }}>Work email</label>
+                <label className="block text-xs font-semibold mb-1.5" style={{ color: INK_SOFT }}>Work email</label>
                 <div className="flex items-center gap-2 px-3 rounded-xl"
-                  style={{ border: '1.5px solid #E2E8F0', background: '#EFF6FF' }}>
-                  <Mail size={13} style={{ color: '#94A3B8' }} />
+                  style={{ border: `1.5px solid ${RULE}`, background: PANEL }}>
+                  <Mail size={13} style={{ color: INK_FAINT }} />
                   <input type="email" required value={inviteEmail} onChange={e => setInviteEmail(e.target.value)}
                     placeholder="colleague@company.com"
                     className="flex-1 py-2.5 text-sm outline-none bg-transparent"
-                    style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }} />
+                    style={{ color: INK, fontFamily: SANS }} />
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-semibold mb-2" style={{ color: '#334155' }}>
-                  Assign tracks <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
+                <label className="block text-xs font-semibold mb-2" style={{ color: INK_SOFT }}>
+                  Assign tracks <span style={{ color: INK_FAINT, fontWeight: 400 }}>(optional)</span>
                 </label>
                 <TrackPicker selected={inviteTracks} onChange={setInviteTracks} />
               </div>
               <button type="submit" disabled={inviting}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                style={{ background: '#2563EB' }}>
+                style={{ background: COBALT }}>
                 {inviting ? 'Creating…' : 'Create invite link'}
               </button>
             </form>
@@ -486,7 +491,7 @@ function InvitePanel({ team, userId, onDone }: {
                 style={{ background: '#D1FAE5' }}>
                 <CheckCircle2 size={22} style={{ color: '#10B981' }} />
               </div>
-              <p className="text-sm font-bold mb-1" style={{ color: '#0F172A' }}>
+              <p className="text-sm font-bold mb-1" style={{ color: INK }}>
                 {bulkResult.sent} invite{bulkResult.sent !== 1 ? 's' : ''} sent!
               </p>
               {bulkResult.failed > 0 && (
@@ -496,7 +501,7 @@ function InvitePanel({ team, userId, onDone }: {
               )}
               <button onClick={() => setBulkResult(null)}
                 className="text-xs font-semibold hover:underline"
-                style={{ color: '#2563EB' }}>
+                style={{ color: COBALT }}>
                 Invite more
               </button>
             </div>
@@ -504,12 +509,12 @@ function InvitePanel({ team, userId, onDone }: {
             <form onSubmit={handleBulk} className="space-y-4">
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="text-xs font-semibold" style={{ color: '#334155' }}>
+                  <label className="text-xs font-semibold" style={{ color: INK_SOFT }}>
                     Email addresses
                   </label>
                   <button type="button" onClick={() => fileRef.current?.click()}
                     className="flex items-center gap-1 text-xs font-semibold transition-colors hover:opacity-70"
-                    style={{ color: '#2563EB' }}>
+                    style={{ color: COBALT }}>
                     <Upload size={11} /> Upload CSV
                   </button>
                   <input ref={fileRef} type="file" accept=".csv,.txt" className="hidden" onChange={handleFileUpload} />
@@ -521,31 +526,31 @@ function InvitePanel({ team, userId, onDone }: {
                   rows={5}
                   className="w-full rounded-xl px-3 py-2.5 text-xs outline-none resize-none"
                   style={{
-                    border: '1.5px solid #E2E8F0',
-                    background: '#EFF6FF',
-                    color: '#0F172A',
-                    fontFamily: 'var(--font-sans)',
+                    border: `1.5px solid ${RULE}`,
+                    background: PANEL,
+                    color: INK,
+                    fontFamily: SANS,
                     lineHeight: 1.7,
                   }}
                   onFocus={e => { e.currentTarget.style.borderColor = '#93C5FD' }}
-                  onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0' }}
+                  onBlur={e => { e.currentTarget.style.borderColor = RULE }}
                 />
                 {parsedEmails.length > 0 && (
-                  <p className="mt-1.5 text-xs font-semibold" style={{ color: '#2563EB' }}>
+                  <p className="mt-1.5 text-xs font-semibold" style={{ color: COBALT }}>
                     {parsedEmails.length} valid email{parsedEmails.length !== 1 ? 's' : ''} detected
                   </p>
                 )}
               </div>
               <div>
-                <label className="block text-xs font-semibold mb-2" style={{ color: '#334155' }}>
-                  Assign tracks to all <span style={{ color: '#94A3B8', fontWeight: 400 }}>(optional)</span>
+                <label className="block text-xs font-semibold mb-2" style={{ color: INK_SOFT }}>
+                  Assign tracks to all <span style={{ color: INK_FAINT, fontWeight: 400 }}>(optional)</span>
                 </label>
                 <TrackPicker selected={bulkTracks} onChange={setBulkTracks} />
               </div>
               <button type="submit"
                 disabled={bulkInviting || parsedEmails.length === 0}
                 className="w-full py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-40"
-                style={{ background: '#2563EB' }}>
+                style={{ background: COBALT }}>
                 {bulkInviting
                   ? 'Sending invites…'
                   : parsedEmails.length === 0
@@ -616,7 +621,7 @@ export default function MembersPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }} />
+          style={{ borderColor: COBALT, borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -632,9 +637,9 @@ export default function MembersPage() {
       {/* Header */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-black" style={{ color: '#0F172A' }}>Members</h1>
+          <h1 className="text-2xl" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Members</h1>
           <div className="flex items-center gap-3 mt-0.5 flex-wrap">
-            <p className="text-sm" style={{ color: '#64748B' }}>
+            <p className="text-sm" style={{ color: INK_SOFT }}>
               {activeMembers.length} active · {pendingMembers.length} pending · {team.seat_limit} seat limit
             </p>
             {atRiskCount > 0 && (
@@ -648,7 +653,7 @@ export default function MembersPage() {
         <button
           onClick={() => setShowInvite(v => !v)}
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: '#2563EB' }}>
+          style={{ background: COBALT }}>
           <UserPlus size={14} />
           {showInvite ? 'Close' : 'Invite members'}
           <ChevronDown size={13} style={{ transform: showInvite ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
@@ -675,7 +680,7 @@ export default function MembersPage() {
       {/* Active members grid */}
       {activeMembers.length > 0 && (
         <div>
-          <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#94A3B8' }}>
+          <p className="text-[11px] font-semibold tracking-[0.16em] uppercase mb-4" style={{ color: INK_FAINT, fontFamily: MONO }}>
             Active members ({activeMembers.length})
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -689,34 +694,34 @@ export default function MembersPage() {
       {/* Pending invites */}
       {(pendingMembers.length > 0 || invites.length > 0) && (
         <div>
-          <p className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#94A3B8' }}>
+          <p className="text-[11px] font-semibold tracking-[0.16em] uppercase mb-4" style={{ color: INK_FAINT, fontFamily: MONO }}>
             Pending invites ({pendingMembers.length + invites.length})
           </p>
           <div className="rounded-2xl overflow-hidden"
-            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0' }}>
+            style={{ background: PAPER_2, border: `1px solid ${RULE}` }}>
             {invites.map((inv, i) => (
               <div key={inv.id}
                 className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-slate-50"
-                style={{ borderBottom: i < invites.length - 1 ? '1px solid #F1F5F9' : 'none' }}>
+                style={{ borderBottom: i < invites.length - 1 ? `1px solid ${RULE}` : 'none' }}>
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold"
                   style={{ background: '#FEF3C7', color: '#D97706' }}>
                   {inv.email.slice(0, 1).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate" style={{ color: '#334155' }}>{inv.email}</p>
-                  <p className="text-xs" style={{ color: '#94A3B8' }}>
+                  <p className="text-sm font-medium truncate" style={{ color: INK_SOFT }}>{inv.email}</p>
+                  <p className="text-xs" style={{ color: INK_FAINT }}>
                     Expires {new Date(inv.expires_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <button onClick={() => copyInviteLink(inv.token)}
                     className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg transition-all hover:opacity-80"
-                    style={{ background: copied === inv.token ? '#D1FAE5' : '#DBEAFE', color: copied === inv.token ? '#10B981' : '#2563EB' }}>
+                    style={{ background: copied === inv.token ? '#D1FAE5' : 'rgba(36,64,216,0.12)', color: copied === inv.token ? '#10B981' : COBALT }}>
                     {copied === inv.token ? <><CheckCheck size={10} /> Copied</> : <><Copy size={10} /> Copy link</>}
                   </button>
                   <button onClick={() => handleRevokeInvite(inv.id)}
                     className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"
-                    style={{ color: '#CBD5E1' }} title="Revoke invite">
+                    style={{ color: INK_FAINT }} title="Revoke invite">
                     <X size={13} />
                   </button>
                 </div>
@@ -729,13 +734,13 @@ export default function MembersPage() {
       {/* Empty */}
       {activeMembers.length === 0 && pendingMembers.length === 0 && invites.length === 0 && (
         <div className="rounded-2xl p-12 text-center"
-          style={{ background: '#FFFFFF', border: '2px dashed #E2E8F0' }}>
-          <Users size={32} className="mx-auto mb-4" style={{ color: '#CBD5E1' }} />
-          <p className="text-sm font-bold mb-1" style={{ color: '#0F172A' }}>No members yet</p>
-          <p className="text-xs mb-4" style={{ color: '#94A3B8' }}>Invite your first team member to get started.</p>
+          style={{ background: PAPER_2, border: `2px dashed ${RULE}` }}>
+          <Users size={32} className="mx-auto mb-4" style={{ color: INK_FAINT }} />
+          <p className="text-sm font-bold mb-1" style={{ color: INK }}>No members yet</p>
+          <p className="text-xs mb-4" style={{ color: INK_FAINT }}>Invite your first team member to get started.</p>
           <button onClick={() => setShowInvite(true)}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white"
-            style={{ background: '#2563EB' }}>
+            style={{ background: COBALT }}>
             <UserPlus size={13} /> Send first invite
           </button>
         </div>

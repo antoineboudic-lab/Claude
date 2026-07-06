@@ -8,6 +8,10 @@ import Logo from '@/components/Logo'
 import { useAuth } from '@/context/AuthContext'
 import { getAdminTeam } from '@/lib/supabase/teams'
 import type { Team } from '@/lib/supabase/teams'
+import {
+  PAPER, PAPER_2, INK, INK_SOFT, INK_FAINT,
+  COBALT, RULE, SERIF, MONO, SANS,
+} from "@/components/editorial/theme"
 
 const NAV = [
   { href: '/dashboard/team', label: 'Overview', icon: LayoutDashboard, exact: true },
@@ -41,9 +45,9 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
 
   if (loading || checking) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#EFF6FF' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: PAPER }}>
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }} />
+          style={{ borderColor: COBALT, borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -58,23 +62,23 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
     : user.email?.slice(0, 2).toUpperCase() ?? '?'
 
   return (
-    <div className="min-h-screen flex" style={{ background: '#EFF6FF', fontFamily: 'var(--font-sans)' }}>
+    <div className="min-h-screen flex" style={{ background: PAPER, fontFamily: SANS }}>
       {/* Sidebar */}
       <aside className="hidden lg:flex flex-col w-60 flex-shrink-0"
-        style={{ background: '#FFFFFF', borderRight: '1px solid #E2E8F0', position: 'sticky', top: 0, height: '100vh', overflowY: 'auto' }}>
+        style={{ background: PAPER_2, borderRight: `1px solid ${RULE}`, position: 'sticky', top: 0, height: '100vh', overflowY: 'auto' }}>
         {/* Logo */}
-        <div className="px-5 py-5" style={{ borderBottom: '1px solid #F1F5F9' }}>
+        <div className="px-5 py-5" style={{ borderBottom: `1px solid ${RULE}` }}>
           <Link href="/">
             <Logo size="sm" />
           </Link>
         </div>
 
         {/* Team name */}
-        <div className="px-5 py-4" style={{ borderBottom: '1px solid #F1F5F9' }}>
-          <p className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: '#94A3B8' }}>Team</p>
-          <p className="text-sm font-bold truncate" style={{ color: '#0F172A' }}>{team.name}</p>
+        <div className="px-5 py-4" style={{ borderBottom: `1px solid ${RULE}` }}>
+          <p className="text-[10px] font-bold tracking-[0.16em] uppercase mb-1" style={{ color: INK_FAINT, fontFamily: MONO }}>Team</p>
+          <p className="text-sm truncate" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>{team.name}</p>
           <span className="text-[10px] font-semibold capitalize px-1.5 py-0.5 rounded-md mt-1 inline-block"
-            style={{ background: '#DBEAFE', color: '#2563EB' }}>{team.plan}</span>
+            style={{ background: 'rgba(36,64,216,0.12)', color: COBALT }}>{team.plan}</span>
         </div>
 
         {/* Nav */}
@@ -84,10 +88,11 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
             const Icon = item.icon
             return (
               <Link key={item.href} href={item.href}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[11px] font-semibold uppercase tracking-[0.14em] transition-all"
                 style={{
-                  background: active ? '#DBEAFE' : 'transparent',
-                  color: active ? '#2563EB' : '#64748B',
+                  background: active ? 'rgba(36,64,216,0.12)' : 'transparent',
+                  color: active ? COBALT : INK_SOFT,
+                  fontFamily: MONO,
                 }}>
                 <Icon size={16} />
                 {item.label}
@@ -95,7 +100,7 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
             )
           })}
 
-          <div className="pt-4 mt-4" style={{ borderTop: '1px solid #F1F5F9' }}>
+          <div className="pt-4 mt-4" style={{ borderTop: `1px solid ${RULE}` }}>
             <Link href="/dashboard"
               className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-500 hover:bg-slate-50">
               <BookOpen size={16} />
@@ -105,17 +110,17 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
         </nav>
 
         {/* User */}
-        <div className="px-4 py-4" style={{ borderTop: '1px solid #F1F5F9' }}>
+        <div className="px-4 py-4" style={{ borderTop: `1px solid ${RULE}` }}>
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-              style={{ background: '#2563EB' }}>
+              style={{ background: COBALT }}>
               {initials}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold truncate" style={{ color: '#0F172A' }}>
+              <p className="text-xs font-semibold truncate" style={{ color: INK }}>
                 {user.user_metadata?.full_name ?? user.email?.split('@')[0]}
               </p>
-              <p className="text-[10px] truncate" style={{ color: '#94A3B8' }}>Admin</p>
+              <p className="text-[10px] truncate" style={{ color: INK_FAINT }}>Admin</p>
             </div>
             <button onClick={signOut} className="text-slate-400 hover:text-slate-600 transition-colors">
               <LogOut size={14} />
@@ -126,10 +131,10 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
 
       {/* Mobile top bar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-40 px-4 py-3 flex items-center justify-between"
-        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid #E2E8F0' }}>
+        style={{ background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(12px)', borderBottom: `1px solid ${RULE}` }}>
         <Link href="/" className="flex items-center gap-2">
           <Logo size="sm" markOnly />
-          <span className="font-black text-sm" style={{ color: '#0F172A' }}>Team — {team.name}</span>
+          <span className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Team — {team.name}</span>
         </Link>
         <div className="flex items-center gap-3">
           {NAV.map(item => {
@@ -138,7 +143,7 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
             return (
               <Link key={item.href} href={item.href}
                 className="p-1.5 rounded-lg transition-colors"
-                style={{ background: active ? '#DBEAFE' : 'transparent', color: active ? '#2563EB' : '#94A3B8' }}>
+                style={{ background: active ? 'rgba(36,64,216,0.12)' : 'transparent', color: active ? COBALT : INK_FAINT }}>
                 <Icon size={16} />
               </Link>
             )
@@ -150,10 +155,10 @@ export default function TeamDashboardLayout({ children }: { children: ReactNode 
       <main className="flex-1 lg:pt-0 pt-14 min-w-0">
         <div className="max-w-5xl mx-auto px-6 py-8">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-1.5 text-xs mb-6" style={{ color: '#94A3B8' }}>
+          <div className="flex items-center gap-1.5 text-xs mb-6" style={{ color: INK_FAINT }}>
             <span>{team.name}</span>
             <ChevronRight size={11} />
-            <span style={{ color: '#334155', fontWeight: 600 }}>
+            <span style={{ color: INK_SOFT, fontWeight: 600, fontFamily: MONO, textTransform: "uppercase", letterSpacing: "0.1em", fontSize: "11px" }}>
               {NAV.find(n => n.exact ? pathname === n.href : pathname.startsWith(n.href))?.label ?? 'Team'}
             </span>
           </div>

@@ -18,6 +18,10 @@ import {
 } from '@/lib/supabase/teams'
 import { getAllTracks } from '@/lib/curriculum'
 import type { TrackId } from '@/lib/curriculum/types'
+import {
+  PAPER, PAPER_2, PANEL, INK, INK_SOFT, INK_FAINT,
+  COBALT, RULE, SERIF, MONO, SANS,
+} from "@/components/editorial/theme"
 
 const easing = [0.25, 0.46, 0.45, 0.94] as [number, number, number, number]
 
@@ -36,7 +40,7 @@ const TRACK_COLORS: Record<string, string> = {
 
 const PLAN_OPTIONS = [
   { id: 'starter', label: 'Starter', seats: '15 seats', desc: 'Small teams getting started', color: '#10B981' },
-  { id: 'growth', label: 'Growth', seats: '50 seats', desc: 'Growing teams at scale', color: '#2563EB' },
+  { id: 'growth', label: 'Growth', seats: '50 seats', desc: 'Growing teams at scale', color: COBALT },
   { id: 'enterprise', label: 'Enterprise', seats: 'Unlimited', desc: 'Large organisations', color: '#7C3AED' },
 ] as const
 
@@ -64,8 +68,8 @@ function SavedBadge({ show }: { show: boolean }) {
 
 function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl p-6" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-      <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+    <div className="rounded-2xl p-6" style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] mb-5" style={{ color: INK_FAINT, fontFamily: MONO }}>
         {title}
       </p>
       {children}
@@ -83,20 +87,20 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-xs font-semibold mb-1.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+      <label className="block text-xs font-semibold mb-1.5" style={{ color: INK_SOFT, fontFamily: SANS }}>
         {label}
       </label>
       <div className="relative">
-        <Icon size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#CBD5E1' }} />
+        <Icon size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: INK_FAINT }} />
         <input
           type={type}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
           className="w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
-          style={{ background: '#EFF6FF', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
-          onFocus={e => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.background = '#FFFFFF' }}
-          onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#EFF6FF' }}
+          style={{ background: PANEL, border: `1.5px solid ${RULE}`, color: INK, fontFamily: SANS }}
+          onFocus={e => { e.currentTarget.style.borderColor = COBALT; e.currentTarget.style.background = PAPER_2 }}
+          onBlur={e => { e.currentTarget.style.borderColor = RULE; e.currentTarget.style.background = PANEL }}
         />
       </div>
     </div>
@@ -113,25 +117,25 @@ function PasswordField({
 }) {
   return (
     <div>
-      <label className="block text-xs font-semibold mb-1.5" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+      <label className="block text-xs font-semibold mb-1.5" style={{ color: INK_SOFT, fontFamily: SANS }}>
         {label}
       </label>
       <div className="relative">
-        <Lock size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#CBD5E1' }} />
+        <Lock size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: INK_FAINT }} />
         <input
           type={show ? 'text' : 'password'}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
           className="w-full pl-10 pr-10 py-3 rounded-xl text-sm outline-none transition-all"
-          style={{ background: '#EFF6FF', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
-          onFocus={e => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.background = '#FFFFFF' }}
-          onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#EFF6FF' }}
+          style={{ background: PANEL, border: `1.5px solid ${RULE}`, color: INK, fontFamily: SANS }}
+          onFocus={e => { e.currentTarget.style.borderColor = COBALT; e.currentTarget.style.background = PAPER_2 }}
+          onBlur={e => { e.currentTarget.style.borderColor = RULE; e.currentTarget.style.background = PANEL }}
         />
         <button
           type="button" onClick={onToggle}
           className="absolute right-3.5 top-1/2 -translate-y-1/2 transition-colors hover:text-slate-500"
-          style={{ color: '#CBD5E1' }}
+          style={{ color: INK_FAINT }}
         >
           {show ? <EyeOff size={13} /> : <Eye size={13} />}
         </button>
@@ -244,15 +248,15 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
       className="space-y-5">
       <SectionCard title="Personal info">
         {/* Avatar picker */}
-        <div className="flex items-center gap-5 mb-6 pb-6" style={{ borderBottom: '1px solid #F1F5F9' }}>
+        <div className="flex items-center gap-5 mb-6 pb-6" style={{ borderBottom: `1px solid ${RULE}` }}>
           <div className="relative flex-shrink-0">
             <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #2563EB, #22D3EE)' }}>
+              style={{ background: `linear-gradient(135deg, ${COBALT}, #22D3EE)` }}>
               {avatarUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={avatarUrl} alt="Profile" referrerPolicy="no-referrer" className="w-full h-full object-cover" />
               ) : (
-                <span className="text-lg font-black text-white" style={{ fontFamily: 'var(--font-sans)' }}>
+                <span className="text-lg font-black text-white" style={{ fontFamily: SANS }}>
                   {name ? name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : user.email?.slice(0, 2).toUpperCase()}
                 </span>
               )}
@@ -267,7 +271,7 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
               onClick={() => fileInputRef.current?.click()}
               disabled={avatarUploading}
               className="absolute -bottom-1.5 -right-1.5 w-6 h-6 rounded-lg flex items-center justify-center transition-all hover:opacity-90 disabled:opacity-50"
-              style={{ background: '#2563EB', boxShadow: '0 2px 6px rgba(37,99,235,0.4)' }}
+              style={{ background: COBALT, boxShadow: '0 2px 6px rgba(36,64,216,0.4)' }}
             >
               <Camera size={11} className="text-white" />
             </button>
@@ -280,10 +284,10 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
             />
           </div>
           <div>
-            <p className="text-sm font-semibold mb-0.5" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Profile picture</p>
-            <p className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>JPEG, PNG, WebP or GIF — max 2 MB</p>
+            <p className="text-sm font-semibold mb-0.5" style={{ color: INK, fontFamily: SANS }}>Profile picture</p>
+            <p className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>JPEG, PNG, WebP or GIF — max 2 MB</p>
             {avatarError && (
-              <p className="text-xs mt-1.5 font-semibold" style={{ color: '#EF4444', fontFamily: 'var(--font-sans)' }}>{avatarError}</p>
+              <p className="text-xs mt-1.5 font-semibold" style={{ color: '#EF4444', fontFamily: SANS }}>{avatarError}</p>
             )}
           </div>
         </div>
@@ -298,7 +302,7 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
             {error && (
               <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                 className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
-                style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: SANS }}>
                 <AlertCircle size={13} className="flex-shrink-0" />{error}
               </motion.div>
             )}
@@ -308,7 +312,7 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
             <button
               type="submit" disabled={loading}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-              style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+              style={{ background: COBALT, boxShadow: '0 4px 14px rgba(36,64,216,0.2)', fontFamily: SANS }}
             >
               {loading ? <><Loader2 size={13} className="animate-spin" /> Saving…</> : <><Save size={13} /> Save changes</>}
             </button>
@@ -320,9 +324,9 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
       <SectionCard title="Password">
         {isOAuth ? (
           <div className="flex items-center gap-3 px-4 py-3 rounded-xl"
-            style={{ background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-            <Lock size={13} style={{ color: '#CBD5E1', flexShrink: 0 }} />
-            <p className="text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            style={{ background: PAPER, border: `1px solid ${RULE}` }}>
+            <Lock size={13} style={{ color: INK_FAINT, flexShrink: 0 }} />
+            <p className="text-sm" style={{ color: INK_SOFT, fontFamily: SANS }}>
               Password is managed by your sign-in provider ({user.app_metadata?.provider === 'linkedin_oidc' ? 'LinkedIn' : 'Google'}).
             </p>
           </div>
@@ -330,8 +334,8 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
         <>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Change password</p>
-            <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-sm font-semibold" style={{ color: INK, fontFamily: SANS }}>Change password</p>
+            <p className="text-xs mt-0.5" style={{ color: INK_FAINT, fontFamily: SANS }}>
               {pwOpen ? 'Enter your current and new password below.' : 'Update your account password.'}
             </p>
           </div>
@@ -339,7 +343,7 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
             <button
               onClick={() => setPwOpen(true)}
               className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80"
-              style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}
+              style={{ background: PANEL, color: COBALT, fontFamily: SANS }}
             >
               Change <ChevronRight size={12} />
             </button>
@@ -373,14 +377,14 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
                   {pwError && (
                     <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                       className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
-                      style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                      style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: SANS }}>
                       <AlertCircle size={13} className="flex-shrink-0" />{pwError}
                     </motion.div>
                   )}
                   {pwSaved && (
                     <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                       className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
-                      style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+                      style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', color: '#10B981', fontFamily: SANS }}>
                       <Check size={13} /> Password updated successfully
                     </motion.div>
                   )}
@@ -390,7 +394,7 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
                   <button
                     type="submit" disabled={pwLoading || !currentPw || !newPw || !confirmPw}
                     className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+                    style={{ background: COBALT, boxShadow: '0 4px 14px rgba(36,64,216,0.2)', fontFamily: SANS }}
                   >
                     {pwLoading ? <><Loader2 size={13} className="animate-spin" /> Updating…</> : <><Lock size={13} /> Update password</>}
                   </button>
@@ -398,7 +402,7 @@ function ProfileTab({ user }: { user: { email?: string; user_metadata?: Record<s
                     type="button"
                     onClick={() => { setPwOpen(false); setPwError(''); setCurrentPw(''); setNewPw(''); setConfirmPw('') }}
                     className="text-xs font-semibold transition-colors hover:text-slate-600"
-                    style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+                    style={{ color: INK_FAINT, fontFamily: SANS }}
                   >
                     Cancel
                   </button>
@@ -470,12 +474,12 @@ function PreferencesTab() {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: easing }}
       className="space-y-5">
       <SectionCard title="Learning track">
-        <p className="text-sm mb-4" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+        <p className="text-sm mb-4" style={{ color: INK_SOFT, fontFamily: SANS }}>
           Pick your primary focus area. This personalises your dashboard recommendations.
         </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
           {tracks.map(t => {
-            const color = TRACK_COLORS[t.id] ?? '#2563EB'
+            const color = TRACK_COLORS[t.id] ?? COBALT
             const selected = primaryTrack === t.id
             return (
               <button
@@ -483,12 +487,12 @@ function PreferencesTab() {
                 onClick={() => setPrimaryTrack(t.id as TrackId)}
                 className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left transition-all"
                 style={{
-                  background: selected ? `${color}12` : '#EFF6FF',
-                  border: selected ? `1.5px solid ${color}` : '1.5px solid #E2E8F0',
+                  background: selected ? `${color}12` : PANEL,
+                  border: selected ? `1.5px solid ${color}` : `1.5px solid ${RULE}`,
                 }}
               >
                 <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color }} />
-                <span className="text-xs font-semibold truncate" style={{ color: selected ? color : '#64748B', fontFamily: 'var(--font-sans)' }}>
+                <span className="text-xs font-semibold truncate" style={{ color: selected ? color : INK_SOFT, fontFamily: SANS }}>
                   {t.title}
                 </span>
               </button>
@@ -507,14 +511,14 @@ function PreferencesTab() {
                 onClick={() => setDailyGoal(g.value)}
                 className="flex flex-col items-center gap-1 py-4 rounded-xl transition-all"
                 style={{
-                  background: selected ? '#2563EB' : '#EFF6FF',
-                  border: selected ? '1.5px solid #2563EB' : '1.5px solid #E2E8F0',
+                  background: selected ? COBALT : PANEL,
+                  border: selected ? `1.5px solid ${COBALT}` : `1.5px solid ${RULE}`,
                 }}
               >
-                <span className="text-sm font-black" style={{ color: selected ? '#FFFFFF' : '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                <span className="text-sm font-black" style={{ color: selected ? PAPER_2 : INK, fontFamily: SANS }}>
                   {g.value === '7' ? '7' : g.value}
                 </span>
-                <span className="text-[10px] font-semibold" style={{ color: selected ? '#BFDBFE' : '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                <span className="text-[10px] font-semibold" style={{ color: selected ? '#BFDBFE' : INK_FAINT, fontFamily: SANS }}>
                   {g.desc}
                 </span>
               </button>
@@ -526,13 +530,13 @@ function PreferencesTab() {
       <SectionCard title="Notifications">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Weekly progress digest</p>
-            <p className="text-xs mt-0.5" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>A summary of your learning activity each week</p>
+            <p className="text-sm font-semibold" style={{ color: INK, fontFamily: SANS }}>Weekly progress digest</p>
+            <p className="text-xs mt-0.5" style={{ color: INK_FAINT, fontFamily: SANS }}>A summary of your learning activity each week</p>
           </div>
           <button
             onClick={() => setEmailDigest(v => !v)}
             className="relative w-11 h-6 rounded-full transition-all flex-shrink-0"
-            style={{ background: emailDigest ? '#2563EB' : '#E2E8F0' }}
+            style={{ background: emailDigest ? COBALT : RULE }}
           >
             <span
               className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-all"
@@ -546,7 +550,7 @@ function PreferencesTab() {
         <button
           onClick={save}
           className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+          style={{ background: COBALT, boxShadow: '0 4px 14px rgba(36,64,216,0.2)', fontFamily: SANS }}
         >
           <Save size={13} /> Save preferences
         </button>
@@ -627,7 +631,7 @@ function TeamTab({ userId }: { userId: string }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <Loader2 size={22} className="animate-spin" style={{ color: '#2563EB' }} />
+        <Loader2 size={22} className="animate-spin" style={{ color: COBALT }} />
       </div>
     )
   }
@@ -643,21 +647,21 @@ function TeamTab({ userId }: { userId: string }) {
         <SectionCard title="Your team">
           <div className="flex items-center gap-4 mb-5">
             <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
-              style={{ background: '#DBEAFE' }}>
-              <Users size={20} style={{ color: '#2563EB' }} />
+              style={{ background: 'rgba(36,64,216,0.12)' }}>
+              <Users size={20} style={{ color: COBALT }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-lg font-black truncate" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+              <p className="text-lg truncate" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>
                 {team.name}
               </p>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-lg capitalize"
-                  style={{ background: '#EFF6FF', color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: PANEL, color: COBALT, fontFamily: SANS }}>
                   {team.plan}
                 </span>
                 {isAdmin && (
                   <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-lg"
-                    style={{ background: '#FEF3C7', color: '#D97706', fontFamily: 'var(--font-sans)' }}>
+                    style={{ background: '#FEF3C7', color: '#D97706', fontFamily: SANS }}>
                     <Crown size={10} /> Admin
                   </span>
                 )}
@@ -666,7 +670,7 @@ function TeamTab({ userId }: { userId: string }) {
             <Link
               href="/dashboard/team"
               className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-80 flex-shrink-0"
-              style={{ background: '#DBEAFE', color: '#2563EB', fontFamily: 'var(--font-sans)' }}
+              style={{ background: 'rgba(36,64,216,0.12)', color: COBALT, fontFamily: SANS }}
             >
               Manage <ExternalLink size={11} />
             </Link>
@@ -675,13 +679,13 @@ function TeamTab({ userId }: { userId: string }) {
 
         {isAdmin && (
           <SectionCard title="Invite members">
-            <p className="text-sm mb-4" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-sm mb-4" style={{ color: INK_SOFT, fontFamily: SANS }}>
               Invite people by email or share the team link.
             </p>
 
             <form onSubmit={handleInvite} className="flex gap-2 mb-4">
               <div className="relative flex-1">
-                <Mail size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: '#CBD5E1' }} />
+                <Mail size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: INK_FAINT }} />
                 <input
                   type="email"
                   value={inviteEmail}
@@ -689,15 +693,15 @@ function TeamTab({ userId }: { userId: string }) {
                   placeholder="colleague@company.com"
                   required
                   className="w-full pl-10 pr-4 py-3 rounded-xl text-sm outline-none transition-all"
-                  style={{ background: '#EFF6FF', border: '1.5px solid #E2E8F0', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
-                  onFocus={e => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.background = '#FFFFFF' }}
-                  onBlur={e => { e.currentTarget.style.borderColor = '#E2E8F0'; e.currentTarget.style.background = '#EFF6FF' }}
+                  style={{ background: PANEL, border: `1.5px solid ${RULE}`, color: INK, fontFamily: SANS }}
+                  onFocus={e => { e.currentTarget.style.borderColor = COBALT; e.currentTarget.style.background = PAPER_2 }}
+                  onBlur={e => { e.currentTarget.style.borderColor = RULE; e.currentTarget.style.background = PANEL }}
                 />
               </div>
               <button
                 type="submit" disabled={inviting}
                 className="flex items-center gap-1.5 px-4 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 flex-shrink-0"
-                style={{ background: '#2563EB', fontFamily: 'var(--font-sans)' }}
+                style={{ background: COBALT, fontFamily: SANS }}
               >
                 {inviting ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
                 Invite
@@ -708,14 +712,14 @@ function TeamTab({ userId }: { userId: string }) {
               {inviteSuccess && (
                 <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                   className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm mb-3"
-                  style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', color: '#10B981', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', color: '#10B981', fontFamily: SANS }}>
                   <Check size={13} /> Invite sent successfully
                 </motion.div>
               )}
               {inviteError && (
                 <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                   className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm mb-3"
-                  style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                  style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: SANS }}>
                   <AlertCircle size={13} className="flex-shrink-0" />{inviteError}
                 </motion.div>
               )}
@@ -723,13 +727,13 @@ function TeamTab({ userId }: { userId: string }) {
 
             <div className="flex items-center gap-3 pt-1">
               <div className="flex-1 px-3 py-2.5 rounded-xl text-xs truncate"
-                style={{ background: '#EFF6FF', border: '1px solid #E2E8F0', color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: PANEL, border: `1px solid ${RULE}`, color: INK_SOFT, fontFamily: SANS }}>
                 {typeof window !== 'undefined' ? `${window.location.origin}/join/${team.id}` : ''}
               </div>
               <button
                 onClick={copyInviteLink}
                 className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2.5 rounded-xl transition-all hover:opacity-80 flex-shrink-0"
-                style={{ background: copied ? '#F0FDF4' : '#DBEAFE', color: copied ? '#10B981' : '#2563EB', fontFamily: 'var(--font-sans)' }}
+                style={{ background: copied ? '#F0FDF4' : 'rgba(36,64,216,0.12)', color: copied ? '#10B981' : COBALT, fontFamily: SANS }}
               >
                 {copied ? <><Check size={11} /> Copied</> : <><Copy size={11} /> Copy link</>}
               </button>
@@ -745,7 +749,7 @@ function TeamTab({ userId }: { userId: string }) {
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, ease: easing }}
       className="space-y-5">
       <SectionCard title="Create your team">
-        <p className="text-sm mb-6" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+        <p className="text-sm mb-6" style={{ color: INK_SOFT, fontFamily: SANS }}>
           Set up a team workspace to assign tracks, track progress, and manage your organisation's AI learning.
         </p>
 
@@ -753,7 +757,7 @@ function TeamTab({ userId }: { userId: string }) {
           <Field icon={Users} label="Team name" value={teamName} onChange={setTeamName} placeholder="e.g. Acme Corp" />
 
           <div>
-            <label className="block text-xs font-semibold mb-3" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            <label className="block text-xs font-semibold mb-3" style={{ color: INK_SOFT, fontFamily: SANS }}>
               Plan
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -766,20 +770,20 @@ function TeamTab({ userId }: { userId: string }) {
                     onClick={() => setPlan(p.id)}
                     className="flex flex-col items-start gap-1 p-4 rounded-xl text-left transition-all"
                     style={{
-                      background: selected ? `${p.color}10` : '#EFF6FF',
-                      border: selected ? `1.5px solid ${p.color}` : '1.5px solid #E2E8F0',
+                      background: selected ? `${p.color}10` : PANEL,
+                      border: selected ? `1.5px solid ${p.color}` : `1.5px solid ${RULE}`,
                     }}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <span className="text-sm font-black" style={{ color: selected ? p.color : '#0F172A', fontFamily: 'var(--font-sans)' }}>
+                      <span className="text-sm font-black" style={{ color: selected ? p.color : INK, fontFamily: SANS }}>
                         {p.label}
                       </span>
                       {selected && <Check size={13} style={{ color: p.color }} />}
                     </div>
-                    <span className="text-xs font-semibold" style={{ color: p.color, fontFamily: 'var(--font-sans)' }}>
+                    <span className="text-xs font-semibold" style={{ color: p.color, fontFamily: SANS }}>
                       {p.seats}
                     </span>
-                    <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}>
+                    <span className="text-xs" style={{ color: INK_FAINT, fontFamily: SANS }}>
                       {p.desc}
                     </span>
                   </button>
@@ -792,7 +796,7 @@ function TeamTab({ userId }: { userId: string }) {
             {createError && (
               <motion.div initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                 className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
-                style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: 'var(--font-sans)' }}>
+                style={{ background: '#FEF2F2', border: '1px solid #FECACA', color: '#EF4444', fontFamily: SANS }}>
                 <AlertCircle size={13} className="flex-shrink-0" />{createError}
               </motion.div>
             )}
@@ -801,23 +805,23 @@ function TeamTab({ userId }: { userId: string }) {
           <button
             type="submit" disabled={creating || !teamName.trim()}
             className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.2)', fontFamily: 'var(--font-sans)' }}
+            style={{ background: COBALT, boxShadow: '0 4px 14px rgba(36,64,216,0.2)', fontFamily: SANS }}
           >
             {creating ? <><Loader2 size={13} className="animate-spin" /> Creating…</> : <><Zap size={13} /> Create team</>}
           </button>
         </form>
       </SectionCard>
 
-      <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, #EFF6FF, #F0FDF4)', border: '1px solid #DBEAFE' }}>
+      <div className="rounded-2xl p-6" style={{ background: PANEL, border: `1px solid rgba(36,64,216,0.12)` }}>
         <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: '#DBEAFE' }}>
-            <Target size={16} style={{ color: '#2563EB' }} />
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(36,64,216,0.12)' }}>
+            <Target size={16} style={{ color: COBALT }} />
           </div>
           <div>
-            <p className="text-sm font-bold mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-sm font-bold mb-1" style={{ color: INK, fontFamily: SANS }}>
               Already have a team invite?
             </p>
-            <p className="text-xs leading-relaxed" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+            <p className="text-xs leading-relaxed" style={{ color: INK_SOFT, fontFamily: SANS }}>
               Check your email for an invite link from your team admin. Clicking it will automatically add you to their workspace.
             </p>
           </div>
@@ -847,26 +851,26 @@ export default function SettingsPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F8FAFC' }}>
-        <Loader2 size={24} className="animate-spin" style={{ color: '#2563EB' }} />
+      <div className="min-h-screen flex items-center justify-center" style={{ background: PAPER }}>
+        <Loader2 size={24} className="animate-spin" style={{ color: COBALT }} />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #DBEAFE 0px, #EFF6FF 200px, #F8FAFC 500px)' }}>
+    <div className="min-h-screen" style={{ background: PAPER }}>
       {/* Nav */}
-      <nav className="sticky top-0 z-40 border-b" style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', borderColor: '#E2E8F0' }}>
+      <nav className="sticky top-0 z-40 border-b" style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', borderColor: RULE }}>
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center gap-4">
           <Link
             href="/dashboard"
             className="flex items-center gap-1.5 text-sm transition-colors hover:text-slate-700"
-            style={{ color: '#94A3B8', fontFamily: 'var(--font-sans)' }}
+            style={{ color: INK_FAINT, fontFamily: SANS }}
           >
             <ArrowLeft size={14} /> Dashboard
           </Link>
-          <span style={{ color: '#E2E8F0' }}>/</span>
-          <span className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Settings</span>
+          <span style={{ color: RULE }}>/</span>
+          <span className="text-sm font-semibold" style={{ color: INK, fontFamily: SANS }}>Settings</span>
         </div>
       </nav>
 
@@ -876,14 +880,14 @@ export default function SettingsPage() {
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease: easing }}
           className="mb-8"
         >
-          <h1 className="text-3xl font-black mb-1" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>Settings</h1>
-          <p className="text-sm" style={{ color: '#64748B', fontFamily: 'var(--font-sans)' }}>
+          <h1 className="text-3xl mb-1" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Settings</h1>
+          <p className="text-sm" style={{ color: INK_SOFT, fontFamily: SANS }}>
             Manage your profile, learning preferences, and team.
           </p>
         </motion.div>
 
         {/* Tabs */}
-        <div className="flex gap-1 p-1 rounded-xl mb-8" style={{ background: '#EFF6FF', border: '1px solid #E2E8F0', width: 'fit-content' }}>
+        <div className="flex gap-1 p-1 rounded-xl mb-8" style={{ background: PANEL, border: `1px solid ${RULE}`, width: 'fit-content' }}>
           {TABS.filter(t => t.id !== 'team' || isInTeam).map(t => {
             const Icon = t.icon
             const active = tab === t.id
@@ -891,12 +895,12 @@ export default function SettingsPage() {
               <button
                 key={t.id}
                 onClick={() => setTab(t.id)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-semibold uppercase tracking-[0.12em] transition-all"
                 style={{
-                  background: active ? '#FFFFFF' : 'transparent',
-                  color: active ? '#2563EB' : '#94A3B8',
+                  background: active ? PAPER_2 : 'transparent',
+                  color: active ? COBALT : INK_FAINT,
                   boxShadow: active ? '0 1px 4px rgba(0,0,0,0.06)' : 'none',
-                  fontFamily: 'var(--font-sans)',
+                  fontFamily: MONO,
                 }}
               >
                 <Icon size={13} />

@@ -15,6 +15,10 @@ import {
   setWelcomeMessage, getWelcomeMessage,
   type Team, type TeamMember, type TeamGoal,
 } from '@/lib/supabase/teams'
+import {
+  PAPER_2, PANEL, INK, INK_SOFT, INK_FAINT,
+  COBALT, RULE, SERIF, MONO, SANS,
+} from "@/components/editorial/theme"
 
 const TRACK_COLORS: Record<string, string> = {
   marketing: '#E04D2A', finance: '#F59E0B', hr: '#10B981',
@@ -38,35 +42,35 @@ function MemberRow({ member, rank }: { member: TeamMember; rank: number }) {
 
   return (
     <div className="flex items-center gap-4 py-3.5 px-5 transition-colors hover:bg-slate-50 rounded-xl -mx-1">
-      <span className="w-6 text-center text-xs font-bold" style={{ color: '#CBD5E1' }}>{rank}</span>
+      <span className="w-6 text-center text-xs font-bold" style={{ color: INK_FAINT }}>{rank}</span>
       <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold text-white flex-shrink-0"
-        style={{ background: ['#2563EB','#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][rank % 10] }}>
+        style={{ background: [COBALT,'#E04D2A','#F59E0B','#10B981','#3B82F6','#22D3EE','#F97316','#0284C7','#DC2626','#0EA5E9'][rank % 10] }}>
         {initials}
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold truncate" style={{ color: '#0F172A' }}>
+        <p className="text-sm font-semibold truncate" style={{ color: INK }}>
           {member.display_name ?? member.email.split('@')[0]}
         </p>
-        <p className="text-xs truncate" style={{ color: '#94A3B8' }}>{member.email}</p>
+        <p className="text-xs truncate" style={{ color: INK_FAINT }}>{member.email}</p>
       </div>
       <div className="hidden sm:flex items-center gap-1.5 flex-shrink-0">
         {tracks.slice(0, 3).map(t => (
-          <span key={t} className="w-2 h-2 rounded-full" style={{ background: TRACK_COLORS[t] ?? '#CBD5E1' }} title={TRACK_LABELS[t]} />
+          <span key={t} className="w-2 h-2 rounded-full" style={{ background: TRACK_COLORS[t] ?? INK_FAINT }} title={TRACK_LABELS[t]} />
         ))}
-        {tracks.length > 3 && <span className="text-[10px]" style={{ color: '#94A3B8' }}>+{tracks.length - 3}</span>}
+        {tracks.length > 3 && <span className="text-[10px]" style={{ color: INK_FAINT }}>+{tracks.length - 3}</span>}
       </div>
       <div className="w-20 flex-shrink-0">
         <div className="flex items-center justify-between text-xs mb-1">
-          <span style={{ color: '#94A3B8' }}>{progress}%</span>
-          <span style={{ color: '#64748B' }}>{lessons}L</span>
+          <span style={{ color: INK_FAINT }}>{progress}%</span>
+          <span style={{ color: INK_SOFT }}>{lessons}L</span>
         </div>
-        <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
-          <div className="h-full rounded-full" style={{ width: `${progress}%`, background: '#2563EB', transition: 'width 0.8s ease' }} />
+        <div className="h-1.5 rounded-full" style={{ background: RULE }}>
+          <div className="h-full rounded-full" style={{ width: `${progress}%`, background: COBALT, transition: 'width 0.8s ease' }} />
         </div>
       </div>
       <div className="w-16 text-right flex-shrink-0">
-        <p className="text-sm font-bold" style={{ color: '#2563EB' }}>{(member.xp ?? 0).toLocaleString()}</p>
-        <p className="text-[10px]" style={{ color: '#94A3B8' }}>XP</p>
+        <p className="text-sm font-bold" style={{ color: COBALT }}>{(member.xp ?? 0).toLocaleString()}</p>
+        <p className="text-[10px]" style={{ color: INK_FAINT }}>XP</p>
       </div>
     </div>
   )
@@ -133,7 +137,7 @@ export default function TeamOverviewPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="w-8 h-8 rounded-full border-2 border-t-transparent animate-spin"
-          style={{ borderColor: '#2563EB', borderTopColor: 'transparent' }} />
+          style={{ borderColor: COBALT, borderTopColor: 'transparent' }} />
       </div>
     )
   }
@@ -141,10 +145,10 @@ export default function TeamOverviewPage() {
   if (!team) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-center gap-4">
-        <p className="text-sm font-semibold" style={{ color: '#0F172A', fontFamily: 'var(--font-sans)' }}>
+        <p className="text-sm font-semibold" style={{ color: INK, fontFamily: SANS }}>
           You don&apos;t have admin access to a team.
         </p>
-        <a href="/dashboard" className="text-sm font-semibold underline" style={{ color: '#2563EB', fontFamily: 'var(--font-sans)' }}>
+        <a href="/dashboard" className="text-sm font-semibold underline" style={{ color: COBALT, fontFamily: SANS }}>
           Back to dashboard
         </a>
       </div>
@@ -169,15 +173,15 @@ export default function TeamOverviewPage() {
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-2xl font-black" style={{ color: '#0F172A' }}>Team Overview</h1>
-          <p className="text-sm mt-0.5" style={{ color: '#64748B' }}>
+          <h1 className="text-2xl" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Team Overview</h1>
+          <p className="text-sm mt-0.5" style={{ color: INK_SOFT }}>
             {activeMembers.length} active member{activeMembers.length !== 1 ? 's' : ''}
             {pending.length > 0 && ` · ${pending.length} invite${pending.length !== 1 ? 's' : ''} pending`}
           </p>
         </div>
         <Link href="/dashboard/team/members"
           className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: '#2563EB' }}>
+          style={{ background: COBALT }}>
           <UserPlus size={14} /> Invite member
         </Link>
       </div>
@@ -185,7 +189,7 @@ export default function TeamOverviewPage() {
       {/* Stats row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { icon: Users, label: 'Active members', value: stats.total, color: '#2563EB' },
+          { icon: Users, label: 'Active members', value: stats.total, color: COBALT },
           { icon: BookOpen, label: 'Total lessons done', value: stats.totalLessons, color: '#10B981' },
           { icon: Zap, label: 'Total XP earned', value: stats.totalXP.toLocaleString(), color: '#F59E0B', str: true },
           { icon: Award, label: 'Tracks completed', value: stats.completedTracks, color: '#E04D2A' },
@@ -194,12 +198,12 @@ export default function TeamOverviewPage() {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.07, duration: 0.45, ease: easing }}
             className="p-5 rounded-2xl"
-            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ background: `${color}12` }}>
               <Icon size={16} style={{ color }} />
             </div>
-            <p className="text-2xl font-black mb-0.5" style={{ color: '#0F172A' }}>{str ? value : value}</p>
-            <p className="text-xs" style={{ color: '#94A3B8' }}>{label}</p>
+            <p className="text-2xl font-black mb-0.5" style={{ color: INK }}>{str ? value : value}</p>
+            <p className="text-xs" style={{ color: INK_FAINT }}>{label}</p>
           </motion.div>
         ))}
       </div>
@@ -208,25 +212,25 @@ export default function TeamOverviewPage() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Member leaderboard */}
         <div className="lg:col-span-2 rounded-2xl overflow-hidden"
-          style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-          <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: '1px solid #F1F5F9' }}>
+          style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+          <div className="px-5 py-4 flex items-center justify-between" style={{ borderBottom: `1px solid ${RULE}` }}>
             <div className="flex items-center gap-2">
-              <TrendingUp size={15} style={{ color: '#2563EB' }} />
-              <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Top learners</p>
+              <TrendingUp size={15} style={{ color: COBALT }} />
+              <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Top learners</p>
             </div>
             <Link href="/dashboard/team/analytics"
               className="text-xs font-semibold flex items-center gap-1 hover:underline"
-              style={{ color: '#2563EB' }}>
+              style={{ color: COBALT }}>
               Full leaderboard <ChevronRight size={11} />
             </Link>
           </div>
           <div className="p-2">
             {topMembers.length === 0 ? (
               <div className="py-12 text-center">
-                <p className="text-sm" style={{ color: '#94A3B8' }}>No active members yet.</p>
+                <p className="text-sm" style={{ color: INK_FAINT }}>No active members yet.</p>
                 <Link href="/dashboard/team/members"
                   className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold"
-                  style={{ color: '#2563EB' }}>
+                  style={{ color: COBALT }}>
                   <UserPlus size={13} /> Invite your first member
                 </Link>
               </div>
@@ -235,10 +239,10 @@ export default function TeamOverviewPage() {
             )}
           </div>
           {activeMembers.length > 5 && (
-            <div className="px-5 py-3" style={{ borderTop: '1px solid #F1F5F9' }}>
+            <div className="px-5 py-3" style={{ borderTop: `1px solid ${RULE}` }}>
               <Link href="/dashboard/team/members"
                 className="text-xs font-semibold flex items-center gap-1 hover:underline"
-                style={{ color: '#64748B' }}>
+                style={{ color: INK_SOFT }}>
                 View all {activeMembers.length} members <ArrowRight size={11} />
               </Link>
             </div>
@@ -249,28 +253,28 @@ export default function TeamOverviewPage() {
         <div className="space-y-5">
           {/* Track completion */}
           <div className="rounded-2xl p-5"
-            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="flex items-center gap-2 mb-4">
               <BarChart3 size={15} style={{ color: '#10B981' }} />
-              <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Track coverage</p>
+              <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Track coverage</p>
             </div>
             {trackCompletion.length === 0 ? (
-              <p className="text-xs" style={{ color: '#94A3B8' }}>No tracks assigned yet.</p>
+              <p className="text-xs" style={{ color: INK_FAINT }}>No tracks assigned yet.</p>
             ) : (
               <div className="space-y-3">
                 {trackCompletion.slice(0, 6).map(({ track, assigned, completed }) => {
                   const pct = assigned > 0 ? Math.round((completed / assigned) * 100) : 0
-                  const color = TRACK_COLORS[track] ?? '#2563EB'
+                  const color = TRACK_COLORS[track] ?? COBALT
                   return (
                     <div key={track}>
                       <div className="flex items-center justify-between text-xs mb-1">
                         <div className="flex items-center gap-1.5">
                           <span className="w-2 h-2 rounded-full" style={{ background: color }} />
-                          <span style={{ color: '#334155' }}>{TRACK_LABELS[track] ?? track}</span>
+                          <span style={{ color: INK_SOFT }}>{TRACK_LABELS[track] ?? track}</span>
                         </div>
-                        <span style={{ color: '#94A3B8' }}>{completed}/{assigned}</span>
+                        <span style={{ color: INK_FAINT }}>{completed}/{assigned}</span>
                       </div>
-                      <div className="h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+                      <div className="h-1.5 rounded-full" style={{ background: RULE }}>
                         <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color, transition: 'width 0.8s ease' }} />
                       </div>
                     </div>
@@ -311,16 +315,16 @@ export default function TeamOverviewPage() {
 
           {/* Team goal */}
           <div className="rounded-2xl p-5"
-            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <Target size={14} style={{ color: '#2563EB' }} />
-                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Team goal</p>
+                <Target size={14} style={{ color: COBALT }} />
+                <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Team goal</p>
               </div>
               {!editingGoal && (
                 <button onClick={() => { setGoalTitle(goal?.title ?? ''); setGoalDeadline(goal?.deadline ?? ''); setEditingGoal(true) }}
                   className="p-1 rounded-lg hover:bg-slate-100 transition-colors"
-                  style={{ color: '#94A3B8' }}>
+                  style={{ color: INK_FAINT }}>
                   <Edit2 size={12} />
                 </button>
               )}
@@ -333,27 +337,27 @@ export default function TeamOverviewPage() {
                   onChange={e => setGoalTitle(e.target.value)}
                   placeholder="e.g. Complete AI Fundamentals by Q3"
                   className="w-full px-3 py-2 rounded-xl text-sm outline-none"
-                  style={{ border: '1.5px solid #2563EB', background: '#EFF6FF', color: '#0F172A', fontFamily: 'var(--font-sans)' }}
+                  style={{ border: `1.5px solid ${COBALT}`, background: PANEL, color: INK, fontFamily: SANS }}
                 />
                 <div className="flex items-center gap-1.5">
-                  <CalendarDays size={12} style={{ color: '#94A3B8' }} />
+                  <CalendarDays size={12} style={{ color: INK_FAINT }} />
                   <input
                     type="date"
                     value={goalDeadline}
                     onChange={e => setGoalDeadline(e.target.value)}
                     className="flex-1 px-2 py-1.5 rounded-lg text-xs outline-none"
-                    style={{ border: '1px solid #E2E8F0', background: '#EFF6FF', color: '#475569', fontFamily: 'var(--font-sans)' }}
+                    style={{ border: `1px solid ${RULE}`, background: PANEL, color: INK_SOFT, fontFamily: SANS }}
                   />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleSaveGoal} disabled={savingGoal || !goalTitle.trim()}
                     className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{ background: '#2563EB' }}>
+                    style={{ background: COBALT }}>
                     <Check size={11} /> {savingGoal ? 'Saving…' : 'Save'}
                   </button>
                   <button onClick={() => setEditingGoal(false)}
                     className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors hover:bg-slate-100"
-                    style={{ color: '#64748B', border: '1px solid #E2E8F0' }}>
+                    style={{ color: INK_SOFT, border: `1px solid ${RULE}` }}>
                     <X size={11} />
                   </button>
                 </div>
@@ -367,9 +371,9 @@ export default function TeamOverviewPage() {
               </div>
             ) : goal ? (
               <div>
-                <p className="text-sm font-medium mb-1" style={{ color: '#334155' }}>{goal.title}</p>
+                <p className="text-sm font-medium mb-1" style={{ color: INK_SOFT }}>{goal.title}</p>
                 {goal.deadline && (
-                  <p className="flex items-center gap-1 text-xs" style={{ color: '#94A3B8' }}>
+                  <p className="flex items-center gap-1 text-xs" style={{ color: INK_FAINT }}>
                     <CalendarDays size={10} />
                     Due {new Date(goal.deadline).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </p>
@@ -378,7 +382,7 @@ export default function TeamOverviewPage() {
             ) : (
               <button onClick={() => { setGoalTitle(''); setGoalDeadline(''); setEditingGoal(true) }}
                 className="text-xs font-semibold hover:underline"
-                style={{ color: '#2563EB' }}>
+                style={{ color: COBALT }}>
                 + Set a team goal
               </button>
             )}
@@ -386,16 +390,16 @@ export default function TeamOverviewPage() {
 
           {/* Welcome message */}
           <div className="rounded-2xl p-5"
-            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <MessageSquare size={14} style={{ color: '#10B981' }} />
-                <p className="text-sm font-bold" style={{ color: '#0F172A' }}>Welcome message</p>
+                <p className="text-sm" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Welcome message</p>
               </div>
               {!editingWelcome && (
                 <button onClick={() => { setWelcomeDraft(welcomeMsg ?? ''); setEditingWelcome(true) }}
                   className="p-1 rounded-lg hover:bg-slate-100 transition-colors"
-                  style={{ color: '#94A3B8' }}>
+                  style={{ color: INK_FAINT }}>
                   <Edit2 size={12} />
                 </button>
               )}
@@ -408,7 +412,7 @@ export default function TeamOverviewPage() {
                   placeholder="Write a short welcome note for new members joining via invite…"
                   rows={3}
                   className="w-full px-3 py-2 rounded-xl text-xs outline-none resize-none"
-                  style={{ border: '1.5px solid #10B981', background: '#EFF6FF', color: '#0F172A', fontFamily: 'var(--font-sans)', lineHeight: 1.6 }}
+                  style={{ border: '1.5px solid #10B981', background: PANEL, color: INK, fontFamily: SANS, lineHeight: 1.6 }}
                 />
                 <div className="flex gap-2">
                   <button onClick={handleSaveWelcome} disabled={savingWelcome}
@@ -418,13 +422,13 @@ export default function TeamOverviewPage() {
                   </button>
                   <button onClick={() => setEditingWelcome(false)}
                     className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors hover:bg-slate-100"
-                    style={{ color: '#64748B', border: '1px solid #E2E8F0' }}>
+                    style={{ color: INK_SOFT, border: `1px solid ${RULE}` }}>
                     <X size={11} />
                   </button>
                 </div>
               </div>
             ) : welcomeMsg ? (
-              <p className="text-xs leading-relaxed" style={{ color: '#475569' }}>{welcomeMsg}</p>
+              <p className="text-xs leading-relaxed" style={{ color: INK_SOFT }}>{welcomeMsg}</p>
             ) : (
               <button onClick={() => { setWelcomeDraft(''); setEditingWelcome(true) }}
                 className="text-xs font-semibold hover:underline"
@@ -433,7 +437,7 @@ export default function TeamOverviewPage() {
               </button>
             )}
             {!editingWelcome && (
-              <p className="mt-2 text-[10px]" style={{ color: '#CBD5E1' }}>
+              <p className="mt-2 text-[10px]" style={{ color: INK_FAINT }}>
                 Shown to new members on the invite page
               </p>
             )}
@@ -441,10 +445,10 @@ export default function TeamOverviewPage() {
 
           {/* Quick links */}
           <div className="rounded-2xl p-5"
-            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-            <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#94A3B8' }}>Quick actions</p>
+            style={{ background: PAPER_2, border: `1px solid ${RULE}`, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+            <p className="text-[11px] font-semibold tracking-[0.16em] uppercase mb-3" style={{ color: INK_FAINT, fontFamily: MONO }}>Quick actions</p>
             {[
-              { href: '/dashboard/team/members', icon: UserPlus, label: 'Invite team members', color: '#2563EB' },
+              { href: '/dashboard/team/members', icon: UserPlus, label: 'Invite team members', color: COBALT },
               { href: '/dashboard/team/analytics', icon: BarChart3, label: 'View full analytics', color: '#10B981' },
               { href: '/tracks', icon: BookOpen, label: 'Browse all tracks', color: '#F59E0B' },
             ].map(item => (
@@ -454,8 +458,8 @@ export default function TeamOverviewPage() {
                   style={{ background: `${item.color}10` }}>
                   <item.icon size={13} style={{ color: item.color }} />
                 </div>
-                <span className="text-sm font-medium flex-1" style={{ color: '#475569' }}>{item.label}</span>
-                <ChevronRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#CBD5E1' }} />
+                <span className="text-sm font-medium flex-1" style={{ color: INK_SOFT }}>{item.label}</span>
+                <ChevronRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: INK_FAINT }} />
               </Link>
             ))}
           </div>
@@ -465,15 +469,15 @@ export default function TeamOverviewPage() {
       {/* Empty state CTA */}
       {activeMembers.length === 0 && (
         <div className="rounded-2xl p-10 text-center"
-          style={{ background: '#FFFFFF', border: '2px dashed #E2E8F0' }}>
-          <Users size={36} className="mx-auto mb-4" style={{ color: '#CBD5E1' }} />
-          <h3 className="text-lg font-black mb-2" style={{ color: '#0F172A' }}>Your team is empty</h3>
-          <p className="text-sm mb-6 max-w-sm mx-auto" style={{ color: '#64748B' }}>
+          style={{ background: PAPER_2, border: `2px dashed ${RULE}` }}>
+          <Users size={36} className="mx-auto mb-4" style={{ color: INK_FAINT }} />
+          <h3 className="text-lg mb-2" style={{ color: INK, fontFamily: SERIF, fontWeight: 600 }}>Your team is empty</h3>
+          <p className="text-sm mb-6 max-w-sm mx-auto" style={{ color: INK_SOFT }}>
             Invite your first team member to start tracking progress and assigning role-specific tracks.
           </p>
           <Link href="/dashboard/team/members"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white"
-            style={{ background: '#2563EB' }}>
+            style={{ background: COBALT }}>
             <UserPlus size={14} /> Invite your first member
           </Link>
         </div>
